@@ -1,0 +1,56 @@
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# IDE/editor
+.idea/
+.vscode/
+*.code-workspace
+
+# Logs
+*.log
+logs/
+
+# Environments and secrets
+.env
+.env.*
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node / JS
+node_modules/
+.npm/
+.pnpm-store/
+yarn.lock
+pnpm-lock.yaml
+package-lock.json
+
+dist/
+build/
+.tmp/
+.cache/
+
+# Coverage and reports
+coverage/
+reports/
+
+# Archives
+*.zip
+*.tar
+*.tar.gz
+*.rar
+
+# Misc
+*.swp
+*.swo
+*.tmp
+*.bak
