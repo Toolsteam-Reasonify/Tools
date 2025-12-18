@@ -1,0 +1,558 @@
+{
+  "language": {
+    "en": "English",
+    "hi": "हिंदी",
+    "gu": "ગુજરાતી",
+    "selectorLabel": "Choose language"
+  },
+  "nav": {
+    "logo": "Conductors & Insulators",
+    "learn": "Learn",
+    "practice": "Practice",
+    "applications": "Real World Applications"
+  },
+  "common": {
+    "next": "Next",
+    "previous": "Previous",
+    "submit": "Submit",
+    "reset": "Reset",
+    "gotIt": "Got it!",
+    "correct": "Correct",
+    "incorrect": "Incorrect",
+    "examples": "Examples",
+    "yourAnswer": "Your Answer:",
+    "answerPlaceholder": "Type your answer here...",
+    "ariaBack": "Go back",
+    "ariaNext": "Go forward"
+  },
+  "component": {
+    "on": "ON",
+    "off": "OFF"
+  },
+  "torch": {
+    "intro": {
+      "title": "Topic 3.1: A Torchlight",
+      "subtitle": "Let's explore how a torchlight works! 🔦",
+      "learnHeading": "What We'll Learn:",
+      "start": "Let's Start Exploring!"
+    },
+    "learn": {
+      "obsTitle": "Observation Skills",
+      "obsDesc": "Identify parts of a torchlight",
+      "partsTitle": "Understanding Parts",
+      "partsDesc": "Learn about cells, battery, lamp, switch",
+      "glowTitle": "How It Glows",
+      "glowDesc": "Discover why lamp lights up",
+      "demoTitle": "Interactive Demo",
+      "demoDesc": "Try animations and activities"
+    },
+    "safety": {
+      "title": "Safety First!",
+      "line1": "Use only small batteries from torches or remotes.",
+      "warning": "Never experiment with wall socket electricity!"
+    },
+    "observe": {
+      "title": "Activity 3.1: Observe a Torchlight",
+      "clickTorch": "Click the Torch!",
+      "lampGlowing": "✨ The lamp is GLOWING!",
+      "lampNotGlowing": "⭕ The lamp is NOT glowing",
+      "whatNotice": "🔦 What is a Torchlight?",
+      "definition": "A torchlight is a portable light source that uses electric cells (battery), a switch, wires, and a lamp or LED. When the switch is ON, the cells push electric current through the wires to the lamp/LED, making it glow so you can see in the dark.",
+      "nextQuestion": "🧐 Next Question:",
+      "questionText": "If we open the torchlight, what will we find inside?",
+      "exploreNext": "Let's explore the different parts! →",
+      "back": "Back",
+      "nextParts": "Next: Torch Parts"
+    },
+    "parts": {
+      "title": "🔍 What's Inside a Torchlight?",
+      "lamp": "1. Lamp",
+      "switch": "2. Switch",
+      "cells": "3. Cells",
+      "wires": "4. Wires",
+      "lampCard": "Lamp",
+      "lampDesc": "Produces light",
+      "switchCard": "Switch",
+      "switchDesc": "Controls ON/OFF",
+      "cellCard": "Cell",
+      "cellDesc": "Power source",
+      "wiresCard": "Wires",
+      "wiresDesc": "Carry electricity",
+      "clickToLearn": "Click to learn →",
+      "back": "Back",
+      "nextCell": "Next: Learn About Cells"
+    },
+    "cell": {
+      "title": "🔋 Electric Cell",
+      "content": "An electric cell stores chemical energy and pushes electric charge from its positive (+) terminal to its negative (−) terminal when connected in a circuit. The metal cap is the positive terminal and the flat base is the negative terminal. When you connect wires from + to − through a lamp or LED, the cell supplies the energy that makes the lamp glow."
+    },
+    "battery": {
+      "title": "🔋🔋 Battery",
+      "content": "Detailed battery content here..."
+    },
+    "lamp": {
+      "title": "💡 Electric Lamp",
+      "content": "Detailed lamp content here..."
+    },
+    "switch": {
+      "title": "🔘 Switch",
+      "content": "Detailed switch content here..."
+    },
+    "complete": {
+      "title": "⚡ Complete Circuit",
+      "content": "Final overview..."
+    },
+    "quiz": {
+      "title": "📝 Quiz Time!",
+      "content": "Test your knowledge..."
+    },
+    "nav": {
+      "back": "Back",
+      "continue": "Continue Learning"
+    }
+  },
+  "practice": {
+    "header": {
+      "title": "⚡ Practice: Torchlight Circuit",
+      "subtitle": "Apply what you learned!"
+    },
+    "practiceMode": "Practice Mode",
+    "topicSelection": "Choose a Topic to Practice",
+    "mixedPractice": "Mixed Practice",
+    "allTopics": "All Topics Combined",
+    "questions": "questions",
+    "submitAnswer": "Submit Answer",
+    "nextQuestion": "Next Question",
+    "finishPractice": "Finish Practice",
+    "yourScore": "Your Score",
+    "tryAgain": "Try Again",
+    "backToTopics": "Back to Topics",
+    "excellentWork": "Excellent Work!",
+    "goodJob": "Good Job!",
+    "keepPracticing": "Keep Practicing!",
+    "explanation": "Explanation:",
+    "correctAnswer": "Correct Answer:",
+    "progress": "Progress",
+    "easy": "Easy",
+    "medium": "Medium",
+    "hard": "Hard",
+    "correct": "Correct",
+    "incorrect": "Incorrect",
+    "total": "Total",
+    "outstandingWork": "Outstanding work! You have mastered this topic!",
+    "goodWork": "Good work! Keep practicing to improve further.",
+    "dontGiveUp": "Don't give up! Practice more to improve your understanding.",
+    "topics": {
+      "identification": {
+        "name": "Basic Identification",
+        "description": "Identify conductors and insulators"
+      },
+      "properties": {
+        "name": "Properties",
+        "description": "Understanding material properties"
+      },
+      "wires": {
+        "name": "Wires & Cables",
+        "description": "Why wires are made and covered"
+      },
+      "testing": {
+        "name": "Testing Methods",
+        "description": "Using conduction tester"
+      },
+      "safety": {
+        "name": "Safety Rules",
+        "description": "Electrical safety precautions"
+      },
+      "applications": {
+        "name": "Real-World Uses",
+        "description": "Applications in daily life"
+      }
+    },
+    "ex6": {
+      "question": "Question",
+      "of": "of",
+      "q1": "What is the purpose of an electric cell in a torchlight?",
+      "q1o1": "To produce light",
+      "q1o2": "To provide electrical energy",
+      "q1o3": "To control the flow of electricity",
+      "q1o4": "To connect the parts",
+      "q2": "How many cells make a battery?",
+      "q2o1": "One",
+      "q2o2": "Two or more",
+      "q2o3": "Exactly three",
+      "q2o4": "None",
+      "q3": "What happens when we slide the switch to ON position?",
+      "q3o1": "Circuit breaks",
+      "q3o2": "Circuit completes and lamp glows",
+      "q3o3": "Battery drains immediately",
+      "q3o4": "Nothing happens",
+      "q4": "What component actually produces light in a torchlight?",
+      "q4o1": "Cell",
+      "q4o2": "Battery",
+      "q4o3": "Electric lamp",
+      "q4o4": "Switch",
+      "q5": "What do connecting wires do?",
+      "q5o1": "Store electricity",
+      "q5o2": "Produce light",
+      "q5o3": "Carry electricity between components",
+      "q5o4": "Turn electricity on and off",
+      "checkQuiz": "Submit Quiz"
+    },
+    "ex1": {
+      "notLabeled": "Not answered"
+    },
+    "summary": {
+      "title": "🎉 Practice Complete!",
+      "totalScore": "Total Score:",
+      "exercisesCompleted": "Exercises Completed:",
+      "excellent": "Excellent work!",
+      "good": "Good job!",
+      "keepPracticing": "Keep practicing!",
+      "restart": "Restart Practice",
+      "backToLearn": "Back to Learn Mode",
+      "scoreLine": "{correct, number} / {total, number} correct ({percentage, number}%)",
+      "exerciseCount": "{count, plural, one {{count} exercise completed} other {{count} exercises completed}}"
+    }
+  },
+  "realworld": {
+    "title": "Real World Applications",
+    "tagline": "Discover how electricity powers our daily lives",
+    "usageCategories": "Electricity Usage Categories",
+    "keyFacts": "Key Facts About Electricity",
+    "cooking": "Cooking",
+    "lighting": "Lighting",
+    "transportation": "Transportation",
+    "heating": "Heating & Cooling",
+    "entertainment": "Entertainment",
+    "communication": "Communication",
+    "dc": {
+      "title": "Direct Current (DC)",
+      "desc": "Batteries provide DC electricity - current flows in one direction. Used in mobile phones, flashlights, and electric vehicles."
+    },
+    "ac": {
+      "title": "Alternating Current (AC)",
+      "desc": "Wall sockets provide AC electricity - current changes direction. Used in homes for most appliances and lighting."
+    },
+    "storage": {
+      "title": "Energy Storage",
+      "desc": "Batteries store electrical energy chemically, allowing portable devices to work without being plugged in."
+    },
+    "impact": {
+      "title": "Global Impact",
+      "desc": "Renewable sources like solar and hydroelectric power help protect our environment."
+    },
+    "desc": {
+      "cooking": "Electricity powers various cooking appliances",
+      "lighting": "Illuminating our homes and streets",
+      "transportation": "Electric vehicles and public transport",
+      "heating": "Climate control in buildings",
+      "entertainment": "Powering our entertainment devices",
+      "communication": "Connecting people worldwide"
+    },
+    "example": {
+      "cooking": {
+        "stove": "Electric stove",
+        "microwave": "Microwave oven",
+        "kettle": "Electric kettle",
+        "toaster": "Toaster"
+      },
+      "lighting": {
+        "bulbs": "LED bulbs",
+        "street": "Street lights",
+        "flashlight": "Flashlights",
+        "lamp": "Lamps"
+      },
+      "transportation": {
+        "cars": "Electric cars",
+        "trains": "Trains",
+        "trams": "Trams",
+        "ebikes": "E-bikes"
+      },
+      "heating": {
+        "ac": "Air conditioners",
+        "heater": "Heaters",
+        "blanket": "Electric blankets",
+        "fan": "Fans"
+      },
+      "entertainment": {
+        "tv": "Television",
+        "computer": "Computers",
+        "console": "Gaming consoles",
+        "speakers": "Speakers"
+      },
+      "communication": {
+        "phones": "Mobile phones",
+        "router": "Internet routers",
+        "radio": "Radios",
+        "satellite": "Satellites"
+      }
+    },
+    "safety": {
+      "title": "Safety First!",
+      "1": "Never experiment with household electricity",
+      "2": "Use only batteries/cells for experiments",
+      "3": "Never touch switches with wet hands",
+      "4": "Don't use damaged electrical equipment",
+      "5": "Always ask an adult for help with electrical work"
+    },
+    "stats": {
+      "title": "Localized stats",
+      "households": "Households with electricity",
+      "savings": "Avg monthly savings",
+      "updated": "Updated {date}"
+    }
+  },
+  "conductors": {
+    "intro": {
+      "title": "Topic 3.4: Conductors & Insulators",
+      "subtitle": "Which materials let electricity pass through? Let's find out! 🔬",
+      "discoverTitle": "What We'll Discover Today",
+      "conductorsTitle": "⚡ Conductors",
+      "conductorsDesc": "Materials that allow electricity to flow",
+      "insulatorsTitle": "🛡️ Insulators",
+      "insulatorsDesc": "Materials that stop electricity",
+      "testingTitle": "🔬 Testing",
+      "testingDesc": "Use a tester to identify materials",
+      "safetyTitle": "⚠️ Safety",
+      "safetyDesc": "Why insulators protect us",
+      "startButton": "Let's Start Exploring!"
+    },
+    "tester": {
+      "title": "⚡ Conduction Tester",
+      "subtitle": "Test which materials conduct electricity!",
+      "circuitSetup": "Circuit Setup",
+      "materialsToTest": "Materials to Test",
+      "conductors": "Conductors",
+      "semiconductors": "Semiconductors",
+      "insulators": "Insulators",
+      "resetTest": "Reset Test",
+      "battery": "Battery",
+      "bulb": "Bulb",
+      "probe1": "Probe 1",
+      "probe2": "Probe 2",
+      "currentFlow": "Current Flow →",
+      "return": "← Return",
+      "materialUnderTest": "← Material Under Test →",
+      "conductorDetected": "✓ Conductor Detected!",
+      "nonConductor": "✗ Non-Conductor (Insulator)",
+      "materialType": "Material Type:",
+      "currentFlowLabel": "Current Flow:",
+      "bulbBrightness": "Bulb Brightness:",
+      "resistance": "Resistance:",
+      "howItWorks": "How It Works",
+      "conductorsDesc": "Materials that allow electricity to flow easily. Metals like copper, aluminum, and iron have free electrons that can move through the material, creating an electrical current.",
+      "semiconductorsDesc": "Materials with conductivity between conductors and insulators. Examples include graphite and silicon. Their conductivity can be controlled and is useful in electronics.",
+      "insulatorsDesc": "Materials that resist the flow of electricity. Rubber, plastic, wood, and glass have tightly bound electrons that don't move easily, preventing current flow and keeping us safe.",
+      "diagramTitle": "Our Conduction Tester",
+      "cellLabel": "Cell (Battery)",
+      "wire1": "Wire 1",
+      "wire2": "Wire 2",
+      "wire3": "Wire 3",
+      "lampOn": "⚡ ON",
+      "lampOff": "○ OFF",
+      "freeEnd1": "Free End 1",
+      "freeEnd1Color": "(Red)",
+      "freeEnd2": "Free End 2",
+      "freeEnd2Color": "(Blue)",
+      "testingArea": "TESTING AREA",
+      "currentFlowPath": "Current Flow Path:",
+      "circuitComplete": "✓ Circuit Complete - Current Flowing!",
+      "testing": "Testing...",
+      "placeMaterial": "↓ Place Material Here ↓",
+      "touchInstructions1": "Touch both free ends to the material",
+      "touchInstructions2": "to test if it conducts electricity",
+      "buildTitle": "How to Build the Tester:",
+      "buildStep1": "Connect a <strong>cell</strong> and a <strong>lamp</strong> with wires",
+      "buildStep2": "Leave <strong>two wire ends free</strong> (not connected)",
+      "buildStep3": "<strong>Touch the free ends together</strong> momentarily",
+      "buildStep4": "If lamp glows, <strong>tester is ready! ✓</strong>",
+      "howItWorksTitle": "✨ How It Works:",
+      "howItWorksDesc": "When we touch an object with both free wire ends:",
+      "conductorResult": "If lamp glows: Object is a <strong>CONDUCTOR</strong>",
+      "insulatorResult": "If lamp doesn't glow: Object is an <strong>INSULATOR</strong>",
+      "tipsTitle": "Important Tips:",
+      "tip1": "Make sure the two free wires don't touch each other",
+      "tip2": "Touch both ends of the object being tested",
+      "tip3": "Hold for 1-2 seconds to observe the lamp",
+      "back": "Back",
+      "startTesting": "Start Testing Materials"
+    },
+    "materials": {
+      "title": "🧪 Let's Test Different Materials!",
+      "resetAll": "Reset All",
+      "testing": "Testing...",
+      "lampGlows": "LAMP GLOWS!",
+      "conductor": "✓ CONDUCTOR",
+      "noGlow": "NO GLOW",
+      "insulator": "✗ INSULATOR",
+      "progress": "Progress: {tested} / {total} tested",
+      "clickToTest": "Click on any material to test it!",
+      "allTestedTitle": "🎉 All Materials Tested!",
+      "allTestedDesc": "Great job! You've identified {conductors} conductors and {insulators} insulators.",
+      "conductorLabel": "Conductor",
+      "insulatorLabel": "Insulator",
+      "back": "Back",
+      "seeResults": "See Results & Learn More",
+      "materialNames": {
+        "metalKey": "Metal Key",
+        "plasticScale": "Plastic Scale",
+        "coin": "Coin",
+        "rubberEraser": "Rubber Eraser",
+        "glassBangle": "Glass Bangle",
+        "ironNail": "Iron Nail",
+        "woodenStick": "Wooden Stick",
+        "aluminumFoil": "Aluminum Foil",
+        "paperStrip": "Paper Strip",
+        "copperWire": "Copper Wire",
+        "cork": "Cork",
+        "steelSpoon": "Steel Spoon"
+      },
+      "materialTypes": {
+        "metalIron": "Metal (Iron)",
+        "plastic": "Plastic",
+        "metalCopper": "Metal (Copper)",
+        "rubber": "Rubber",
+        "glass": "Glass",
+        "wood": "Wood",
+        "metalAluminum": "Metal (Aluminum)",
+        "paper": "Paper",
+        "metalSteel": "Metal (Steel)",
+        "cork": "Cork"
+      },
+      "materialDescriptions": {
+        "metalKey": "Keys are made of metal like iron or brass",
+        "plasticScale": "Rulers are usually made of plastic",
+        "coin": "Coins are made of copper, nickel, or other metals",
+        "rubberEraser": "Erasers are made from rubber material",
+        "glassBangle": "Bangles can be made of glass",
+        "ironNail": "Nails are made of iron or steel",
+        "woodenStick": "Wood comes from trees",
+        "aluminumFoil": "Kitchen foil is made of aluminum",
+        "paperStrip": "Paper is made from wood pulp",
+        "copperWire": "Electrical wires are usually copper",
+        "cork": "Cork comes from tree bark",
+        "steelSpoon": "Spoons are often made of steel",
+        "graphite": "Moderate conductor, used in pencils",
+        "saltWater": "Ionic conductor due to dissolved salts",
+        "plasticRuler": "Insulator, blocks electricity flow",
+        "glass": "Excellent insulator"
+      },
+      "testMaterialNames": {
+        "copperWire": "Copper Wire",
+        "ironNail": "Iron Nail",
+        "aluminumFoil": "Aluminum Foil",
+        "graphite": "Graphite (Pencil Lead)",
+        "saltWater": "Salt Water",
+        "plasticRuler": "Plastic Ruler",
+        "rubberEraser": "Rubber Eraser",
+        "woodenStick": "Wooden Stick",
+        "glass": "Glass",
+        "paper": "Paper"
+      },
+      "testMaterialDescriptions": {
+        "copperWire": "Excellent conductor used in electrical wiring",
+        "ironNail": "Good conductor, used in construction",
+        "aluminumFoil": "Lightweight conductor used in packaging",
+        "graphite": "Moderate conductor, used in pencils",
+        "saltWater": "Ionic conductor due to dissolved salts",
+        "plasticRuler": "Insulator, blocks electricity flow",
+        "rubberEraser": "Excellent insulator, used for safety",
+        "woodenStick": "Poor conductor when dry",
+        "glass": "Excellent insulator",
+        "paper": "Insulator when dry"
+      }
+    },
+    "results": {
+      "title": "📊 Test Results: Conductors vs Insulators",
+      "conductorsTitle": "Conductors",
+      "conductorsSubtitle": "Lamp GLOWED ✓",
+      "conductorsDesc": "Materials that <strong>allow electricity to flow</strong> through them easily.",
+      "insulatorsTitle": "Insulators",
+      "insulatorsSubtitle": "Lamp DID NOT glow ✗",
+      "insulatorsDesc": "Materials that <strong>do NOT allow electricity to flow</strong> through them.",
+      "patternConductors": "Pattern: All are <strong>METALS!</strong> 🔑",
+      "patternInsulators": "Pattern: <strong>Non-metals!</strong> (Plastic, Rubber, Wood, Glass, etc.) 🛡️",
+      "discoveriesTitle": "Key Discoveries:",
+      "conductorsListTitle": "✓ Conductors (Metals):",
+      "conductorsList1": "• Iron, Copper, Aluminum",
+      "conductorsList2": "• Steel, Brass, Silver, Gold",
+      "conductorsList3": "• All metals conduct electricity",
+      "insulatorsListTitle": "✗ Insulators (Non-metals):",
+      "insulatorsList1": "• Plastic, Rubber, Glass",
+      "insulatorsList2": "• Wood, Paper, Cork",
+      "insulatorsList3": "• Most non-metals are insulators",
+      "backToTesting": "Back to Testing",
+      "learnMoreConductors": "Learn More About Conductors"
+    },
+    "conductorsDetail": {
+      "title": "⚡ All About Conductors",
+      "content": "Detailed conductor information...",
+      "next": "Next: Insulators"
+    },
+    "insulatorsDetail": {
+      "title": "🛡️ All About Insulators",
+      "content": "Detailed insulator information...",
+      "next": "Next: Safety"
+    },
+    "safetyDetail": {
+      "title": "⚠️ Safety Rules",
+      "content": "Safety information...",
+      "next": "Next: Applications"
+    },
+    "applicationsDetail": {
+      "title": "🔌 Real-World Applications",
+      "intro": "Conductors and insulators are essential in our daily lives. Let's explore how they are used in real-world applications!",
+      "conductorsTitle": "Conductors in Daily Life",
+      "insulatorsTitle": "Insulators in Daily Life",
+      "conductor1": {
+        "title": "Electrical Wiring",
+        "desc": "Copper and aluminum wires carry electricity safely through our homes, powering lights, appliances, and devices."
+      },
+      "conductor2": {
+        "title": "Light Bulbs",
+        "desc": "Metal filaments inside bulbs conduct electricity to produce light. The filament glows when current passes through it."
+      },
+      "conductor3": {
+        "title": "Electronic Devices",
+        "desc": "Circuit boards use copper tracks to connect components in phones, computers, and tablets, allowing them to function."
+      },
+      "conductor4": {
+        "title": "Electric Vehicles",
+        "desc": "Batteries and motors use metal conductors to power electric cars, buses, and bikes, making transportation cleaner."
+      },
+      "conductor5": {
+        "title": "Power Transmission",
+        "desc": "High-voltage power lines use aluminum and steel conductors to transport electricity from power plants to cities."
+      },
+      "insulator1": {
+        "title": "Safety Equipment",
+        "desc": "Rubber gloves, boots, and mats protect electricians from electric shocks by preventing current from passing through their bodies."
+      },
+      "insulator2": {
+        "title": "Wire Coating",
+        "desc": "Plastic or rubber coating on electrical wires prevents short circuits and protects us from touching live wires."
+      },
+      "insulator3": {
+        "title": "Building Materials",
+        "desc": "Wood, glass, and plastic are used in construction to prevent electrical accidents and provide structural support."
+      },
+      "insulator4": {
+        "title": "Protective Gear",
+        "desc": "Insulating materials in tools and equipment keep workers safe when handling electrical systems and appliances."
+      },
+      "insulator5": {
+        "title": "Packaging & Storage",
+        "desc": "Plastic and cardboard containers safely store electronic devices, preventing static electricity and damage."
+      },
+      "keyTakeaways": "Key Takeaways",
+      "takeaway1": "Conductors allow electricity to flow, making them essential for powering devices and transmitting energy.",
+      "takeaway2": "Insulators prevent electricity from flowing, protecting us from electric shocks and preventing accidents.",
+      "takeaway3": "Both conductors and insulators work together to make electrical systems safe and functional in our daily lives.",
+      "back": "Back to Tester"
+    },
+    "quiz": {
+      "title": "📝 Quiz Time!",
+      "content": "Quiz content..."
+    }
+  }
+}

@@ -1,0 +1,254 @@
+{
+  "language": {
+    "en": "English",
+    "hi": "हिंदी",
+    "gu": "ગુજરાતી",
+    "selectorLabel": "Choose language"
+  },
+  "nav": {
+    "logo": "Torchlight",
+    "learn": "Learn",
+    "practice": "Practice",
+    "applications": "Real World Applications"
+  },
+  "common": {
+    "next": "Next",
+    "previous": "Previous",
+    "submit": "Submit",
+    "reset": "Reset",
+    "gotIt": "Got it!",
+    "correct": "Correct",
+    "incorrect": "Incorrect",
+    "examples": "Examples",
+    "yourAnswer": "Your Answer:",
+    "answerPlaceholder": "Type your answer here...",
+    "ariaBack": "Go back",
+    "ariaNext": "Go forward"
+  },
+  "component": {
+    "on": "ON",
+    "off": "OFF"
+  },
+  "torch": {
+    "intro": {
+      "title": "Topic 3.1: A Torchlight",
+      "subtitle": "Let's explore how a torchlight works! 🔦",
+      "learnHeading": "What We'll Learn:",
+      "start": "Let's Start Exploring!"
+    },
+    "learn": {
+      "obsTitle": "Observation Skills",
+      "obsDesc": "Identify parts of a torchlight",
+      "partsTitle": "Understanding Parts",
+      "partsDesc": "Learn about cells, battery, lamp, switch",
+      "glowTitle": "How It Glows",
+      "glowDesc": "Discover why lamp lights up",
+      "demoTitle": "Interactive Demo",
+      "demoDesc": "Try animations and activities"
+    },
+    "safety": {
+      "title": "Safety First!",
+      "line1": "Use only small batteries from torches or remotes.",
+      "warning": "Never experiment with wall socket electricity!"
+    },
+    "observe": {
+      "title": "Activity 3.1: Observe a Torchlight",
+      "clickTorch": "Click the Torch!",
+      "lampGlowing": "✨ The lamp is GLOWING!",
+      "lampNotGlowing": "⭕ The lamp is NOT glowing",
+      "whatNotice": "🔦 What is a Torchlight?",
+      "definition": "A torchlight is a portable light source that uses electric cells (battery), a switch, wires, and a lamp or LED. When the switch is ON, the cells push electric current through the wires to the lamp/LED, making it glow so you can see in the dark.",
+      "nextQuestion": "🧐 Next Question:",
+      "questionText": "If we open the torchlight, what will we find inside?",
+      "exploreNext": "Let's explore the different parts! →",
+      "back": "Back",
+      "nextParts": "Next: Torch Parts"
+    },
+    "parts": {
+      "title": "🔍 What's Inside a Torchlight?",
+      "lamp": "1. Lamp",
+      "switch": "2. Switch",
+      "cells": "3. Cells",
+      "wires": "4. Wires",
+      "lampCard": "Lamp",
+      "lampDesc": "Produces light",
+      "switchCard": "Switch",
+      "switchDesc": "Controls ON/OFF",
+      "cellCard": "Cell",
+      "cellDesc": "Power source",
+      "wiresCard": "Wires",
+      "wiresDesc": "Carry electricity",
+      "clickToLearn": "Click to learn →",
+      "back": "Back",
+      "nextCell": "Next: Learn About Cells"
+    },
+    "cell": {
+      "title": "🔋 Electric Cell",
+      "content": "An electric cell stores chemical energy and pushes electric charge from its positive (+) terminal to its negative (−) terminal when connected in a circuit. The metal cap is the positive terminal and the flat base is the negative terminal. When you connect wires from + to − through a lamp or LED, the cell supplies the energy that makes the lamp glow."
+    },
+    "battery": {
+      "title": "🔋🔋 Battery",
+      "content": "Detailed battery content here..."
+    },
+    "lamp": {
+      "title": "💡 Electric Lamp",
+      "content": "Detailed lamp content here..."
+    },
+    "switch": {
+      "title": "🔘 Switch",
+      "content": "Detailed switch content here..."
+    },
+    "complete": {
+      "title": "⚡ Complete Circuit",
+      "content": "Final overview..."
+    },
+    "quiz": {
+      "title": "📝 Quiz Time!",
+      "content": "Test your knowledge..."
+    },
+    "nav": {
+      "back": "Back",
+      "continue": "Continue Learning"
+    }
+  },
+  "practice": {
+    "header": {
+      "title": "⚡ Practice: Torchlight Circuit",
+      "subtitle": "Apply what you learned!"
+    },
+    "ex6": {
+      "question": "Question",
+      "of": "of",
+      "q1": "What is the purpose of an electric cell in a torchlight?",
+      "q1o1": "To produce light",
+      "q1o2": "To provide electrical energy",
+      "q1o3": "To control the flow of electricity",
+      "q1o4": "To connect the parts",
+      "q2": "How many cells make a battery?",
+      "q2o1": "One",
+      "q2o2": "Two or more",
+      "q2o3": "Exactly three",
+      "q2o4": "None",
+      "q3": "What happens when we slide the switch to ON position?",
+      "q3o1": "Circuit breaks",
+      "q3o2": "Circuit completes and lamp glows",
+      "q3o3": "Battery drains immediately",
+      "q3o4": "Nothing happens",
+      "q4": "What component actually produces light in a torchlight?",
+      "q4o1": "Cell",
+      "q4o2": "Battery",
+      "q4o3": "Electric lamp",
+      "q4o4": "Switch",
+      "q5": "What do connecting wires do?",
+      "q5o1": "Store electricity",
+      "q5o2": "Produce light",
+      "q5o3": "Carry electricity between components",
+      "q5o4": "Turn electricity on and off",
+      "checkQuiz": "Submit Quiz"
+    },
+    "ex1": {
+      "notLabeled": "Not answered"
+    },
+    "summary": {
+      "title": "🎉 Practice Complete!",
+      "totalScore": "Total Score:",
+      "exercisesCompleted": "Exercises Completed:",
+      "excellent": "Excellent work!",
+      "good": "Good job!",
+      "keepPracticing": "Keep practicing!",
+      "restart": "Restart Practice",
+      "backToLearn": "Back to Learn Mode",
+      "scoreLine": "{correct, number} / {total, number} correct ({percentage, number}%)",
+      "exerciseCount": "{count, plural, one {{count} exercise completed} other {{count} exercises completed}}"
+    }
+  },
+  "realworld": {
+    "title": "Real World Applications",
+    "tagline": "Discover how electricity powers our daily lives",
+    "usageCategories": "Electricity Usage Categories",
+    "keyFacts": "Key Facts About Electricity",
+    "cooking": "Cooking",
+    "lighting": "Lighting",
+    "transportation": "Transportation",
+    "heating": "Heating & Cooling",
+    "entertainment": "Entertainment",
+    "communication": "Communication",
+    "dc": {
+      "title": "Direct Current (DC)",
+      "desc": "Batteries provide DC electricity - current flows in one direction. Used in mobile phones, flashlights, and electric vehicles."
+    },
+    "ac": {
+      "title": "Alternating Current (AC)",
+      "desc": "Wall sockets provide AC electricity - current changes direction. Used in homes for most appliances and lighting."
+    },
+    "storage": {
+      "title": "Energy Storage",
+      "desc": "Batteries store electrical energy chemically, allowing portable devices to work without being plugged in."
+    },
+    "impact": {
+      "title": "Global Impact",
+      "desc": "Renewable sources like solar and hydroelectric power help protect our environment."
+    },
+    "desc": {
+      "cooking": "Electricity powers various cooking appliances",
+      "lighting": "Illuminating our homes and streets",
+      "transportation": "Electric vehicles and public transport",
+      "heating": "Climate control in buildings",
+      "entertainment": "Powering our entertainment devices",
+      "communication": "Connecting people worldwide"
+    },
+    "example": {
+      "cooking": {
+        "stove": "Electric stove",
+        "microwave": "Microwave oven",
+        "kettle": "Electric kettle",
+        "toaster": "Toaster"
+      },
+      "lighting": {
+        "bulbs": "LED bulbs",
+        "street": "Street lights",
+        "flashlight": "Flashlights",
+        "lamp": "Lamps"
+      },
+      "transportation": {
+        "cars": "Electric cars",
+        "trains": "Trains",
+        "trams": "Trams",
+        "ebikes": "E-bikes"
+      },
+      "heating": {
+        "ac": "Air conditioners",
+        "heater": "Heaters",
+        "blanket": "Electric blankets",
+        "fan": "Fans"
+      },
+      "entertainment": {
+        "tv": "Television",
+        "computer": "Computers",
+        "console": "Gaming consoles",
+        "speakers": "Speakers"
+      },
+      "communication": {
+        "phones": "Mobile phones",
+        "router": "Internet routers",
+        "radio": "Radios",
+        "satellite": "Satellites"
+      }
+    },
+    "safety": {
+      "title": "Safety First!",
+      "1": "Never experiment with household electricity",
+      "2": "Use only batteries/cells for experiments",
+      "3": "Never touch switches with wet hands",
+      "4": "Don't use damaged electrical equipment",
+      "5": "Always ask an adult for help with electrical work"
+    },
+    "stats": {
+      "title": "Localized stats",
+      "households": "Households with electricity",
+      "savings": "Avg monthly savings",
+      "updated": "Updated {date}"
+    }
+  }
+}
+
