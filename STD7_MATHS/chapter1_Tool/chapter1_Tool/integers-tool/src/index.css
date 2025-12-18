@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* App scaffolding */
+:root {
+  color-scheme: light;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+/* Custom components for practice mode */
+@layer components {
+  .shadow-soft {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+  
+  .question-button {
+    @apply relative transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+  
+  .question-button:hover {
+    transform: translateY(-1px);
+  }
+  
+  .navigation-button {
+    @apply flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+  
+  .navigation-button:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+  }
+  
+  .navigation-button:active:not(:disabled) {
+    transform: translateY(0);
+  }
+  
+  .input-field {
+    @apply w-full border-2 rounded-lg px-4 py-3 text-lg font-medium focus:outline-none transition-all duration-200;
+  }
+  
+  .input-field:focus {
+    transform: translateY(-1px);
+  }
+  
+  .practice-card {
+    @apply bg-white rounded-xl border shadow-soft transition-all duration-300;
+  }
+  
+  .practice-card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  }
+  
+  .status-badge {
+    @apply px-2 py-1 rounded-lg text-sm font-medium transition-colors;
+  }
+  
+  .progress-bar {
+    @apply w-full bg-gray-200 rounded-full h-3 overflow-hidden;
+  }
+  
+  .progress-fill {
+    @apply h-full rounded-full transition-all duration-500 ease-out;
+    background: linear-gradient(90deg, #14b8a6, #8b5cf6);
+  }
+}
+
+
