@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Play, Pause, RotateCcw, ChevronRight, ChevronLeft, Sun, Radio } from 'lucide-react';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useLanguage } from './RadiationLearning';
 import { LanguageCode, getFontFamilyForLanguage } from '../i18n/radiationTranslations';
 
 interface RadiationLearnModeProps {

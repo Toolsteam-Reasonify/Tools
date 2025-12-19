@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Globe, Home, Sun, Zap, Flame, Shirt, ChevronDown, ChevronUp } from 'lucide-react';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useLanguage } from './RadiationLearning';
 import { LanguageCode, getFontFamilyForLanguage } from '../i18n/radiationTranslations';
 
 interface Application {

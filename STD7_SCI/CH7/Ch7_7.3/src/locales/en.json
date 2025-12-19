@@ -10,7 +10,7 @@
     "tabs": {
       "learn": "Learn",
       "practice": "Practice",
-      "applications": "Real World"
+      "applications": "Real World Applications"
     }
   },
   "conduction": {
@@ -36,7 +36,7 @@
       },
       "heatFlowDirection": "Heat Flow Direction →",
       "pinCard": {
-      "pinLabel": "Pin",
+        "pinLabel": "Pin",
         "order": "Order: {order}",
         "fallen": "✓ Fallen",
         "falling": "⏳ Falling...",
@@ -180,7 +180,12 @@
           "id": 2,
           "type": "mcq",
           "question": "In Activity 7.1, which pin falls FIRST when the metal strip is heated?",
-          "options": ["Pin IV (farthest from heat)", "Pin II", "Pin III", "Pin I (closest to heat)"],
+          "options": [
+            "Pin IV (farthest from heat)",
+            "Pin II",
+            "Pin III",
+            "Pin I (closest to heat)"
+          ],
           "correctAnswer": "Pin I (closest to heat)",
           "explanation": "Pin I falls first because it is closest to the heat source. The heat travels along the metal strip and reaches Pin I first, melting the wax that holds it.",
           "difficulty": "easy",
@@ -190,7 +195,12 @@
           "id": 3,
           "type": "mcq",
           "question": "Why are cooking utensils made of metals?",
-          "options": ["Metals are cheap", "Metals are good conductors of heat", "Metals are shiny", "Metals are light"],
+          "options": [
+            "Metals are cheap",
+            "Metals are good conductors of heat",
+            "Metals are shiny",
+            "Metals are light"
+          ],
           "correctAnswer": "Metals are good conductors of heat",
           "explanation": "Metals allow heat to pass through them easily, making them excellent for cooking as heat from the stove quickly reaches the food.",
           "difficulty": "easy",
@@ -240,7 +250,12 @@
           "id": 7,
           "type": "mcq",
           "question": "What material is used for the handles of cooking utensils to prevent burns?",
-          "options": ["Steel", "Copper", "Wood or plastic (insulators)", "Aluminum"],
+          "options": [
+            "Steel",
+            "Copper",
+            "Wood or plastic (insulators)",
+            "Aluminum"
+          ],
           "correctAnswer": "Wood or plastic (insulators)",
           "explanation": "Handles are made of insulators like wood or plastic because they are poor conductors of heat and prevent the handle from getting too hot to hold.",
           "difficulty": "medium",
@@ -250,7 +265,12 @@
           "id": 8,
           "type": "mcq",
           "question": "Why do we prefer wearing woolen clothes in winter?",
-          "options": ["Wool generates heat", "Wool traps air which is a poor conductor of heat", "Wool is waterproof", "Wool is heavy"],
+          "options": [
+            "Wool generates heat",
+            "Wool traps air which is a poor conductor of heat",
+            "Wool is waterproof",
+            "Wool is heavy"
+          ],
           "correctAnswer": "Wool traps air which is a poor conductor of heat",
           "explanation": "Woolen fabric has air pockets that trap air. Since air is a very poor conductor of heat, it prevents our body heat from escaping, keeping us warm.",
           "difficulty": "medium",
@@ -300,7 +320,12 @@
           "id": 13,
           "type": "fill-blank",
           "question": "Materials that allow heat to pass through them easily are called _____ of heat.",
-          "options": ["good conductors", "poor conductors", "insulators", "radiators"],
+          "options": [
+            "good conductors",
+            "poor conductors",
+            "insulators",
+            "radiators"
+          ],
           "correctAnswer": "good conductors",
           "explanation": "Good conductors allow heat to pass through easily. Metals like copper, aluminum, and iron are good conductors of heat.",
           "difficulty": "easy",
@@ -330,8 +355,18 @@
           "id": 16,
           "type": "match",
           "question": "Match the materials with their heat conduction property:",
-          "options": ["Steel|Good Conductor", "Wood|Poor Conductor", "Copper|Good Conductor", "Plastic|Poor Conductor"],
-          "correctAnswer": ["Steel|Good Conductor", "Wood|Poor Conductor", "Copper|Good Conductor", "Plastic|Poor Conductor"],
+          "options": [
+            "Steel|Good Conductor",
+            "Wood|Poor Conductor",
+            "Copper|Good Conductor",
+            "Plastic|Poor Conductor"
+          ],
+          "correctAnswer": [
+            "Steel|Good Conductor",
+            "Wood|Poor Conductor",
+            "Copper|Good Conductor",
+            "Plastic|Poor Conductor"
+          ],
           "explanation": "Metals (Steel, Copper) are good conductors. Non-metals (Wood, Plastic) are poor conductors/insulators.",
           "difficulty": "medium",
           "points": 20
@@ -382,7 +417,12 @@
           "id": 20,
           "type": "mcq",
           "question": "In the Himalayan regions, houses have walls made of two wooden layers with mud between them. Why?",
-          "options": ["For decoration", "Wood and mud are poor conductors that prevent heat loss", "To make walls stronger", "Wood is easily available"],
+          "options": [
+            "For decoration",
+            "Wood and mud are poor conductors that prevent heat loss",
+            "To make walls stronger",
+            "Wood is easily available"
+          ],
           "correctAnswer": "Wood and mud are poor conductors that prevent heat loss",
           "explanation": "Both wood and mud are poor conductors of heat. This double-layer construction with insulating materials helps keep houses warm in extremely cold climates.",
           "difficulty": "hard",
@@ -919,8 +959,18 @@
           "type": "match",
           "question": "Match the process with its characteristic:",
           "pairs": {
-            "left": ["Conduction", "Convection", "Radiation", "Convection Current"],
-            "right": ["Particles stay in position", "Particles move from place to place", "No medium needed", "Circular movement of fluid"]
+            "left": [
+              "Conduction",
+              "Convection",
+              "Radiation",
+              "Convection Current"
+            ],
+            "right": [
+              "Particles stay in position",
+              "Particles move from place to place",
+              "No medium needed",
+              "Circular movement of fluid"
+            ]
           },
           "correctAnswer": {
             "Conduction": "Particles stay in position",

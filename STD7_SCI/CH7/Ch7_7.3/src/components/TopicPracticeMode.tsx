@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { CheckCircle, XCircle, Award, RotateCcw, ChevronRight, ChevronLeft, Trophy, AlertCircle } from 'lucide-react';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useLanguage } from './RadiationLearning';
 import { LanguageCode, getFontFamilyForLanguage } from '../i18n/radiationTranslations';
 
 interface Question {

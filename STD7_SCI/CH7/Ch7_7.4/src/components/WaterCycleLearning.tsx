@@ -1,5 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Play, Pause, ChevronLeft, ChevronRight, RotateCcw, Droplets } from 'lucide-react';
+import React, { useState, useEffect, useRef, createContext, useContext, ReactNode, useMemo } from 'react';
+import { Play, Pause, ChevronLeft, ChevronRight, RotateCcw, Droplets, ChevronDown, ChevronUp, Sparkles, Info, BookOpen } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import i18n from '../i18n';
 
 type StepMode = 'learn' | 'practice' | 'real_world';
 
@@ -59,6 +61,94 @@ interface RealWorldStep extends BaseStep {
 }
 
 type Step = LearnStep | PracticeStep | RealWorldStep;
+
+// ============================================================================
+// Language Context (inline)
+// ============================================================================
+type Language = 'en' | 'hi' | 'gu';
+
+interface LanguageContextType {
+  language: Language;
+  setLanguage: (lang: Language) => void;
+  t: (key: string, options?: Record<string, unknown>) => string;
+}
+
+const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+
+export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const { t } = useTranslation();
+  const initialLanguage = (i18n.language?.split('-')[0] as Language) || 'en';
+  const [language, setLanguageState] = useState<Language>(initialLanguage);
+
+  useEffect(() => {
+    const handleLanguageChanged = (lng: string) => {
+      const base = (lng?.split('-')[0] as Language) || 'en';
+      setLanguageState(base);
+    };
+    i18n.on('languageChanged', handleLanguageChanged);
+    return () => {
+      i18n.off('languageChanged', handleLanguageChanged);
+    };
+  }, []);
+
+  const handleSetLanguage = (lang: Language) => {
+    i18n.changeLanguage(lang);
+    localStorage.setItem('i18nextLng', lang);
+  };
+
+  useEffect(() => {
+    document.documentElement.lang = language;
+  }, [language]);
+
+  return (
+    <LanguageContext.Provider value={{ language, setLanguage: handleSetLanguage, t }}>
+      {children}
+    </LanguageContext.Provider>
+  );
+};
+
+export const useLanguage = () => {
+  const context = useContext(LanguageContext);
+  if (!context) {
+    throw new Error('useLanguage must be used within LanguageProvider');
+  }
+  return context;
+};
+
+// ============================================================================
+// Language Selector Component (inline)
+// ============================================================================
+const LanguageSelector: React.FC = () => {
+  const { language, setLanguage, t } = useLanguage();
+
+  const languages: { code: Language; name: string; flag: string }[] = [
+    { code: 'en', name: t('language.en'), flag: '🇬🇧' },
+    { code: 'hi', name: t('language.hi'), flag: '🇮🇳' },
+    { code: 'gu', name: t('language.gu'), flag: '🇮🇳' },
+  ];
+
+  return (
+    <div className="relative">
+      <select
+        aria-label={t('language.selectorLabel')}
+        value={language}
+        onChange={(e) => setLanguage(e.target.value as Language)}
+        className="appearance-none bg-white border-2 border-teal-500 rounded-lg px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 pr-6 sm:pr-8 text-xs sm:text-sm md:text-base text-teal-700 font-medium cursor-pointer hover:border-purple-500 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-300"
+      >
+        {languages.map((lang) => (
+          <option key={lang.code} value={lang.code}>
+            {lang.flag} {lang.name}
+          </option>
+        ))}
+      </select>
+      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-1 sm:px-2">
+        <svg className="fill-current h-3 w-3 sm:h-4 sm:w-4 text-teal-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+          <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+        </svg>
+      </div>
+    </div>
+  );
+};
 
 const DEFAULT_STEPS: Step[] = [
   {
@@ -217,20 +307,270 @@ const DEFAULT_STEPS: Step[] = [
   },
 ];
 
+interface RealWorldApplication {
+  id: number;
+  title: string;
+  category: string;
+  description: string;
+  howItWorks: string;
+  scienceBehind: string;
+  realExample: string;
+  benefits: string[];
+  relatedStage: LearnStage;
+  example: RealWorldExample;
+}
+
+// Transform RealWorldStep to RealWorldApplication format
+const transformToApplication = (step: RealWorldStep, t: (key: string) => string): RealWorldApplication => {
+  const appData = t(`waterCycle.realWorld.applications.${step.data.example}`, { returnObjects: true }) as any;
+  
+  return {
+    id: step.id,
+    title: step.title.replace('Real World: ', ''),
+    description: step.description,
+    relatedStage: step.data.relatedStage,
+    example: step.data.example,
+    category: appData?.category || 'Everyday',
+    howItWorks: appData?.howItWorks || '',
+    scienceBehind: appData?.scienceBehind || '',
+    realExample: appData?.realExample || '',
+    benefits: appData?.benefits || []
+  };
+};
+
+const RealWorldApplicationsView: React.FC<{ steps: RealWorldStep[] }> = ({ steps }) => {
+  const { t } = useLanguage();
+  const [expandedApp, setExpandedApp] = useState<number | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+
+  const applications = useMemo(() => steps.map(step => transformToApplication(step, t)), [steps, t]);
+  const categories = ['all', 'everyday', 'nature', 'technology'];
+  
+  const filteredApplications = selectedCategory === 'all' 
+    ? applications 
+    : applications.filter(app => app.category.toLowerCase() === selectedCategory);
+
+  const toggleExpand = (id: number) => {
+    setExpandedApp(expandedApp === id ? null : id);
+  };
+
+  const getCategoryColor = (category: string) => {
+    const colors: { [key: string]: string } = {
+      'Everyday': 'border-teal-300 bg-teal-50',
+      'Nature': 'border-green-300 bg-green-50',
+      'Technology': 'border-purple-300 bg-purple-50'
+    };
+    return colors[category] || 'border-gray-300 bg-gray-50';
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Filter / summary panel */}
+      <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 border border-teal-100 animate-fade-in">
+        <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+          <Sparkles className="w-5 h-5 text-teal-600" />
+          {t('waterCycle.realWorld.ui.filterByCategory')}
+        </h3>
+        <div className="flex flex-wrap gap-3 mb-3">
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => setSelectedCategory(category)}
+              className={`px-4 py-2 rounded-full font-semibold text-sm transition-all duration-200 ${
+                selectedCategory === category
+                  ? 'bg-gradient-to-r from-teal-500 to-purple-500 text-white shadow-md scale-105'
+                  : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
+              }`}
+            >
+              {t(`waterCycle.realWorld.ui.categories.${category}`)}
+            </button>
+          ))}
+        </div>
+        <p className="text-sm text-gray-600">
+          {t('waterCycle.realWorld.ui.showing')} <strong>{filteredApplications.length}</strong>{' '}
+          {filteredApplications.length !== 1 ? t('waterCycle.realWorld.ui.applications') : t('waterCycle.realWorld.ui.application')}
+        </p>
+      </div>
+
+      {/* Applications grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {filteredApplications.map((app, index) => {
+          const isExpanded = expandedApp === app.id;
+
+          return (
+            <div
+              key={app.id}
+              className={`bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 animate-fade-in ${getCategoryColor(app.category)}`}
+              style={{ animationDelay: `${index * 0.05}s` }}
+            >
+              {/* Header strip with icon and title */}
+              <button
+                type="button"
+                onClick={() => toggleExpand(app.id)}
+                className="w-full text-left"
+              >
+                <div className="bg-gradient-to-r from-teal-500 via-purple-500 to-teal-500 p-5 flex items-center justify-between">
+                  <div className="flex items-center gap-4 flex-1">
+                    <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center text-white text-2xl">
+                      {app.example === 'clothes' && '👔'}
+                      {app.example === 'dew' && '💧'}
+                      {app.example === 'harvesting' && '🏠'}
+                      {app.example === 'ice-stupa' && '❄️'}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-xl font-bold text-white mb-1">{app.title}</h3>
+                      <div className="flex flex-wrap items-center gap-2 text-xs">
+                        <span className="px-2 py-0.5 rounded-full bg-white/15 text-white">
+                          {app.category}
+                        </span>
+                        <span className="px-2 py-0.5 rounded-full bg-white/10 text-white text-[11px] font-semibold">
+                          {app.relatedStage}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  {isExpanded ? (
+                    <ChevronUp className="w-6 h-6 text-white flex-shrink-0" />
+                  ) : (
+                    <ChevronDown className="w-6 h-6 text-white flex-shrink-0" />
+                  )}
+                </div>
+              </button>
+
+              {/* Compact summary section always visible */}
+              <div className="p-5 border-t border-gray-100">
+                <p className="text-gray-600 text-sm mb-3">{app.description}</p>
+                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+                  {t('waterCycle.realWorld.ui.realLifeExample')}
+                </p>
+                <p className="text-gray-800 text-sm italic">{app.realExample}</p>
+              </div>
+
+              {/* Detailed section toggled by expand */}
+              {isExpanded && (
+                <div className="px-5 pb-5 space-y-4 border-t border-gray-100 bg-gradient-to-br from-gray-50 via-purple-50/30 to-teal-50/40">
+                  <div className="bg-white rounded-lg p-4 shadow-sm border border-blue-100">
+                    <h4 className="font-bold text-blue-900 mb-2 text-sm flex items-center gap-2">
+                      <Info className="w-4 h-4" />
+                      {t('waterCycle.realWorld.ui.howItWorks')}
+                    </h4>
+                    <p className="text-gray-700 text-sm leading-relaxed">{app.howItWorks}</p>
+                  </div>
+
+                  <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg p-4 border border-purple-200">
+                    <h4 className="font-bold text-purple-900 mb-2 text-sm flex items-center gap-2">
+                      <BookOpen className="w-4 h-4" />
+                      {t('waterCycle.realWorld.ui.scienceBehind')}
+                    </h4>
+                    <p className="text-gray-700 text-sm leading-relaxed">{app.scienceBehind}</p>
+                  </div>
+
+                  <div className="bg-white rounded-lg p-4 border border-indigo-200 shadow-sm">
+                    <h4 className="font-bold text-indigo-900 mb-2 text-sm flex items-center gap-2">
+                      <Sparkles className="w-4 h-4" />
+                      {t('waterCycle.realWorld.ui.benefits')}
+                    </h4>
+                    <ul className="space-y-1.5">
+                      {app.benefits.map((benefit, idx) => (
+                        <li key={idx} className="flex items-start gap-2 text-sm">
+                          <span className="mt-0.5 text-indigo-500">
+                            <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                              <path
+                                fillRule="evenodd"
+                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                clipRule="evenodd"
+                              />
+                            </svg>
+                          </span>
+                          <span className="text-gray-700 flex-1">{benefit}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
 interface WaterCycleLearningProps {
   width?: number;
   height?: number;
   steps?: Step[];
+  mode: 'learn' | 'practice' | 'applications';
+  setMode: (mode: 'learn' | 'practice' | 'applications') => void;
 }
 
 const WaterCycleLearning: React.FC<WaterCycleLearningProps> = ({
   width = 800,
   height = 600,
-  steps = DEFAULT_STEPS,
+  steps: propSteps,
+  mode,
+  setMode,
 }) => {
+  const { t, language } = useLanguage();
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
-  const [selectedMode, setSelectedMode] = useState<StepMode>('learn');
+  // Map 'applications' to 'real_world' for internal use
+  const selectedMode: StepMode = mode === 'applications' ? 'real_world' : mode;
+
+  // Build steps from translations
+  const steps: Step[] = useMemo(() => {
+    if (propSteps) return propSteps;
+    
+    try {
+      const learnSteps = t('waterCycle.learn.steps', { returnObjects: true }) as any[];
+      const practiceSteps = t('waterCycle.practice.steps', { returnObjects: true }) as any[];
+      const realWorldSteps = t('waterCycle.realWorld.steps', { returnObjects: true }) as any[];
+
+      const allSteps: Step[] = [
+        ...(Array.isArray(learnSteps) && learnSteps.length > 0 ? learnSteps.map((step, idx) => ({
+          id: step.id || idx + 1,
+          title: step.title,
+          description: step.description,
+          type: (idx === 0 ? 'intro' : 'explanation') as 'intro' | 'explanation',
+          mode: 'learn' as const,
+          data: {
+            stage: (['overview', 'evaporation', 'condensation', 'precipitation', 'collection', 'complete'][idx] || 'overview') as LearnStage,
+            activeElements: idx === 1 ? ['sun', 'water', 'vapor'] : idx === 2 ? ['vapor', 'clouds'] : idx === 3 ? ['clouds', 'rain', 'water'] : idx === 4 ? ['rain', 'ground', 'water'] : idx === 5 ? ['all'] : undefined
+          }
+        }) : []),
+        ...(Array.isArray(practiceSteps) && practiceSteps.length > 0 ? practiceSteps.map((step, idx) => ({
+          id: step.id || idx + 7,
+          title: step.title,
+          description: step.description,
+          type: (idx === 0 ? 'intro' : 'practice') as 'intro' | 'practice',
+          mode: 'practice' as const,
+          data: {
+            question: step.question,
+            answer: step.answer,
+            options: step.options,
+            type: step.type || 'single'
+          }
+        }) : []),
+        ...(Array.isArray(realWorldSteps) && realWorldSteps.length > 0 ? realWorldSteps.map((step, idx) => ({
+          id: step.id || idx + 11,
+          title: step.title,
+          description: step.description,
+          type: 'real_world' as const,
+          mode: 'real_world' as const,
+          data: {
+            example: (['clothes', 'dew', 'harvesting', 'ice-stupa'][idx] || 'clothes') as RealWorldExample,
+            image: (['clothes-drying', 'morning-dew', 'rainwater-harvest', 'ice-stupa'][idx] || 'clothes-drying'),
+            relatedStage: (['evaporation', 'condensation', 'collection', 'complete'][idx] || 'evaporation') as LearnStage
+          }
+        }) : [])
+      ];
+
+      return allSteps.length > 0 ? allSteps : DEFAULT_STEPS;
+    } catch {
+      return DEFAULT_STEPS;
+    }
+  }, [t, propSteps]);
   const [practiceAnswer, setPracticeAnswer] = useState<string | null>(null);
   const [sequenceOrder, setSequenceOrder] = useState<string[]>([]);
   const [showFeedback, setShowFeedback] = useState(false);
@@ -245,8 +585,39 @@ const WaterCycleLearning: React.FC<WaterCycleLearningProps> = ({
   const isChoiceData = (data: PracticeData): data is PracticeChoiceData =>
     !Array.isArray(data.answer);
 
-  const modeSteps = steps.filter((step) => step.mode === selectedMode);
+  const modeSteps = useMemo(() => steps.filter((step) => step.mode === selectedMode), [steps, selectedMode]);
   const currentStep = modeSteps[currentStepIndex];
+  
+  // Get translated step data
+  const translatedStep = useMemo(() => {
+    if (!currentStep) return null;
+    
+    if (currentStep.mode === 'learn') {
+      const learnSteps = t('waterCycle.learn.steps', { returnObjects: true }) as any[];
+      const stepData = learnSteps?.find((s: any) => s.id === currentStep.id) || currentStep;
+      return { ...currentStep, title: stepData.title, description: stepData.description };
+    } else if (currentStep.mode === 'practice') {
+      const practiceSteps = t('waterCycle.practice.steps', { returnObjects: true }) as any[];
+      const stepData = practiceSteps?.find((s: any) => s.id === currentStep.id) || currentStep;
+      return {
+        ...currentStep,
+        title: stepData.title,
+        description: stepData.description,
+        data: {
+          ...currentStep.data,
+          question: stepData.question || (currentStep.data as PracticeChoiceData).question,
+          options: stepData.options || (currentStep.data as PracticeChoiceData).options,
+          answer: stepData.answer || (currentStep.data as PracticeChoiceData).answer
+        }
+      };
+    } else {
+      const realWorldSteps = t('waterCycle.realWorld.steps', { returnObjects: true }) as any[];
+      const stepData = realWorldSteps?.find((s: any) => s.id === currentStep.id) || currentStep;
+      return { ...currentStep, title: stepData.title, description: stepData.description };
+    }
+  }, [currentStep, t]);
+  
+  const displayStep = translatedStep || currentStep;
 
   useEffect(() => {
     if (!isPlaying || selectedMode === 'practice') return;
@@ -285,16 +656,16 @@ const WaterCycleLearning: React.FC<WaterCycleLearningProps> = ({
     ctx.clearRect(0, 0, width, height);
 
     const stage =
-      currentStep && currentStep.mode === 'learn'
-        ? currentStep.data.stage
+      displayStep && displayStep.mode === 'learn'
+        ? displayStep.data.stage
         : 'overview';
     const activeElements =
-      currentStep && currentStep.mode === 'learn' && currentStep.data.activeElements
-        ? currentStep.data.activeElements
+      displayStep && displayStep.mode === 'learn' && displayStep.data.activeElements
+        ? displayStep.data.activeElements
         : [];
 
-    drawWaterCycle(ctx, width, height, stage, activeElements, animationProgress);
-  }, [currentStep, animationProgress, width, height, selectedMode]);
+    drawWaterCycle(ctx, width, height, stage, activeElements, animationProgress, t);
+  }, [displayStep, animationProgress, width, height, selectedMode, t]);
 
   const nextStep = () => {
     if (currentStepIndex < modeSteps.length - 1) {
@@ -321,18 +692,18 @@ const WaterCycleLearning: React.FC<WaterCycleLearningProps> = ({
     setSequenceOrder([]);
   };
 
-  const handleModeChange = (mode: StepMode) => {
-    setSelectedMode(mode);
+  const handleModeChange = (newMode: 'learn' | 'practice' | 'applications') => {
+    setMode(newMode);
     setCurrentStepIndex(0);
     setPracticeAnswer(null);
     setShowFeedback(false);
     setSequenceOrder([]);
-    setIsPlaying(mode !== 'practice');
+    setIsPlaying(newMode !== 'practice');
   };
 
   const handlePracticeAnswer = (answer: string) => {
-    if (!currentStep || currentStep.mode !== 'practice') return;
-    const data = currentStep.data;
+    if (!displayStep || displayStep.mode !== 'practice') return;
+    const data = displayStep.data;
     if (isChoiceData(data)) {
       setPracticeAnswer(answer);
       setShowFeedback(true);
@@ -354,8 +725,8 @@ const WaterCycleLearning: React.FC<WaterCycleLearningProps> = ({
   };
 
   const checkSequence = () => {
-    if (!currentStep || currentStep.mode !== 'practice') return;
-    const data = currentStep.data;
+    if (!displayStep || displayStep.mode !== 'practice') return;
+    const data = displayStep.data;
     if (isSequenceData(data)) {
       const correctOrder = data.answer;
       const isCorrect = JSON.stringify(sequenceOrder) === JSON.stringify(correctOrder);
@@ -371,91 +742,135 @@ const WaterCycleLearning: React.FC<WaterCycleLearningProps> = ({
     }
   };
 
-  if (!currentStep) return null;
+  const isLearn = mode === 'learn';
+  const isPractice = mode === 'practice';
+  const isApplications = mode === 'applications';
+
+  // For Real World mode, we don't need currentStep
+  if (selectedMode === 'real_world') {
+    // Render Real World Applications view
+  } else if (!currentStep) {
+    return null;
+  }
 
   return (
-    <div className="w-full max-w-6xl mx-auto bg-gradient-to-br from-sky-50 via-blue-50 to-cyan-50 rounded-2xl shadow-2xl overflow-hidden font-['Poppins',sans-serif]">
-      <div className="bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 text-white p-6">
-        <h1 className="text-3xl font-bold mb-4 flex items-center gap-3">
-          <Droplets className="w-8 h-8" />
-          Water Cycle Interactive Learning
-        </h1>
+    <div className="w-full max-w-7xl mx-auto">
+      {/* Navbar - matching Ch7_7.1 style */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-teal-50 via-purple-50 to-teal-50 border-b border-teal-200/50 shadow-sm backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            {/* Logo / title */}
+            <div className="flex-shrink-0 flex items-center gap-2">
+              <Droplets className="w-6 h-6 text-teal-600" aria-hidden="true" />
+              <span className="text-2xl font-bold bg-gradient-to-r from-teal-600 to-purple-600 bg-clip-text text-transparent">
+                {t('nav.logo')}
+              </span>
+            </div>
 
-        <div className="flex gap-2 mb-4">
-          <button
-            onClick={() => handleModeChange('learn')}
-            className={`px-6 py-3 rounded-lg font-semibold transition-all ${
-              selectedMode === 'learn'
-                ? 'bg-white text-blue-600 shadow-lg scale-105'
-                : 'bg-blue-500/30 text-white hover:bg-blue-500/50'
-            }`}
-          >
-            📚 Learn
-          </button>
-          <button
-            onClick={() => handleModeChange('practice')}
-            className={`px-6 py-3 rounded-lg font-semibold transition-all ${
-              selectedMode === 'practice'
-                ? 'bg-white text-blue-600 shadow-lg scale-105'
-                : 'bg-blue-500/30 text-white hover:bg-blue-500/50'
-            }`}
-          >
-            ✏️ Practice
-          </button>
-          <button
-            onClick={() => handleModeChange('real_world')}
-            className={`px-6 py-3 rounded-lg font-semibold transition-all ${
-              selectedMode === 'real_world'
-                ? 'bg-white text-blue-600 shadow-lg scale-105'
-                : 'bg-blue-500/30 text-white hover:bg-blue-500/50'
-            }`}
-          >
-            🌍 Real World
-          </button>
-        </div>
+            {/* Primary navigation actions */}
+            <div className="flex items-center space-x-1 md:space-x-2">
+              {/* Learn button */}
+              <button
+                type="button"
+                onClick={() => handleModeChange('learn')}
+                className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                  isLearn
+                    ? 'bg-teal-500 text-white shadow-md'
+                    : 'text-teal-700 hover:bg-teal-100/50'
+                }`}
+              >
+                <span className="hidden sm:inline">📚 </span>
+                <span className="sm:hidden">📚</span>
+                <span className="hidden md:inline ml-1">{t('nav.tabs.learn')}</span>
+              </button>
 
-        <div className="flex justify-between items-center">
-          <h2 className="text-xl font-semibold">{currentStep.title}</h2>
-          <div className="text-sm bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">
-            Step {currentStepIndex + 1} of {modeSteps.length}
+              {/* Practice button */}
+              <button
+                type="button"
+                onClick={() => handleModeChange('practice')}
+                className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                  isPractice
+                    ? 'bg-purple-500 text-white shadow-md'
+                    : 'text-purple-700 hover:bg-purple-100/50'
+                }`}
+              >
+                <span className="hidden sm:inline">🎯 </span>
+                <span className="sm:hidden">🎯</span>
+                <span className="hidden md:inline ml-1">{t('nav.tabs.practice')}</span>
+              </button>
+
+              {/* Real-world applications button */}
+              <button
+                type="button"
+                onClick={() => handleModeChange('applications')}
+                className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                  isApplications
+                    ? 'bg-gradient-to-r from-teal-500 to-purple-500 text-white shadow-md'
+                    : 'text-gray-700 hover:bg-gray-100/50'
+                }`}
+              >
+                <span className="hidden sm:inline">🌍 </span>
+                <span className="sm:hidden">🌍</span>
+                <span className="hidden lg:inline ml-1">{t('nav.tabs.applications')}</span>
+              </button>
+
+              {/* Language selector */}
+              <div className="ml-2 md:ml-4">
+                <LanguageSelector />
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </nav>
 
-      <div className="p-8">
-        {selectedMode === 'learn' && (
-          <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
-            <canvas
-              ref={canvasRef}
-              width={width}
-              height={height}
-              className="w-full border-2 border-blue-200 rounded-lg"
-            />
+      {/* Main content */}
+      <div className="bg-white rounded-2xl shadow-xl overflow-hidden animate-fade-in">
+        {/* Content header - only show for learn and practice modes */}
+        {selectedMode !== 'real_world' && displayStep && (
+          <div className="bg-gradient-to-r from-teal-500 via-purple-500 to-teal-500 text-white p-4 sm:p-6">
+            <div className="flex justify-between items-center flex-wrap gap-2">
+              <h2 className="text-xl sm:text-2xl font-semibold">{displayStep.title}</h2>
+              <div className="text-sm bg-white/20 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full backdrop-blur-sm">
+                {t('waterCycle.controls.step')} {currentStepIndex + 1} {t('waterCycle.controls.of')} {modeSteps.length}
+              </div>
+            </div>
           </div>
         )}
 
-        {selectedMode === 'practice' && currentStep.mode === 'practice' && (
-          <div className="bg-white rounded-xl shadow-lg p-8 mb-6">
-            <h3 className="text-2xl font-bold text-blue-900 mb-6">
-              {currentStep.data.question}
-            </h3>
+        <div className="p-4 sm:p-6 md:p-8">
+          {selectedMode === 'learn' && (
+            <div className="bg-gradient-to-br from-sky-50 to-blue-50 rounded-xl shadow-lg p-4 sm:p-6 mb-6">
+              <canvas
+                ref={canvasRef}
+                width={width}
+                height={height}
+                className="w-full border-2 border-teal-200 rounded-lg"
+              />
+            </div>
+          )}
 
-            {isSequenceData(currentStep.data) ? (
+          {selectedMode === 'practice' && displayStep && displayStep.mode === 'practice' && (
+            <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl shadow-lg p-6 sm:p-8 mb-6">
+              <h3 className="text-xl sm:text-2xl font-bold text-purple-900 mb-6">
+                {displayStep.data.question}
+              </h3>
+
+            {displayStep && isSequenceData(displayStep.data) ? (
               <div>
                 <div className="mb-6">
                   <h4 className="font-semibold text-lg mb-3 text-gray-700">
-                    Available Options (Click to add in order):
+                    {t('waterCycle.practice.ui.availableOptions')}
                   </h4>
                   <div className="grid grid-cols-2 gap-3">
-                    {currentStep.data.answer.map((option) => (
+                    {displayStep.data.answer.map((option) => (
                       <button
                         key={option}
                         onClick={() => handleSequenceSelection(option)}
                         disabled={sequenceOrder.includes(option)}
-                        className={`px-6 py-4 rounded-lg font-semibold transition-all ${
+                        className={`px-4 sm:px-6 py-3 sm:py-4 rounded-lg font-semibold transition-all ${
                           sequenceOrder.includes(option)
                             ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                            : 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white hover:shadow-lg hover:scale-105'
+                            : 'bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:shadow-lg hover:scale-105'
                         }`}
                       >
                         {option.charAt(0).toUpperCase() + option.slice(1)}
@@ -465,12 +880,12 @@ const WaterCycleLearning: React.FC<WaterCycleLearningProps> = ({
                 </div>
 
                 <div className="mb-6">
-                  <h4 className="font-semibold text-lg mb-3 text-gray-700">Your Order:</h4>
+                  <h4 className="font-semibold text-lg mb-3 text-gray-700">{t('waterCycle.practice.ui.yourOrder')}</h4>
                   <div className="flex gap-2 min-h-[60px] p-4 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
                     {sequenceOrder.map((item, index) => (
                       <div
                         key={index}
-                        className="px-4 py-2 bg-gradient-to-r from-teal-500 to-cyan-500 text-white rounded-lg font-semibold flex items-center gap-2"
+                        className="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg font-semibold flex items-center gap-2"
                       >
                         {index + 1}. {item.charAt(0).toUpperCase() + item.slice(1)}
                       </div>
@@ -480,27 +895,27 @@ const WaterCycleLearning: React.FC<WaterCycleLearningProps> = ({
 
                 <button
                   onClick={checkSequence}
-                  disabled={sequenceOrder.length !== currentStep.data.answer.length}
-                  className={`w-full py-4 rounded-lg font-bold text-lg transition-all ${
-                    sequenceOrder.length === currentStep.data.answer.length
+                  disabled={displayStep && sequenceOrder.length !== (displayStep.data as PracticeSequenceData).answer.length}
+                  className={`w-full py-3 sm:py-4 rounded-lg font-bold text-base sm:text-lg transition-all ${
+                    displayStep && sequenceOrder.length === (displayStep.data as PracticeSequenceData).answer.length
                       ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white hover:shadow-lg hover:scale-105'
                       : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                   }`}
                 >
-                  Check Answer
+{t('waterCycle.practice.ui.checkAnswer')}
                 </button>
               </div>
             ) : (
               <div className="grid grid-cols-2 gap-4">
-                {isChoiceData(currentStep.data) &&
-                  currentStep.data.options.map((option) => (
+                {displayStep && isChoiceData(displayStep.data) &&
+                  displayStep.data.options.map((option) => (
                     <button
                       key={option}
                       onClick={() => handlePracticeAnswer(option)}
                       disabled={practiceAnswer !== null}
                       className={`px-6 py-4 rounded-xl font-semibold text-lg transition-all ${
                         practiceAnswer === option
-                          ? option === currentStep.data.answer
+                          ? option === displayStep.data.answer
                             ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-lg scale-105'
                             : 'bg-gradient-to-r from-red-500 to-rose-500 text-white shadow-lg'
                           : practiceAnswer !== null
@@ -514,100 +929,95 @@ const WaterCycleLearning: React.FC<WaterCycleLearningProps> = ({
               </div>
             )}
 
-            {showFeedback && (
+            {showFeedback && displayStep && (
               <div
                 className={`mt-6 p-4 rounded-lg text-center font-semibold ${
                   practiceAnswer === 'correct' ||
-                  (currentStep.mode === 'practice' &&
-                    isChoiceData(currentStep.data) &&
-                    practiceAnswer === currentStep.data.answer)
+                  (displayStep.mode === 'practice' &&
+                    isChoiceData(displayStep.data) &&
+                    practiceAnswer === displayStep.data.answer)
                     ? 'bg-green-100 text-green-800'
                     : 'bg-red-100 text-red-800'
                 }`}
               >
                 {practiceAnswer === 'correct' ||
-                (currentStep.mode === 'practice' &&
-                  isChoiceData(currentStep.data) &&
-                  practiceAnswer === currentStep.data.answer)
-                  ? '✅ Correct! Well done!'
-                  : '❌ Try again!'}
+                (displayStep.mode === 'practice' &&
+                  isChoiceData(displayStep.data) &&
+                  practiceAnswer === displayStep.data.answer)
+                  ? t('waterCycle.practice.ui.correct')
+                  : t('waterCycle.practice.ui.tryAgain')}
               </div>
             )}
           </div>
         )}
 
-        {selectedMode === 'real_world' && currentStep.mode === 'real_world' && (
-          <div className="bg-white rounded-xl shadow-lg p-8 mb-6">
-            <div className="flex items-start gap-6">
-              <div className="flex-1">
-                <div className="mb-6">
-                  {getRealWorldIllustration(currentStep.data.example)}
-                </div>
+          {selectedMode === 'real_world' ? (
+            <RealWorldApplicationsView steps={steps.filter(s => s.mode === 'real_world') as RealWorldStep[]} />
+          ) : displayStep && (
+            <>
+              <div className="bg-gradient-to-r from-teal-50 via-purple-50 to-teal-50 rounded-xl p-4 sm:p-6 mb-6 border-l-4 border-teal-500">
+                <p className="text-gray-800 text-base sm:text-lg leading-relaxed">{displayStep.description}</p>
               </div>
-            </div>
-          </div>
-        )}
 
-        <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-6 mb-6 border-l-4 border-blue-500">
-          <p className="text-gray-800 text-lg leading-relaxed">{currentStep.description}</p>
-        </div>
+              <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+            <button
+              onClick={prevStep}
+              disabled={currentStepIndex === 0}
+              className="flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-300 transition-all w-full sm:w-auto"
+            >
+              <ChevronLeft className="w-5 h-5" />
+              {t('waterCycle.controls.previous')}
+            </button>
 
-        <div className="flex justify-between items-center gap-4">
-          <button
-            onClick={prevStep}
-            disabled={currentStepIndex === 0}
-            className="flex items-center gap-2 px-6 py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-300 transition-all"
-          >
-            <ChevronLeft className="w-5 h-5" />
-            Previous
-          </button>
+            <div className="flex gap-2 sm:gap-3 w-full sm:w-auto">
+              {selectedMode === 'learn' && (
+                <button
+                  onClick={() => setIsPlaying(!isPlaying)}
+                  className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-teal-600 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all flex-1 sm:flex-none"
+                >
+                  {isPlaying ? (
+                    <>
+                      <Pause className="w-5 h-5" />
+                      {t('waterCycle.controls.pause')}
+                    </>
+                  ) : (
+                    <>
+                      <Play className="w-5 h-5" />
+                      {t('waterCycle.controls.play')}
+                    </>
+                  )}
+                </button>
+              )}
 
-          <div className="flex gap-3">
-            {selectedMode === 'learn' && (
               <button
-                onClick={() => setIsPlaying(!isPlaying)}
-                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all"
+                onClick={resetMode}
+                className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition-all flex-1 sm:flex-none"
               >
-                {isPlaying ? (
-                  <>
-                    <Pause className="w-5 h-5" />
-                    Pause
-                  </>
-                ) : (
-                  <>
-                    <Play className="w-5 h-5" />
-                    Play
-                  </>
-                )}
+                <RotateCcw className="w-5 h-5" />
+                {t('waterCycle.controls.reset')}
               </button>
-            )}
+            </div>
 
             <button
-              onClick={resetMode}
-              className="flex items-center gap-2 px-6 py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition-all"
+              onClick={nextStep}
+              disabled={currentStepIndex === modeSteps.length - 1}
+              className="flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-teal-600 to-purple-600 text-white rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg transition-all w-full sm:w-auto"
             >
-              <RotateCcw className="w-5 h-5" />
-              Reset
+              {t('waterCycle.controls.next')}
+              <ChevronRight className="w-5 h-5" />
             </button>
           </div>
 
-          <button
-            onClick={nextStep}
-            disabled={currentStepIndex === modeSteps.length - 1}
-            className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg transition-all"
-          >
-            Next
-            <ChevronRight className="w-5 h-5" />
-          </button>
-        </div>
-
-        <div className="mt-6">
-          <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
-            <div
-              className="h-full bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 transition-all duration-300 rounded-full"
-              style={{ width: `${((currentStepIndex + 1) / modeSteps.length) * 100}%` }}
-            />
-          </div>
+              <div className="mt-6">
+                <div className="w-full bg-gray-200 rounded-full h-2 sm:h-3 overflow-hidden">
+                  <div
+                    className="h-full bg-gradient-to-r from-teal-600 via-purple-600 to-teal-600 transition-all duration-300 rounded-full"
+                    style={{ width: `${((currentStepIndex + 1) / modeSteps.length) * 100}%` }}
+                  />
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>
@@ -621,6 +1031,7 @@ function drawWaterCycle(
   stage: LearnStage,
   activeElements: LearnActiveElement[],
   progress: number,
+  t: (key: string) => string,
 ) {
   const waterY = height * 0.7;
 
@@ -739,17 +1150,17 @@ function drawWaterCycle(
   ctx.textAlign = 'center';
 
   if (stage === 'evaporation' || stage === 'complete') {
-    ctx.fillText('EVAPORATION', width * 0.3, height * 0.55);
+    ctx.fillText(t('waterCycle.learn.canvas.evaporation'), width * 0.3, height * 0.55);
   }
   if (stage === 'condensation' || stage === 'complete') {
-    ctx.fillText('CONDENSATION', width * 0.5, height * 0.15);
+    ctx.fillText(t('waterCycle.learn.canvas.condensation'), width * 0.5, height * 0.15);
   }
   if (stage === 'precipitation' || stage === 'complete') {
-    ctx.fillText('PRECIPITATION', width * 0.5, height * 0.4);
+    ctx.fillText(t('waterCycle.learn.canvas.precipitation'), width * 0.5, height * 0.4);
   }
   if (stage === 'collection' || stage === 'complete') {
-    ctx.fillText('COLLECTION', width * 0.5, height * 0.73);
-    ctx.fillText('INFILTRATION', width * 0.5, height * 0.95);
+    ctx.fillText(t('waterCycle.learn.canvas.collection'), width * 0.5, height * 0.73);
+    ctx.fillText(t('waterCycle.learn.canvas.infiltration'), width * 0.5, height * 0.95);
   }
 }
 
@@ -816,176 +1227,6 @@ function drawCloud(ctx: CanvasRenderingContext2D, x: number, y: number, size: nu
   ctx.fill();
 }
 
-function getRealWorldIllustration(example: RealWorldExample): React.ReactElement | null {
-  switch (example) {
-    case 'clothes':
-      return (
-        <div className="relative bg-gradient-to-b from-sky-200 to-sky-100 rounded-lg p-8 h-80 overflow-hidden">
-          <div className="absolute top-4 right-4 w-16 h-16 bg-yellow-400 rounded-full shadow-lg">
-            <div className="absolute inset-0 animate-pulse bg-yellow-300 rounded-full opacity-50" />
-          </div>
-          <div className="absolute top-20 left-0 right-0 h-1 bg-gray-700" />
-          <div className="absolute top-24 left-12 w-20 h-24 bg-blue-400 rounded-lg shadow-md transform rotate-2 animate-bounce" />
-          <div className="absolute top-24 left-36 w-24 h-28 bg-red-400 rounded-lg shadow-md transform -rotate-1" />
-          <div
-            className="absolute top-24 left-64 w-20 h-24 bg-green-400 rounded-lg shadow-md transform rotate-3 animate-bounce"
-            style={{ animationDelay: '0.2s' }}
-          />
-          <div
-            className="absolute top-52 left-16 text-cyan-500 text-4xl animate-bounce"
-            style={{ animationDuration: '2s' }}
-          >
-            ↑
-          </div>
-          <div
-            className="absolute top-56 left-44 text-cyan-500 text-4xl animate-bounce"
-            style={{ animationDuration: '2s', animationDelay: '0.3s' }}
-          >
-            ↑
-          </div>
-          <div
-            className="absolute top-52 left-72 text-cyan-500 text-4xl animate-bounce"
-            style={{ animationDuration: '2s', animationDelay: '0.6s' }}
-          >
-            ↑
-          </div>
-          <div className="absolute bottom-4 left-4 right-4 bg-white/80 backdrop-blur-sm p-4 rounded-lg">
-            <p className="text-sm font-semibold text-gray-800">
-              ☀️ Sun&apos;s heat → Water evaporates from clothes → Clothes dry faster!
-            </p>
-          </div>
-        </div>
-      );
-    case 'dew':
-      return (
-        <div className="relative bg-gradient-to-b from-indigo-900 via-blue-900 to-green-800 rounded-lg p-8 h-80 overflow-hidden">
-          <div className="absolute top-4 right-8 w-12 h-12 bg-gray-200 rounded-full shadow-lg">
-            <div className="absolute top-1 right-2 w-8 h-8 bg-indigo-900 rounded-full" />
-          </div>
-          <div className="absolute bottom-0 left-0 right-0">
-            {Array.from({ length: 12 }).map((_, i) => (
-              <div key={i} className="inline-block mx-2">
-                <div className="w-2 h-32 bg-green-600 rounded-t-full transform origin-bottom">
-                  <div className="absolute top-8 -left-1 w-4 h-4 bg-cyan-300 rounded-full opacity-80 animate-pulse shadow-lg" />
-                  <div
-                    className="absolute top-16 -left-0.5 w-3 h-3 bg-cyan-300 rounded-full opacity-80 animate-pulse shadow-lg"
-                    style={{ animationDelay: '0.3s' }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-          <div
-            className="absolute top-20 left-20 text-cyan-300 text-2xl animate-bounce"
-            style={{ animationDuration: '3s' }}
-          >
-            💧
-          </div>
-          <div
-            className="absolute top-32 left-40 text-cyan-300 text-2xl animate-bounce"
-            style={{ animationDuration: '3s', animationDelay: '0.5s' }}
-          >
-            💧
-          </div>
-          <div
-            className="absolute top-28 right-32 text-cyan-300 text-2xl animate-bounce"
-            style={{ animationDuration: '3s', animationDelay: '1s' }}
-          >
-            💧
-          </div>
-          <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-sm p-4 rounded-lg">
-            <p className="text-sm font-semibold text-gray-800">
-              🌙 Night cooling → Water vapor condenses → Dew forms on grass!
-            </p>
-          </div>
-        </div>
-      );
-    case 'harvesting':
-      return (
-        <div className="relative bg-gradient-to-b from-gray-600 via-gray-400 to-green-700 rounded-lg p-8 h-80 overflow-hidden">
-          <div className="absolute bottom-24 left-12 w-32 h-24 bg-orange-800 rounded-lg">
-            <div className="absolute -top-8 -left-4 w-40 h-12 bg-red-800 transform -skew-y-12 rounded-t-lg" />
-            <div className="absolute top-4 left-4 w-8 h-10 bg-blue-900" />
-          </div>
-          <div className="absolute top-8 left-0 right-0">
-            {Array.from({ length: 20 }).map((_, i) => (
-              <div
-                key={i}
-                className="absolute text-blue-500 text-2xl animate-bounce"
-                style={{
-                  left: `${i * 5}%`,
-                  top: `${(i * 13) % 60}px`,
-                  animationDuration: '1.5s',
-                  animationDelay: `${i * 0.1}s`,
-                }}
-              >
-                |
-              </div>
-            ))}
-          </div>
-          <div className="absolute bottom-24 right-12 w-24 h-32 bg-blue-800 rounded-lg border-4 border-blue-900">
-            <div className="absolute top-4 left-0 right-0 h-20 bg-blue-400 animate-pulse" />
-            <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 text-blue-500 text-3xl">
-              ▼
-            </div>
-          </div>
-          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-            <div className="text-blue-600 text-4xl animate-bounce" style={{ animationDuration: '2s' }}>
-              ⬇
-            </div>
-          </div>
-          <div className="absolute bottom-0 left-0 right-0 h-16 bg-blue-900/30 backdrop-blur-sm">
-            <p className="text-center text-white font-semibold pt-4 px-4 text-sm">
-              🏠 Collected rainwater → Seeps into ground → Replenishes groundwater!
-            </p>
-          </div>
-        </div>
-      );
-    case 'ice-stupa':
-      return (
-        <div className="relative bg-gradient-to-b from-blue-300 via-white to-blue-100 rounded-lg p-8 h-80 overflow-hidden">
-          <div className="absolute bottom-16 left-4 w-32 h-40 bg-gray-600 transform -skew-x-12">
-            <div className="absolute top-0 left-0 right-0 h-20 bg-white" />
-          </div>
-          <div className="absolute bottom-16 right-8 w-40 h-48 bg-gray-700 transform skew-x-6">
-            <div className="absolute top-0 left-0 right-0 h-24 bg-white" />
-          </div>
-          <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2">
-            <div className="relative w-0 h-0 border-l-[60px] border-l-transparent border-r-[60px] border-r-transparent border-b-[120px] border-b-cyan-200">
-              <div className="absolute -bottom-1 -left-12 w-24 h-2 bg-cyan-300 rounded-full" />
-              <div className="absolute -bottom-20 -left-10 w-20 h-2 bg-cyan-300 rounded-full" />
-              <div className="absolute -bottom-40 -left-8 w-16 h-2 bg-cyan-300 rounded-full" />
-              <div className="absolute -bottom-60 -left-6 w-12 h-2 bg-cyan-300 rounded-full" />
-              <div className="absolute -bottom-80 -left-4 w-8 h-2 bg-cyan-300 rounded-full" />
-              <div className="absolute -bottom-4 left-0 text-blue-400 text-xl animate-bounce">💧</div>
-              <div
-                className="absolute -bottom-4 -left-4 text-blue-400 text-xl animate-bounce"
-                style={{ animationDelay: '0.5s' }}
-              >
-                💧
-              </div>
-            </div>
-          </div>
-          <div className="absolute top-4 right-4 w-16 h-16 bg-yellow-400 rounded-full shadow-lg">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <div
-                key={i}
-                className="absolute top-1/2 left-1/2 w-8 h-1 bg-yellow-400 transform origin-left"
-                style={{ transform: `translate(-50%, -50%) rotate(${i * 45}deg)` }}
-              />
-            ))}
-          </div>
-          <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-sm p-4 rounded-lg">
-            <p className="text-sm font-semibold text-gray-800">
-              ❄️ Winter: Water freezes → Spring: Ice melts slowly → Provides water for farming!
-            </p>
-          </div>
-        </div>
-      );
-    default:
-      return null;
-  }
-}
 
 export default WaterCycleLearning;
 
