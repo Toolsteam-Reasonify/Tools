@@ -1,10 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { LanguageProvider } from './contexts/LanguageContext';
-import { ModeProvider } from './contexts/ModeContext';
-import Navbar from './components/Navbar';
-import CircuitVisualization from './components/CircuitVisualization';
-import RealWorldApplications from './components/RealWorldApplications';
+import { LanguageProvider, ModeProvider, Navbar, CircuitVisualization, RealWorldApplications } from './components/AllComponents';
 
 const App: React.FC = () => {
   return (

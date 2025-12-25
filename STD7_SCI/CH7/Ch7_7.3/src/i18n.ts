@@ -3,14 +3,27 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import ICU from 'i18next-icu';
 import { initReactI18next } from 'react-i18next';
 
-import en from './locales/en.json';
-import hi from './locales/hi.json';
-import gu from './locales/gu.json';
+import translationData from './locales/translation.json';
+
+// Extract language-specific translations and merge with base translations
+const getLanguageResources = (lang: 'en' | 'hi' | 'gu') => {
+  const langSpecific = (translationData as any)[lang] || {};
+  const baseTranslations = (translationData as any).translation || {};
+  
+  // Merge: language-specific translations override base translations
+  return {
+    ...baseTranslations,
+    ...langSpecific,
+    // Ensure language and nav are from language-specific section
+    language: langSpecific.language || baseTranslations.language,
+    nav: langSpecific.nav || baseTranslations.nav,
+  };
+};
 
 const resources = {
-  en: { translation: en },
-  hi: { translation: hi },
-  gu: { translation: gu },
+  en: { translation: getLanguageResources('en') },
+  hi: { translation: getLanguageResources('hi') },
+  gu: { translation: getLanguageResources('gu') },
 };
 
 i18n

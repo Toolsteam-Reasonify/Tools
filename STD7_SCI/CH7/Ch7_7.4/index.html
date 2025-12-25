@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Sans+Gujarati:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Water Cycle </title>
+  </head>
+  <body>
+    <style>
+      html, body {
+        font-family: "Poppins", "Noto Sans", "Noto Sans Devanagari", "Noto Sans Gujarati", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      }
+    </style>
+    <div id="root"></div>
+    <script>
+      // Suppress browser extension errors before React loads
+      (function() {
+        const originalError = console.error;
+        console.error = function() {
+          const args = Array.from(arguments);
+          const errorMessage = args[0]?.toString() || '';
+          if (
+            errorMessage.includes('runtime.lastError') ||
+            errorMessage.includes('message port closed') ||
+            errorMessage.includes('Extension context invalidated') ||
+            errorMessage.includes('Unchecked runtime.lastError')
+          ) {
+            return;
+          }
+          originalError.apply(console, args);
+        };
+        
+        window.addEventListener('error', function(event) {
+          const errorMessage = event.message || '';
+          if (
+            errorMessage.includes('runtime.lastError') ||
+            errorMessage.includes('message port closed') ||
+            errorMessage.includes('Extension context invalidated')
+          ) {
+            event.preventDefault();
+            return false;
+          }
+        }, true);
+      })();
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

@@ -1,0 +1,2758 @@
+{
+  "circuit_tool_data": {
+    "tool_type": "torchlight_circuit",
+    "session_id": "session_001",
+    "mode": "mixed",
+    "demonstration": {
+      "steps": [
+        {
+          "step_number": 1,
+          "title": "demo.intro.title",
+          "description": "demo.intro.desc",
+          "type": "explanation",
+          "visual_state": {
+            "components": [
+              {
+                "id": "cell_1",
+                "type": "cell",
+                "position": { "x": 100, "y": 200 },
+                "connections": ["wire_1"],
+                "state": "on",
+                "polarity": "correct"
+              },
+              {
+                "id": "wire_1",
+                "type": "wire",
+                "position": { "x": 200, "y": 200 },
+                "connections": ["cell_1", "switch_1"],
+                "state": "on"
+              },
+              {
+                "id": "switch_1",
+                "type": "switch",
+                "position": { "x": 300, "y": 200 },
+                "connections": ["wire_1", "wire_2"],
+                "state": "closed"
+              },
+              {
+                "id": "wire_2",
+                "type": "wire",
+                "position": { "x": 400, "y": 200 },
+                "connections": ["switch_1", "lamp_1"],
+                "state": "on"
+              },
+              {
+                "id": "lamp_1",
+                "type": "lamp",
+                "position": { "x": 500, "y": 200 },
+                "connections": ["wire_2", "wire_3"],
+                "state": "on"
+              },
+              {
+                "id": "wire_3",
+                "type": "wire",
+                "position": { "x": 600, "y": 200 },
+                "connections": ["lamp_1", "cell_1"],
+                "state": "on"
+              }
+            ],
+            "circuit_complete": true,
+            "current_flowing": true
+          },
+          "interactions": [
+            {
+              "type": "click",
+              "target": "switch_1",
+              "expectedValue": "closed",
+              "hint": "Click on the switch to see how it controls the circuit"
+            }
+          ],
+          "completion_criteria": {
+            "type": "user_confirm"
+          },
+          "learning_notes": "demo.intro.note",
+          "common_mistakes": [
+            "Forgetting to close the switch",
+            "Not connecting all components in a loop",
+            "Reversing polarity of the cell"
+          ]
+        },
+        {
+          "step_number": 2,
+          "title": "demo.cell.title",
+          "description": "demo.cell.desc",
+          "type": "visualization",
+          "visual_state": {
+            "components": [
+              {
+                "id": "symbol_cell",
+                "type": "cell",
+                "position": { "x": 150, "y": 150 },
+                "connections": [],
+                "polarity": "correct"
+              },
+              {
+                "id": "symbol_battery",
+                "type": "battery",
+                "position": { "x": 300, "y": 150 },
+                "connections": [],
+                "polarity": "correct"
+              },
+              {
+                "id": "symbol_lamp",
+                "type": "lamp",
+                "position": { "x": 450, "y": 150 },
+                "connections": [],
+                "state": "on"
+              },
+              {
+                "id": "symbol_led",
+                "type": "led",
+                "position": { "x": 600, "y": 150 },
+                "connections": [],
+                "state": "on",
+                "polarity": "correct"
+              },
+              {
+                "id": "symbol_switch_on",
+                "type": "switch",
+                "position": { "x": 150, "y": 300 },
+                "connections": [],
+                "state": "closed"
+              },
+              {
+                "id": "symbol_switch_off",
+                "type": "switch",
+                "position": { "x": 300, "y": 300 },
+                "connections": [],
+                "state": "open"
+              },
+              {
+                "id": "symbol_wire",
+                "type": "wire",
+                "position": { "x": 450, "y": 300 },
+                "connections": [],
+                "state": "on"
+              }
+            ],
+            "circuit_complete": false,
+            "current_flowing": false
+          },
+          "interactions": [
+            {
+              "type": "select",
+              "target": "component_type",
+              "hint": "Select different components to see their symbols"
+            }
+          ],
+          "completion_criteria": {
+            "type": "automatic",
+            "condition": "all_symbols_viewed"
+          },
+          "learning_notes": "Each component has a unique symbol that represents it in circuit diagrams.",
+          "common_mistakes": [
+            "Confusing cell and battery symbols",
+            "Mixing up switch on and off positions",
+            "Forgetting LED polarity"
+          ]
+        },
+        {
+          "step_number": 3,
+          "title": "demo.complete.title",
+          "description": "demo.complete.desc",
+          "type": "interaction",
+          "visual_state": {
+            "components": [],
+            "circuit_complete": false,
+            "current_flowing": false
+          },
+          "interactions": [
+            {
+              "type": "drag",
+              "target": "component",
+              "hint": "Drag components from the toolbox to build your circuit"
+            },
+            {
+              "type": "click",
+              "target": "connection_point",
+              "hint": "demo.complete.hint"
+            }
+          ],
+          "completion_criteria": {
+            "type": "user_confirm"
+          },
+          "learning_notes": "A working circuit must form a complete loop from positive to negative terminal.",
+          "common_mistakes": [
+            "Creating an open circuit",
+            "Short circuiting components",
+            "Incorrect component placement"
+          ]
+        }
+      ],
+      "auto_progression": false,
+      "step_duration": 3000
+    },
+    "practice": {
+      "exercises": [
+        {
+          "exercise_id": "practice_001",
+          "title": "Identify Complete Circuits",
+          "description": "Select which diagram shows a complete, working circuit.",
+          "difficulty": "beginner",
+          "problem_data": {
+            "circuit_setup": [
+              {
+                "id": "p1_cell",
+                "type": "cell",
+                "position": { "x": 100, "y": 200 },
+                "connections": ["p1_wire1"],
+                "polarity": "correct"
+              },
+              {
+                "id": "p1_wire1",
+                "type": "wire",
+                "position": { "x": 200, "y": 200 },
+                "connections": ["p1_cell", "p1_lamp"],
+                "state": "on"
+              },
+              {
+                "id": "p1_lamp",
+                "type": "lamp",
+                "position": { "x": 300, "y": 200 },
+                "connections": ["p1_wire1", "p1_wire2"],
+                "state": "on"
+              },
+              {
+                "id": "p1_wire2",
+                "type": "wire",
+                "position": { "x": 400, "y": 200 },
+                "connections": ["p1_lamp", "p1_cell"],
+                "state": "on"
+              }
+            ],
+            "question_type": "build_circuit",
+            "correct_solution": {
+              "components": ["p1_cell", "p1_wire1", "p1_lamp", "p1_wire2"],
+              "circuit_complete": true,
+              "current_flowing": true
+            }
+          },
+          "solution": {
+            "correct_answer": {
+              "components": ["p1_cell", "p1_wire1", "p1_lamp", "p1_wire2"],
+              "circuit_complete": true,
+              "current_flowing": true
+            },
+            "solution_steps": [
+              "Place the cell with correct polarity",
+              "Connect wire from positive terminal",
+              "Add lamp in the circuit",
+              "Complete the loop back to negative terminal"
+            ],
+            "multiple_solutions": false
+          },
+          "interaction_config": {
+            "input_methods": ["drag", "click", "select"],
+            "max_attempts": 3,
+            "hint_system": true,
+            "progressive_hints": [
+              "Remember, a circuit needs to form a complete loop",
+              "Check if all components are connected",
+              "Make sure the cell polarity is correct"
+            ]
+          },
+          "assessment": {
+            "accuracy_weight": 0.8,
+            "time_weight": 0.1,
+            "attempt_weight": 0.1
+          }
+        },
+        {
+          "exercise_id": "practice_002",
+          "title": "LED Polarity Test",
+          "description": "Build a circuit with an LED, ensuring correct polarity for it to light up.",
+          "difficulty": "intermediate",
+          "problem_data": {
+            "circuit_setup": [
+              {
+                "id": "p2_battery",
+                "type": "battery",
+                "position": { "x": 100, "y": 200 },
+                "connections": ["p2_wire1"],
+                "polarity": "correct"
+              },
+              {
+                "id": "p2_wire1",
+                "type": "wire",
+                "position": { "x": 200, "y": 200 },
+                "connections": ["p2_battery", "p2_led"],
+                "state": "on"
+              },
+              {
+                "id": "p2_led",
+                "type": "led",
+                "position": { "x": 300, "y": 200 },
+                "connections": ["p2_wire1", "p2_wire2"],
+                "state": "on",
+                "polarity": "correct"
+              },
+              {
+                "id": "p2_wire2",
+                "type": "wire",
+                "position": { "x": 400, "y": 200 },
+                "connections": ["p2_led", "p2_battery"],
+                "state": "on"
+              }
+            ],
+            "question_type": "build_circuit",
+            "correct_solution": {
+              "led_polarity": "correct",
+              "circuit_complete": true,
+              "led_illuminated": true
+            }
+          },
+          "solution": {
+            "correct_answer": {
+              "led_polarity": "correct",
+              "circuit_complete": true,
+              "led_illuminated": true
+            },
+            "solution_steps": [
+              "Connect positive terminal to LED anode (long leg)",
+              "Connect LED cathode (short leg) to negative terminal",
+              "Ensure complete circuit loop",
+              "Verify LED lights up"
+            ],
+            "multiple_solutions": false
+          },
+          "interaction_config": {
+            "input_methods": ["drag", "rotate", "click"],
+            "max_attempts": 5,
+            "hint_system": true,
+            "progressive_hints": [
+              "LEDs have polarity - they only work one way",
+              "The longer leg is positive (anode)",
+              "The shorter leg is negative (cathode)",
+              "Check if LED is connected in the right direction"
+            ]
+          },
+          "assessment": {
+            "accuracy_weight": 0.9,
+            "time_weight": 0.05,
+            "attempt_weight": 0.05
+          }
+        },
+        {
+          "exercise_id": "practice_003",
+          "title": "Troubleshoot Broken Circuit",
+          "description": "Identify and fix the problem in this non-working circuit.",
+          "difficulty": "advanced",
+          "problem_data": {
+            "circuit_setup": [
+              {
+                "id": "p3_cell",
+                "type": "cell",
+                "position": { "x": 100, "y": 200 },
+                "connections": ["p3_wire1"],
+                "polarity": "correct"
+              },
+              {
+                "id": "p3_wire1",
+                "type": "wire",
+                "position": { "x": 200, "y": 200 },
+                "connections": ["p3_cell", "p3_switch"],
+                "state": "on"
+              },
+              {
+                "id": "p3_switch",
+                "type": "switch",
+                "position": { "x": 300, "y": 200 },
+                "connections": ["p3_wire1"],
+                "state": "open"
+              }
+            ],
+            "question_type": "troubleshoot",
+            "correct_solution": {
+              "issue": "open_switch",
+              "fix": "close_switch",
+              "circuit_complete": true
+            }
+          },
+          "solution": {
+            "correct_answer": {
+              "issue": "open_switch",
+              "fix": "close_switch",
+              "circuit_complete": true
+            },
+            "solution_steps": [
+              "Identify the switch is open",
+              "Close the switch to complete the circuit",
+              "Verify current flows and lamp lights up"
+            ],
+            "multiple_solutions": false
+          },
+          "interaction_config": {
+            "input_methods": ["click", "select", "input"],
+            "max_attempts": 4,
+            "hint_system": true,
+            "progressive_hints": [
+              "Check if all components are properly connected",
+              "Look for any breaks in the circuit",
+              "Is the switch in the correct position?",
+              "A closed switch allows current to flow"
+            ]
+          },
+          "assessment": {
+            "accuracy_weight": 0.7,
+            "time_weight": 0.2,
+            "attempt_weight": 0.1
+          }
+        },
+        {
+          "exercise_id": "practice_004",
+          "title": "Test Conductor vs Insulator",
+          "description": "Identify which materials allow electricity to flow through them.",
+          "difficulty": "beginner",
+          "problem_data": {
+            "circuit_setup": [
+              {
+                "id": "p4_cell",
+                "type": "cell",
+                "position": { "x": 100, "y": 200 },
+                "connections": ["p4_wire1"],
+                "polarity": "correct"
+              },
+              {
+                "id": "p4_wire1",
+                "type": "wire",
+                "position": { "x": 200, "y": 200 },
+                "connections": ["p4_cell", "p4_test_material"],
+                "state": "on"
+              },
+              {
+                "id": "p4_test_material",
+                "type": "conductor",
+                "position": { "x": 300, "y": 200 },
+                "connections": ["p4_wire1", "p4_wire2"],
+                "state": "on"
+              },
+              {
+                "id": "p4_wire2",
+                "type": "wire",
+                "position": { "x": 400, "y": 200 },
+                "connections": ["p4_test_material", "p4_lamp"],
+                "state": "on"
+              },
+              {
+                "id": "p4_lamp",
+                "type": "lamp",
+                "position": { "x": 500, "y": 200 },
+                "connections": ["p4_wire2", "p4_wire3"],
+                "state": "on"
+              },
+              {
+                "id": "p4_wire3",
+                "type": "wire",
+                "position": { "x": 600, "y": 200 },
+                "connections": ["p4_lamp", "p4_cell"],
+                "state": "on"
+              }
+            ],
+            "question_type": "test_conductor",
+            "correct_solution": {
+              "material_type": "conductor",
+              "current_flows": true,
+              "lamp_lights": true
+            }
+          },
+          "solution": {
+            "correct_answer": {
+              "material_type": "conductor",
+              "current_flows": true,
+              "lamp_lights": true
+            },
+            "solution_steps": [
+              "Test material in circuit",
+              "Observe if lamp lights up",
+              "If lamp lights, material is conductor",
+              "If lamp doesn't light, material is insulator"
+            ],
+            "multiple_solutions": false
+          },
+          "interaction_config": {
+            "input_methods": ["select", "click"],
+            "max_attempts": 3,
+            "hint_system": true,
+            "progressive_hints": [
+              "Conductors allow electricity to flow",
+              "Metals are usually good conductors",
+              "If the lamp lights, current is flowing"
+            ]
+          },
+          "assessment": {
+            "accuracy_weight": 0.85,
+            "time_weight": 0.1,
+            "attempt_weight": 0.05
+          }
+        },
+        {
+          "exercise_id": "practice_005",
+          "title": "Build Series Circuit",
+          "description": "Create a circuit with multiple components connected in series.",
+          "difficulty": "intermediate",
+          "problem_data": {
+            "circuit_setup": [
+              {
+                "id": "p5_battery",
+                "type": "battery",
+                "position": { "x": 100, "y": 200 },
+                "connections": ["p5_wire1"],
+                "polarity": "correct"
+              },
+              {
+                "id": "p5_wire1",
+                "type": "wire",
+                "position": { "x": 200, "y": 200 },
+                "connections": ["p5_battery", "p5_lamp1"],
+                "state": "on"
+              },
+              {
+                "id": "p5_lamp1",
+                "type": "lamp",
+                "position": { "x": 300, "y": 200 },
+                "connections": ["p5_wire1", "p5_wire2"],
+                "state": "on"
+              },
+              {
+                "id": "p5_wire2",
+                "type": "wire",
+                "position": { "x": 400, "y": 200 },
+                "connections": ["p5_lamp1", "p5_lamp2"],
+                "state": "on"
+              },
+              {
+                "id": "p5_lamp2",
+                "type": "lamp",
+                "position": { "x": 500, "y": 200 },
+                "connections": ["p5_wire2", "p5_wire3"],
+                "state": "on"
+              },
+              {
+                "id": "p5_wire3",
+                "type": "wire",
+                "position": { "x": 600, "y": 200 },
+                "connections": ["p5_lamp2", "p5_battery"],
+                "state": "on"
+              }
+            ],
+            "question_type": "build_circuit",
+            "correct_solution": {
+              "circuit_type": "series",
+              "all_lamps_lit": true,
+              "circuit_complete": true
+            }
+          },
+          "solution": {
+            "correct_answer": {
+              "circuit_type": "series",
+              "all_lamps_lit": true,
+              "circuit_complete": true
+            },
+            "solution_steps": [
+              "Connect battery positive terminal",
+              "Add first lamp in series",
+              "Connect second lamp after first",
+              "Complete loop back to battery negative",
+              "Verify both lamps light up"
+            ],
+            "multiple_solutions": false
+          },
+          "interaction_config": {
+            "input_methods": ["drag", "click", "connect"],
+            "max_attempts": 5,
+            "hint_system": true,
+            "progressive_hints": [
+              "In a series circuit, components are connected one after another",
+              "Current flows through each component in order",
+              "All components must be connected in a single path",
+              "Check that both lamps are in the circuit path"
+            ]
+          },
+          "assessment": {
+            "accuracy_weight": 0.75,
+            "time_weight": 0.15,
+            "attempt_weight": 0.1
+          }
+        }
+      ],
+      "session_config": {
+        "max_exercises": 5,
+        "difficulty_adaptation": true,
+        "immediate_feedback": true
+      }
+    },
+    "student_context": {
+      "current_level": "beginner",
+      "learning_preferences": ["visual", "interactive", "hands-on"],
+      "previous_performance": {
+        "accuracy": 0.75,
+        "avg_time": 120,
+        "completed_exercises": 3
+      }
+    },
+    "metadata": {
+      "learning_objectives": [
+        "objective.1",
+        "objective.2",
+        "objective.3",
+        "objective.4"
+      ],
+      "estimated_duration": 600,
+      "prerequisite_skills": [
+        "Basic understanding of electricity",
+        "Familiarity with simple tools"
+      ],
+      "difficulty_level": "beginner"
+    }
+  },
+  "ui_config": {
+    "theme": "modern",
+    "layout": "standard",
+    "auto_play": false,
+    "step_duration": 5000,
+    "show_controls": true,
+    "show_progress": true,
+    "hint_system": true,
+    "progressive_difficulty": true,
+    "immediate_feedback": true,
+    "celebration_animations": true,
+    "high_contrast": false,
+    "large_text": false,
+    "keyboard_navigation": true,
+    "screen_reader_support": true
+  },
+  "component_definitions": {
+    "cell": {
+      "name": "Electric Cell",
+      "description": "A single cell that provides electrical energy. Has positive and negative terminals.",
+      "symbol": "cell",
+      "properties": {
+        "voltage": "1.5V",
+        "polarity": true,
+        "terminal_positive": "long line",
+        "terminal_negative": "short line"
+      }
+    },
+    "battery": {
+      "name": "Battery",
+      "description": "Multiple cells connected together to provide higher voltage.",
+      "symbol": "battery",
+      "properties": {
+        "voltage": "3V or more",
+        "polarity": true,
+        "terminal_positive": "long line",
+        "terminal_negative": "short line"
+      }
+    },
+    "lamp": {
+      "name": "Electric Lamp",
+      "description": "A device that converts electrical energy into light energy.",
+      "symbol": "lamp",
+      "properties": {
+        "polarity": false,
+        "lights_when_current_flows": true
+      }
+    },
+    "led": {
+      "name": "Light Emitting Diode",
+      "description": "A semiconductor device that emits light when current flows in the correct direction.",
+      "symbol": "led",
+      "properties": {
+        "polarity": true,
+        "anode": "long leg (positive)",
+        "cathode": "short leg (negative)",
+        "requires_correct_polarity": true
+      }
+    },
+    "switch": {
+      "name": "Switch",
+      "description": "A device that opens or closes a circuit to control current flow.",
+      "symbol": "switch",
+      "properties": {
+        "states": ["open", "closed"],
+        "open": "no current flows",
+        "closed": "current flows"
+      }
+    },
+    "wire": {
+      "name": "Wire",
+      "description": "A conductor that connects components in a circuit.",
+      "symbol": "wire",
+      "properties": {
+        "material": "metal",
+        "conducts_electricity": true
+      }
+    },
+    "conductor": {
+      "name": "Conductor",
+      "description": "A material that allows electricity to flow through it.",
+      "symbol": "conductor",
+      "properties": {
+        "examples": ["copper", "aluminum", "iron"],
+        "allows_current": true
+      }
+    },
+    "insulator": {
+      "name": "Insulator",
+      "description": "A material that does not allow electricity to flow through it.",
+      "symbol": "insulator",
+      "properties": {
+        "examples": ["rubber", "plastic", "wood"],
+        "allows_current": false
+      }
+    }
+  },
+  "practice_questions": {
+    "questions": [
+      {
+        "id": "p1",
+        "question": "Which circuit diagram shows a complete, working circuit?",
+        "type": "diagram",
+        "correct_answer": "p1a",
+        "explanation": "A complete circuit must form a closed loop from the positive terminal of the cell, through components, and back to the negative terminal.",
+        "hint": "Look for a circuit that forms a complete loop without any breaks."
+      },
+      {
+        "id": "p2",
+        "question": "In which circuit is the LED connected with correct polarity?",
+        "type": "diagram",
+        "correct_answer": "p2a",
+        "explanation": "LEDs have polarity. The positive terminal (anode) should connect to the positive terminal of the battery, and the negative terminal (cathode) to the negative terminal.",
+        "hint": "Remember: LED anode (long leg) connects to positive, cathode (short leg) connects to negative."
+      },
+      {
+        "id": "p3",
+        "question": "Why won't the lamp light up in this circuit?",
+        "type": "diagram",
+        "correct_answer": "p3a",
+        "explanation": "The switch is open, which breaks the circuit. No current can flow when the switch is open, so the lamp won't light.",
+        "hint": "Check the position of the switch - is it allowing current to flow?"
+      },
+      {
+        "id": "p4",
+        "question": "Which terminal of the cell is positive?",
+        "type": "diagram",
+        "correct_answer": "p4a",
+        "explanation": "In a cell symbol, the longer line represents the positive terminal, and the shorter line represents the negative terminal.",
+        "hint": "Look at the lengths of the lines in the cell symbol."
+      },
+      {
+        "id": "p5",
+        "question": "In which direction does current flow from the battery?",
+        "type": "diagram",
+        "correct_answer": "p5a",
+        "explanation": "Current flows from the positive terminal of the battery, through the circuit components, and back to the negative terminal.",
+        "hint": "Current flows from positive to negative terminal through the circuit."
+      }
+    ]
+  },
+  "translation_keys": {
+    "learn": {
+      "symbols": {
+        "cell": {
+          "name": "Electric Cell",
+          "description": "A single cell that provides electrical energy"
+        },
+        "battery": {
+          "name": "Battery",
+          "description": "Multiple cells connected together"
+        },
+        "lamp": {
+          "name": "Electric Lamp",
+          "description": "Converts electrical energy into light"
+        },
+        "led": {
+          "name": "LED",
+          "description": "Light Emitting Diode - emits light with correct polarity"
+        },
+        "switchOn": {
+          "name": "Switch (On)",
+          "description": "Switch in closed position - current flows"
+        },
+        "switchOff": {
+          "name": "Switch (Off)",
+          "description": "Switch in open position - no current flows"
+        },
+        "wire": {
+          "name": "Wire",
+          "description": "Conductor that connects circuit components"
+        }
+      },
+      "examples": {
+        "labels": {
+          "positive": "+",
+          "negative": "-"
+        }
+      }
+    },
+    "practice": {
+      "exercise": "Exercise",
+      "attempt": "Attempt",
+      "attempts": "Attempts",
+      "time": "Time",
+      "placeholder": "Type your answer here...",
+      "mode": "Practice Mode",
+      "selectTopic": "Select a topic to practice",
+      "mixedPractice": "Mixed Practice",
+      "allTopics": "All Topics",
+      "question": "Question",
+      "of": "of",
+      "score": "Score",
+      "submit": "Submit",
+      "correct": "Correct!",
+      "incorrect": "Incorrect",
+      "explanation": "Explanation",
+      "correctAnswer": "Correct Answer",
+      "excellent": "Excellent!",
+      "good": "Good Job!",
+      "keepPracticing": "Keep Practicing!",
+      "result": {
+        "excellent": "Outstanding work! You have mastered this topic.",
+        "good": "Well done! Keep practicing to improve further.",
+        "keepPracticing": "Good effort! Review the concepts and try again."
+      },
+      "tryAgain": "Try Again",
+      "backToTopics": "Back to Topics",
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard",
+      "noComponents": {
+        "title": "Add or arrange components to see the circuit.",
+        "desc": "Use the hints and description to decide what to connect."
+      },
+      "ex1": {
+        "notLabeled": "Not labeled"
+      },
+      "ex6": {
+        "question": "Question",
+        "of": "of",
+        "checkQuiz": "Check Quiz",
+        "q1": "What is the main purpose of a switch in an electric circuit?",
+        "q1o1": "To provide electricity",
+        "q1o2": "To control the flow of current",
+        "q1o3": "To produce light",
+        "q1o4": "To store energy",
+        "q2": "Which component provides electrical energy in a torch?",
+        "q2o1": "Lamp",
+        "q2o2": "Cells",
+        "q2o3": "Switch",
+        "q2o4": "Wires",
+        "q3": "What happens when a switch is turned ON?",
+        "q3o1": "The circuit breaks",
+        "q3o2": "Current flows through the circuit",
+        "q3o3": "The lamp turns off",
+        "q3o4": "No electricity flows",
+        "q4": "In a complete circuit, current flows from:",
+        "q4o1": "Negative to positive terminal",
+        "q4o2": "Lamp to cell",
+        "q4o3": "Positive to negative terminal",
+        "q4o4": "Switch to lamp",
+        "q5": "What is needed for a lamp to glow in a circuit?",
+        "q5o1": "Only a cell",
+        "q5o2": "Only wires",
+        "q5o3": "A complete closed circuit",
+        "q5o4": "Only a switch"
+      },
+      "header": {
+        "title": "Practice Exercise",
+        "subtitle": "Answer the following questions to test your understanding."
+      },
+      "summary": {
+        "title": "Practice Complete!",
+        "excellent": "Excellent Work!",
+        "good": "Good Job!",
+        "keepPracticing": "Keep Practicing!",
+        "totalScore": "Total Score",
+        "scoreLine": "You got {{correct}} out of {{total}} questions correct ({{percentage}}%)",
+        "exerciseCount": "You completed {{count}} exercises",
+        "restart": "Restart Practice",
+        "backToLearn": "Back to Learning"
+      },
+      "questions": {
+        "p1": {
+          "question": "Which circuit diagram shows a complete, working circuit?",
+          "explanation": "A complete circuit must form a closed loop from the positive terminal of the cell, through components, and back to the negative terminal.",
+          "hint": "Look for a circuit that forms a complete loop without any breaks."
+        },
+        "p2": {
+          "question": "In which circuit is the LED connected with correct polarity?",
+          "explanation": "LEDs have polarity. The positive terminal (anode) should connect to the positive terminal of the battery, and the negative terminal (cathode) to the negative terminal.",
+          "hint": "Remember: LED anode (long leg) connects to positive, cathode (short leg) connects to negative."
+        },
+        "p3": {
+          "question": "Why won't the lamp light up in this circuit?",
+          "explanation": "The switch is open, which breaks the circuit. No current can flow when the switch is open, so the lamp won't light.",
+          "hint": "Check the position of the switch - is it allowing current to flow?"
+        },
+        "p4": {
+          "question": "Which terminal of the cell is positive?",
+          "explanation": "In a cell symbol, the longer line represents the positive terminal, and the shorter line represents the negative terminal.",
+          "hint": "Look at the lengths of the lines in the cell symbol."
+        },
+        "p5": {
+          "question": "In which direction does current flow from the battery?",
+          "explanation": "Current flows from the positive terminal of the battery, through the circuit components, and back to the negative terminal.",
+          "hint": "Current flows from positive to negative terminal through the circuit."
+        }
+      },
+      "svg": {
+        "positive": "+",
+        "negative": "-",
+        "switchOn": "ON",
+        "switchOff": "OFF",
+        "longLine": "Long line",
+        "shortLine": "Short line",
+        "currentFlow": "Current Flow"
+      },
+      "ui": {
+        "selectInstruction": "Select the correct answer from the options below.",
+        "showHint": "Show Hint",
+        "hideHint": "Hide Hint",
+        "checkAnswer": "Check Answer",
+        "selectPrompt": "Please select an answer first",
+        "correct": "Correct",
+        "wrong": "Wrong",
+        "correctTitle": "Correct!",
+        "incorrectTitle": "Not quite right",
+        "previous": "Previous",
+        "next": "Next",
+        "footer": "Take your time to understand each concept before moving to the next question."
+      }
+    },
+    "nav": {
+      "logo": "Circuits",
+      "learn": "Learn",
+      "practice": "Practice",
+      "assess": "Assess",
+      "applications": "Real World Applications",
+      "tabs": {
+        "learn": "Learn",
+        "practice": "Practice",
+        "applications": "Real World Applications"
+      }
+    },
+    "language": {
+      "en": "English",
+      "hi": "Hindi",
+      "gu": "Gujarati",
+      "selectorLabel": "Select Language"
+    },
+    "component": {
+      "cell": "Electric Cell",
+      "battery": "Battery",
+      "lamp": "Lamp",
+      "led": "LED",
+      "switch": "Switch",
+      "wire": "Wire",
+      "on": "ON",
+      "off": "OFF"
+    },
+    "learnSymbols": {
+      "header": {
+        "title": "Circuit Component Symbols",
+        "subtitle": "Learn the standard symbols used in circuit diagrams"
+      },
+      "example": {
+        "title": "Complete Circuit Example",
+        "batteryLabel": "Battery",
+        "currentFlow": "Current Flow",
+        "circuitHeading": "Complete Circuit:",
+        "circuitExplanation": "This diagram shows a complete circuit with a battery (power source), switch (control), and lamp (load). When the switch is closed, current flows from the positive terminal, through the switch and lamp, and back to the negative terminal, causing the lamp to light up."
+      },
+      "categories": {
+        "power": "Power Source",
+        "output": "Output Device",
+        "control": "Control Device",
+        "conductor": "Conductor"
+      },
+      "aria": {
+        "page": "Circuit component symbols learning page",
+        "symbolsGrid": "Grid of circuit component symbols",
+        "symbolPreview": "Preview of {component} symbol"
+      }
+    },
+    "realworld": {
+      "cooking": "Cooking & Heating",
+      "desc": {
+        "cooking": "Electric stoves, ovens, and appliances use electrical circuits to generate heat for cooking.",
+        "lighting": "Light bulbs and LED lights convert electrical energy into light through circuit connections.",
+        "transportation": "Electric vehicles use complex circuits to power motors and control systems.",
+        "heating": "Heaters and air conditioners use circuits to regulate temperature.",
+        "entertainment": "Televisions, computers, and gaming consoles rely on circuits for power and signal processing.",
+        "communication": "Phones, routers, and communication devices use circuits to transmit and receive signals."
+      },
+      "lighting": "Lighting",
+      "transportation": "Transportation",
+      "heating": "Heating & Cooling",
+      "entertainment": "Entertainment",
+      "communication": "Communication",
+      "usageCategories": "Usage Categories",
+      "example": {
+        "cooking": {
+          "stove": "Electric Stove",
+          "microwave": "Microwave Oven",
+          "kettle": "Electric Kettle",
+          "toaster": "Toaster"
+        },
+        "lighting": {
+          "bulbs": "Light Bulbs",
+          "street": "Street Lights",
+          "flashlight": "Flashlight",
+          "lamp": "Table Lamp"
+        },
+        "transportation": {
+          "cars": "Electric Cars",
+          "trains": "Electric Trains",
+          "trams": "Trams",
+          "ebikes": "E-Bikes"
+        },
+        "heating": {
+          "ac": "Air Conditioner",
+          "heater": "Electric Heater",
+          "blanket": "Electric Blanket",
+          "fan": "Electric Fan"
+        },
+        "entertainment": {
+          "tv": "Television",
+          "computer": "Computer",
+          "console": "Gaming Console",
+          "speakers": "Speakers"
+        },
+        "communication": {
+          "phones": "Mobile Phones",
+          "router": "Wi-Fi Router",
+          "radio": "Radio",
+          "satellite": "Satellite"
+        }
+      }
+    },
+    "torch": {
+      "observe": {
+        "title": "Observe the Torch",
+        "clickTorch": "Click the torch to turn it on/off",
+        "lampGlowing": "The lamp is glowing!",
+        "lampNotGlowing": "The lamp is not glowing.",
+        "whatNotice": "What do you notice?",
+        "definition": "A torchlight works when all its parts are connected properly. When you turn on the switch, electric current flows from the cells through the wires to the lamp, making it glow.",
+        "nextParts": "Next: Learn about Parts"
+      },
+      "parts": {
+        "title": "Parts of a Torch",
+        "lamp": "Lamp",
+        "switch": "Switch",
+        "cells": "Cells",
+        "wires": "Wires",
+        "lampCard": "Lamp",
+        "lampDesc": "Produces light",
+        "switchCard": "Switch",
+        "switchDesc": "Controls current flow",
+        "cellCard": "Cells",
+        "cellDesc": "Provides electricity",
+        "wiresCard": "Wires",
+        "wiresDesc": "Connects components",
+        "back": "Back"
+      }
+    },
+    "common": {
+      "examples": "Examples",
+      "next": "Next",
+      "previous": "Previous",
+      "submit": "Submit",
+      "reset": "Reset",
+      "continue": "Continue",
+      "gotIt": "Got it!",
+      "hint": "Hint",
+      "correct": "Correct",
+      "incorrect": "Incorrect",
+      "processing": "Processing...",
+      "yourAnswer": "Your Answer:",
+      "answerPlaceholder": "Type your answer here...",
+      "invalidMode": "Invalid mode",
+      "mistakesTitle": "Common Mistakes to Avoid",
+      "status": {
+        "incomplete": "Incomplete Circuit",
+        "complete": "Circuit Complete",
+        "flowing": "Current Flowing"
+      }
+    },
+    "title": {
+      "circuits": "Electrical Circuits"
+    },
+    "electricity": {
+      "lessons": "Lessons",
+      "lesson": {
+        "cell": "Cell",
+        "battery": "Battery",
+        "lamps": "Lamps",
+        "circuit": "Circuit",
+        "switch": "Switch"
+      },
+      "cell": {
+        "title": "Electric Cell",
+        "icon": "⚡",
+        "definition": "An electric cell is a portable source of electrical energy. It has two terminals: positive (+) and negative (-).",
+        "keyPoints": "Key Points",
+        "point1": "Portable source of electricity",
+        "point2": "Has 2 terminals: Positive (+) and Negative (-)",
+        "point3": "Metal cap = Positive terminal",
+        "point4": "Flat disc = Negative terminal",
+        "point5": "Provides 1.5V of electrical energy",
+        "point6": "Used in torches, remote controls, and clocks"
+      },
+      "metalCap": "Metal Cap",
+      "flatDisc": "Flat Disc",
+      "battery": {
+        "title": "Battery",
+        "icon": "🔋",
+        "definition": "A battery is a combination of two or more electric cells connected together in series.",
+        "keyPoints": "Key Points",
+        "point1": "Made of 2 or more cells connected together",
+        "point2": "Cells connected positive to negative",
+        "point3": "Provides more energy than a single cell",
+        "point4": "Used in torches, toys, and portable devices",
+        "point5": "More cells = More voltage",
+        "point6": "Must be connected correctly to work",
+        "cell": "Cell {number}",
+        "multipleCells": "Multiple Cells = Battery",
+        "totalVoltage": "Total Voltage = Sum of all cells",
+        "label": "Battery"
+      },
+      "lamps": {
+        "title": "Electric Lamps",
+        "icon": "💡",
+        "definition": "Electric lamps produce light when electric current passes through them.",
+        "keyPoints": "Key Points",
+        "point1": "Incandescent lamps have a filament that glows",
+        "point2": "LED lamps are more efficient and last longer",
+        "point3": "Filament gets hot and produces light",
+        "point4": "LEDs produce light without getting very hot",
+        "point5": "Both need electricity to work",
+        "point6": "LEDs have positive and negative terminals"
+      },
+      "lamp": {
+        "filamentHeats": "Filament heats up",
+        "andGlows": "and glows",
+        "tungsten": "Tungsten",
+        "filament": "Filament"
+      },
+      "circuit": {
+        "title": "Electric Circuit",
+        "icon": "🔌",
+        "definition": "An electric circuit is a complete path for electric current to flow from positive terminal through the device back to negative terminal.",
+        "keyPoints": "Key Points",
+        "point1": "Must be a complete closed path",
+        "point2": "Current flows from positive to negative",
+        "point3": "All components must be connected properly",
+        "point4": "No gaps or breaks in the circuit",
+        "point5": "Switch can open or close the circuit",
+        "point6": "Lamp glows only when circuit is complete",
+        "bulb": "Bulb",
+        "currentFlow": "Current Flow",
+        "completeCircuit": "Complete Circuit - Current Can Flow"
+      },
+      "switch": {
+        "title": "Switch",
+        "icon": "🔘",
+        "definition": "A switch is used to complete or break an electric circuit.",
+        "keyPoints": "Key Points",
+        "point1": "Controls the flow of electricity",
+        "point2": "ON = Circuit closed, current flows",
+        "point3": "OFF = Circuit open, no current",
+        "point4": "Can be placed anywhere in the circuit",
+        "point5": "Makes devices safe to use",
+        "point6": "Prevents wastage of electricity",
+        "on": "Switch ON",
+        "off": "Switch OFF",
+        "bulbOn": "Bulb ON",
+        "bulbOff": "Bulb OFF",
+        "gap": "Gap",
+        "whenOn": "When switch is ON, circuit is complete and bulb glows",
+        "whenOff": "When switch is OFF, circuit is broken and bulb does not glow"
+      },
+      "definition": "Definition"
+    },
+    "demo": {
+      "stepType": {
+        "explanation": "explanation",
+        "visualization": "visualization",
+        "interaction": "interaction"
+      },
+      "unknownType": "Unknown step type",
+      "intro": {
+        "title": "Introduction to Electric Circuits",
+        "desc": "Learn how a torchlight works with electric cells and a lamp",
+        "note": "A complete circuit is needed for current to flow"
+      },
+      "cell": {
+        "title": "Electric Cell",
+        "desc": "An electric cell has two terminals: positive (+) and negative (-)"
+      },
+      "complete": {
+        "title": "Complete Circuit",
+        "desc": "Connect cell, wire, switch, and lamp to make a complete circuit",
+        "hint": "Click the switch to close the circuit"
+      }
+    },
+    "objective": {
+      "1": "Understand how electrical circuits work",
+      "2": "Identify circuit components",
+      "3": "Build complete circuits",
+      "4": "Distinguish conductors and insulators"
+    },
+    "conduction": {
+      "materials": {
+        "steel": "Steel",
+        "copper": "Copper",
+        "aluminum": "Aluminum",
+        "wood": "Wood",
+        "plastic": "Plastic",
+        "glass": "Glass"
+      },
+      "activity": {
+        "sectionTitle": "Heat Conduction Activity",
+        "safetyTitle": "Safety Reminder",
+        "safetyText": "This is a simulation. In real experiments, always handle heat sources with care and adult supervision.",
+        "simulationTitle": "Heat Conduction Simulation",
+        "controls": {
+          "start": "Start Heating",
+          "reset": "Reset",
+          "heatIntensity": "Heat Intensity"
+        },
+        "heatFlowDirection": "Heat Flow Direction",
+        "pinCard": {
+          "pinLabel": "Pin",
+          "order": "Order: {{order}}",
+          "fallen": "Fallen",
+          "falling": "Falling...",
+          "waiting": "Waiting"
+        },
+        "observations": {
+          "title": "Observations",
+          "item1Title": "Heat travels through the metal strip",
+          "item1Body": "As heat is applied, it moves from the heat source along the metal strip, causing the wax to melt.",
+          "item2Title": "Pins fall in order of distance",
+          "item2Body": "The pin closest to the heat source falls first, followed by pins further away, showing heat conduction.",
+          "item3Title": "Metal is a good conductor",
+          "item3Body": "This demonstrates that metals conduct heat well, allowing thermal energy to flow through them."
+        },
+        "table": {
+          "title": "Pin Fall Analysis",
+          "pin": "Pin",
+          "order": "Order",
+          "status": "Status",
+          "reason": "Reason",
+          "fallen": "Fallen",
+          "notFallen": "Not Fallen",
+          "reasonClosest": "Closest to heat source",
+          "reasonFarthest": "Farthest from heat source",
+          "reasonProgress": "Heat reaches progressively"
+        }
+      },
+      "testing": {
+        "sectionTitle": "Material Testing",
+        "callout": "Drag materials to the test zone to see if they conduct heat",
+        "zoneTitle": "Test Zone",
+        "dropHere": "Drop Material Here",
+        "heatSource": "Heat Source",
+        "heatPasses": "Heat Passes Through",
+        "heatBlocked": "Heat Blocked",
+        "testResult": {
+          "title": "Test Result",
+          "material": "Material",
+          "type": "Type",
+          "good": "Good Conductor",
+          "poor": "Poor Conductor (Insulator)",
+          "heatPasses": "Heat passes through this material",
+          "heatStops": "Heat does not pass through this material",
+          "goodDesc": "This material allows heat to flow through it easily.",
+          "poorDesc": "This material prevents heat from flowing through it."
+        },
+        "quickTest": "Quick Test",
+        "tested": "Tested {{count}} of {{total}} materials"
+      },
+      "realWorld": {
+        "filterTitle": "Filter by Category",
+        "showing": "Showing",
+        "application": "application",
+        "applicationsPlural": "applications",
+        "realLifeExample": "Real Life Example",
+        "howItWorks": "How It Works",
+        "goodConductorUsed": "Good Conductor Used",
+        "insulatorUsed": "Insulator Used",
+        "scienceBehind": "Science Behind It",
+        "benefitsImpact": "Benefits & Impact",
+        "difficulty": {
+          "everyday": "Everyday",
+          "industrial": "Industrial",
+          "advanced": "Advanced"
+        },
+        "categories": {
+          "all": "All Categories",
+          "Kitchen": "Kitchen",
+          "Clothing": "Clothing",
+          "Building": "Building",
+          "Appliances": "Appliances",
+          "Architecture": "Architecture",
+          "Safety": "Safety",
+          "Industry": "Industry",
+          "Space Technology": "Space Technology"
+        },
+        "applications": [
+          {
+            "id": 1,
+            "title": "Cooking Pans",
+            "category": "Kitchen",
+            "description": "Metal pans conduct heat from the stove to cook food evenly.",
+            "howItWorks": "When you place a metal pan on a hot stove, heat flows from the burner through the metal base to the food. Metals like aluminum and copper are excellent conductors, spreading heat quickly and evenly across the pan's surface.",
+            "conductor": "Aluminum, Copper, Stainless Steel",
+            "insulator": "Plastic handles, Wooden handles",
+            "scienceBehind": "Metals have free electrons that can move easily, allowing thermal energy to transfer rapidly through the material. This is why metal pans heat up quickly and distribute heat evenly.",
+            "realExample": "Non-stick frying pans with aluminum base and plastic handles",
+            "benefits": [
+              "Efficient cooking with even heat distribution",
+              "Food cooks faster and more uniformly",
+              "Energy efficient - less heat wasted"
+            ],
+            "difficulty": "everyday"
+          },
+          {
+            "id": 2,
+            "title": "Thermal Clothing",
+            "category": "Clothing",
+            "description": "Clothing uses insulating materials to keep body heat in during cold weather.",
+            "howItWorks": "Insulating materials like wool, down, and synthetic fibers trap air pockets that prevent body heat from escaping. These materials are poor conductors, so they slow down heat loss from your body to the cold environment.",
+            "conductor": "Metal zippers (minimal contact)",
+            "insulator": "Wool, Down feathers, Synthetic fibers",
+            "scienceBehind": "Insulators have tightly bound molecules that don't transfer heat well. Air pockets in insulating materials create barriers that reduce heat conduction, keeping you warm.",
+            "realExample": "Winter jackets with down insulation and wool sweaters",
+            "benefits": [
+              "Keeps body warm in cold conditions",
+              "Reduces energy needed for heating",
+              "Comfortable in various weather conditions"
+            ],
+            "difficulty": "everyday"
+          },
+          {
+            "id": 3,
+            "title": "Building Insulation",
+            "category": "Building",
+            "description": "Homes use insulating materials in walls and roofs to maintain comfortable temperatures.",
+            "howItWorks": "Insulation materials like fiberglass, foam, and cellulose are placed in walls, attics, and roofs. These materials slow down heat transfer, keeping homes warm in winter and cool in summer by preventing heat from entering or escaping.",
+            "conductor": "Metal frames (minimal)",
+            "insulator": "Fiberglass, Foam board, Cellulose",
+            "scienceBehind": "Insulation works by trapping air in small pockets, creating barriers to heat flow. The trapped air has low thermal conductivity, significantly reducing heat transfer through walls and roofs.",
+            "realExample": "Fiberglass insulation in walls and spray foam in attics",
+            "benefits": [
+              "Reduces heating and cooling costs",
+              "Maintains comfortable indoor temperature",
+              "Environmentally friendly - less energy consumption"
+            ],
+            "difficulty": "industrial"
+          },
+          {
+            "id": 4,
+            "title": "Heat Sinks in Electronics",
+            "category": "Appliances",
+            "description": "Metal heat sinks conduct heat away from electronic components to prevent overheating.",
+            "howItWorks": "Heat sinks are made of highly conductive metals like aluminum or copper. They attach to hot components (like computer processors) and use their large surface area and high thermal conductivity to quickly transfer heat away from the device into the surrounding air.",
+            "conductor": "Aluminum, Copper",
+            "insulator": "Plastic casing, Ceramic substrates",
+            "scienceBehind": "Metals conduct heat efficiently due to free electrons. Heat sinks maximize surface area with fins, allowing more air contact for better heat dissipation through convection.",
+            "realExample": "CPU heat sinks in computers and heat sinks in LED lights",
+            "benefits": [
+              "Prevents electronic component damage",
+              "Extends device lifespan",
+              "Maintains optimal performance"
+            ],
+            "difficulty": "advanced"
+          },
+          {
+            "id": 5,
+            "title": "Double-Pane Windows",
+            "category": "Architecture",
+            "description": "Windows with two glass panes separated by air or gas provide better insulation than single panes.",
+            "howItWorks": "Double-pane windows have two layers of glass with air or inert gas (like argon) between them. The air gap acts as an insulator, significantly reducing heat transfer. The glass itself also provides some insulation compared to metal frames.",
+            "conductor": "Metal window frames (minimal)",
+            "insulator": "Glass panes, Air gap, Inert gases (argon, krypton)",
+            "scienceBehind": "The air or gas between panes has low thermal conductivity. This creates a thermal barrier that slows heat conduction, keeping indoor temperatures stable regardless of outside weather.",
+            "realExample": "Energy-efficient windows in modern buildings",
+            "benefits": [
+              "Reduces energy costs for heating and cooling",
+              "Prevents condensation",
+              "Improves comfort and reduces noise"
+            ],
+            "difficulty": "industrial"
+          },
+          {
+            "id": 6,
+            "title": "Firefighter Protective Gear",
+            "category": "Safety",
+            "description": "Firefighter suits use insulating materials to protect against extreme heat.",
+            "howItWorks": "Firefighter gear uses multiple layers of insulating materials like Nomex and Kevlar. These materials are poor conductors, creating a barrier that slows heat transfer from flames to the body, protecting firefighters from burns.",
+            "conductor": "Metal fasteners (minimal, protected)",
+            "insulator": "Nomex, Kevlar, Fire-resistant fabrics",
+            "scienceBehind": "Specialized insulating materials have high heat resistance and low thermal conductivity. They create multiple barriers that prevent heat from reaching the skin, even in extreme temperatures.",
+            "realExample": "Firefighter turnout gear with Nomex outer shell",
+            "benefits": [
+              "Protects lives in dangerous situations",
+              "Allows firefighters to work in extreme heat",
+              "Prevents serious injuries"
+            ],
+            "difficulty": "advanced"
+          },
+          {
+            "id": 7,
+            "title": "Industrial Furnaces",
+            "category": "Industry",
+            "description": "Furnaces use insulating materials to contain high temperatures efficiently.",
+            "howItWorks": "Industrial furnaces are lined with refractory materials (ceramics, firebrick) that are excellent insulators. These materials can withstand very high temperatures while preventing heat from escaping, making furnaces more energy-efficient.",
+            "conductor": "Metal heating elements (inside)",
+            "insulator": "Firebrick, Ceramic fiber, Refractory materials",
+            "scienceBehind": "Refractory materials have extremely low thermal conductivity and high melting points. They create effective thermal barriers that contain heat within the furnace while protecting the outer structure.",
+            "realExample": "Steel production furnaces and glass manufacturing kilns",
+            "benefits": [
+              "Increases energy efficiency",
+              "Reduces operating costs",
+              "Enables high-temperature industrial processes"
+            ],
+            "difficulty": "advanced"
+          },
+          {
+            "id": 8,
+            "title": "Spacecraft Thermal Protection",
+            "category": "Space Technology",
+            "description": "Spacecraft use advanced insulating materials to protect against extreme temperature changes in space.",
+            "howItWorks": "Spacecraft are covered with thermal protection systems using materials like ceramic tiles and aerogels. These materials are excellent insulators that protect the craft from extreme heat during re-entry and extreme cold in space.",
+            "conductor": "Metal structure (protected by insulation)",
+            "insulator": "Ceramic tiles, Aerogels, Multi-layer insulation",
+            "scienceBehind": "Spacecraft face extreme temperature variations. Insulating materials with very low thermal conductivity create barriers that prevent heat transfer, protecting both the craft and astronauts from temperature extremes.",
+            "realExample": "Space Shuttle thermal tiles and Mars rover insulation",
+            "benefits": [
+              "Enables space exploration",
+              "Protects expensive equipment",
+              "Ensures mission success"
+            ],
+            "difficulty": "advanced"
+          }
+        ]
+      },
+      "practice": {
+        "ui": {
+          "noQuestionsTitle": "No Questions Available",
+          "noQuestionsBody": "Questions are being prepared. Please check back later.",
+          "questionLabel": "Question {{current}} of {{total}}",
+          "pointsLabel": "{{points}} Points",
+          "difficulty": {
+            "easy": "Easy",
+            "medium": "Medium",
+            "hard": "Hard"
+          },
+          "fillBlankHint": "Select the correct option to fill in the blank",
+          "matchHint": "Match each material with its category",
+          "orderingHint": "Arrange the items in the correct order",
+          "classifyHint": "Classify each material as a good or poor conductor",
+          "materials": "Materials",
+          "categories": "Categories",
+          "selectCategory": "Select Category",
+          "noItemsMatched": "No items matched yet",
+          "noItemsClassified": "No items classified yet",
+          "goodConductor": "Good Conductor",
+          "poorConductor": "Poor Conductor",
+          "goodConductorLabel": "Good Conductor",
+          "poorConductorLabel": "Poor Conductor",
+          "correctTitle": "Correct!",
+          "incorrectTitle": "Not Quite Right",
+          "correctAnswerLabel": "Correct Answer:",
+          "previousButton": "Previous",
+          "nextButton": "Next",
+          "submitButton": "Submit Answer",
+          "tryAgainButton": "Try Again",
+          "startOverButton": "Start Over",
+          "completeTitle": "Practice Complete!",
+          "scoreSummary": "Your Score: {{score}} / {{total}} points",
+          "questionsAnswered": "Questions Answered",
+          "scorePercentage": "Score Percentage",
+          "gradeLabel": "Grade"
+        },
+        "questions": [
+          {
+            "id": 1,
+            "type": "mcq",
+            "question": "Which material is the best conductor of heat?",
+            "options": [
+              "Wood",
+              "Plastic",
+              "Copper",
+              "Glass"
+            ],
+            "correctAnswer": "Copper",
+            "explanation": "Copper is an excellent conductor of heat because it has free electrons that can move easily, allowing thermal energy to transfer rapidly through the material.",
+            "difficulty": "easy",
+            "points": 10
+          },
+          {
+            "id": 2,
+            "type": "true-false",
+            "question": "Metals are generally good conductors of heat.",
+            "options": [
+              "True",
+              "False"
+            ],
+            "correctAnswer": "True",
+            "explanation": "Most metals are good conductors of heat because they have free electrons that can transfer thermal energy efficiently.",
+            "difficulty": "easy",
+            "points": 10
+          },
+          {
+            "id": 3,
+            "type": "mcq",
+            "question": "What happens to the pins in the heat conduction activity as heat intensity increases?",
+            "options": [
+              "All pins fall at the same time",
+              "Pins fall in random order",
+              "Pins fall in order from closest to farthest from heat source",
+              "No pins fall"
+            ],
+            "correctAnswer": "Pins fall in order from closest to farthest from heat source",
+            "explanation": "Heat travels through the metal strip from the heat source. The pin closest to the heat source falls first because it receives heat first, followed by pins further away as heat continues to flow.",
+            "difficulty": "medium",
+            "points": 15
+          },
+          {
+            "id": 4,
+            "type": "match",
+            "question": "Match each material with its heat conduction property:",
+            "options": [
+              "Copper|Good Conductor",
+              "Aluminum|Good Conductor",
+              "Steel|Good Conductor",
+              "Wood|Poor Conductor",
+              "Plastic|Poor Conductor",
+              "Glass|Poor Conductor"
+            ],
+            "correctAnswer": [
+              "Copper|Good Conductor",
+              "Aluminum|Good Conductor",
+              "Steel|Good Conductor",
+              "Wood|Poor Conductor",
+              "Plastic|Poor Conductor",
+              "Glass|Poor Conductor"
+            ],
+            "explanation": "Metals like copper, aluminum, and steel are good conductors because they have free electrons. Non-metals like wood, plastic, and glass are poor conductors (insulators) because their molecules are tightly bound.",
+            "difficulty": "medium",
+            "points": 20
+          },
+          {
+            "id": 5,
+            "type": "ordering",
+            "question": "Arrange these materials in order from best to worst heat conductor:",
+            "options": [
+              "Copper",
+              "Aluminum",
+              "Wood",
+              "Plastic"
+            ],
+            "correctAnswer": [
+              "Copper",
+              "Aluminum",
+              "Wood",
+              "Plastic"
+            ],
+            "explanation": "Copper is the best conductor, followed by aluminum (both are metals). Wood and plastic are insulators, with wood being slightly better than plastic.",
+            "difficulty": "hard",
+            "points": 25
+          },
+          {
+            "id": 6,
+            "type": "classify",
+            "question": "Classify each material as a good conductor or poor conductor:",
+            "options": [
+              "Steel",
+              "Copper",
+              "Aluminum",
+              "Wood",
+              "Plastic",
+              "Glass"
+            ],
+            "correctAnswer": [
+              "Steel|Good Conductor",
+              "Copper|Good Conductor",
+              "Aluminum|Good Conductor",
+              "Wood|Poor Conductor",
+              "Plastic|Poor Conductor",
+              "Glass|Poor Conductor"
+            ],
+            "explanation": "Metals (steel, copper, aluminum) are good conductors. Non-metals (wood, plastic, glass) are poor conductors or insulators.",
+            "difficulty": "medium",
+            "points": 20
+          },
+          {
+            "id": 7,
+            "type": "fill-blank",
+            "question": "Materials that allow heat to flow through them easily are called _____.",
+            "options": [
+              "Insulators",
+              "Conductors",
+              "Resistors",
+              "Transformers"
+            ],
+            "correctAnswer": "Conductors",
+            "explanation": "Conductors are materials that allow heat (or electricity) to flow through them easily. Metals are typically good conductors.",
+            "difficulty": "easy",
+            "points": 10
+          },
+          {
+            "id": 8,
+            "type": "mcq",
+            "question": "Why do cooking pans have metal bases but plastic or wooden handles?",
+            "options": [
+              "To make them lighter",
+              "To save money",
+              "Metal conducts heat well for cooking, while plastic/wood insulates to keep handles cool",
+              "For decoration"
+            ],
+            "correctAnswer": "Metal conducts heat well for cooking, while plastic/wood insulates to keep handles cool",
+            "explanation": "Metal bases conduct heat efficiently for cooking, while plastic or wooden handles are insulators that prevent heat from reaching your hands, making the pan safe to hold.",
+            "difficulty": "medium",
+            "points": 15
+          }
+        ]
+      }
+    },
+    "convection": {
+      "learn": {
+        "header": {
+          "title": "Convection - Heat Transfer",
+          "subtitle": "Learn how heat moves through fluids"
+        },
+        "step": "Step {{current}} of {{total}}",
+        "indicators": {
+          "practice": "Interactive Practice"
+        },
+        "controls": {
+          "previous": "Previous",
+          "next": "Next",
+          "play": "Play",
+          "pause": "Pause",
+          "reset": "Reset"
+        },
+        "canvas": {
+          "cup1": "Cup 1",
+          "cup2Heated": "Cup 2 (Heated)",
+          "hotAirRises": "Hot Air Rises",
+          "coldAirSinks": "Cold Air Sinks",
+          "hotWaterRises": "Hot Water Rises",
+          "coldWaterSinks": "Cold Water Sinks",
+          "daytime": "Daytime",
+          "nighttime": "Nighttime",
+          "warmerLand": "Warmer Land",
+          "coolerSea": "Cooler Sea",
+          "coolerLand": "Cooler Land",
+          "warmerSea": "Warmer Sea",
+          "seaBreeze": "Sea Breeze",
+          "landBreeze": "Land Breeze",
+          "hot": "Hot",
+          "cold": "Cold",
+          "convectionCurrent": "Convection Current"
+        },
+        "steps": [
+          {
+            "id": 1,
+            "title": "What is Convection?",
+            "description": "Convection is the process of heat transfer through the actual movement of particles in fluids (liquids and gases). Unlike conduction where particles stay in place, in convection, the heated particles themselves move from one place to another.",
+            "type": "intro"
+          },
+          {
+            "id": 2,
+            "title": "Activity 7.2: Paper Cup Experiment",
+            "description": "Two paper cups are hung on a stick. When a candle is placed under one cup, the hot air inside rises, making that cup tilt upward. This demonstrates that hot air is lighter than cold air and rises up.",
+            "type": "explanation",
+            "animationData": {
+              "experiment": "paper_cups"
+            }
+          },
+          {
+            "id": 3,
+            "title": "Why Does Hot Air Rise?",
+            "description": "When air is heated, it expands and occupies more space. This makes it less dense (lighter) compared to the surrounding cold air. The lighter hot air rises up, while heavier cold air moves down to take its place.",
+            "type": "explanation",
+            "animationData": {
+              "experiment": "hot_air_rising"
+            }
+          },
+          {
+            "id": 4,
+            "title": "Convection in Liquids",
+            "description": "Water at the bottom of a beaker gets heated first. It expands, becomes lighter, and rises up. Cooler water from the sides moves down to replace it. This creates a convection current - a continuous cycle of rising hot water and sinking cold water.",
+            "type": "explanation",
+            "animationData": {
+              "experiment": "water_heating"
+            }
+          },
+          {
+            "id": 5,
+            "title": "Interactive: Sea Breeze (Day)",
+            "description": "During the day, land heats up faster than water. Hot air above the land rises, and cooler air from the sea moves toward the land to replace it. This is called sea breeze, which brings relief on hot days.",
+            "type": "practice",
+            "animationData": {
+              "experiment": "sea_breeze"
+            }
+          },
+          {
+            "id": 6,
+            "title": "Interactive: Land Breeze (Night)",
+            "description": "At night, land cools faster than water. Air above the sea is warmer and rises. Cooler air from the land moves toward the sea. This is called land breeze, and it reverses the direction of daytime winds.",
+            "type": "practice",
+            "animationData": {
+              "experiment": "land_breeze"
+            }
+          },
+          {
+            "id": 7,
+            "title": "Real World: Coastal Climate",
+            "description": "People living near the seashore experience sea breeze during the day (cool wind from sea) and land breeze at night (cool wind from land). This is why coastal areas have moderate temperatures and windows facing the sea are preferred.",
+            "type": "real_world"
+          },
+          {
+            "id": 8,
+            "title": "Real World: Smoke from Incense",
+            "description": "When you burn an incense stick (agarbatti), the smoke rises upward. This happens because smoke is a mixture of hot gases and tiny particles. Being warmer than surrounding air, it rises up through convection.",
+            "type": "real_world"
+          },
+          {
+            "id": 9,
+            "title": "Real World: Heating Your Room",
+            "description": "Room heaters work on convection. Hot air from the heater rises to the ceiling, then cools and comes down. This creates a convection current that circulates warm air throughout the room, heating it evenly.",
+            "type": "real_world"
+          }
+        ]
+      },
+      "realWorld": {
+        "filter": {
+          "title": "Filter by Category",
+          "showing": "Showing",
+          "application": "application",
+          "applications": "applications"
+        },
+        "categories": {
+          "all": "All Categories",
+          "Nature": "Nature",
+          "Home": "Home",
+          "Kitchen": "Kitchen",
+          "Everyday": "Everyday",
+          "Technology": "Technology"
+        },
+        "difficulty": {
+          "everyday": "Everyday",
+          "nature": "Nature",
+          "technology": "Technology"
+        },
+        "labels": {
+          "howItWorks": "How It Works",
+          "scienceBehind": "Science Behind It",
+          "realExample": "Real Life Example",
+          "benefits": "Benefits & Impact"
+        },
+        "applications": [
+          {
+            "id": 1,
+            "title": "Sea Breeze and Land Breeze",
+            "category": "Nature",
+            "description": "Coastal areas experience sea breeze during the day and land breeze at night due to convection currents.",
+            "howItWorks": "During the day, land heats up faster than water. Hot air above land rises, creating low pressure. Cooler air from the sea moves toward land, creating sea breeze. At night, the process reverses - water stays warmer, so air above sea rises and cooler air from land moves toward sea, creating land breeze.",
+            "scienceBehind": "Convection occurs because land and water have different heat capacities. Land heats and cools faster than water. This temperature difference creates pressure differences that drive air movement through convection currents.",
+            "realExample": "People living near beaches feel cool sea breeze during hot afternoons and notice wind direction changes at night.",
+            "benefits": [
+              "Moderates coastal temperatures",
+              "Provides natural cooling",
+              "Affects local weather patterns"
+            ],
+            "difficulty": "nature"
+          },
+          {
+            "id": 2,
+            "title": "Room Heating",
+            "category": "Home",
+            "description": "Room heaters use convection to circulate warm air throughout a room.",
+            "howItWorks": "A heater warms the air near it. This hot air expands, becomes less dense, and rises toward the ceiling. As it cools, it becomes denser and sinks back down. This creates a convection current that circulates warm air throughout the room.",
+            "scienceBehind": "Convection currents in air work because hot air is less dense than cold air. The continuous cycle of rising hot air and sinking cool air distributes heat evenly without needing fans.",
+            "realExample": "Electric room heaters, radiators, and fireplaces all use convection to heat rooms.",
+            "benefits": [
+              "Efficient heat distribution",
+              "No moving parts needed",
+              "Natural air circulation"
+            ],
+            "difficulty": "everyday"
+          },
+          {
+            "id": 3,
+            "title": "Boiling Water",
+            "category": "Kitchen",
+            "description": "When water boils, convection currents circulate the water, bringing hot water to the surface.",
+            "howItWorks": "Heat from the stove warms water at the bottom of the pot. This hot water expands and rises to the top. Cooler water from the top sinks to replace it. This convection current continues until all water reaches boiling temperature.",
+            "scienceBehind": "Water expands when heated, making it less dense. The density difference between hot and cold water creates buoyancy forces that drive convection currents, ensuring even heating.",
+            "realExample": "You can see bubbles rising in a pot of boiling water - these are convection currents in action.",
+            "benefits": [
+              "Even heating of liquids",
+              "Faster cooking",
+              "Prevents hot spots"
+            ],
+            "difficulty": "everyday"
+          },
+          {
+            "id": 4,
+            "title": "Smoke Rising",
+            "category": "Everyday",
+            "description": "Smoke from fires, incense, or chimneys rises upward due to convection.",
+            "howItWorks": "Smoke contains hot gases and particles. Being warmer than surrounding air, smoke is less dense and rises upward. As it rises, it cools and mixes with surrounding air, eventually dispersing.",
+            "scienceBehind": "Hot smoke particles are less dense than cool air. Buoyancy forces cause the lighter hot smoke to rise, creating visible convection currents.",
+            "realExample": "Smoke from incense sticks (agarbatti), campfires, and chimneys all rise due to convection.",
+            "benefits": [
+              "Natural ventilation",
+              "Removes pollutants upward",
+              "Visible demonstration of convection"
+            ],
+            "difficulty": "everyday"
+          },
+          {
+            "id": 5,
+            "title": "Weather Patterns",
+            "category": "Nature",
+            "description": "Convection drives many weather patterns including thunderstorms and wind systems.",
+            "howItWorks": "When the sun heats Earth's surface, air near the ground warms and rises. This rising air creates low pressure areas. Cooler air from surrounding areas moves in to replace it, creating winds. In thunderstorms, this process is intensified, with hot air rising rapidly and creating powerful convection currents.",
+            "scienceBehind": "Large-scale convection currents in the atmosphere drive weather systems. Temperature differences between regions create pressure differences that drive air movement, forming winds, clouds, and storms.",
+            "realExample": "Thunderstorms, trade winds, and monsoon patterns all result from atmospheric convection.",
+            "benefits": [
+              "Distributes heat globally",
+              "Creates weather patterns",
+              "Essential for Earth's climate"
+            ],
+            "difficulty": "nature"
+          },
+          {
+            "id": 6,
+            "title": "Hot Air Balloons",
+            "category": "Technology",
+            "description": "Hot air balloons rise because hot air inside is less dense than surrounding cool air.",
+            "howItWorks": "A burner heats air inside the balloon. Hot air expands and becomes less dense than the cooler air outside. This density difference creates buoyancy, causing the balloon to rise. To descend, the pilot allows air to cool or releases some hot air.",
+            "scienceBehind": "Hot air balloons demonstrate convection on a large scale. The principle of buoyancy - that less dense fluids rise in denser fluids - is the same principle that drives all convection currents.",
+            "realExample": "Hot air balloons used for recreation and scientific research rely entirely on convection principles.",
+            "benefits": [
+              "Efficient transportation method",
+              "Uses simple physics",
+              "Low environmental impact"
+            ],
+            "difficulty": "technology"
+          },
+          {
+            "id": 7,
+            "title": "Ocean Currents",
+            "category": "Nature",
+            "description": "Ocean currents are driven by convection, moving warm and cold water around the globe.",
+            "howItWorks": "Water near the equator is heated by the sun and becomes less dense. This warm water rises and moves toward the poles. Cold water from polar regions sinks and moves toward the equator, creating global ocean currents.",
+            "scienceBehind": "Temperature differences in ocean water create density differences. Warm water is less dense and rises, while cold water is denser and sinks. This creates large-scale convection currents that circulate water globally.",
+            "realExample": "The Gulf Stream is a warm ocean current that affects weather in Europe. Cold currents from the poles affect marine life distribution.",
+            "benefits": [
+              "Regulates global climate",
+              "Distributes nutrients",
+              "Affects marine ecosystems"
+            ],
+            "difficulty": "nature"
+          },
+          {
+            "id": 8,
+            "title": "Radiator Heating",
+            "category": "Home",
+            "description": "Radiators heat rooms through convection, circulating warm air naturally.",
+            "howItWorks": "Hot water or steam flows through radiator pipes, heating the metal. Air near the radiator warms, expands, and rises. Cool air moves in to replace it, gets heated, and rises. This creates a convection current that circulates warm air throughout the room.",
+            "scienceBehind": "Radiators transfer heat to air through conduction, then convection circulates the warm air. The continuous cycle ensures even heating without fans or forced air systems.",
+            "realExample": "Central heating systems in homes and buildings use radiators that work on convection principles.",
+            "benefits": [
+              "Quiet operation",
+              "Even heat distribution",
+              "Energy efficient"
+            ],
+            "difficulty": "everyday"
+          }
+        ]
+      },
+      "practice": {
+        "ui": {
+          "noQuestionsTitle": "No Questions Available",
+          "noQuestionsBody": "Questions are being prepared. Please check back later.",
+          "questionLabel": "Question {{current}} of {{total}}",
+          "pointsLabel": "{{points}} Points",
+          "difficulty": {
+            "easy": "Easy",
+            "medium": "Medium",
+            "hard": "Hard"
+          },
+          "matchHint": "Match each process with its characteristic",
+          "sequenceHint": "Arrange the steps in the correct order",
+          "processes": "Processes",
+          "characteristics": "Characteristics",
+          "select": "Select",
+          "correctTitle": "Correct!",
+          "incorrectTitle": "Not Quite Right",
+          "previousButton": "Previous",
+          "previousButtonShort": "Prev",
+          "nextButton": "Next",
+          "nextButtonShort": "Next",
+          "submitButton": "Submit Answer",
+          "submitButtonShort": "Submit",
+          "tryAgainButton": "Try Again",
+          "tryAgainButtonShort": "Retry",
+          "completeTitle": "Practice Complete!",
+          "scoreSummary": "Your Score: {{score}} / {{total}} points",
+          "questionsAnswered": "Questions Answered",
+          "scorePercentage": "Score Percentage",
+          "gradeLabel": "Grade",
+          "startOverButton": "Start Over"
+        },
+        "questions": [
+          {
+            "id": 1,
+            "type": "mcq",
+            "question": "What is convection?",
+            "options": [
+              "Heat transfer through direct contact",
+              "Heat transfer through the movement of fluids",
+              "Heat transfer through empty space",
+              "Heat transfer through solids only"
+            ],
+            "correctAnswer": "Heat transfer through the movement of fluids",
+            "explanation": "Convection is the process of heat transfer through the actual movement of particles in fluids (liquids and gases). The heated particles themselves move from one place to another.",
+            "difficulty": "easy",
+            "points": 10
+          },
+          {
+            "id": 2,
+            "type": "true-false",
+            "question": "Hot air rises because it is less dense than cold air.",
+            "options": [
+              "True",
+              "False"
+            ],
+            "correctAnswer": "True",
+            "explanation": "When air is heated, it expands and becomes less dense (lighter) than surrounding cold air. The lighter hot air rises up due to buoyancy.",
+            "difficulty": "easy",
+            "points": 10
+          },
+          {
+            "id": 3,
+            "type": "mcq",
+            "question": "What happens in the paper cup experiment when a candle is placed under one cup?",
+            "options": [
+              "Both cups tilt equally",
+              "The heated cup tilts upward",
+              "The heated cup tilts downward",
+              "Nothing happens"
+            ],
+            "correctAnswer": "The heated cup tilts upward",
+            "explanation": "When a candle heats the air under one cup, the hot air inside rises, making that cup lighter and causing it to tilt upward. This demonstrates that hot air is lighter than cold air.",
+            "difficulty": "medium",
+            "points": 15
+          },
+          {
+            "id": 4,
+            "type": "match",
+            "question": "Match each process with its characteristic:",
+            "pairs": {
+              "left": [
+                "Sea Breeze",
+                "Land Breeze",
+                "Hot Air Rising",
+                "Cold Air Sinking"
+              ],
+              "right": [
+                "Occurs during the day",
+                "Occurs at night",
+                "Less dense air",
+                "More dense air"
+              ]
+            },
+            "correctAnswer": {
+              "Sea Breeze": "Occurs during the day",
+              "Land Breeze": "Occurs at night",
+              "Hot Air Rising": "Less dense air",
+              "Cold Air Sinking": "More dense air"
+            },
+            "explanation": "Sea breeze occurs during the day when land heats faster than water. Land breeze occurs at night when water stays warmer than land. Hot air rises because it's less dense, and cold air sinks because it's more dense.",
+            "difficulty": "medium",
+            "points": 20
+          },
+          {
+            "id": 5,
+            "type": "sequence",
+            "question": "Arrange the steps of convection in water heating:",
+            "sequence": [
+              "Water at bottom gets heated",
+              "Hot water expands and becomes less dense",
+              "Hot water rises to the top",
+              "Cool water from sides moves down",
+              "Convection current is created"
+            ],
+            "correctAnswer": [
+              "Water at bottom gets heated",
+              "Hot water expands and becomes less dense",
+              "Hot water rises to the top",
+              "Cool water from sides moves down",
+              "Convection current is created"
+            ],
+            "explanation": "Convection in liquids follows this sequence: heating at bottom causes expansion, making water less dense so it rises, while cooler water sinks to replace it, creating a continuous convection current.",
+            "difficulty": "hard",
+            "points": 25
+          },
+          {
+            "id": 6,
+            "type": "mcq",
+            "question": "Why does smoke from incense rise upward?",
+            "options": [
+              "Because smoke is heavy",
+              "Because smoke contains hot gases that are less dense than air",
+              "Because smoke is pushed upward",
+              "Because smoke is magnetic"
+            ],
+            "correctAnswer": "Because smoke contains hot gases that are less dense than air",
+            "explanation": "Smoke contains hot gases and particles. Being warmer than surrounding air, smoke is less dense and rises upward through convection. This is why we see smoke rising from fires and incense.",
+            "difficulty": "medium",
+            "points": 15
+          },
+          {
+            "id": 7,
+            "type": "true-false",
+            "question": "Convection only occurs in gases, not in liquids.",
+            "options": [
+              "True",
+              "False"
+            ],
+            "correctAnswer": "False",
+            "explanation": "Convection occurs in both liquids and gases (fluids). Examples include water heating (liquid) and air circulation (gas). Both involve the movement of heated particles.",
+            "difficulty": "easy",
+            "points": 10
+          },
+          {
+            "id": 8,
+            "type": "mcq",
+            "question": "What creates a convection current?",
+            "options": [
+              "Temperature differences causing density differences",
+              "Magnetic forces",
+              "Gravity alone",
+              "Pressure differences only"
+            ],
+            "correctAnswer": "Temperature differences causing density differences",
+            "explanation": "Convection currents are created when temperature differences cause density differences in fluids. Hot fluid is less dense and rises, while cool fluid is denser and sinks, creating a continuous cycle.",
+            "difficulty": "hard",
+            "points": 20
+          }
+        ]
+      }
+    },
+    "radiation": {
+      "learn": {
+        "header": {
+          "title": "Topic 7.3: Radiation",
+          "subtitle": "Heat Transfer Without Any Medium"
+        },
+        "stepLabel": "Step",
+        "ofLabel": "of",
+        "stepTypeLabels": {
+          "intro": "INTRODUCTION",
+          "explanation": "EXPLANATION",
+          "practice": "PRACTICE",
+          "real_world": "REAL WORLD"
+        },
+        "practiceBadge": "Interactive Practice Mode",
+        "realWorldBadge": "Real-World Application",
+        "controls": {
+          "previous": "Previous",
+          "next": "Next",
+          "play": "Play",
+          "pause": "Pause",
+          "reset": "Reset"
+        },
+        "canvas": {
+          "introHotObject": "🔥 Hot Object",
+          "introPerson": "👤 Person",
+          "introMainLabel": "Heat Radiation ~~~>",
+          "introSubLabel": "(No medium needed!)",
+          "fireplacePema": "Pema",
+          "fireplacePalden": "Palden",
+          "fireplaceLabel": "Heat radiates in all directions",
+          "sunSpace": "SPACE",
+          "sunVacuumNote": "(Vacuum - No Air!)",
+          "sunLabel": "☀️ Sun",
+          "earthLabel": "🌍 Earth",
+          "sunDistanceNote": "Heat radiation travels 150 million km!",
+          "utensilTitle": "Hot Utensil",
+          "utensilLabel": "Radiating heat to surroundings",
+          "colorSunLabel": "☀️ Sun Radiation",
+          "colorWhiteCloth": "White Cloth",
+          "colorReflects": "REFLECTS heat ❄️",
+          "colorStaysCool": "Stays Cool",
+          "colorBlackCloth": "Black Cloth",
+          "colorAbsorbs": "ABSORBS heat 🔥",
+          "colorBecomesHot": "Becomes Hot",
+          "comparisonConduction": "CONDUCTION",
+          "comparisonNeedsDirect": "Needs direct",
+          "comparisonContact": "contact",
+          "comparisonSolidMedium": "(Solid medium)",
+          "comparisonConvection": "CONVECTION",
+          "comparisonNeedsParticles": "Needs particle",
+          "comparisonMovement": "movement",
+          "comparisonFluidMedium": "(Fluid medium)",
+          "comparisonRadiation": "RADIATION",
+          "comparisonNoMedium": "NO medium",
+          "comparisonNeeded": "needed!",
+          "comparisonWorksVacuum": "(Works in vacuum)",
+          "defaultTitle": "Radiation Animation"
+        },
+        "steps": [
+          {
+            "id": 1,
+            "title": "What is Radiation?",
+            "description": "Radiation is the process of heat transfer that does NOT require any medium (solid, liquid, or gas). Heat travels directly from a hot object through empty space to reach us. Unlike conduction and convection, radiation can travel through vacuum!",
+            "type": "intro"
+          },
+          {
+            "id": 2,
+            "title": "Heat from the Fireplace",
+            "description": "Remember Pema and Palden sitting around the fireplace? They felt warm even though they were not touching the fire. The heat reached them directly through radiation - traveling through the air without needing the air to move!",
+            "type": "explanation"
+          },
+          {
+            "id": 3,
+            "title": "The Sun's Heat",
+            "description": "The Sun is 150 million kilometers away in space (vacuum). Yet we feel its warmth on Earth! This is radiation at work. Heat from the Sun travels through the vacuum of space to reach us - no medium needed!",
+            "type": "explanation"
+          },
+          {
+            "id": 4,
+            "title": "All Objects Radiate Heat",
+            "description": "Every object radiates heat to its surroundings. A hot utensil kept away from flame gradually cools down by radiating heat to cooler surroundings. Hotter objects radiate more heat than cooler objects.",
+            "type": "explanation"
+          },
+          {
+            "id": 5,
+            "title": "Interactive: Light vs Dark Colors",
+            "description": "Light colors REFLECT heat radiation, keeping you cool in summer. Dark colors ABSORB heat radiation, keeping you warm in winter. This is why we wear white clothes in summer and dark clothes in winter!",
+            "type": "practice"
+          },
+          {
+            "id": 6,
+            "title": "Comparing Heat Transfer Methods",
+            "description": "Conduction needs solid contact. Convection needs particle movement in fluids. Radiation needs NO medium - it can travel through vacuum! All three can happen together, like when heating water in a pan.",
+            "type": "explanation"
+          }
+        ]
+      },
+      "realWorld": {
+        "header": {
+          "title": "Radiation in the Real World",
+          "subtitle": "Discover How Radiation Works in Daily Life"
+        },
+        "categories": {
+          "all": "All Applications",
+          "nature": "Nature",
+          "home": "Home",
+          "everyday": "Everyday",
+          "technology": "Technology",
+          "clothing": "Clothing"
+        },
+        "showingCount": "Showing {{count}} application{{plural}}",
+        "difficulty": {
+          "everyday": "Everyday Life",
+          "nature": "Natural Process",
+          "technology": "Technology"
+        },
+        "sectionTitles": {
+          "whatIsIt": "What Is It?",
+          "howItWorks": "How It Works",
+          "scienceBehind": "Science Behind It",
+          "realExample": "Real Indian Example",
+          "benefits": "Benefits & Importance"
+        },
+        "summary": {
+          "title": "Key Insights About Radiation",
+          "cards": {
+            "noMedium": {
+              "title": "No Medium Needed",
+              "body": "Radiation can travel through vacuum - unlike conduction and convection which require a medium with particles."
+            },
+            "allObjects": {
+              "title": "All Objects Radiate",
+              "body": "Every object above absolute zero radiates heat. Hotter objects radiate more intensely than cooler ones."
+            },
+            "emWaves": {
+              "title": "Electromagnetic Waves",
+              "body": "Heat radiation travels as infrared electromagnetic waves at the speed of light (300,000 km/s)."
+            }
+          }
+        },
+        "applications": [
+          {
+            "id": 1,
+            "title": "Feeling Warmth from Fireplace",
+            "category": "home",
+            "description": "When Pema and Palden sat around the fireplace in Gangtok, they felt warm even without touching the fire. This warmth traveled directly from the fire to them through radiation - no medium needed!",
+            "howItWorks": "The fire emits heat radiation in all directions. This radiation travels through the air (but doesn't need the air!) and reaches people sitting nearby. When this radiation hits your skin, it transfers energy and you feel warm.",
+            "scienceBehind": "Radiation travels as electromagnetic waves (infrared). These waves don't require particles to travel - they can even go through vacuum! The hotter the fire (higher temperature), the more radiation it emits.",
+            "realExample": "Across India, from Himalayan regions using bukhari (traditional heaters) to coastal areas with bonfires, people experience radiation warmth. In Sikkim, families gather around fireplaces during winter, feeling the heat directly without any contact.",
+            "benefits": [
+              "Can feel warmth from a distance without touching hot objects",
+              "Works even when air is still (no convection needed)",
+              "Provides instant warmth as soon as fire starts",
+              "Can warm multiple people in different directions simultaneously"
+            ],
+            "difficulty": "everyday",
+            "icon": "🔥"
+          },
+          {
+            "id": 2,
+            "title": "Sun's Energy Reaching Earth",
+            "category": "nature",
+            "description": "The Sun is 150 million kilometers away from Earth, with empty space (vacuum) in between. Yet we feel the Sun's warmth every day! This incredible journey happens entirely through radiation.",
+            "howItWorks": "The Sun emits enormous amounts of heat and light as radiation. This radiation travels through the complete vacuum of space - where there are NO particles at all - and reaches Earth in about 8 minutes, traveling at the speed of light (300,000 km/second).",
+            "scienceBehind": "Solar radiation includes visible light, infrared (heat), and ultraviolet rays. Unlike conduction (needs contact) and convection (needs particle movement), radiation requires NO medium. It's pure energy transfer through electromagnetic waves.",
+            "realExample": "Kerala receives intense solar radiation near the equator, making it warmer than Gangtok (as Palden noticed!). Solar radiation drives India's agriculture through photosynthesis, powers solar panels across Gujarat and Rajasthan, and causes the monsoon through differential heating.",
+            "benefits": [
+              "Provides all energy for life on Earth through photosynthesis",
+              "Drives weather patterns and water cycle (evaporation)",
+              "Enables vitamin D production in human skin",
+              "Source of clean solar energy for electricity"
+            ],
+            "difficulty": "nature",
+            "icon": "☀️"
+          },
+          {
+            "id": 3,
+            "title": "White vs Dark Clothes",
+            "category": "clothing",
+            "description": "Why do we wear white clothes in summer and dark clothes in winter? It's all about how different colors interact with heat radiation - reflecting or absorbing it!",
+            "howItWorks": "Light colors (white, cream) REFLECT most incoming heat radiation back into the environment. Dark colors (black, navy) ABSORB most heat radiation and convert it to internal heat energy.",
+            "scienceBehind": "When radiation hits a surface, it can be reflected, absorbed, or transmitted. White surfaces reflect up to 80-90% of radiation, while black surfaces absorb 80-90%. Absorbed radiation becomes heat energy in the material.",
+            "realExample": "In Rajasthan's desert regions, people traditionally wear white clothing to stay cool under intense sun (45°C). In Ladakh's cold winters (-20°C), dark clothing helps absorb any available solar radiation for warmth. Indian cricket team wears whites in Test matches played during hot days!",
+            "benefits": [
+              "White in summer: Stays 5-10°C cooler than dark clothes",
+              "Dark in winter: Absorbs solar heat, providing natural warmth",
+              "Simple, no-energy solution for thermal comfort",
+              "Traditional Indian clothing follows this principle"
+            ],
+            "difficulty": "everyday",
+            "icon": "👕"
+          },
+          {
+            "id": 4,
+            "title": "Drying Clothes in Sunlight",
+            "category": "everyday",
+            "description": "Wet clothes dry much faster on a sunny day compared to a cloudy day. The Sun's radiation heats the water in clothes, causing rapid evaporation - a daily example of radiation at work!",
+            "howItWorks": "Solar radiation travels through space and air to reach wet clothes. This radiation transfers energy to water molecules in the fabric, increasing their kinetic energy. Fast-moving water molecules escape as vapor (evaporation).",
+            "scienceBehind": "Evaporation rate depends on temperature. Solar radiation raises water temperature from ~25°C to 40-50°C on cloth surface. At higher temperatures, more water molecules have enough energy to break free and evaporate.",
+            "realExample": "Every Indian household practices this daily! Clothes hung in direct sunlight at noon (when solar radiation is strongest) dry in 2-3 hours, while in shade they may take 6-8 hours. In monsoon season (cloudy), clothes take even longer as radiation is blocked by clouds.",
+            "benefits": [
+              "Saves electricity (no need for clothes dryers)",
+              "Natural disinfection - UV rays in sunlight kill bacteria",
+              "Free energy from the Sun",
+              "Clothes smell fresh from outdoor drying"
+            ],
+            "difficulty": "everyday",
+            "icon": "👔"
+          },
+          {
+            "id": 5,
+            "title": "Solar Cookers",
+            "category": "technology",
+            "description": "Solar cookers use mirrors to concentrate the Sun's radiation onto a cooking pot. Food gets cooked using only sunlight - no gas, no electricity, no smoke! Pure radiation cooking.",
+            "howItWorks": "Parabolic mirrors reflect and focus solar radiation onto a central point where the cooking pot is placed. This concentrated radiation can reach temperatures of 150-200°C, enough to cook rice, vegetables, and lentils.",
+            "scienceBehind": "Mirrors redirect radiation rays toward a focal point. When parallel radiation rays from the Sun hit a parabolic mirror, they all reflect to one spot. This concentration multiplies the radiation intensity by 50-100 times!",
+            "realExample": "Gujarat and Rajasthan have many solar cooker projects. Tulsi Chanrai Foundation provided solar cookers to villages in Gujarat. During summer, these cookers can prepare a full meal (dal, rice, vegetables) for a family of 4-5 in 2-3 hours using only sunlight!",
+            "benefits": [
+              "Zero fuel cost - completely free cooking energy",
+              "No smoke or indoor air pollution (unlike wood fires)",
+              "Reduces deforestation (no need for firewood)",
+              "Food retains more nutrients with slow solar cooking"
+            ],
+            "difficulty": "technology",
+            "icon": "🍳"
+          },
+          {
+            "id": 6,
+            "title": "Greenhouse Effect on Earth",
+            "category": "nature",
+            "description": "Earth's atmosphere acts like a greenhouse, trapping heat radiation from the Sun. This natural process keeps our planet warm enough for life - without it, Earth would be frozen at -18°C!",
+            "howItWorks": "Solar radiation passes through the atmosphere and warms Earth's surface. Earth then radiates heat back as infrared radiation. Greenhouse gases (CO₂, water vapor, methane) trap some of this outgoing radiation, keeping Earth warm.",
+            "scienceBehind": "Visible light from Sun penetrates atmosphere easily. Earth absorbs it and re-emits as infrared (heat) radiation. Greenhouse gases are transparent to visible light but opaque to infrared - they trap the heat trying to escape.",
+            "realExample": "Natural greenhouse effect maintains India's livable temperatures. However, excessive CO₂ from vehicles and industry enhances this effect, causing global warming. This affects Indian monsoons and Himalayan glaciers like those near Gangtok.",
+            "benefits": [
+              "Maintains Earth's average temperature at +15°C (instead of -18°C)",
+              "Enables liquid water to exist on Earth's surface",
+              "Makes agriculture and life possible",
+              "Natural climate regulation system"
+            ],
+            "difficulty": "nature",
+            "icon": "🌍"
+          },
+          {
+            "id": 7,
+            "title": "Thermal Imaging Cameras",
+            "category": "technology",
+            "description": "These special cameras can 'see' heat radiation that our eyes cannot detect. They create images based on infrared radiation emitted by objects, revealing temperature differences.",
+            "howItWorks": "All objects above absolute zero (-273°C) emit infrared radiation. Thermal cameras detect this radiation and convert it to visible images - hotter objects appear bright (red/white), cooler objects appear dark (blue/black).",
+            "scienceBehind": "Amount of infrared radiation emitted increases rapidly with temperature (Stefan-Boltzmann law: power ∝ T⁴). A surface at 37°C (body temperature) emits much more radiation than one at 27°C (room temperature).",
+            "realExample": "During COVID-19, thermal cameras detected fever at airports across India by sensing excess body heat radiation. Indian Army uses them at LOC for night surveillance. Firefighters in Mumbai use them to locate people in smoke-filled buildings - heat radiation passes through smoke!",
+            "benefits": [
+              "Non-contact temperature measurement (important for COVID screening)",
+              "Works in complete darkness (detects heat, not light)",
+              "Can detect heat loss in buildings (energy audits)",
+              "Medical diagnosis - detects inflammation and blood flow issues"
+            ],
+            "difficulty": "technology",
+            "icon": "📷"
+          },
+          {
+            "id": 8,
+            "title": "Heat Radiation from Hot Utensils",
+            "category": "home",
+            "description": "A hot metal pot kept on the table (away from the stove) gradually cools down. Where does the heat go? It radiates away to the cooler surroundings - walls, air, table - through radiation!",
+            "howItWorks": "The hot utensil (say at 80°C) emits heat radiation in all directions. Cooler surroundings (at 25°C room temperature) absorb this radiation. The utensil keeps radiating until temperatures equalize.",
+            "scienceBehind": "ALL objects continuously radiate heat to surroundings. Hotter objects radiate more intensely. Net heat transfer occurs from hot to cold. A 80°C pot radiates about 16 times more power than a 25°C wall!",
+            "realExample": "After cooking, grandmother's hot kadhai gradually cools on the kitchen counter. You can feel heat radiating from it if you hold your hand nearby (without touching!). The metal emits infrared radiation that your skin senses as warmth.",
+            "benefits": [
+              "Automatic cooling without any effort",
+              "Radiation works alongside conduction and convection",
+              "Can feel heat without direct contact (safety feature)",
+              "Faster cooling for hot items due to radiation"
+            ],
+            "difficulty": "everyday",
+            "icon": "🍲"
+          },
+          {
+            "id": 9,
+            "title": "Night Vision Technology",
+            "category": "technology",
+            "description": "Night vision devices let us 'see' in darkness by detecting infrared heat radiation from warm objects (humans, animals, vehicles) even when there's no visible light.",
+            "howItWorks": "Objects warmer than surroundings emit more infrared radiation. Night vision devices detect this invisible radiation, amplify the signal electronically, and display it as a green-tinted visible image.",
+            "scienceBehind": "Human body at 37°C emits peak radiation at wavelength 9.4 micrometers (infrared - invisible to eyes). Night vision detects wavelengths 0.7-14 micrometers, covering near and thermal infrared regions.",
+            "realExample": "Indian security forces use night vision at borders. Wildlife researchers in Jim Corbett National Park use thermal cameras to study nocturnal tigers without disturbing them. The cameras detect body heat radiation from tigers against cooler forest background.",
+            "benefits": [
+              "Security and surveillance in complete darkness",
+              "Wildlife observation without visible light disturbance",
+              "Search and rescue operations at night",
+              "Military operations and border patrol"
+            ],
+            "difficulty": "technology",
+            "icon": "🌙"
+          },
+          {
+            "id": 10,
+            "title": "Earth's Energy Balance",
+            "category": "nature",
+            "description": "Earth receives radiation from the Sun and radiates heat back to space. These two radiation flows must balance, or Earth would keep heating up or cooling down continuously!",
+            "howItWorks": "Earth receives ~1360 W/m² solar radiation at top of atmosphere. About 30% is reflected back to space. Remaining 70% is absorbed, warms Earth, and is re-radiated as infrared radiation to space.",
+            "scienceBehind": "Incoming solar radiation (shortwave) = Outgoing terrestrial radiation (longwave) for stable temperature. Earth's average temperature adjusts until radiation out equals radiation in. Currently receiving ~240 W/m² net, radiating same amount back.",
+            "realExample": "This balance maintains Earth's climate. However, increasing greenhouse gases trap more outgoing radiation, causing warming. This affects Indian agriculture, water resources, and Himalayan ice. Scientists monitor this balance using satellites to understand climate change.",
+            "benefits": [
+              "Maintains stable global average temperature (~15°C)",
+              "Enables predictable seasons and climate patterns",
+              "Allows life to adapt to stable conditions",
+              "Understanding this helps predict climate change"
+            ],
+            "difficulty": "nature",
+            "icon": "⚖️"
+          }
+        ]
+      },
+      "practice": {
+        "header": {
+          "title": "Radiation Practice Quiz",
+          "subtitle": "Test Your Understanding"
+        },
+        "pointsLabel": "points",
+        "progressLabel": "{{answered}} of {{total}} questions answered",
+        "questionLabel": "Q{{id}}",
+        "submitAnswer": "Submit Answer",
+        "next": "Next",
+        "previous": "Previous",
+        "restartQuiz": "Restart Quiz",
+        "final": {
+          "title": "Quiz Complete! 🎉",
+          "subtitle": "Great job completing the radiation quiz!"
+        },
+        "totalPoints": "Total Points",
+        "scoreLabel": "Score",
+        "correctLabel": "Correct",
+        "gradeLabel": "Grade",
+        "keyReminders": {
+          "title": "📚 Key Reminders:",
+          "items": [
+            "Radiation does NOT need any medium - works in vacuum!",
+            "Sun's heat reaches Earth through radiation across 150 million km",
+            "Light colors reflect heat, dark colors absorb heat",
+            "All objects radiate heat to their surroundings",
+            "Conduction and convection need a medium, radiation doesn't"
+          ]
+        },
+        "correctFeedback": "✓ Correct!",
+        "incorrectFeedback": "✗ Incorrect",
+        "arrangeSequenceHint": "Use the arrows to arrange these steps in the correct order",
+        "selectAnswerPlaceholder": "Select answer...",
+        "grade": {
+          "excellent": "Excellent! 🌟",
+          "good": "Good Job! 👍",
+          "keepPracticing": "Keep Practicing! 📚"
+        },
+        "difficulty": {
+          "easy": "EASY",
+          "medium": "MEDIUM",
+          "hard": "HARD"
+        },
+        "questions": [
+          {
+            "id": 1,
+            "question": "What is radiation?",
+            "type": "mcq",
+            "options": [
+              "Heat transfer through direct contact between particles",
+              "Heat transfer through movement of particles in fluids",
+              "Heat transfer without requiring any medium",
+              "Heat transfer only in solids"
+            ],
+            "correctAnswer": "Heat transfer without requiring any medium",
+            "explanation": "Radiation is the process of heat transfer that does NOT require any medium (solid, liquid, or gas). Heat travels directly from a hot object through empty space.",
+            "difficulty": "easy",
+            "points": 10
+          },
+          {
+            "id": 2,
+            "question": "Radiation can travel through vacuum (empty space).",
+            "type": "true_false",
+            "options": [
+              "True",
+              "False"
+            ],
+            "correctAnswer": "True",
+            "explanation": "TRUE! This is what makes radiation unique. The Sun's heat reaches Earth by traveling through 150 million km of vacuum space. No medium is needed!",
+            "difficulty": "easy",
+            "points": 10
+          },
+          {
+            "id": 3,
+            "question": "How does heat from the Sun reach Earth?",
+            "type": "mcq",
+            "options": [
+              "Through conduction in the atmosphere",
+              "Through convection currents in space",
+              "Through radiation across vacuum",
+              "Through air particles in space"
+            ],
+            "correctAnswer": "Through radiation across vacuum",
+            "explanation": "The Sun's heat reaches Earth through radiation. It travels 150 million kilometers through the vacuum of space where there are no particles to conduct or convect heat!",
+            "difficulty": "medium",
+            "points": 15
+          },
+          {
+            "id": 4,
+            "question": "Why do we wear white clothes in summer and dark clothes in winter?",
+            "type": "mcq",
+            "options": [
+              "White clothes absorb heat, dark clothes reflect heat",
+              "White clothes reflect heat, dark clothes absorb heat",
+              "Color has no effect on heat",
+              "White clothes conduct heat better"
+            ],
+            "correctAnswer": "White clothes reflect heat, dark clothes absorb heat",
+            "explanation": "Light colors REFLECT most heat radiation (keeping us cool in summer), while dark colors ABSORB more heat radiation (keeping us warm in winter).",
+            "difficulty": "medium",
+            "points": 15
+          },
+          {
+            "id": 5,
+            "question": "All objects radiate heat to their surroundings.",
+            "type": "true_false",
+            "options": [
+              "True",
+              "False"
+            ],
+            "correctAnswer": "True",
+            "explanation": "TRUE! Every object radiates heat. A hot utensil kept away from flame gradually cools down by radiating heat to cooler surroundings. Hotter objects radiate more heat.",
+            "difficulty": "easy",
+            "points": 10
+          },
+          {
+            "id": 6,
+            "question": "Pema and Palden felt warm sitting near the fireplace even without touching the fire. This warmth was due to:",
+            "type": "mcq",
+            "options": [
+              "Conduction through the air",
+              "Convection currents in the room",
+              "Radiation from the fire",
+              "Reflected heat from walls"
+            ],
+            "correctAnswer": "Radiation from the fire",
+            "explanation": "The warmth they felt was due to RADIATION - heat traveling directly from the fire to them through the air without needing the air particles to move.",
+            "difficulty": "medium",
+            "points": 15
+          },
+          {
+            "id": 7,
+            "question": "Which statement about radiation is INCORRECT?",
+            "type": "mcq",
+            "options": [
+              "Radiation requires a medium to travel",
+              "Radiation can travel through vacuum",
+              "All objects radiate heat",
+              "The Sun's heat reaches Earth by radiation"
+            ],
+            "correctAnswer": "Radiation requires a medium to travel",
+            "explanation": "This is INCORRECT! Radiation does NOT require any medium. This is what makes it different from conduction and convection, which both need a medium.",
+            "difficulty": "hard",
+            "points": 20
+          },
+          {
+            "id": 8,
+            "question": "A hot metal pot is kept on a table (not on a stove). It gradually cools down. What process causes this cooling?",
+            "type": "mcq",
+            "options": [
+              "Conduction to the table only",
+              "Convection in the air only",
+              "Radiation to surroundings only",
+              "All three: conduction, convection, and radiation"
+            ],
+            "correctAnswer": "All three: conduction, convection, and radiation",
+            "explanation": "The pot cools through ALL THREE processes: conduction to the table, convection to air around it, and radiation to all surroundings. But the textbook emphasizes radiation!",
+            "difficulty": "hard",
+            "points": 20
+          },
+          {
+            "id": 9,
+            "question": "Wet clothes dry faster in sunlight because:",
+            "type": "mcq",
+            "options": [
+              "Wind blows the water away",
+              "Sun's radiation heats water molecules causing faster evaporation",
+              "Air conducts heat to clothes",
+              "Sunlight absorbs the water"
+            ],
+            "correctAnswer": "Sun's radiation heats water molecules causing faster evaporation",
+            "explanation": "The Sun's RADIATION heats the water in clothes, making water molecules move faster and evaporate more quickly. The heat travels through space and air via radiation!",
+            "difficulty": "medium",
+            "points": 15
+          },
+          {
+            "id": 10,
+            "question": "Heat transfer methods can work together at the same time.",
+            "type": "true_false",
+            "options": [
+              "True",
+              "False"
+            ],
+            "correctAnswer": "True",
+            "explanation": "TRUE! When heating water in a pan: conduction transfers heat from flame to pan, convection heats the water, and radiation makes you feel warmth near the flame. All three work together!",
+            "difficulty": "easy",
+            "points": 10
+          },
+          {
+            "id": 11,
+            "question": "Match each heat transfer process with its key characteristic:",
+            "type": "match",
+            "options": [
+              "Conduction|Particles pass heat to neighbors without moving position",
+              "Convection|Particles physically move carrying heat with them",
+              "Radiation|No medium needed, works in vacuum",
+              "All three|Require a temperature difference"
+            ],
+            "correctAnswer": {
+              "Conduction": "Particles pass heat to neighbors without moving position",
+              "Convection": "Particles physically move carrying heat with them",
+              "Radiation": "No medium needed, works in vacuum",
+              "All three": "Require a temperature difference"
+            },
+            "explanation": "Each heat transfer method has unique characteristics. Radiation's ability to work without any medium makes it special - that's how the Sun's energy reaches us!",
+            "difficulty": "hard",
+            "points": 25
+          },
+          {
+            "id": 12,
+            "question": "Arrange these statements about solar cookers in the correct order from start to finish:",
+            "type": "sequence",
+            "options": [
+              "Sunlight reaches Earth through radiation across space",
+              "Mirrors reflect and concentrate sunlight",
+              "Concentrated radiation heats the cooking pot",
+              "Food in the pot gets cooked",
+              "All this happens without any medium for heat transfer!"
+            ],
+            "correctAnswer": [
+              "Sunlight reaches Earth through radiation across space",
+              "Mirrors reflect and concentrate sunlight",
+              "Concentrated radiation heats the cooking pot",
+              "Food in the pot gets cooked",
+              "All this happens without any medium for heat transfer!"
+            ],
+            "explanation": "Solar cookers demonstrate radiation perfectly: the Sun's energy travels through vacuum, gets concentrated by mirrors, and heats food - all through radiation without needing particles to carry the heat!",
+            "difficulty": "hard",
+            "points": 25
+          }
+        ]
+      }
+    },
+    "waterCycle": {
+      "nav": {
+        "logo": "Water Cycle Learning",
+        "tabs": {
+          "learn": "Learn",
+          "practice": "Practice",
+          "applications": "Applications"
+        }
+      },
+      "language": {
+        "en": "English",
+        "hi": "हिंदी",
+        "gu": "ગુજરાતી",
+        "selectorLabel": "Select Language"
+      },
+      "controls": {
+        "step": "Step",
+        "of": "of",
+        "previous": "Previous",
+        "next": "Next",
+        "play": "Play",
+        "pause": "Pause",
+        "reset": "Reset"
+      },
+      "learn": {
+        "steps": {
+          "overview": {
+            "title": "What is the Water Cycle?",
+            "description": "The water cycle is the continuous movement of water on, above, and below the Earth's surface. Water moves between oceans, atmosphere, and land through evaporation, condensation, and precipitation."
+          },
+          "evaporation": {
+            "title": "Step 1: Evaporation",
+            "description": "When the Sun heats water in oceans, rivers, and lakes, it evaporates and becomes water vapor. Watch the water droplets rise upward from the water surface as they turn into invisible vapor."
+          },
+          "transpiration": {
+            "title": "Step 2: Transpiration",
+            "description": "Water also evaporates from trees and plants through transpiration. Plants absorb water through their roots and release water vapor through tiny pores in their leaves. Watch the water droplets rising from the tree."
+          },
+          "condensation": {
+            "title": "Step 3: Condensation",
+            "description": "As water vapor rises into the atmosphere, it cools down. When it cools enough, the water vapor condenses into tiny water droplets, forming clouds. Notice how the vapor disappears and clouds form."
+          },
+          "precipitation": {
+            "title": "Step 4: Precipitation",
+            "description": "When clouds become heavy with water droplets, they release the water back to Earth as precipitation - rain, snow, or hail. Watch the rain falling from the clouds."
+          },
+          "collection": {
+            "title": "Step 5: Collection",
+            "description": "Rainwater that falls on Earth flows into ponds, lakes, rivers, and oceans. Some water flows over the surface as runoff. The water is collected and ready to evaporate again."
+          },
+          "complete": {
+            "title": "Step 6: The Complete Cycle",
+            "description": "The water cycle is complete! Water evaporates from water bodies and plants, forms clouds through condensation, falls as rain, and collects again. This continuous process helps redistribute water across Earth."
+          }
+        },
+        "canvas": {
+          "evaporation": "Evaporation",
+          "transpiration": "Transpiration",
+          "condensation": "Condensation",
+          "precipitation": "Precipitation",
+          "collection": "Collection",
+          "sun": "Sun",
+          "waterBody": "Water Body",
+          "clouds": "Clouds",
+          "rain": "Rain"
+        }
+      }
+    },
+    "sourcesOfLight": {
+      "nav": {
+        "logo": "Sources of Light Learning",
+        "tabs": {
+          "learn": "Learn",
+          "practice": "Practice",
+          "applications": "Applications",
+          "real_world": "Real World"
+        }
+      },
+      "language": {
+        "en": "English",
+        "hi": "हिंदी",
+        "gu": "ગુજરાતી",
+        "selectorLabel": "Select Language"
+      },
+      "controls": {
+        "step": "Step",
+        "of": "of",
+        "previous": "Previous",
+        "next": "Next",
+        "play": "Play",
+        "pause": "Pause",
+        "reset": "Reset"
+      },
+      "steps": {
+        "overview": {
+          "title": "What are Sources of Light?",
+          "description": "Light is essential for vision and life on Earth. The Sun is our primary natural source of light. But there are many other sources - both natural and artificial. Let's explore the fascinating world of light sources!"
+        },
+        "luminous_objects": {
+          "title": "Luminous Objects",
+          "description": "Objects that emit their own light are called luminous objects. The Sun, stars, lightning, fire, and certain animals like fireflies produce their own light through various natural processes."
+        },
+        "non_luminous_objects": {
+          "title": "Non-Luminous Objects",
+          "description": "Objects that do not emit their own light are called non-luminous objects. The Moon is a perfect example - it doesn't produce its own light but reflects sunlight that falls on it. This is why we can see the Moon at night!"
+        },
+        "natural_sources": {
+          "title": "Natural Sources of Light",
+          "description": "The Sun gives out or emits its own light and is the main source of natural light on Earth. Other natural sources include stars, lightning, natural fire, and bioluminescent animals like fireflies that use light to communicate."
+        },
+        "artificial_sources": {
+          "title": "Artificial Sources of Light",
+          "description": "In ancient times, humans learned to create fire - the earliest form of artificial lighting. With time, they created light using different fuels like animal fat, oil, wax, and gas. Today, most lighting needs are met by electric lighting."
+        },
+        "led_technology": {
+          "title": "LED Technology Revolution",
+          "description": "Light Emitting Diode (LED) lamps are modern light sources that consume much less power, are brighter, and last longer than traditional lamps. This reduces electricity bills and is better for the environment. India has promoted LED usage nationwide."
+        },
+        "complete": {
+          "title": "Complete Understanding",
+          "description": "You now understand the difference between luminous and non-luminous objects, natural and artificial light sources, and the evolution of lighting technology from ancient fire to modern LEDs. Light sources are essential for life and modern society!"
+        }
+      },
+      "practice": {
+        "title": "Practice Exercise",
+        "subtitle": "Answer the following questions to test your understanding.",
+        "question": "Question",
+        "score": "Score",
+        "correct": "Correct!",
+        "incorrect": "Incorrect",
+        "explanation": "Explanation",
+        "checkAnswer": "Check Answer",
+        "nextQuestion": "Next Question",
+        "selectAnswer": "Please select an answer first",
+        "complete": "Practice Complete!",
+        "finalScore": "Your Final Score",
+        "restart": "Restart Practice",
+        "questions": []
+      },
+      "realWorld": {
+        "title": "Real World Applications",
+        "subtitle": "Discover how sources of light are used in everyday life",
+        "applications": []
+      }
+    },
+    "Learn": "Learn",
+    "Practice": "Practice"
+  }
+}

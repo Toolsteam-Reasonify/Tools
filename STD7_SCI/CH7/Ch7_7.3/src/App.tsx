@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { LanguageProvider } from './components/RadiationLearning';
-import RadiationLearning from './components/RadiationLearning';
+import { LanguageProvider } from './components/Radiation';
+import RadiationLearning from './components/Radiation';
 
 const App: React.FC = () => {
   const [mode, setMode] = useState<'learn' | 'practice' | 'applications'>('learn');

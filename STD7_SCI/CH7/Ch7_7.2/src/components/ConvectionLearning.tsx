@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo, createContext, useContext, ReactNode } from 'react';
-import { Play, Pause, RotateCcw, ChevronRight, ChevronLeft, Wind, Thermometer, Sun, Flame, ChevronDown, ChevronUp, CheckCircle, XCircle, Award, RotateCcw as ResetIcon, Globe, Home, Coffee, CloudSnow, Sparkles, Info, BookOpen, Lightbulb } from 'lucide-react';
+import { Play, Pause, RotateCcw, ChevronRight, ChevronLeft, Wind, Thermometer, Sun, Flame, ChevronDown, ChevronUp, CheckCircle, XCircle, Award, Globe, Home, Coffee, CloudSnow, Sparkles, Info, BookOpen, Lightbulb } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import i18n from '@/i18n';
 
@@ -257,7 +257,7 @@ const LanguageSelector: React.FC = () => {
         aria-label={t('language.selectorLabel')}
         value={language}
         onChange={(e) => setLanguage(e.target.value as Language)}
-        className="appearance-none bg-white border-2 border-teal-500 rounded-lg px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 pr-6 sm:pr-8 text-xs sm:text-sm md:text-base text-teal-700 font-medium cursor-pointer hover:border-purple-500 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-300"
+        className="appearance-none bg-white border-2 border-teal-500 rounded-lg px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 pr-6 sm:pr-8 w-40 sm:w-48 md:w-56 text-xs sm:text-sm md:text-base text-teal-700 font-medium cursor-pointer hover:border-purple-500 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-300"
       >
         {languages.map((lang) => (
           <option key={lang.code} value={lang.code}>

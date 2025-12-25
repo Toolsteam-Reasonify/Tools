@@ -257,7 +257,7 @@ const LanguageSelector: React.FC = () => {
         aria-label={t('language.selectorLabel')}
         value={language}
         onChange={(e) => setLanguage(e.target.value as Language)}
-        className="appearance-none bg-white border-2 border-teal-500 rounded-lg px-4 py-2 pr-8 text-teal-700 font-medium cursor-pointer hover:border-purple-500 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-300"
+        className="appearance-none bg-white border-2 border-teal-500 rounded-lg px-4 py-2 pr-8 w-48 text-teal-700 font-medium cursor-pointer hover:border-purple-500 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-300"
       >
         {languages.map((lang) => (
           <option key={lang.code} value={lang.code}>

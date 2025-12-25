@@ -1,0 +1,879 @@
+{
+  "chapter_title": "Topic 3.4: Conductors & Insulators",
+  "modules": [
+    {
+      "module_id": "M1",
+      "module_name": "Introduction to Conductors and Insulators",
+      "module_description": "Understanding the fundamental concepts of electrical conductivity, identifying materials that conduct electricity (conductors) and those that block it (insulators), and exploring their properties and real-world applications.",
+      "segments": [
+        {
+          "segment_id": "M1.S1",
+          "segment_name": "Understanding Conductors and Insulators",
+          "segment_description": "Introduction to materials that allow or block the flow of electricity, and how to identify them.",
+          "topics": [
+            {
+              "topic_id": "M1.S1.T1",
+              "topic_name": "What are Conductors and Insulators?",
+              "concept_bullets": [
+                "Conductors are materials that allow electricity to flow through them easily",
+                "Insulators are materials that block or prevent the flow of electricity",
+                "Metals like copper, iron, and aluminum are good conductors",
+                "Materials like plastic, rubber, wood, and glass are insulators",
+                "The ability to conduct electricity depends on the presence of free electrons"
+              ],
+              "learning_objectives": [
+                {
+                  "objective_id": "M1.S1.T1.O1",
+                  "objective_text": "Define conductors and insulators",
+                  "image_examples": [
+                    {
+                      "example_id": "M1.S1.T1.O1.E1",
+                      "example_title": "Copper Wire Conductor",
+                      "image_description": "This image illustrates a conductor by showing a copper wire connected to a circuit with a glowing bulb. The copper wire allows electricity to flow, completing the circuit and lighting the bulb, demonstrating what a conductor does.",
+                      "image_prompt": "Educational illustration, Grade 7-8 textbook style. A simple circuit diagram showing a battery connected to a glowing light bulb via a copper wire. The copper wire is highlighted in orange-brown color. An arrow shows electric current flowing through the wire, labeled 'Current Flow'. The bulb is glowing brightly. Clear labels: 'Conductor: Copper Wire', 'Battery', 'Bulb'. Vibrant but educational colors, clear focal point. Uncluttered background.",
+                      "other_details": {
+                        "labels": [
+                          "Conductor: Copper Wire",
+                          "Current Flow →",
+                          "Glowing Bulb",
+                          "Battery"
+                        ],
+                        "caption": "A conductor like copper wire allows electricity to flow through it, completing the circuit and lighting the bulb.",
+                        "diagram_type": "circuit diagram",
+                        "color_scheme": "Orange-brown for copper, yellow for glowing bulb, metallic gray for battery",
+                        "key_elements": [
+                          "Copper wire",
+                          "Glowing bulb",
+                          "Battery",
+                          "Current flow arrows"
+                        ],
+                        "annotations": [
+                          "Arrow showing current flow through wire",
+                          "Label: Conductor"
+                        ],
+                        "style": "scientific diagram"
+                      },
+                      "image_url": "https://storage.googleapis.com/topic-content-images/conductors_insulators/M1/S1/T1/M1_S1_T1_O1_E1.png"
+                    },
+                    {
+                      "example_id": "M1.S1.T1.O1.E2",
+                      "example_title": "Plastic Insulator Blocking Current",
+                      "image_description": "The image illustrates an insulator by showing a plastic rod placed in a circuit gap. The circuit remains incomplete, and the bulb does not glow, demonstrating that plastic blocks electricity and is an insulator.",
+                      "image_prompt": "Educational illustration, Grade 7-8 textbook style. A simple circuit diagram with a battery, wires, and a bulb. A plastic rod (blue colored) is placed in a gap in the circuit. The bulb is not glowing (dark). A red X mark indicates 'No Current Flow'. Clear labels: 'Insulator: Plastic', 'Battery', 'Bulb (OFF)'. Educational colors, clear composition. Uncluttered background.",
+                      "other_details": {
+                        "labels": [
+                          "Insulator: Plastic",
+                          "No Current Flow ✗",
+                          "Bulb (OFF)",
+                          "Battery"
+                        ],
+                        "caption": "An insulator like plastic blocks electricity from flowing, so the circuit remains incomplete and the bulb stays off.",
+                        "diagram_type": "circuit diagram",
+                        "color_scheme": "Blue for plastic, dark gray for unlit bulb, metallic gray for battery",
+                        "key_elements": [
+                          "Plastic rod in circuit gap",
+                          "Unlit bulb",
+                          "Battery",
+                          "X mark showing blocked current"
+                        ],
+                        "annotations": [
+                          "X mark indicating blocked current",
+                          "Label: Insulator"
+                        ],
+                        "style": "scientific diagram"
+                      },
+                      "image_url": "https://storage.googleapis.com/topic-content-images/conductors_insulators/M1/S1/T1/M1_S1_T1_O1_E2.png"
+                    },
+                    {
+                      "example_id": "M1.S1.T1.O1.E3",
+                      "example_title": "Iron Rod Conductor",
+                      "image_description": "This image shows an iron rod completing a circuit and allowing the bulb to glow. Iron, being a metal, is a conductor that allows electricity to flow through it.",
+                      "image_prompt": "Educational illustration, Grade 7-8 textbook style. A circuit diagram with an iron rod (dark gray/metallic) placed in a circuit gap. The bulb is glowing brightly. Current flow arrows show electricity passing through the iron rod. Labels: 'Conductor: Iron Rod', 'Current Flow', 'Glowing Bulb'. Clear, educational style with metallic colors for iron.",
+                      "other_details": {
+                        "labels": [
+                          "Conductor: Iron Rod",
+                          "Current Flow →",
+                          "Glowing Bulb",
+                          "Metallic Material"
+                        ],
+                        "caption": "Iron is a metal and a good conductor. When placed in a circuit, it allows electricity to flow and lights the bulb.",
+                        "diagram_type": "circuit diagram",
+                        "color_scheme": "Dark gray/metallic for iron, yellow for glowing bulb",
+                        "key_elements": [
+                          "Iron rod",
+                          "Glowing bulb",
+                          "Current flow"
+                        ],
+                        "annotations": [
+                          "Arrow showing current through iron",
+                          "Label: Conductor"
+                        ],
+                        "style": "scientific diagram"
+                      },
+                      "image_url": "https://storage.googleapis.com/topic-content-images/conductors_insulators/M1/S1/T1/M1_S1_T1_O1_E3.png"
+                    },
+                    {
+                      "example_id": "M1.S1.T1.O1.E4",
+                      "example_title": "Wood Insulator",
+                      "image_description": "The image demonstrates that wood is an insulator by showing a wooden stick in a circuit gap. The circuit remains broken, and the bulb does not light up, showing that wood blocks electricity.",
+                      "image_prompt": "Educational illustration, Grade 7-8 textbook style. A circuit diagram with a wooden stick (brown, natural wood texture) placed in a circuit gap. The bulb is dark (not glowing). A red X indicates blocked current. Labels: 'Insulator: Wood', 'No Current Flow', 'Bulb (OFF)'. Natural wood colors, clear educational style.",
+                      "other_details": {
+                        "labels": [
+                          "Insulator: Wood",
+                          "No Current Flow ✗",
+                          "Bulb (OFF)",
+                          "Natural Material"
+                        ],
+                        "caption": "Wood is a natural insulator. It does not allow electricity to pass through, so the circuit remains incomplete.",
+                        "diagram_type": "circuit diagram",
+                        "color_scheme": "Brown for wood, dark gray for unlit bulb",
+                        "key_elements": [
+                          "Wooden stick",
+                          "Unlit bulb",
+                          "Blocked current indicator"
+                        ],
+                        "annotations": [
+                          "X mark showing blocked current",
+                          "Label: Insulator"
+                        ],
+                        "style": "scientific diagram"
+                      },
+                      "image_url": "https://storage.googleapis.com/topic-content-images/conductors_insulators/M1/S1/T1/M1_S1_T1_O1_E4.png"
+                    },
+                    {
+                      "example_id": "M1.S1.T1.O1.E5",
+                      "example_title": "Graphite Conductor (Pencil Lead)",
+                      "image_description": "This image shows that graphite, the 'lead' in pencils, is a conductor. When graphite completes a circuit, electricity flows and the bulb glows, demonstrating that not all conductors are metals.",
+                      "image_prompt": "Educational illustration, Grade 7-8 textbook style. A circuit diagram with a graphite rod (dark gray/black) from a pencil placed in a circuit gap. The bulb is glowing. Current flow arrows show electricity passing through graphite. Labels: 'Conductor: Graphite (Pencil Lead)', 'Current Flow', 'Glowing Bulb'. Educational style with dark gray for graphite.",
+                      "other_details": {
+                        "labels": [
+                          "Conductor: Graphite",
+                          "Pencil Lead",
+                          "Current Flow →",
+                          "Glowing Bulb"
+                        ],
+                        "caption": "Graphite, the 'lead' in pencils, is a non-metal conductor. It allows electricity to flow through it.",
+                        "diagram_type": "circuit diagram",
+                        "color_scheme": "Dark gray/black for graphite, yellow for glowing bulb",
+                        "key_elements": [
+                          "Graphite rod",
+                          "Glowing bulb",
+                          "Current flow"
+                        ],
+                        "annotations": [
+                          "Arrow showing current through graphite",
+                          "Label: Conductor (Non-metal)"
+                        ],
+                        "style": "scientific diagram"
+                      },
+                      "image_url": "https://storage.googleapis.com/topic-content-images/conductors_insulators/M1/S1/T1/M1_S1_T1_O1_E5.png"
+                    }
+                  ]
+                },
+                {
+                  "objective_id": "M1.S1.T1.O2",
+                  "objective_text": "Identify common conductors and insulators",
+                  "image_examples": [
+                    {
+                      "example_id": "M1.S1.T1.O2.E1",
+                      "example_title": "Common Conductors: Metals",
+                      "image_description": "This image displays various metal objects that are conductors: copper wire, iron nail, aluminum foil, and steel spoon. All are shown with a glowing bulb indicator, showing they conduct electricity.",
+                      "image_prompt": "Educational illustration, Grade 7-8 textbook style. A collection of metal objects arranged neatly: copper wire (orange-brown), iron nail (dark gray), aluminum foil (silver), and steel spoon (metallic gray). Each object has a small glowing bulb icon next to it, indicating they are conductors. Labels: 'Conductors: Metals'. Clear, educational layout with metallic colors.",
+                      "other_details": {
+                        "labels": [
+                          "Copper Wire",
+                          "Iron Nail",
+                          "Aluminum Foil",
+                          "Steel Spoon",
+                          "All are Conductors"
+                        ],
+                        "caption": "Common metal conductors include copper, iron, aluminum, and steel. All metals are good conductors of electricity.",
+                        "diagram_type": "collection illustration",
+                        "color_scheme": "Metallic colors: orange-brown, gray, silver",
+                        "key_elements": [
+                          "Copper wire",
+                          "Iron nail",
+                          "Aluminum foil",
+                          "Steel spoon",
+                          "Conductor indicators"
+                        ],
+                        "annotations": [
+                          "Glowing bulb icons for each conductor",
+                          "Label: All Metals are Conductors"
+                        ],
+                        "style": "educational collection"
+                      },
+                      "image_url": "https://storage.googleapis.com/topic-content-images/conductors_insulators/M1/S1/T1/M1_S1_T1_O2_E1.png"
+                    },
+                    {
+                      "example_id": "M1.S1.T1.O2.E2",
+                      "example_title": "Common Insulators: Non-Metals",
+                      "image_description": "The image shows various insulating materials: plastic scale, rubber eraser, glass bangle, and wooden stick. Each has a dark bulb icon, indicating they block electricity.",
+                      "image_prompt": "Educational illustration, Grade 7-8 textbook style. A collection of non-metal objects: plastic scale (blue), rubber eraser (pink), glass bangle (transparent/blue), and wooden stick (brown). Each object has a dark bulb icon with X mark, indicating they are insulators. Labels: 'Insulators: Non-Metals'. Clear educational layout.",
+                      "other_details": {
+                        "labels": [
+                          "Plastic Scale",
+                          "Rubber Eraser",
+                          "Glass Bangle",
+                          "Wooden Stick",
+                          "All are Insulators"
+                        ],
+                        "caption": "Common insulators include plastic, rubber, glass, and wood. These materials block the flow of electricity.",
+                        "diagram_type": "collection illustration",
+                        "color_scheme": "Blue, pink, transparent, brown for various materials",
+                        "key_elements": [
+                          "Plastic scale",
+                          "Rubber eraser",
+                          "Glass bangle",
+                          "Wooden stick",
+                          "Insulator indicators"
+                        ],
+                        "annotations": [
+                          "Dark bulb icons with X for each insulator",
+                          "Label: All are Insulators"
+                        ],
+                        "style": "educational collection"
+                      },
+                      "image_url": "https://storage.googleapis.com/topic-content-images/conductors_insulators/M1/S1/T1/M1_S1_T1_O2_E2.png"
+                    }
+                  ]
+                }
+              ],
+              "modified_chunk": "Conductors are materials that allow electricity to flow through them easily. Metals like copper, iron, aluminum, and silver are excellent conductors because they have free electrons that can move through the material. Insulators are materials that block or prevent the flow of electricity. Common insulators include plastic, rubber, wood, glass, and ceramic. These materials do not have free electrons, so electricity cannot flow through them.",
+              "original_chunk": "Materials that allow electricity to pass through them are called conductors. Materials that do not allow electricity to pass through them are called insulators.",
+              "word_count": {
+                "modified": 78,
+                "original": 20
+              },
+              "agent_metadata": {
+                "agent_id": "agent_1_1",
+                "agent_name": "Content Enhancement Agent",
+                "model_used": "anthropic/claude-4.5-sonnet",
+                "execution_time_seconds": 8.45,
+                "llm_calls": [
+                  {
+                    "call_number": 1,
+                    "input_tokens": 1523,
+                    "output_tokens": 412,
+                    "total_tokens": 1935
+                  }
+                ],
+                "total_input_tokens": 1523,
+                "total_output_tokens": 412,
+                "total_tokens": 1935
+              }
+            },
+            {
+              "topic_id": "M1.S1.T2",
+              "topic_name": "Properties of Conductors and Insulators",
+              "concept_bullets": [
+                "All metals are good conductors of electricity",
+                "Silver is the best conductor, followed by copper and gold",
+                "Copper is most commonly used because it's cheaper than silver",
+                "Plastic and rubber are insulators used to protect us from electric shock",
+                "Pure water is a poor conductor, but water with dissolved salts conducts electricity"
+              ],
+              "learning_objectives": [
+                {
+                  "objective_id": "M1.S1.T2.O1",
+                  "objective_text": "Understand why metals are good conductors",
+                  "image_examples": [
+                    {
+                      "example_id": "M1.S1.T2.O1.E1",
+                      "example_title": "Free Electrons in Metals",
+                      "image_description": "This diagram shows the atomic structure of a metal conductor, highlighting free electrons that can move freely through the material, allowing electricity to flow.",
+                      "image_prompt": "Educational diagram, Grade 7-8 textbook style. A simplified atomic structure of a metal showing metal atoms (spheres) in a regular arrangement. Free electrons (small dots with arrows) are shown moving between atoms. Labels: 'Metal Atoms', 'Free Electrons', 'Current Flow'. Clear, scientific illustration style with arrows showing electron movement.",
+                      "other_details": {
+                        "labels": [
+                          "Metal Atoms",
+                          "Free Electrons",
+                          "Current Flow Direction"
+                        ],
+                        "caption": "Metals have free electrons that can move easily through the material, allowing electricity to flow.",
+                        "diagram_type": "atomic structure diagram",
+                        "color_scheme": "Metallic gray for atoms, yellow for electrons",
+                        "key_elements": [
+                          "Metal atoms",
+                          "Free electrons",
+                          "Movement arrows"
+                        ],
+                        "annotations": [
+                          "Arrows showing electron movement",
+                          "Label: Free Electrons Enable Conduction"
+                        ],
+                        "style": "scientific diagram"
+                      },
+                      "image_url": "https://storage.googleapis.com/topic-content-images/conductors_insulators/M1/S1/T2/M1_S1_T2_O1_E1.png"
+                    }
+                  ]
+                },
+                {
+                  "objective_id": "M1.S1.T2.O2",
+                  "objective_text": "Compare conductivity of different materials",
+                  "image_examples": [
+                    {
+                      "example_id": "M1.S1.T2.O2.E1",
+                      "example_title": "Conductivity Ranking Chart",
+                      "image_description": "A bar chart showing the relative conductivity of different materials: silver (highest), copper, gold, aluminum, iron, graphite, and insulators (zero).",
+                      "image_prompt": "Educational chart, Grade 7-8 textbook style. A horizontal bar chart showing conductivity levels. Bars from left to right: Silver (longest, gold color), Copper (orange-brown, very long), Gold (yellow, long), Aluminum (silver, medium-long), Iron (gray, medium), Graphite (dark gray, short), Insulators (zero, red X). Labels on each bar. Clear, colorful, educational style.",
+                      "other_details": {
+                        "labels": [
+                          "Silver (Best)",
+                          "Copper",
+                          "Gold",
+                          "Aluminum",
+                          "Iron",
+                          "Graphite",
+                          "Insulators (None)"
+                        ],
+                        "caption": "Silver is the best conductor, but copper is most commonly used because it's cheaper. Insulators have zero conductivity.",
+                        "diagram_type": "bar chart",
+                        "color_scheme": "Metallic colors for conductors, red X for insulators",
+                        "key_elements": [
+                          "Conductivity bars",
+                          "Material labels",
+                          "Ranking indicators"
+                        ],
+                        "annotations": [
+                          "Bar lengths showing relative conductivity",
+                          "Label: Best to Worst"
+                        ],
+                        "style": "educational chart"
+                      },
+                      "image_url": "https://storage.googleapis.com/topic-content-images/conductors_insulators/M1/S1/T2/M1_S1_T2_O2_E1.png"
+                    }
+                  ]
+                }
+              ],
+              "modified_chunk": "All metals are good conductors of electricity because they contain free electrons that can move through the material. Silver is the best conductor, followed by copper and gold. However, copper is most commonly used in electrical wiring because it's cheaper than silver while still being an excellent conductor. Insulators like plastic, rubber, and glass do not have free electrons, so they block electricity. Pure water is a poor conductor, but water with dissolved salts and minerals conducts electricity well, which is why wet hands increase the risk of electric shock.",
+              "original_chunk": "All metals are conductors. Silver is the best conductor. Plastic and rubber are insulators.",
+              "word_count": {
+                "modified": 95,
+                "original": 15
+              },
+              "agent_metadata": {
+                "agent_id": "agent_1_2",
+                "agent_name": "Content Enhancement Agent",
+                "model_used": "anthropic/claude-4.5-sonnet",
+                "execution_time_seconds": 7.82,
+                "llm_calls": [
+                  {
+                    "call_number": 1,
+                    "input_tokens": 1489,
+                    "output_tokens": 398,
+                    "total_tokens": 1887
+                  }
+                ],
+                "total_input_tokens": 1489,
+                "total_output_tokens": 398,
+                "total_tokens": 1887
+              }
+            }
+          ]
+        },
+        {
+          "segment_id": "M1.S2",
+          "segment_name": "Testing and Safety",
+          "segment_description": "Learning how to test materials for conductivity and understanding safety measures when working with electricity.",
+          "topics": [
+            {
+              "topic_id": "M1.S2.T1",
+              "topic_name": "Conduction Tester",
+              "concept_bullets": [
+                "A conduction tester is used to check if a material conducts electricity",
+                "It consists of a cell (battery), a lamp (bulb), and wires with free ends",
+                "If the lamp glows when touching a material, it's a conductor",
+                "If the lamp doesn't glow, the material is an insulator",
+                "Always test the tester first by touching the free ends together"
+              ],
+              "learning_objectives": [
+                {
+                  "objective_id": "M1.S2.T1.O1",
+                  "objective_text": "Understand how a conduction tester works",
+                  "image_examples": [
+                    {
+                      "example_id": "M1.S2.T1.O1.E1",
+                      "example_title": "Conduction Tester Setup",
+                      "image_description": "A diagram showing a complete conduction tester with battery, bulb, wires, and two free ends (probes) ready to test materials.",
+                      "image_prompt": "Educational diagram, Grade 7-8 textbook style. A simple circuit diagram showing a battery connected to a bulb via wires. Two free wire ends (probes) extend outward, ready to touch materials. Labels: 'Battery', 'Bulb', 'Wire', 'Free Ends (Probes)'. Clear, educational style with arrows showing where to place test material.",
+                      "other_details": {
+                        "labels": [
+                          "Battery (Cell)",
+                          "Bulb (Lamp)",
+                          "Wires",
+                          "Free Ends (Probes)"
+                        ],
+                        "caption": "A conduction tester has a battery, bulb, and wires with free ends. Touch the free ends to a material to test if it conducts.",
+                        "diagram_type": "circuit diagram",
+                        "color_scheme": "Metallic gray for battery, yellow for bulb, brown for wires",
+                        "key_elements": [
+                          "Battery",
+                          "Bulb",
+                          "Wires",
+                          "Free probe ends"
+                        ],
+                        "annotations": [
+                          "Arrow pointing to probe ends",
+                          "Label: Touch Material Here"
+                        ],
+                        "style": "scientific diagram"
+                      },
+                      "image_url": "https://storage.googleapis.com/topic-content-images/conductors_insulators/M1/S2/T1/M1_S2_T1_O1_E1.png"
+                    },
+                    {
+                      "example_id": "M1.S2.T1.O1.E2",
+                      "example_title": "Testing a Conductor",
+                      "image_description": "The image shows a conduction tester being used to test a copper wire. The bulb glows brightly, indicating that copper is a conductor.",
+                      "image_prompt": "Educational illustration, Grade 7-8 textbook style. A conduction tester with glowing bulb. A copper wire connects the two free probe ends. Current flow arrows show electricity passing through the copper wire. Labels: 'Copper Wire', 'Bulb Glows', 'Conductor Detected'. Clear, educational style.",
+                      "other_details": {
+                        "labels": [
+                          "Copper Wire",
+                          "Bulb Glows ✓",
+                          "Conductor",
+                          "Current Flow"
+                        ],
+                        "caption": "When a conductor like copper wire connects the probes, electricity flows and the bulb glows.",
+                        "diagram_type": "testing diagram",
+                        "color_scheme": "Orange-brown for copper, yellow for glowing bulb",
+                        "key_elements": [
+                          "Copper wire connecting probes",
+                          "Glowing bulb",
+                          "Current flow"
+                        ],
+                        "annotations": [
+                          "Checkmark indicating conductor",
+                          "Current flow arrows"
+                        ],
+                        "style": "scientific diagram"
+                      },
+                      "image_url": "https://storage.googleapis.com/topic-content-images/conductors_insulators/M1/S2/T1/M1_S2_T1_O1_E2.png"
+                    },
+                    {
+                      "example_id": "M1.S2.T1.O1.E3",
+                      "example_title": "Testing an Insulator",
+                      "image_description": "The image shows a conduction tester testing a plastic rod. The bulb remains dark, indicating that plastic is an insulator.",
+                      "image_prompt": "Educational illustration, Grade 7-8 textbook style. A conduction tester with dark bulb. A plastic rod (blue) connects the two free probe ends, but no current flows. A red X mark indicates 'No Conduction'. Labels: 'Plastic Rod', 'Bulb Off', 'Insulator'. Clear educational style.",
+                      "other_details": {
+                        "labels": [
+                          "Plastic Rod",
+                          "Bulb Off ✗",
+                          "Insulator",
+                          "No Current Flow"
+                        ],
+                        "caption": "When an insulator like plastic connects the probes, no electricity flows and the bulb stays off.",
+                        "diagram_type": "testing diagram",
+                        "color_scheme": "Blue for plastic, dark gray for unlit bulb",
+                        "key_elements": [
+                          "Plastic rod connecting probes",
+                          "Dark bulb",
+                          "X mark"
+                        ],
+                        "annotations": [
+                          "X mark indicating insulator",
+                          "No current flow indicator"
+                        ],
+                        "style": "scientific diagram"
+                      },
+                      "image_url": "https://storage.googleapis.com/topic-content-images/conductors_insulators/M1/S2/T1/M1_S2_T1_O1_E3.png"
+                    }
+                  ]
+                }
+              ],
+              "modified_chunk": "A conduction tester is a simple device used to check if a material conducts electricity. It consists of a cell (battery) for power, a lamp (bulb) to show when current flows, and wires with free ends (probes) for testing. To use it, touch the two free ends to the material being tested. If the lamp glows, the material is a conductor because electricity can flow through it. If the lamp doesn't glow, the material is an insulator because it blocks electricity. Always test the tester first by touching the free ends together - the bulb should glow to confirm the tester is working properly.",
+              "original_chunk": "A conduction tester has a cell, lamp, and wires with free ends. Touch the ends to test materials.",
+              "word_count": {
+                "modified": 108,
+                "original": 18
+              },
+              "agent_metadata": {
+                "agent_id": "agent_2_1",
+                "agent_name": "Content Enhancement Agent",
+                "model_used": "anthropic/claude-4.5-sonnet",
+                "execution_time_seconds": 9.12,
+                "llm_calls": [
+                  {
+                    "call_number": 1,
+                    "input_tokens": 1654,
+                    "output_tokens": 445,
+                    "total_tokens": 2099
+                  }
+                ],
+                "total_input_tokens": 1654,
+                "total_output_tokens": 445,
+                "total_tokens": 2099
+              }
+            },
+            {
+              "topic_id": "M1.S2.T2",
+              "topic_name": "Electrical Safety",
+              "concept_bullets": [
+                "Never touch electrical appliances with wet hands",
+                "Water with dissolved salts is a conductor and increases shock risk",
+                "Human body contains water and salts, making it a conductor",
+                "Damaged wires with exposed conductors are dangerous",
+                "Always inform an adult if you see damaged electrical equipment",
+                "Plastic and rubber handles on tools protect us from electric shock"
+              ],
+              "learning_objectives": [
+                {
+                  "objective_id": "M1.S2.T2.O1",
+                  "objective_text": "Understand why wet hands are dangerous with electricity",
+                  "image_examples": [
+                    {
+                      "example_id": "M1.S2.T2.O1.E1",
+                      "example_title": "Wet Hands and Electric Shock Risk",
+                      "image_description": "A diagram showing why wet hands increase the risk of electric shock. Water on hands conducts electricity, creating a path for current to flow through the body.",
+                      "image_prompt": "Educational safety diagram, Grade 7-8 textbook style. A person's hand with water droplets touching an electrical appliance. Current flow arrows show electricity passing through the wet hand into the body. A warning symbol and labels: 'Wet Hands', 'Water Conducts', 'Danger: Electric Shock Risk'. Clear safety-focused illustration.",
+                      "other_details": {
+                        "labels": [
+                          "Wet Hands",
+                          "Water Conducts Electricity",
+                          "Current Flow Through Body",
+                          "⚠️ DANGER"
+                        ],
+                        "caption": "Wet hands conduct electricity because water contains dissolved salts. This creates a dangerous path for current to flow through your body.",
+                        "diagram_type": "safety diagram",
+                        "color_scheme": "Blue for water, red for danger, yellow for warning",
+                        "key_elements": [
+                          "Wet hand",
+                          "Electrical appliance",
+                          "Current flow path",
+                          "Warning symbol"
+                        ],
+                        "annotations": [
+                          "Warning symbol",
+                          "Current flow arrows through body"
+                        ],
+                        "style": "safety illustration"
+                      },
+                      "image_url": "https://storage.googleapis.com/topic-content-images/conductors_insulators/M1/S2/T2/M1_S2_T2_O1_E1.png"
+                    },
+                    {
+                      "example_id": "M1.S2.T2.O1.E2",
+                      "example_title": "Dry Hands Safety",
+                      "image_description": "The image shows dry hands safely handling an electrical appliance. No current flows through dry skin, demonstrating proper safety.",
+                      "image_prompt": "Educational safety diagram, Grade 7-8 textbook style. A person's dry hand (no water) touching an electrical appliance. A green checkmark indicates safety. Labels: 'Dry Hands', 'Safe', 'No Current Flow'. Positive, safe illustration style.",
+                      "other_details": {
+                        "labels": [
+                          "Dry Hands",
+                          "✓ Safe",
+                          "No Current Flow",
+                          "Proper Safety"
+                        ],
+                        "caption": "Always use dry hands when handling electrical appliances. Dry skin provides better insulation and reduces shock risk.",
+                        "diagram_type": "safety diagram",
+                        "color_scheme": "Green for safety, natural skin tones",
+                        "key_elements": [
+                          "Dry hand",
+                          "Electrical appliance",
+                          "Safety checkmark"
+                        ],
+                        "annotations": [
+                          "Green checkmark",
+                          "Label: Safe Practice"
+                        ],
+                        "style": "safety illustration"
+                      },
+                      "image_url": "https://storage.googleapis.com/topic-content-images/conductors_insulators/M1/S2/T2/M1_S2_T2_O1_E2.png"
+                    }
+                  ]
+                },
+                {
+                  "objective_id": "M1.S2.T2.O2",
+                  "objective_text": "Identify safety features in electrical equipment",
+                  "image_examples": [
+                    {
+                      "example_id": "M1.S2.T2.O2.E1",
+                      "example_title": "Insulated Wire",
+                      "image_description": "A diagram showing an electrical wire with plastic insulation covering the metal conductor. The plastic insulator protects users from electric shock.",
+                      "image_prompt": "Educational diagram, Grade 7-8 textbook style. A cross-section of an electrical wire showing a copper conductor (orange-brown) in the center, surrounded by plastic insulation (blue). Labels: 'Copper Conductor', 'Plastic Insulation', 'Protection'. Clear educational style showing the safety feature.",
+                      "other_details": {
+                        "labels": [
+                          "Copper Conductor (Inside)",
+                          "Plastic Insulation (Outside)",
+                          "Protects from Shock"
+                        ],
+                        "caption": "Electrical wires are covered with plastic or rubber insulation. The insulator protects us from touching the conducting wire inside.",
+                        "diagram_type": "cross-section diagram",
+                        "color_scheme": "Orange-brown for copper, blue for plastic",
+                        "key_elements": [
+                          "Copper core",
+                          "Plastic covering",
+                          "Protection layer"
+                        ],
+                        "annotations": [
+                          "Arrow pointing to insulation",
+                          "Label: Safety Feature"
+                        ],
+                        "style": "scientific diagram"
+                      },
+                      "image_url": "https://storage.googleapis.com/topic-content-images/conductors_insulators/M1/S2/T2/M1_S2_T2_O2_E1.png"
+                    },
+                    {
+                      "example_id": "M1.S2.T2.O2.E2",
+                      "example_title": "Tool with Insulated Handle",
+                      "image_description": "An electrical tool like pliers with a plastic or rubber handle. The handle is an insulator that protects the user from electric shock.",
+                      "image_prompt": "Educational illustration, Grade 7-8 textbook style. A pair of electrical pliers with metal jaws and a plastic/rubber handle (blue or black). Labels: 'Metal Jaws (Conductor)', 'Plastic Handle (Insulator)', 'Safety Protection'. Clear, educational style.",
+                      "other_details": {
+                        "labels": [
+                          "Metal Jaws (Conductor)",
+                          "Plastic Handle (Insulator)",
+                          "Protects Hands"
+                        ],
+                        "caption": "Electrical tools have plastic or rubber handles. These insulators prevent electricity from reaching your hands, protecting you from shock.",
+                        "diagram_type": "tool illustration",
+                        "color_scheme": "Metallic gray for metal, blue/black for handle",
+                        "key_elements": [
+                          "Metal tool part",
+                          "Insulated handle",
+                          "Safety feature"
+                        ],
+                        "annotations": [
+                          "Arrow pointing to handle",
+                          "Label: Insulator Protects"
+                        ],
+                        "style": "educational illustration"
+                      },
+                      "image_url": "https://storage.googleapis.com/topic-content-images/conductors_insulators/M1/S2/T2/M1_S2_T2_O2_E2.png"
+                    }
+                  ]
+                }
+              ],
+              "modified_chunk": "Electrical safety is crucial when working with electricity. Never touch electrical appliances with wet hands because water, especially with dissolved salts, is a conductor that increases the risk of electric shock. The human body contains water and salts, making it a conductor of electricity, which is why electric shock can be dangerous or even fatal. Always check for damaged wires with exposed conductors - if you see any, inform an adult immediately and never try to repair them yourself. Electrical tools have plastic or rubber handles because these insulators prevent electricity from reaching your hands, protecting you from shock.",
+              "original_chunk": "Never touch electrical appliances with wet hands. Damaged wires are dangerous. Use tools with insulated handles.",
+              "word_count": {
+                "modified": 112,
+                "original": 18
+              },
+              "agent_metadata": {
+                "agent_id": "agent_2_2",
+                "agent_name": "Content Enhancement Agent",
+                "model_used": "anthropic/claude-4.5-sonnet",
+                "execution_time_seconds": 8.67,
+                "llm_calls": [
+                  {
+                    "call_number": 1,
+                    "input_tokens": 1589,
+                    "output_tokens": 432,
+                    "total_tokens": 2021
+                  }
+                ],
+                "total_input_tokens": 1589,
+                "total_output_tokens": 432,
+                "total_tokens": 2021
+              }
+            }
+          ]
+        },
+        {
+          "segment_id": "M1.S3",
+          "segment_name": "Real-World Applications",
+          "segment_description": "Exploring how conductors and insulators are used in everyday life and various applications.",
+          "topics": [
+            {
+              "topic_id": "M1.S3.T1",
+              "topic_name": "Conductors in Daily Life",
+              "concept_bullets": [
+                "Copper and aluminum wires carry electricity in homes",
+                "Metal filaments in light bulbs conduct electricity to produce light",
+                "Circuit boards use copper tracks to connect components",
+                "Electric vehicles use metal conductors in batteries and motors",
+                "Power lines use aluminum and steel to transport electricity"
+              ],
+              "learning_objectives": [
+                {
+                  "objective_id": "M1.S3.T1.O1",
+                  "objective_text": "Identify uses of conductors in everyday life",
+                  "image_examples": [
+                    {
+                      "example_id": "M1.S3.T1.O1.E1",
+                      "example_title": "Electrical Wiring in Homes",
+                      "image_description": "A diagram showing copper wires running through walls of a house, carrying electricity to lights, fans, and appliances.",
+                      "image_prompt": "Educational illustration, Grade 7-8 textbook style. A cutaway view of a house wall showing copper wires (orange-brown) running through it, connecting to a light bulb and electrical outlet. Labels: 'Copper Wires', 'Carries Electricity', 'Home Wiring'. Clear, educational style showing real-world application.",
+                      "other_details": {
+                        "labels": [
+                          "Copper Wires",
+                          "Electrical Outlet",
+                          "Light Bulb",
+                          "Home Wiring"
+                        ],
+                        "caption": "Copper wires carry electricity safely through our homes, powering lights, fans, and appliances.",
+                        "diagram_type": "application diagram",
+                        "color_scheme": "Orange-brown for copper, yellow for light",
+                        "key_elements": [
+                          "Copper wires",
+                          "House structure",
+                          "Electrical connections"
+                        ],
+                        "annotations": [
+                          "Arrow showing electricity flow",
+                          "Label: Real-World Use"
+                        ],
+                        "style": "educational illustration"
+                      },
+                      "image_url": "https://storage.googleapis.com/topic-content-images/conductors_insulators/M1/S3/T1/M1_S3_T1_O1_E1.png"
+                    },
+                    {
+                      "example_id": "M1.S3.T1.O1.E2",
+                      "example_title": "Light Bulb Filament",
+                      "image_description": "A close-up view of a light bulb showing the metal filament that conducts electricity and glows to produce light.",
+                      "image_prompt": "Educational diagram, Grade 7-8 textbook style. A light bulb with visible metal filament (tungsten wire) glowing brightly. Current flow arrows show electricity passing through the filament. Labels: 'Metal Filament', 'Conducts Electricity', 'Produces Light'. Clear, scientific illustration.",
+                      "other_details": {
+                        "labels": [
+                          "Metal Filament",
+                          "Electricity Flow",
+                          "Glowing Light",
+                          "Tungsten Wire"
+                        ],
+                        "caption": "The metal filament inside a light bulb conducts electricity. When current flows, it glows and produces light.",
+                        "diagram_type": "component diagram",
+                        "color_scheme": "Yellow/orange for glowing filament, clear glass",
+                        "key_elements": [
+                          "Metal filament",
+                          "Glowing effect",
+                          "Current flow"
+                        ],
+                        "annotations": [
+                          "Current flow arrows",
+                          "Label: Conductor Application"
+                        ],
+                        "style": "scientific diagram"
+                      },
+                      "image_url": "https://storage.googleapis.com/topic-content-images/conductors_insulators/M1/S3/T1/M1_S3_T1_O1_E2.png"
+                    }
+                  ]
+                }
+              ],
+              "modified_chunk": "Conductors are essential in our daily lives. Copper and aluminum wires carry electricity safely through our homes, powering lights, fans, and appliances. Inside light bulbs, metal filaments conduct electricity and glow to produce light. Electronic devices like phones and computers use circuit boards with copper tracks to connect components, allowing them to function. Electric vehicles use metal conductors in batteries and motors to power cars, buses, and bikes. High-voltage power lines use aluminum and steel conductors to transport electricity from power plants to cities and towns.",
+              "original_chunk": "Conductors are used in wires, bulbs, and electronic devices.",
+              "word_count": {
+                "modified": 89,
+                "original": 9
+              },
+              "agent_metadata": {
+                "agent_id": "agent_3_1",
+                "agent_name": "Content Enhancement Agent",
+                "model_used": "anthropic/claude-4.5-sonnet",
+                "execution_time_seconds": 7.95,
+                "llm_calls": [
+                  {
+                    "call_number": 1,
+                    "input_tokens": 1543,
+                    "output_tokens": 389,
+                    "total_tokens": 1932
+                  }
+                ],
+                "total_input_tokens": 1543,
+                "total_output_tokens": 389,
+                "total_tokens": 1932
+              }
+            },
+            {
+              "topic_id": "M1.S3.T2",
+              "topic_name": "Insulators in Daily Life",
+              "concept_bullets": [
+                "Plastic and rubber cover electrical wires for safety",
+                "Tool handles are made of plastic or rubber to prevent shock",
+                "Electrical plugs have plastic bodies with metal pins",
+                "Power line insulators prevent electricity from reaching the ground",
+                "Ceramic insulators support power lines safely"
+              ],
+              "learning_objectives": [
+                {
+                  "objective_id": "M1.S3.T2.O1",
+                  "objective_text": "Identify uses of insulators in everyday life",
+                  "image_examples": [
+                    {
+                      "example_id": "M1.S3.T2.O1.E1",
+                      "example_title": "Electrical Plug",
+                      "image_description": "An electrical plug showing metal pins (conductors) for connection and a plastic body (insulator) for safety protection.",
+                      "image_prompt": "Educational illustration, Grade 7-8 textbook style. An electrical plug with metal pins (silver/gray) extending outward and a plastic body (blue or white). Labels: 'Metal Pins (Conductors)', 'Plastic Body (Insulator)', 'Safety Protection'. Clear, educational style showing the combination.",
+                      "other_details": {
+                        "labels": [
+                          "Metal Pins (Conductors)",
+                          "Plastic Body (Insulator)",
+                          "Protects from Shock"
+                        ],
+                        "caption": "Electrical plugs have metal pins to conduct electricity and plastic bodies to insulate and protect us from touching the conducting parts.",
+                        "diagram_type": "product diagram",
+                        "color_scheme": "Metallic gray for pins, blue/white for plastic",
+                        "key_elements": [
+                          "Metal pins",
+                          "Plastic body",
+                          "Safety design"
+                        ],
+                        "annotations": [
+                          "Arrow pointing to plastic body",
+                          "Label: Insulator Protects"
+                        ],
+                        "style": "educational illustration"
+                      },
+                      "image_url": "https://storage.googleapis.com/topic-content-images/conductors_insulators/M1/S3/T2/M1_S3_T2_O1_E1.png"
+                    },
+                    {
+                      "example_id": "M1.S3.T2.O1.E2",
+                      "example_title": "Power Line Insulators",
+                      "image_description": "A diagram showing power lines supported by ceramic insulators on poles. The insulators prevent electricity from flowing to the ground.",
+                      "image_prompt": "Educational illustration, Grade 7-8 textbook style. Power lines on a pole with ceramic insulators (white/brown) supporting the wires. Labels: 'Power Lines', 'Ceramic Insulators', 'Prevents Ground Contact'. Clear, educational style showing safety application.",
+                      "other_details": {
+                        "labels": [
+                          "Power Lines",
+                          "Ceramic Insulators",
+                          "Prevents Ground Contact",
+                          "Safety Support"
+                        ],
+                        "caption": "Ceramic insulators support power lines and prevent electricity from flowing to the ground, ensuring safe power transmission.",
+                        "diagram_type": "infrastructure diagram",
+                        "color_scheme": "White/brown for ceramic, metallic for wires",
+                        "key_elements": [
+                          "Power lines",
+                          "Ceramic insulators",
+                          "Pole support"
+                        ],
+                        "annotations": [
+                          "Arrow pointing to insulator",
+                          "Label: Safety Feature"
+                        ],
+                        "style": "educational illustration"
+                      },
+                      "image_url": "https://storage.googleapis.com/topic-content-images/conductors_insulators/M1/S3/T2/M1_S3_T2_O1_E2.png"
+                    }
+                  ]
+                }
+              ],
+              "modified_chunk": "Insulators play a crucial safety role in our daily lives. Electrical wires are covered with plastic or rubber insulation to protect us from electric shock. Tool handles are made of plastic or rubber because these insulators prevent electricity from reaching our hands. Electrical plugs combine conductors and insulators: metal pins conduct electricity for connection, while plastic bodies insulate and protect us from touching the conducting parts. Power lines use ceramic insulators to support the wires and prevent electricity from flowing to the ground, ensuring safe power transmission over long distances.",
+              "original_chunk": "Insulators are used to cover wires and protect us from electric shock.",
+              "word_count": {
+                "modified": 98,
+                "original": 12
+              },
+              "agent_metadata": {
+                "agent_id": "agent_3_2",
+                "agent_name": "Content Enhancement Agent",
+                "model_used": "anthropic/claude-4.5-sonnet",
+                "execution_time_seconds": 8.23,
+                "llm_calls": [
+                  {
+                    "call_number": 1,
+                    "input_tokens": 1567,
+                    "output_tokens": 401,
+                    "total_tokens": 1968
+                  }
+                ],
+                "total_input_tokens": 1567,
+                "total_output_tokens": 401,
+                "total_tokens": 1968
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "image_metadata": {
+    "total_images_mapped": 15,
+    "gcp_bucket": "topic-content-images",
+    "last_updated": "2025-01-15T10:30:00.000000",
+    "image_path_prefix": "https://storage.googleapis.com/topic-content-images/conductors_insulators"
+  }
+}

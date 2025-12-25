@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { LanguageProvider } from './contexts/LanguageContext';
-import { ModeProvider } from './contexts/ModeContext';
-import Navbar from './components/Navbar';
-import CircuitVisualization from './components/CircuitVisualization';
-import RealWorldApplications from './components/RealWorldApplications';
-import { CircuitUIConfig } from './interfaces/circuitTypes';
-import { sampleCircuitData } from './data/sampleData';
+import {
+  LanguageProvider,
+  ModeProvider,
+  Navbar,
+  CircuitVisualization,
+  RealWorldApplications,
+  CircuitUIConfig,
+  sampleCircuitData,
+} from './components/AllComponents';
 
 const App: React.FC = () => {
   const [uiConfig] = useState<CircuitUIConfig>({
