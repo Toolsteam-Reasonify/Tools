@@ -34,12 +34,6 @@
     },
     {
       "id": 6,
-      "title": "Comparison",
-      "description": "Comparing how light passes through different materials",
-      "activity": "comparison"
-    },
-    {
-      "id": 7,
       "title": "Conclusion",
       "description": "Summary of light behavior with materials",
       "activity": "conclusion"

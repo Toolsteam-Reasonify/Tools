@@ -89,7 +89,6 @@ type LearnStage =
   | "non_luminous_objects"
   | "natural_sources"
   | "artificial_sources"
-  | "led_technology"
   | "complete";
 
 type Language = "en" | "hi" | "gu";
@@ -194,11 +193,6 @@ const translations: Record<Language, any> = {
         description:
           "In ancient times, humans learned to create fire - the earliest form of artificial lighting. With time, they created light using different fuels like animal fat, oil, wax, and gas. Today, most lighting needs are met by electric lighting.",
       },
-      led_technology: {
-        title: "LED Technology Revolution",
-        description:
-          "Light Emitting Diode (LED) lamps are modern light sources that consume much less power, are brighter, and last longer than traditional lamps. This reduces electricity bills and is better for the environment. India has promoted LED usage nationwide.",
-      },
       complete: {
         title: "Complete Understanding",
         description:
@@ -252,11 +246,6 @@ const translations: Record<Language, any> = {
         description:
           "प्राचीन काल में, मनुष्यों ने आग बनाना सीखा - कृत्रिम प्रकाश का सबसे पहला रूप। समय के साथ, उन्होंने विभिन्न ईंधनों का उपयोग करके प्रकाश बनाया। आज, अधिकांश प्रकाश आवश्यकताएं विद्युत प्रकाश द्वारा पूरी की जाती हैं।",
       },
-      led_technology: {
-        title: "एलईडी प्रौद्योगिकी क्रांति",
-        description:
-          "एलईडी लैंप आधुनिक प्रकाश स्रोत हैं जो बहुत कम बिजली की खपत करते हैं, अधिक उज्ज्वल हैं, और पारंपरिक लैंपों की तुलना में अधिक समय तक चलते हैं। भारत ने राष्ट्रव्यापी एलईडी उपयोग को बढ़ावा दिया है।",
-      },
       complete: {
         title: "पूर्ण समझ",
         description:
@@ -309,11 +298,6 @@ const translations: Record<Language, any> = {
         title: "કૃત્રિમ પ્રકાશ સ્રોતો",
         description:
           "પ્રાચીન કાળમાં, માનવોએ અગ્નિ બનાવવાનું શીખ્યા - કૃત્રિમ પ્રકાશનું પ્રથમ સ્વરૂપ। સમય સાથે, તેઓએ વિવિધ ઇંધણોનો ઉપયોગ કરીને પ્રકાશ બનાવ્યો। આજે, મોટાભાગની પ્રકાશ જરૂરિયાતો ઇલેક્ટ્રિક પ્રકાશ દ્વારા પૂરી થાય છે।",
-      },
-      led_technology: {
-        title: "LED તકનીકી ક્રાંતિ",
-        description:
-          "LED લેમ્પ આધુનિક પ્રકાશ સ્રોતો છે જે ખૂબ ઓછી શક્તિ વાપરે છે, વધુ તેજસ્વી છે, અને પરંપરાગત લેમ્પ કરતાં લાંબા સમય સુધી ચાલે છે। ભારતે રાષ્ટ્રીય સ્તરે LED ઉપયોગને પ્રોત્સાહન આપ્યું છે।",
       },
       complete: {
         title: "સંપૂર્ણ સમજ",
@@ -433,23 +417,6 @@ const DEFAULT_STEPS: Step[] = [
     data: { stage: "overview" },
   },
   {
-    id: 2,
-    title: "Luminous Objects",
-    description: "",
-    type: "explanation",
-    mode: "learn",
-    data: {
-      stage: "luminous_objects",
-      lightObjects: [
-        { name: "Sun", type: "natural", luminous: true },
-        { name: "Stars", type: "natural", luminous: true },
-        { name: "Lightning", type: "natural", luminous: true },
-        { name: "Fire", type: "natural", luminous: true },
-        { name: "Firefly", type: "natural", luminous: true },
-      ],
-    },
-  },
-  {
     id: 3,
     title: "Non-Luminous Objects",
     description: "",
@@ -497,14 +464,6 @@ const DEFAULT_STEPS: Step[] = [
     },
   },
   {
-    id: 6,
-    title: "LED Technology",
-    description: "",
-    type: "explanation",
-    mode: "learn",
-    data: { stage: "led_technology" },
-  },
-  {
     id: 7,
     title: "Complete Understanding",
     description: "",
@@ -532,7 +491,7 @@ const PracticeMode: React.FC = () => {
   // Early return if no questions available
   if (questions.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-teal-50 to-blue-50 pt-20 p-4 sm:p-6 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-teal-50 to-blue-50 p-4 sm:p-6 flex items-center justify-center">
         <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 max-w-2xl w-full text-center">
           <p className="text-gray-600">Loading questions...</p>
         </div>
@@ -578,7 +537,7 @@ const PracticeMode: React.FC = () => {
 
   if (isQuizComplete) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-teal-50 to-blue-50 pt-20 p-4 sm:p-6 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-teal-50 to-blue-50 p-4 sm:p-6 flex items-center justify-center">
         <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 max-w-2xl w-full">
           <div className="text-center">
             <CheckCircle className="w-20 h-20 text-green-500 mx-auto mb-4" />
@@ -606,7 +565,7 @@ const PracticeMode: React.FC = () => {
   const question = questions[currentQuestion];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-teal-50 to-blue-50 pt-20 p-4 sm:p-6">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-teal-50 to-blue-50 p-4 sm:p-6">
       <div className="max-w-4xl mx-auto">
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
           <div className="bg-gradient-to-r from-blue-500 via-teal-500 to-blue-500 text-white p-6">
@@ -724,7 +683,7 @@ const RealWorldMode: React.FC = () => {
   // Early return if no applications available
   if (applications.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-teal-50 to-blue-50 pt-20 p-4 sm:p-6 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-teal-50 to-blue-50 p-4 sm:p-6 flex items-center justify-center">
         <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 max-w-2xl w-full text-center">
           <p className="text-gray-600">Loading applications...</p>
         </div>
@@ -733,7 +692,7 @@ const RealWorldMode: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-teal-50 to-blue-50 pt-20 p-4 sm:p-6">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-teal-50 to-blue-50 p-4 sm:p-6">
       <div className="max-w-6xl mx-auto">
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden mb-6">
           <div className="bg-gradient-to-r from-blue-500 via-teal-500 to-blue-500 text-white p-6">
@@ -960,20 +919,24 @@ const SourcesOfLight: React.FC<SourcesOfLightProps> = ({
   // Render Practice Mode
   if (currentMode === "practice") {
     return (
-      <>
+      <div className="w-full">
         {renderNavbar()}
-        <PracticeMode />
-      </>
+        <div className="mt-20">
+          <PracticeMode />
+        </div>
+      </div>
     );
   }
 
   // Render Real World Mode
   if (currentMode === "real_world") {
     return (
-      <>
+      <div className="w-full">
         {renderNavbar()}
-        <RealWorldMode />
-      </>
+        <div className="mt-20">
+          <RealWorldMode />
+        </div>
+      </div>
     );
   }
 
@@ -1091,7 +1054,7 @@ function drawLightSources(
   lightObjects: Array<{ name: string; type: string; luminous: boolean }>,
   progress: number,
   particles: Particle[],
-  _t: (key: string) => string
+  t: (key: string) => string
 ) {
   // Dark background
   const bgGradient = ctx.createRadialGradient(
@@ -1120,19 +1083,17 @@ function drawLightSources(
   }
 
   if (stage === "overview") {
-    drawOverview(ctx, width, height, progress);
+    drawOverview(ctx, width, height, progress, t);
   } else if (stage === "luminous_objects") {
-    drawLuminousObjects(ctx, width, height, lightObjects, progress);
+    drawLuminousObjects(ctx, width, height, lightObjects, progress, t);
   } else if (stage === "non_luminous_objects") {
-    drawNonLuminousObjects(ctx, width, height, progress);
+    drawNonLuminousObjects(ctx, width, height, progress, t);
   } else if (stage === "natural_sources") {
-    drawNaturalSources(ctx, width, height, lightObjects, progress);
+    drawNaturalSources(ctx, width, height, lightObjects, progress, t);
   } else if (stage === "artificial_sources") {
-    drawArtificialSources(ctx, width, height, lightObjects, progress);
-  } else if (stage === "led_technology") {
-    drawLEDTechnology(ctx, width, height, progress);
+    drawArtificialSources(ctx, width, height, lightObjects, progress, t);
   } else if (stage === "complete") {
-    drawComplete(ctx, width, height, progress, particles);
+    drawComplete(ctx, width, height, progress, particles, t);
   }
 }
 
@@ -1140,7 +1101,8 @@ function drawOverview(
   ctx: CanvasRenderingContext2D,
   width: number,
   height: number,
-  progress: number
+  progress: number,
+  t: (key: string) => string
 ) {
   const centerX = width / 2;
   const centerY = height / 2;
@@ -1217,7 +1179,7 @@ function drawOverview(
   ctx.textAlign = "center";
   ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
   ctx.shadowBlur = 10;
-  ctx.fillText("Sources of Light", centerX, height - 50);
+  ctx.fillText(t("canvas.overview.title"), centerX, height - 50);
   ctx.shadowBlur = 0;
 }
 
@@ -1226,7 +1188,8 @@ function drawLuminousObjects(
   width: number,
   height: number,
   lightObjects: Array<{ name: string }>,
-  progress: number
+  progress: number,
+  t: (key: string) => string
 ) {
   const numObjects = lightObjects.length;
   const spacing = width / (numObjects + 1);
@@ -1298,7 +1261,7 @@ function drawLuminousObjects(
   ctx.textAlign = "center";
   ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
   ctx.shadowBlur = 10;
-  ctx.fillText("Luminous Objects (Emit Own Light)", width / 2, 50);
+  ctx.fillText(t("canvas.luminous_objects.title"), width / 2, 50);
   ctx.shadowBlur = 0;
 }
 
@@ -1306,7 +1269,8 @@ function drawNonLuminousObjects(
   ctx: CanvasRenderingContext2D,
   width: number,
   height: number,
-  progress: number
+  progress: number,
+  t: (key: string) => string
 ) {
   // Sun (light source)
   const sunX = width * 0.2;
@@ -1400,12 +1364,12 @@ function drawNonLuminousObjects(
   ctx.textAlign = "center";
   ctx.shadowColor = "rgba(0, 0, 0, 0.8)";
   ctx.shadowBlur = 8;
-  ctx.fillText("☀️ Sun (Luminous)", sunX, sunY + sunRadius + 30);
+  ctx.fillText(t("canvas.non_luminous_objects.sunLabel"), sunX, sunY + sunRadius + 30);
 
   ctx.fillStyle = "#FFF";
-  ctx.fillText("🌙 Moon (Non-Luminous)", moonX, moonY + moonRadius + 30);
+  ctx.fillText(t("canvas.non_luminous_objects.moonLabel"), moonX, moonY + moonRadius + 30);
   ctx.font = "14px Poppins, sans-serif";
-  ctx.fillText("Reflects Sunlight", moonX, moonY + moonRadius + 50);
+  ctx.fillText(t("canvas.non_luminous_objects.reflectsLabel"), moonX, moonY + moonRadius + 50);
   ctx.shadowBlur = 0;
 
   // Title
@@ -1414,7 +1378,7 @@ function drawNonLuminousObjects(
   ctx.textAlign = "center";
   ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
   ctx.shadowBlur = 10;
-  ctx.fillText("Non-Luminous Objects (Reflect Light)", width / 2, 50);
+  ctx.fillText(t("canvas.non_luminous_objects.title"), width / 2, 50);
   ctx.shadowBlur = 0;
 }
 
@@ -1423,7 +1387,8 @@ function drawNaturalSources(
   width: number,
   height: number,
   lightObjects: Array<{ name: string }>,
-  progress: number
+  progress: number,
+  t: (key: string) => string
 ) {
   const centerY = height / 2;
   const spacing = width / (lightObjects.length + 1);
@@ -1518,7 +1483,8 @@ function drawNaturalSources(
     ctx.textAlign = "center";
     ctx.shadowColor = "rgba(0, 0, 0, 0.8)";
     ctx.shadowBlur = 8;
-    ctx.fillText(obj.name, x, centerY + 70);
+    const labelKey = `canvas.natural_sources.${obj.name.toLowerCase().replace(/\s+/g, "_")}`;
+    ctx.fillText(t(labelKey) || obj.name, x, centerY + 70);
     ctx.shadowBlur = 0;
   });
 
@@ -1528,7 +1494,7 @@ function drawNaturalSources(
   ctx.textAlign = "center";
   ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
   ctx.shadowBlur = 10;
-  ctx.fillText("Natural Sources of Light", width / 2, 50);
+  ctx.fillText(t("canvas.natural_sources.title"), width / 2, 50);
   ctx.shadowBlur = 0;
 }
 
@@ -1537,7 +1503,8 @@ function drawArtificialSources(
   width: number,
   height: number,
   lightObjects: Array<{ name: string }>,
-  progress: number
+  progress: number,
+  t: (key: string) => string
 ) {
   const centerY = height / 2;
   const spacing = width / (lightObjects.length + 1);
@@ -1569,29 +1536,116 @@ function drawArtificialSources(
       ctx.ellipse(x, centerY - 10, 12, flameSize, 0, 0, Math.PI * 2);
       ctx.fill();
     } else if (obj.name === "Oil Lamp") {
-      // Lamp body
-      ctx.fillStyle = "#8B4513";
-      ctx.beginPath();
-      ctx.ellipse(x, centerY + 10, 25, 15, 0, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Flame
-      const flameSize = 18 + Math.sin(progress * Math.PI * 4 + idx) * 3;
-      const flameGradient = ctx.createRadialGradient(
+      // Oil lamp glow effect
+      const lampGlow = ctx.createRadialGradient(
         x,
-        centerY - 15,
+        centerY - 20,
         0,
         x,
-        centerY - 15,
+        centerY - 20,
+        50
+      );
+      lampGlow.addColorStop(0, "rgba(255, 215, 0, 0.3)");
+      lampGlow.addColorStop(0.5, "rgba(255, 165, 0, 0.15)");
+      lampGlow.addColorStop(1, "rgba(255, 165, 0, 0)");
+
+      ctx.fillStyle = lampGlow;
+      ctx.beginPath();
+      ctx.arc(x, centerY - 20, 50, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Lamp base (container) - bottom part
+      const baseGradient = ctx.createLinearGradient(
+        x - 20,
+        centerY + 25,
+        x + 20,
+        centerY + 25
+      );
+      baseGradient.addColorStop(0, "#654321");
+      baseGradient.addColorStop(0.5, "#8B4513");
+      baseGradient.addColorStop(1, "#654321");
+
+      ctx.fillStyle = baseGradient;
+      ctx.beginPath();
+      ctx.ellipse(x, centerY + 25, 22, 18, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Lamp body (glass/container) - main part
+      const bodyGradient = ctx.createLinearGradient(
+        x - 15,
+        centerY - 5,
+        x + 15,
+        centerY + 15
+      );
+      bodyGradient.addColorStop(0, "rgba(139, 69, 19, 0.8)");
+      bodyGradient.addColorStop(0.3, "rgba(160, 82, 45, 0.9)");
+      bodyGradient.addColorStop(0.7, "rgba(139, 69, 19, 0.9)");
+      bodyGradient.addColorStop(1, "rgba(101, 67, 33, 0.8)");
+
+      ctx.fillStyle = bodyGradient;
+      ctx.beginPath();
+      ctx.ellipse(x, centerY + 5, 18, 25, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Oil level indicator (inside the lamp)
+      ctx.fillStyle = "rgba(255, 215, 0, 0.4)";
+      ctx.beginPath();
+      ctx.ellipse(x, centerY + 12, 12, 15, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Lamp neck/spout
+      ctx.fillStyle = "#654321";
+      ctx.beginPath();
+      ctx.ellipse(x, centerY - 8, 8, 12, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Wick (coming out of the spout)
+      ctx.strokeStyle = "#4A4A4A";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(x, centerY - 8);
+      ctx.lineTo(x, centerY - 25);
+      ctx.stroke();
+
+      // Flame with proper animation
+      const flameSize = 16 + Math.sin(progress * Math.PI * 4 + idx) * 4;
+      const flameGradient = ctx.createRadialGradient(
+        x,
+        centerY - 28,
+        0,
+        x,
+        centerY - 28,
         flameSize
       );
-      flameGradient.addColorStop(0, "#FFF");
-      flameGradient.addColorStop(0.4, "#FFD700");
-      flameGradient.addColorStop(1, "#FF6347");
+      flameGradient.addColorStop(0, "#FFFFFF");
+      flameGradient.addColorStop(0.2, "#FFD700");
+      flameGradient.addColorStop(0.5, "#FFA500");
+      flameGradient.addColorStop(0.8, "#FF6347");
+      flameGradient.addColorStop(1, "rgba(255, 99, 71, 0)");
 
       ctx.fillStyle = flameGradient;
       ctx.beginPath();
-      ctx.ellipse(x, centerY - 15, 10, flameSize, 0, 0, Math.PI * 2);
+      // Draw a more realistic flame shape
+      ctx.ellipse(x, centerY - 28, 8, flameSize, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Inner flame core (brighter)
+      const innerFlameSize = flameSize * 0.6;
+      const innerGradient = ctx.createRadialGradient(
+        x,
+        centerY - 28,
+        0,
+        x,
+        centerY - 28,
+        innerFlameSize
+      );
+      innerGradient.addColorStop(0, "#FFFFFF");
+      innerGradient.addColorStop(0.5, "#FFD700");
+      innerGradient.addColorStop(1, "rgba(255, 215, 0, 0)");
+
+      ctx.fillStyle = innerGradient;
+      ctx.beginPath();
+      ctx.ellipse(x, centerY - 28, 5, innerFlameSize, 0, 0, Math.PI * 2);
       ctx.fill();
     } else if (obj.name === "Light Bulb") {
       // Bulb glow
@@ -1657,7 +1711,8 @@ function drawArtificialSources(
     ctx.textAlign = "center";
     ctx.shadowColor = "rgba(0, 0, 0, 0.8)";
     ctx.shadowBlur = 8;
-    ctx.fillText(obj.name, x, centerY + 90);
+    const labelKey = `canvas.artificial_sources.${obj.name.toLowerCase().replace(/\s+/g, "_")}`;
+    ctx.fillText(t(labelKey) || obj.name, x, centerY + 90);
     ctx.shadowBlur = 0;
   });
 
@@ -1667,130 +1722,7 @@ function drawArtificialSources(
   ctx.textAlign = "center";
   ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
   ctx.shadowBlur = 10;
-  ctx.fillText("Artificial Sources of Light", width / 2, 50);
-  ctx.shadowBlur = 0;
-}
-
-function drawLEDTechnology(
-  ctx: CanvasRenderingContext2D,
-  width: number,
-  height: number,
-  _progress: number
-) {
-  const leftX = width * 0.3;
-  const rightX = width * 0.7;
-  const centerY = height / 2;
-
-  // Traditional bulb (left)
-  ctx.fillStyle = "#FFD700";
-  ctx.font = "bold 18px Poppins, sans-serif";
-  ctx.textAlign = "center";
-  ctx.shadowColor = "rgba(0, 0, 0, 0.8)";
-  ctx.shadowBlur = 8;
-  ctx.fillText("Traditional Bulb", leftX, 80);
-
-  // Traditional bulb glow (larger, less efficient)
-  const tradGlow = ctx.createRadialGradient(
-    leftX,
-    centerY,
-    0,
-    leftX,
-    centerY,
-    60
-  );
-  tradGlow.addColorStop(0, "rgba(255, 255, 200, 0.9)");
-  tradGlow.addColorStop(0.5, "rgba(255, 215, 0, 0.5)");
-  tradGlow.addColorStop(1, "rgba(255, 215, 0, 0)");
-
-  ctx.fillStyle = tradGlow;
-  ctx.beginPath();
-  ctx.arc(leftX, centerY, 60, 0, Math.PI * 2);
-  ctx.fill();
-
-  ctx.fillStyle = "#FFF9E6";
-  ctx.beginPath();
-  ctx.arc(leftX, centerY, 35, 0, Math.PI * 2);
-  ctx.fill();
-
-  ctx.fillStyle = "#64748B";
-  ctx.fillRect(leftX - 15, centerY + 30, 30, 20);
-
-  // Stats (traditional)
-  ctx.fillStyle = "#EF4444";
-  ctx.font = "14px Poppins, sans-serif";
-  ctx.fillText("⚡ 100W Power", leftX, centerY + 80);
-  ctx.fillText("⏱️ 1,000 hrs Life", leftX, centerY + 100);
-  ctx.fillText("💰 High Cost", leftX, centerY + 120);
-
-  // LED bulb (right)
-  ctx.fillStyle = "#3B82F6";
-  ctx.font = "bold 18px Poppins, sans-serif";
-  ctx.fillText("LED Bulb", rightX, 80);
-
-  // LED glow (smaller, more efficient)
-  const ledGlow = ctx.createRadialGradient(
-    rightX,
-    centerY,
-    0,
-    rightX,
-    centerY,
-    40
-  );
-  ledGlow.addColorStop(0, "rgba(100, 200, 255, 1)");
-  ledGlow.addColorStop(0.5, "rgba(59, 130, 246, 0.6)");
-  ledGlow.addColorStop(1, "rgba(59, 130, 246, 0)");
-
-  ctx.fillStyle = ledGlow;
-  ctx.beginPath();
-  ctx.arc(rightX, centerY, 40, 0, Math.PI * 2);
-  ctx.fill();
-
-  ctx.fillStyle = "#DBEAFE";
-  ctx.beginPath();
-  ctx.arc(rightX, centerY, 28, 0, Math.PI * 2);
-  ctx.fill();
-
-  ctx.fillStyle = "#3B82F6";
-  ctx.beginPath();
-  ctx.arc(rightX, centerY, 18, 0, Math.PI * 2);
-  ctx.fill();
-
-  ctx.fillStyle = "#64748B";
-  ctx.fillRect(rightX - 12, centerY + 25, 24, 15);
-
-  // Stats (LED)
-  ctx.fillStyle = "#10B981";
-  ctx.font = "14px Poppins, sans-serif";
-  ctx.fillText("⚡ 25W Power (75% less!)", rightX, centerY + 80);
-  ctx.fillText("⏱️ 25,000 hrs Life", rightX, centerY + 100);
-  ctx.fillText("💰 Low Cost", rightX, centerY + 120);
-
-  // Arrow showing improvement
-  ctx.strokeStyle = "#10B981";
-  ctx.lineWidth = 4;
-  ctx.beginPath();
-  ctx.moveTo(leftX + 50, centerY);
-  ctx.lineTo(rightX - 50, centerY);
-  ctx.stroke();
-
-  // Arrow head
-  ctx.fillStyle = "#10B981";
-  ctx.beginPath();
-  ctx.moveTo(rightX - 50, centerY);
-  ctx.lineTo(rightX - 65, centerY - 10);
-  ctx.lineTo(rightX - 65, centerY + 10);
-  ctx.closePath();
-  ctx.fill();
-
-  ctx.shadowBlur = 0;
-
-  // Title
-  ctx.fillStyle = "#10B981";
-  ctx.font = "bold 24px Poppins, sans-serif";
-  ctx.textAlign = "center";
-  ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
-  ctx.shadowBlur = 10;
-  ctx.fillText("LED Technology Revolution", width / 2, 40);
+  ctx.fillText(t("canvas.artificial_sources.title"), width / 2, 50);
   ctx.shadowBlur = 0;
 }
 
@@ -1799,7 +1731,8 @@ function drawComplete(
   width: number,
   height: number,
   progress: number,
-  particles: Particle[]
+  particles: Particle[],
+  t: (key: string) => string
 ) {
   const centerX = width / 2;
   const centerY = height / 2;
@@ -1875,10 +1808,10 @@ function drawComplete(
   ctx.textAlign = "center";
   ctx.shadowColor = "rgba(0, 0, 0, 0.8)";
   ctx.shadowBlur = 15;
-  ctx.fillText("Complete!", centerX, height - 80);
+  ctx.fillText(t("canvas.complete.title"), centerX, height - 80);
 
   ctx.font = "18px Poppins, sans-serif";
-  ctx.fillText("You understand Sources of Light!", centerX, height - 50);
+  ctx.fillText(t("canvas.complete.message"), centerX, height - 50);
   ctx.shadowBlur = 0;
 }
 

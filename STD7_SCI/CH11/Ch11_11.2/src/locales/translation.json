@@ -51,10 +51,6 @@
       "pipe_bent": {
         "title": "Bent Pipe - Candle Not Visible",
         "description": "Now, bend the pipe and try to see the candle flame again. Can you still see it? You cannot see the candle flame through a bent pipe. This shows that light travels in a straight line."
-      },
-      "conclusion": {
-        "title": "Conclusion: Light Travels in a Straight Line",
-        "description": "Through both experiments, we have observed that light travels in a straight line. When the path is straight and unobstructed, light can pass through. When the path is blocked or bent, light cannot reach the other end."
       }
     },
     "canvas": {
@@ -80,10 +76,6 @@
       },
       "pipe_bent": {
         "message": "Bent pipe - Cannot see the flame!"
-      },
-      "conclusion": {
-        "title": "Light Travels in a Straight Line!",
-        "subtitle": "Both experiments confirm this important property of light"
       }
     },
     "practice": {
@@ -373,10 +365,6 @@
       "pipe_bent": {
         "title": "मुड़ा हुआ पाइप - मोमबत्ती दिखाई नहीं देती",
         "description": "अब, पाइप को मोड़ें और फिर से मोमबत्ती की लौ देखने की कोशिश करें। क्या आप अभी भी इसे देख सकते हैं? आप मुड़े हुए पाइप के माध्यम से मोमबत्ती की लौ नहीं देख सकते। यह दर्शाता है कि प्रकाश सीधी रेखा में यात्रा करता है।"
-      },
-      "conclusion": {
-        "title": "निष्कर्ष: प्रकाश सीधी रेखा में यात्रा करता है",
-        "description": "दोनों प्रयोगों के माध्यम से, हमने देखा है कि प्रकाश सीधी रेखा में यात्रा करता है। जब रास्ता सीधा और बिना किसी बाधा के होता है, तो प्रकाश गुजर सकता है। जब रास्ता अवरुद्ध या मुड़ा हुआ होता है, तो प्रकाश दूसरे छोर तक नहीं पहुंच सकता।"
       }
     },
     "canvas": {
@@ -402,10 +390,6 @@
       },
       "pipe_bent": {
         "message": "मुड़ा हुआ पाइप - लौ नहीं देख सकते!"
-      },
-      "conclusion": {
-        "title": "प्रकाश सीधी रेखा में यात्रा करता है!",
-        "subtitle": "दोनों प्रयोग इस प्रकाश के महत्वपूर्ण गुण की पुष्टि करते हैं"
       }
     },
     "practice": {
@@ -695,10 +679,6 @@
       "pipe_bent": {
         "title": "વળેલી પાઈપ - મીણબત્તી દેખાતી નથી",
         "description": "હવે, પાઈપને વાળો અને ફરીથી મીણબત્તીની જ્યોત જોવાનો પ્રયાસ કરો। શું તમે હજુ પણ તેને જોઈ શકો છો? તમે વળેલી પાઈપ દ્વારા મીણબત્તીની જ્યોત જોઈ શકતા નથી। આ દર્શાવે છે કે પ્રકાશ સીધી રેખામાં મુસાફરી કરે છે।"
-      },
-      "conclusion": {
-        "title": "નિષ્કર્ષ: પ્રકાશ સીધી રેખામાં મુસાફરી કરે છે",
-        "description": "બંને પ્રયોગો દ્વારા, આપણે અવલોકન કર્યું છે કે પ્રકાશ સીધી રેખામાં મુસાફરી કરે છે। જ્યારે માર્ગ સીધો અને અવરોધ વિનાનો હોય છે, ત્યારે પ્રકાશ પસાર થઈ શકે છે। જ્યારે માર્ગ અવરોધાયો અથવા વળેલો હોય છે, ત્યારે પ્રકાશ બીજા છેડા સુધી પહોંચી શકતો નથી।"
       }
     },
     "canvas": {
@@ -724,10 +704,6 @@
       },
       "pipe_bent": {
         "message": "વળેલી પાઈપ - જ્યોત જોઈ શકતા નથી!"
-      },
-      "conclusion": {
-        "title": "પ્રકાશ સીધી રેખામાં મુસાફરી કરે છે!",
-        "subtitle": "બંને પ્રયોગો પ્રકાશના આ મહત્વપૂર્ણ ગુણધર્મની પુષ્ટિ કરે છે"
       }
     },
     "practice": {

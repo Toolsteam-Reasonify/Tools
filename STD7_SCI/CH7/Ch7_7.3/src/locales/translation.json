@@ -1237,6 +1237,31 @@
         }
       ]
     }
+  },
+  "radiation": {
+    "learn": {
+      "heatingWater": {
+        "temperatureLabel": "Temperature:",
+        "phaseLabel": "Phase:",
+        "phaseNameCold": "Cold",
+        "phaseNameWarming": "Warming",
+        "phaseNameHot": "Hot",
+        "phaseNameBoiling": "Boiling",
+        "phaseNameSteam": "Steam",
+        "phaseCold": "Water is cold - molecules moving slowly",
+        "phaseWarming": "Water is warming - molecules moving faster",
+        "phaseHot": "Water is hot - molecules moving rapidly",
+        "phaseBoiling": "Water is boiling - bubbles forming!",
+        "phaseSteam": "Steam forming - water turning to vapor!",
+        "startHeating": "🔥 Start Heating",
+        "reset": "❄️ Reset",
+        "keyPoints": "🌡️ Key Points:",
+        "keyPoint1": "Water boils at 100°C (212°F) at sea level",
+        "keyPoint2": "Heat energy increases molecular movement",
+        "keyPoint3": "Bubbles form when water vapor pressure exceeds atmospheric pressure",
+        "keyPoint4": "Steam is water in gaseous state"
+      }
+    }
   }
   }
 }

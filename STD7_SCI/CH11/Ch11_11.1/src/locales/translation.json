@@ -29,10 +29,6 @@
         "title": "What are Sources of Light?",
         "description": "Light is essential for vision and life on Earth. The Sun is our primary natural source of light. But there are many other sources - both natural and artificial. Let's explore the fascinating world of light sources!"
       },
-      "luminous_objects": {
-        "title": "Luminous Objects",
-        "description": "Objects that emit their own light are called luminous objects. The Sun, stars, lightning, fire, and certain animals like fireflies produce their own light through various natural processes."
-      },
       "non_luminous_objects": {
         "title": "Non-Luminous Objects",
         "description": "Objects that do not emit their own light are called non-luminous objects. The Moon is a perfect example - it doesn't produce its own light but reflects sunlight that falls on it. This is why we can see the Moon at night!"
@@ -45,13 +41,41 @@
         "title": "Artificial Sources of Light",
         "description": "In ancient times, humans learned to create fire - the earliest form of artificial lighting. With time, they created light using different fuels like animal fat, oil, wax, and gas. Today, most lighting needs are met by electric lighting."
       },
-      "led_technology": {
-        "title": "LED Technology Revolution",
-        "description": "Light Emitting Diode (LED) lamps are modern light sources that consume much less power, are brighter, and last longer than traditional lamps. This reduces electricity bills and is better for the environment. India has promoted LED usage nationwide."
-      },
       "complete": {
         "title": "Complete Understanding",
-        "description": "You now understand the difference between luminous and non-luminous objects, natural and artificial light sources, and the evolution of lighting technology from ancient fire to modern LEDs. Light sources are essential for life and modern society!"
+        "description": "You now understand the difference between luminous and non-luminous objects, natural and artificial light sources. Light sources are essential for life and modern society!"
+      }
+    },
+    "canvas": {
+      "overview": {
+        "title": "Sources of Light"
+      },
+      "luminous_objects": {
+        "title": "Luminous Objects (Emit Own Light)"
+      },
+      "non_luminous_objects": {
+        "title": "Non-Luminous Objects (Reflect Light)",
+        "sunLabel": "☀️ Sun (Luminous)",
+        "moonLabel": "🌙 Moon (Non-Luminous)",
+        "reflectsLabel": "Reflects Sunlight"
+      },
+      "natural_sources": {
+        "title": "Natural Sources of Light",
+        "sun": "Sun",
+        "stars": "Stars",
+        "lightning": "Lightning",
+        "fireflies": "Fireflies"
+      },
+      "artificial_sources": {
+        "title": "Artificial Sources of Light",
+        "candle": "Candle",
+        "oil_lamp": "Oil Lamp",
+        "light_bulb": "Light Bulb",
+        "led": "LED"
+      },
+      "complete": {
+        "title": "Complete!",
+        "message": "You understand Sources of Light!"
       }
     },
     "practice": {
@@ -179,10 +203,6 @@
         "title": "प्रकाश के स्रोत क्या हैं?",
         "description": "प्रकाश पृथ्वी पर जीवन और दृष्टि के लिए आवश्यक है। सूर्य हमारा प्राथमिक प्राकृतिक प्रकाश स्रोत है। लेकिन कई अन्य स्रोत हैं - प्राकृतिक और कृत्रिम दोनों। आइए प्रकाश स्रोतों की आकर्षक दुनिया का अन्वेषण करें!"
       },
-      "luminous_objects": {
-        "title": "दीप्तिमान वस्तुएं",
-        "description": "वे वस्तुएं जो अपना स्वयं का प्रकाश उत्सर्जित करती हैं, दीप्तिमान वस्तुएं कहलाती हैं। सूर्य, तारे, बिजली, आग, और जुगनू जैसे कुछ जानवर विभिन्न प्राकृतिक प्रक्रियाओं के माध्यम से अपना स्वयं का प्रकाश उत्पन्न करते हैं।"
-      },
       "non_luminous_objects": {
         "title": "गैर-दीप्तिमान वस्तुएं",
         "description": "वे वस्तुएं जो अपना स्वयं का प्रकाश उत्सर्जित नहीं करतीं, गैर-दीप्तिमान वस्तुएं कहलाती हैं। चंद्रमा एक आदर्श उदाहरण है - यह अपना प्रकाश उत्पन्न नहीं करता बल्कि सूर्य के प्रकाश को परावर्तित करता है।"
@@ -195,13 +215,41 @@
         "title": "कृत्रिम प्रकाश स्रोत",
         "description": "प्राचीन काल में, मनुष्यों ने आग बनाना सीखा - कृत्रिम प्रकाश का सबसे पहला रूप। समय के साथ, उन्होंने विभिन्न ईंधनों का उपयोग करके प्रकाश बनाया। आज, अधिकांश प्रकाश आवश्यकताएं विद्युत प्रकाश द्वारा पूरी की जाती हैं।"
       },
-      "led_technology": {
-        "title": "एलईडी प्रौद्योगिकी क्रांति",
-        "description": "एलईडी लैंप आधुनिक प्रकाश स्रोत हैं जो बहुत कम बिजली की खपत करते हैं, अधिक उज्ज्वल हैं, और पारंपरिक लैंपों की तुलना में अधिक समय तक चलते हैं। भारत ने राष्ट्रव्यापी एलईडी उपयोग को बढ़ावा दिया है।"
-      },
       "complete": {
         "title": "पूर्ण समझ",
-        "description": "अब आप दीप्तिमान और गैर-दीप्तिमान वस्तुओं, प्राकृतिक और कृत्रिम प्रकाश स्रोतों, और प्राचीन आग से आधुनिक एलईडी तक प्रकाश प्रौद्योगिकी के विकास के बीच अंतर को समझते हैं।"
+        "description": "अब आप दीप्तिमान और गैर-दीप्तिमान वस्तुओं, प्राकृतिक और कृत्रिम प्रकाश स्रोतों के बीच अंतर को समझते हैं।"
+      }
+    },
+    "canvas": {
+      "overview": {
+        "title": "प्रकाश के स्रोत"
+      },
+      "luminous_objects": {
+        "title": "दीप्तिमान वस्तुएं (अपना प्रकाश उत्सर्जित करती हैं)"
+      },
+      "non_luminous_objects": {
+        "title": "गैर-दीप्तिमान वस्तुएं (प्रकाश को परावर्तित करती हैं)",
+        "sunLabel": "☀️ सूर्य (दीप्तिमान)",
+        "moonLabel": "🌙 चंद्रमा (गैर-दीप्तिमान)",
+        "reflectsLabel": "सूर्य के प्रकाश को परावर्तित करता है"
+      },
+      "natural_sources": {
+        "title": "प्रकाश के प्राकृतिक स्रोत",
+        "sun": "सूर्य",
+        "stars": "तारे",
+        "lightning": "बिजली",
+        "fireflies": "जुगनू"
+      },
+      "artificial_sources": {
+        "title": "कृत्रिम प्रकाश स्रोत",
+        "candle": "मोमबत्ती",
+        "oil_lamp": "तेल का दीपक",
+        "light_bulb": "विद्युत बल्ब",
+        "led": "LED"
+      },
+      "complete": {
+        "title": "पूर्ण!",
+        "message": "आप प्रकाश के स्रोतों को समझते हैं!"
       }
     },
     "practice": {
@@ -329,10 +377,6 @@
         "title": "પ્રકાશના સ્રોતો શું છે?",
         "description": "પૃથ્વી પર જીવન અને દ્રષ્ટિ માટે પ્રકાશ આવશ્યક છે। સૂર્ય આપણો પ્રાથમિક કુદરતી પ્રકાશ સ્રોત છે। પરંતુ ઘણા અન્ય સ્રોતો છે - કુદરતી અને કૃત્રિમ બંને। ચાલો પ્રકાશ સ્રોતોની આકર્ષક દુનિયાનું અન્વેષણ કરીએ!"
       },
-      "luminous_objects": {
-        "title": "પ્રકાશિત વસ્તુઓ",
-        "description": "જે વસ્તુઓ પોતાનો પ્રકાશ ઉત્સર્જન કરે છે તેને પ્રકાશિત વસ્તુઓ કહેવામાં આવે છે। સૂર્ય, તારાઓ, વીજળી, અગ્નિ અને જુગનુ જેવા કેટલાક પ્રાણીઓ વિવિધ કુદરતી પ્રક્રિયાઓ દ્વારા પોતાનો પ્રકાશ ઉત્પન્ન કરે છે।"
-      },
       "non_luminous_objects": {
         "title": "બિન-પ્રકાશિત વસ્તુઓ",
         "description": "જે વસ્તુઓ પોતાનો પ્રકાશ ઉત્સર્જન કરતી નથી તેને બિન-પ્રકાશિત વસ્તુઓ કહેવામાં આવે છે। ચંદ્ર એક સંપૂર્ણ ઉદાહરણ છે - તે પોતાનો પ્રકાશ ઉત્પન્ન કરતું નથી પરંતુ સૂર્યના પ્રકાશને પ્રતિબિંબિત કરે છે।"
@@ -345,13 +389,41 @@
         "title": "કૃત્રિમ પ્રકાશ સ્રોતો",
         "description": "પ્રાચીન કાળમાં, માનવોએ અગ્નિ બનાવવાનું શીખ્યા - કૃત્રિમ પ્રકાશનું પ્રથમ સ્વરૂપ। સમય સાથે, તેઓએ વિવિધ ઇંધણોનો ઉપયોગ કરીને પ્રકાશ બનાવ્યો। આજે, મોટાભાગની પ્રકાશ જરૂરિયાતો ઇલેક્ટ્રિક પ્રકાશ દ્વારા પૂરી થાય છે।"
       },
-      "led_technology": {
-        "title": "LED તકનીકી ક્રાંતિ",
-        "description": "LED લેમ્પ આધુનિક પ્રકાશ સ્રોતો છે જે ખૂબ ઓછી શક્તિ વાપરે છે, વધુ તેજસ્વી છે, અને પરંપરાગત લેમ્પ કરતાં લાંબા સમય સુધી ચાલે છે। ભારતે રાષ્ટ્રીય સ્તરે LED ઉપયોગને પ્રોત્સાહન આપ્યું છે।"
-      },
       "complete": {
         "title": "સંપૂર્ણ સમજ",
-        "description": "હવે તમે પ્રકાશિત અને બિન-પ્રકાશિત વસ્તુઓ, કુદરતી અને કૃત્રિમ પ્રકાશ સ્રોતો, અને પ્રાચીન અગ્નિથી આધુનિક LEDsમાં પ્રકાશ તકનીકીના વિકાસ વચ્ચેનો તફાવત સમજો છો।"
+        "description": "હવે તમે પ્રકાશિત અને બિન-પ્રકાશિત વસ્તુઓ, કુદરતી અને કૃત્રિમ પ્રકાશ સ્રોતો વચ્ચેનો તફાવત સમજો છો।"
+      }
+    },
+    "canvas": {
+      "overview": {
+        "title": "પ્રકાશના સ્રોતો"
+      },
+      "luminous_objects": {
+        "title": "પ્રકાશિત વસ્તુઓ (પોતાનો પ્રકાશ ઉત્સર્જન કરે છે)"
+      },
+      "non_luminous_objects": {
+        "title": "બિન-પ્રકાશિત વસ્તુઓ (પ્રકાશને પ્રતિબિંબિત કરે છે)",
+        "sunLabel": "☀️ સૂર્ય (પ્રકાશિત)",
+        "moonLabel": "🌙 ચંદ્ર (બિન-પ્રકાશિત)",
+        "reflectsLabel": "સૂર્યના પ્રકાશને પ્રતિબિંબિત કરે છે"
+      },
+      "natural_sources": {
+        "title": "પ્રકાશના કુદરતી સ્રોતો",
+        "sun": "સૂર્ય",
+        "stars": "તારાઓ",
+        "lightning": "વીજળી",
+        "fireflies": "જુગનુ"
+      },
+      "artificial_sources": {
+        "title": "કૃત્રિમ પ્રકાશ સ્રોતો",
+        "candle": "મીણબત્તી",
+        "oil_lamp": "તેલનો દીવો",
+        "light_bulb": "વિદ્યુત બલ્બ",
+        "led": "LED"
+      },
+      "complete": {
+        "title": "પૂર્ણ!",
+        "message": "તમે પ્રકાશના સ્રોતોને સમજો છો!"
       }
     },
     "practice": {

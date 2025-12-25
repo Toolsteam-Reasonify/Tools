@@ -27,18 +27,62 @@
           const lowerMessage = String(message).toLowerCase();
           const patterns = [
             'runtime.lasterror',
+            'runtime.lastError',
+            'runtime.last_error',
             'unchecked runtime.lasterror',
+            'unchecked runtime.lasterror',
+            'unchecked runtime.last_error',
             'message port closed',
-            'extension context invalidated',
             'message port closed before a response',
+            'message port closed before a response was received',
+            'the message port closed before a response was received',
+            'extension context invalidated',
+            'chrome.runtime.lastError',
+            'chrome.runtime.lasterror',
             'chrome-extension://',
             'moz-extension://',
             'safari-extension://',
-            'extension://'
+            'extension://',
+            'lastError',
+            'lasterror',
+            'port closed',
+            'port closed before'
           ];
           return patterns.some(function(pattern) {
             return lowerMessage.indexOf(pattern) !== -1;
           });
+        }
+        
+        // Suppress Chrome runtime.lastError if Chrome API exists
+        if (typeof chrome !== 'undefined' && chrome.runtime) {
+          try {
+            // Store original lastError getter if it exists
+            var originalLastError = chrome.runtime.lastError;
+            
+            // Wrap chrome.runtime.sendMessage to catch and suppress errors
+            if (chrome.runtime.sendMessage) {
+              var originalSendMessage = chrome.runtime.sendMessage;
+              chrome.runtime.sendMessage = function() {
+                try {
+                  var result = originalSendMessage.apply(this, arguments);
+                  // Check for lastError after sendMessage
+                  if (chrome.runtime.lastError) {
+                    // Suppress the error silently
+                    return;
+                  }
+                  return result;
+                } catch (e) {
+                  var errorMsg = String(e.message || e || '');
+                  if (suppressExtensionError(errorMsg)) {
+                    return;
+                  }
+                  throw e;
+                }
+              };
+            }
+          } catch (e) {
+            // Silently fail if we can't wrap the API
+          }
         }
         
         // Store original console methods
@@ -50,23 +94,53 @@
           debug: console.debug
         };
         
-        // Override console.error
+        // Override console.error with more aggressive checking
         console.error = function() {
           var args = Array.from(arguments);
-          var fullMessage = args.map(function(arg) { return String(arg || ''); }).join(' ');
+          var fullMessage = args.map(function(arg) { 
+            // Handle Error objects, strings, and other types
+            if (arg instanceof Error) {
+              return String(arg.message || arg.stack || arg.name || arg);
+            }
+            return String(arg || ''); 
+          }).join(' ');
+          
+          // Check the full message and each individual argument
           if (suppressExtensionError(fullMessage)) {
             return; // Silently ignore
           }
+          
+          // Also check individual arguments
+          for (var i = 0; i < args.length; i++) {
+            if (suppressExtensionError(String(args[i] || ''))) {
+              return; // Silently ignore
+            }
+          }
+          
           originalConsole.error.apply(console, args);
         };
         
         // Override console.warn (extensions sometimes use warn)
         console.warn = function() {
           var args = Array.from(arguments);
-          var fullMessage = args.map(function(arg) { return String(arg || ''); }).join(' ');
+          var fullMessage = args.map(function(arg) { 
+            if (arg instanceof Error) {
+              return String(arg.message || arg.stack || arg.name || arg);
+            }
+            return String(arg || ''); 
+          }).join(' ');
+          
           if (suppressExtensionError(fullMessage)) {
             return; // Silently ignore
           }
+          
+          // Check individual arguments
+          for (var i = 0; i < args.length; i++) {
+            if (suppressExtensionError(String(args[i] || ''))) {
+              return; // Silently ignore
+            }
+          }
+          
           originalConsole.warn.apply(console, args);
         };
         

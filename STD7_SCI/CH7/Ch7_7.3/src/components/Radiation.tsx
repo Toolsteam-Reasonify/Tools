@@ -7,6 +7,45 @@ import {
 import { useTranslation } from 'react-i18next';
 import i18n from '@/i18n';
 
+// Type declaration for Chrome extension APIs (to suppress runtime.lastError warnings)
+declare global {
+  interface Window {
+    chrome?: {
+      runtime?: {
+        lastError?: { message?: string } | undefined;
+        sendMessage?: (...args: any[]) => void;
+      };
+    };
+  }
+}
+
+// Suppress Chrome extension runtime.lastError warnings
+if (typeof window !== 'undefined') {
+  // Override console.error to filter out Chrome extension errors
+  const originalError = console.error;
+  console.error = (...args: any[]) => {
+    const errorMessage = args[0]?.toString() || '';
+    // Filter out Chrome extension runtime.lastError messages
+    if (errorMessage.includes('runtime.lastError') || 
+        errorMessage.includes('message port closed')) {
+      return; // Suppress these errors
+    }
+    originalError.apply(console, args);
+  };
+
+  // Handle Chrome extension errors globally
+  if (window.chrome?.runtime) {
+    // Clear any existing lastError to prevent warnings
+    try {
+      if (window.chrome.runtime.lastError) {
+        window.chrome.runtime.lastError = undefined;
+      }
+    } catch {
+      // Ignore errors when clearing
+    }
+  }
+}
+
 // ============================================================================
 // Type Definitions
 // ============================================================================
@@ -36,20 +75,46 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
   const [language, setLanguageState] = useState<Language>(initialLanguage);
 
   useEffect(() => {
+    // Suppress Chrome extension runtime.lastError warnings
+    if (typeof window !== 'undefined' && window.chrome?.runtime?.lastError) {
+      // Silently handle extension errors
+      try {
+        window.chrome.runtime.lastError = undefined;
+      } catch {
+        // Ignore errors when clearing
+      }
+    }
+
     const handleLanguageChanged = (lng: string) => {
       const base = (lng?.split('-')[0] as Language) || 'en';
       setLanguageState(base);
     };
-    i18n.on('languageChanged', handleLanguageChanged);
+    
+    try {
+      i18n.on('languageChanged', handleLanguageChanged);
+    } catch (error) {
+      // Handle i18n event listener errors
+      console.warn('Failed to set up language change listener:', error);
+    }
+    
     return () => {
-      i18n.off('languageChanged', handleLanguageChanged);
+      try {
+        i18n.off('languageChanged', handleLanguageChanged);
+      } catch (error) {
+        // Handle cleanup errors silently
+      }
     };
   }, []);
 
   const handleSetLanguage = (lang: Language) => {
     i18n.changeLanguage(lang);
     if (typeof window !== 'undefined') {
-      localStorage.setItem('i18nextLng', lang);
+      try {
+        localStorage.setItem('i18nextLng', lang);
+      } catch (error) {
+        // Handle localStorage errors (e.g., quota exceeded, private browsing)
+        console.warn('Failed to save language preference to localStorage:', error);
+      }
     }
   };
 
@@ -196,6 +261,27 @@ interface LearnTranslations {
     comparisonWorksVacuum: string;
     defaultTitle: string;
   };
+  heatingWater: {
+    temperatureLabel: string;
+    phaseLabel: string;
+    phaseNameCold: string;
+    phaseNameWarming: string;
+    phaseNameHot: string;
+    phaseNameBoiling: string;
+    phaseNameSteam: string;
+    phaseCold: string;
+    phaseWarming: string;
+    phaseHot: string;
+    phaseBoiling: string;
+    phaseSteam: string;
+    startHeating: string;
+    reset: string;
+    keyPoints: string;
+    keyPoint1: string;
+    keyPoint2: string;
+    keyPoint3: string;
+    keyPoint4: string;
+  };
 }
 
 interface LearnTranslationsType {
@@ -262,6 +348,12 @@ const learnTranslations: LearnTranslationsType = {
         description:
           'Conduction needs solid contact. Convection needs particle movement in fluids. Radiation needs NO medium - it can travel through vacuum! All three can happen together, like when heating water in a pan.',
       },
+      {
+        id: 7,
+        title: 'Heating Water',
+        description:
+          'Watch how water molecules move faster as heat is applied. When water reaches 100°C, it begins to boil and transform into steam through radiation and convection working together.',
+      },
     ],
     canvas: {
       introHotObject: '🔥 Hot Object',
@@ -298,6 +390,27 @@ const learnTranslations: LearnTranslationsType = {
       comparisonNeeded: 'needed!',
       comparisonWorksVacuum: '(Works in vacuum)',
       defaultTitle: 'Radiation Animation',
+    },
+    heatingWater: {
+      temperatureLabel: 'Temperature:',
+      phaseLabel: 'Phase:',
+      phaseNameCold: 'Cold',
+      phaseNameWarming: 'Warming',
+      phaseNameHot: 'Hot',
+      phaseNameBoiling: 'Boiling',
+      phaseNameSteam: 'Steam',
+      phaseCold: 'Water is cold - molecules moving slowly',
+      phaseWarming: 'Water is warming - molecules moving faster',
+      phaseHot: 'Water is hot - molecules moving rapidly',
+      phaseBoiling: 'Water is boiling - bubbles forming!',
+      phaseSteam: 'Steam forming - water turning to vapor!',
+      startHeating: '🔥 Start Heating',
+      reset: '❄️ Reset',
+      keyPoints: '🌡️ Key Points:',
+      keyPoint1: 'Water boils at 100°C (212°F) at sea level',
+      keyPoint2: 'Heat energy increases molecular movement',
+      keyPoint3: 'Bubbles form when water vapor pressure exceeds atmospheric pressure',
+      keyPoint4: 'Steam is water in gaseous state',
     },
   },
   hi: {
@@ -357,6 +470,12 @@ const learnTranslations: LearnTranslationsType = {
         description:
           'चालन को ठोस संपर्क चाहिए। संवहन को तरल पदार्थों में कणों की गति चाहिए। विकिरण को कोई माध्यम नहीं चाहिए - यह निर्वात से होकर यात्रा कर सकता है! तीनों एक साथ हो सकते हैं, जैसे कि पैन में पानी गर्म करते समय।',
       },
+      {
+        id: 7,
+        title: 'पानी को गर्म करना',
+        description:
+          'देखें कि गर्मी लगाने पर जल के अणु तेजी से कैसे चलते हैं। जब पानी 100°C तक पहुँचता है, तो यह उबलना शुरू कर देता है और विकिरण तथा संवहन के साथ मिलकर भाप में बदल जाता है।',
+      },
     ],
     canvas: {
       introHotObject: '🔥 गर्म वस्तु',
@@ -393,6 +512,27 @@ const learnTranslations: LearnTranslationsType = {
       comparisonNeeded: 'नहीं चाहिए!',
       comparisonWorksVacuum: '(निर्वात में भी काम करता है)',
       defaultTitle: 'विकिरण एनीमेशन',
+    },
+    heatingWater: {
+      temperatureLabel: 'तापमान:',
+      phaseLabel: 'अवस्था:',
+      phaseNameCold: 'ठंडा',
+      phaseNameWarming: 'गर्म हो रहा',
+      phaseNameHot: 'गर्म',
+      phaseNameBoiling: 'उबल रहा',
+      phaseNameSteam: 'भाप',
+      phaseCold: 'पानी ठंडा है - अणु धीरे-धीरे चल रहे हैं',
+      phaseWarming: 'पानी गर्म हो रहा है - अणु तेजी से चल रहे हैं',
+      phaseHot: 'पानी गर्म है - अणु तेजी से चल रहे हैं',
+      phaseBoiling: 'पानी उबल रहा है - बुलबुले बन रहे हैं!',
+      phaseSteam: 'भाप बन रही है - पानी वाष्प में बदल रहा है!',
+      startHeating: '🔥 गर्म करना शुरू करें',
+      reset: '❄️ रीसेट करें',
+      keyPoints: '🌡️ मुख्य बिंदु:',
+      keyPoint1: 'समुद्र तल पर पानी 100°C (212°F) पर उबलता है',
+      keyPoint2: 'ऊष्मा ऊर्जा अणुओं की गति को बढ़ाती है',
+      keyPoint3: 'जब जल वाष्प दबाव वायुमंडलीय दबाव से अधिक हो जाता है तो बुलबुले बनते हैं',
+      keyPoint4: 'भाप गैसीय अवस्था में पानी है',
     },
   },
   gu: {
@@ -452,6 +592,12 @@ const learnTranslations: LearnTranslationsType = {
         description:
           'ચાલનને ઘન સંપર્ક જોઈએ. સંવહનને પ્રવાહીમાં કણોની ગતિ જોઈએ. વિકિરણને કોઈ માધ્યમ જોઈએ નથી - તે શૂન્યાવકાશમાંથી પસાર થઈ શકે છે! ત્રણેય એક સાથે થઈ શકે છે, જેમ કે પાનમાં પાણી ગરમ કરતી વખતે.',
       },
+      {
+        id: 7,
+        title: 'પાણી ગરમ કરવું',
+        description:
+          'જુઓ કે ગરમી લાગવાથી પાણીના અણુઓ કેટલા ઝડપથી ખસે છે. જ્યારે પાણી 100°C સુધી પહોંચે છે, ત્યારે તે ઉકળવાનું શરૂ કરે છે અને વિકિરણ અને સંવહન સાથે મળીને વરાળમાં રૂપાંતરિત થાય છે.',
+      },
     ],
     canvas: {
       introHotObject: '🔥 ગરમ વસ્તુ',
@@ -488,6 +634,27 @@ const learnTranslations: LearnTranslationsType = {
       comparisonNeeded: 'જરૂર નથી!',
       comparisonWorksVacuum: '(શૂન્યાવકાશમાં પણ કામ કરે છે)',
       defaultTitle: 'વિકિરણ એનિમેશન',
+    },
+    heatingWater: {
+      temperatureLabel: 'તાપમાન:',
+      phaseLabel: 'અવસ્થા:',
+      phaseNameCold: 'ઠંડું',
+      phaseNameWarming: 'ગરમ થઈ રહ્યું',
+      phaseNameHot: 'ગરમ',
+      phaseNameBoiling: 'ઉકળી રહ્યું',
+      phaseNameSteam: 'વરાળ',
+      phaseCold: 'પાણી ઠંડું છે - અણુઓ ધીમે ધીમે ખસી રહ્યા છે',
+      phaseWarming: 'પાણી ગરમ થઈ રહ્યું છે - અણુઓ ઝડપથી ખસી રહ્યા છે',
+      phaseHot: 'પાણી ગરમ છે - અણુઓ ખૂબ ઝડપથી ખસી રહ્યા છે',
+      phaseBoiling: 'પાણી ઉકળી રહ્યું છે - પરપોટા બની રહ્યા છે!',
+      phaseSteam: 'વરાળ બની રહી છે - પાણી વરાળમાં રૂપાંતરિત થઈ રહ્યું છે!',
+      startHeating: '🔥 ગરમ કરવાનું શરૂ કરો',
+      reset: '❄️ રીસેટ કરો',
+      keyPoints: '🌡️ મુખ્ય મુદ્દાઓ:',
+      keyPoint1: 'સમુદ્ર સપાટી પર પાણી 100°C (212°F) પર ઉકળે છે',
+      keyPoint2: 'ઉષ્મા ઊર્જા આણ્વિક ગતિને વધારે છે',
+      keyPoint3: 'જ્યારે પાણીનો વરાળ દબાણ વાયુમંડળીય દબાણ કરતાં વધી જાય છે ત્યારે પરપોટા બને છે',
+      keyPoint4: 'વરાળ એ ગેસીય સ્થિતિમાં પાણી છે',
     },
   },
 };
@@ -534,8 +701,544 @@ const DEFAULT_STEPS: StepDataInterface[] = [
     description: "Conduction needs solid contact. Convection needs particle movement in fluids. Radiation needs NO medium - it can travel through vacuum! All three can happen together, like when heating water in a pan.",
     type: 'explanation',
     animationData: { experiment: 'comparison' }
+  },
+  {
+    id: 7,
+    title: "Heating Water",
+    description: "Watch how water molecules move faster as heat is applied. When water reaches 100°C, it begins to boil and transform into steam through radiation and convection working together.",
+    type: 'explanation',
+    animationData: { experiment: 'heating_water' }
   }
 ];
+
+// HeatingWaterAnimation Component
+interface HeatingWaterAnimationProps {
+  language: LanguageCode;
+  translations: LearnTranslations['heatingWater'];
+}
+
+const HeatingWaterAnimation: React.FC<HeatingWaterAnimationProps> = ({ language: _language, translations }) => {
+  const [temperature, setTemperature] = useState(25);
+  const [isHeating, setIsHeating] = useState(false);
+  const [phase, setPhase] = useState<'cold' | 'warming' | 'hot' | 'boiling' | 'steam'>('cold');
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animationRef = useRef<number>();
+  const particlesRef = useRef<Array<{
+    x: number;
+    y: number;
+    vx: number;
+    vy: number;
+    size: number;
+    opacity: number;
+    type: 'molecule' | 'bubble' | 'vapor';
+  }>>([]);
+
+  useEffect(() => {
+    if (!isHeating) return;
+
+    const interval = setInterval(() => {
+      setTemperature((prev) => {
+        if (prev >= 100) {
+          return 100;
+        }
+        return prev + 0.5;
+      });
+    }, 50);
+
+    return () => clearInterval(interval);
+  }, [isHeating]);
+
+  useEffect(() => {
+    if (temperature < 40) setPhase('cold');
+    else if (temperature < 70) setPhase('warming');
+    else if (temperature < 95) setPhase('hot');
+    else if (temperature < 100) setPhase('boiling');
+    else setPhase('steam');
+  }, [temperature]);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Initialize water molecules
+    if (particlesRef.current.length === 0) {
+      for (let i = 0; i < 80; i++) {
+        particlesRef.current.push({
+          x: 95 + Math.random() * 195,
+          y: 200 + Math.random() * 55,
+          vx: 0,
+          vy: 0,
+          size: 2.5,
+          opacity: 0.6,
+          type: 'molecule'
+        });
+      }
+    }
+
+    // Helper functions
+    const getWaterColor = (temp: number) => {
+      if (temp < 40) {
+        return { top: 'rgba(100, 180, 255, 0.7)', bottom: 'rgba(70, 150, 230, 0.8)' };
+      } else if (temp < 70) {
+        return { top: 'rgba(120, 190, 255, 0.7)', bottom: 'rgba(90, 160, 240, 0.8)' };
+      } else if (temp < 95) {
+        return { top: 'rgba(140, 200, 255, 0.7)', bottom: 'rgba(110, 170, 250, 0.8)' };
+      } else {
+        return { top: 'rgba(160, 210, 255, 0.6)', bottom: 'rgba(130, 180, 255, 0.7)' };
+      }
+    };
+
+    const drawFlames = (ctx: CanvasRenderingContext2D, intensity: number) => {
+      const time = Date.now() * 0.005;
+      const flames = [
+        { x: 165, height: 28 },
+        { x: 185, height: 35 },
+        { x: 200, height: 38 },
+        { x: 215, height: 35 },
+        { x: 235, height: 28 }
+      ];
+
+      flames.forEach((flame, i) => {
+        const flicker = Math.sin(time + i) * 5;
+        const height = (flame.height + flicker) * intensity;
+
+        // Outer flame (orange)
+        const gradient1 = ctx.createLinearGradient(flame.x, 280, flame.x, 280 - height);
+        gradient1.addColorStop(0, 'rgba(255, 100, 0, 0.8)');
+        gradient1.addColorStop(0.5, 'rgba(255, 150, 0, 0.6)');
+        gradient1.addColorStop(1, 'rgba(255, 200, 0, 0)');
+
+        ctx.fillStyle = gradient1;
+        ctx.beginPath();
+        ctx.moveTo(flame.x - 10, 280);
+        ctx.quadraticCurveTo(flame.x - 7, 280 - height * 0.7, flame.x, 280 - height);
+        ctx.quadraticCurveTo(flame.x + 7, 280 - height * 0.7, flame.x + 10, 280);
+        ctx.closePath();
+        ctx.fill();
+
+        // Inner flame (yellow-white)
+        const gradient2 = ctx.createLinearGradient(flame.x, 280, flame.x, 280 - height * 0.7);
+        gradient2.addColorStop(0, 'rgba(255, 255, 100, 0.9)');
+        gradient2.addColorStop(0.5, 'rgba(255, 255, 200, 0.7)');
+        gradient2.addColorStop(1, 'rgba(255, 255, 255, 0)');
+
+        ctx.fillStyle = gradient2;
+        ctx.beginPath();
+        ctx.moveTo(flame.x - 5, 280);
+        ctx.quadraticCurveTo(flame.x - 3, 280 - height * 0.5, flame.x, 280 - height * 0.7);
+        ctx.quadraticCurveTo(flame.x + 3, 280 - height * 0.5, flame.x + 5, 280);
+        ctx.closePath();
+        ctx.fill();
+      });
+    };
+
+    const drawPan = (ctx: CanvasRenderingContext2D) => {
+    // Pan body (trapezoid shape) - reduced size
+    ctx.fillStyle = '#8b7355';
+    ctx.strokeStyle = '#5d4a3a';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(95, 200);
+    ctx.lineTo(102, 255);
+    ctx.lineTo(298, 255);
+    ctx.lineTo(305, 200);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    // Pan rim
+    ctx.fillStyle = '#a0826d';
+    ctx.fillRect(92, 193, 216, 10);
+    ctx.strokeRect(92, 193, 216, 10);
+
+    // Pan handle
+    ctx.fillStyle = '#8b7355';
+    ctx.fillRect(310, 225, 28, 8);
+    ctx.strokeRect(310, 225, 28, 8);
+    ctx.beginPath();
+    ctx.arc(338, 229, 4, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    // Shine on pan
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(115, 215);
+      ctx.lineTo(130, 245);
+      ctx.stroke();
+    };
+
+    const drawWaterSurface = (ctx: CanvasRenderingContext2D) => {
+      const time = Date.now() * 0.003;
+      const boilingEffect = phase === 'boiling' || phase === 'steam' ? 1 : 0;
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(102, 200);
+      
+      // Create wavy surface
+      for (let x = 102; x <= 298; x += 5) {
+        const wave = Math.sin((x - 102) * 0.05 + time) * 2 * (1 + boilingEffect * 2);
+        ctx.lineTo(x, 200 + wave);
+      }
+      
+      ctx.lineTo(298, 255);
+      ctx.lineTo(102, 255);
+      ctx.closePath();
+
+      // Water gradient based on temperature
+      const waterColor = getWaterColor(temperature);
+      const gradient = ctx.createLinearGradient(200, 200, 200, 255);
+      gradient.addColorStop(0, waterColor.top);
+      gradient.addColorStop(1, waterColor.bottom);
+      ctx.fillStyle = gradient;
+      ctx.fill();
+
+      // Add shimmer effect
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+      ctx.beginPath();
+      ctx.ellipse(200, 227, 70, 20, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.restore();
+    };
+
+    const updateParticles = (ctx: CanvasRenderingContext2D) => {
+      const movementFactor = temperature / 50;
+      const time = Date.now();
+
+      // Generate bubbles when boiling
+      if ((phase === 'boiling' || phase === 'steam') && Math.random() < 0.15) {
+        particlesRef.current.push({
+          x: 110 + Math.random() * 188,
+          y: 250,
+          vx: (Math.random() - 0.5) * 0.5,
+          vy: -2 - Math.random() * 1.5, // Negative value ensures upward movement
+          size: 2.5 + Math.random() * 3,
+          opacity: 0.8,
+          type: 'bubble'
+        });
+      }
+
+    // Generate vapor/steam above water
+    if (temperature > 70 && Math.random() < 0.2) {
+      particlesRef.current.push({
+        x: 110 + Math.random() * 188,
+        y: 195,
+        vx: (Math.random() - 0.5) * 1,
+        vy: -0.8 - Math.random() * 0.7,
+        size: 3 + Math.random() * 4,
+        opacity: 0.5,
+        type: 'vapor'
+      });
+    }
+
+    // Update and draw all particles
+    particlesRef.current = particlesRef.current.filter(particle => {
+      if (particle.type === 'molecule') {
+        // Water molecules - brownian motion
+        particle.x += Math.sin(time * 0.001 + particle.x) * movementFactor * 0.1;
+        particle.y += Math.cos(time * 0.001 + particle.y) * movementFactor * 0.1;
+
+        // Keep molecules within water bounds
+        if (particle.x < 107) particle.x = 107;
+        if (particle.x > 293) particle.x = 293;
+        if (particle.y < 205) particle.y = 205;
+        if (particle.y > 250) particle.y = 250;
+
+        // Draw molecule
+        ctx.fillStyle = `rgba(70, 130, 220, ${particle.opacity})`;
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+        ctx.fill();
+
+        return true;
+      } else if (particle.type === 'bubble') {
+        // Bubbles rise and expand
+        particle.x += particle.vx;
+        particle.y += particle.vy;
+        particle.size *= 1.01;
+        particle.opacity *= 0.98;
+
+        // Remove bubble if it reaches surface or fades out
+        if (particle.y < 200 || particle.opacity < 0.1) {
+          // Convert to vapor at surface
+          if (particle.y < 200) {
+            particlesRef.current.push({
+              x: particle.x,
+              y: 195,
+              vx: (Math.random() - 0.5) * 1.5,
+              vy: -1 - Math.random() * 0.5,
+              size: particle.size * 1.5,
+              opacity: 0.6,
+              type: 'vapor'
+            });
+          }
+          return false;
+        }
+
+        // Draw bubble with blue color
+        ctx.strokeStyle = `rgba(70, 130, 220, ${particle.opacity})`;
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // Bubble fill (light blue)
+        ctx.fillStyle = `rgba(100, 180, 255, ${particle.opacity * 0.4})`;
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, particle.size - 1, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Bubble highlight (white highlight on blue bubble)
+        ctx.fillStyle = `rgba(255, 255, 255, ${particle.opacity * 0.5})`;
+        ctx.beginPath();
+        ctx.arc(particle.x - particle.size * 0.3, particle.y - particle.size * 0.3, particle.size * 0.3, 0, Math.PI * 2);
+        ctx.fill();
+
+        return true;
+      } else if (particle.type === 'vapor') {
+        // Vapor rises and disperses
+        particle.x += particle.vx;
+        particle.y += particle.vy;
+        particle.vx *= 0.99;
+        particle.size *= 1.02;
+        particle.opacity *= 0.96;
+
+        // Remove vapor when it fades or goes off screen
+        if (particle.opacity < 0.05 || particle.y < 50) {
+          return false;
+        }
+
+        // Draw vapor with gradient
+        const vaporGradient = ctx.createRadialGradient(
+          particle.x, particle.y, 0,
+          particle.x, particle.y, particle.size
+        );
+        vaporGradient.addColorStop(0, `rgba(230, 240, 255, ${particle.opacity})`);
+        vaporGradient.addColorStop(0.5, `rgba(200, 220, 255, ${particle.opacity * 0.5})`);
+        vaporGradient.addColorStop(1, `rgba(180, 200, 255, 0)`);
+
+        ctx.fillStyle = vaporGradient;
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+        ctx.fill();
+
+        return true;
+      }
+      return false;
+    });
+    };
+
+    const drawTemperatureGauge = (ctx: CanvasRenderingContext2D) => {
+      // Thermometer (further reduced size)
+      const thermoX = 25;
+      const thermoY = 100;
+      const thermoWidth = 14;
+      const thermoHeight = 100;
+      const bulbRadius = 9;
+      const bulbY = thermoY + thermoHeight + bulbRadius - 2;
+
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(thermoX, thermoY, thermoWidth, thermoHeight);
+      ctx.strokeStyle = '#333';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(thermoX, thermoY, thermoWidth, thermoHeight);
+
+      // Mercury/indicator
+      const mercuryHeight = (temperature / 100) * thermoHeight;
+      const gradient = ctx.createLinearGradient(thermoX, thermoY + thermoHeight, thermoX, thermoY);
+      gradient.addColorStop(0, '#ff3333');
+      gradient.addColorStop(0.5, '#ff6633');
+      gradient.addColorStop(1, '#ff9933');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(thermoX + 2, (thermoY + thermoHeight) - mercuryHeight, thermoWidth - 4, mercuryHeight + bulbRadius - 2);
+
+      // Bulb
+      ctx.beginPath();
+      ctx.arc(thermoX + thermoWidth / 2, bulbY, bulbRadius, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      // Temperature text
+      ctx.fillStyle = '#333';
+      ctx.font = 'bold 14px Arial';
+      ctx.textAlign = 'center';
+      ctx.fillText(`${temperature.toFixed(1)}°C`, thermoX + thermoWidth / 2, thermoY - 8);
+
+      // Scale marks
+      ctx.strokeStyle = '#333';
+      ctx.lineWidth = 1;
+      ctx.font = '7px Arial';
+      ctx.fillStyle = '#333';
+      for (let i = 0; i <= 100; i += 25) {
+        const y = (thermoY + thermoHeight) - (i / 100) * thermoHeight;
+        ctx.beginPath();
+        ctx.moveTo(thermoX + thermoWidth, y);
+        ctx.lineTo(thermoX + thermoWidth + 4, y);
+        ctx.stroke();
+        ctx.fillText(`${i}°`, thermoX + thermoWidth + 6, y + 2);
+      }
+    };
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw background gradient
+      const bgGradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+      bgGradient.addColorStop(0, '#f8f9fa');
+      bgGradient.addColorStop(1, '#e9ecef');
+      ctx.fillStyle = bgGradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Draw stove
+      ctx.fillStyle = '#2c2c2c';
+      ctx.fillRect(95, 280, 210, 28);
+      
+      // Draw burner
+      ctx.fillStyle = '#444';
+      ctx.beginPath();
+      ctx.ellipse(200, 280, 56, 8, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Draw flames (animated)
+      if (isHeating) {
+        const flameIntensity = Math.min(temperature / 100, 1);
+        drawFlames(ctx, flameIntensity);
+      }
+
+      // Draw pan
+      drawPan(ctx);
+
+      // Update and draw particles
+      updateParticles(ctx);
+
+      // Draw water surface with ripples
+      drawWaterSurface(ctx);
+
+      // Draw temperature gauge
+      drawTemperatureGauge(ctx);
+
+      animationRef.current = requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [temperature, isHeating, phase]);
+
+  const getPhaseName = () => {
+    switch (phase) {
+      case 'cold':
+        return translations.phaseNameCold;
+      case 'warming':
+        return translations.phaseNameWarming;
+      case 'hot':
+        return translations.phaseNameHot;
+      case 'boiling':
+        return translations.phaseNameBoiling;
+      case 'steam':
+        return translations.phaseNameSteam;
+      default:
+        return '';
+    }
+  };
+
+  const getPhaseDescription = () => {
+    switch (phase) {
+      case 'cold':
+        return translations.phaseCold;
+      case 'warming':
+        return translations.phaseWarming;
+      case 'hot':
+        return translations.phaseHot;
+      case 'boiling':
+        return translations.phaseBoiling;
+      case 'steam':
+        return translations.phaseSteam;
+      default:
+        return '';
+    }
+  };
+
+  return (
+    <div className="flex flex-col items-center justify-center w-full">
+      {/* Canvas */}
+      <div className="bg-white rounded-lg p-4 sm:p-4 mb-6 w-full shadow-md">
+        <canvas
+          ref={canvasRef}
+          width={400}
+          height={380}
+          className="w-full rounded-lg"
+        />
+      </div>
+
+      {/* Temperature Display */}
+      <div className="bg-gradient-to-r from-blue-500 to-red-500 rounded-lg p-4 sm:p-6 mb-6 w-full">
+        <div className="flex justify-between items-center mb-2">
+          <span className="text-white font-semibold text-sm sm:text-base">{translations.temperatureLabel}</span>
+          <span className="text-white text-xl sm:text-2xl font-bold">{temperature.toFixed(1)}°C</span>
+        </div>
+        <div className="w-full bg-white bg-opacity-30 rounded-full h-4">
+          <div
+            className="bg-white rounded-full h-4 transition-all duration-300"
+            style={{ width: `${temperature}%` }}
+          />
+        </div>
+      </div>
+
+      {/* Phase Description */}
+      <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6 w-full">
+        <p className="text-blue-800 font-medium text-sm sm:text-base">
+          {translations.phaseLabel} <span className="uppercase">{getPhaseName()}</span>
+        </p>
+        <p className="text-blue-700 text-xs sm:text-sm mt-2">{getPhaseDescription()}</p>
+      </div>
+
+      {/* Controls */}
+      <div className="flex gap-4 justify-center w-full">
+        <button
+          onClick={() => setIsHeating(true)}
+          disabled={isHeating || temperature >= 100}
+          className="bg-red-500 hover:bg-red-600 disabled:bg-gray-400 text-white font-bold py-2 sm:py-3 px-4 sm:px-6 rounded-lg transition-colors duration-200 text-sm sm:text-base"
+        >
+          {translations.startHeating}
+        </button>
+        <button
+          onClick={() => {
+            setIsHeating(false);
+            setTemperature(25);
+            particlesRef.current = particlesRef.current.filter(p => p.type === 'molecule');
+          }}
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 sm:py-3 px-4 sm:px-6 rounded-lg transition-colors duration-200 text-sm sm:text-base"
+        >
+          {translations.reset}
+        </button>
+      </div>
+
+      {/* Educational Information */}
+      <div className="mt-6 sm:mt-8 space-y-4 text-gray-700 w-full">
+        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+          <h3 className="font-bold text-base sm:text-lg mb-2">{translations.keyPoints}</h3>
+          <ul className="list-disc list-inside space-y-1 text-xs sm:text-sm">
+            <li>{translations.keyPoint1}</li>
+            <li>{translations.keyPoint2}</li>
+            <li>{translations.keyPoint3}</li>
+            <li>{translations.keyPoint4}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const RadiationLearnMode: React.FC<RadiationLearnModeProps> = ({
   props = {},
@@ -612,7 +1315,7 @@ const RadiationLearnMode: React.FC<RadiationLearnModeProps> = ({
       animationRef.current = requestAnimationFrame(animate);
     };
 
-    if (isPlaying) {
+    if (isPlaying && currentStep.animationData?.experiment !== 'heating_water') {
       lastFrameTime.current = Date.now();
       animationRef.current = requestAnimationFrame(animate);
     }
@@ -713,6 +1416,10 @@ const RadiationLearnMode: React.FC<RadiationLearnModeProps> = ({
         break;
       case 'comparison':
         drawComparison(ctx);
+        break;
+      case 'heating_water':
+        // HeatingWaterAnimation is rendered as a React component, not canvas
+        drawDefaultAnimation(ctx);
         break;
       default:
         drawDefaultAnimation(ctx);
@@ -1783,24 +2490,30 @@ const RadiationLearnMode: React.FC<RadiationLearnModeProps> = ({
           {stepTexts[currentStepIndex]?.title}
         </h2>
 
-        <div
-          className={`mb-6 rounded-xl p-4 border-2 border-orange-200 ${
-            currentStep.animationData?.experiment === 'sun_heat'
-              ? 'bg-[radial-gradient(circle_at_top,_#111827,_#020617)]'
-              : 'bg-gradient-to-br from-orange-50 to-red-50'
-          }`}
-        >
-          <canvas
-            ref={canvasRef}
-            width={width}
-            height={height}
-            className={`w-full rounded-lg shadow-md ${
+        {currentStep.animationData?.experiment === 'heating_water' ? (
+          <div className="mb-6 rounded-xl p-4 border-2 border-orange-200 bg-gradient-to-br from-orange-50 to-red-50">
+            <HeatingWaterAnimation language={language} translations={t.heatingWater} />
+          </div>
+        ) : (
+          <div
+            className={`mb-6 rounded-xl p-4 border-2 border-orange-200 ${
               currentStep.animationData?.experiment === 'sun_heat'
-                ? 'bg-transparent'
-                : 'bg-white'
+                ? 'bg-[radial-gradient(circle_at_top,_#111827,_#020617)]'
+                : 'bg-gradient-to-br from-orange-50 to-red-50'
             }`}
-          />
-        </div>
+          >
+            <canvas
+              ref={canvasRef}
+              width={width}
+              height={height}
+              className={`w-full rounded-lg shadow-md ${
+                currentStep.animationData?.experiment === 'sun_heat'
+                  ? 'bg-transparent'
+                  : 'bg-white'
+              }`}
+            />
+          </div>
+        )}
 
         <div className="bg-gradient-to-r from-orange-50 to-pink-50 p-6 rounded-xl border-l-4 border-orange-500">
           <p className="text-gray-700 leading-relaxed text-base sm:text-lg">

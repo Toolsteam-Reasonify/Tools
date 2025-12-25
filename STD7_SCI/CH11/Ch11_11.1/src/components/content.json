@@ -2705,10 +2705,6 @@
           "title": "What are Sources of Light?",
           "description": "Light is essential for vision and life on Earth. The Sun is our primary natural source of light. But there are many other sources - both natural and artificial. Let's explore the fascinating world of light sources!"
         },
-        "luminous_objects": {
-          "title": "Luminous Objects",
-          "description": "Objects that emit their own light are called luminous objects. The Sun, stars, lightning, fire, and certain animals like fireflies produce their own light through various natural processes."
-        },
         "non_luminous_objects": {
           "title": "Non-Luminous Objects",
           "description": "Objects that do not emit their own light are called non-luminous objects. The Moon is a perfect example - it doesn't produce its own light but reflects sunlight that falls on it. This is why we can see the Moon at night!"
@@ -2721,13 +2717,41 @@
           "title": "Artificial Sources of Light",
           "description": "In ancient times, humans learned to create fire - the earliest form of artificial lighting. With time, they created light using different fuels like animal fat, oil, wax, and gas. Today, most lighting needs are met by electric lighting."
         },
-        "led_technology": {
-          "title": "LED Technology Revolution",
-          "description": "Light Emitting Diode (LED) lamps are modern light sources that consume much less power, are brighter, and last longer than traditional lamps. This reduces electricity bills and is better for the environment. India has promoted LED usage nationwide."
-        },
         "complete": {
           "title": "Complete Understanding",
-          "description": "You now understand the difference between luminous and non-luminous objects, natural and artificial light sources, and the evolution of lighting technology from ancient fire to modern LEDs. Light sources are essential for life and modern society!"
+          "description": "You now understand the difference between luminous and non-luminous objects, natural and artificial light sources. Light sources are essential for life and modern society!"
+        }
+      },
+      "canvas": {
+        "overview": {
+          "title": "Sources of Light"
+        },
+        "luminous_objects": {
+          "title": "Luminous Objects (Emit Own Light)"
+        },
+        "non_luminous_objects": {
+          "title": "Non-Luminous Objects (Reflect Light)",
+          "sunLabel": "☀️ Sun (Luminous)",
+          "moonLabel": "🌙 Moon (Non-Luminous)",
+          "reflectsLabel": "Reflects Sunlight"
+        },
+        "natural_sources": {
+          "title": "Natural Sources of Light",
+          "sun": "Sun",
+          "stars": "Stars",
+          "lightning": "Lightning",
+          "fireflies": "Fireflies"
+        },
+        "artificial_sources": {
+          "title": "Artificial Sources of Light",
+          "candle": "Candle",
+          "oil_lamp": "Oil Lamp",
+          "light_bulb": "Light Bulb",
+          "led": "LED"
+        },
+        "complete": {
+          "title": "Complete!",
+          "message": "You understand Sources of Light!"
         }
       },
       "practice": {

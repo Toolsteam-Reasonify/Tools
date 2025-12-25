@@ -3,14 +3,12 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import ICU from 'i18next-icu';
 import { initReactI18next } from 'react-i18next';
 
-import en from './locales/en.json';
-import hi from './locales/hi.json';
-import gu from './locales/gu.json';
+import translations from './locales/translation.json';
 
 const resources = {
-  en: { translation: en },
-  hi: { translation: hi },
-  gu: { translation: gu },
+  en: { translation: translations.en },
+  hi: { translation: translations.hi },
+  gu: { translation: translations.gu },
 };
 
 i18n

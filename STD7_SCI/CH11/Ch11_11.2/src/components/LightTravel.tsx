@@ -248,7 +248,7 @@ const LanguageSelector: React.FC = () => {
         aria-label={t("language.selectorLabel")}
         value={language}
         onChange={(e) => setLanguage(e.target.value as Language)}
-        className="appearance-none bg-white border-2 border-blue-500 rounded-lg px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 pr-6 sm:pr-8 w-40 sm:w-48 md:w-56 text-xs sm:text-sm md:text-base text-blue-700 font-medium cursor-pointer hover:border-teal-500 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-300"
+        className="appearance-none bg-white border-2 border-blue-500 rounded-lg px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 pr-6 sm:pr-8 w-40 sm:w-48 md:w-56 text-xs sm:text-sm md:text-base text-blue-700 font-medium cursor-pointer hover:border-teal-500 transition-all duration-500 focus:outline-none focus:ring-2 focus:ring-teal-300"
       >
         {languages.map((lang) => (
           <option key={lang.code} value={lang.code}>
@@ -258,7 +258,7 @@ const LanguageSelector: React.FC = () => {
       </select>
       <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-1 sm:px-2">
         <svg
-          className="fill-current h-3 w-3 sm:h-4 sm:w-4 text-blue-500"
+          className="fill-current h-3 w-3 sm:h-4 sm:w-4 text-blue-500 transition-transform duration-500"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
         >
@@ -313,12 +313,6 @@ const DEFAULT_STEPS: Step[] = [
     description: "",
     activity: "pipe",
   },
-  {
-    id: 8,
-    title: "Conclusion",
-    description: "",
-    activity: "conclusion",
-  },
 ];
 
 interface LightTravelProps {
@@ -334,6 +328,7 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = ({
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [animationProgress, setAnimationProgress] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const animationFrameRef = useRef<number | null>(null);
@@ -345,18 +340,22 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = ({
     if (!isPlaying) return;
     const timer = window.setTimeout(() => {
       if (currentStepIndex < steps.length - 1) {
-        setCurrentStepIndex((prev) => prev + 1);
+        setIsTransitioning(true);
+        setTimeout(() => {
+          setCurrentStepIndex((prev) => prev + 1);
+          setIsTransitioning(false);
+        }, 500);
       } else {
         setIsPlaying(false);
       }
-    }, 7000);
+    }, 12000); // Increased from 7000ms to 12000ms (12 seconds per step)
     return () => window.clearTimeout(timer);
   }, [isPlaying, currentStepIndex, steps.length]);
 
-  // Animation loop
+  // Animation loop - reduced speed by half (0.02 -> 0.01)
   useEffect(() => {
     const animate = () => {
-      setAnimationProgress((prev) => (prev + 0.02) % 1);
+      setAnimationProgress((prev) => (prev + 0.01) % 1); // Slower animation
       animationFrameRef.current = window.requestAnimationFrame(animate);
     };
 
@@ -383,18 +382,30 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = ({
 
   const nextStep = () => {
     if (currentStepIndex < steps.length - 1) {
-      setCurrentStepIndex((prev) => prev + 1);
+      setIsTransitioning(true);
+      setTimeout(() => {
+        setCurrentStepIndex((prev) => prev + 1);
+        setIsTransitioning(false);
+      }, 500); // Increased from 300ms to 500ms
     }
   };
 
   const prevStep = () => {
     if (currentStepIndex > 0) {
-      setCurrentStepIndex((prev) => prev - 1);
+      setIsTransitioning(true);
+      setTimeout(() => {
+        setCurrentStepIndex((prev) => prev - 1);
+        setIsTransitioning(false);
+      }, 500); // Increased from 300ms to 500ms
     }
   };
 
   const resetMode = () => {
-    setCurrentStepIndex(0);
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentStepIndex(0);
+      setIsTransitioning(false);
+    }, 500); // Increased from 300ms to 500ms
   };
 
   const getStepKey = (index: number): string => {
@@ -406,7 +417,6 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = ({
       "pipe_intro",
       "pipe_straight",
       "pipe_bent",
-      "conclusion",
     ];
     return keys[index] || "intro";
   };
@@ -419,11 +429,13 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = ({
     <div className="w-full min-h-screen bg-gradient-to-br from-blue-50 via-teal-50 to-blue-50">
       {/* Main Content */}
       <div className="w-full max-w-7xl mx-auto pt-4 px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-2xl shadow-xl overflow-hidden mt-6">
-          <div className="bg-gradient-to-r from-blue-500 via-teal-500 to-blue-500 text-white p-4 sm:p-6">
+        <div className="bg-white rounded-2xl shadow-xl overflow-hidden mt-6 transform transition-all duration-700 hover:shadow-2xl">
+          <div className="bg-gradient-to-r from-blue-500 via-teal-500 to-blue-500 text-white p-4 sm:p-6 animate-gradient-x">
             <div className="flex justify-between items-center flex-wrap gap-2">
-              <h2 className="text-xl sm:text-2xl font-semibold">{title}</h2>
-              <div className="text-sm bg-white/20 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full backdrop-blur-sm">
+              <h2 className={`text-xl sm:text-2xl font-semibold transition-all duration-700 ${isTransitioning ? 'opacity-0 transform -translate-x-4' : 'opacity-100 transform translate-x-0'}`}>
+                {title}
+              </h2>
+              <div className="text-sm bg-white/20 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full backdrop-blur-sm transition-all duration-500 hover:bg-white/30 hover:scale-105">
                 {t("controls.step")} {currentStepIndex + 1} {t("controls.of")}{" "}
                 {steps.length}
               </div>
@@ -431,16 +443,16 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = ({
           </div>
 
           <div className="p-4 sm:p-6 md:p-8">
-            <div className="bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 rounded-xl shadow-lg p-4 sm:p-6 mb-6">
+            <div className={`bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 rounded-xl shadow-lg p-4 sm:p-6 mb-6 transition-all duration-700 ${isTransitioning ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
               <canvas
                 ref={canvasRef}
                 width={width}
                 height={height}
-                className="w-full border-2 border-blue-300 rounded-lg"
+                className="w-full border-2 border-blue-300 rounded-lg transition-all duration-500"
               />
             </div>
 
-            <div className="bg-gradient-to-r from-blue-50 via-teal-50 to-blue-50 rounded-xl p-4 sm:p-6 mb-6 border-l-4 border-blue-500">
+            <div className={`bg-gradient-to-r from-blue-50 via-teal-50 to-blue-50 rounded-xl p-4 sm:p-6 mb-6 border-l-4 border-blue-500 transition-all duration-700 ${isTransitioning ? 'opacity-0 transform translate-y-4' : 'opacity-100 transform translate-y-0'}`}>
               <p className="text-gray-800 text-base sm:text-lg leading-relaxed">
                 {description}
               </p>
@@ -450,20 +462,20 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = ({
               <button
                 onClick={prevStep}
                 disabled={currentStepIndex === 0}
-                className="flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-300 transition-all w-full sm:w-auto"
+                className="flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-300 transition-all duration-500 hover:scale-105 active:scale-95 w-full sm:w-auto"
               >
-                <ChevronLeft className="w-5 h-5" />
+                <ChevronLeft className="w-5 h-5 transition-transform duration-500 group-hover:-translate-x-1" />
                 {t("controls.previous")}
               </button>
 
               <div className="flex gap-2 sm:gap-3 w-full sm:w-auto">
                 <button
                   onClick={() => setIsPlaying(!isPlaying)}
-                  className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-blue-600 to-teal-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all flex-1 sm:flex-none"
+                  className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-blue-600 to-teal-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-500 hover:scale-105 active:scale-95 flex-1 sm:flex-none"
                 >
                   {isPlaying ? (
                     <>
-                      <Pause className="w-5 h-5" />
+                      <Pause className="w-5 h-5 animate-pulse" />
                       {t("controls.pause")}
                     </>
                   ) : (
@@ -476,9 +488,9 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = ({
 
                 <button
                   onClick={resetMode}
-                  className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition-all flex-1 sm:flex-none"
+                  className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition-all duration-500 hover:scale-105 active:scale-95 flex-1 sm:flex-none"
                 >
-                  <RotateCcw className="w-5 h-5" />
+                  <RotateCcw className="w-5 h-5 transition-transform duration-500 hover:rotate-180" />
                   {t("controls.reset")}
                 </button>
               </div>
@@ -486,17 +498,17 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = ({
               <button
                 onClick={nextStep}
                 disabled={currentStepIndex === steps.length - 1}
-                className="flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-blue-600 to-teal-600 text-white rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg transition-all w-full sm:w-auto"
+                className="flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-blue-600 to-teal-600 text-white rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg transition-all duration-500 hover:scale-105 active:scale-95 w-full sm:w-auto"
               >
                 {t("controls.next")}
-                <ChevronRight className="w-5 h-5" />
+                <ChevronRight className="w-5 h-5 transition-transform duration-500 group-hover:translate-x-1" />
               </button>
             </div>
 
             <div className="mt-6">
               <div className="w-full bg-gray-200 rounded-full h-2 sm:h-3 overflow-hidden">
                 <div
-                  className="h-full bg-gradient-to-r from-blue-600 via-teal-600 to-blue-600 transition-all duration-300 rounded-full"
+                  className="h-full bg-gradient-to-r from-blue-600 via-teal-600 to-blue-600 transition-all duration-1000 ease-out rounded-full animate-pulse-slow"
                   style={{
                     width: `${((currentStepIndex + 1) / steps.length) * 100}%`,
                   }}
@@ -506,6 +518,35 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = ({
           </div>
         </div>
       </div>
+
+      <style>{`
+        @keyframes gradient-x {
+          0%, 100% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+        }
+
+        .animate-gradient-x {
+          background-size: 200% 200%;
+          animation: gradient-x 6s ease infinite; /* Increased from 3s to 6s */
+        }
+
+        @keyframes pulse-slow {
+          0%, 100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.8;
+          }
+        }
+
+        .animate-pulse-slow {
+          animation: pulse-slow 4s ease-in-out infinite; /* Increased from 2s to 4s */
+        }
+      `}</style>
     </div>
   );
 };
@@ -547,8 +588,6 @@ function drawVisualization(
     drawPipeStraight(ctx, width, height, progress, t);
   } else if (stage === "pipe_bent") {
     drawPipeBent(ctx, width, height, progress, t);
-  } else if (stage === "conclusion") {
-    drawConclusion(ctx, width, height, progress, t);
   }
 }
 
@@ -576,10 +615,10 @@ function drawIntro(
   const numRays = 8;
   for (let i = 0; i < numRays; i++) {
     const angle = (i * (360 / numRays) + progress * 180) * (Math.PI / 180);
-    const rayLength = 100 + Math.sin(progress * Math.PI * 2 + i) * 20;
+    const rayLength = 100 + Math.sin(progress * Math.PI * 1 + i) * 20; // Slower oscillation
 
     ctx.strokeStyle = `rgba(255, 215, 0, ${
-      0.3 + Math.sin(progress * Math.PI * 2 + i) * 0.3
+      0.3 + Math.sin(progress * Math.PI * 1 + i) * 0.3 // Slower oscillation
     })`;
     ctx.lineWidth = 3;
     ctx.beginPath();
@@ -684,8 +723,8 @@ function drawMatchboxAligned(
   ctx.arc(torchX, torchY, 20, 0, Math.PI * 2);
   ctx.fill();
 
-  // Light beam (animated)
-  const beamProgress = Math.min(progress * 1.5, 1);
+  // Light beam (animated) - reduced speed
+  const beamProgress = Math.min(progress * 1.0, 1);
   const beamEndX = startX + 3 * spacing + 100;
 
   ctx.strokeStyle = `rgba(255, 215, 0, ${0.6 - progress * 0.2})`;
@@ -786,8 +825,8 @@ function drawMatchboxMisaligned(
   ctx.arc(torchX, torchY, 20, 0, Math.PI * 2);
   ctx.fill();
 
-  // Light beam (blocked)
-  const beamProgress = Math.min(progress * 1.5, 1);
+  // Light beam (blocked) - reduced speed
+  const beamProgress = Math.min(progress * 1.0, 1);
   const blockX = startX + spacing + boxWidth / 2 - 30;
 
   ctx.strokeStyle = `rgba(255, 215, 0, ${0.6 - progress * 0.2})`;
@@ -816,8 +855,8 @@ function drawMatchboxMisaligned(
     const x = startX + i * spacing;
     let y = centerY - boxHeight / 2;
 
-    // Middle box is offset
-    const offset = i === 1 ? 30 * Math.sin(progress * Math.PI) : 0;
+    // Middle box is offset - slower animation
+    const offset = i === 1 ? 30 * Math.sin(progress * Math.PI * 0.5) : 0;
     y += offset;
 
     // Matchbox body
@@ -898,8 +937,8 @@ function drawPipeIntro(
   const centerX = width / 2;
   const centerY = height / 2;
 
-  // Draw pipe (animated appearance)
-  const pipeLength = 300 * Math.min(progress * 1.5, 1);
+  // Draw pipe (animated appearance) - reduced speed
+  const pipeLength = 300 * Math.min(progress * 1.0, 1);
   const pipeY = centerY;
 
   ctx.strokeStyle = "#64748B";
@@ -927,8 +966,8 @@ function drawPipeIntro(
     ctx.fillStyle = "#F3E5AB";
     ctx.fillRect(candleX - 10, candleY, 20, 60);
 
-    // Flame
-    const flameSize = 20 + Math.sin(progress * Math.PI * 8) * 3;
+    // Flame - slower flicker
+    const flameSize = 20 + Math.sin(progress * Math.PI * 4) * 3;
     const flameGradient = ctx.createRadialGradient(
       candleX,
       candleY - 10,
@@ -1010,8 +1049,8 @@ function drawPipeStraight(
   ctx.lineTo(pipeEndX, centerY);
   ctx.stroke();
 
-  // Light ray through pipe (animated)
-  const rayProgress = Math.min(progress * 1.5, 1);
+  // Light ray through pipe (animated) - reduced speed
+  const rayProgress = Math.min(progress * 1.0, 1);
   const rayEndX = pipeStartX + (pipeEndX - pipeStartX) * rayProgress;
 
   ctx.strokeStyle = "rgba(255, 215, 0, 0.7)";
@@ -1152,9 +1191,9 @@ function drawPipeBent(
   ctx.lineTo(centerX + 200, centerY);
   ctx.stroke();
 
-  // Light ray (stops at bend)
+  // Light ray (stops at bend) - reduced speed
   if (progress > 0.3) {
-    const rayProgress = Math.min((progress - 0.3) * 1.5, 1);
+    const rayProgress = Math.min((progress - 0.3) * 1.0, 1);
     const rayLength = 150 * rayProgress;
 
     ctx.strokeStyle = "rgba(255, 215, 0, 0.7)";
@@ -1253,119 +1292,6 @@ function drawPipeBent(
   ctx.shadowBlur = 10;
   ctx.fillText(t("canvas.pipe_bent.message"), centerX, 80);
   ctx.shadowBlur = 0;
-}
-
-function drawConclusion(
-  ctx: CanvasRenderingContext2D,
-  width: number,
-  height: number,
-  progress: number,
-  t: (key: string) => string
-) {
-  const centerX = width / 2;
-  const centerY = height / 2;
-
-  // Draw multiple light rays demonstrating straight line travel
-  const numRays = 5;
-  for (let i = 0; i < numRays; i++) {
-    const startX = 100;
-    const startY = 100 + i * 100;
-    const endX = width - 100;
-    const endY = startY;
-
-    // Animate rays
-    const rayProgress = Math.min((progress - i * 0.1) * 1.2, 1);
-    if (rayProgress > 0) {
-      const currentEndX = startX + (endX - startX) * rayProgress;
-
-      // Glow
-      ctx.strokeStyle = `rgba(255, 215, 0, ${0.3 - i * 0.05})`;
-      ctx.lineWidth = 30;
-      ctx.beginPath();
-      ctx.moveTo(startX, startY);
-      ctx.lineTo(currentEndX, endY);
-      ctx.stroke();
-
-      // Bright ray
-      ctx.strokeStyle = `rgba(255, 255, 150, ${0.8 - i * 0.1})`;
-      ctx.lineWidth = 10;
-      ctx.beginPath();
-      ctx.moveTo(startX, startY);
-      ctx.lineTo(currentEndX, endY);
-      ctx.stroke();
-
-      // Arrow at end
-      if (rayProgress > 0.95) {
-        ctx.fillStyle = "#FFD700";
-        ctx.beginPath();
-        ctx.moveTo(currentEndX, endY);
-        ctx.lineTo(currentEndX - 15, endY - 8);
-        ctx.lineTo(currentEndX - 15, endY + 8);
-        ctx.closePath();
-        ctx.fill();
-      }
-    }
-  }
-
-  // Central icon - lightbulb with checkmark
-  if (progress > 0.5) {
-    const iconProgress = (progress - 0.5) * 2;
-
-    // Lightbulb glow
-    const glowGradient = ctx.createRadialGradient(
-      centerX,
-      centerY,
-      0,
-      centerX,
-      centerY,
-      60
-    );
-    glowGradient.addColorStop(0, "rgba(255, 215, 0, 0.8)");
-    glowGradient.addColorStop(1, "rgba(255, 215, 0, 0)");
-
-    ctx.fillStyle = glowGradient;
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, 60 * iconProgress, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Lightbulb
-    ctx.fillStyle = "#FFD700";
-    ctx.font = "80px Arial";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillText("💡", centerX, centerY);
-
-    // Checkmark
-    if (iconProgress > 0.7) {
-      ctx.strokeStyle = "#10B981";
-      ctx.lineWidth = 10;
-      ctx.lineCap = "round";
-      ctx.lineJoin = "round";
-      ctx.beginPath();
-      ctx.moveTo(centerX + 30, centerY - 40);
-      ctx.lineTo(centerX + 50, centerY - 20);
-      ctx.lineTo(centerX + 90, centerY - 60);
-      ctx.stroke();
-    }
-  }
-
-  // Title
-  ctx.fillStyle = "#10B981";
-  ctx.font = "bold 32px Arial";
-  ctx.textAlign = "center";
-  ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
-  ctx.shadowBlur = 15;
-  ctx.fillText(t("canvas.conclusion.title"), centerX, height - 80);
-  ctx.shadowBlur = 0;
-
-  // Subtitle
-  ctx.fillStyle = "#FFF";
-  ctx.font = "20px Arial";
-  ctx.fillText(
-    t("canvas.conclusion.subtitle"),
-    centerX,
-    height - 40
-  );
 }
 
 // Practice Mode Component
@@ -1663,7 +1589,7 @@ const RealWorldMode: React.FC = () => {
           {applications.map((app) => (
             <div
               key={app.id}
-              className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all p-6 border-2 border-transparent hover:border-blue-400 hover:scale-105 transform duration-300"
+              className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all p-6 border-2 border-transparent hover:border-blue-400 hover:scale-105 transform duration-500"
             >
               <div className="flex items-start justify-between mb-4">
                 <div className="text-6xl">{app.icon}</div>
@@ -1714,18 +1640,18 @@ const MainApp: React.FC = () => {
               <div className="flex gap-2">
                 <button
                   onClick={() => setActiveTab("learn")}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all ${
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all duration-500 ${
                     activeTab === "learn"
                       ? "bg-gradient-to-r from-blue-600 to-teal-600 text-white shadow-md"
                       : "text-gray-700 hover:bg-blue-50"
                   }`}
                 >
                   <BookOpen className="w-5 h-5" />
-                  {t("nav.tabs.learn")}
+                  {t("nav.tabs.learn")} 
                 </button>
                 <button
                   onClick={() => setActiveTab("practice")}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all ${
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all duration-500 ${
                     activeTab === "practice"
                       ? "bg-gradient-to-r from-blue-600 to-teal-600 text-white shadow-md"
                       : "text-gray-700 hover:bg-blue-50"
@@ -1736,7 +1662,7 @@ const MainApp: React.FC = () => {
                 </button>
                 <button
                   onClick={() => setActiveTab("realWorld")}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all ${
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all duration-500 ${
                     activeTab === "realWorld"
                       ? "bg-gradient-to-r from-blue-600 to-teal-600 text-white shadow-md"
                       : "text-gray-700 hover:bg-blue-50"

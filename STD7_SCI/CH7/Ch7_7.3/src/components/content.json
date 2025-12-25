@@ -2154,6 +2154,15 @@
             "title": "Comparing Heat Transfer Methods",
             "description": "Conduction needs solid contact. Convection needs particle movement in fluids. Radiation needs NO medium - it can travel through vacuum! All three can happen together, like when heating water in a pan.",
             "type": "explanation"
+          },
+          {
+            "id": 7,
+            "title": "Heating Water",
+            "description": "Watch how water molecules move faster as heat is applied. When water reaches 100°C, it begins to boil and transform into steam through radiation and convection working together.",
+            "type": "explanation",
+            "animationData": {
+              "experiment": "heating_water"
+            }
           }
         ]
       },

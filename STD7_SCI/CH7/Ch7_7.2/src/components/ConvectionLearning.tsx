@@ -436,7 +436,7 @@ const DEFAULT_STEPS: StepDataInterface[] = [
 ];
 
 const ConvectionLearnMode: React.FC = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const width = 800;
   const height = 500;
 
@@ -452,7 +452,7 @@ const ConvectionLearnMode: React.FC = () => {
       type: (step.type || DEFAULT_STEPS[index]?.type || 'intro') as StepDataInterface['type'],
       animationData: DEFAULT_STEPS[index]?.animationData ?? step.animationData,
     }));
-  }, [t]);
+  }, [t, language]);
 
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);

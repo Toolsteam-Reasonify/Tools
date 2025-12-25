@@ -324,12 +324,6 @@ const DEFAULT_STEPS: Step[] = [
   },
   {
     id: 6,
-    title: "Comparison",
-    description: "Comparing how light passes through different materials",
-    activity: "comparison",
-  },
-  {
-    id: 7,
     title: "Conclusion",
     description: "Summary of light behavior with materials",
     activity: "conclusion",
@@ -363,14 +357,14 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = ({
       } else {
         setIsPlaying(false);
       }
-    }, 7000);
+    }, 10000);
     return () => window.clearTimeout(timer);
   }, [isPlaying, currentStepIndex, steps.length]);
 
   // Animation loop
   useEffect(() => {
     const animate = () => {
-      setAnimationProgress((prev) => (prev + 0.02) % 1);
+      setAnimationProgress((prev) => (prev + 0.01) % 1);
       animationFrameRef.current = window.requestAnimationFrame(animate);
     };
 
@@ -541,8 +535,6 @@ function drawVisualization(
     drawTranslucent(ctx, width, height, progress);
   } else if (stage === "opaque") {
     drawOpaque(ctx, width, height, progress);
-  } else if (stage === "comparison") {
-    drawComparison(ctx, width, height, progress);
   } else if (stage === "conclusion") {
     drawConclusion(ctx, width, height, progress);
   }
@@ -611,59 +603,178 @@ function drawMaterials(
   progress: number
 ) {
   const centerX = width / 2;
-  const spacing = 200;
+  const spacing = width / 3;
   const materialY = height / 2;
 
-  // Three materials appearing
+  // Three materials with their properties
   const materials = [
     {
       name: "Transparent",
       color: "rgba(150, 200, 255, 0.3)",
       border: "#60A5FA",
       offset: 0,
+      lightIntensity: 0.9,
+      lightPasses: true,
     },
     {
       name: "Translucent",
       color: "rgba(150, 200, 255, 0.6)",
       border: "#3B82F6",
-      offset: 0.3,
+      offset: 0.2,
+      lightIntensity: 0.5,
+      lightPasses: true,
     },
     {
       name: "Opaque",
       color: "rgba(100, 100, 100, 0.9)",
       border: "#1F2937",
-      offset: 0.6,
+      offset: 0.4,
+      lightIntensity: 0,
+      lightPasses: false,
     },
   ];
 
   materials.forEach((mat, i) => {
-    const matProgress = Math.max(0, Math.min(1, (progress - mat.offset) * 2));
+    const matProgress = Math.max(0, Math.min(1, (progress - mat.offset) * 1.5));
     if (matProgress > 0) {
-      const x = centerX - spacing + i * spacing;
-      const y = materialY - 60;
-      const scale = matProgress;
+      const columnX = spacing * (i + 0.5);
+      const torchX = columnX - 120;
+      const materialX = columnX;
+      const screenX = columnX + 120;
 
-      ctx.save();
-      ctx.translate(x, y);
-      ctx.scale(scale, scale);
+      // Torch
+      if (matProgress > 0.1) {
+        ctx.fillStyle = "#FFD700";
+        ctx.beginPath();
+        ctx.arc(torchX, materialY, 15, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Light beam animation
+      const beamProgress = Math.min((matProgress - 0.1) * 1.2, 1);
+      
+      // Beam to material
+      if (beamProgress > 0) {
+        ctx.strokeStyle = "rgba(255, 215, 0, 0.6)";
+        ctx.lineWidth = 25;
+        ctx.beginPath();
+        ctx.moveTo(torchX + 15, materialY);
+        ctx.lineTo(
+          torchX + 15 + (materialX - torchX - 50) * beamProgress,
+          materialY
+        );
+        ctx.stroke();
+      }
 
       // Material box
-      ctx.fillStyle = mat.color;
-      ctx.strokeStyle = mat.border;
-      ctx.lineWidth = 3;
-      ctx.fillRect(-50, 0, 100, 120);
-      ctx.strokeRect(-50, 0, 100, 120);
+      const boxProgress = Math.min((matProgress - 0.2) * 2, 1);
+      if (boxProgress > 0) {
+        ctx.fillStyle = mat.color;
+        ctx.strokeStyle = mat.border;
+        ctx.lineWidth = 3;
+        const boxHeight = 100 * boxProgress;
+        ctx.fillRect(materialX - 40, materialY - boxHeight / 2, 80, boxHeight);
+        ctx.strokeRect(materialX - 40, materialY - boxHeight / 2, 80, boxHeight);
+
+        // Add texture for translucent
+        if (mat.name === "Translucent" && boxProgress > 0.5) {
+          for (let j = 0; j < 15; j++) {
+            ctx.fillStyle = `rgba(255, 255, 255, ${Math.random() * 0.3})`;
+            ctx.fillRect(
+              materialX - 35 + Math.random() * 70,
+              materialY - boxHeight / 2 + 10 + Math.random() * (boxHeight - 20),
+              4,
+              4
+            );
+          }
+        }
+
+        // Wood texture for opaque
+        if (mat.name === "Opaque" && boxProgress > 0.5) {
+          ctx.strokeStyle = "rgba(80, 50, 20, 0.5)";
+          ctx.lineWidth = 2;
+          for (let j = 0; j < 6; j++) {
+            ctx.beginPath();
+            ctx.moveTo(materialX - 35, materialY - boxHeight / 2 + j * 15);
+            ctx.lineTo(materialX + 35, materialY - boxHeight / 2 + j * 15);
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Light passes through (for transparent and translucent)
+      if (mat.lightPasses && beamProgress > 0.5) {
+        const throughProgress = (beamProgress - 0.5) * 2;
+        if (throughProgress > 0) {
+          ctx.strokeStyle = `rgba(255, 215, 0, ${mat.lightIntensity * 0.6})`;
+          ctx.lineWidth = 25;
+          ctx.beginPath();
+          ctx.moveTo(materialX + 40, materialY);
+          ctx.lineTo(
+            materialX + 40 + (screenX - materialX - 50) * throughProgress,
+            materialY
+          );
+          ctx.stroke();
+
+          // Brighter beam
+          ctx.strokeStyle = `rgba(255, 255, 150, ${mat.lightIntensity * 0.8})`;
+          ctx.lineWidth = 15;
+          ctx.beginPath();
+          ctx.moveTo(materialX + 40, materialY);
+          ctx.lineTo(
+            materialX + 40 + (screenX - materialX - 50) * throughProgress,
+            materialY
+          );
+          ctx.stroke();
+        }
+      }
+
+      // Screen
+      if (beamProgress > 0.3) {
+        ctx.fillStyle = "#FFF";
+        ctx.fillRect(screenX - 8, materialY - 60, 8, 120);
+      }
+
+      // Light spot on screen (for transparent and translucent)
+      if (mat.lightPasses && beamProgress > 0.8) {
+        const spotProgress = (beamProgress - 0.8) * 5;
+        if (spotProgress > 0) {
+          const spotGradient = ctx.createRadialGradient(
+            screenX - 8,
+            materialY,
+            0,
+            screenX - 8,
+            materialY,
+            35
+          );
+          spotGradient.addColorStop(0, `rgba(255, 255, 150, ${mat.lightIntensity * spotProgress})`);
+          spotGradient.addColorStop(1, "rgba(255, 255, 150, 0)");
+          ctx.fillStyle = spotGradient;
+          ctx.beginPath();
+          ctx.arc(screenX - 8, materialY, 35, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      // Shadow for opaque
+      if (!mat.lightPasses && beamProgress > 0.6) {
+        const shadowProgress = (beamProgress - 0.6) * 2.5;
+        if (shadowProgress > 0) {
+          ctx.fillStyle = `rgba(0, 0, 0, ${0.5 * shadowProgress})`;
+          ctx.fillRect(materialX + 40, materialY - 60, screenX - materialX - 48, 120);
+        }
+      }
 
       // Label
-      ctx.fillStyle = "#FFF";
-      ctx.font = "bold 16px Arial";
-      ctx.textAlign = "center";
-      ctx.shadowColor = "rgba(0, 0, 0, 0.8)";
-      ctx.shadowBlur = 5;
-      ctx.fillText(mat.name, 0, 150);
-      ctx.shadowBlur = 0;
-
-      ctx.restore();
+      if (matProgress > 0.3) {
+        ctx.fillStyle = "#FFF";
+        ctx.font = "bold 18px Arial";
+        ctx.textAlign = "center";
+        ctx.shadowColor = "rgba(0, 0, 0, 0.8)";
+        ctx.shadowBlur = 5;
+        ctx.fillText(mat.name, columnX, materialY + 100);
+        ctx.shadowBlur = 0;
+      }
     }
   });
 
@@ -673,7 +784,7 @@ function drawMaterials(
   ctx.textAlign = "center";
   ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
   ctx.shadowBlur = 10;
-  ctx.fillText("Three Types of Materials", centerX, 80);
+  ctx.fillText("Three Types of Materials", centerX, 50);
   ctx.shadowBlur = 0;
 }
 
@@ -763,13 +874,31 @@ function drawTransparent(
     ctx.fill();
   }
 
-  // Label
+  // Title label
   ctx.fillStyle = "#10B981";
   ctx.font = "bold 24px Arial";
   ctx.textAlign = "center";
   ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
   ctx.shadowBlur = 10;
   ctx.fillText("Transparent: Light passes almost completely", centerX, 80);
+  ctx.shadowBlur = 0;
+
+  // Component labels
+  ctx.fillStyle = "#FFF";
+  ctx.font = "bold 18px Arial";
+  ctx.textAlign = "center";
+  ctx.shadowColor = "rgba(0, 0, 0, 0.8)";
+  ctx.shadowBlur = 5;
+  
+  // Light source label
+  ctx.fillText("Light source", torchX, centerY + 50);
+  
+  // Material type label
+  ctx.fillText("Transparent", materialX, centerY + 100);
+  
+  // Screen label (below the screen object)
+  ctx.fillText("Screen", screenX - 5, centerY + 120);
+  
   ctx.shadowBlur = 0;
 }
 
@@ -872,13 +1001,31 @@ function drawTranslucent(
     ctx.fill();
   }
 
-  // Label
+  // Title label
   ctx.fillStyle = "#F59E0B";
   ctx.font = "bold 24px Arial";
   ctx.textAlign = "center";
   ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
   ctx.shadowBlur = 10;
   ctx.fillText("Translucent: Light passes partially", centerX, 80);
+  ctx.shadowBlur = 0;
+
+  // Component labels
+  ctx.fillStyle = "#FFF";
+  ctx.font = "bold 18px Arial";
+  ctx.textAlign = "center";
+  ctx.shadowColor = "rgba(0, 0, 0, 0.8)";
+  ctx.shadowBlur = 5;
+  
+  // Light source label
+  ctx.fillText("Light source", torchX, centerY + 50);
+  
+  // Material type label
+  ctx.fillText("Translucent", materialX, centerY + 100);
+  
+  // Screen label (below the screen object)
+  ctx.fillText("Screen", screenX - 5, centerY + 120);
+  
   ctx.shadowBlur = 0;
 }
 
@@ -960,7 +1107,7 @@ function drawOpaque(
     ctx.fillRect(materialX + 50, centerY - 80, screenX - materialX - 60, 160);
   }
 
-  // Label
+  // Title label
   ctx.fillStyle = "#EF4444";
   ctx.font = "bold 24px Arial";
   ctx.textAlign = "center";
@@ -968,94 +1115,23 @@ function drawOpaque(
   ctx.shadowBlur = 10;
   ctx.fillText("Opaque: Light does NOT pass through", centerX, 80);
   ctx.shadowBlur = 0;
-}
 
-function drawComparison(
-  ctx: CanvasRenderingContext2D,
-  width: number,
-  _height: number,
-  progress: number
-) {
-  const materials = [
-    { name: "Transparent", y: 150, opacity: 0.3, light: 0.9 },
-    { name: "Translucent", y: 300, opacity: 0.6, light: 0.5 },
-    { name: "Opaque", y: 450, opacity: 0.95, light: 0 },
-  ];
-
-  materials.forEach((mat, i) => {
-    const matProgress = Math.max(0, Math.min(1, (progress - i * 0.25) * 2));
-    if (matProgress > 0) {
-      const torchX = 100;
-      const materialX = 300;
-      const screenX = width - 100;
-
-      // Torch
-      ctx.fillStyle = "#FFD700";
-      ctx.beginPath();
-      ctx.arc(torchX, mat.y, 15, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Light beam
-      ctx.strokeStyle = "rgba(255, 215, 0, 0.4)";
-      ctx.lineWidth = 25;
-      ctx.beginPath();
-      ctx.moveTo(torchX + 15, mat.y);
-      ctx.lineTo(materialX - 30, mat.y);
-      ctx.stroke();
-
-      // Material
-      const matColor =
-        i === 0
-          ? "rgba(150, 200, 255, "
-          : i === 1
-          ? "rgba(150, 200, 255, "
-          : "rgba(139, 69, 19, ";
-      ctx.fillStyle = matColor + mat.opacity + ")";
-      ctx.strokeStyle = i === 2 ? "#1F2937" : "#60A5FA";
-      ctx.lineWidth = 2;
-      ctx.fillRect(materialX - 30, mat.y - 40, 60, 80);
-      ctx.strokeRect(materialX - 30, mat.y - 40, 60, 80);
-
-      // Light after material
-      if (mat.light > 0 && matProgress > 0.5) {
-        ctx.strokeStyle = `rgba(255, 215, 0, ${mat.light * 0.4})`;
-        ctx.lineWidth = 25;
-        ctx.beginPath();
-        ctx.moveTo(materialX + 30, mat.y);
-        ctx.lineTo(screenX - 20, mat.y);
-        ctx.stroke();
-      }
-
-      // Screen
-      ctx.fillStyle = "#E5E7EB";
-      ctx.fillRect(screenX - 20, mat.y - 40, 10, 80);
-
-      // Light spot
-      if (mat.light > 0 && matProgress > 0.7) {
-        ctx.fillStyle = `rgba(255, 255, 150, ${mat.light * 0.7})`;
-        ctx.beginPath();
-        ctx.arc(screenX - 15, mat.y, 20 * mat.light, 0, Math.PI * 2);
-        ctx.fill();
-      }
-
-      // Label
-      ctx.fillStyle = "#FFF";
-      ctx.font = "bold 18px Arial";
-      ctx.textAlign = "left";
-      ctx.shadowColor = "rgba(0, 0, 0, 0.8)";
-      ctx.shadowBlur = 5;
-      ctx.fillText(mat.name, materialX - 30, mat.y - 55);
-      ctx.shadowBlur = 0;
-    }
-  });
-
-  // Title
-  ctx.fillStyle = "#60A5FA";
-  ctx.font = "bold 28px Arial";
+  // Component labels
+  ctx.fillStyle = "#FFF";
+  ctx.font = "bold 18px Arial";
   ctx.textAlign = "center";
-  ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
-  ctx.shadowBlur = 10;
-  ctx.fillText("Comparing Light Behavior", width / 2, 60);
+  ctx.shadowColor = "rgba(0, 0, 0, 0.8)";
+  ctx.shadowBlur = 5;
+  
+  // Light source label
+  ctx.fillText("Light source", torchX, centerY + 50);
+  
+  // Material type label
+  ctx.fillText("Opaque", materialX, centerY + 100);
+  
+  // Screen label (below the screen object)
+  ctx.fillText("Screen", screenX - 5, centerY + 120);
+  
   ctx.shadowBlur = 0;
 }
 

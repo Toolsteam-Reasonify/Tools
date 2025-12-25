@@ -698,87 +698,87 @@
     "convection": {
       "learn": {
         "header": {
-          "title": "पाठ 7.2: संवहन",
-          "subtitle": "गति के माध्यम से ऊष्मा स्थानांतरण को समझना"
+          "title": "Lesson 7.2: Convection",
+          "subtitle": "Understanding heat transfer through motion"
         },
-        "step": "चरण {current} / {total}",
+        "step": "Step {current} / {total}",
         "controls": {
-          "previous": "पिछला",
-          "next": "अगला",
-          "play": "चलाएं",
-          "pause": "रोकें",
-          "reset": "रीसेट"
+          "previous": "Previous",
+          "next": "Next",
+          "play": "Play",
+          "pause": "Pause",
+          "reset": "Reset"
         },
         "indicators": {
-          "practice": "इंटरैक्टिव अभ्यास मोड",
-          "realWorld": "वास्तविक दुनिया का अनुप्रयोग"
+          "practice": "Interactive Practice Mode",
+          "realWorld": "Real World Application"
         },
         "steps": [
           {
             "id": 1,
-            "title": "संवहन क्या है?",
-            "description": "संवहन तरल पदार्थों (द्रव और गैसों) में कणों की वास्तविक गति के माध्यम से ऊष्मा स्थानांतरण की प्रक्रिया है। चालन के विपरीत जहाँ कण अपनी जगह पर रहते हैं, संवहन में, गर्म कण स्वयं एक स्थान से दूसरे स्थान पर चले जाते हैं।"
+            "title": "What is Convection?",
+            "description": "Convection is the process of heat transfer through the actual movement of particles in fluids (liquids and gases). Unlike conduction where particles stay in place, in convection, the heated particles themselves move from one place to another."
           },
           {
             "id": 2,
-            "title": "गतिविधि 7.2: कागज़ के कप का प्रयोग",
-            "description": "एक छड़ी पर दो कागज़ के कप लटकाए गए हैं। जब एक कप के नीचे मोमबत्ती रखी जाती है, तो अंदर की गर्म हवा ऊपर उठती है, जिससे वह कप ऊपर की ओर झुक जाता है। यह दर्शाता है कि गर्म हवा ठंडी हवा से हल्की होती है और ऊपर उठती है।"
+            "title": "Activity 7.2: Paper Cup Experiment",
+            "description": "Two paper cups are hung on a stick. When a candle is placed under one cup, the hot air inside rises, making that cup tilt upward. This demonstrates that hot air is lighter than cold air and rises up."
           },
           {
             "id": 3,
-            "title": "गर्म हवा क्यों ऊपर उठती है?",
-            "description": "जब हवा गर्म होती है, तो यह फैलती है और अधिक स्थान घेरती है। यह इसे आसपास की ठंडी हवा की तुलना में कम घनत्व (हल्का) बनाता है। हल्की गर्म हवा ऊपर उठती है, जबकि भारी ठंडी हवा नीचे चली जाती है।"
+            "title": "Why Does Hot Air Rise?",
+            "description": "When air is heated, it expands and occupies more space. This makes it less dense (lighter) compared to the surrounding cold air. The lighter hot air rises up, while heavier cold air moves down to take its place."
           },
           {
             "id": 4,
-            "title": "द्रव में संवहन",
-            "description": "बीकर के नीचे का पानी पहले गर्म होता है। यह फैलता है, हल्का हो जाता है, और ऊपर उठता है। किनारों से ठंडा पानी नीचे चला जाता है। यह एक संवहन धारा बनाता है - गर्म पानी के ऊपर उठने और ठंडे पानी के नीचे जाने का निरंतर चक्र।"
+            "title": "Convection in Liquids",
+            "description": "Water at the bottom of a beaker gets heated first. It expands, becomes lighter, and rises up. Cooler water from the sides moves down to replace it. This creates a convection current - a continuous cycle of rising hot water and sinking cold water."
           },
           {
             "id": 5,
-            "title": "इंटरैक्टिव: समुद्री हवा (दिन)",
-            "description": "दिन के दौरान, जमीन पानी से तेजी से गर्म होती है। जमीन के ऊपर की गर्म हवा ऊपर उठती है, और समुद्र से ठंडी हवा जमीन की ओर चलती है। इसे समुद्री हवा कहा जाता है, जो गर्म दिनों में राहत लाती है।"
+            "title": "Interactive: Sea Breeze (Day)",
+            "description": "During the day, land heats up faster than water. Hot air above the land rises, and cooler air from the sea moves toward the land to replace it. This is called sea breeze, which brings relief on hot days."
           },
           {
             "id": 6,
-            "title": "इंटरैक्टिव: भूमि हवा (रात)",
-            "description": "रात में, जमीन पानी से तेजी से ठंडी होती है। समुद्र के ऊपर की हवा गर्म होती है और ऊपर उठती है। जमीन से ठंडी हवा समुद्र की ओर चलती है। इसे भूमि हवा कहा जाता है, और यह दिन के हवाओं की दिशा को उलट देती है।"
+            "title": "Interactive: Land Breeze (Night)",
+            "description": "At night, land cools faster than water. Air above the sea is warmer and rises. Cooler air from the land moves toward the sea. This is called land breeze, and it reverses the direction of daytime winds."
           },
           {
             "id": 7,
-            "title": "वास्तविक दुनिया: तटीय जलवायु",
-            "description": "समुद्र तट के पास रहने वाले लोग दिन में समुद्री हवा (समुद्र से ठंडी हवा) और रात में भूमि हवा (जमीन से ठंडी हवा) का अनुभव करते हैं। इसीलिए तटीय क्षेत्रों में मध्यम तापमान होता है और समुद्र की ओर वाली खिड़कियां पसंद की जाती हैं।"
+            "title": "Real World: Coastal Climate",
+            "description": "People living near the seashore experience sea breeze during the day (cool wind from sea) and land breeze at night (cool wind from land). This is why coastal areas have moderate temperatures and windows facing the sea are preferred."
           },
           {
             "id": 8,
-            "title": "वास्तविक दुनिया: अगरबत्ती से धुआं",
-            "description": "जब आप अगरबत्ती (अगरबत्ती) जलाते हैं, तो धुआं ऊपर की ओर उठता है। ऐसा इसलिए होता है क्योंकि धुआं गर्म गैसों और छोटे कणों का मिश्रण है। आसपास की हवा से गर्म होने के कारण, यह संवहन के माध्यम से ऊपर उठता है।"
+            "title": "Real World: Smoke from Incense",
+            "description": "When you burn an incense stick (agarbatti), the smoke rises upward. This happens because smoke is a mixture of hot gases and tiny particles. Being warmer than surrounding air, it rises up through convection."
           },
           {
             "id": 9,
-            "title": "वास्तविक दुनिया: अपने कमरे को गर्म करना",
-            "description": "कमरे के हीटर संवहन पर काम करते हैं। हीटर से गर्म हवा छत तक उठती है, फिर ठंडी होकर नीचे आती है। यह एक संवहन धारा बनाता है जो पूरे कमरे में गर्म हवा को प्रसारित करती है, इसे समान रूप से गर्म करती है।"
+            "title": "Real World: Heating Your Room",
+            "description": "Room heaters work on convection. Hot air from the heater rises to the ceiling, then cools and comes down. This creates a convection current that circulates warm air throughout the room, heating it evenly."
           }
         ],
         "canvas": {
-          "cup1": "कप 1",
-          "cup2": "कप 2 (गर्म)",
-          "cup2Heated": "कप 2",
-          "hotAirRises": "🔥 गर्म हवा ऊपर उठती है",
-          "coldAirSinks": "❄️ ठंडी हवा नीचे जाती है",
-          "hotWaterRises": "गर्म पानी ऊपर उठता है ↑",
-          "coldWaterSinks": "ठंडा पानी नीचे जाता है ↓",
-          "daytime": "☀️ दिन",
-          "nighttime": "🌙 रात",
-          "warmerLand": "गर्म जमीन",
-          "coolerSea": "ठंडा समुद्र",
-          "coolerLand": "ठंडी जमीन",
-          "warmerSea": "गर्म समुद्र",
-          "seaBreeze": "← समुद्री हवा",
-          "landBreeze": "भूमि हवा →",
-          "hot": "गर्म",
-          "cold": "ठंडा",
-          "convectionCurrent": "संवहन धारा"
+          "cup1": "Cup 1",
+          "cup2": "Cup 2 (Heated)",
+          "cup2Heated": "Cup 2 (Heated)",
+          "hotAirRises": "Hot Air Rises",
+          "coldAirSinks": "Cold Air Sinks",
+          "hotWaterRises": "Hot Water Rises",
+          "coldWaterSinks": "Cold Water Sinks",
+          "daytime": "Daytime",
+          "nighttime": "Nighttime",
+          "warmerLand": "Warmer Land",
+          "coolerSea": "Cooler Sea",
+          "coolerLand": "Cooler Land",
+          "warmerSea": "Warmer Sea",
+          "seaBreeze": "Sea Breeze",
+          "landBreeze": "Land Breeze",
+          "hot": "Hot",
+          "cold": "Cold",
+          "convectionCurrent": "Convection Current"
         }
       },
       "practice": {
