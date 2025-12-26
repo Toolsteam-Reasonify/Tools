@@ -4,15 +4,15 @@ declare global {
     chrome?: {
       runtime?: {
         lastError?: { message?: string };
-        sendMessage?: (...args: any[]) => any;
-        connect?: (...args: any[]) => any;
-        sendNativeMessage?: (...args: any[]) => any;
+        sendMessage?: (...args: unknown[]) => unknown;
+        connect?: (...args: unknown[]) => unknown;
+        sendNativeMessage?: (...args: unknown[]) => unknown;
       };
     };
     browser?: {
       runtime?: {
-        sendMessage?: (...args: any[]) => any;
-        connect?: (...args: any[]) => any;
+        sendMessage?: (...args: unknown[]) => unknown;
+        connect?: (...args: unknown[]) => unknown;
       };
     };
   }

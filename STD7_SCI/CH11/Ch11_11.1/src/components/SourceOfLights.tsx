@@ -141,7 +141,41 @@ interface RealWorldApp {
 }
 
 // Translation system
-const translations: Record<Language, any> = {
+interface TranslationData {
+  nav: {
+    logo: string;
+    tabs: {
+      learn: string;
+      practice: string;
+      applications: string;
+      real_world: string;
+    };
+  };
+  language: {
+    en: string;
+    hi: string;
+    gu: string;
+    selectorLabel: string;
+  };
+  controls: {
+    step: string;
+    of: string;
+    previous: string;
+    next: string;
+    play: string;
+    pause: string;
+    reset: string;
+  };
+  steps: {
+    [key: string]: {
+      title: string;
+      description: string;
+    };
+  };
+  [key: string]: unknown;
+}
+
+const translations: Record<Language, TranslationData> = {
   en: {
     nav: {
       logo: "Sources of Light Learning",
@@ -312,7 +346,7 @@ const translations: Record<Language, any> = {
 interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: (key: string) => any;
+  t: (key: string) => string | unknown;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(
@@ -336,21 +370,21 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({
     }
   }, []);
 
-  const t = (key: string) => {
+  const t = (key: string): string | unknown => {
     const keys = key.split(".");
     // First try to get from external JSON translations
-    let value: any = translationsData[language as keyof typeof translationsData];
+    let value: unknown = translationsData[language as keyof typeof translationsData];
     for (const k of keys) {
-      value = value?.[k];
+      value = (value as Record<string, unknown>)?.[k];
     }
     // If not found, fallback to internal translations
     if (value === undefined || value === key) {
       value = translations[language];
       for (const k of keys) {
-        value = value?.[k];
+        value = (value as Record<string, unknown>)?.[k];
       }
     }
-    return value || key;
+    return value ?? key;
   };
 
   return (
@@ -362,6 +396,7 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useLanguage = () => {
   const context = useContext(LanguageContext);
   if (!context)
@@ -374,15 +409,15 @@ const LanguageSelector: React.FC = () => {
   const { language, setLanguage, t } = useLanguage();
 
   const languages: { code: Language; name: string; flag: string }[] = [
-    { code: "en", name: t("language.en"), flag: "🇬🇧" },
-    { code: "hi", name: t("language.hi"), flag: "🇮🇳" },
-    { code: "gu", name: t("language.gu"), flag: "🇮🇳" },
+    { code: "en", name: String(t("language.en") || "English"), flag: "🇬🇧" },
+    { code: "hi", name: String(t("language.hi") || "हिंदी"), flag: "🇮🇳" },
+    { code: "gu", name: String(t("language.gu") || "ગુજરાતી"), flag: "🇮🇳" },
   ];
 
   return (
     <div className="relative">
       <select
-        aria-label={t("language.selectorLabel")}
+        aria-label={String(t("language.selectorLabel") || "Select Language")}
         value={language}
         onChange={(e) => setLanguage(e.target.value as Language)}
         className="appearance-none bg-white border-2 border-blue-500 rounded-lg px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 pr-6 sm:pr-8 w-40 sm:w-48 md:w-56 text-xs sm:text-sm md:text-base text-blue-700 font-medium cursor-pointer hover:border-teal-500 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-300"
@@ -507,7 +542,7 @@ const PracticeMode: React.FC = () => {
 
   const handleCheckAnswer = () => {
     if (selectedAnswer === null) {
-      alert(t("practice.selectAnswer"));
+      alert(String(t("practice.selectAnswer") || "Please select an answer"));
       return;
     }
     setShowResult(true);
@@ -542,10 +577,10 @@ const PracticeMode: React.FC = () => {
           <div className="text-center">
             <CheckCircle className="w-20 h-20 text-green-500 mx-auto mb-4" />
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              {t("practice.complete")}
+              {String(t("practice.complete") || "Complete")}
             </h2>
             <p className="text-xl text-gray-600 mb-2">
-              {t("practice.finalScore")}
+              {String(t("practice.finalScore") || "Final Score")}
             </p>
             <p className="text-5xl font-bold text-blue-600 mb-6">
               {score} / {questions.length}
@@ -554,7 +589,7 @@ const PracticeMode: React.FC = () => {
               onClick={handleRestart}
               className="px-8 py-3 bg-gradient-to-r from-blue-600 to-teal-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all"
             >
-              {t("practice.restart")}
+              {String(t("practice.restart") || "Restart")}
             </button>
           </div>
         </div>
@@ -569,15 +604,15 @@ const PracticeMode: React.FC = () => {
       <div className="max-w-4xl mx-auto">
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
           <div className="bg-gradient-to-r from-blue-500 via-teal-500 to-blue-500 text-white p-6">
-            <h2 className="text-2xl font-bold mb-2">{t("practice.title")}</h2>
-            <p className="text-blue-100">{t("practice.subtitle")}</p>
+            <h2 className="text-2xl font-bold mb-2">{String(t("practice.title") || "Practice")}</h2>
+            <p className="text-blue-100">{String(t("practice.subtitle") || "Test your knowledge")}</p>
             <div className="mt-4 flex justify-between items-center">
               <span className="text-sm bg-white/20 px-4 py-2 rounded-full">
-                {t("practice.question")} {currentQuestion + 1} /{" "}
+                {String(t("practice.question") || "Question")} {currentQuestion + 1} /{" "}
                 {questions.length}
               </span>
               <span className="text-sm bg-white/20 px-4 py-2 rounded-full">
-                {t("practice.score")}: {score}
+                {String(t("practice.score") || "Score")}: {score}
               </span>
             </div>
           </div>
@@ -634,12 +669,12 @@ const PracticeMode: React.FC = () => {
               >
                 <p className="font-semibold text-lg mb-2">
                   {selectedAnswer === question.correctAnswer
-                    ? t("practice.correct")
-                    : t("practice.incorrect")}
+                    ? String(t("practice.correct") || "Correct!")
+                    : String(t("practice.incorrect") || "Incorrect")}
                 </p>
                 <p className="text-gray-700">
                   <span className="font-semibold">
-                    {t("practice.explanation")}
+                    {String(t("practice.explanation") || "Explanation")}
                   </span>{" "}
                   {question.explanation}
                 </p>
@@ -652,7 +687,7 @@ const PracticeMode: React.FC = () => {
                   onClick={handleCheckAnswer}
                   className="flex-1 px-6 py-3 bg-gradient-to-r from-blue-600 to-teal-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all"
                 >
-                  {t("practice.checkAnswer")}
+                  {String(t("practice.checkAnswer") || "Check Answer")}
                 </button>
               ) : (
                 <button
@@ -660,7 +695,7 @@ const PracticeMode: React.FC = () => {
                   disabled={currentQuestion === questions.length - 1}
                   className="flex-1 px-6 py-3 bg-gradient-to-r from-blue-600 to-teal-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {t("practice.nextQuestion")}
+                  {String(t("practice.nextQuestion") || "Next Question")}
                 </button>
               )}
             </div>
@@ -697,9 +732,9 @@ const RealWorldMode: React.FC = () => {
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden mb-6">
           <div className="bg-gradient-to-r from-blue-500 via-teal-500 to-blue-500 text-white p-6">
             <h2 className="text-2xl sm:text-3xl font-bold mb-2">
-              {t("realWorld.title")}
+              {String(t("realWorld.title") || "Real World Applications")}
             </h2>
-            <p className="text-blue-100">{t("realWorld.subtitle")}</p>
+            <p className="text-blue-100">{String(t("realWorld.subtitle") || "Applications")}</p>
           </div>
         </div>
 
@@ -732,16 +767,14 @@ interface SourcesOfLightProps {
   width?: number;
   height?: number;
   steps?: Step[];
-  mode: "learn" | "practice" | "applications";
-  setMode: (mode: "learn" | "practice" | "applications") => void;
+  mode?: "learn" | "practice" | "applications";
+  setMode?: (mode: "learn" | "practice" | "applications") => void;
 }
 
 const SourcesOfLight: React.FC<SourcesOfLightProps> = ({
   width = 800,
   height = 600,
   steps: propSteps,
-  mode: _mode,
-  setMode: _setMode,
 }) => {
   const { t } = useLanguage();
   const [currentMode, setCurrentMode] = useState<StepMode>("learn");
@@ -839,7 +872,7 @@ const SourcesOfLight: React.FC<SourcesOfLightProps> = ({
       lightObjects,
       animationProgress,
       particles,
-      t
+      (key: string) => String(t(key) || key)
     );
   }, [currentStep, animationProgress, particles, width, height, t]);
 
@@ -869,7 +902,7 @@ const SourcesOfLight: React.FC<SourcesOfLightProps> = ({
             <div className="flex-shrink-0 flex items-center gap-2">
               <Lightbulb className="w-6 h-6 text-blue-600" />
               <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-teal-600 bg-clip-text text-transparent">
-                {t("nav.logo")}
+                {String(t("nav.logo") || "Sources of Light Learning")}
               </span>
             </div>
 
@@ -883,7 +916,7 @@ const SourcesOfLight: React.FC<SourcesOfLightProps> = ({
                     : "bg-white text-gray-700 hover:bg-gray-100"
                 }`}
               >
-                {t("nav.tabs.learn")}
+                {String(t("nav.tabs.learn") || "Learn")}
               </button>
               <button
                 onClick={() => setCurrentMode("practice")}
@@ -893,7 +926,7 @@ const SourcesOfLight: React.FC<SourcesOfLightProps> = ({
                     : "bg-white text-gray-700 hover:bg-gray-100"
                 }`}
               >
-                {t("nav.tabs.practice")}
+                {String(t("nav.tabs.practice") || "Practice")}
               </button>
               <button
                 onClick={() => setCurrentMode("real_world")}
@@ -903,7 +936,7 @@ const SourcesOfLight: React.FC<SourcesOfLightProps> = ({
                     : "bg-white text-gray-700 hover:bg-gray-100"
                 }`}
               >
-                {t("nav.tabs.real_world")}
+                {String(t("nav.tabs.real_world") || "Real World")}
               </button>
             </div>
 
@@ -946,8 +979,8 @@ const SourcesOfLight: React.FC<SourcesOfLightProps> = ({
   }
 
   const stepKey = currentStep.data.stage;
-  const title = t(`steps.${stepKey}.title`);
-  const description = t(`steps.${stepKey}.description`);
+  const title = String(t(`steps.${stepKey}.title`) || currentStep.title);
+  const description = String(t(`steps.${stepKey}.description`) || currentStep.description);
 
   return (
     <div className="w-full max-w-7xl mx-auto mt-20">
@@ -958,7 +991,7 @@ const SourcesOfLight: React.FC<SourcesOfLightProps> = ({
           <div className="flex justify-between items-center flex-wrap gap-2">
             <h2 className="text-xl sm:text-2xl font-semibold">{title}</h2>
             <div className="text-sm bg-white/20 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full backdrop-blur-sm">
-              {t("controls.step")} {currentStepIndex + 1} {t("controls.of")}{" "}
+              {String(t("controls.step") || "Step")} {currentStepIndex + 1} {String(t("controls.of") || "of")}{" "}
               {modeSteps.length}
             </div>
           </div>
@@ -987,7 +1020,7 @@ const SourcesOfLight: React.FC<SourcesOfLightProps> = ({
               className="flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-300 transition-all w-full sm:w-auto"
             >
               <ChevronLeft className="w-5 h-5" />
-              {t("controls.previous")}
+              {String(t("controls.previous") || "Previous")}
             </button>
 
             <div className="flex gap-2 sm:gap-3 w-full sm:w-auto">
@@ -998,12 +1031,12 @@ const SourcesOfLight: React.FC<SourcesOfLightProps> = ({
                 {isPlaying ? (
                   <>
                     <Pause className="w-5 h-5" />
-                    {t("controls.pause")}
+                    {String(t("controls.pause") || "Pause")}
                   </>
                 ) : (
                   <>
                     <Play className="w-5 h-5" />
-                    {t("controls.play")}
+                    {String(t("controls.play") || "Play")}
                   </>
                 )}
               </button>
@@ -1013,7 +1046,7 @@ const SourcesOfLight: React.FC<SourcesOfLightProps> = ({
                 className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition-all flex-1 sm:flex-none"
               >
                 <RotateCcw className="w-5 h-5" />
-                {t("controls.reset")}
+                {String(t("controls.reset") || "Reset")}
               </button>
             </div>
 
@@ -1022,7 +1055,7 @@ const SourcesOfLight: React.FC<SourcesOfLightProps> = ({
               disabled={currentStepIndex === modeSteps.length - 1}
               className="flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-blue-600 to-teal-600 text-white rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg transition-all w-full sm:w-auto"
             >
-              {t("controls.next")}
+              {String(t("controls.next") || "Next")}
               <ChevronRight className="w-5 h-5" />
             </button>
           </div>

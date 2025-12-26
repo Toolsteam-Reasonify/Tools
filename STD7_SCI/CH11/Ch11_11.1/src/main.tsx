@@ -30,7 +30,7 @@ const originalConsole = {
 };
 
 // Override console.error
-console.error = (...args: any[]) => {
+console.error = (...args: unknown[]) => {
   const fullMessage = args.map(arg => String(arg || '')).join(' ');
   if (suppressExtensionError(fullMessage)) {
     return; // Silently ignore
@@ -39,7 +39,7 @@ console.error = (...args: any[]) => {
 };
 
 // Override console.warn (sometimes extensions use warn instead of error)
-console.warn = (...args: any[]) => {
+console.warn = (...args: unknown[]) => {
   const fullMessage = args.map(arg => String(arg || '')).join(' ');
   if (suppressExtensionError(fullMessage)) {
     return; // Silently ignore
@@ -49,7 +49,7 @@ console.warn = (...args: any[]) => {
 
 // Also intercept console.log for safety
 const originalLog = console.log;
-console.log = (...args: any[]) => {
+console.log = (...args: unknown[]) => {
   const fullMessage = args.map(arg => String(arg || '')).join(' ');
   if (suppressExtensionError(fullMessage)) {
     return; // Silently ignore
@@ -61,7 +61,7 @@ console.log = (...args: any[]) => {
 window.addEventListener('error', (event) => {
   const errorMessage = (event.message || '').toLowerCase();
   const errorSource = (event.filename || '').toLowerCase();
-  const errorTarget = (event.target as any)?.src || '';
+  const errorTarget = ((event.target as { src?: string })?.src || '').toLowerCase();
   
   if (
     suppressExtensionError(errorMessage) ||
@@ -81,7 +81,8 @@ window.addEventListener('error', (event) => {
 // Catch unhandled promise rejections from extensions
 window.addEventListener('unhandledrejection', (event) => {
   const errorMessage = String(event.reason || '').toLowerCase();
-  const errorStack = String((event.reason as any)?.stack || '').toLowerCase();
+  const reason = event.reason as { stack?: string } | undefined;
+  const errorStack = String(reason?.stack || '').toLowerCase();
   
   if (
     suppressExtensionError(errorMessage) ||
