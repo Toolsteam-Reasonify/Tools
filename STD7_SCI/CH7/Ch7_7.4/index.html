@@ -17,12 +17,47 @@
     </style>
     <div id="root"></div>
     <script>
-      // Suppress browser extension errors before React loads
+      // Enhanced error handling for Chrome extension runtime errors before React loads
       (function() {
         const originalError = console.error;
+        const originalWarn = console.warn;
+        
+        // Type guard for Chrome extension API
+        function hasChromeRuntime() {
+          try {
+            return typeof window !== 'undefined' && 
+                   typeof window.chrome !== 'undefined' && 
+                   window.chrome.runtime !== undefined;
+          } catch {
+            return false;
+          }
+        }
+        
+        // Log Chrome extension runtime.lastError if present
+        if (hasChromeRuntime()) {
+          if (window.chrome.runtime.lastError) {
+            const lastError = window.chrome.runtime.lastError;
+            if (lastError.message) {
+              originalWarn('Chrome extension runtime.lastError:', lastError.message);
+            }
+          }
+        }
+        
         console.error = function() {
           const args = Array.from(arguments);
           const errorMessage = args[0]?.toString() || '';
+          
+          // Log runtime.lastError before suppressing
+          if (hasChromeRuntime()) {
+            if (window.chrome.runtime.lastError) {
+              const lastError = window.chrome.runtime.lastError;
+              if (lastError.message) {
+                originalWarn('Chrome extension runtime.lastError:', lastError.message);
+              }
+            }
+          }
+          
+          // Suppress the specific browser extension errors
           if (
             errorMessage.includes('runtime.lastError') ||
             errorMessage.includes('message port closed') ||
@@ -36,10 +71,22 @@
         
         window.addEventListener('error', function(event) {
           const errorMessage = event.message || '';
+          
+          // Log Chrome extension errors before suppressing
+          if (hasChromeRuntime()) {
+            if (window.chrome.runtime.lastError) {
+              const lastError = window.chrome.runtime.lastError;
+              if (lastError.message) {
+                originalWarn('Chrome extension runtime.lastError:', lastError.message);
+              }
+            }
+          }
+          
           if (
             errorMessage.includes('runtime.lastError') ||
             errorMessage.includes('message port closed') ||
-            errorMessage.includes('Extension context invalidated')
+            errorMessage.includes('Extension context invalidated') ||
+            errorMessage.includes('Unchecked runtime.lastError')
           ) {
             event.preventDefault();
             return false;

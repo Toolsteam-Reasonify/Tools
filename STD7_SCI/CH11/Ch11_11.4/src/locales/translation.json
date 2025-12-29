@@ -506,190 +506,190 @@
       }
     },
     "practice": {
-      "title": "🌍 Shadows in Real World",
-      "subtitle": "Discover how shadow formation affects our daily lives",
+      "title": "🌍 वास्तविक दुनिया में छायाएं",
+      "subtitle": "जानें कि छाया निर्माण हमारे दैनिक जीवन को कैसे प्रभावित करता है",
       "scenarios": [
         {
           "id": 1,
-          "title": "Shadow Play Performance",
-          "situation": "Priya is performing shadow puppetry (Togalu Gombeyaata) for her school's cultural program. She notices that when she moves the puppet closer to the light source, something interesting happens to the shadow on the screen.",
-          "question": "What should Priya do to make the shadow of her puppet appear LARGER on the screen?",
+          "title": "छाया कठपुतली प्रदर्शन",
+          "situation": "प्रिया अपने स्कूल के सांस्कृतिक कार्यक्रम के लिए छाया कठपुतली (तोगालू गोम्बेयाता) प्रदर्शन कर रही है। उसने देखा कि जब वह कठपुतली को प्रकाश स्रोत के करीब ले जाती है, तो स्क्रीन पर छाया में कुछ दिलचस्प होता है।",
+          "question": "प्रिया को अपनी कठपुतली की छाया स्क्रीन पर बड़ी दिखाने के लिए क्या करना चाहिए?",
           "options": [
-            "Move the puppet closer to the screen",
-            "Move the puppet closer to the light source",
-            "Move the light source closer to the screen",
-            "Use a brighter light"
+            "कठपुतली को स्क्रीन के करीब ले जाएं",
+            "कठपुतली को प्रकाश स्रोत के करीब ले जाएं",
+            "प्रकाश स्रोत को स्क्रीन के करीब ले जाएं",
+            "अधिक चमकदार प्रकाश का उपयोग करें"
           ],
           "correctAnswer": 1,
-          "explanation": "When Priya moves the puppet closer to the light source (keeping the screen fixed), the shadow becomes larger. This is because light rays from the source spread out more after passing around the puppet, creating a bigger shadow on the screen. Shadow puppeteers use this principle to control the size of their characters!",
-          "realWorldTip": "Traditional Indian shadow puppetry forms like Tholu Bommalata (Andhra Pradesh), Togalu Gombeyaata (Karnataka), and Ravana Chhaya (Odisha) have been using this principle for centuries to create dramatic effects in their performances!",
+          "explanation": "जब प्रिया कठपुतली को प्रकाश स्रोत के करीब ले जाती है (स्क्रीन को स्थिर रखते हुए), छाया बड़ी हो जाती है। ऐसा इसलिए है क्योंकि स्रोत से प्रकाश किरणें कठपुतली के चारों ओर से गुजरने के बाद अधिक फैलती हैं, जिससे स्क्रीन पर एक बड़ी छाया बनती है। छाया कठपुतली कलाकार अपने पात्रों के आकार को नियंत्रित करने के लिए इस सिद्धांत का उपयोग करते हैं!",
+          "realWorldTip": "पारंपरिक भारतीय छाया कठपुतली रूप जैसे थोलू बोम्मलाटा (आंध्र प्रदेश), तोगालू गोम्बेयाता (कर्नाटक), और रावण छाया (ओडिशा) सदियों से अपने प्रदर्शन में नाटकीय प्रभाव बनाने के लिए इस सिद्धांत का उपयोग कर रहे हैं!",
           "imageEmoji": "🎭"
         },
         {
           "id": 2,
-          "title": "Cricket Match at Sunset",
-          "situation": "Rohan and his friends are playing cricket in the evening. As the Sun gets lower in the sky, Rohan notices that their shadows on the ground are getting much longer compared to when they were playing at noon.",
-          "question": "Why do shadows become longer in the evening compared to noon?",
+          "title": "सूर्यास्त पर क्रिकेट मैच",
+          "situation": "रोहन और उसके दोस्त शाम को क्रिकेट खेल रहे हैं। जैसे-जैसे सूर्य आकाश में नीचे आता है, रोहन देखता है कि जमीन पर उनकी छायाएं दोपहर के समय की तुलना में बहुत लंबी हो रही हैं।",
+          "question": "शाम को छायाएं दोपहर की तुलना में क्यों लंबी हो जाती हैं?",
           "options": [
-            "People grow taller in the evening",
-            "The Sun is lower in the sky, creating a different angle of light",
-            "The ground becomes softer in the evening",
-            "There is more dust in the air during evening"
+            "शाम को लोग लंबे हो जाते हैं",
+            "सूर्य आकाश में नीचे है, जो प्रकाश का एक अलग कोण बनाता है",
+            "शाम को जमीन नरम हो जाती है",
+            "शाम के दौरान हवा में अधिक धूल होती है"
           ],
           "correctAnswer": 1,
-          "explanation": "At noon, the Sun is high in the sky, almost directly overhead. Light falls at a steep angle, creating short shadows. In the evening, the Sun is lower near the horizon. Light travels at a shallow angle, similar to how Priya's puppet creates a larger shadow when the light source is positioned differently. This is why shadows are shortest at noon and longest during sunrise and sunset!",
-          "realWorldTip": "This is why photographers prefer 'golden hour' (early morning or late evening) for outdoor photography - the long, soft shadows add depth and drama to pictures!",
+          "explanation": "दोपहर में, सूर्य आकाश में ऊंचा होता है, लगभग सिर के ऊपर सीधा। प्रकाश एक खड़ी कोण पर पड़ता है, जिससे छोटी छायाएं बनती हैं। शाम को, सूर्य क्षितिज के पास नीचे होता है। प्रकाश एक कम कोण पर यात्रा करता है, जैसे कि प्रिया की कठपुतली तब बड़ी छाया बनाती है जब प्रकाश स्रोत अलग तरीके से रखा जाता है। यही कारण है कि छायाएं दोपहर में सबसे छोटी और सूर्योदय और सूर्यास्त के दौरान सबसे लंबी होती हैं!",
+          "realWorldTip": "यही कारण है कि फोटोग्राफर बाहरी फोटोग्राफी के लिए 'गोल्डन आवर' (सुबह जल्दी या देर शाम) पसंद करते हैं - लंबी, नरम छायाएं तस्वीरों में गहराई और नाटक जोड़ती हैं!",
           "imageEmoji": "🏏"
         },
         {
           "id": 3,
-          "title": "Traffic Signal Safety",
-          "situation": "Kavya notices that at a busy traffic intersection, there are very tall streetlights. Her uncle explains that these lights are positioned high up for a good reason related to shadows.",
-          "question": "Why are streetlights placed high above the ground at traffic intersections?",
+          "title": "ट्रैफिक सिग्नल सुरक्षा",
+          "situation": "कव्या देखती है कि एक व्यस्त यातायात चौराहे पर, बहुत ऊंचे स्ट्रीटलाइट हैं। उसके चाचा बताते हैं कि ये लाइटें छाया से संबंधित एक अच्छे कारण से ऊंचाई पर रखी गई हैं।",
+          "question": "यातायात चौराहों पर स्ट्रीटलाइट जमीन से ऊंचे क्यों रखी जाती हैं?",
           "options": [
-            "To make them look more decorative",
-            "To minimize shadows on the road and improve visibility",
-            "To save electricity",
-            "To protect them from damage"
+            "उन्हें अधिक सजावटी बनाने के लिए",
+            "सड़क पर छायाओं को कम करने और दृश्यता बेहतर बनाने के लिए",
+            "बिजली बचाने के लिए",
+            "उन्हें नुकसान से बचाने के लिए"
           ],
           "correctAnswer": 1,
-          "explanation": "When light sources are placed high, shadows of objects (like vehicles, poles, and people) become smaller and less prominent. This reduces dark patches on the road and improves visibility for all road users. If lights were placed low, they would create large, confusing shadows that could hide hazards and make driving dangerous. The positioning of the light source directly affects shadow size and road safety!",
-          "realWorldTip": "Modern street lighting design considers shadow formation carefully. LED streetlights are positioned to minimize shadows while providing even illumination, making roads safer at night!",
+          "explanation": "जब प्रकाश स्रोत ऊंचाई पर रखे जाते हैं, तो वस्तुओं (जैसे वाहन, खंभे, और लोगों) की छायाएं छोटी और कम प्रमुख हो जाती हैं। यह सड़क पर अंधेरे पैच को कम करता है और सभी सड़क उपयोगकर्ताओं के लिए दृश्यता बेहतर बनाता है। यदि लाइटें नीचे रखी जातीं, तो वे बड़ी, भ्रमित करने वाली छायाएं बनातीं जो खतरों को छुपा सकती थीं और ड्राइविंग को खतरनाक बना सकती थीं। प्रकाश स्रोत की स्थिति सीधे छाया के आकार और सड़क सुरक्षा को प्रभावित करती है!",
+          "realWorldTip": "आधुनिक स्ट्रीट लाइटिंग डिज़ाइन छाया निर्माण पर ध्यान से विचार करता है। LED स्ट्रीटलाइट को छायाओं को कम करने के लिए रखा जाता है जबकि समान प्रकाश व्यवस्था प्रदान करते हुए, रात में सड़कों को सुरक्षित बनाता है!",
           "imageEmoji": "🚦"
         },
         {
           "id": 4,
-          "title": "Solar Eclipse Observation",
-          "situation": "During a solar eclipse, Aditya's science teacher set up a pinhole projector to safely view the eclipse. Aditya sees a crescent-shaped image on the screen and wonders why we can't look directly at the eclipse.",
-          "question": "Why is it dangerous to look directly at a solar eclipse, and how does the pinhole projector help?",
+          "title": "सौर ग्रहण अवलोकन",
+          "situation": "एक सौर ग्रहण के दौरान, आदित्य के विज्ञान शिक्षक ने ग्रहण को सुरक्षित रूप से देखने के लिए एक पिनहोल प्रोजेक्टर स्थापित किया। आदित्य स्क्रीन पर एक अर्धचंद्राकार छवि देखता है और सोचता है कि हम सीधे ग्रहण को क्यों नहीं देख सकते।",
+          "question": "सौर ग्रहण को सीधे देखना खतरनाक क्यों है, और पिनहोल प्रोजेक्टर कैसे मदद करता है?",
           "options": [
-            "The eclipse emits harmful rays that the pinhole blocks",
-            "The pinhole magnifies the eclipse safely",
-            "Looking directly can damage eyes; the pinhole projects a safe image on screen",
-            "The pinhole creates a fake eclipse image"
+            "ग्रहण हानिकारक किरणें उत्सर्जित करता है जिन्हें पिनहोल अवरुद्ध करता है",
+            "पिनहोल ग्रहण को सुरक्षित रूप से बढ़ाता है",
+            "सीधे देखने से आंखें क्षतिग्रस्त हो सकती हैं; पिनहोल स्क्रीन पर एक सुरक्षित छवि बनाता है",
+            "पिनहोल एक नकली ग्रहण छवि बनाता है"
           ],
           "correctAnswer": 2,
-          "explanation": "During a solar eclipse, the Sun is still very bright and can damage your eyes permanently if viewed directly. A pinhole projector works on the same principle as shadow formation - light from the eclipse passes through a tiny hole and creates an image on a screen. This allows us to safely observe the eclipse's shadow pattern without looking at the Sun directly. The Moon is casting a shadow on Earth during an eclipse!",
-          "realWorldTip": "During solar eclipses, astronomers and educators set up pinhole projectors in communities to help people safely observe this rare astronomical event. Never look directly at the Sun or an eclipse without proper equipment!",
+          "explanation": "सौर ग्रहण के दौरान, सूर्य अभी भी बहुत चमकदार है और यदि सीधे देखा जाए तो आपकी आंखों को स्थायी रूप से नुकसान पहुंचा सकता है। एक पिनहोल प्रोजेक्टर छाया निर्माण के समान सिद्धांत पर काम करता है - ग्रहण से प्रकाश एक छोटे छेद से गुजरता है और स्क्रीन पर एक छवि बनाता है। यह हमें सूर्य को सीधे देखे बिना ग्रहण के छाया पैटर्न को सुरक्षित रूप से देखने की अनुमति देता है। ग्रहण के दौरान चंद्रमा पृथ्वी पर एक छाया डाल रहा है!",
+          "realWorldTip": "सौर ग्रहण के दौरान, खगोलविद और शिक्षक समुदायों में पिनहोल प्रोजेक्टर स्थापित करते हैं ताकि लोगों को इस दुर्लभ खगोलीय घटना को सुरक्षित रूप से देखने में मदद मिल सके। उचित उपकरण के बिना कभी भी सीधे सूर्य या ग्रहण को न देखें!",
           "imageEmoji": "🌑"
         },
         {
           "id": 5,
-          "title": "Archaeological Discovery",
-          "situation": "Dr. Sharma, an archaeologist in Hampi, Karnataka, needs to photograph ancient rock carvings. She notices that during certain times of the day, the carvings are much easier to see and photograph.",
-          "question": "When would be the BEST time for Dr. Sharma to photograph the rock carvings to make the details most visible?",
+          "title": "पुरातात्विक खोज",
+          "situation": "डॉ. शर्मा, कर्नाटक में हंपी में एक पुरातत्वविद्, प्राचीन चट्टान की नक्काशी की तस्वीर लेने की आवश्यकता है। वह देखती है कि दिन के कुछ समय के दौरान, नक्काशी देखने और फोटोग्राफ करने में बहुत आसान होती है।",
+          "question": "विवरण को सबसे अधिक दिखाने के लिए डॉ. शर्मा के लिए चट्टान की नक्काशी की तस्वीर लेने का सबसे अच्छा समय कब होगा?",
           "options": [
-            "At noon when the Sun is directly overhead",
-            "During early morning or late evening when Sun is at an angle",
-            "At night with a flashlight",
-            "On a cloudy day with no direct sunlight"
+            "दोपहर में जब सूर्य सीधे सिर के ऊपर हो",
+            "सुबह जल्दी या देर शाम जब सूर्य कोण पर हो",
+            "रात में टॉर्च के साथ",
+            "बादल वाले दिन में जब कोई सीधी धूप न हो"
           ],
           "correctAnswer": 1,
-          "explanation": "When the Sun is at an angle (early morning or late evening), it creates shadows in the carved grooves and details of the rock. These shadows make the three-dimensional features more visible and dramatic. At noon, when the Sun is overhead, there are minimal shadows, making the carvings appear flat and harder to see. This is the same principle of shadow formation - the position of the light source affects how shadows reveal or hide details!",
-          "realWorldTip": "Archaeologists, architects, and art historians use 'raking light' (light at a shallow angle) to study artifacts and structures. This technique reveals textures, tool marks, and wear patterns that might otherwise be invisible!",
+          "explanation": "जब सूर्य कोण पर होता है (सुबह जल्दी या देर शाम), यह चट्टान की नक्काशी वाली खांचे और विवरणों में छायाएं बनाता है। ये छायाएं त्रि-आयामी विशेषताओं को अधिक दिखाई देने योग्य और नाटकीय बनाती हैं। दोपहर में, जब सूर्य सिर के ऊपर होता है, तो न्यूनतम छायाएं होती हैं, जिससे नक्काशी सपाट और देखने में कठिन लगती है। यह छाया निर्माण का वही सिद्धांत है - प्रकाश स्रोत की स्थिति प्रभावित करती है कि छायाएं विवरणों को कैसे प्रकट या छुपाती हैं!",
+          "realWorldTip": "पुरातत्वविद्, वास्तुकार, और कला इतिहासकार कलाकृतियों और संरचनाओं का अध्ययन करने के लिए 'रेकिंग लाइट' (कम कोण पर प्रकाश) का उपयोग करते हैं। यह तकनीक बनावट, उपकरण के निशान, और घिसाव पैटर्न को प्रकट करती है जो अन्यथा अदृश्य हो सकते हैं!",
           "imageEmoji": "🏛️"
         },
         {
           "id": 6,
-          "title": "Farmers and Sundials",
-          "situation": "In a village in Rajasthan, elderly farmers still use traditional knowledge to estimate time during the day by observing their shadow length. Ramesh's grandfather taught him this ancient skill.",
-          "question": "How can farmers estimate approximate time using shadow length?",
+          "title": "किसान और सूर्यघड़ी",
+          "situation": "राजस्थान के एक गांव में, बुजुर्ग किसान अभी भी अपनी छाया लंबाई का अवलोकन करके दिन के दौरान समय का अनुमान लगाने के लिए पारंपरिक ज्ञान का उपयोग करते हैं। रमेश के दादा ने उसे यह प्राचीन कौशल सिखाया।",
+          "question": "किसान छाया लंबाई का उपयोग करके अनुमानित समय कैसे लगा सकते हैं?",
           "options": [
-            "Shadows are random and cannot indicate time",
-            "Shadow length changes predictably: shortest at noon, longer morning/evening",
-            "Shadows always point north",
-            "Shadow color changes with time"
+            "छायाएं यादृच्छिक हैं और समय नहीं बता सकतीं",
+            "छाया लंबाई अनुमानित रूप से बदलती है: दोपहर में सबसे छोटी, सुबह/शाम में लंबी",
+            "छायाएं हमेशा उत्तर की ओर इंगित करती हैं",
+            "समय के साथ छाया का रंग बदलता है"
           ],
           "correctAnswer": 1,
-          "explanation": "The position of the Sun changes predictably throughout the day. At sunrise, shadows are long and point west. As the Sun rises, shadows get shorter and rotate. At noon (solar noon), shadows are shortest and point north (in locations north of the Tropic of Cancer like most of India). After noon, shadows lengthen again and point east. This predictable pattern of shadow formation has been used for centuries in sundials and traditional timekeeping!",
-          "realWorldTip": "Sundials are one of humanity's oldest scientific instruments, used for over 5,000 years! Many ancient Indian temples have sundial markings. You can even make a simple sundial at home using a stick and marking shadow positions hourly on a sunny day!",
+          "explanation": "सूर्य की स्थिति पूरे दिन अनुमानित रूप से बदलती है। सूर्योदय पर, छायाएं लंबी होती हैं और पश्चिम की ओर इंगित करती हैं। जैसे-जैसे सूर्य उगता है, छायाएं छोटी हो जाती हैं और घूमती हैं। दोपहर में (सौर दोपहर), छायाएं सबसे छोटी होती हैं और उत्तर की ओर इंगित करती हैं (कर्क रेखा के उत्तर में स्थानों में जैसे भारत का अधिकांश हिस्सा)। दोपहर के बाद, छायाएं फिर से लंबी हो जाती हैं और पूर्व की ओर इंगित करती हैं। छाया निर्माण का यह अनुमानित पैटर्न सदियों से सूर्यघड़ी और पारंपरिक समय रखने में उपयोग किया गया है!",
+          "realWorldTip": "सूर्यघड़ी मानवता के सबसे पुराने वैज्ञानिक उपकरणों में से एक है, 5,000 से अधिक वर्षों से उपयोग की जा रही है! कई प्राचीन भारतीय मंदिरों में सूर्यघड़ी के निशान हैं। आप एक छड़ी का उपयोग करके और धूप वाले दिन पर प्रति घंटे छाया स्थितियों को चिह्नित करके घर पर एक साधारण सूर्यघड़ी भी बना सकते हैं!",
           "imageEmoji": "🌾"
         },
         {
           "id": 7,
-          "title": "Firefighters and Shadows",
-          "situation": "During a fire safety demonstration, firefighter Lakshmi explains to students why firefighters sometimes use powerful lights from multiple angles when searching through smoke-filled buildings.",
-          "question": "Why do firefighters use multiple light sources from different angles during rescue operations?",
+          "title": "अग्निशामक और छायाएं",
+          "situation": "एक अग्नि सुरक्षा प्रदर्शन के दौरान, अग्निशामक लक्ष्मी छात्रों को समझाती है कि अग्निशामक कभी-कभी धुएं से भरे इमारतों में खोज करते समय कई कोणों से शक्तिशाली रोशनी का उपयोग क्यों करते हैं।",
+          "question": "बचाव अभियानों के दौरान अग्निशामक अलग-अलग कोणों से कई प्रकाश स्रोतों का उपयोग क्यों करते हैं?",
           "options": [
-            "To make the building brighter only",
-            "To reduce confusing shadows and see obstacles clearly",
-            "To scare away smoke",
-            "To signal other firefighters"
+            "केवल इमारत को अधिक चमकदार बनाने के लिए",
+            "भ्रमित करने वाली छायाओं को कम करने और बाधाओं को स्पष्ट रूप से देखने के लिए",
+            "धुएं को भगाने के लिए",
+            "अन्य अग्निशामकों को संकेत देने के लिए"
           ],
           "correctAnswer": 1,
-          "explanation": "A single light source creates strong shadows that can hide obstacles, victims, or hazards. When light comes from only one direction, objects block the light and create dark shadow regions where nothing can be seen. By using multiple lights from different angles, firefighters reduce these shadowed areas. If one light creates a shadow, another light from a different angle illuminates it. This is a practical application of understanding shadow formation!",
-          "realWorldTip": "Film and photography studios also use multiple light sources (key light, fill light, back light) to control shadows and create the desired effect. Understanding shadow formation is crucial in many professions!",
+          "explanation": "एक एकल प्रकाश स्रोत मजबूत छायाएं बनाता है जो बाधाओं, पीड़ितों, या खतरों को छुपा सकता है। जब प्रकाश केवल एक दिशा से आता है, तो वस्तुएं प्रकाश को अवरुद्ध करती हैं और अंधेरे छाया क्षेत्र बनाती हैं जहां कुछ भी नहीं देखा जा सकता। विभिन्न कोणों से कई रोशनी का उपयोग करके, अग्निशामक इन छाया क्षेत्रों को कम करते हैं। यदि एक रोशनी छाया बनाती है, तो एक अलग कोण से दूसरी रोशनी इसे प्रकाशित करती है। यह छाया निर्माण की समझ का एक व्यावहारिक अनुप्रयोग है!",
+          "realWorldTip": "फिल्म और फोटोग्राफी स्टूडियो भी छायाओं को नियंत्रित करने और वांछित प्रभाव बनाने के लिए कई प्रकाश स्रोतों (की लाइट, फिल लाइट, बैक लाइट) का उपयोग करते हैं। छाया निर्माण की समझ कई व्यवसायों में महत्वपूर्ण है!",
           "imageEmoji": "🚒"
         },
         {
           "id": 8,
-          "title": "Building Design and Shadows",
-          "situation": "Architect Mrs. Patel is designing a new apartment building in Bangalore. She needs to plan the building's position carefully to ensure that it doesn't cast long shadows on the neighboring playground during afternoon hours when children play.",
-          "question": "What should Mrs. Patel consider about shadow formation when positioning the building?",
+          "title": "भवन डिज़ाइन और छायाएं",
+          "situation": "वास्तुकार श्रीमती पटेल बैंगलोर में एक नई अपार्टमेंट इमारत डिज़ाइन कर रही हैं। उन्हें इमारत की स्थिति को सावधानी से योजना बनाने की आवश्यकता है ताकि यह सुनिश्चित हो सके कि यह दोपहर के घंटों के दौरान बच्चों के खेलने के समय पड़ोसी खेल के मैदान पर लंबी छायाएं न डाले।",
+          "question": "इमारत को स्थित करते समय श्रीमती पटेल को छाया निर्माण के बारे में क्या विचार करना चाहिए?",
           "options": [
-            "Shadows don't matter in building design",
-            "Building height, Sun's path, and shadow direction throughout the day",
-            "Only the building's color affects shadows",
-            "Shadows are the same size all day"
+            "भवन डिज़ाइन में छायाएं मायने नहीं रखतीं",
+            "भवन की ऊंचाई, सूर्य का पथ, और दिन भर छाया की दिशा",
+            "केवल इमारत का रंग छायाओं को प्रभावित करता है",
+            "छायाएं पूरे दिन एक ही आकार की होती हैं"
           ],
           "correctAnswer": 1,
-          "explanation": "The building acts as an opaque object that blocks sunlight. Taller buildings create longer shadows. The Sun's position changes throughout the day and across seasons - it's higher in summer (shorter shadows) and lower in winter (longer shadows). Mrs. Patel must calculate where shadows will fall at different times and seasons. In hot climates like Bangalore, shadows can provide valuable cooling, but blocking playground light reduces safety and usability. This is why 'shadow impact studies' are required for new construction in many cities!",
-          "realWorldTip": "Modern sustainable architecture uses 'shadow analysis' software to optimize building design. Some buildings are designed to deliberately create shaded courtyards for natural cooling, while others use shadow patterns to create interesting architectural effects throughout the day!",
+          "explanation": "इमारत एक अपारदर्शी वस्तु के रूप में काम करती है जो सूर्य के प्रकाश को अवरुद्ध करती है। ऊंची इमारतें लंबी छायाएं बनाती हैं। सूर्य की स्थिति पूरे दिन और मौसमों में बदलती है - गर्मियों में यह उच्च होता है (छोटी छायाएं) और सर्दियों में नीचे (लंबी छायाएं)। श्रीमती पटेल को गणना करनी चाहिए कि विभिन्न समय और मौसमों में छायाएं कहां गिरेंगी। बैंगलोर जैसे गर्म जलवायु में, छायाएं मूल्यवान शीतलन प्रदान कर सकती हैं, लेकिन खेल के मैदान के प्रकाश को अवरुद्ध करना सुरक्षा और उपयोगिता को कम करता है। यही कारण है कि कई शहरों में नए निर्माण के लिए 'छाया प्रभाव अध्ययन' आवश्यक हैं!",
+          "realWorldTip": "आधुनिक स्थायी वास्तुकला भवन डिज़ाइन को अनुकूलित करने के लिए 'छाया विश्लेषण' सॉफ़्टवेयर का उपयोग करती है। कुछ इमारतें जानबूझकर प्राकृतिक शीतलन के लिए छायादार आंगन बनाने के लिए डिज़ाइन की जाती हैं, जबकि अन्य दिन भर दिलचस्प वास्तुशिल्प प्रभाव बनाने के लिए छाया पैटर्न का उपयोग करती हैं!",
           "imageEmoji": "🏢"
         }
       ],
       "controls": {
-        "previous": "← Previous",
-        "checkAnswer": "Check Answer",
-        "nextScenario": "Next Scenario →",
-        "scenarioCount": "Scenario {{current}} of {{total}}"
+        "previous": "← पिछला",
+        "checkAnswer": "उत्तर जांचें",
+        "nextScenario": "अगला परिदृश्य →",
+        "scenarioCount": "परिदृश्य {{current}} / {{total}}"
       },
       "headers": {
-        "realWorldSituation": "📖 Real-World Situation",
-        "scientificExplanation": "💡 Scientific Explanation",
-        "realWorldApplication": "🌍 Real-World Application"
+        "realWorldSituation": "📖 वास्तविक दुनिया की स्थिति",
+        "scientificExplanation": "💡 वैज्ञानिक व्याख्या",
+        "realWorldApplication": "🌍 वास्तविक दुनिया का अनुप्रयोग"
       },
       "progress": {
-        "title": "📊 Your Progress",
-        "completed": "Scenarios Completed:",
-        "congrats": "🎉 Congratulations! You've completed all real-world scenarios!"
+        "title": "📊 आपकी प्रगति",
+        "completed": "पूर्ण परिदृश्य:",
+        "congrats": "🎉 बधाई हो! आपने सभी वास्तविक दुनिया के परिदृश्य पूरे कर लिए हैं!"
       },
       "facts": {
-        "title": "🌟 Amazing Shadow Facts from India",
+        "title": "🌟 भारत से अद्भुत छाया तथ्य",
         "list": [
-          "<strong>Konark Sun Temple</strong> (Odisha) was designed so that the first rays of the Sun would fall on its main entrance, creating spectacular shadow patterns",
-          "<strong>Jantar Mantar</strong> observatories in Delhi, Jaipur, and other cities use giant shadow-casting instruments (sundials) to track time and astronomical positions with incredible accuracy",
-          "Ancient Indian mathematicians like <strong>Aryabhata</strong> (5th century CE) studied shadows to calculate Earth's circumference and the distances to celestial bodies",
-          "Traditional <strong>shadow puppetry</strong> performances in India often last through the night, with stories from epics like Ramayana and Mahabharata told through moving shadows",
-          "The <strong>Dilwara Temples</strong> in Rajasthan are positioned to create changing shadow patterns on intricate marble carvings throughout the day"
+          "<strong>कोणार्क सूर्य मंदिर</strong> (ओडिशा) को इस तरह डिज़ाइन किया गया था कि सूर्य की पहली किरणें इसके मुख्य प्रवेश द्वार पर पड़ें, शानदार छाया पैटर्न बनाते हुए",
+          "<strong>जंतर मंतर</strong> वेधशालाएं दिल्ली, जयपुर और अन्य शहरों में विशाल छाया-प्रक्षेपण उपकरण (सूर्यघड़ी) का उपयोग अविश्वसनीय सटीकता के साथ समय और खगोलीय स्थितियों को ट्रैक करने के लिए करती हैं",
+          "प्राचीन भारतीय गणितज्ञ जैसे <strong>आर्यभट्ट</strong> (5वीं शताब्दी CE) ने पृथ्वी की परिधि और खगोलीय पिंडों की दूरियों की गणना करने के लिए छायाओं का अध्ययन किया",
+          "भारत में पारंपरिक <strong>छाया कठपुतली</strong> प्रदर्शन अक्सर रात भर चलते हैं, रामायण और महाभारत जैसे महाकाव्यों की कहानियां चलती छायाओं के माध्यम से बताई जाती हैं",
+          "राजस्थान में <strong>दिलवाड़ा मंदिर</strong> जटिल संगमरमर नक्काशी पर दिन भर बदलते छाया पैटर्न बनाने के लिए स्थित हैं"
         ]
       },
       "simulation": {
-        "title": "🎭 Shadow Puppetry Simulator",
-        "show": "Show Simulation",
-        "hide": "Hide Simulation",
-        "intro": "Try moving the puppet and adjusting the light distance to see how shadows change in traditional Indian shadow puppetry!",
-        "shadowSize": "Shadow Size",
-        "large": "Large",
-        "medium": "Medium",
-        "small": "Small",
-        "puppetPosLabel": "🎭 Puppet Position (closer to light = larger shadow)",
-        "puppetShapeLabel": "Choose Puppet Shape",
+        "title": "🎭 छाया कठपुतली सिम्युलेटर",
+        "show": "सिम्युलेशन दिखाएं",
+        "hide": "सिम्युलेशन छुपाएं",
+        "intro": "पारंपरिक भारतीय छाया कठपुतली में छायाएं कैसे बदलती हैं देखने के लिए कठपुतली को हिलाएं और प्रकाश दूरी समायोजित करें!",
+        "shadowSize": "छाया का आकार",
+        "large": "बड़ा",
+        "medium": "मध्यम",
+        "small": "छोटा",
+        "puppetPosLabel": "🎭 कठपुतली की स्थिति (प्रकाश के करीब = बड़ी छाया)",
+        "puppetShapeLabel": "कठपुतली का आकार चुनें",
         "shapes": {
           "hand": {
-            "label": "Hand",
+            "label": "हाथ",
             "emoji": "✋"
           },
           "bird": {
-            "label": "Bird",
+            "label": "पक्षी",
             "emoji": "🦅"
           },
           "dog": {
-            "label": "Dog",
+            "label": "कुत्ता",
             "emoji": "🐕"
           }
         },
-        "tip": "<strong>💡 Try this:</strong> Move the puppet closer to the light source (left) to make the shadow larger! Traditional shadow puppeteers use this technique to make characters appear to grow or shrink during performances."
+        "tip": "<strong>💡 इसे आजमाएं:</strong> छाया को बड़ा बनाने के लिए कठपुतली को प्रकाश स्रोत (बाएं) के करीब ले जाएं! पारंपरिक छाया कठपुतली कलाकार प्रदर्शन के दौरान पात्रों को बढ़ने या सिकुड़ने के लिए इस तकनीक का उपयोग करते हैं।"
       }
     },
     "realWorld": {
@@ -906,190 +906,190 @@
       }
     },
     "practice": {
-      "title": "🌍 Shadows in Real World",
-      "subtitle": "Discover how shadow formation affects our daily lives",
+      "title": "🌍 વાસ્તવિક દુનિયામાં છાયાઓ",
+      "subtitle": "જાણો કે છાયા રચના આપણા દૈનિક જીવનને કેવી રીતે અસર કરે છે",
       "scenarios": [
         {
           "id": 1,
-          "title": "Shadow Play Performance",
-          "situation": "Priya is performing shadow puppetry (Togalu Gombeyaata) for her school's cultural program. She notices that when she moves the puppet closer to the light source, something interesting happens to the shadow on the screen.",
-          "question": "What should Priya do to make the shadow of her puppet appear LARGER on the screen?",
+          "title": "છાયા કઠપુતળી પ્રદર્શન",
+          "situation": "પ્રિયા તેના સ્કૂલના સાંસ્કૃતિક કાર્યક્રમ માટે છાયા કઠપુતળી (તોગાળુ ગોમ્બેયાતા) કરી રહી છે. તે જુએ છે કે જ્યારે તે કઠપુતળીને પ્રકાશ સ્ત્રોતની નજીક ખસેડે છે, ત્યારે સ્ક્રીન પર છાયામાં કંઈક રસપ્રદ બનતું હોય છે।",
+          "question": "પ્રિયાએ તેની કઠપુતળીની છાયા સ્ક્રીન પર મોટી દેખાડવા માટે શું કરવું જોઈએ?",
           "options": [
-            "Move the puppet closer to the screen",
-            "Move the puppet closer to the light source",
-            "Move the light source closer to the screen",
-            "Use a brighter light"
+            "કઠપુતળીને સ્ક્રીનની નજીક ખસેડો",
+            "કઠપુતળીને પ્રકાશ સ્ત્રોતની નજીક ખસેડો",
+            "પ્રકાશ સ્ત્રોતને સ્ક્રીનની નજીક ખસેડો",
+            "વધુ તેજસ્વી પ્રકાશનો ઉપયોગ કરો"
           ],
           "correctAnswer": 1,
-          "explanation": "When Priya moves the puppet closer to the light source (keeping the screen fixed), the shadow becomes larger. This is because light rays from the source spread out more after passing around the puppet, creating a bigger shadow on the screen. Shadow puppeteers use this principle to control the size of their characters!",
-          "realWorldTip": "Traditional Indian shadow puppetry forms like Tholu Bommalata (Andhra Pradesh), Togalu Gombeyaata (Karnataka), and Ravana Chhaya (Odisha) have been using this principle for centuries to create dramatic effects in their performances!",
+          "explanation": "જ્યારે પ્રિયા કઠપુતળીને પ્રકાશ સ્ત્રોતની નજીક ખસેડે છે (સ્ક્રીનને નિશ્ચિત રાખીને), છાયા મોટી થઈ જાય છે. આ એટલા માટે કારણ કે સ્ત્રોતમાંથી પ્રકાશ કિરણો કઠપુતળીની આસપાસથી પસાર થયા પછી વધુ ફેલાય છે, જે સ્ક્રીન પર મોટી છાયા બનાવે છે. છાયા કઠપુતળી કલાકારો પોતાના પાત્રોના કદને નિયંત્રિત કરવા માટે આ સિદ્ધાંતનો ઉપયોગ કરે છે!",
+          "realWorldTip": "પરંપરાગત ભારતીય છાયા કઠપુતળી ફોર્મ જેવા કે થોલુ બોમ્મલટા (આંધ્ર પ્રદેશ), તોગાળુ ગોમ્બેયાતા (કર્ણાટક), અને રાવણ છાયા (ઓડિશા) સદીઓથી પોતાના પ્રદર્શનોમાં નાટકીય અસરો બનાવવા માટે આ સિદ્ધાંતનો ઉપયોગ કરી રહ્યા છે!",
           "imageEmoji": "🎭"
         },
         {
           "id": 2,
-          "title": "Cricket Match at Sunset",
-          "situation": "Rohan and his friends are playing cricket in the evening. As the Sun gets lower in the sky, Rohan notices that their shadows on the ground are getting much longer compared to when they were playing at noon.",
-          "question": "Why do shadows become longer in the evening compared to noon?",
+          "title": "સૂર્યાસ્ત પર ક્રિકેટ મેચ",
+          "situation": "રોહન અને તેના મિત્રો સાંજે ક્રિકેટ ખેલી રહ્યા છે. જેમ જેમ સૂર્ય આકાશમાં નીચે આવે છે, રોહન જુએ છે કે જમીન પર તેમની છાયાઓ બપોરે ખેલતી વખતે કરતાં ખૂબ લાંબી થઈ રહી છે।",
+          "question": "સાંજે છાયાઓ બપોર કરતાં શા માટે લાંબી થઈ જાય છે?",
           "options": [
-            "People grow taller in the evening",
-            "The Sun is lower in the sky, creating a different angle of light",
-            "The ground becomes softer in the evening",
-            "There is more dust in the air during evening"
+            "સાંજે લોકો લાંબા થઈ જાય છે",
+            "સૂર્ય આકાશમાં નીચે છે, જે પ્રકાશનો વિવિધ કોણ બનાવે છે",
+            "સાંજે જમીન નરમ થઈ જાય છે",
+            "સાંજે હવામાં વધુ ધૂળ હોય છે"
           ],
           "correctAnswer": 1,
-          "explanation": "At noon, the Sun is high in the sky, almost directly overhead. Light falls at a steep angle, creating short shadows. In the evening, the Sun is lower near the horizon. Light travels at a shallow angle, similar to how Priya's puppet creates a larger shadow when the light source is positioned differently. This is why shadows are shortest at noon and longest during sunrise and sunset!",
-          "realWorldTip": "This is why photographers prefer 'golden hour' (early morning or late evening) for outdoor photography - the long, soft shadows add depth and drama to pictures!",
+          "explanation": "બપોરે, સૂર્ય આકાશમાં ઊંચો હોય છે, લગભગ સીધો ઓવરહેડ. પ્રકાશ ઊંચા કોણ પર પડે છે, જે નાની છાયાઓ બનાવે છે. સાંજે, સૂર્ય આદિક્ષિતિ નજીક નીચે હોય છે. પ્રકાશ નીચા કોણ પર મુસાફરી કરે છે, જેમ કે પ્રિયાની કઠપુતળી જ્યારે પ્રકાશ સ્ત્રોત અલગ રીતે સ્થિત થાય છે ત્યારે મોટી છાયા બનાવે છે. આ જ કારણ છે કે છાયાઓ બપોરે સૌથી ટૂંકી અને સૂર્યોદય અને સૂર્યાસ્ત દરમ્યાન સૌથી લાંબી હોય છે!",
+          "realWorldTip": "આ જ કારણ છે કે ફોટોગ્રાફરો બાહ્ય ફોટોગ્રાફી માટે 'ગોલ્ડન અવર' (સવારે વહેલા અથવા સાંજે મોડા) પસંદ કરે છે - લાંબી, નરમ છાયાઓ ચિત્રોમાં ઊંડાઈ અને નાટક ઉમેરે છે!",
           "imageEmoji": "🏏"
         },
         {
           "id": 3,
-          "title": "Traffic Signal Safety",
-          "situation": "Kavya notices that at a busy traffic intersection, there are very tall streetlights. Her uncle explains that these lights are positioned high up for a good reason related to shadows.",
-          "question": "Why are streetlights placed high above the ground at traffic intersections?",
+          "title": "ટ્રાફિક સિગ્નલ સુરક્ષા",
+          "situation": "કવ્યા જુએ છે કે વ્યસ્ત ટ્રાફિક આંતરછેદ પર, ખૂબ ઊંચી સ્ટ્રીટલાઇટ્સ છે. તેના કાકા સમજાવે છે કે આ લાઇટો છાયાઓ સંબંધિત સારા કારણોસર ઊંચાઈ પર સ્થિત છે।",
+          "question": "ટ્રાફિક આંતરછેદ પર સ્ટ્રીટલાઇટ્સ જમીનથી ઊંચી કેમ મૂકવામાં આવે છે?",
           "options": [
-            "To make them look more decorative",
-            "To minimize shadows on the road and improve visibility",
-            "To save electricity",
-            "To protect them from damage"
+            "તેમને વધુ સુશોભિત બનાવવા માટે",
+            "રસ્તા પર છાયાઓ ઘટાડવા અને દૃશ્યતા સુધારવા માટે",
+            "વીજળી બચાવવા માટે",
+            "તેમને નુકસાનથી બચાવવા માટે"
           ],
           "correctAnswer": 1,
-          "explanation": "When light sources are placed high, shadows of objects (like vehicles, poles, and people) become smaller and less prominent. This reduces dark patches on the road and improves visibility for all road users. If lights were placed low, they would create large, confusing shadows that could hide hazards and make driving dangerous. The positioning of the light source directly affects shadow size and road safety!",
-          "realWorldTip": "Modern street lighting design considers shadow formation carefully. LED streetlights are positioned to minimize shadows while providing even illumination, making roads safer at night!",
+          "explanation": "જ્યારે પ્રકાશ સ્ત્રોતો ઊંચાઈ પર મૂકવામાં આવે છે, ત્યારે વસ્તુઓ (વાહનો, ધ્રુવો, અને લોકો જેવી) ની છાયાઓ નાની અને ઓછી પ્રમુખ બને છે. આ રસ્તા પર ડાર્ક પેચો ઘટાડે છે અને બધા રોડ ઉપયોગકર્તાઓ માટે દૃશ્યતા સુધારે છે. જો લાઇટો નીચે મૂકવામાં આવે, તો તે મોટી, ગૂંચવણમાં મૂકનારી છાયાઓ બનાવે જે જોખમો છુપાવી શકે અને ડ્રાઇવિંગને ખતરનાક બનાવી શકે. પ્રકાશ સ્ત્રોતની સ્થિતિ સીધી રીતે છાયાના કદ અને રોડ સુરક્ષાને અસર કરે છે!",
+          "realWorldTip": "આધુનિક સ્ટ્રીટ લાઇટિંગ ડિઝાઇન છાયા રચનાને કાળજીપૂર્વક ધ્યાનમાં લે છે. LED સ્ટ્રીટલાઇટ્સ છાયાઓ ઘટાડવા માટે સ્થિત છે જ્યારે સમાન પ્રકાશ પ્રદાન કરતી વખતે, રાત્રે રસ્તાઓને સુરક્ષિત બનાવે છે!",
           "imageEmoji": "🚦"
         },
         {
           "id": 4,
-          "title": "Solar Eclipse Observation",
-          "situation": "During a solar eclipse, Aditya's science teacher set up a pinhole projector to safely view the eclipse. Aditya sees a crescent-shaped image on the screen and wonders why we can't look directly at the eclipse.",
-          "question": "Why is it dangerous to look directly at a solar eclipse, and how does the pinhole projector help?",
+          "title": "સૌર ગ્રહણ અવલોકન",
+          "situation": "સૌર ગ્રહણ દરમ્યાન, આદિત્યના વિજ્ઞાન શિક્ષકે ગ્રહણને સુરક્ષિત રીતે જોવા માટે પિનહોલ પ્રોજેક્ટર સેટઅપ કર્યો. આદિત્ય સ્ક્રીન પર અર્ધચંદ્રાકાર છબી જુએ છે અને આશ્ચર્ય પામે છે કે આપણે ગ્રહણને સીધું કેમ જોઈ શકતા નથી।",
+          "question": "સૌર ગ્રહણને સીધું જોવું ખતરનાક શા માટે છે, અને પિનહોલ પ્રોજેક્ટર કેવી રીતે મદદ કરે છે?",
           "options": [
-            "The eclipse emits harmful rays that the pinhole blocks",
-            "The pinhole magnifies the eclipse safely",
-            "Looking directly can damage eyes; the pinhole projects a safe image on screen",
-            "The pinhole creates a fake eclipse image"
+            "ગ્રહણ હાનિકારક કિરણો બહાર પાડે છે જેને પિનહોલ અવરોધે છે",
+            "પિનહોલ ગ્રહણને સુરક્ષિત રીતે મોટું કરે છે",
+            "સીધું જોવાથી આંખો નુકસાન થઈ શકે છે; પિનહોલ સ્ક્રીન પર સુરક્ષિત છબી બનાવે છે",
+            "પિનહોલ ખોટી ગ્રહણ છબી બનાવે છે"
           ],
           "correctAnswer": 2,
-          "explanation": "During a solar eclipse, the Sun is still very bright and can damage your eyes permanently if viewed directly. A pinhole projector works on the same principle as shadow formation - light from the eclipse passes through a tiny hole and creates an image on a screen. This allows us to safely observe the eclipse's shadow pattern without looking at the Sun directly. The Moon is casting a shadow on Earth during an eclipse!",
-          "realWorldTip": "During solar eclipses, astronomers and educators set up pinhole projectors in communities to help people safely observe this rare astronomical event. Never look directly at the Sun or an eclipse without proper equipment!",
+          "explanation": "સૌર ગ્રહણ દરમ્યાન, સૂર્ય હજી પણ ખૂબ તેજસ્વી છે અને જો સીધું જોવામાં આવે તો તમારી આંખોને કાયમી નુકસાન પહોંચાડી શકે છે. પિનહોલ પ્રોજેક્ટર છાયા રચના જેવા જ સિદ્ધાંત પર કામ કરે છે - ગ્રહણમાંથી પ્રકાશ નાના છિદ્રમાંથી પસાર થાય છે અને સ્ક્રીન પર છબી બનાવે છે. આ આપણને સૂર્યને સીધું જોયા વગર ગ્રહણના છાયા પેટર્નને સુરક્ષિત રીતે જોવા માટે પરવાનગી આપે છે. ગ્રહણ દરમ્યાન ચંદ્ર પૃથ્વી પર છાયા પાડી રહ્યો છે!",
+          "realWorldTip": "સૌર ગ્રહણ દરમ્યાન, ખગોળશાસ્ત્રીઓ અને શિક્ષકો સમુદાયોમાં પિનહોલ પ્રોજેક્ટર સેટઅપ કરે છે જેથી લોકોને આ દુર્લભ ખગોળીય ઘટનાને સુરક્ષિત રીતે જોવામાં મદદ મળે. યોગ્ય ઉપકરણ વગર ક્યારેય સીધું સૂર્ય અથવા ગ્રહણ જોવાનું નહીં!",
           "imageEmoji": "🌑"
         },
         {
           "id": 5,
-          "title": "Archaeological Discovery",
-          "situation": "Dr. Sharma, an archaeologist in Hampi, Karnataka, needs to photograph ancient rock carvings. She notices that during certain times of the day, the carvings are much easier to see and photograph.",
-          "question": "When would be the BEST time for Dr. Sharma to photograph the rock carvings to make the details most visible?",
+          "title": "પુરાતત્વીય શોધ",
+          "situation": "ડૉ. શર્મા, કર્ણાટકમાં હંપીમાં પુરાતત્વશાસ્ત્રી, પ્રાચીન ચટ્ટાની કોતરણીની ફોટો લેવાની જરૂર છે. તે જુએ છે કે દિવસના ચોક્કસ સમય દરમ્યાન, કોતરણી જોવી અને ફોટોગ્રાફ કરવી ખૂબ સરળ હોય છે।",
+          "question": "વિગતોને સૌથી વધુ દેખાવવા માટે ડૉ. શર્મા માટે ચટ્ટાની કોતરણીની ફોટો લેવાનો શ્રેષ્ઠ સમય ક્યારે હશે?",
           "options": [
-            "At noon when the Sun is directly overhead",
-            "During early morning or late evening when Sun is at an angle",
-            "At night with a flashlight",
-            "On a cloudy day with no direct sunlight"
+            "બપોરે જ્યારે સૂર્ય સીધો ઓવરહેડ હોય",
+            "સવારે વહેલા અથવા સાંજે મોડા જ્યારે સૂર્ય કોણ પર હોય",
+            "રાત્રે ટોર્ચ સાથે",
+            "બાદળિયા દિવસે જ્યારે કોઈ સીધી સૂર્યપ્રકાશ ન હોય"
           ],
           "correctAnswer": 1,
-          "explanation": "When the Sun is at an angle (early morning or late evening), it creates shadows in the carved grooves and details of the rock. These shadows make the three-dimensional features more visible and dramatic. At noon, when the Sun is overhead, there are minimal shadows, making the carvings appear flat and harder to see. This is the same principle of shadow formation - the position of the light source affects how shadows reveal or hide details!",
-          "realWorldTip": "Archaeologists, architects, and art historians use 'raking light' (light at a shallow angle) to study artifacts and structures. This technique reveals textures, tool marks, and wear patterns that might otherwise be invisible!",
+          "explanation": "જ્યારે સૂર્ય કોણ પર હોય છે (સવારે વહેલા અથવા સાંજે મોડા), તે ચટ્ટાની કોતરેલી ખાંચો અને વિગતોમાં છાયાઓ બનાવે છે. આ છાયાઓ ત્રિ-પરિમાણીય લક્ષણોને વધુ દ્રશ્ય અને નાટકીય બનાવે છે. બપોરે, જ્યારે સૂર્ય ઓવરહેડ હોય છે, ત્યારે લઘુત્તમ છાયાઓ હોય છે, જે કોતરણીને સપાટ અને જોવા માટે મુશ્કેલ બનાવે છે. આ છાયા રચના જેવો જ સિદ્ધાંત છે - પ્રકાશ સ્ત્રોતની સ્થિતિ અસર કરે છે કે છાયાઓ વિગતોને કેવી રીતે પ્રકટ કરે છે અથવા છુપાવે છે!",
+          "realWorldTip": "પુરાતત્વશાસ્ત્રીઓ, વાસ્તુકારો, અને કલા ઇતિહાસકારો કલાકૃતિઓ અને માળખાનો અભ્યાસ કરવા માટે 'રેકિંગ લાઇટ' (નીચા કોણ પર પ્રકાશ) નો ઉપયોગ કરે છે. આ તકનીક બનાવટ, સાધન નિશાનો, અને ઘસારા પેટર્નને પ્રકટ કરે છે જે અન્યથા અદૃશ્ય હોઈ શકે!",
           "imageEmoji": "🏛️"
         },
         {
           "id": 6,
-          "title": "Farmers and Sundials",
-          "situation": "In a village in Rajasthan, elderly farmers still use traditional knowledge to estimate time during the day by observing their shadow length. Ramesh's grandfather taught him this ancient skill.",
-          "question": "How can farmers estimate approximate time using shadow length?",
+          "title": "કિસાનો અને સૂર્યઘડિયાળ",
+          "situation": "રાજસ્થાનના એક ગામમાં, વૃદ્ધ કિસાનો હજી પણ પરંપરાગત જ્ઞાનનો ઉપયોગ કરે છે જે દિવસ દરમ્યાન તેમની છાયા લંબાઈને અવલોકન કરીને સમયનો અંદાજ લગાવવા માટે. રમેશના દાદાએ તેને આ પ્રાચીન કૌશલ્ય શીખવ્યું.",
+          "question": "કિસાનો છાયા લંબાઈનો ઉપયોગ કરીને અંદાજિત સમય કેવી રીતે અંદાજી શકે છે?",
           "options": [
-            "Shadows are random and cannot indicate time",
-            "Shadow length changes predictably: shortest at noon, longer morning/evening",
-            "Shadows always point north",
-            "Shadow color changes with time"
+            "છાયાઓ રેન્ડમ છે અને સમય સૂચવી શકતી નથી",
+            "છાયા લંબાઈ અનુમાનિત રીતે બદલાય છે: બપોરે સૌથી ટૂંકી, સવાર/સાંજે લાંબી",
+            "છાયાઓ હંમેશા ઉત્તર તરફ નિર્દેશ કરે છે",
+            "સમય સાથે છાયાનો રંગ બદલાય છે"
           ],
           "correctAnswer": 1,
-          "explanation": "The position of the Sun changes predictably throughout the day. At sunrise, shadows are long and point west. As the Sun rises, shadows get shorter and rotate. At noon (solar noon), shadows are shortest and point north (in locations north of the Tropic of Cancer like most of India). After noon, shadows lengthen again and point east. This predictable pattern of shadow formation has been used for centuries in sundials and traditional timekeeping!",
-          "realWorldTip": "Sundials are one of humanity's oldest scientific instruments, used for over 5,000 years! Many ancient Indian temples have sundial markings. You can even make a simple sundial at home using a stick and marking shadow positions hourly on a sunny day!",
+          "explanation": "સૂર્યની સ્થિતિ દિવસ દરમ્યાન અનુમાનિત રીતે બદલાય છે. સૂર્યોદય પર, છાયાઓ લાંબી હોય છે અને પશ્ચિમ તરફ નિર્દેશ કરે છે. જેમ જેમ સૂર્ય ઉગે છે, છાયાઓ ટૂંકી થઈ જાય છે અને ફેરવાય છે. બપોરે (સૌર બપોર), છાયાઓ સૌથી ટૂંકી હોય છે અને ઉત્તર તરફ નિર્દેશ કરે છે (કર્ક રેખાના ઉત્તરમાં સ્થાનોમાં જેમ કે મોટાભાગનો ભારત). બપોર પછી, છાયાઓ ફરીથી લંબાઈ પામે છે અને પૂર્વ તરફ નિર્દેશ કરે છે. છાયા રચનાનો આ અનુમાનિત પેટર્ન સદીઓથી સૂર્યઘડિયાળ અને પરંપરાગત સમય રાખવામાં ઉપયોગ કરવામાં આવ્યો છે!",
+          "realWorldTip": "સૂર્યઘડિયાળ માનવતાના સૌથી પ્રાચીન વૈજ્ઞાનિક ઉપકરણોમાંથી એક છે, 5,000 થી વધુ વર્ષોથી ઉપયોગમાં છે! ઘણા પ્રાચીન ભારતીય મંદિરોમાં સૂર્યઘડિયાળ નિશાનો છે. તમે એક લાકડીનો ઉપયોગ કરીને અને સની દિવસે પ્રતિ કલાકે છાયા સ્થિતિઓને ચિહ્નિત કરીને ઘરે એક સરળ સૂર્યઘડિયાળ પણ બનાવી શકો છો!",
           "imageEmoji": "🌾"
         },
         {
           "id": 7,
-          "title": "Firefighters and Shadows",
-          "situation": "During a fire safety demonstration, firefighter Lakshmi explains to students why firefighters sometimes use powerful lights from multiple angles when searching through smoke-filled buildings.",
-          "question": "Why do firefighters use multiple light sources from different angles during rescue operations?",
+          "title": "અગ્નિશામકો અને છાયાઓ",
+          "situation": "અગ્નિ સુરક્ષા પ્રદર્શન દરમ્યાન, અગ્નિશામક લક્ષ્મી વિદ્યાર્થીઓને સમજાવે છે કે અગ્નિશામકો કેમ ક્યારેક ધુમાડાથી ભરેલા મકાનોમાં શોધ કરતી વખતે અનેક કોણોમાંથી શક્તિશાળી લાઇટ્સનો ઉપયોગ કરે છે।",
+          "question": "રેસ્ક્યુ ઓપરેશન દરમ્યાન અગ્નિશામકો શા માટે અલગ અલગ કોણોમાંથી અનેક પ્રકાશ સ્ત્રોતોનો ઉપયોગ કરે છે?",
           "options": [
-            "To make the building brighter only",
-            "To reduce confusing shadows and see obstacles clearly",
-            "To scare away smoke",
-            "To signal other firefighters"
+            "માત્ર મકાનને વધુ તેજસ્વી બનાવવા માટે",
+            "ગૂંચવણમાં મૂકનારી છાયાઓ ઘટાડવા અને અવરોધોને સ્પષ્ટ રીતે જોવા માટે",
+            "ધુમાડો દૂર કરવા માટે",
+            "અન્ય અગ્નિશામકોને સિગ્નલ આપવા માટે"
           ],
           "correctAnswer": 1,
-          "explanation": "A single light source creates strong shadows that can hide obstacles, victims, or hazards. When light comes from only one direction, objects block the light and create dark shadow regions where nothing can be seen. By using multiple lights from different angles, firefighters reduce these shadowed areas. If one light creates a shadow, another light from a different angle illuminates it. This is a practical application of understanding shadow formation!",
-          "realWorldTip": "Film and photography studios also use multiple light sources (key light, fill light, back light) to control shadows and create the desired effect. Understanding shadow formation is crucial in many professions!",
+          "explanation": "એક એક પ્રકાશ સ્ત્રોત મજબૂત છાયાઓ બનાવે છે જે અવરોધો, શિકારો, અથવા જોખમોને છુપાવી શકે છે. જ્યારે પ્રકાશ માત્ર એક દિશામાંથી આવે છે, ત્યારે વસ્તુઓ પ્રકાશને અવરોધે છે અને ડાર્ક છાયા પ્રદેશો બનાવે છે જ્યાં કંઈ જોઈ શકાતું નથી. અલગ અલગ કોણોમાંથી અનેક લાઇટ્સનો ઉપયોગ કરીને, અગ્નિશામકો આ છાયા પ્રદેશોને ઘટાડે છે. જો એક લાઇટ છાયા બનાવે, તો અલગ કોણમાંથી બીજી લાઇટ તેને પ્રકાશિત કરે છે. આ છાયા રચનાની સમજનો વ્યવહારિક ઉપયોગ છે!",
+          "realWorldTip": "ફિલ્મ અને ફોટોગ્રાફી સ્ટુડિયો પણ છાયાઓને નિયંત્રિત કરવા અને ઇચ્છિત અસર બનાવવા માટે અનેક પ્રકાશ સ્ત્રોતો (કી લાઇટ, ફિલ લાઇટ, બેક લાઇટ) નો ઉપયોગ કરે છે. છાયા રચનાની સમજ ઘણા વ્યવસાયોમાં મહત્વપૂર્ણ છે!",
           "imageEmoji": "🚒"
         },
         {
           "id": 8,
-          "title": "Building Design and Shadows",
-          "situation": "Architect Mrs. Patel is designing a new apartment building in Bangalore. She needs to plan the building's position carefully to ensure that it doesn't cast long shadows on the neighboring playground during afternoon hours when children play.",
-          "question": "What should Mrs. Patel consider about shadow formation when positioning the building?",
+          "title": "બિલ્ડિંગ ડિઝાઇન અને છાયાઓ",
+          "situation": "વાસ્તુકાર શ્રીમતી પટેલ બેંગલોરમાં નવી એપાર્ટમેન્ટ બિલ્ડિંગ ડિઝાઇન કરી રહ્યા છે. તેમને બિલ્ડિંગની સ્થિતિ કાળજીપૂર્વક યોજના બનાવવાની જરૂર છે જેથી તે બપોરના કલાકો દરમ્યાન બાળકો ખેલતી વખતે પડોશી પ્લેગ્રાઉન્ડ પર લાંબી છાયાઓ ન પાડે।",
+          "question": "બિલ્ડિંગને સ્થિત કરતી વખતે શ્રીમતી પટેલે છાયા રચના વિશે શું વિચારવું જોઈએ?",
           "options": [
-            "Shadows don't matter in building design",
-            "Building height, Sun's path, and shadow direction throughout the day",
-            "Only the building's color affects shadows",
-            "Shadows are the same size all day"
+            "બિલ્ડિંગ ડિઝાઇનમાં છાયાઓનું મહત્વ નથી",
+            "બિલ્ડિંગની ઊંચાઈ, સૂર્યનો પાથ, અને દિવસ દરમ્યાન છાયાની દિશા",
+            "માત્ર બિલ્ડિંગનો રંગ છાયાઓને અસર કરે છે",
+            "છાયાઓ આખો દિવસ એક જ કદની હોય છે"
           ],
           "correctAnswer": 1,
-          "explanation": "The building acts as an opaque object that blocks sunlight. Taller buildings create longer shadows. The Sun's position changes throughout the day and across seasons - it's higher in summer (shorter shadows) and lower in winter (longer shadows). Mrs. Patel must calculate where shadows will fall at different times and seasons. In hot climates like Bangalore, shadows can provide valuable cooling, but blocking playground light reduces safety and usability. This is why 'shadow impact studies' are required for new construction in many cities!",
-          "realWorldTip": "Modern sustainable architecture uses 'shadow analysis' software to optimize building design. Some buildings are designed to deliberately create shaded courtyards for natural cooling, while others use shadow patterns to create interesting architectural effects throughout the day!",
+          "explanation": "બિલ્ડિંગ એક અપારદર્શક વસ્તુ તરીકે કામ કરે છે જે સૂર્યપ્રકાશને અવરોધે છે. ઊંચા બિલ્ડિંગો લાંબી છાયાઓ બનાવે છે. સૂર્યની સ્થિતિ દિવસ દરમ્યાન અને ઋતુઓ દરમ્યાન બદલાય છે - તે ઉનાળામાં ઊંચી હોય છે (ટૂંકી છાયાઓ) અને શિયાળામાં નીચી (લાંબી છાયાઓ). શ્રીમતી પટેલે ગણતરી કરવી જોઈએ કે વિવિધ સમય અને ઋતુઓમાં છાયાઓ ક્યાં પડશે. બેંગલોર જેવી ગરમ આબોહવામાં, છાયાઓ મૂલ્યવાન ઠંડક પ્રદાન કરી શકે છે, પરંતુ પ્લેગ્રાઉન્ડ પ્રકાશને અવરોધવું સુરક્ષા અને ઉપયોગિતાને ઘટાડે છે. આ જ કારણ છે કે ઘણા શહેરોમાં નવા બાંધકામ માટે 'છાયા અસર અભ્યાસ' જરૂરી છે!",
+          "realWorldTip": "આધુનિક ટકાઉ વાસ્તુકલા બિલ્ડિંગ ડિઝાઇનને ઓપ્ટિમાઇઝ કરવા માટે 'છાયા વિશ્લેષણ' સોફ્ટવેરનો ઉપયોગ કરે છે. કેટલીક બિલ્ડિંગો જાણી જોઈને પ્રાકૃતિક ઠંડક માટે છાયાદાર આંગણાં બનાવવા માટે ડિઝાઇન કરવામાં આવે છે, જ્યારે અન્ય દિવસ દરમ્યાન રસપ્રદ વાસ્તુકલા અસરો બનાવવા માટે છાયા પેટર્નનો ઉપયોગ કરે છે!",
           "imageEmoji": "🏢"
         }
       ],
       "controls": {
-        "previous": "← Previous",
-        "checkAnswer": "Check Answer",
-        "nextScenario": "Next Scenario →",
-        "scenarioCount": "Scenario {{current}} of {{total}}"
+        "previous": "← અગાઉ",
+        "checkAnswer": "જવાબ તપાસો",
+        "nextScenario": "આગળનું પરિદ્રશ્ય →",
+        "scenarioCount": "પરિદ્રશ્ય {{current}} / {{total}}"
       },
       "headers": {
-        "realWorldSituation": "📖 Real-World Situation",
-        "scientificExplanation": "💡 Scientific Explanation",
-        "realWorldApplication": "🌍 Real-World Application"
+        "realWorldSituation": "📖 વાસ્તવિક દુનિયાની પરિસ્થિતિ",
+        "scientificExplanation": "💡 વૈજ્ઞાનિક સમજૂતી",
+        "realWorldApplication": "🌍 વાસ્તવિક દુનિયાનો ઉપયોગ"
       },
       "progress": {
-        "title": "📊 Your Progress",
-        "completed": "Scenarios Completed:",
-        "congrats": "🎉 Congratulations! You've completed all real-world scenarios!"
+        "title": "📊 તમારી પ્રગતિ",
+        "completed": "પૂર્ણ પરિદ્રશ્ય:",
+        "congrats": "🎉 અભિનંદન! તમે બધા વાસ્તવિક દુનિયાના પરિદ્રશ્યો પૂર્ણ કર્યા છે!"
       },
       "facts": {
-        "title": "🌟 Amazing Shadow Facts from India",
+        "title": "🌟 ભારતના અદ્ભુત છાયા તથ્યો",
         "list": [
-          "<strong>Konark Sun Temple</strong> (Odisha) was designed so that the first rays of the Sun would fall on its main entrance, creating spectacular shadow patterns",
-          "<strong>Jantar Mantar</strong> observatories in Delhi, Jaipur, and other cities use giant shadow-casting instruments (sundials) to track time and astronomical positions with incredible accuracy",
-          "Ancient Indian mathematicians like <strong>Aryabhata</strong> (5th century CE) studied shadows to calculate Earth's circumference and the distances to celestial bodies",
-          "Traditional <strong>shadow puppetry</strong> performances in India often last through the night, with stories from epics like Ramayana and Mahabharata told through moving shadows",
-          "The <strong>Dilwara Temples</strong> in Rajasthan are positioned to create changing shadow patterns on intricate marble carvings throughout the day"
+          "<strong>કોનાર્ક સૂર્ય મંદિર</strong> (ઓડિશા) આ રીતે ડિઝાઇન કરવામાં આવ્યું હતું કે સૂર્યની પહેલી કિરણો તેના મુખ્ય પ્રવેશદ્વાર પર પડે, શાનદાર છાયા પેટર્ન બનાવતી",
+          "<strong>જંતર મંતર</strong> વેધશાળાઓ દિલ્હી, જયપુર, અને અન્ય શહેરોમાં વિશાળ છાયા-પ્રક્ષેપણ સાધનો (સૂર્યઘડિયાળ) નો ઉપયોગ અવિશ્વસનીય ચોકસાઈ સાથે સમય અને ખગોળીય સ્થિતિઓને ટ્રેક કરવા માટે કરે છે",
+          "પ્રાચીન ભારતીય ગણિતશાસ્ત્રીઓ જેવા કે <strong>આર્યભટ્ટ</strong> (5મી સદી CE) પૃથ્વીની પરિઘ અને આકાશી પિંડોની દૂરીઓની ગણતરી કરવા માટે છાયાઓનો અભ્યાસ કર્યો",
+          "ભારતમાં પરંપરાગત <strong>છાયા કઠપુતળી</strong> પ્રદર્શનો ઘણીવાર રાત્રે ચાલે છે, રામાયણ અને મહાભારત જેવા મહાકાવ્યોની વાર્તાઓ ચલતી છાયાઓ દ્વારા કહેવામાં આવે છે",
+          "રાજસ્થાનમાં <strong>દિલવાડા મંદિરો</strong> જટિલ સંગમરમર કોતરણી પર દિવસ દરમ્યાન બદલતા છાયા પેટર્ન બનાવવા માટે સ્થિત છે"
         ]
       },
       "simulation": {
-        "title": "🎭 Shadow Puppetry Simulator",
-        "show": "Show Simulation",
-        "hide": "Hide Simulation",
-        "intro": "Try moving the puppet and adjusting the light distance to see how shadows change in traditional Indian shadow puppetry!",
-        "shadowSize": "Shadow Size",
-        "large": "Large",
-        "medium": "Medium",
-        "small": "Small",
-        "puppetPosLabel": "🎭 Puppet Position (closer to light = larger shadow)",
-        "puppetShapeLabel": "Choose Puppet Shape",
+        "title": "🎭 છાયા કઠપુતળી સિમ્યુલેટર",
+        "show": "સિમ્યુલેશન બતાવો",
+        "hide": "સિમ્યુલેશન છુપાવો",
+        "intro": "પરંપરાગત ભારતીય છાયા કઠપુતળીમાં છાયાઓ કેવી રીતે બદલાય છે તે જોવા માટે કઠપુતળીને ખસેડવાનો અને પ્રકાશ અંતર સમાયોજિત કરવાનો પ્રયાસ કરો!",
+        "shadowSize": "છાયાનું કદ",
+        "large": "મોટું",
+        "medium": "મધ્યમ",
+        "small": "નાનું",
+        "puppetPosLabel": "🎭 કઠપુતળીની સ્થિતિ (પ્રકાશની નજીક = મોટી છાયા)",
+        "puppetShapeLabel": "કઠપુતળીનું આકાર પસંદ કરો",
         "shapes": {
           "hand": {
-            "label": "Hand",
+            "label": "હાથ",
             "emoji": "✋"
           },
           "bird": {
-            "label": "Bird",
+            "label": "પક્ષી",
             "emoji": "🦅"
           },
           "dog": {
-            "label": "Dog",
+            "label": "કુતરો",
             "emoji": "🐕"
           }
         },
-        "tip": "<strong>💡 Try this:</strong> Move the puppet closer to the light source (left) to make the shadow larger! Traditional shadow puppeteers use this technique to make characters appear to grow or shrink during performances."
+        "tip": "<strong>💡 આ અજમાવો:</strong> છાયાને મોટી બનાવવા માટે કઠપુતળીને પ્રકાશ સ્ત્રોત (ડાબે) ની નજીક ખસેડો! પરંપરાગત છાયા કઠપુતળી કલાકારો પ્રદર્શન દરમ્યાન પાત્રોને વધવા અથવા સંકોચાવા માટે આ તકનીકનો ઉપયોગ કરે છે."
       }
     },
     "realWorld": {

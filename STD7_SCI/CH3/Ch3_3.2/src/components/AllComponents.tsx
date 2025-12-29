@@ -5,9 +5,6 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import {
-  Target, Brain, Trophy, ChevronRight
-} from 'lucide-react';
 
 // ============================================================================
 // TYPES AND INTERFACES
@@ -243,6 +240,76 @@ export const translations: Record<Language, Record<string, string>> = {
     'practice.hard': 'Hard',
     'practice.noComponents.title': 'Add or arrange components to see the circuit.',
     'practice.noComponents.desc': 'Use the hints and description to decide what to connect.',
+    'practice.multipleChoice': 'Multiple Choice',
+    'practice.trueFalse': 'True or False',
+    'practice.fillBlank': 'Fill in the Blank',
+    'practice.shortAnswer': 'Short Answer',
+    'practice.submitAnswer': 'Submit Answer',
+    'practice.previous': 'Previous',
+    'practice.next': 'Next',
+    'practice.question1': 'An electric cell has how many terminals?',
+    'practice.question1.option1': 'One',
+    'practice.question1.option2': 'Two',
+    'practice.question1.option3': 'Three',
+    'practice.question1.option4': 'Four',
+    'practice.question1.explanation': 'All electric cells have two terminals: one positive (+ve) and one negative (−ve).',
+    'practice.question2': 'Which terminal of an electric cell has a small protruding metal cap?',
+    'practice.question2.option1': 'Positive terminal',
+    'practice.question2.option2': 'Negative terminal',
+    'practice.question2.option3': 'Both terminals',
+    'practice.question2.option4': 'Neither terminal',
+    'practice.question2.explanation': 'The metal cap is the positive terminal of the electric cell, while the metal disc is the negative terminal.',
+    'practice.question3': 'A combination of two or more cells is called a battery.',
+    'practice.question3.option1': 'True',
+    'practice.question3.option2': 'False',
+    'practice.question3.explanation': 'When two or more cells are connected (positive to negative), the combination is called a battery.',
+    'practice.question4': 'In a battery, the positive terminal of one cell is connected to the _____ terminal of the next cell.',
+    'practice.question4.answer': 'negative',
+    'practice.question4.explanation': 'In a battery, cells are connected in series - the positive terminal of one cell connects to the negative terminal of the next cell.',
+    'practice.question5': 'What is the thin glowing wire inside an incandescent lamp called?',
+    'practice.question5.option1': 'Wire',
+    'practice.question5.option2': 'Filament',
+    'practice.question5.option3': 'Thread',
+    'practice.question5.option4': 'Conductor',
+    'practice.question5.explanation': 'The thin wire inside the glass bulb that glows is called the filament of the lamp.',
+    'practice.question6': 'An incandescent lamp has two terminals that are fixed in a way that they touch each other.',
+    'practice.question6.explanation': 'The two terminals of an incandescent lamp are fixed in a way that they do NOT touch each other.',
+    'practice.question7': 'Which type of lamp does not have a filament?',
+    'practice.question7.option1': 'Incandescent lamp',
+    'practice.question7.option2': 'LED lamp',
+    'practice.question7.option3': 'Both have filaments',
+    'practice.question7.option4': 'Neither has filament',
+    'practice.question7.explanation': 'Unlike incandescent lamps, LEDs (Light Emitting Diodes) do not have filaments.',
+    'practice.question8': 'In an LED, which wire is longer?',
+    'practice.question8.option1': 'Positive terminal wire',
+    'practice.question8.option2': 'Negative terminal wire',
+    'practice.question8.option3': 'Both are equal',
+    'practice.question8.option4': 'It varies',
+    'practice.question8.explanation': 'In an LED, the positive terminal is attached to a longer wire, while the negative terminal has the shorter wire.',
+    'practice.question9': 'Electric current can pass through an LED in both directions.',
+    'practice.question9.explanation': 'Electric current can pass through an LED in one direction only - from positive to negative.',
+    'practice.question10': 'For an electric lamp to glow, one terminal of the lamp must be connected to one terminal of the cell and the other terminal of the lamp to the _____ terminal of the cell.',
+    'practice.question10.answer': 'other',
+    'practice.question10.explanation': 'For a lamp to glow, it must form a complete circuit connecting both terminals of the cell to both terminals of the lamp.',
+    'practice.question11': 'What is a setup that provides a complete path for electric current called?',
+    'practice.question11.option1': 'Electrical circuit',
+    'practice.question11.option2': 'Electrical path',
+    'practice.question11.option3': 'Current path',
+    'practice.question11.option4': 'Wire connection',
+    'practice.question11.explanation': 'An electrical circuit provides a complete path for electric current to flow through the lamp.',
+    'practice.question12': 'The direction of electric current in an electrical circuit is from the negative to the positive terminal.',
+    'practice.question12.explanation': 'The direction of electric current in an electrical circuit is taken to be from the positive to the negative terminal of the electric cell.',
+    'practice.question13': 'What device either completes or breaks an electrical circuit?',
+    'practice.question13.option1': 'Wire',
+    'practice.question13.option2': 'Battery',
+    'practice.question13.option3': 'Switch',
+    'practice.question13.option4': 'Lamp',
+    'practice.question13.explanation': 'A switch is a simple device that either completes or breaks a circuit, controlling the flow of electricity.',
+    'practice.question14': 'When a switch is in the ON position, the circuit is _____.',
+    'practice.question14.answer': 'closed',
+    'practice.question14.explanation': 'When the switch is ON, the circuit is closed and current flows from the cell\'s positive to negative terminal.',
+    'practice.question15': 'A broken filament will still allow the lamp to glow.',
+    'practice.question15.explanation': 'A broken filament stops the flow of current, preventing the lamp from glowing. This is called a \'fused\' lamp.',
     'common.processing': 'Processing...',
     'common.yourAnswer': 'Your Answer:',
     'common.answerPlaceholder': 'Type your answer here...',
@@ -432,6 +499,76 @@ export const translations: Record<Language, Record<string, string>> = {
     'practice.hard': 'कठिन',
     'practice.noComponents.title': 'सर्किट देखने के लिए घटक जोड़ें या व्यवस्थित करें।',
     'practice.noComponents.desc': 'यह तय करने के लिए कि क्या जोड़ना है, संकेत और विवरण का उपयोग करें।',
+    'practice.multipleChoice': 'बहुविकल्पी',
+    'practice.trueFalse': 'सही या गलत',
+    'practice.fillBlank': 'रिक्त स्थान भरें',
+    'practice.shortAnswer': 'लघु उत्तर',
+    'practice.submitAnswer': 'उत्तर जमा करें',
+    'practice.previous': 'पिछला',
+    'practice.next': 'अगला',
+    'practice.question1': 'एक विद्युत सेल के कितने टर्मिनल होते हैं?',
+    'practice.question1.option1': 'एक',
+    'practice.question1.option2': 'दो',
+    'practice.question1.option3': 'तीन',
+    'practice.question1.option4': 'चार',
+    'practice.question1.explanation': 'सभी विद्युत सेल के दो टर्मिनल होते हैं: एक धनात्मक (+ve) और एक ऋणात्मक (−ve)।',
+    'practice.question2': 'विद्युत सेल के किस टर्मिनल पर छोटी धातु की टोपी होती है?',
+    'practice.question2.option1': 'धनात्मक टर्मिनल',
+    'practice.question2.option2': 'ऋणात्मक टर्मिनल',
+    'practice.question2.option3': 'दोनों टर्मिनल',
+    'practice.question2.option4': 'कोई भी टर्मिनल नहीं',
+    'practice.question2.explanation': 'धातु की टोपी विद्युत सेल का धनात्मक टर्मिनल है, जबकि धातु की डिस्क ऋणात्मक टर्मिनल है।',
+    'practice.question3': 'दो या अधिक सेल के संयोजन को बैटरी कहा जाता है।',
+    'practice.question3.option1': 'सही',
+    'practice.question3.option2': 'गलत',
+    'practice.question3.explanation': 'जब दो या अधिक सेल जुड़े होते हैं (धनात्मक से ऋणात्मक), तो उस संयोजन को बैटरी कहा जाता है।',
+    'practice.question4': 'बैटरी में, एक सेल का धनात्मक टर्मिनल अगले सेल के _____ टर्मिनल से जुड़ा होता है।',
+    'practice.question4.answer': 'ऋणात्मक',
+    'practice.question4.explanation': 'बैटरी में, सेल श्रृंखला में जुड़े होते हैं - एक सेल का धनात्मक टर्मिनल अगले सेल के ऋणात्मक टर्मिनल से जुड़ता है।',
+    'practice.question5': 'एक तापदीप्त लैंप के अंदर चमकने वाले पतले तार को क्या कहा जाता है?',
+    'practice.question5.option1': 'तार',
+    'practice.question5.option2': 'फिलामेंट',
+    'practice.question5.option3': 'धागा',
+    'practice.question5.option4': 'चालक',
+    'practice.question5.explanation': 'कांच के बल्ब के अंदर चमकने वाला पतला तार लैंप का फिलामेंट कहलाता है।',
+    'practice.question6': 'एक तापदीप्त लैंप के दो टर्मिनल इस तरह से तय होते हैं कि वे एक दूसरे को छूते हैं।',
+    'practice.question6.explanation': 'तापदीप्त लैंप के दो टर्मिनल इस तरह से तय होते हैं कि वे एक दूसरे को नहीं छूते हैं।',
+    'practice.question7': 'किस प्रकार के लैंप में फिलामेंट नहीं होता है?',
+    'practice.question7.option1': 'तापदीप्त लैंप',
+    'practice.question7.option2': 'LED लैंप',
+    'practice.question7.option3': 'दोनों में फिलामेंट होता है',
+    'practice.question7.option4': 'किसी में भी फिलामेंट नहीं होता',
+    'practice.question7.explanation': 'तापदीप्त लैंप के विपरीत, LED (लाइट एमिटिंग डायोड) में फिलामेंट नहीं होता है।',
+    'practice.question8': 'LED में, कौन सा तार लंबा होता है?',
+    'practice.question8.option1': 'धनात्मक टर्मिनल तार',
+    'practice.question8.option2': 'ऋणात्मक टर्मिनल तार',
+    'practice.question8.option3': 'दोनों बराबर हैं',
+    'practice.question8.option4': 'यह अलग-अलग होता है',
+    'practice.question8.explanation': 'LED में, धनात्मक टर्मिनल लंबे तार से जुड़ा होता है, जबकि ऋणात्मक टर्मिनल में छोटा तार होता है।',
+    'practice.question9': 'विद्युत धारा LED से दोनों दिशाओं में गुजर सकती है।',
+    'practice.question9.explanation': 'विद्युत धारा LED से केवल एक दिशा में गुजर सकती है - धनात्मक से ऋणात्मक तक।',
+    'practice.question10': 'एक विद्युत लैंप को चमकने के लिए, लैंप का एक टर्मिनल सेल के एक टर्मिनल से जुड़ा होना चाहिए और लैंप का दूसरा टर्मिनल सेल के _____ टर्मिनल से जुड़ा होना चाहिए।',
+    'practice.question10.answer': 'दूसरे',
+    'practice.question10.explanation': 'लैंप को चमकने के लिए, इसे सेल के दोनों टर्मिनल को लैंप के दोनों टर्मिनल से जोड़कर एक पूर्ण सर्किट बनाना चाहिए।',
+    'practice.question11': 'विद्युत धारा के लिए पूर्ण पथ प्रदान करने वाली व्यवस्था को क्या कहा जाता है?',
+    'practice.question11.option1': 'विद्युत परिपथ',
+    'practice.question11.option2': 'विद्युत पथ',
+    'practice.question11.option3': 'धारा पथ',
+    'practice.question11.option4': 'तार कनेक्शन',
+    'practice.question11.explanation': 'एक विद्युत परिपथ लैंप के माध्यम से विद्युत धारा के प्रवाह के लिए एक पूर्ण पथ प्रदान करता है।',
+    'practice.question12': 'विद्युत परिपथ में विद्युत धारा की दिशा ऋणात्मक से धनात्मक टर्मिनल तक होती है।',
+    'practice.question12.explanation': 'विद्युत परिपथ में विद्युत धारा की दिशा विद्युत सेल के धनात्मक से ऋणात्मक टर्मिनल तक ली जाती है।',
+    'practice.question13': 'कौन सा उपकरण विद्युत परिपथ को पूर्ण या तोड़ता है?',
+    'practice.question13.option1': 'तार',
+    'practice.question13.option2': 'बैटरी',
+    'practice.question13.option3': 'स्विच',
+    'practice.question13.option4': 'लैंप',
+    'practice.question13.explanation': 'स्विच एक सरल उपकरण है जो परिपथ को पूर्ण या तोड़ता है, बिजली के प्रवाह को नियंत्रित करता है।',
+    'practice.question14': 'जब स्विच ON स्थिति में होता है, तो परिपथ _____ होता है।',
+    'practice.question14.answer': 'बंद',
+    'practice.question14.explanation': 'जब स्विच ON होता है, तो परिपथ बंद होता है और धारा सेल के धनात्मक से ऋणात्मक टर्मिनल तक प्रवाहित होती है।',
+    'practice.question15': 'टूटा हुआ फिलामेंट लैंप को अभी भी चमकने की अनुमति देगा।',
+    'practice.question15.explanation': 'टूटा हुआ फिलामेंट धारा के प्रवाह को रोकता है, जिससे लैंप चमक नहीं पाता। इसे \'फ्यूज्ड\' लैंप कहा जाता है।',
     'common.examples': 'उदाहरण',
     'common.status.incomplete': 'अधूरा सर्किट',
     'common.status.complete': 'सर्किट पूर्ण',
@@ -615,6 +752,76 @@ export const translations: Record<Language, Record<string, string>> = {
     'practice.hard': 'કઠિન',
     'practice.noComponents.title': 'સર્કિટ જોવા માટે ઘટકો ઉમેરો અથવા વ્યવસ્થિત કરો.',
     'practice.noComponents.desc': 'શું જોડવું તે નક્કી કરવા માટે સંકેતો અને વર્ણનનો ઉપયોગ કરો.',
+    'practice.multipleChoice': 'બહુવિકલ્પ',
+    'practice.trueFalse': 'સાચું અથવા ખોટું',
+    'practice.fillBlank': 'ખાલી જગ્યા ભરો',
+    'practice.shortAnswer': 'ટૂંકો જવાબ',
+    'practice.submitAnswer': 'જવાબ સબમિટ કરો',
+    'practice.previous': 'પાછળ',
+    'practice.next': 'આગળ',
+    'practice.question1': 'ઇલેક્ટ્રિક સેલના કેટલા ટર્મિનલ હોય છે?',
+    'practice.question1.option1': 'એક',
+    'practice.question1.option2': 'બે',
+    'practice.question1.option3': 'ત્રણ',
+    'practice.question1.option4': 'ચાર',
+    'practice.question1.explanation': 'બધા ઇલેક્ટ્રિક સેલના બે ટર્મિનલ હોય છે: એક પોઝિટિવ (+ve) અને એક નેગેટિવ (−ve)।',
+    'practice.question2': 'ઇલેક્ટ્રિક સેલના કયા ટર્મિનલ પર નાની ધાતુની ટોપી હોય છે?',
+    'practice.question2.option1': 'પોઝિટિવ ટર્મિનલ',
+    'practice.question2.option2': 'નેગેટિવ ટર્મિનલ',
+    'practice.question2.option3': 'બંને ટર્મિનલ',
+    'practice.question2.option4': 'કોઈ પણ ટર્મિનલ નહીં',
+    'practice.question2.explanation': 'ધાતુની ટોપી ઇલેક્ટ્રિક સેલનું પોઝિટિવ ટર્મિનલ છે, જ્યારે ધાતુની ડિસ્ક નેગેટિવ ટર્મિનલ છે।',
+    'practice.question3': 'બે અથવા વધુ સેલના સંયોજનને બેટરી કહેવામાં આવે છે।',
+    'practice.question3.option1': 'સાચું',
+    'practice.question3.option2': 'ખોટું',
+    'practice.question3.explanation': 'જ્યારે બે અથવા વધુ સેલ જોડાયેલા હોય છે (પોઝિટિવથી નેગેટિવ), તો તે સંયોજનને બેટરી કહેવામાં આવે છે।',
+    'practice.question4': 'બેટરીમાં, એક સેલનું પોઝિટિવ ટર્મિનલ આગળના સેલના _____ ટર્મિનલ સાથે જોડાયેલું હોય છે।',
+    'practice.question4.answer': 'નેગેટિવ',
+    'practice.question4.explanation': 'બેટરીમાં, સેલ શ્રેણીમાં જોડાયેલા હોય છે - એક સેલનું પોઝિટિવ ટર્મિનલ આગળના સેલના નેગેટિવ ટર્મિનલ સાથે જોડાય છે।',
+    'practice.question5': 'ઇન્કેન્ડેસન્ટ લેમ્પની અંદર ચમકતા પાતળા તારને શું કહેવામાં આવે છે?',
+    'practice.question5.option1': 'તાર',
+    'practice.question5.option2': 'ફિલામેન્ટ',
+    'practice.question5.option3': 'ધાગો',
+    'practice.question5.option4': 'વાહક',
+    'practice.question5.explanation': 'કાચના બલ્બની અંદર ચમકતા પાતળા તારને લેમ્પનું ફિલામેન્ટ કહેવામાં આવે છે।',
+    'practice.question6': 'ઇન્કેન્ડેસન્ટ લેમ્પના બે ટર્મિનલ એવી રીતે ફિક્સ કરવામાં આવે છે કે તેઓ એકબીજાને સ્પર્શ કરે છે।',
+    'practice.question6.explanation': 'ઇન્કેન્ડેસન્ટ લેમ્પના બે ટર્મિનલ એવી રીતે ફિક્સ કરવામાં આવે છે કે તેઓ એકબીજાને સ્પર્શ કરતા નથી।',
+    'practice.question7': 'કયા પ્રકારના લેમ્પમાં ફિલામેન્ટ નથી?',
+    'practice.question7.option1': 'ઇન્કેન્ડેસન્ટ લેમ્પ',
+    'practice.question7.option2': 'LED લેમ્પ',
+    'practice.question7.option3': 'બંનેમાં ફિલામેન્ટ છે',
+    'practice.question7.option4': 'કોઈમાં પણ ફિલામેન્ટ નથી',
+    'practice.question7.explanation': 'ઇન્કેન્ડેસન્ટ લેમ્પથી વિપરીત, LED (લાઇટ એમિટિંગ ડાયોડ) માં ફિલામેન્ટ નથી હોતું।',
+    'practice.question8': 'LED માં, કયો તાર લાંબો હોય છે?',
+    'practice.question8.option1': 'પોઝિટિવ ટર્મિનલ તાર',
+    'practice.question8.option2': 'નેગેટિવ ટર્મિનલ તાર',
+    'practice.question8.option3': 'બંને સમાન છે',
+    'practice.question8.option4': 'તે બદલાય છે',
+    'practice.question8.explanation': 'LED માં, પોઝિટિવ ટર્મિનલ લાંબા તાર સાથે જોડાયેલું હોય છે, જ્યારે નેગેટિવ ટર્મિનલમાં ટૂંકો તાર હોય છે।',
+    'practice.question9': 'વિદ્યુત પ્રવાહ LED દ્વારા બંને દિશામાં પસાર થઈ શકે છે।',
+    'practice.question9.explanation': 'વિદ્યુત પ્રવાહ LED દ્વારા ફક્ત એક દિશામાં પસાર થઈ શકે છે - પોઝિટિવથી નેગેટિવ તરફ।',
+    'practice.question10': 'ઇલેક્ટ્રિક લેમ્પને ચમકવા માટે, લેમ્પનું એક ટર્મિનલ સેલના એક ટર્મિનલ સાથે જોડાયેલું હોવું જોઈએ અને લેમ્પનું બીજું ટર્મિનલ સેલના _____ ટર્મિનલ સાથે જોડાયેલું હોવું જોઈએ।',
+    'practice.question10.answer': 'બીજા',
+    'practice.question10.explanation': 'લેમ્પને ચમકવા માટે, તેને સેલના બંને ટર્મિનલને લેમ્પના બંને ટર્મિનલ સાથે જોડીને સંપૂર્ણ સર્કિટ બનાવવું જોઈએ।',
+    'practice.question11': 'વિદ્યુત પ્રવાહ માટે સંપૂર્ણ માર્ગ પ્રદાન કરતી સુયોજનાને શું કહેવામાં આવે છે?',
+    'practice.question11.option1': 'વિદ્યુત સર્કિટ',
+    'practice.question11.option2': 'વિદ્યુત માર્ગ',
+    'practice.question11.option3': 'પ્રવાહ માર્ગ',
+    'practice.question11.option4': 'તાર કનેક્શન',
+    'practice.question11.explanation': 'વિદ્યુત સર્કિટ લેમ્પ દ્વારા વિદ્યુત પ્રવાહના પ્રવાહ માટે સંપૂર્ણ માર્ગ પ્રદાન કરે છે।',
+    'practice.question12': 'વિદ્યુત સર્કિટમાં વિદ્યુત પ્રવાહની દિશા નેગેટિવથી પોઝિટિવ ટર્મિનલ તરફ હોય છે।',
+    'practice.question12.explanation': 'વિદ્યુત સર્કિટમાં વિદ્યુત પ્રવાહની દિશા ઇલેક્ટ્રિક સેલના પોઝિટિવથી નેગેટિવ ટર્મિનલ તરફ લેવામાં આવે છે।',
+    'practice.question13': 'કયું ઉપકરણ વિદ્યુત સર્કિટને પૂર્ણ અથવા તોડે છે?',
+    'practice.question13.option1': 'તાર',
+    'practice.question13.option2': 'બેટરી',
+    'practice.question13.option3': 'સ્વીચ',
+    'practice.question13.option4': 'લેમ્પ',
+    'practice.question13.explanation': 'સ્વીચ એક સરળ ઉપકરણ છે જે સર્કિટને પૂર્ણ અથવા તોડે છે, વીજળીના પ્રવાહને નિયંત્રિત કરે છે।',
+    'practice.question14': 'જ્યારે સ્વીચ ON સ્થિતિમાં હોય છે, ત્યારે સર્કિટ _____ હોય છે।',
+    'practice.question14.answer': 'બંધ',
+    'practice.question14.explanation': 'જ્યારે સ્વીચ ON હોય છે, ત્યારે સર્કિટ બંધ હોય છે અને પ્રવાહ સેલના પોઝિટિવથી નેગેટિવ ટર્મિનલ તરફ વહે છે।',
+    'practice.question15': 'ટૂટેલું ફિલામેન્ટ લેમ્પને હજુ પણ ચમકવાની મંજૂરી આપશે।',
+    'practice.question15.explanation': 'ટૂટેલું ફિલામેન્ટ પ્રવાહના પ્રવાહને અટકાવે છે, જે લેમ્પને ચમકતું અટકાવે છે. આને \'ફ્યુઝ્ડ\' લેમ્પ કહેવામાં આવે છે।',
     'common.examples': 'ઉદાહરણો',
     'common.status.incomplete': 'અધૂરું સર્કિટ',
     'common.status.complete': 'સર્કિટ પૂર્ણ',
@@ -833,14 +1040,31 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
 
   useEffect(() => {
     const handlePopState = () => {
-      const langFromURL = getLanguageFromURL();
-      if (langFromURL && langFromURL !== language) {
-        setLanguage(langFromURL);
+      try {
+        const langFromURL = getLanguageFromURL();
+        if (langFromURL && langFromURL !== language) {
+          setLanguage(langFromURL);
+        }
+      } catch (error) {
+        // Suppress browser extension errors
+        if (error instanceof Error && error.message.includes('message port')) {
+          return;
+        }
+        console.warn('Error handling popstate:', error);
       }
     };
 
     window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
+    return () => {
+      try {
+        window.removeEventListener('popstate', handlePopState);
+      } catch (error) {
+        // Suppress browser extension errors
+        if (error instanceof Error && error.message.includes('message port')) {
+          return;
+        }
+      }
+    };
   }, [language, setLanguage]);
 
   const t = useCallback((key: string, params?: Record<string, string | number>): string => {
@@ -1783,25 +2007,24 @@ export const CircuitVisualization: React.FC<CircuitToolProps> = ({
   return (
     <div className="min-h-screen p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
-        <div className="mb-6">
-          <h1 className="text-4xl font-bold text-teal-700 mb-2">{t(title) || title}</h1>
-        </div>
         {currentMode !== 'practice' && (
-          <div className="mb-6 p-4 bg-teal-50 rounded-lg border border-teal-200 animate-fade-in">
-            <h3 className="font-semibold text-teal-800 mb-2">{t('objective.1')}</h3>
-            <ul className="text-sm text-teal-700 space-y-1">
-              {data.metadata.learning_objectives.map((objective, index) => (
-                <li key={index}>• {t(objective) || objective}</li>
-              ))}
-            </ul>
-          </div>
+          <>
+            <div className="mb-6">
+              <h1 className="text-4xl font-bold text-teal-700 mb-2">{t(title) || title}</h1>
+            </div>
+            <div className="mb-6 p-4 bg-teal-50 rounded-lg border border-teal-200 animate-fade-in">
+              <h3 className="font-semibold text-teal-800 mb-2">{t('objective.1')}</h3>
+              <ul className="text-sm text-teal-700 space-y-1">
+                {data.metadata.learning_objectives.map((objective, index) => (
+                  <li key={index}>• {t(objective) || objective}</li>
+                ))}
+              </ul>
+            </div>
+          </>
         )}
         <div className="mb-6 bg-white rounded-lg shadow-lg p-6 animate-fade-in">
           {currentMode === 'practice' ? (
-            <div className="text-center p-8">
-              <p className="text-gray-600 mb-4">Practice Mode</p>
-              <p className="text-sm text-gray-500">Full implementation available in PracticeMode component</p>
-            </div>
+            <PracticeMode />
           ) : <ElectricityLearningApp />}
         </div>
       </div>
@@ -1809,6 +2032,9 @@ export const CircuitVisualization: React.FC<CircuitToolProps> = ({
   );
 };
 
+// ============================================================================
+// ELECTRICITY LEARNING APP
+// ============================================================================
 // ============================================================================
 // ELECTRICITY LEARNING APP
 // ============================================================================
@@ -2401,172 +2627,363 @@ export const RealWorldApplications: React.FC = () => {
 };
 
 // ============================================================================
-// PRACTICE MODE (Simplified - Full implementation available in original file)
+// PRACTICE MODE - CIRCUIT PRACTICE
 // ============================================================================
 
-// Types available for future use:
-// type QuestionType = 'mcq' | 'trueFalse';
-// type DifficultyLevel = 'easy' | 'medium' | 'hard';
-type OldLanguage = 'english' | 'hindi' | 'gujarati';
-
-// Question interface available for future use
-// interface Question {
-//   id: string;
-//   type: QuestionType;
-//   difficulty: DifficultyLevel;
-//   topic: string;
-//   question: Record<OldLanguage, string>;
-//   options: Record<OldLanguage, string[]>;
-//   correctAnswer: number;
-//   explanation: Record<OldLanguage, string>;
-// }
-
-interface Topic {
-  id: string;
-  name: Record<OldLanguage, string>;
-  icon: string;
-  color: string;
-  questionCount: number;
+interface Question {
+  id: number;
+  question: string;
+  type: 'mcq' | 'true-false' | 'fill-blank' | 'match' | 'short-answer';
+  options?: string[];
+  correctAnswer: string | string[];
+  explanation: string;
+  image?: string;
 }
 
-const mapLanguage = (lang: Language): OldLanguage => {
-  if (lang === 'en') return 'english';
-  if (lang === 'hi') return 'hindi';
-  return 'gujarati';
-};
-
-const topics: Topic[] = [
-  {
-    id: 'cell',
-    name: { english: 'Electric Cell', hindi: 'विद्युत सेल', gujarati: 'ઇલેક્ટ્રિક સેલ' },
-    icon: '⚡',
-    color: 'from-red-400 to-orange-400',
-    questionCount: 8
-  },
-  {
-    id: 'battery',
-    name: { english: 'Battery', hindi: 'बैटरी', gujarati: 'બેટરી' },
-    icon: '🔋',
-    color: 'from-blue-400 to-purple-400',
-    questionCount: 8
-  },
-  {
-    id: 'lamps',
-    name: { english: 'Electric Lamps', hindi: 'विद्युत लैंप', gujarati: 'ઇલેક્ટ્રિક લેમ્પ' },
-    icon: '💡',
-    color: 'from-yellow-400 to-orange-400',
-    questionCount: 8
-  },
-  {
-    id: 'circuit',
-    name: { english: 'Electric Circuit', hindi: 'विद्युत परिपथ', gujarati: 'ઇલેક્ટ્રિક સર્કિટ' },
-    icon: '🔌',
-    color: 'from-green-400 to-blue-400',
-    questionCount: 8
-  },
-  {
-    id: 'switch',
-    name: { english: 'Switch', hindi: 'स्विच', gujarati: 'સ્વીચ' },
-    icon: '🔘',
-    color: 'from-purple-400 to-pink-400',
-    questionCount: 8
-  },
-  {
-    id: 'conductors',
-    name: { english: 'Conductors & Insulators', hindi: 'चालक और अवरोधक', gujarati: 'વાહક અને અવાહક' },
-    icon: '🔬',
-    color: 'from-teal-400 to-green-400',
-    questionCount: 10
-  }
-];
-
-// Note: Full PracticeMode component with all questions is very large (1100+ lines)
-// For production use, consider importing from the original PracticeMode.tsx file
-// or splitting into separate question data files. This is a simplified placeholder.
 export const PracticeMode: React.FC = () => {
-  const { language, t } = useLanguage();
-  const mappedLang = mapLanguage(language);
-  const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
-
-  const startPractice = (topicId: string) => {
-    setSelectedTopic(topicId);
-  };
-
-  const resetPractice = () => {
-    setSelectedTopic(null);
-  };
-
-  const renderTopicSelection = () => (
-    <div className="bg-white p-8 rounded-2xl shadow-lg">
-      <div className="text-center mb-8">
-        <Brain className="w-16 h-16 mx-auto text-blue-500 mb-4" />
-        <h2 className="text-4xl font-bold text-gray-800 mb-2">{t('practice.mode')}</h2>
-        <p className="text-gray-600">{t('practice.selectTopic')}</p>
-      </div>
-      <div className="mb-8">
-        <button
-          onClick={() => startPractice('all')}
-          className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white p-6 rounded-xl hover:from-purple-600 hover:to-pink-600 transition-all transform hover:scale-105 shadow-lg"
-        >
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Trophy className="w-10 h-10" />
-              <div className="text-left">
-                <h3 className="text-2xl font-bold">{t('practice.mixedPractice')}</h3>
-                <p className="text-sm opacity-90">{t('practice.allTopics')} • 12 {t('practice.questions')}</p>
-              </div>
-            </div>
-            <ChevronRight className="w-8 h-8" />
-          </div>
-        </button>
-      </div>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {topics.map((topic) => (
-          <button
-            key={topic.id}
-            onClick={() => startPractice(topic.id)}
-            className="bg-gradient-to-br from-white to-gray-50 p-6 rounded-xl border-2 border-gray-200 hover:border-blue-400 hover:shadow-lg transition-all transform hover:scale-105"
-          >
-            <div className={`w-16 h-16 rounded-full bg-gradient-to-br ${topic.color} flex items-center justify-center text-3xl mb-4 mx-auto`}>
-              {topic.icon}
-            </div>
-            <h3 className="text-xl font-bold text-gray-800 mb-2">
-              {topic.name[mappedLang]}
-            </h3>
-            <div className="flex items-center justify-center gap-2 text-sm text-gray-600">
-              <Target className="w-4 h-4" />
-              <span>{topic.questionCount} {t('practice.questions')}</span>
-            </div>
-          </button>
-        ))}
-      </div>
-    </div>
+  const { t } = useLanguage();
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [selectedAnswer, setSelectedAnswer] = useState<string>('');
+  const [showResult, setShowResult] = useState(false);
+  const [score, setScore] = useState(0);
+  const [answeredQuestions, setAnsweredQuestions] = useState<boolean[]>(
+    new Array(15).fill(false)
   );
 
+  const questions: Question[] = [
+    {
+      id: 1,
+      question: t('practice.question1'),
+      type: 'mcq',
+      options: [t('practice.question1.option1'), t('practice.question1.option2'), t('practice.question1.option3'), t('practice.question1.option4')],
+      correctAnswer: t('practice.question1.option2'),
+      explanation: t('practice.question1.explanation')
+    },
+    {
+      id: 2,
+      question: t('practice.question2'),
+      type: 'mcq',
+      options: [t('practice.question2.option1'), t('practice.question2.option2'), t('practice.question2.option3'), t('practice.question2.option4')],
+      correctAnswer: t('practice.question2.option1'),
+      explanation: t('practice.question2.explanation')
+    },
+    {
+      id: 3,
+      question: t('practice.question3'),
+      type: 'true-false',
+      options: [t('practice.question3.option1'), t('practice.question3.option2')],
+      correctAnswer: t('practice.question3.option1'),
+      explanation: t('practice.question3.explanation')
+    },
+    {
+      id: 4,
+      question: t('practice.question4'),
+      type: 'fill-blank',
+      correctAnswer: t('practice.question4.answer'),
+      explanation: t('practice.question4.explanation')
+    },
+    {
+      id: 5,
+      question: t('practice.question5'),
+      type: 'mcq',
+      options: [t('practice.question5.option1'), t('practice.question5.option2'), t('practice.question5.option3'), t('practice.question5.option4')],
+      correctAnswer: t('practice.question5.option2'),
+      explanation: t('practice.question5.explanation')
+    },
+    {
+      id: 6,
+      question: t('practice.question6'),
+      type: 'true-false',
+      options: [t('practice.question3.option1'), t('practice.question3.option2')],
+      correctAnswer: t('practice.question3.option2'),
+      explanation: t('practice.question6.explanation')
+    },
+    {
+      id: 7,
+      question: t('practice.question7'),
+      type: 'mcq',
+      options: [t('practice.question7.option1'), t('practice.question7.option2'), t('practice.question7.option3'), t('practice.question7.option4')],
+      correctAnswer: t('practice.question7.option2'),
+      explanation: t('practice.question7.explanation')
+    },
+    {
+      id: 8,
+      question: t('practice.question8'),
+      type: 'mcq',
+      options: [t('practice.question8.option1'), t('practice.question8.option2'), t('practice.question8.option3'), t('practice.question8.option4')],
+      correctAnswer: t('practice.question8.option1'),
+      explanation: t('practice.question8.explanation')
+    },
+    {
+      id: 9,
+      question: t('practice.question9'),
+      type: 'true-false',
+      options: [t('practice.question3.option1'), t('practice.question3.option2')],
+      correctAnswer: t('practice.question3.option2'),
+      explanation: t('practice.question9.explanation')
+    },
+    {
+      id: 10,
+      question: t('practice.question10'),
+      type: 'fill-blank',
+      correctAnswer: t('practice.question10.answer'),
+      explanation: t('practice.question10.explanation')
+    },
+    {
+      id: 11,
+      question: t('practice.question11'),
+      type: 'mcq',
+      options: [t('practice.question11.option1'), t('practice.question11.option2'), t('practice.question11.option3'), t('practice.question11.option4')],
+      correctAnswer: t('practice.question11.option1'),
+      explanation: t('practice.question11.explanation')
+    },
+    {
+      id: 12,
+      question: t('practice.question12'),
+      type: 'true-false',
+      options: [t('practice.question3.option1'), t('practice.question3.option2')],
+      correctAnswer: t('practice.question3.option2'),
+      explanation: t('practice.question12.explanation')
+    },
+    {
+      id: 13,
+      question: t('practice.question13'),
+      type: 'mcq',
+      options: [t('practice.question13.option1'), t('practice.question13.option2'), t('practice.question13.option3'), t('practice.question13.option4')],
+      correctAnswer: t('practice.question13.option3'),
+      explanation: t('practice.question13.explanation')
+    },
+    {
+      id: 14,
+      question: t('practice.question14'),
+      type: 'fill-blank',
+      correctAnswer: t('practice.question14.answer'),
+      explanation: t('practice.question14.explanation')
+    },
+    {
+      id: 15,
+      question: t('practice.question15'),
+      type: 'true-false',
+      options: [t('practice.question3.option1'), t('practice.question3.option2')],
+      correctAnswer: t('practice.question3.option2'),
+      explanation: t('practice.question15.explanation')
+    }
+  ];
+
+  const currentQ = questions[currentQuestion];
+
+  const handleAnswerSelect = (answer: string) => {
+    setSelectedAnswer(answer);
+  };
+
+  const handleSubmit = () => {
+    if (!selectedAnswer) return;
+
+    const isCorrect = selectedAnswer.toLowerCase().trim() === 
+                      (typeof currentQ.correctAnswer === 'string' 
+                        ? currentQ.correctAnswer.toLowerCase().trim() 
+                        : currentQ.correctAnswer[0].toLowerCase().trim());
+    
+    if (isCorrect && !answeredQuestions[currentQuestion]) {
+      setScore(score + 1);
+    }
+
+    const newAnswered = [...answeredQuestions];
+    newAnswered[currentQuestion] = true;
+    setAnsweredQuestions(newAnswered);
+    
+    setShowResult(true);
+  };
+
+  const handleNext = () => {
+    if (currentQuestion < questions.length - 1) {
+      setCurrentQuestion(currentQuestion + 1);
+      setSelectedAnswer('');
+      setShowResult(false);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentQuestion > 0) {
+      setCurrentQuestion(currentQuestion - 1);
+      setSelectedAnswer('');
+      setShowResult(false);
+    }
+  };
+
+  const isCorrect = selectedAnswer.toLowerCase().trim() === 
+                    (typeof currentQ.correctAnswer === 'string' 
+                      ? currentQ.correctAnswer.toLowerCase().trim() 
+                      : currentQ.correctAnswer[0].toLowerCase().trim());
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 p-4 md:p-8">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-            ⚡ {t('practice.mode')}
-          </h1>
-        </div>
-        <div>
-          {!selectedTopic && renderTopicSelection()}
-          {selectedTopic && (
-            <div className="bg-white p-8 rounded-2xl shadow-lg text-center">
-              <p className="text-gray-600 mb-4">Practice mode for topic: {selectedTopic}</p>
-              <p className="text-sm text-gray-500 mb-6">
-                Note: Full question bank implementation available in original PracticeMode.tsx file
-              </p>
-              <button
-                onClick={resetPractice}
-                className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
-              >
-                {t('practice.backToTopics')}
-              </button>
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 p-8">
+      <div className="max-w-4xl mx-auto">
+        {/* Question Card */}
+        <div className="bg-white rounded-2xl shadow-xl p-8 mb-6">
+          {/* Question Type Badge */}
+          <div className="mb-4">
+            <span className={`px-4 py-2 rounded-full text-sm font-semibold ${
+              currentQ.type === 'mcq' ? 'bg-blue-100 text-blue-700' :
+              currentQ.type === 'true-false' ? 'bg-green-100 text-green-700' :
+              currentQ.type === 'fill-blank' ? 'bg-yellow-100 text-yellow-700' :
+              'bg-purple-100 text-purple-700'
+            }`}>
+              {currentQ.type === 'mcq' ? t('practice.multipleChoice') :
+               currentQ.type === 'true-false' ? t('practice.trueFalse') :
+               currentQ.type === 'fill-blank' ? t('practice.fillBlank') :
+               t('practice.shortAnswer')}
+            </span>
+          </div>
+
+          {/* Question */}
+          <h2 className="text-2xl font-bold text-gray-800 mb-6">
+            {currentQ.question}
+          </h2>
+
+          {/* Answer Options */}
+          <div className="space-y-3 mb-6">
+            {currentQ.type === 'mcq' || currentQ.type === 'true-false' ? (
+              currentQ.options?.map((option, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleAnswerSelect(option)}
+                  disabled={showResult}
+                  className={`w-full p-4 text-left rounded-xl border-2 transition-all ${
+                    selectedAnswer === option
+                      ? showResult
+                        ? isCorrect
+                          ? 'border-green-500 bg-green-50'
+                          : 'border-red-500 bg-red-50'
+                        : 'border-purple-500 bg-purple-50'
+                      : showResult && option === currentQ.correctAnswer
+                      ? 'border-green-500 bg-green-50'
+                      : 'border-gray-200 hover:border-purple-300 hover:bg-purple-50'
+                  } ${showResult ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                >
+                  <div className="flex items-center">
+                    <div className={`w-6 h-6 rounded-full border-2 mr-3 flex items-center justify-center ${
+                      selectedAnswer === option
+                        ? showResult
+                          ? isCorrect
+                            ? 'border-green-500 bg-green-500'
+                            : 'border-red-500 bg-red-500'
+                          : 'border-purple-500 bg-purple-500'
+                        : showResult && option === currentQ.correctAnswer
+                        ? 'border-green-500 bg-green-500'
+                        : 'border-gray-300'
+                    }`}>
+                      {((selectedAnswer === option && showResult) || 
+                        (showResult && option === currentQ.correctAnswer)) && (
+                        <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          {isCorrect || option === currentQ.correctAnswer ? (
+                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
+                          ) : (
+                            <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"/>
+                          )}
+                        </svg>
+                      )}
+                    </div>
+                    <span className="font-medium text-gray-800">{option}</span>
+                  </div>
+                </button>
+              ))
+            ) : (
+              <input
+                type="text"
+                value={selectedAnswer}
+                onChange={(e) => handleAnswerSelect(e.target.value)}
+                disabled={showResult}
+                placeholder={t('common.answerPlaceholder')}
+                className={`w-full p-4 text-lg border-2 rounded-xl ${
+                  showResult
+                    ? isCorrect
+                      ? 'border-green-500 bg-green-50'
+                      : 'border-red-500 bg-red-50'
+                    : 'border-gray-300 focus:border-purple-500 focus:outline-none'
+                } ${showResult ? 'cursor-not-allowed' : ''}`}
+              />
+            )}
+          </div>
+
+          {/* Submit Button */}
+          {!showResult && (
+            <button
+              onClick={handleSubmit}
+              disabled={!selectedAnswer}
+              className={`w-full py-4 rounded-xl font-bold text-lg transition-all ${
+                selectedAnswer
+                  ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 shadow-lg'
+                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+              }`}
+            >
+              {t('practice.submitAnswer')}
+            </button>
+          )}
+
+          {/* Result & Explanation */}
+          {showResult && (
+            <div className={`p-6 rounded-xl ${
+              isCorrect ? 'bg-green-50 border-2 border-green-200' : 'bg-red-50 border-2 border-red-200'
+            }`}>
+              <div className="flex items-center mb-4">
+                {isCorrect ? (
+                  <div className="flex items-center text-green-700">
+                    <svg className="w-8 h-8 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
+                    </svg>
+                    <span className="text-2xl font-bold">{t('practice.correct')}</span>
+                  </div>
+                ) : (
+                  <div className="flex items-center text-red-700">
+                    <svg className="w-8 h-8 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd"/>
+                    </svg>
+                    <span className="text-2xl font-bold">{t('practice.incorrect')}</span>
+                  </div>
+                )}
+              </div>
+
+              {!isCorrect && (
+                <div className="mb-3 p-3 bg-white rounded-lg">
+                  <span className="font-semibold text-gray-700">{t('practice.correctAnswer')}: </span>
+                  <span className="text-green-700 font-bold">{currentQ.correctAnswer}</span>
+                </div>
+              )}
+
+              <div className="p-4 bg-white rounded-lg">
+                <p className="font-semibold text-gray-700 mb-2">{t('practice.explanation')}:</p>
+                <p className="text-gray-800">{currentQ.explanation}</p>
+              </div>
             </div>
           )}
+        </div>
+
+        {/* Navigation Buttons */}
+        <div className="flex justify-between gap-4">
+          <button
+            onClick={handlePrevious}
+            disabled={currentQuestion === 0}
+            className={`px-8 py-4 rounded-xl font-bold text-lg transition-all ${
+              currentQuestion === 0
+                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                : 'bg-white text-purple-600 border-2 border-purple-500 hover:bg-purple-50'
+            }`}
+          >
+            ← {t('practice.previous')}
+          </button>
+
+          <button
+            onClick={handleNext}
+            disabled={currentQuestion === questions.length - 1}
+            className={`px-8 py-4 rounded-xl font-bold text-lg transition-all ${
+              currentQuestion === questions.length - 1
+                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                : 'bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 shadow-lg'
+            }`}
+          >
+            {t('practice.next')} →
+          </button>
         </div>
       </div>
     </div>

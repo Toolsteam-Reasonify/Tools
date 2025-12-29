@@ -1261,6 +1261,210 @@
           }
         ]
       }
+    },
+    "waterCycle": {
+      "nav": {
+        "logo": "Water Cycle Learning",
+        "tabs": {
+          "learn": "Learn",
+          "practice": "Practice",
+          "applications": "Applications"
+        }
+      },
+      "language": {
+        "en": "English",
+        "hi": "हिंदी",
+        "gu": "ગુજરાતી",
+        "selectorLabel": "Select Language"
+      },
+      "controls": {
+        "step": "Step",
+        "of": "of",
+        "previous": "Previous",
+        "next": "Next",
+        "play": "Play",
+        "pause": "Pause",
+        "reset": "Reset"
+      },
+      "steps": {
+        "overview": {
+          "title": "The Water Cycle - An Overview",
+          "description": "The water cycle, also called the hydrological cycle, is the continuous movement of water on, above, and below the surface of Earth. Water can change states among liquid, vapor, and ice at various places in the water cycle.",
+          "keyPoints": [
+            "Water constantly moves through different states",
+            "The cycle is powered by the Sun's energy",
+            "Water moves between oceans, atmosphere, and land",
+            "The total amount of water on Earth remains constant"
+          ]
+        },
+        "evaporation": {
+          "title": "Step 1: Evaporation",
+          "description": "Evaporation is the process where liquid water transforms into water vapor (gas). When the Sun heats water in oceans, rivers, lakes, and puddles, the water molecules gain enough energy to break free from the liquid surface and rise into the atmosphere as invisible water vapor.",
+          "keyPoints": [
+            "Heat from the Sun provides energy for evaporation",
+            "Water changes from liquid to gas (vapor)",
+            "Occurs from oceans, rivers, lakes, and soil",
+            "About 86% of global evaporation comes from oceans"
+          ]
+        },
+        "transpiration": {
+          "title": "Step 2: Transpiration",
+          "description": "Transpiration is the process where plants absorb water through their roots and release water vapor through tiny pores (stomata) in their leaves. This is how plants contribute to the water cycle and cool themselves, just like humans sweating.",
+          "keyPoints": [
+            "Plants absorb water through roots from soil",
+            "Water travels up through the plant's stem",
+            "Water vapor exits through stomata in leaves",
+            "About 10% of atmospheric moisture comes from plants"
+          ]
+        },
+        "condensation": {
+          "title": "Step 3: Condensation",
+          "description": "Condensation occurs when water vapor in the atmosphere cools down and changes back into liquid water droplets. As warm, moist air rises, it expands and cools. When the air cools to its dew point, water vapor condenses around tiny particles like dust, salt, or smoke to form clouds.",
+          "keyPoints": [
+            "Water vapor cools and turns back into liquid",
+            "Forms tiny water droplets around dust particles",
+            "Creates clouds, fog, and dew",
+            "Higher altitude = cooler temperature = more condensation"
+          ]
+        },
+        "precipitation": {
+          "title": "Step 4: Precipitation",
+          "description": "Precipitation is when water falls from clouds to Earth. As cloud droplets collide and merge, they become heavier. When they're too heavy for air currents to hold them up, they fall as rain, snow, sleet, or hail depending on the temperature.",
+          "keyPoints": [
+            "Water droplets in clouds grow larger and heavier",
+            "Falls as rain when temperature is above 0°C",
+            "Falls as snow when temperature is below 0°C",
+            "Average raindrop falls at 20 mph (32 km/h)"
+          ]
+        },
+        "collection": {
+          "title": "Step 5: Collection (Surface Runoff)",
+          "description": "Collection is when precipitation gathers in bodies of water. Some water flows over land as surface runoff into streams and rivers, eventually reaching lakes and oceans. This runoff can erode soil and carry nutrients and pollutants.",
+          "keyPoints": [
+            "Water flows downhill due to gravity",
+            "Forms streams, rivers, and eventually reaches oceans",
+            "Some water collects in lakes and ponds",
+            "Runoff can cause erosion and flooding"
+          ]
+        },
+        "infiltration": {
+          "title": "Step 6: Infiltration & Groundwater",
+          "description": "Infiltration is the process where water soaks into the ground through soil and rocks. This water becomes groundwater, stored in underground layers called aquifers. Groundwater slowly moves through the ground and can take years to centuries to return to the surface through springs or wells.",
+          "keyPoints": [
+            "Water seeps through soil into underground layers",
+            "Stored in aquifers between rock and soil layers",
+            "Provides drinking water for many communities",
+            "Can take hundreds of years to recharge"
+          ]
+        },
+        "complete": {
+          "title": "The Complete Water Cycle",
+          "description": "The water cycle is continuous and interconnected. Solar energy drives evaporation and transpiration, sending water vapor into the atmosphere. Cooling causes condensation into clouds, which release precipitation. Water then collects in bodies of water and infiltrates the ground, completing the cycle and beginning again.",
+          "keyPoints": [
+            "All steps work together continuously",
+            "Powered by solar energy and gravity",
+            "Distributes fresh water across the planet",
+            "Essential for all life on Earth"
+          ]
+        }
+      },
+      "canvas": {
+        "evaporation": "EVAPORATION",
+        "transpiration": "TRANSPIRATION",
+        "condensation": "CONDENSATION",
+        "precipitation": "PRECIPITATION",
+        "collection": "COLLECTION (Runoff)",
+        "infiltration": "INFILTRATION",
+        "groundwater": "GROUNDWATER",
+        "sun": "Sun",
+        "waterBody": "Water Body",
+        "clouds": "Clouds",
+        "rain": "Rain"
+      },
+      "learn": {
+        "title": "The Water Cycle",
+        "subtitle": "Interactive Learning Experience",
+        "stepInformation": "Step Information",
+        "keyPoints": "Key Points",
+        "quickJump": "Quick Jump",
+        "didYouKnow": "Did You Know?",
+        "understanding": "Understanding the Water Cycle",
+        "energySource": "Energy Source",
+        "energySourceDesc": "The Sun provides energy for evaporation, driving the entire water cycle.",
+        "stateChanges": "State Changes",
+        "stateChangesDesc": "Water changes between liquid, vapor, and ice throughout the cycle.",
+        "continuousProcess": "Continuous Process",
+        "continuousProcessDesc": "The cycle never stops - water is constantly moving and changing form.",
+        "lifeSupport": "Life Support",
+        "lifeSupportDesc": "The water cycle distributes fresh water essential for all living things.",
+        "funFacts": [
+          "🌊 97% of Earth's water is in the oceans (salt water)",
+          "💧 Only 3% is fresh water, and 2/3 of that is frozen!",
+          "🌍 The same water has been cycling for billions of years",
+          "☁️ A cloud can weigh more than 1 million pounds!",
+          "🌳 A large oak tree can transpire 40,000 gallons per year"
+        ],
+        "progress": "Progress"
+      },
+      "practice": {
+        "title": "Water Cycle - Practice Mode",
+        "subtitle": "Click on stages to connect them and build the water cycle!",
+        "score": "Score",
+        "reset": "Reset",
+        "showAnswers": "Show Answers",
+        "instructions": "Instructions: Click on a stage, then click on another stage to create a connection. Build the complete water cycle by connecting all stages correctly!",
+        "correct": "✓ Correct connection!",
+        "incorrect": "✗ Incorrect connection. Try again!",
+        "alreadyConnected": "✓ Connection already made!",
+        "progress": "Your Progress",
+        "connectionsMade": "connections made",
+        "stages": {
+          "sun": "Sun",
+          "ocean": "Ocean/Water Bodies",
+          "evaporation": "Evaporation",
+          "transpiration": "Transpiration",
+          "condensation": "Condensation",
+          "precipitation": "Precipitation",
+          "infiltration": "Infiltration",
+          "groundwater": "Groundwater"
+        },
+        "stageDescriptions": {
+          "sun": "Main source of heat for evaporation",
+          "ocean": "Source of water for evaporation",
+          "evaporation": "Water turns into water vapour due to heat",
+          "transpiration": "Water evaporates from trees and plants",
+          "condensation": "Water vapour cools and forms clouds",
+          "precipitation": "Rain, snow, or hail falls from clouds",
+          "infiltration": "Water seeps through soil and rocks",
+          "groundwater": "Water stored in aquifers underground"
+        },
+        "concepts": {
+          "evaporation": {
+            "title": "🌊 Evaporation",
+            "description": "Water from oceans, rivers, and lakes gets heated by the Sun and turns into water vapour."
+          },
+          "transpiration": {
+            "title": "🌳 Transpiration",
+            "description": "Plants release water vapour through their leaves into the atmosphere."
+          },
+          "condensation": {
+            "title": "☁️ Condensation",
+            "description": "Water vapour rises, cools down, and forms tiny droplets that create clouds."
+          },
+          "precipitation": {
+            "title": "🌧️ Precipitation",
+            "description": "Clouds release water as rain, snow, or hail, which falls back to Earth."
+          },
+          "collection": {
+            "title": "💧 Collection",
+            "description": "Water flows into rivers, lakes, and oceans, ready to start the cycle again."
+          },
+          "infiltration": {
+            "title": "🌍 Infiltration",
+            "description": "Water seeps into the ground, becoming groundwater stored in aquifers."
+          }
+        }
+      }
     }
   },
   "gu": {
@@ -2525,6 +2729,210 @@
           }
         ]
       }
+    },
+    "waterCycle": {
+      "nav": {
+        "logo": "જળ ચક્ર શીખવું",
+        "tabs": {
+          "learn": "શીખો",
+          "practice": "અભ્યાસ",
+          "applications": "ઉપયોગો"
+        }
+      },
+      "language": {
+        "en": "English",
+        "hi": "હિન્દી",
+        "gu": "ગુજરાતી",
+        "selectorLabel": "ભાષા પસંદ કરો"
+      },
+      "controls": {
+        "step": "પગલું",
+        "of": "નું",
+        "previous": "પાછલું",
+        "next": "આગળ",
+        "play": "ચલાવો",
+        "pause": "રોકો",
+        "reset": "રીસેટ"
+      },
+      "steps": {
+        "overview": {
+          "title": "જળ ચક્ર - એક અવલોકન",
+          "description": "જળ ચક્ર, જેને જળીય ચક્ર પણ કહેવામાં આવે છે, એ પૃથ્વીની સપાટી પર, ઉપર અને નીચે પાણીની સતત હલચલ છે। જળ ચક્રમાં વિવિધ સ્થાનોએ પાણી પ્રવાહી, વરાળ અને બરફ વચ્ચે અવસ્થાઓ બદલી શકે છે।",
+          "keyPoints": [
+            "પાણી સતત વિવિધ અવસ્થાઓ દ્વારા ફરે છે",
+            "ચક્ર સૂર્યની ઊર્જાથી સંચાલિત થાય છે",
+            "પાણી મહાસાગરો, વાતાવરણ અને જમીન વચ્ચે ફરે છે",
+            "પૃથ્વી પર પાણીની કુલ માત્રા સ્થિર રહે છે"
+          ]
+        },
+        "evaporation": {
+          "title": "પગલું 1: બાષ્પીભવન",
+          "description": "બાષ્પીભવન એ પ્રક્રિયા છે જ્યાં પ્રવાહી પાણી જળ વરાળ (ગેસ)માં પરિવર્તિત થાય છે। જ્યારે સૂર્ય મહાસાગરો, નદીઓ, તળાવો અને ખાડાઓમાં પાણીને ગરમ કરે છે, ત્યારે પાણીના અણુઓ પ્રવાહી સપાટીથી મુક્ત થવા માટે પૂરતી ઊર્જા મેળવે છે અને અદૃશ્ય જળ વરાળ તરીકે વાતાવરણમાં ઉપર જાય છે।",
+          "keyPoints": [
+            "સૂર્યની ગરમી બાષ્પીભવન માટે ઊર્જા પ્રદાન કરે છે",
+            "પાણી પ્રવાહીથી ગેસ (વરાળ)માં બદલાય છે",
+            "મહાસાગરો, નદીઓ, તળાવો અને માટીમાંથી થાય છે",
+            "વૈશ્વિક બાષ્પીભવનનો લગભગ 86% મહાસાગરોમાંથી આવે છે"
+          ]
+        },
+        "transpiration": {
+          "title": "પગલું 2: વાષ્પોત્સર્જન",
+          "description": "વાષ્પોત્સર્જન એ પ્રક્રિયા છે જ્યાં છોડ તેમના મૂળ દ્વારા પાણીને શોષી લે છે અને તેમના પાંદડાઓમાં નાના છિદ્રો (સ્ટોમેટા) દ્વારા જળ વરાળ છોડે છે। આ રીતે છોડ જળ ચક્રમાં યોગદાન આપે છે અને પોતાને ઠંડા કરે છે, બિલકુલ મનુષ્યોના પસીના જેવું.",
+          "keyPoints": [
+            "છોડ માટીમાંથી મૂળ દ્વારા પાણીને શોષી લે છે",
+            "પાણી છોડના દાંડી દ્વારા ઉપર જાય છે",
+            "જળ વરાળ પાંદડાઓમાં સ્ટોમેટા દ્વારા બહાર આવે છે",
+            "વાયુમંડળીય ભેજનો લગભગ 10% છોડમાંથી આવે છે"
+          ]
+        },
+        "condensation": {
+          "title": "પગલું 3: સંઘનન",
+          "description": "સંઘનન ત્યારે થાય છે જ્યારે વાતાવરણમાં જળ વરાળ ઠંડી થઈને પાછી પ્રવાહી પાણીની ટીપાંમાં બદલાય છે। જેમ ગરમ, ભેજવાળી હવા ઉપર જાય છે, તે વિસ્તરે છે અને ઠંડી થાય છે। જ્યારે હવા તેના ઓસ બિંદુ સુધી ઠંડી થાય છે, ત્યારે જળ વરાળ ધૂળ, મીઠું અથવા ધુમાડા જેવા નાના કણોની આસપાસ સંઘનિત થઈને વાદળો બનાવે છે।",
+          "keyPoints": [
+            "જળ વરાળ ઠંડી થઈને પાછી પ્રવાહીમાં બદલાય છે",
+            "ધૂળના કણોની આસપાસ નાના પાણીના ટીપાં બનાવે છે",
+            "વાદળો, ધુમ્મસ અને ઓસ બનાવે છે",
+            "વધુ ઊંચાઈ = ઠંડુ તાપમાન = વધુ સંઘનન"
+          ]
+        },
+        "precipitation": {
+          "title": "પગલું 4: વરસાદ",
+          "description": "વરસાદ ત્યારે થાય છે જ્યારે પાણી વાદળોમાંથી પૃથ્વી પર પડે છે। જેમ વાદળોની ટીપાંઓ ટકરાય છે અને મળે છે, તે ભારે થાય છે। જ્યારે તે હવાના પ્રવાહો માટે ખૂબ ભારે થાય છે કે તે તેને ઉપર રાખી શકે, ત્યારે તે તાપમાન અનુસાર વરસાદ, બરફ, સ્લીट અથવા કરાના રૂપમાં પડે છે।",
+          "keyPoints": [
+            "વાદળોમાં પાણીની ટીપાંઓ મોટી અને ભારે થાય છે",
+            "જ્યારે તાપમાન 0°C થી ઉપર હોય ત્યારે વરસાદ તરીકે પડે છે",
+            "જ્યારે તાપમાન 0°C થી નીચે હોય ત્યારે બરફ તરીકે પડે છે",
+            "સરેરાશ વરસાદની ટીપાં 20 માઇલ/કલાક (32 કિમી/કલાક) ની ઝડપે પડે છે"
+          ]
+        },
+        "collection": {
+          "title": "પગલું 5: સંગ્રહ (સપાટી રનઓફ)",
+          "description": "સંગ્રહ ત્યારે થાય છે જ્યારે વરસાદ જળ સંસ્થાઓમાં એકત્રિત થાય છે। કેટલાક પાણી સપાટી રનઓફ તરીકે જમીન પર વહીને નદીઓ અને નાળાઓમાં જાય છે, અંતે તળાવો અને મહાસાગરો સુધી પહોંચે છે। આ રનઓફ માટીનું કટાણ કરી શકે છે અને પોષક તત્વો અને પ્રદૂષકોને લઈ જઈ શકે છે।",
+          "keyPoints": [
+            "પાણી ગુરુત્વાકર્ષણના કારણે નીચે તરફ વહે છે",
+            "નદીઓ અને નાળાઓ બનાવે છે અને અંતે મહાસાગરો સુધી પહોંચે છે",
+            "કેટલાક પાણી તળાવો અને તળાવોમાં એકત્રિત થાય છે",
+            "રનઓફ કટાણ અને પૂરનું કારણ બની શકે છે"
+          ]
+        },
+        "infiltration": {
+          "title": "પગલું 6: અંતર્સ્યંદન અને ભૂજળ",
+          "description": "અંતર્સ્યંદન એ પ્રક્રિયા છે જ્યાં પાણી માટી અને ખડકો દ્વારા જમીનમાં રસે છે। આ પાણી ભૂજળ બને છે, જે ભૂગર્ભ સ્તરોમાં સંગ્રહિત થાય છે જેને જળભરત કહેવામાં આવે છે। ભૂજળ ધીમે ધીમે જમીન દ્વારા ફરે છે અને સપાટી પર પાછું આવવામાં વર્ષોથી સેંકડો વર્ષ લાગી શકે છે।",
+          "keyPoints": [
+            "પાણી માટી દ્વારા ભૂગર્ભ સ્તરોમાં રસે છે",
+            "ખડક અને માટીની સ્તરો વચ્ચે જળભરતમાં સંગ્રહિત",
+            "ઘણા સમુદાયોને પીણાનું પાણી પ્રદાન કરે છે",
+            "પુનઃભરણ માટે સેંકડો વર્ષ લાગી શકે છે"
+          ]
+        },
+        "complete": {
+          "title": "પગલું 7: સંપૂર્ણ જળ ચક્ર",
+          "description": "જળ ચક્ર સતત અને પરસ્પર જોડાયેલું છે। સૌર ઊર્જા બાષ્પીભવન અને વાષ્પોત્સર્જનને ચલાવે છે, જે જળ વરાળને વાતાવરણમાં મોકલે છે। ઠંડકથી વાદળોમાં સંઘનન થાય છે, જે વરસાદ છોડે છે। પાણી પછી જળ સંસ્થાઓમાં એકત્રિત થાય છે અને જમીનમાં રસે છે, ચક્રને પૂર્ણ કરે છે અને ફરીથી શરૂ કરે છે।",
+          "keyPoints": [
+            "બધા પગલાઓ સતત એકસાથે કામ કરે છે",
+            "સૌર ઊર્જા અને ગુરુત્વાકર્ષણ દ્વારા સંચાલિત",
+            "ગ્રહ પર તાજા પાણીને વિતરિત કરે છે",
+            "પૃથ્વી પરના બધા જીવન માટે આવશ્યક"
+          ]
+        }
+      },
+      "canvas": {
+        "evaporation": "બાષ્પીભવન",
+        "transpiration": "વાષ્પોત્સર્જન",
+        "condensation": "સંઘનન",
+        "precipitation": "વરસાદ",
+        "collection": "સંગ્રહ (રનઓફ)",
+        "infiltration": "અંતર્સ્યંદન",
+        "groundwater": "ભૂજળ",
+        "sun": "સૂર્ય",
+        "waterBody": "જળ સંસ્થા",
+        "clouds": "વાદળો",
+        "rain": "વરસાદ"
+      },
+      "learn": {
+        "title": "જળ ચક્ર",
+        "subtitle": "ઇન્ટરએક્ટિવ શીખવાનો અનુભવ",
+        "stepInformation": "પગલું માહિતી",
+        "keyPoints": "મુખ્ય મુદ્દાઓ",
+        "quickJump": "ઝડપી જમ્પ",
+        "didYouKnow": "શું તમે જાણો છો?",
+        "understanding": "જળ ચક્રને સમજવું",
+        "energySource": "ઊર્જા સ્ત્રોત",
+        "energySourceDesc": "સૂર્ય બાષ્પીભવન માટે ઊર્જા પ્રદાન કરે છે, જે આખા જળ ચક્રને ચલાવે છે।",
+        "stateChanges": "સ્થિતિ પરિવર્તન",
+        "stateChangesDesc": "ચક્ર દરમિયાન પાણી પ્રવાહી, વરાળ અને બરફ વચ્ચે બદલાય છે।",
+        "continuousProcess": "સતત પ્રક્રિયા",
+        "continuousProcessDesc": "ચક્ર ક્યારેય અટકતું નથી - પાણી સતત ફરતું રહે છે અને રૂપ બદલે છે।",
+        "lifeSupport": "જીવન સહાય",
+        "lifeSupportDesc": "જળ ચક્ર બધી જીવંત વસ્તુઓ માટે આવશ્યક તાજા પાણીને વિતરિત કરે છે।",
+        "funFacts": [
+          "🌊 પૃથ્વીનો 97% પાણી મહાસાગરોમાં છે (ખારું પાણી)",
+          "💧 માત્ર 3% તાજું પાણી છે, અને તેનો 2/3 જામી ગયેલું છે!",
+          "🌍 આ જ પાણી અબજો વર્ષોથી ફરી રહ્યું છે",
+          "☁️ એક વાદળનું વજન 1 મિલિયન પાઉન્ડથી વધારે હોઈ શકે છે!",
+          "🌳 એક મોટું ઓકનું ઝાડ વર્ષ દીઠ 40,000 ગેલન પાણીનો વાષ્પોત્સર્જન કરી શકે છે"
+        ],
+        "progress": "પ્રગતિ"
+      },
+      "practice": {
+        "title": "જળ ચક્ર - અભ્યાસ મોડ",
+        "subtitle": "પગલાઓ પર ક્લિક કરો અને જળ ચક્ર બનાવવા માટે તેમને જોડો!",
+        "score": "સ્કોર",
+        "reset": "રીસેટ",
+        "showAnswers": "જવાબો બતાવો",
+        "instructions": "સૂચનાઓ: એક પગલું પર ક્લિક કરો, પછી કનેક્શન બનાવવા માટે બીજા પગલા પર ક્લિક કરો. બધા પગલાઓને સાચી રીતે જોડીને સંપૂર્ણ જળ ચક્ર બનાવો!",
+        "correct": "✓ સાચો કનેક્શન!",
+        "incorrect": "✗ ખોટો કનેક્શન. ફરીથી પ્રયાસ કરો!",
+        "alreadyConnected": "✓ કનેક્શન પહેલેથી બનાવ્યો છે!",
+        "progress": "તમારી પ્રગતિ",
+        "connectionsMade": "કનેક્શન બનાવ્યા",
+        "stages": {
+          "sun": "સૂર્ય",
+          "ocean": "મહાસાગર/જળ સંસ્થાઓ",
+          "evaporation": "બાષ્પીભવન",
+          "transpiration": "વાષ્પોત્સર્જન",
+          "condensation": "સંઘનન",
+          "precipitation": "વરસાદ",
+          "infiltration": "અંતર્સ્યંદન",
+          "groundwater": "ભૂજળ"
+        },
+        "stageDescriptions": {
+          "sun": "બાષ્પીભવન માટે ગરમીનો મુખ્ય સ્ત્રોત",
+          "ocean": "બાષ્પીભવન માટે પાણીનો સ્ત્રોત",
+          "evaporation": "ગરમીના કારણે પાણી જળ વરાળમાં ફેરવાય છે",
+          "transpiration": "વૃક્ષો અને છોડમાંથી પાણી બાષ્પીભવન થાય છે",
+          "condensation": "જળ વરાળ ઠંડી થઈને વાદળો બનાવે છે",
+          "precipitation": "વાદળોમાંથી વરસાદ, બરફ અથવા કરાના રૂપમાં પાણી પડે છે",
+          "infiltration": "પાણી માટી અને ખડકો દ્વારા રસે છે",
+          "groundwater": "ભૂગર્ભજળ ભંડારણમાં સંગ્રહિત પાણી"
+        },
+        "concepts": {
+          "evaporation": {
+            "title": "🌊 બાષ્પીભવન",
+            "description": "મહાસાગરો, નદીઓ અને તળાવોમાંથી પાણી સૂર્ય દ્વારા ગરમ થઈને જળ વરાળમાં ફેરવાય છે."
+          },
+          "transpiration": {
+            "title": "🌳 વાષ્પોત્સર્જન",
+            "description": "છોડ તેમની પાંદડાઓ દ્વારા વાતાવરણમાં જળ વરાળ છોડે છે."
+          },
+          "condensation": {
+            "title": "☁️ સંઘનન",
+            "description": "જળ વરાળ ઉપર જાય છે, ઠંડી થાય છે, અને નાના ટીપાં બનાવે છે જે વાદળો બનાવે છે."
+          },
+          "precipitation": {
+            "title": "🌧️ વરસાદ",
+            "description": "વાદળો પાણીને વરસાદ, બરફ અથવા કરાના રૂપમાં છોડે છે, જે પૃથ્વી પર પાછા પડે છે."
+          },
+          "collection": {
+            "title": "💧 સંગ્રહ",
+            "description": "પાણી નદીઓ, તળાવો અને મહાસાગરોમાં વહે છે, ચક્રને ફરીથી શરૂ કરવા માટે તૈયાર."
+          },
+          "infiltration": {
+            "title": "🌍 અંતર્સ્યંદન",
+            "description": "પાણી જમીનમાં રસે છે, જળભરતમાં સંગ્રહિત ભૂજળ બને છે।"
+          }
+        }
+      }
     }
   },
   "hi": {
@@ -3788,6 +4196,210 @@
             "difficulty": "nature"
           }
         ]
+      }
+    },
+    "waterCycle": {
+      "nav": {
+        "logo": "जल चक्र सीखना",
+        "tabs": {
+          "learn": "सीखें",
+          "practice": "अभ्यास",
+          "applications": "अनुप्रयोग"
+        }
+      },
+      "language": {
+        "en": "अंग्रेज़ी",
+        "hi": "हिंदी",
+        "gu": "ગુજરાતી",
+        "selectorLabel": "भाषा चुनें"
+      },
+      "controls": {
+        "step": "चरण",
+        "of": "का",
+        "previous": "पिछला",
+        "next": "अगला",
+        "play": "चलाएं",
+        "pause": "रोकें",
+        "reset": "रीसेट"
+      },
+      "steps": {
+        "overview": {
+          "title": "जल चक्र - एक अवलोकन",
+          "description": "जल चक्र, जिसे जलीय चक्र भी कहा जाता है, पृथ्वी की सतह पर, ऊपर और नीचे पानी की निरंतर गति है। जल चक्र में विभिन्न स्थानों पर पानी तरल, वाष्प और बर्फ के बीच अवस्थाएं बदल सकता है।",
+          "keyPoints": [
+            "पानी लगातार विभिन्न अवस्थाओं के माध्यम से घूमता है",
+            "चक्र सूर्य की ऊर्जा से संचालित होता है",
+            "पानी महासागरों, वायुमंडल और भूमि के बीच घूमता है",
+            "पृथ्वी पर पानी की कुल मात्रा स्थिर रहती है"
+          ]
+        },
+        "evaporation": {
+          "title": "चरण 1: वाष्पीकरण",
+          "description": "वाष्पीकरण वह प्रक्रिया है जहां तरल पानी जलवाष्प (गैस) में बदल जाता है। जब सूर्य महासागरों, नदियों, झीलों और पोखरों में पानी को गर्म करता है, तो पानी के अणुओं को तरल सतह से मुक्त होने के लिए पर्याप्त ऊर्जा मिलती है और वे अदृश्य जलवाष्प के रूप में वायुमंडल में उठ जाते हैं।",
+          "keyPoints": [
+            "सूर्य से गर्मी वाष्पीकरण के लिए ऊर्जा प्रदान करती है",
+            "पानी तरल से गैस (वाष्प) में बदलता है",
+            "महासागरों, नदियों, झीलों और मिट्टी से होता है",
+            "वैश्विक वाष्पीकरण का लगभग 86% महासागरों से आता है"
+          ]
+        },
+        "transpiration": {
+          "title": "चरण 2: वाष्पोत्सर्जन",
+          "description": "वाष्पोत्सर्जन वह प्रक्रिया है जहां पौधे अपनी जड़ों के माध्यम से पानी को अवशोषित करते हैं और अपनी पत्तियों में छोटे छिद्रों (स्टोमेटा) के माध्यम से जलवाष्प छोड़ते हैं। इसी तरह पौधे जल चक्र में योगदान करते हैं और अपने आप को ठंडा करते हैं, बिल्कुल मनुष्यों के पसीने की तरह।",
+          "keyPoints": [
+            "पौधे मिट्टी से जड़ों के माध्यम से पानी को अवशोषित करते हैं",
+            "पानी पौधे के तने के माध्यम से ऊपर जाता है",
+            "जलवाष्प पत्तियों में स्टोमेटा के माध्यम से बाहर निकलता है",
+            "वायुमंडलीय नमी का लगभग 10% पौधों से आता है"
+          ]
+        },
+        "condensation": {
+          "title": "चरण 3: संघनन",
+          "description": "संघनन तब होता है जब वायुमंडल में जलवाष्प ठंडा होकर वापस तरल पानी की बूंदों में बदल जाता है। जैसे-जैसे गर्म, नम हवा ऊपर उठती है, यह फैलती है और ठंडी होती है। जब हवा अपने ओस बिंदु तक ठंडी हो जाती है, तो जलवाष्प धूल, नमक या धुएं जैसे छोटे कणों के चारों ओर संघनित होकर बादल बनाता है।",
+          "keyPoints": [
+            "जलवाष्प ठंडा होकर वापस तरल में बदल जाता है",
+            "धूल के कणों के चारों ओर छोटी पानी की बूंदें बनाता है",
+            "बादल, धुंध और ओस बनाता है",
+            "अधिक ऊंचाई = ठंडा तापमान = अधिक संघनन"
+          ]
+        },
+        "precipitation": {
+          "title": "चरण 4: वर्षा",
+          "description": "वर्षा तब होती है जब पानी बादलों से पृथ्वी पर गिरता है। जैसे-जैसे बादल की बूंदें टकराती हैं और मिलती हैं, वे भारी हो जाती हैं। जब वे हवा की धाराओं के लिए इतनी भारी हो जाती हैं कि वे उन्हें ऊपर रख सकें, तो वे तापमान के अनुसार बारिश, बर्फ, ओले या ओलों के रूप में गिरती हैं।",
+          "keyPoints": [
+            "बादलों में पानी की बूंदें बड़ी और भारी हो जाती हैं",
+            "जब तापमान 0°C से ऊपर हो तो बारिश के रूप में गिरती है",
+            "जब तापमान 0°C से नीचे हो तो बर्फ के रूप में गिरती है",
+            "औसत बारिश की बूंद 20 मील/घंटा (32 किमी/घंटा) की गति से गिरती है"
+          ]
+        },
+        "collection": {
+          "title": "चरण 5: संग्रहण (सतह अपवाह)",
+          "description": "संग्रहण तब होता है जब वर्षा जल निकायों में एकत्र होती है। कुछ पानी सतह अपवाह के रूप में भूमि पर बहकर नदियों और नालों में जाता है, अंततः झीलों और महासागरों तक पहुँचता है। यह अपवाह मिट्टी का कटाव कर सकता है और पोषक तत्वों और प्रदूषकों को ले जा सकता है।",
+          "keyPoints": [
+            "पानी गुरुत्वाकर्षण के कारण नीचे की ओर बहता है",
+            "नदियाँ और नाले बनाता है और अंततः महासागरों तक पहुँचता है",
+            "कुछ पानी झीलों और तालाबों में एकत्र होता है",
+            "अपवाह से कटाव और बाढ़ आ सकती है"
+          ]
+        },
+        "infiltration": {
+          "title": "चरण 6: अंतःस्यंदन और भूजल",
+          "description": "अंतःस्यंदन वह प्रक्रिया है जिसमें पानी मिट्टी और चट्टानों के माध्यम से जमीन में रिसता है। यह पानी भूजल बन जाता है, जो भूमिगत परतों में संग्रहीत होता है जिन्हें जलभृत कहा जाता है। भूजल धीरे-धीरे जमीन के माध्यम से चलता है और सतह पर वापस आने में सालों से सैकड़ों साल लग सकते हैं।",
+          "keyPoints": [
+            "पानी मिट्टी से भूमिगत परतों में रिसता है",
+            "चट्टान और मिट्टी की परतों के बीच जलभृत में संग्रहीत",
+            "कई समुदायों को पीने का पानी प्रदान करता है",
+            "पुनर्भरण में सैकड़ों साल लग सकते हैं"
+          ]
+        },
+        "complete": {
+          "title": "पूर्ण जल चक्र",
+          "description": "जल चक्र निरंतर और परस्पर जुड़ा हुआ है। सौर ऊर्जा वाष्पीकरण और वाष्पोत्सर्जन को चलाती है, जो जलवाष्प को वायुमंडल में भेजती है। ठंडक से संघनन होकर बादल बनते हैं, जो वर्षा छोड़ते हैं। पानी फिर जल निकायों में एकत्र होता है और जमीन में रिसता है, चक्र को पूरा करता है और फिर से शुरू करता है।",
+          "keyPoints": [
+            "सभी चरण लगातार एक साथ काम करते हैं",
+            "सौर ऊर्जा और गुरुत्वाकर्षण द्वारा संचालित",
+            "ग्रह भर में ताजा पानी वितरित करता है",
+            "पृथ्वी पर सभी जीवन के लिए आवश्यक"
+          ]
+        }
+      },
+      "canvas": {
+        "evaporation": "वाष्पीकरण",
+        "transpiration": "वाष्पोत्सर्जन",
+        "condensation": "संघनन",
+        "precipitation": "वर्षा",
+        "collection": "संग्रहण (अपवाह)",
+        "infiltration": "अंतःस्यंदन",
+        "groundwater": "भूजल",
+        "sun": "सूर्य",
+        "waterBody": "जल निकाय",
+        "clouds": "बादल",
+        "rain": "बारिश"
+      },
+      "learn": {
+        "title": "जल चक्र",
+        "subtitle": "इंटरएक्टिव लर्निंग अनुभव",
+        "stepInformation": "चरण जानकारी",
+        "keyPoints": "मुख्य बिंदु",
+        "quickJump": "त्वरित जंप",
+        "didYouKnow": "क्या आप जानते हैं?",
+        "understanding": "जल चक्र को समझना",
+        "energySource": "ऊर्जा स्रोत",
+        "energySourceDesc": "सूर्य वाष्पीकरण के लिए ऊर्जा प्रदान करता है, जो पूरे जल चक्र को चलाता है।",
+        "stateChanges": "अवस्था परिवर्तन",
+        "stateChangesDesc": "चक्र भर में पानी तरल, वाष्प और बर्फ के बीच बदलता रहता है।",
+        "continuousProcess": "निरंतर प्रक्रिया",
+        "continuousProcessDesc": "चक्र कभी नहीं रुकता - पानी लगातार घूम रहा है और रूप बदल रहा है।",
+        "lifeSupport": "जीवन सहायता",
+        "lifeSupportDesc": "जल चक्र सभी जीवित चीजों के लिए आवश्यक ताजा पानी वितरित करता है।",
+        "funFacts": [
+          "🌊 पृथ्वी का 97% पानी महासागरों में है (खारा पानी)",
+          "💧 केवल 3% ताजा पानी है, और उसका 2/3 जमा हुआ है!",
+          "🌍 यही पानी अरबों वर्षों से चक्रित हो रहा है",
+          "☁️ एक बादल का वजन 1 मिलियन पाउन्ड से अधिक हो सकता है!",
+          "🌳 एक बड़ा ओक का पेड़ प्रति वर्ष 40,000 गैलन पानी का वाष्पोत्सर्जन कर सकता है"
+        ],
+        "progress": "प्रगति"
+      },
+      "practice": {
+        "title": "जल चक्र - अभ्यास मोड",
+        "subtitle": "चरणों पर क्लिक करें और जल चक्र बनाने के लिए उन्हें जोड़ें!",
+        "score": "स्कोर",
+        "reset": "रीसेट",
+        "showAnswers": "उत्तर दिखाएं",
+        "instructions": "निर्देश: एक चरण पर क्लिक करें, फिर कनेक्शन बनाने के लिए दूसरे चरण पर क्लिक करें। सभी चरणों को सही तरीके से जोड़कर पूर्ण जल चक्र बनाएं!",
+        "correct": "✓ सही कनेक्शन!",
+        "incorrect": "✗ गलत कनेक्शन। पुनः प्रयास करें!",
+        "alreadyConnected": "✓ कनेक्शन पहले से बना है!",
+        "progress": "आपकी प्रगति",
+        "connectionsMade": "कनेक्शन बनाए गए",
+        "stages": {
+          "sun": "सूर्य",
+          "ocean": "महासागर/जल निकाय",
+          "evaporation": "वाष्पीकरण",
+          "transpiration": "वाष्पोत्सर्जन",
+          "condensation": "संघनन",
+          "precipitation": "वर्षा",
+          "infiltration": "अंतःस्यंदन",
+          "groundwater": "भूजल"
+        },
+        "stageDescriptions": {
+          "sun": "वाष्पीकरण के लिए गर्मी का मुख्य स्रोत",
+          "ocean": "वाष्पीकरण के लिए पानी का स्रोत",
+          "evaporation": "गर्मी के कारण पानी जलवाष्प में बदल जाता है",
+          "transpiration": "पेड़ों और पौधों से पानी वाष्पित होता है",
+          "condensation": "जलवाष्प ठंडा होकर बादल बनाता है",
+          "precipitation": "बादलों से बारिश, बर्फ या ओले गिरते हैं",
+          "infiltration": "पानी मिट्टी और चट्टानों के माध्यम से रिसता है",
+          "groundwater": "भूमिगत जलभृत में संग्रहीत पानी"
+        },
+        "concepts": {
+          "evaporation": {
+            "title": "🌊 वाष्पीकरण",
+            "description": "महासागरों, नदियों और झीलों से पानी सूर्य द्वारा गर्म होकर जलवाष्प में बदल जाता है।"
+          },
+          "transpiration": {
+            "title": "🌳 वाष्पोत्सर्जन",
+            "description": "पौधे अपनी पत्तियों के माध्यम से वायुमंडल में जलवाष्प छोड़ते हैं।"
+          },
+          "condensation": {
+            "title": "☁️ संघनन",
+            "description": "जलवाष्प ऊपर उठता है, ठंडा होता है, और छोटी बूंदें बनाता है जो बादल बनाती हैं।"
+          },
+          "precipitation": {
+            "title": "🌧️ वर्षा",
+            "description": "बादल पानी को बारिश, बर्फ या ओले के रूप में छोड़ते हैं, जो पृथ्वी पर वापस गिरते हैं।"
+          },
+          "collection": {
+            "title": "💧 संग्रहण",
+            "description": "पानी नदियों, झीलों और महासागरों में बहता है, चक्र को फिर से शुरू करने के लिए तैयार।"
+          },
+          "infiltration": {
+            "title": "🌍 अंतःस्यंदन",
+            "description": "पानी जमीन में रिसता है, जलभृत में संग्रहीत भूजल बन जाता है।"
+          }
+        }
       }
     }
   }

@@ -6,6 +6,7 @@ import React, {
   useContext,
   ReactNode,
   useMemo,
+  useCallback,
 } from "react";
 
 // Simple icon components
@@ -77,6 +78,7 @@ type LearnStage =
   | "condensation"
   | "precipitation"
   | "collection"
+  | "infiltration"
   | "complete";
 type LearnActiveElement =
   | "sun"
@@ -109,13 +111,18 @@ interface LearnStep extends BaseStep {
 type Step = LearnStep;
 
 interface Particle {
+  id: number;
   x: number;
   y: number;
+  initialX: number; // Reference for sine wave calculation
   vx: number;
   vy: number;
   size: number;
   opacity: number;
+  type: 'water' | 'vapor' | 'rain' | 'snow';
   color: string;
+  life: number; // 0 to 1
+  wobbleSpeed: number; // How fast it moves side to side
 }
 
 // Translation system
@@ -146,51 +153,131 @@ const translations: Record<Language, any> = {
     },
     steps: {
       overview: {
-        title: "What is the Water Cycle?",
+        title: "The Water Cycle - An Overview",
         description:
-          "The water cycle is the continuous movement of water on, above, and below the Earth's surface. Water moves between oceans, atmosphere, and land through evaporation, condensation, and precipitation.",
+          "The water cycle, also called the hydrological cycle, is the continuous movement of water on, above, and below the surface of Earth. Water can change states among liquid, vapor, and ice at various places in the water cycle.",
+        keyPoints: [
+          "Water constantly moves through different states",
+          "The cycle is powered by the Sun's energy",
+          "Water moves between oceans, atmosphere, and land",
+          "The total amount of water on Earth remains constant"
+        ],
       },
       evaporation: {
         title: "Step 1: Evaporation",
         description:
-          "When the Sun heats water in oceans, rivers, and lakes, it evaporates and becomes water vapor. Watch the water droplets rise upward from the water surface as they turn into invisible vapor.",
+          "Evaporation is the process where liquid water transforms into water vapor (gas). When the Sun heats water in oceans, rivers, lakes, and puddles, the water molecules gain enough energy to break free from the liquid surface and rise into the atmosphere as invisible water vapor.",
+        keyPoints: [
+          "Heat from the Sun provides energy for evaporation",
+          "Water changes from liquid to gas (vapor)",
+          "Occurs from oceans, rivers, lakes, and soil",
+          "About 86% of global evaporation comes from oceans"
+        ],
       },
       transpiration: {
         title: "Step 2: Transpiration",
         description:
-          "Water also evaporates from trees and plants through transpiration. Plants absorb water through their roots and release water vapor through tiny pores in their leaves. Watch the water droplets rising from the tree.",
+          "Transpiration is the process where plants absorb water through their roots and release water vapor through tiny pores (stomata) in their leaves. This is how plants contribute to the water cycle and cool themselves, just like humans sweating.",
+        keyPoints: [
+          "Plants absorb water through roots from soil",
+          "Water travels up through the plant's stem",
+          "Water vapor exits through stomata in leaves",
+          "About 10% of atmospheric moisture comes from plants"
+        ],
       },
       condensation: {
         title: "Step 3: Condensation",
         description:
-          "As water vapor rises into the atmosphere, it cools down. When it cools enough, the water vapor condenses into tiny water droplets, forming clouds. Notice how the vapor disappears and clouds form.",
+          "Condensation occurs when water vapor in the atmosphere cools down and changes back into liquid water droplets. As warm, moist air rises, it expands and cools. When the air cools to its dew point, water vapor condenses around tiny particles like dust, salt, or smoke to form clouds.",
+        keyPoints: [
+          "Water vapor cools and turns back into liquid",
+          "Forms tiny water droplets around dust particles",
+          "Creates clouds, fog, and dew",
+          "Higher altitude = cooler temperature = more condensation"
+        ],
       },
       precipitation: {
         title: "Step 4: Precipitation",
         description:
-          "When clouds become heavy with water droplets, they release the water back to Earth as precipitation - rain, snow, or hail. Watch the rain falling from the clouds.",
+          "Precipitation is when water falls from clouds to Earth. As cloud droplets collide and merge, they become heavier. When they're too heavy for air currents to hold them up, they fall as rain, snow, sleet, or hail depending on the temperature.",
+        keyPoints: [
+          "Water droplets in clouds grow larger and heavier",
+          "Falls as rain when temperature is above 0°C",
+          "Falls as snow when temperature is below 0°C",
+          "Average raindrop falls at 20 mph (32 km/h)"
+        ],
       },
       collection: {
-        title: "Step 5: Collection",
+        title: "Step 5: Collection (Surface Runoff)",
         description:
-          "Rainwater that falls on Earth flows into ponds, lakes, rivers, and oceans. Some water flows over the surface as runoff. The water is collected and ready to evaporate again.",
+          "Collection is when precipitation gathers in bodies of water. Some water flows over land as surface runoff into streams and rivers, eventually reaching lakes and oceans. This runoff can erode soil and carry nutrients and pollutants.",
+        keyPoints: [
+          "Water flows downhill due to gravity",
+          "Forms streams, rivers, and eventually reaches oceans",
+          "Some water collects in lakes and ponds",
+          "Runoff can cause erosion and flooding"
+        ],
+      },
+      infiltration: {
+        title: "Step 6: Infiltration & Groundwater",
+        description:
+          "Infiltration is the process where water soaks into the ground through soil and rocks. This water becomes groundwater, stored in underground layers called aquifers. Groundwater slowly moves through the ground and can take years to centuries to return to the surface through springs or wells.",
+        keyPoints: [
+          "Water seeps through soil into underground layers",
+          "Stored in aquifers between rock and soil layers",
+          "Provides drinking water for many communities",
+          "Can take hundreds of years to recharge"
+        ],
       },
       complete: {
-        title: "Step 6: The Complete Cycle",
+        title: "The Complete Water Cycle",
         description:
-          "The water cycle is complete! Water evaporates from water bodies and plants, forms clouds through condensation, falls as rain, and collects again. This continuous process helps redistribute water across Earth.",
+          "The water cycle is continuous and interconnected. Solar energy drives evaporation and transpiration, sending water vapor into the atmosphere. Cooling causes condensation into clouds, which release precipitation. Water then collects in bodies of water and infiltrates the ground, completing the cycle and beginning again.",
+        keyPoints: [
+          "All steps work together continuously",
+          "Powered by solar energy and gravity",
+          "Distributes fresh water across the planet",
+          "Essential for all life on Earth"
+        ],
       },
     },
     canvas: {
-      evaporation: "Evaporation",
-      transpiration: "Transpiration",
-      condensation: "Condensation",
-      precipitation: "Precipitation",
-      collection: "Collection",
+      evaporation: "EVAPORATION",
+      transpiration: "TRANSPIRATION",
+      condensation: "CONDENSATION",
+      precipitation: "PRECIPITATION",
+      collection: "COLLECTION (Runoff)",
+      infiltration: "INFILTRATION",
+      groundwater: "GROUNDWATER",
       sun: "Sun",
       waterBody: "Water Body",
       clouds: "Clouds",
       rain: "Rain",
+    },
+    learn: {
+      title: "The Water Cycle",
+      subtitle: "Interactive Learning Experience",
+      stepInformation: "Step Information",
+      keyPoints: "Key Points",
+      quickJump: "Quick Jump",
+      didYouKnow: "Did You Know?",
+      understanding: "Understanding the Water Cycle",
+      energySource: "Energy Source",
+      energySourceDesc: "The Sun provides energy for evaporation, driving the entire water cycle.",
+      stateChanges: "State Changes",
+      stateChangesDesc: "Water changes between liquid, vapor, and ice throughout the cycle.",
+      continuousProcess: "Continuous Process",
+      continuousProcessDesc: "The cycle never stops - water is constantly moving and changing form.",
+      lifeSupport: "Life Support",
+      lifeSupportDesc: "The water cycle distributes fresh water essential for all living things.",
+      funFacts: [
+        "🌊 97% of Earth's water is in the oceans (salt water)",
+        "💧 Only 3% is fresh water, and 2/3 of that is frozen!",
+        "🌍 The same water has been cycling for billions of years",
+        "☁️ A cloud can weigh more than 1 million pounds!",
+        "🌳 A large oak tree can transpire 40,000 gallons per year"
+      ],
+      progress: "Progress",
     },
     practice: {
       title: "Water Cycle - Practice Mode",
@@ -459,9 +546,15 @@ const translations: Record<Language, any> = {
     },
     steps: {
       overview: {
-        title: "जल चक्र क्या है?",
+        title: "जल चक्र - एक अवलोकन",
         description:
-          "जल चक्र पृथ्वी की सतह पर, ऊपर और नीचे जल की निरंतर गति है। जल वाष्पीकरण, संघनन और वर्षा के माध्यम से महासागरों, वायुमंडल और भूमि के बीच घूमता है।",
+          "जल चक्र, जिसे जलीय चक्र भी कहा जाता है, पृथ्वी की सतह पर, ऊपर और नीचे पानी की निरंतर गति है। जल चक्र में विभिन्न स्थानों पर पानी तरल, वाष्प और बर्फ के बीच अवस्थाएं बदल सकता है।",
+        keyPoints: [
+          "पानी लगातार विभिन्न अवस्थाओं के माध्यम से घूमता है",
+          "चक्र सूर्य की ऊर्जा से संचालित होता है",
+          "पानी महासागरों, वायुमंडल और भूमि के बीच घूमता है",
+          "पृथ्वी पर पानी की कुल मात्रा स्थिर रहती है"
+        ],
       },
       evaporation: {
         title: "चरण 1: वाष्पीकरण",
@@ -484,14 +577,37 @@ const translations: Record<Language, any> = {
           "जब बादल पानी की बूंदों से भारी हो जाते हैं, तो वे पानी को वर्षा के रूप में पृथ्वी पर वापस छोड़ते हैं - बारिश, बर्फ या ओले के रूप में।",
       },
       collection: {
-        title: "चरण 5: संग्रहण",
+        title: "चरण 5: संग्रहण (सतह अपवाह)",
         description:
-          "पृथ्वी पर गिरने वाला वर्षा जल तालाबों, झीलों, नदियों और महासागरों में बहता है। कुछ पानी सतह पर प्रवाह के रूप में बहता है।",
+          "संग्रहण तब होता है जब वर्षा जल निकायों में एकत्र होती है। कुछ पानी सतह अपवाह के रूप में भूमि पर बहकर नदियों और नालों में जाता है, अंततः झीलों और महासागरों तक पहुँचता है। यह अपवाह मिट्टी का कटाव कर सकता है और पोषक तत्वों और प्रदूषकों को ले जा सकता है।",
+        keyPoints: [
+          "पानी गुरुत्वाकर्षण के कारण नीचे की ओर बहता है",
+          "नदियाँ और नाले बनाता है और अंततः महासागरों तक पहुँचता है",
+          "कुछ पानी झीलों और तालाबों में एकत्र होता है",
+          "अपवाह से कटाव और बाढ़ आ सकती है"
+        ],
+      },
+      infiltration: {
+        title: "चरण 6: अंतःस्यंदन और भूजल",
+        description:
+          "अंतःस्यंदन वह प्रक्रिया है जिसमें पानी मिट्टी और चट्टानों के माध्यम से जमीन में रिसता है। यह पानी भूजल बन जाता है, जो भूमिगत परतों में संग्रहीत होता है जिन्हें जलभृत कहा जाता है। भूजल धीरे-धीरे जमीन के माध्यम से चलता है और सतह पर वापस आने में सालों से सैकड़ों साल लग सकते हैं।",
+        keyPoints: [
+          "पानी मिट्टी से भूमिगत परतों में रिसता है",
+          "चट्टान और मिट्टी की परतों के बीच जलभृत में संग्रहीत",
+          "कई समुदायों को पीने का पानी प्रदान करता है",
+          "पुनर्भरण में सैकड़ों साल लग सकते हैं"
+        ],
       },
       complete: {
-        title: "चरण 6: पूर्ण चक्र",
+        title: "पूर्ण जल चक्र",
         description:
-          "जल चक्र पूर्ण है! पानी जल निकायों और पौधों से वाष्पित होता है, संघनन के माध्यम से बादल बनाता है, बारिश के रूप में गिरता है, और फिर से एकत्र होता है।",
+          "जल चक्र निरंतर और परस्पर जुड़ा हुआ है। सौर ऊर्जा वाष्पीकरण और वाष्पोत्सर्जन को चलाती है, जो जलवाष्प को वायुमंडल में भेजती है। ठंडक से संघनन होकर बादल बनते हैं, जो वर्षा छोड़ते हैं। पानी फिर जल निकायों में एकत्र होता है और जमीन में रिसता है, चक्र को पूरा करता है और फिर से शुरू करता है।",
+        keyPoints: [
+          "सभी चरण लगातार एक साथ काम करते हैं",
+          "सौर ऊर्जा और गुरुत्वाकर्षण द्वारा संचालित",
+          "ग्रह भर में ताजा पानी वितरित करता है",
+          "पृथ्वी पर सभी जीवन के लिए आवश्यक"
+        ],
       },
     },
     canvas: {
@@ -499,11 +615,38 @@ const translations: Record<Language, any> = {
       transpiration: "वाष्पोत्सर्जन",
       condensation: "संघनन",
       precipitation: "वर्षा",
-      collection: "संग्रहण",
+      collection: "संग्रहण (अपवाह)",
+      infiltration: "अंतःस्यंदन",
+      groundwater: "भूजल",
       sun: "सूर्य",
       waterBody: "जल निकाय",
       clouds: "बादल",
       rain: "बारिश",
+    },
+    learn: {
+      title: "जल चक्र",
+      subtitle: "इंटरएक्टिव लर्निंग अनुभव",
+      stepInformation: "चरण जानकारी",
+      keyPoints: "मुख्य बिंदु",
+      quickJump: "त्वरित जंप",
+      didYouKnow: "क्या आप जानते हैं?",
+      understanding: "जल चक्र को समझना",
+      energySource: "ऊर्जा स्रोत",
+      energySourceDesc: "सूर्य वाष्पीकरण के लिए ऊर्जा प्रदान करता है, जो पूरे जल चक्र को चलाता है।",
+      stateChanges: "अवस्था परिवर्तन",
+      stateChangesDesc: "चक्र भर में पानी तरल, वाष्प और बर्फ के बीच बदलता रहता है।",
+      continuousProcess: "निरंतर प्रक्रिया",
+      continuousProcessDesc: "चक्र कभी नहीं रुकता - पानी लगातार घूम रहा है और रूप बदल रहा है।",
+      lifeSupport: "जीवन सहायता",
+      lifeSupportDesc: "जल चक्र सभी जीवित चीजों के लिए आवश्यक ताजा पानी वितरित करता है।",
+      funFacts: [
+        "🌊 पृथ्वी का 97% पानी महासागरों में है (खारा पानी)",
+        "💧 केवल 3% ताजा पानी है, और उसका 2/3 जमा हुआ है!",
+        "🌍 यही पानी अरबों वर्षों से चक्रित हो रहा है",
+        "☁️ एक बादल का वजन 1 मिलियन पाउंड से अधिक हो सकता है!",
+        "🌳 एक बड़ा ओक का पेड़ प्रति वर्ष 40,000 गैलन पानी का वाष्पोत्सर्जन कर सकता है"
+      ],
+      progress: "प्रगति",
     },
     practice: {
       title: "जल चक्र - अभ्यास मोड",
@@ -772,9 +915,15 @@ const translations: Record<Language, any> = {
     },
     steps: {
       overview: {
-        title: "જળ ચક્ર શું છે?",
+        title: "જળ ચક્ર - એક અવલોકન",
         description:
-          "જળ ચક્ર એ પૃથ્વીની સપાટી પર, ઉપર અને નીચે પાણીની સતત હલચલ છે। બાષ્પીભવન, સંઘનન અને વરસાદ દ્વારા પાણી મહાસાગરો, વાતાવરણ અને જમીન વચ્ચે ફરે છે।",
+          "જળ ચક્ર, જેને જળીય ચક્ર પણ કહેવામાં આવે છે, એ પૃથ્વીની સપાટી પર, ઉપર અને નીચે પાણીની સતત હલચલ છે। જળ ચક્રમાં વિવિધ સ્થાનોએ પાણી પ્રવાહી, વરાળ અને બરફ વચ્ચે અવસ્થાઓ બદલી શકે છે।",
+        keyPoints: [
+          "પાણી સતત વિવિધ અવસ્થાઓ દ્વારા ફરે છે",
+          "ચક્ર સૂર્યની ઊર્જાથી સંચાલિત થાય છે",
+          "પાણી મહાસાગરો, વાતાવરણ અને જમીન વચ્ચે ફરે છે",
+          "પૃથ્વી પર પાણીની કુલ માત્રા સ્થિર રહે છે"
+        ],
       },
       evaporation: {
         title: "પગલું 1: બાષ્પીભવન",
@@ -797,14 +946,37 @@ const translations: Record<Language, any> = {
           "જ્યારે વાદળો પાણીના ટીપાંથી ભારે થાય છે, ત્યારે તેઓ પાણીને વરસાદ તરીકે પૃથ્વી પર પાછા છોડે છે - વરસાદ, બરફ અથવા કરાના રૂપમાં।",
       },
       collection: {
-        title: "પગલું 5: સંગ્રહ",
+        title: "પગલું 5: સંગ્રહ (સપાટી રનઓફ)",
         description:
-          "પૃથ્વી પર પડતો વરસાદી પાણી તળાવો, સરોવરો, નદીઓ અને મહાસાગરોમાં વહે છે। કેટલાક પાણી સપાટી પર વહેણ તરીકે વહે છે।",
+          "સંગ્રહ ત્યારે થાય છે જ્યારે વરસાદ જળ સંસ્થાઓમાં એકત્રિત થાય છે। કેટલાક પાણી સપાટી રનઓફ તરીકે જમીન પર વહીને નદીઓ અને નાળાઓમાં જાય છે, અંતે તળાવો અને મહાસાગરો સુધી પહોંચે છે। આ રનઓફ માટીનું કટાણ કરી શકે છે અને પોષક તત્વો અને પ્રદૂષકોને લઈ જઈ શકે છે।",
+        keyPoints: [
+          "પાણી ગુરુત્વાકર્ષણના કારણે નીચે તરફ વહે છે",
+          "નદીઓ અને નાળાઓ બનાવે છે અને અંતે મહાસાગરો સુધી પહોંચે છે",
+          "કેટલાક પાણી તળાવો અને તળાવોમાં એકત્રિત થાય છે",
+          "રનઓફ કટાણ અને પૂરનું કારણ બની શકે છે"
+        ],
+      },
+      infiltration: {
+        title: "પગલું 6: અંતર્સ્યંદન અને ભૂજળ",
+        description:
+          "અંતર્સ્યંદન એ પ્રક્રિયા છે જ્યાં પાણી માટી અને ખડકો દ્વારા જમીનમાં રસે છે। આ પાણી ભૂજળ બને છે, જે ભૂગર્ભ સ્તરોમાં સંગ્રહિત થાય છે જેને જળભરત કહેવામાં આવે છે। ભૂજળ ધીમે ધીમે જમીન દ્વારા ફરે છે અને સપાટી પર પાછું આવવામાં વર્ષોથી સેંકડો વર્ષ લાગી શકે છે।",
+        keyPoints: [
+          "પાણી માટી દ્વારા ભૂગર્ભ સ્તરોમાં રસે છે",
+          "ખડક અને માટીની સ્તરો વચ્ચે જળભરતમાં સંગ્રહિત",
+          "ઘણા સમુદાયોને પીણાનું પાણી પ્રદાન કરે છે",
+          "પુનઃભરણ માટે સેંકડો વર્ષ લાગી શકે છે"
+        ],
       },
       complete: {
-        title: "પગલું 6: સંપૂર્ણ ચક્ર",
+        title: "સંપૂર્ણ જળ ચક્ર",
         description:
-          "જળ ચક્ર પૂર્ણ છે! પાણી જળ સંસ્થાઓ અને છોડમાંથી બાષ્પીભવન થાય છે, સંઘનન દ્વારા વાદળો બનાવે છે, વરસાદ તરીકે પડે છે અને ફરી એકત્રિત થાય છે।",
+          "જળ ચક્ર સતત અને પરસ્પર જોડાયેલું છે। સૌર ઊર્જા બાષ્પીભવન અને વાષ્પોત્સર્જનને ચલાવે છે, જે જળ વરાળને વાતાવરણમાં મોકલે છે। ઠંડકથી વાદળોમાં સંઘનન થાય છે, જે વરસાદ છોડે છે। પાણી પછી જળ સંસ્થાઓમાં એકત્રિત થાય છે અને જમીનમાં રસે છે, ચક્રને પૂર્ણ કરે છે અને ફરીથી શરૂ કરે છે।",
+        keyPoints: [
+          "બધા પગલાઓ સતત એકસાથે કામ કરે છે",
+          "સૌર ઊર્જા અને ગુરુત્વાકર્ષણ દ્વારા સંચાલિત",
+          "ગ્રહ પર તાજા પાણીને વિતરિત કરે છે",
+          "પૃથ્વી પરના બધા જીવન માટે આવશ્યક"
+        ],
       },
     },
     canvas: {
@@ -812,11 +984,38 @@ const translations: Record<Language, any> = {
       transpiration: "વાષ્પોત્સર્જન",
       condensation: "સંઘનન",
       precipitation: "વરસાદ",
-      collection: "સંગ્રહ",
+      collection: "સંગ્રહ (રનઓફ)",
+      infiltration: "અંતર્સ્યંદન",
+      groundwater: "ભૂજળ",
       sun: "સૂર્ય",
       waterBody: "જળ સંસ્થા",
       clouds: "વાદળો",
       rain: "વરસાદ",
+    },
+    learn: {
+      title: "જળ ચક્ર",
+      subtitle: "ઇન્ટરએક્ટિવ શીખવાનો અનુભવ",
+      stepInformation: "પગલું માહિતી",
+      keyPoints: "મુખ્ય મુદ્દાઓ",
+      quickJump: "ઝડપી જમ્પ",
+      didYouKnow: "શું તમે જાણો છો?",
+      understanding: "જળ ચક્રને સમજવું",
+      energySource: "ઊર્જા સ્ત્રોત",
+      energySourceDesc: "સૂર્ય બાષ્પીભવન માટે ઊર્જા પ્રદાન કરે છે, જે આખા જળ ચક્રને ચલાવે છે।",
+      stateChanges: "સ્થિતિ પરિવર્તન",
+      stateChangesDesc: "ચક્ર દરમિયાન પાણી પ્રવાહી, વરાળ અને બરફ વચ્ચે બદલાય છે।",
+      continuousProcess: "સતત પ્રક્રિયા",
+      continuousProcessDesc: "ચક્ર ક્યારેય અટકતું નથી - પાણી સતત ફરતું રહે છે અને રૂપ બદલે છે।",
+      lifeSupport: "જીવન સહાય",
+      lifeSupportDesc: "જળ ચક્ર બધી જીવંત વસ્તુઓ માટે આવશ્યક તાજા પાણીને વિતરિત કરે છે।",
+      funFacts: [
+        "🌊 પૃથ્વીનો 97% પાણી મહાસાગરોમાં છે (ખારું પાણી)",
+        "💧 માત્ર 3% તાજું પાણી છે, અને તેનો 2/3 જામી ગયેલું છે!",
+        "🌍 આ જ પાણી અબજો વર્ષોથી ફરી રહ્યું છે",
+        "☁️ એક વાદળનું વજન 1 મિલિયન પાઉન્ડથી વધારે હોઈ શકે છે!",
+        "🌳 એક મોટું ઓકનું ઝાડ વર્ષ દીઠ 40,000 ગેલન પાણીનો વાષ્પોત્સર્જન કરી શકે છે"
+      ],
+      progress: "પ્રગતિ",
     },
     practice: {
       title: "જળ ચક્ર - અભ્યાસ મોડ",
@@ -1083,24 +1282,38 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({
 
   const handleSetLanguage = (lang: Language) => {
     setLanguageState(lang);
-    localStorage.setItem("waterCycleLang", lang);
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        localStorage.setItem("waterCycleLang", lang);
+      }
+    } catch (error) {
+      // Silently handle localStorage errors (e.g., in private browsing mode)
+      console.warn('localStorage write error:', error);
+    }
   };
 
   useEffect(() => {
-    const saved = localStorage.getItem("waterCycleLang") as Language;
-    if (saved && ["en", "hi", "gu"].includes(saved)) {
-      setLanguageState(saved);
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        const saved = localStorage.getItem("waterCycleLang") as Language;
+        if (saved && ["en", "hi", "gu"].includes(saved)) {
+          setLanguageState(saved);
+        }
+      }
+    } catch (error) {
+      // Silently handle localStorage errors (e.g., in private browsing mode)
+      console.warn('localStorage access error:', error);
     }
   }, []);
 
-  const t = (key: string) => {
+  const t = useCallback((key: string) => {
     const keys = key.split(".");
     let value: any = translations[language];
     for (const k of keys) {
       value = value?.[k];
     }
     return value || key;
-  };
+  }, [language]);
 
   return (
     <LanguageContext.Provider
@@ -1261,14 +1474,20 @@ const WaterCycleLearning: React.FC<WaterCycleLearningProps> = ({
   useEffect(() => {
     const newParticles: Particle[] = [];
     for (let i = 0; i < 15; i++) {
+      const x = Math.random() * width;
       newParticles.push({
-        x: Math.random() * width,
+        id: Date.now() + i,
+        x: x,
         y: Math.random() * height,
+        initialX: x,
         vx: (Math.random() - 0.5) * 2,
         vy: -Math.random() * 2 - 1,
         size: Math.random() * 5 + 3,
         opacity: Math.random() * 0.6 + 0.4,
+        type: 'vapor',
         color: "#00CED1",
+        life: 1,
+        wobbleSpeed: 0.05 + Math.random() * 0.05,
       });
     }
     setParticles(newParticles);
@@ -1316,12 +1535,30 @@ const WaterCycleLearning: React.FC<WaterCycleLearningProps> = ({
     };
   }, [height]);
 
-  // Draw on canvas
+  // Draw on canvas with enhanced DOM safety checks
   useEffect(() => {
+    // Ensure DOM is ready
+    if (typeof document === 'undefined') return;
+    
     if (!canvasRef.current || !currentStep) return;
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    
+    // Verify canvas is connected to DOM
+    if (!canvas.isConnected) {
+      return;
+    }
+    
+    const ctx = canvas.getContext("2d", { alpha: false });
+    if (!ctx) {
+      console.warn('Failed to get 2D context from canvas');
+      return;
+    }
+
+    // Validate dimensions
+    if (width <= 0 || height <= 0) {
+      console.warn('Invalid canvas dimensions:', width, height);
+      return;
+    }
 
     ctx.clearRect(0, 0, width, height);
 
@@ -1339,22 +1576,6 @@ const WaterCycleLearning: React.FC<WaterCycleLearningProps> = ({
       t
     );
   }, [currentStep, animationProgress, particles, width, height, t]);
-
-  const nextStep = () => {
-    if (currentStepIndex < modeSteps.length - 1) {
-      setCurrentStepIndex((prev) => prev + 1);
-    }
-  };
-
-  const prevStep = () => {
-    if (currentStepIndex > 0) {
-      setCurrentStepIndex((prev) => prev - 1);
-    }
-  };
-
-  const resetMode = () => {
-    setCurrentStepIndex(0);
-  };
 
   // Real World Mode Component
   const RealWorldMode: React.FC = () => {
@@ -1869,7 +2090,7 @@ const WaterCycleLearning: React.FC<WaterCycleLearningProps> = ({
                     <h2 className="text-2xl sm:text-3xl font-bold text-gray-800">
                       {t('realWorld.scenario')} {currentScenario + 1} {t('realWorld.of')} {scenarios.length}
                     </h2>
-                    <div className="text-4xl sm:text-6xl">{scenarios[currentScenario].image}</div>
+                    <div className="text-4xl sm:text-6xl" style={{ lineHeight: '1', fontFamily: 'Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji, sans-serif' }}>{scenarios[currentScenario].image}</div>
                   </div>
                   
                   <h3 className="text-xl sm:text-2xl font-bold text-blue-700 mb-3">
@@ -2392,113 +2613,695 @@ const WaterCycleLearning: React.FC<WaterCycleLearningProps> = ({
     );
   }
 
-  // Render Learn mode
-  if (!currentStep) {
+  // Learn Mode Component
+  const LearnMode: React.FC = () => {
+    const { t } = useLanguage();
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+    const animationRef = useRef<number | null>(null);
+    const mountedRef = useRef<boolean>(true);
+    const particleIdCounter = useRef<number>(0);
+    
+    const [currentStep, setCurrentStep] = useState(0);
+    const [isPlaying, setIsPlaying] = useState(true);
+    const [animationProgress, setAnimationProgress] = useState(0);
+    const [particles, setParticles] = useState<Particle[]>([]);
+    const [showInfo, setShowInfo] = useState(true);
+
+    const steps: Array<{stage: LearnStage; titleKey: string; descKey: string; keyPointsKey: string}> = useMemo(() => [
+      { stage: 'overview', titleKey: 'steps.overview.title', descKey: 'steps.overview.description', keyPointsKey: 'steps.overview.keyPoints' },
+      { stage: 'evaporation', titleKey: 'steps.evaporation.title', descKey: 'steps.evaporation.description', keyPointsKey: 'steps.evaporation.keyPoints' },
+      { stage: 'transpiration', titleKey: 'steps.transpiration.title', descKey: 'steps.transpiration.description', keyPointsKey: 'steps.transpiration.keyPoints' },
+      { stage: 'condensation', titleKey: 'steps.condensation.title', descKey: 'steps.condensation.description', keyPointsKey: 'steps.condensation.keyPoints' },
+      { stage: 'precipitation', titleKey: 'steps.precipitation.title', descKey: 'steps.precipitation.description', keyPointsKey: 'steps.precipitation.keyPoints' },
+      { stage: 'collection', titleKey: 'steps.collection.title', descKey: 'steps.collection.description', keyPointsKey: 'steps.collection.keyPoints' },
+      { stage: 'infiltration', titleKey: 'steps.infiltration.title', descKey: 'steps.infiltration.description', keyPointsKey: 'steps.infiltration.keyPoints' },
+      { stage: 'complete', titleKey: 'steps.complete.title', descKey: 'steps.complete.description', keyPointsKey: 'steps.complete.keyPoints' },
+    ], []);
+
+    // Create particle function
+    const createParticle = useCallback((type: 'vapor' | 'rain', x: number, y: number, color: string): Particle => {
+      particleIdCounter.current += 1;
+      
+      if (type === 'vapor') {
+        return {
+          id: particleIdCounter.current,
+          x: x,
+          y: y,
+          initialX: x,
+          vx: 0, 
+          vy: -2.0, // Slower upward movement for gas
+          size: 5 + Math.random() * 8, // Variable bubble sizes
+          opacity: 0.8, // Start slightly transparent
+          type: 'vapor',
+          color: color,
+          life: 1,
+          wobbleSpeed: 0.05 + Math.random() * 0.05 // Randomize sine wave frequency
+        };
+      } else {
+        return {
+          id: particleIdCounter.current,
+          x: x,
+          y: y,
+          initialX: x,
+          vx: -1.5, // Slight wind to the left
+          vy: 12.0, // MUCH faster downward velocity for rain
+          size: 3, 
+          opacity: 0.9,
+          type: 'rain',
+          color: color,
+          life: 1,
+          wobbleSpeed: 0
+        };
+      }
+    }, []);
+
+    // Animation loop
+    useEffect(() => {
+      if (!isPlaying || !mountedRef.current) return;
+
+      let frameCount = 0;
+      
+      const animate = () => {
+        if (!mountedRef.current) return;
+        
+        frameCount++;
+        setAnimationProgress(prev => (prev + 0.015) % 1);
+        
+        const stage = steps[currentStep]?.stage;
+        
+        setParticles(prevParticles => {
+          let newParticles = [...prevParticles];
+          
+          // --- SPAWNING LOGIC ---
+
+          // Evaporation: Spawn frequently from water surface
+          if ((stage === 'evaporation' || stage === 'complete') && frameCount % 3 === 0) {
+            const x = 60 + Math.random() * 300;
+            newParticles.push(createParticle('vapor', x, 458, '#81D4FA')); // Lighter blue for steam
+          }
+          
+          // Transpiration: Spawn from trees
+          if ((stage === 'transpiration' || stage === 'complete') && frameCount % 4 === 0) {
+            const treeIndex = Math.floor(Math.random() * 3);
+            // Add some randomness to height so it comes from different parts of leaves
+            const x = 450 + treeIndex * 80 + (Math.random() - 0.5) * 40;
+            const y = 370 + (Math.random() - 0.5) * 30;
+            newParticles.push(createParticle('vapor', x, y, '#A5D6A7')); // Light green mist
+          }
+          
+          // Precipitation: Spawn heavily from clouds
+          if ((stage === 'precipitation' || stage === 'complete') && frameCount % 2 === 0) {
+            // Spawn multiple drops per frame for heavy rain effect
+            for(let i=0; i<2; i++) {
+                const x = 270 + Math.random() * 380;
+                newParticles.push(createParticle('rain', x, 140, '#1976D2'));
+            }
+          }
+          
+          // --- MOVEMENT LOGIC ---
+          newParticles = newParticles
+            .map(particle => {
+              let newX = particle.x;
+              let newY = particle.y + particle.vy;
+              let newLife = particle.life;
+              let newOpacity = particle.opacity;
+              let newSize = particle.size;
+
+              if (particle.type === 'vapor') {
+                // Sine Wave Movement for Vapor
+                // x = initialX + sin(time * speed) * amplitude
+                // Amplitude grows as particle rises (life decreases)
+                const waveAmplitude = (1 - particle.life) * 30; 
+                newX = particle.initialX + Math.sin(frameCount * particle.wobbleSpeed) * waveAmplitude;
+                
+                // Fade out as it rises
+                if (newY < 200) {
+                  newLife -= 0.015;
+                  newOpacity = Math.max(0, newLife * 0.8);
+                  // Expand size slightly as it rises/dissipates
+                  newSize += 0.05;
+                }
+              } else if (particle.type === 'rain') {
+                // Rain moves with constant wind (vx) and gravity
+                newX = particle.x + particle.vx;
+                
+                if (newY > 445) {
+                  newLife = 0; // Kill immediately on ground contact (splash could go here)
+                }
+              }
+
+              return {
+                ...particle,
+                x: newX,
+                y: newY,
+                life: newLife,
+                opacity: newOpacity,
+                size: newSize
+              };
+            })
+            .filter(p => p.life > 0 && p.y > -50 && p.y < 650); 
+          
+          if (newParticles.length > 250) { // Increased limit for heavier rain
+            newParticles = newParticles.slice(-250);
+          }
+          
+          return newParticles;
+        });
+
+        if (mountedRef.current) {
+          animationRef.current = requestAnimationFrame(animate);
+        }
+      };
+
+      animationRef.current = requestAnimationFrame(animate);
+
+      return () => {
+        if (animationRef.current) {
+          cancelAnimationFrame(animationRef.current);
+          animationRef.current = null;
+        }
+      };
+    }, [isPlaying, currentStep, steps, createParticle]);
+
+    // Canvas drawing
+    useEffect(() => {
+      if (!mountedRef.current) return;
+      
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+
+      const ctx = canvas.getContext('2d', { alpha: false });
+      if (!ctx) return;
+
+      const width = canvas.width;
+      const height = canvas.height;
+
+      try {
+        ctx.clearRect(0, 0, width, height);
+        const stage = steps[currentStep]?.stage;
+        if (!stage) return;
+        drawScene(ctx, width, height, stage, animationProgress, particles, t);
+      } catch (error) {
+        console.error('Canvas rendering error:', error);
+      }
+    }, [currentStep, animationProgress, particles, steps, t]);
+
+    useEffect(() => {
+      mountedRef.current = true;
+      return () => {
+        mountedRef.current = false;
+        if (animationRef.current) {
+          cancelAnimationFrame(animationRef.current);
+        }
+        setParticles([]);
+      };
+    }, []);
+
+    useEffect(() => {
+      setParticles([]);
+      particleIdCounter.current = 0;
+    }, [currentStep]);
+
+    const drawScene = (
+      ctx: CanvasRenderingContext2D,
+      width: number,
+      height: number,
+      stage: string,
+      progress: number,
+      particles: Particle[],
+      translate: (key: string) => string
+    ) => {
+      // --- BACKGROUNDS ---
+      const skyGradient = ctx.createLinearGradient(0, 0, 0, height * 0.6);
+      skyGradient.addColorStop(0, '#87CEEB');
+      skyGradient.addColorStop(1, '#E0F6FF');
+      ctx.fillStyle = skyGradient;
+      ctx.fillRect(0, 0, width, height * 0.6);
+
+      ctx.fillStyle = '#8FBC8F';
+      ctx.fillRect(0, height * 0.6, width, height * 0.15);
+
+      const undergroundGradient = ctx.createLinearGradient(0, height * 0.75, 0, height);
+      undergroundGradient.addColorStop(0, '#8B7355');
+      undergroundGradient.addColorStop(1, '#3E2723');
+      ctx.fillStyle = undergroundGradient;
+      ctx.fillRect(0, height * 0.75, width, height * 0.25);
+
+      // --- SUN ---
+      if (stage === 'evaporation' || stage === 'transpiration' || stage === 'complete' || stage === 'overview') {
+        const sunPulse = 1 + Math.sin(progress * Math.PI * 2) * 0.08;
+        ctx.save();
+        ctx.shadowBlur = 30;
+        ctx.shadowColor = '#FFA500';
+        ctx.fillStyle = '#FFD700';
+        ctx.beginPath();
+        ctx.arc(100, 80, 35 * sunPulse, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      // --- WATER BODY ---
+      ctx.fillStyle = '#4682B4';
+      ctx.fillRect(0, height * 0.75, width * 0.45, height * 0.25);
+      
+      ctx.strokeStyle = '#87CEEB';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      for (let x = 0; x < width * 0.45; x += 10) {
+        const y = height * 0.75 + Math.sin((x + progress * 100) * 0.05) * 3;
+        if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+
+      // --- LANDSCAPE ---
+      ctx.fillStyle = '#8B7355';
+      ctx.beginPath();
+      ctx.moveTo(width * 0.65, height * 0.6);
+      ctx.lineTo(width * 0.75, height * 0.35);
+      ctx.lineTo(width * 0.85, height * 0.6);
+      ctx.fill();
+
+      ctx.fillStyle = '#FFFFFF';
+      ctx.beginPath();
+      ctx.moveTo(width * 0.72, height * 0.4);
+      ctx.lineTo(width * 0.75, height * 0.35);
+      ctx.lineTo(width * 0.78, height * 0.4);
+      ctx.fill();
+
+      for (let i = 0; i < 3; i++) {
+        const treeX = 450 + i * 80;
+        const treeY = height * 0.6;
+        ctx.fillStyle = '#8B4513';
+        ctx.fillRect(treeX - 8, treeY, 16, 60);
+        ctx.fillStyle = '#228B22';
+        ctx.beginPath();
+        ctx.arc(treeX, treeY - 10, 30, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(treeX - 20, treeY + 5, 25, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(treeX + 20, treeY + 5, 25, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      if (stage === 'condensation' || stage === 'precipitation' || stage === 'complete' || stage === 'overview') {
+        const cloudFloat = Math.sin(progress * Math.PI * 2) * 8;
+        // Darker clouds for rain
+        const isRaining = stage === 'precipitation' || stage === 'complete';
+        const cloudColor = isRaining ? '#D3D3D3' : '#FFFFFF';
+        
+        drawCloud(ctx, 300 + cloudFloat, 120, 90, 0.9, cloudColor);
+        drawCloud(ctx, 450 - cloudFloat, 140, 80, 0.85, cloudColor);
+        drawCloud(ctx, 600 + cloudFloat * 0.7, 110, 85, 0.88, cloudColor);
+      }
+
+      // UPDATED PARTICLE RENDERING
+      particles.forEach(particle => {
+        ctx.save();
+        
+        if (particle.type === 'vapor') {
+          // Soft, gaseous circles
+          const radialGrad = ctx.createRadialGradient(
+            particle.x, particle.y, 0,
+            particle.x, particle.y, particle.size
+          );
+          radialGrad.addColorStop(0, particle.color);
+          radialGrad.addColorStop(1, 'rgba(255,255,255,0)');
+
+          ctx.globalAlpha = particle.opacity;
+          ctx.fillStyle = radialGrad;
+          ctx.beginPath();
+          ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+          ctx.fill();
+
+        } else if (particle.type === 'rain') {
+          // Fast Motion Blur Lines (Streaks)
+          ctx.globalAlpha = particle.opacity;
+          ctx.strokeStyle = particle.color;
+          ctx.lineWidth = 2;
+          ctx.lineCap = 'round';
+          
+          ctx.beginPath();
+          // Draw line opposite to velocity to simulate blur
+          ctx.moveTo(particle.x, particle.y);
+          ctx.lineTo(particle.x - particle.vx * 3, particle.y - particle.vy * 0.5); // Trail length based on speed
+          ctx.stroke();
+        }
+        
+        ctx.restore();
+      });
+
+      // Draw underground water if showing infiltration
+      if (stage === 'infiltration' || stage === 'complete') {
+        // Water seeping down
+        ctx.strokeStyle = '#4682B4';
+        ctx.lineWidth = 2;
+        for (let i = 0; i < 8; i++) {
+          const x = 500 + i * 40 + Math.sin(progress * Math.PI * 2 + i) * 5;
+          const startY = height * 0.6;
+          const endY = height * 0.85;
+          
+          ctx.globalAlpha = 0.5;
+          ctx.beginPath();
+          ctx.moveTo(x, startY);
+          ctx.lineTo(x, startY + (endY - startY) * ((progress * 2 + i * 0.1) % 1));
+          ctx.stroke();
+          ctx.globalAlpha = 1;
+        }
+        
+        // Groundwater layer
+        ctx.fillStyle = 'rgba(70, 130, 180, 0.4)';
+        ctx.fillRect(width * 0.5, height * 0.85, width * 0.5, height * 0.15);
+        
+        // Aquifer rocks
+        ctx.fillStyle = '#696969';
+        for (let i = 0; i < 15; i++) {
+          const rockX = width * 0.5 + Math.random() * width * 0.5;
+          const rockY = height * 0.85 + Math.random() * height * 0.15;
+          ctx.beginPath();
+          ctx.arc(rockX, rockY, 4 + Math.random() * 4, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      // Draw collection (rivers/streams)
+      if (stage === 'collection' || stage === 'complete') {
+        ctx.strokeStyle = '#4169E1';
+        ctx.lineWidth = 8;
+        ctx.lineCap = 'round';
+        
+        // Stream flowing to ocean
+        ctx.beginPath();
+        ctx.moveTo(width * 0.7, height * 0.6);
+        ctx.quadraticCurveTo(
+          width * 0.5, height * 0.68,
+          width * 0.4, height * 0.75
+        );
+        ctx.stroke();
+        
+        // Stream flow animation
+        for (let i = 0; i < 5; i++) {
+          const t = (progress + i * 0.2) % 1;
+          const x = width * 0.7 + (width * 0.3) * t * -1;
+          const y = height * 0.6 + (height * 0.15) * t;
+          
+          ctx.fillStyle = '#87CEEB';
+          ctx.globalAlpha = 1 - t;
+          ctx.beginPath();
+          ctx.arc(x, y, 5, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.globalAlpha = 1;
+        }
+      }
+
+      // --- LABELS ---
+      ctx.font = 'bold 14px Arial';
+      ctx.textAlign = 'center';
+      ctx.shadowColor = 'rgba(255, 255, 255, 0.8)';
+      ctx.shadowBlur = 4;
+
+      const labelColor = (labelStage: string) => {
+        return stage === labelStage || stage === 'complete' ? '#FF4500' : '#000000';
+      };
+
+      if (stage === 'evaporation' || stage === 'complete' || stage === 'overview') {
+        ctx.fillStyle = labelColor('evaporation');
+        ctx.fillText(translate('canvas.evaporation') + ' ↑', 200, height * 0.65);
+      }
+      if (stage === 'transpiration' || stage === 'complete' || stage === 'overview') {
+        ctx.fillStyle = labelColor('transpiration');
+        ctx.fillText(translate('canvas.transpiration') + ' ↑', 520, height * 0.52);
+      }
+      if (stage === 'condensation' || stage === 'complete' || stage === 'overview') {
+        ctx.fillStyle = labelColor('condensation');
+        ctx.fillText(translate('canvas.condensation'), 400, 100);
+      }
+      if (stage === 'precipitation' || stage === 'complete' || stage === 'overview') {
+        ctx.fillStyle = labelColor('precipitation');
+        ctx.fillText(translate('canvas.precipitation') + ' ↓', 500, 200);
+      }
+      if (stage === 'collection' || stage === 'complete') {
+        ctx.fillStyle = labelColor('collection');
+        ctx.fillText(translate('canvas.collection'), width * 0.55, height * 0.72);
+      }
+      if (stage === 'infiltration' || stage === 'complete') {
+        ctx.fillStyle = labelColor('infiltration');
+        ctx.fillText(translate('canvas.infiltration') + ' ↓', width * 0.7, height * 0.65);
+      }
+      ctx.shadowBlur = 0;
+    };
+
+    const drawCloud = (ctx: CanvasRenderingContext2D, x: number, y: number, size: number, opacity: number, color: string = '#FFFFFF') => {
+      ctx.save();
+      ctx.globalAlpha = opacity;
+      ctx.fillStyle = color;
+      ctx.shadowColor = 'rgba(0, 0, 0, 0.2)';
+      ctx.shadowBlur = 15;
+      ctx.beginPath();
+      ctx.arc(x, y, size * 0.5, 0, Math.PI * 2);
+      ctx.arc(x + size * 0.4, y - size * 0.1, size * 0.4, 0, Math.PI * 2);
+      ctx.arc(x - size * 0.4, y - size * 0.1, size * 0.4, 0, Math.PI * 2);
+      ctx.arc(x + size * 0.2, y + size * 0.2, size * 0.35, 0, Math.PI * 2);
+      ctx.arc(x - size * 0.2, y + size * 0.2, size * 0.35, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    };
+
+    const nextStep = useCallback(() => {
+      if (currentStep < steps.length - 1) setCurrentStep(currentStep + 1);
+    }, [currentStep, steps.length]);
+
+    const prevStep = useCallback(() => {
+      if (currentStep > 0) setCurrentStep(currentStep - 1);
+    }, [currentStep]);
+
+    const resetAnimation = useCallback(() => {
+      setCurrentStep(0);
+      setAnimationProgress(0);
+      setParticles([]);
+      particleIdCounter.current = 0;
+    }, []);
+
+    const currentStepData = (currentStep >= 0 && currentStep < steps.length) ? steps[currentStep] : steps[0];
+    const keyPoints = currentStepData ? t(currentStepData.keyPointsKey) : [];
+    const keyPointsArray = Array.isArray(keyPoints) ? keyPoints : [];
+
     return (
-      <>
-        {renderNavbar()}
-        <div className="text-center p-8 mt-20">No steps available</div>
-      </>
+      <div className="min-h-screen bg-gradient-to-b from-sky-100 to-blue-200 p-4 sm:p-8 pt-24">
+        <div className="max-w-6xl mx-auto">
+          {/* Header */}
+          <div className="bg-white rounded-2xl shadow-2xl p-6 mb-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <div className="text-5xl">💧</div>
+                <div>
+                  <h1 className="text-3xl sm:text-4xl font-bold text-blue-800">
+                    {t('learn.title')}
+                  </h1>
+                  <p className="text-gray-600">{t('learn.subtitle')}</p>
+                </div>
+              </div>
+              <div className="text-lg bg-blue-100 px-4 py-2 rounded-full font-semibold text-blue-700">
+                {t('controls.step')} {currentStep + 1} {t('controls.of')} {steps.length}
+              </div>
+            </div>
+          </div>
+
+          {/* Main Content */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Canvas Section */}
+            <div className="lg:col-span-2">
+              <div className="bg-white rounded-2xl shadow-xl p-6">
+                <div className="bg-gradient-to-br from-sky-50 to-blue-100 rounded-xl p-4 border-4 border-blue-200">
+                  <canvas
+                    ref={canvasRef}
+                    width={800}
+                    height={600}
+                    className="w-full rounded-lg"
+                  />
+                </div>
+
+                {/* Controls */}
+                <div className="mt-6 flex flex-wrap gap-3 justify-center">
+                  <button
+                    onClick={prevStep}
+                    disabled={currentStep === 0}
+                    className="px-6 py-3 bg-gray-500 text-white rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-600 transition flex items-center gap-2"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                    {t('controls.previous')}
+                  </button>
+
+                  <button
+                    onClick={() => setIsPlaying(!isPlaying)}
+                    className="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition flex items-center gap-2"
+                  >
+                    {isPlaying ? (
+                      <>
+                        <Pause className="w-5 h-5" />
+                        {t('controls.pause')}
+                      </>
+                    ) : (
+                      <>
+                        <Play className="w-5 h-5" />
+                        {t('controls.play')}
+                      </>
+                    )}
+                  </button>
+
+                  <button
+                    onClick={resetAnimation}
+                    className="px-6 py-3 bg-gray-500 text-white rounded-lg font-semibold hover:bg-gray-600 transition flex items-center gap-2"
+                  >
+                    <RotateCcw className="w-5 h-5" />
+                    {t('controls.reset')}
+                  </button>
+
+                  <button
+                    onClick={nextStep}
+                    disabled={currentStep === steps.length - 1}
+                    className="px-6 py-3 bg-green-600 text-white rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-green-700 transition flex items-center gap-2"
+                  >
+                    {t('controls.next')}
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+                </div>
+
+                {/* Progress Bar */}
+                <div className="mt-6">
+                  <div className="flex justify-between text-sm text-gray-600 mb-2">
+                    <span>{t('learn.progress')}</span>
+                    <span>{Math.round(((currentStep + 1) / steps.length) * 100)}%</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                    <div
+                      className="h-full bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-600 transition-all duration-500 rounded-full"
+                      style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Information Panel */}
+            <div className="lg:col-span-1">
+              <div className="bg-white rounded-2xl shadow-xl p-6 sticky top-4">
+                <button
+                  onClick={() => setShowInfo(!showInfo)}
+                  className="w-full flex items-center justify-between mb-4 p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition"
+                >
+                  <span className="font-bold text-blue-800">{t('learn.stepInformation')}</span>
+                  <svg 
+                    className={`w-5 h-5 transition-transform ${showInfo ? 'rotate-180' : ''}`}
+                    fill="currentColor" 
+                    viewBox="0 0 20 20"
+                  >
+                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"/>
+                  </svg>
+                </button>
+
+                {showInfo && (
+                  <div className="space-y-4 animate-fadeIn">
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-800 mb-3">
+                        {t(currentStepData.titleKey)}
+                      </h3>
+                      <p className="text-gray-700 leading-relaxed">
+                        {t(currentStepData.descKey)}
+                      </p>
+                    </div>
+
+                    {keyPointsArray.length > 0 && (
+                      <div className="border-t pt-4">
+                        <h4 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                          <span className="text-xl">🔑</span>
+                          {t('learn.keyPoints')}
+                        </h4>
+                        <ul className="space-y-2">
+                          {keyPointsArray.map((point: string, index: number) => (
+                            <li key={index} className="flex items-start gap-2 text-sm text-gray-700">
+                              <span className="text-blue-600 font-bold mt-0.5">•</span>
+                              <span>{point}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {/* Quick Navigation */}
+                    <div className="border-t pt-4">
+                      <h4 className="font-semibold text-gray-800 mb-3">{t('learn.quickJump')}</h4>
+                      <div className="grid grid-cols-2 gap-2">
+                        {steps.map((step, index) => (
+                          <button
+                            key={index}
+                            onClick={() => setCurrentStep(index)}
+                            className={`p-2 text-xs rounded-lg font-medium transition ${
+                              currentStep === index
+                                ? 'bg-blue-600 text-white'
+                                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                            }`}
+                          >
+                            {index + 1}. {step.stage.charAt(0).toUpperCase() + step.stage.slice(1)}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Fun Facts */}
+              <div className="mt-6 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-2xl shadow-xl p-6 text-white">
+                <h3 className="text-xl font-bold mb-3 flex items-center gap-2">
+                  <span className="text-2xl">💡</span>
+                  {t('learn.didYouKnow')}
+                </h3>
+                <div className="space-y-3 text-sm">
+                  {(t('learn.funFacts') as string[]).map((fact: string, index: number) => (
+                    <p key={index}>{fact}</p>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Educational Summary */}
+          <div className="mt-6 bg-white rounded-2xl shadow-xl p-6">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-3">
+              <span className="text-3xl">📚</span>
+              {t('learn.understanding')}
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
+                <h3 className="font-bold text-blue-800 mb-2">{t('learn.energySource')}</h3>
+                <p className="text-sm text-gray-700">{t('learn.energySourceDesc')}</p>
+              </div>
+              <div className="bg-green-50 p-4 rounded-lg border-l-4 border-green-500">
+                <h3 className="font-bold text-green-800 mb-2">{t('learn.stateChanges')}</h3>
+                <p className="text-sm text-gray-700">{t('learn.stateChangesDesc')}</p>
+              </div>
+              <div className="bg-purple-50 p-4 rounded-lg border-l-4 border-purple-500">
+                <h3 className="font-bold text-purple-800 mb-2">{t('learn.continuousProcess')}</h3>
+                <p className="text-sm text-gray-700">{t('learn.continuousProcessDesc')}</p>
+              </div>
+              <div className="bg-orange-50 p-4 rounded-lg border-l-4 border-orange-500">
+                <h3 className="font-bold text-orange-800 mb-2">{t('learn.lifeSupport')}</h3>
+                <p className="text-sm text-gray-700">{t('learn.lifeSupportDesc')}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     );
-  }
+  };
 
-  const stepKey = currentStep.data.stage;
-  const title = t(`steps.${stepKey}.title`);
-  const description = t(`steps.${stepKey}.description`);
-
+  // Render Learn mode
   return (
     <>
       {renderNavbar()}
-      <div className="w-full max-w-7xl mx-auto mt-20">
-        <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-        <div className="bg-gradient-to-r from-teal-500 via-purple-500 to-teal-500 text-white p-4 sm:p-6">
-          <div className="flex justify-between items-center flex-wrap gap-2">
-            <h2 className="text-xl sm:text-2xl font-semibold">{title}</h2>
-            <div className="text-sm bg-white/20 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full backdrop-blur-sm">
-              {t("controls.step")} {currentStepIndex + 1} {t("controls.of")}{" "}
-              {modeSteps.length}
-            </div>
-          </div>
-        </div>
-
-        <div className="p-4 sm:p-6 md:p-8">
-          <div className="bg-gradient-to-br from-sky-50 to-blue-50 rounded-xl shadow-lg p-4 sm:p-6 mb-6">
-            <canvas
-              ref={canvasRef}
-              width={width}
-              height={height}
-              className="w-full border-2 border-teal-200 rounded-lg"
-            />
-          </div>
-
-          <div className="bg-gradient-to-r from-teal-50 via-purple-50 to-teal-50 rounded-xl p-4 sm:p-6 mb-6 border-l-4 border-teal-500">
-            <p className="text-gray-800 text-base sm:text-lg leading-relaxed">
-              {description}
-            </p>
-          </div>
-
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-            <button
-              onClick={prevStep}
-              disabled={currentStepIndex === 0}
-              className="flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-300 transition-all w-full sm:w-auto"
-            >
-              <ChevronLeft className="w-5 h-5" />
-              {t("controls.previous")}
-            </button>
-
-            <div className="flex gap-2 sm:gap-3 w-full sm:w-auto">
-              <button
-                onClick={() => setIsPlaying(!isPlaying)}
-                className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-teal-600 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all flex-1 sm:flex-none"
-              >
-                {isPlaying ? (
-                  <>
-                    <Pause className="w-5 h-5" />
-                    {t("controls.pause")}
-                  </>
-                ) : (
-                  <>
-                    <Play className="w-5 h-5" />
-                    {t("controls.play")}
-                  </>
-                )}
-              </button>
-
-              <button
-                onClick={resetMode}
-                className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition-all flex-1 sm:flex-none"
-              >
-                <RotateCcw className="w-5 h-5" />
-                {t("controls.reset")}
-              </button>
-            </div>
-
-            <button
-              onClick={nextStep}
-              disabled={currentStepIndex === modeSteps.length - 1}
-              className="flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-teal-600 to-purple-600 text-white rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg transition-all w-full sm:w-auto"
-            >
-              {t("controls.next")}
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </div>
-
-          <div className="mt-6">
-            <div className="w-full bg-gray-200 rounded-full h-2 sm:h-3 overflow-hidden">
-              <div
-                className="h-full bg-gradient-to-r from-teal-600 via-purple-600 to-teal-600 transition-all duration-300 rounded-full"
-                style={{
-                  width: `${
-                    ((currentStepIndex + 1) / modeSteps.length) * 100
-                  }%`,
-                }}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-      </div>
+      <LearnMode />
     </>
   );
 };

@@ -349,14 +349,6 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = () => {
   return (
     <div className="w-full min-h-screen bg-gradient-to-br from-blue-50 via-teal-50 to-blue-50 p-4 sm:p-6">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-6">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 to-teal-600 bg-clip-text text-transparent mb-2">
-            🌟 {t('shadowSimulator.title')} 🌟
-          </h1>
-          <p className="text-gray-700 text-base sm:text-lg">{t('shadowSimulator.subtitle')}</p>
-        </div>
-
         {/* Feedback Banner */}
         {feedback && (
           <div className="fixed top-20 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-500 to-teal-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-lg sm:text-xl font-bold shadow-2xl animate-bounce z-50">
@@ -477,9 +469,6 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = () => {
                   strokeWidth="3"
                   className="transition-all"
                 />
-                <text x={screenPos + 15} y="30" fill="white" fontSize="14" fontWeight="bold">
-                  📺 {t('shadowSimulator.screenLabel')}
-                </text>
               </g>
 
               {/* Shadow */}
@@ -606,17 +595,9 @@ const PracticeMode: React.FC = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showExplanation, setShowExplanation] = useState(false);
   const [completedScenarios, setCompletedScenarios] = useState<number[]>([]);
-  const [showSimulation, setShowSimulation] = useState(false);
-
-  // Shadow puppetry simulation
-  const [puppetPosition, setPuppetPosition] = useState(50);
-
-  const [puppetShape, setPuppetShape] = useState<'hand' | 'bird' | 'dog'>('hand');
 
   // Fetch scenarios from translations
   const scenarios = (tValue('practice.scenarios') as unknown as Scenario[]) || [];
-
-
 
   const handleAnswerSelect = (index: number) => {
     if (showExplanation) return;
@@ -636,7 +617,6 @@ const PracticeMode: React.FC = () => {
       setCurrentScenario(currentScenario + 1);
       setSelectedAnswer(null);
       setShowExplanation(false);
-      setShowSimulation(false);
     }
   };
 
@@ -645,16 +625,6 @@ const PracticeMode: React.FC = () => {
       setCurrentScenario(currentScenario - 1);
       setSelectedAnswer(null);
       setShowExplanation(false);
-      setShowSimulation(false);
-    }
-  };
-
-  const getPuppetEmoji = () => {
-    switch (puppetShape) {
-      case 'hand': return '✋';
-      case 'bird': return '🦅';
-      case 'dog': return '🐕';
-      default: return '✋';
     }
   };
 
@@ -674,297 +644,48 @@ const PracticeMode: React.FC = () => {
       fontFamily: 'Arial, sans-serif',
       backgroundColor: '#F8F9FA'
     }}>
-      {/* Header */}
+      {/* Scenario Navigation */}
       <div style={{
-        backgroundColor: '#8E44AD',
-        color: 'white',
-        padding: '25px',
-        borderRadius: '15px',
-        marginBottom: '25px',
-        boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
+        display: 'flex',
+        justifyContent: 'center',
+        gap: '10px',
+        marginBottom: '30px',
+        flexWrap: 'wrap'
       }}>
-        <h1 style={{ margin: '0 0 10px 0', fontSize: '32px' }}>
-          {t('practice.title')}
-        </h1>
-        <p style={{ margin: '0', fontSize: '16px', opacity: 0.95 }}>
-          {t('practice.subtitle')}
-        </p>
-        <div style={{
-          marginTop: '15px',
-          display: 'flex',
-          gap: '15px',
-          flexWrap: 'wrap'
-        }}>
-          {scenarios.map((_, index) => (
-            <div
-              key={index}
-              style={{
-                width: '30px',
-                height: '30px',
-                borderRadius: '50%',
-                backgroundColor: completedScenarios.includes(index)
-                  ? '#27AE60'
-                  : index === currentScenario
-                    ? 'white'
-                    : 'rgba(255,255,255,0.3)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontWeight: 'bold',
-                fontSize: '14px',
-                color: index === currentScenario ? '#8E44AD' : 'white',
-                border: index === currentScenario ? '3px solid white' : 'none',
-                cursor: 'pointer',
-                transition: 'all 0.3s ease'
-              }}
-              onClick={() => {
-                setCurrentScenario(index);
-                setSelectedAnswer(null);
-                setShowExplanation(false);
-                setShowSimulation(false);
-              }}
-            >
-              {completedScenarios.includes(index) ? '✓' : index + 1}
-            </div>
-          ))}
-        </div>
+        {scenarios.map((_, index) => (
+          <div
+            key={index}
+            style={{
+              width: '35px',
+              height: '35px',
+              borderRadius: '50%',
+              backgroundColor: completedScenarios.includes(index)
+                ? '#27AE60'
+                : index === currentScenario
+                  ? '#2563EB'
+                  : '#ECF0F1',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontWeight: 'bold',
+              fontSize: '16px',
+              color: index === currentScenario || completedScenarios.includes(index) ? 'white' : '#7F8C8D',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              border: completedScenarios.includes(index) ? '2px solid #27AE60' : '2px solid transparent'
+            }}
+            onClick={() => {
+              setCurrentScenario(index);
+              setSelectedAnswer(null);
+              setShowExplanation(false);
+            }}
+          >
+            {completedScenarios.includes(index) ? '✓' : index + 1}
+          </div>
+        ))}
       </div>
 
-      {/* Interactive Simulation for Shadow Puppetry */}
-      {currentScenario === 0 && (
-        <div style={{
-          backgroundColor: 'white',
-          padding: '25px',
-          borderRadius: '15px',
-          marginBottom: '20px',
-          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-          border: '3px solid #FFD700'
-        }}>
-          <div style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: '15px'
-          }}>
-            <h3 style={{ color: '#8E44AD', margin: '0' }}>
-              {t('practice.simulation.title')}
-            </h3>
-            <button
-              onClick={() => setShowSimulation(!showSimulation)}
-              style={{
-                padding: '8px 16px',
-                backgroundColor: '#8E44AD',
-                color: 'white',
-                border: 'none',
-                borderRadius: '6px',
-                cursor: 'pointer',
-                fontWeight: 'bold',
-                fontSize: '14px'
-              }}
-            >
-              {showSimulation ? t('practice.simulation.hide') : t('practice.simulation.show')}
-            </button>
-          </div>
-
-          {showSimulation && (
-            <>
-              <p style={{ color: '#555', marginBottom: '20px', fontSize: '14px' }}>
-                {t('practice.simulation.intro')}
-              </p>
-
-              {/* Stage */}
-              <div style={{
-                backgroundColor: '#2C3E50',
-                height: '250px',
-                borderRadius: '10px',
-                position: 'relative',
-                marginBottom: '20px',
-                overflow: 'hidden',
-                boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.3)'
-              }}>
-                {/* Light source */}
-                <div style={{
-                  position: 'absolute',
-                  left: '10%',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  fontSize: '40px',
-                  filter: 'drop-shadow(0 0 20px #FFE66D)',
-                  zIndex: 10
-                }}>
-                  🔥
-                </div>
-
-                {/* Light rays */}
-                <svg style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '100%',
-                  pointerEvents: 'none',
-                  zIndex: 1
-                }}>
-                  <line
-                    x1="10%"
-                    y1="50%"
-                    x2={`${puppetPosition}%`}
-                    y2="45%"
-                    stroke="#FFE66D"
-                    strokeWidth="2"
-                    opacity="0.4"
-                  />
-                  <line
-                    x1="10%"
-                    y1="50%"
-                    x2={`${puppetPosition}%`}
-                    y2="55%"
-                    stroke="#FFE66D"
-                    strokeWidth="2"
-                    opacity="0.4"
-                  />
-                </svg>
-
-                {/* Puppet */}
-                <div style={{
-                  position: 'absolute',
-                  left: `${puppetPosition}%`,
-                  top: '50%',
-                  transform: 'translate(-50%, -50%)',
-                  fontSize: '50px',
-                  zIndex: 5,
-                  filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.4))'
-                }}>
-                  {getPuppetEmoji()}
-                </div>
-
-                {/* Screen */}
-                <div style={{
-                  position: 'absolute',
-                  right: '5%',
-                  top: '5%',
-                  width: '6px',
-                  height: '90%',
-                  backgroundColor: '#F0F0F0',
-                  boxShadow: '0 0 15px rgba(255,255,255,0.6)',
-                  zIndex: 2
-                }} />
-
-                {/* Shadow */}
-                <div style={{
-                  position: 'absolute',
-                  right: '5%',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  width: '40px',
-                  height: `${80 + (50 - puppetPosition) * 2}px`,
-                  backgroundColor: 'rgba(0,0,0,0.9)',
-                  borderRadius: '0 20px 20px 0',
-                  filter: 'blur(3px)',
-                  zIndex: 1
-                }} />
-
-                {/* Stage info */}
-                <div style={{
-                  position: 'absolute',
-                  bottom: '10px',
-                  left: '10px',
-                  color: 'white',
-                  fontSize: '12px',
-                  backgroundColor: 'rgba(0,0,0,0.5)',
-                  padding: '8px 12px',
-                  borderRadius: '6px'
-                }}>
-                  {t('practice.simulation.shadowSize')}: {puppetPosition < 35 ? t('practice.simulation.large') : puppetPosition < 50 ? t('practice.simulation.medium') : t('practice.simulation.small')}
-                </div>
-              </div>
-
-              {/* Controls */}
-              <div style={{ marginBottom: '15px' }}>
-                <label style={{
-                  display: 'block',
-                  marginBottom: '8px',
-                  color: '#2C3E50',
-                  fontWeight: 'bold',
-                  fontSize: '14px'
-                }}>
-                  {t('practice.simulation.puppetPosLabel')}
-                </label>
-                <input
-                  type="range"
-                  min="25"
-                  max="70"
-                  value={puppetPosition}
-                  onChange={(e) => setPuppetPosition(Number(e.target.value))}
-                  style={{
-                    width: '100%',
-                    height: '8px',
-                    cursor: 'pointer'
-                  }}
-                />
-              </div>
-
-              <div style={{ marginBottom: '15px' }}>
-                <label style={{
-                  display: 'block',
-                  marginBottom: '8px',
-                  color: '#2C3E50',
-                  fontWeight: 'bold',
-                  fontSize: '14px'
-                }}>
-                  {t('practice.simulation.puppetShapeLabel')}
-                </label>
-                <div style={{ display: 'flex', gap: '10px' }}>
-                  {['hand', 'bird', 'dog'].map((val) => {
-                    const shapeKey = val as 'hand' | 'bird' | 'dog';
-                    // Need to safely access nested key
-                    // But t() returns string. We can use separate keys or manual mapping.
-                    // Based on JSON structure: practice.simulation.shapes.hand.label
-                    const label = t(`practice.simulation.shapes.${shapeKey}.label`);
-                    const emoji = t(`practice.simulation.shapes.${shapeKey}.emoji`);
-                    return (
-                      <button
-                        key={val}
-                        onClick={() => setPuppetShape(shapeKey)}
-                        style={{
-                          padding: '10px 15px',
-                          backgroundColor: puppetShape === val ? '#8E44AD' : '#ECF0F1',
-                          color: puppetShape === val ? 'white' : '#2C3E50',
-                          border: 'none',
-                          borderRadius: '8px',
-                          cursor: 'pointer',
-                          fontSize: '20px',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          alignItems: 'center',
-                          gap: '5px',
-                          fontWeight: 'bold'
-                        }}
-                      >
-                        <span>{emoji}</span>
-                        <span style={{ fontSize: '11px' }}>{label}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <div
-                style={{
-                  backgroundColor: '#FEF9E7',
-                  padding: '12px',
-                  borderRadius: '8px',
-                  fontSize: '13px',
-                  color: '#F39C12'
-                }}
-                dangerouslySetInnerHTML={{ __html: t('practice.simulation.tip') }}
-              />
-            </>
-          )}
-        </div>
-      )}
-
-      {/* Scenario Card */}
+      {/* Question Card */}
       <div style={{
         backgroundColor: 'white',
         padding: '30px',
@@ -972,75 +693,18 @@ const PracticeMode: React.FC = () => {
         marginBottom: '20px',
         boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
       }}>
-        {/* Scenario Header */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '15px',
-          marginBottom: '20px',
-          paddingBottom: '15px',
-          borderBottom: '2px solid #ECF0F1'
-        }}>
-          <div style={{ fontSize: '50px' }}>
-            {currentScenarioData.imageEmoji}
-          </div>
-          <div style={{ flex: 1 }}>
-            <h2 style={{
-              color: '#8E44AD',
-              margin: '0 0 5px 0',
-              fontSize: '24px'
-            }}>
-              {currentScenarioData.title}
-            </h2>
-            <span style={{
-              color: '#7F8C8D',
-              fontSize: '14px'
-            }}>
-              {t('practice.controls.scenarioCount')
-                .replace('{{current}}', String(currentScenario + 1))
-                .replace('{{total}}', String(scenarios.length))}
-            </span>
-          </div>
-        </div>
-
-        {/* Situation */}
-        <div style={{
-          backgroundColor: '#E8F8F5',
-          padding: '20px',
-          borderRadius: '10px',
-          marginBottom: '25px',
-          borderLeft: '4px solid #1ABC9C'
-        }}>
-          <h3 style={{
-            color: '#1ABC9C',
-            marginTop: '0',
-            marginBottom: '10px',
-            fontSize: '16px'
-          }}>
-            {t('practice.headers.realWorldSituation')}
-          </h3>
-          <p style={{
-            color: '#2C3E50',
-            margin: '0',
-            lineHeight: '1.8',
-            fontSize: '15px'
-          }}>
-            {currentScenarioData.situation}
-          </p>
-        </div>
-
         {/* Question */}
         <h3 style={{
           color: '#2C3E50',
-          marginBottom: '20px',
-          fontSize: '18px',
+          marginBottom: '25px',
+          fontSize: '20px',
           lineHeight: '1.6'
         }}>
-          ❓ {currentScenarioData.question}
+          {currentScenarioData.question}
         </h3>
 
         {/* Options */}
-        <div style={{ marginBottom: '25px' }}>
+        <div style={{ marginBottom: '30px' }}>
           {currentScenarioData.options.map((option, index) => {
             const isSelected = selectedAnswer === index;
             const isCorrect = index === currentScenarioData.correctAnswer;
@@ -1061,8 +725,8 @@ const PracticeMode: React.FC = () => {
                 textColor = '#E74C3C';
               }
             } else if (isSelected) {
-              backgroundColor = '#F4ECF7';
-              borderColor = '#8E44AD';
+              backgroundColor = '#EFF6FF';
+              borderColor = '#2563EB';
             }
 
             return (
@@ -1083,7 +747,7 @@ const PracticeMode: React.FC = () => {
                   color: textColor,
                   fontWeight: isSelected || (showResult && isCorrect) ? 'bold' : 'normal',
                   transform: isSelected && !showResult ? 'scale(1.02)' : 'scale(1)',
-                  boxShadow: isSelected && !showResult ? '0 4px 8px rgba(142,68,173,0.2)' : 'none'
+                  boxShadow: isSelected && !showResult ? '0 4px 8px rgba(37,99,235,0.2)' : 'none'
                 }}
               >
                 <div style={{
@@ -1100,7 +764,7 @@ const PracticeMode: React.FC = () => {
                   fontSize: '14px',
                   fontWeight: 'bold'
                 }}>
-                  {showResult && isCorrect ? '✓' : showResult && isSelected ? '✗' : ''}
+                  {showResult && isCorrect ? '✓' : showResult && isSelected ? '✗' : String.fromCharCode(65 + index)}
                 </div>
                 <span style={{ flex: 1, lineHeight: '1.6' }}>{option}</span>
                 {showResult && isCorrect && (
@@ -1110,60 +774,6 @@ const PracticeMode: React.FC = () => {
             );
           })}
         </div>
-
-        {/* Explanation */}
-        {showExplanation && (
-          <div style={{ marginBottom: '20px' }}>
-            <div style={{
-              backgroundColor: '#E8F8F5',
-              padding: '20px',
-              borderRadius: '10px',
-              marginBottom: '15px',
-              borderLeft: '4px solid #27AE60'
-            }}>
-              <h3 style={{
-                color: '#27AE60',
-                marginTop: '0',
-                marginBottom: '12px',
-                fontSize: '16px'
-              }}>
-                {t('practice.headers.scientificExplanation')}
-              </h3>
-              <p style={{
-                color: '#2C3E50',
-                margin: '0',
-                lineHeight: '1.8',
-                fontSize: '15px'
-              }}>
-                {currentScenarioData.explanation}
-              </p>
-            </div>
-
-            <div style={{
-              backgroundColor: '#FFF3CD',
-              padding: '20px',
-              borderRadius: '10px',
-              borderLeft: '4px solid #F39C12'
-            }}>
-              <h3 style={{
-                color: '#F39C12',
-                marginTop: '0',
-                marginBottom: '12px',
-                fontSize: '16px'
-              }}>
-                {t('practice.headers.realWorldApplication')}
-              </h3>
-              <p style={{
-                color: '#2C3E50',
-                margin: '0',
-                lineHeight: '1.8',
-                fontSize: '15px'
-              }}>
-                {currentScenarioData.realWorldTip}
-              </p>
-            </div>
-          </div>
-        )}
 
         {/* Buttons */}
         <div style={{
@@ -1198,7 +808,7 @@ const PracticeMode: React.FC = () => {
                 style={{
                   padding: '12px 30px',
                   fontSize: '16px',
-                  backgroundColor: selectedAnswer === null ? '#BDC3C7' : '#8E44AD',
+                  backgroundColor: selectedAnswer === null ? '#BDC3C7' : '#2563EB',
                   color: 'white',
                   border: 'none',
                   borderRadius: '8px',
@@ -1231,87 +841,6 @@ const PracticeMode: React.FC = () => {
           </div>
         </div>
       </div>
-
-      {/* Progress Summary */}
-      <div style={{
-        backgroundColor: 'white',
-        padding: '20px',
-        borderRadius: '15px',
-        boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-      }}>
-        <h3 style={{ color: '#8E44AD', marginTop: '0', marginBottom: '15px' }}>
-          {t('practice.progress.title')}
-        </h3>
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: '15px'
-        }}>
-          <span style={{ color: '#7F8C8D', fontSize: '15px' }}>
-            {t('practice.progress.completed')}
-          </span>
-          <span style={{
-            fontSize: '20px',
-            fontWeight: 'bold',
-            color: '#27AE60'
-          }}>
-            {completedScenarios.length} / {scenarios.length}
-          </span>
-        </div>
-        <div style={{
-          width: '100%',
-          height: '12px',
-          backgroundColor: '#ECF0F1',
-          borderRadius: '6px',
-          overflow: 'hidden'
-        }}>
-          <div style={{
-            width: `${(completedScenarios.length / scenarios.length) * 100}%`,
-            height: '100%',
-            backgroundColor: '#27AE60',
-            transition: 'width 0.5s ease',
-            borderRadius: '6px'
-          }} />
-        </div>
-        {completedScenarios.length === scenarios.length && (
-          <div style={{
-            marginTop: '15px',
-            padding: '15px',
-            backgroundColor: '#D5F4E6',
-            borderRadius: '8px',
-            textAlign: 'center',
-            color: '#27AE60',
-            fontWeight: 'bold'
-          }}>
-            {t('practice.progress.congrats')}
-          </div>
-        )}
-      </div>
-
-      {/* Fun Facts Section */}
-      <div style={{
-        marginTop: '20px',
-        backgroundColor: '#E8F4F8',
-        padding: '20px',
-        borderRadius: '15px',
-        border: '2px solid #3498DB'
-      }}>
-        <h3 style={{ color: '#3498DB', marginTop: '0', marginBottom: '15px', fontSize: '18px' }}>
-          {t('practice.facts.title')}
-        </h3>
-        <ul style={{
-          color: '#2C3E50',
-          margin: '0',
-          paddingLeft: '20px',
-          lineHeight: '1.9',
-          fontSize: '14px'
-        }}>
-          {(tValue('practice.facts.list') as string[])?.map && (tValue('practice.facts.list') as string[]).map((fact, index) => (
-            <li key={index} dangerouslySetInnerHTML={{ __html: fact }} />
-          ))}
-        </ul>
-      </div>
     </div>
   );
 };
@@ -1320,23 +849,9 @@ const PracticeMode: React.FC = () => {
 // Real World Applications Component
 const RealWorldMode: React.FC = () => {
   const { t, tValue } = useLanguage();
-  const [filterCategory, setFilterCategory] = useState<string>("all");
-  const [filterMaterial, setFilterMaterial] = useState<string>("all");
 
   // Get applications from translations
   const applications: RealWorldApp[] = (tValue('realWorld.applications') as unknown as RealWorldApp[]) || [];
-
-  const categories = ["all", ...Array.from(new Set(applications.map(app => app.category)))];
-  const materials = ["all", "transparent", "translucent", "opaque", "mixed"];
-
-  // Check if any applications have materialType
-  const hasMaterialTypes = applications.some(app => app.materialType);
-
-  const filteredApplications = applications.filter(app => {
-    const categoryMatch = filterCategory === "all" || app.category === filterCategory;
-    const materialMatch = !hasMaterialTypes || filterMaterial === "all" || (app.materialType && app.materialType === filterMaterial);
-    return categoryMatch && materialMatch;
-  });
 
   const getMaterialBadgeColor = (type?: string) => {
     switch (type) {
@@ -1356,67 +871,9 @@ const RealWorldMode: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-teal-50 to-blue-50 p-4">
       <div className="max-w-7xl mx-auto py-8">
-        {/* Header */}
-        <div className="bg-white rounded-2xl shadow-xl overflow-hidden mb-8">
-          <div className="bg-gradient-to-r from-blue-500 via-teal-500 to-blue-500 text-white p-8">
-            <div className="flex items-center gap-3 mb-4">
-              <Globe className="w-10 h-10" />
-              <h2 className="text-4xl font-bold">{t('realWorld.title')}</h2>
-            </div>
-            <p className="text-blue-100 text-xl">
-              {t('realWorld.subtitle')}
-            </p>
-          </div>
-
-          {/* Filters */}
-          <div className="p-6 bg-gray-50 border-b">
-            <div className={`grid grid-cols-1 ${hasMaterialTypes ? 'md:grid-cols-2' : ''} gap-4`}>
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  {t('realWorld.filterCategory') || 'Filter by Category'}
-                </label>
-                <select
-                  value={filterCategory}
-                  onChange={(e) => setFilterCategory(e.target.value)}
-                  className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
-                >
-                  {categories.map(cat => (
-                    <option key={cat} value={cat}>
-                      {cat === "all" ? t('realWorld.allCategories') : cat}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {hasMaterialTypes && (
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    {t('realWorld.filterMaterial') || 'Filter by Material Type'}
-                  </label>
-                  <select
-                    value={filterMaterial}
-                    onChange={(e) => setFilterMaterial(e.target.value)}
-                    className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
-                  >
-                    {materials.map(mat => (
-                      <option key={mat} value={mat}>
-                        {mat === "all" ? "All Materials" : mat.charAt(0).toUpperCase() + mat.slice(1)}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              )}
-            </div>
-
-            <div className="mt-4 text-sm text-gray-600">
-              {t('realWorld.showing') || 'Showing'} {filteredApplications.length} {t('controls.of')} {applications.length} {t('realWorld.applicationsCount') || 'applications'}
-            </div>
-          </div>
-        </div>
-
         {/* Applications Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredApplications.map((app) => (
+          {applications.map((app) => (
             <div
               key={app.id}
               className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all p-6 border-2 border-transparent hover:border-blue-400 hover:scale-105 transform duration-300"
@@ -1451,56 +908,6 @@ const RealWorldMode: React.FC = () => {
               </div>
             </div>
           ))}
-        </div>
-
-        {/* No Results Message */}
-        {filteredApplications.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-xl text-gray-600">
-              {t('realWorld.noResults') || 'No applications found with the selected filters.'}
-            </p>
-            <button
-              onClick={() => {
-                setFilterCategory("all");
-                setFilterMaterial("all");
-              }}
-              className="mt-4 px-6 py-3 bg-gradient-to-r from-blue-600 to-teal-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all"
-            >
-              {t('realWorld.resetFilters') || 'Reset Filters'}
-            </button>
-          </div>
-        )}
-
-        {/* Summary Section */}
-        <div className="mt-12 bg-white rounded-2xl shadow-xl p-8">
-          <h3 className="text-3xl font-bold text-gray-800 mb-6 text-center">
-            Key Takeaways
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-blue-50 rounded-xl p-6 border-2 border-blue-200">
-              <div className="text-4xl mb-3">🔍</div>
-              <h4 className="text-xl font-bold text-blue-700 mb-2">Transparent Materials</h4>
-              <p className="text-gray-700">
-                Allow light to pass almost completely through. Used when clear visibility is needed, like windows, glasses, and aquariums.
-              </p>
-            </div>
-
-            <div className="bg-purple-50 rounded-xl p-6 border-2 border-purple-200">
-              <div className="text-4xl mb-3">🌫️</div>
-              <h4 className="text-xl font-bold text-purple-700 mb-2">Translucent Materials</h4>
-              <p className="text-gray-700">
-                Allow light to pass partially through. Perfect for privacy with light, like frosted glass, lampshades, and shower doors.
-              </p>
-            </div>
-
-            <div className="bg-gray-50 rounded-xl p-6 border-2 border-gray-300">
-              <div className="text-4xl mb-3">🚫</div>
-              <h4 className="text-xl font-bold text-gray-700 mb-2">Opaque Materials</h4>
-              <p className="text-gray-700">
-                Block light completely. Essential for protection and shade, like umbrellas, curtains, and book covers.
-              </p>
-            </div>
-          </div>
         </div>
       </div>
     </div>
