@@ -6,6 +6,7 @@ import './index.css'
 // Enhanced error handling for Chrome extension runtime errors
 const originalError = console.error;
 const originalWarn = console.warn;
+const originalLog = console.log;
 
 // Type guard for Chrome extension API
 const hasChromeRuntime = (): boolean => {
@@ -18,65 +19,79 @@ const hasChromeRuntime = (): boolean => {
   }
 };
 
-// Log Chrome extension runtime.lastError if present
-if (hasChromeRuntime()) {
-  const chrome = (window as any).chrome;
-  if (chrome.runtime && chrome.runtime.lastError) {
-    const lastError = chrome.runtime.lastError;
-    if (lastError.message) {
-      originalWarn('Chrome extension runtime.lastError:', lastError.message);
-    }
-  }
-}
+// Check if error is from browser extension (should be suppressed)
+const isExtensionError = (message: string): boolean => {
+  const lowerMessage = message.toLowerCase();
+  return (
+    lowerMessage.includes('runtime.lasterror') ||
+    lowerMessage.includes('message port closed') ||
+    lowerMessage.includes('extension context invalidated') ||
+    lowerMessage.includes('unchecked runtime.lasterror') ||
+    lowerMessage.includes('receiving end does not exist') ||
+    lowerMessage.includes('could not establish connection')
+  );
+};
 
 // Suppress browser extension errors that don't affect the application
 console.error = (...args: any[]) => {
   const errorMessage = args[0]?.toString() || '';
-  // Log runtime.lastError before suppressing
-  if (hasChromeRuntime()) {
-    const chrome = (window as any).chrome;
-    if (chrome.runtime && chrome.runtime.lastError) {
-      const lastError = chrome.runtime.lastError;
-      if (lastError.message) {
-        originalWarn('Chrome extension runtime.lastError:', lastError.message);
-      }
-    }
-  }
-  // Suppress the specific browser extension errors
-  if (
-    errorMessage.includes('runtime.lastError') ||
-    errorMessage.includes('message port closed') ||
-    errorMessage.includes('Extension context invalidated') ||
-    errorMessage.includes('Unchecked runtime.lastError')
-  ) {
+  
+  // Check if this is a browser extension error
+  if (isExtensionError(errorMessage)) {
+    // Silently suppress - these are harmless browser extension errors
     return;
   }
+  
+  // Check for runtime.lastError in Chrome extensions
+  if (hasChromeRuntime()) {
+    try {
+      const chrome = (window as any).chrome;
+      if (chrome.runtime && chrome.runtime.lastError) {
+        const lastError = chrome.runtime.lastError;
+        // Suppress if it's a known extension error
+        if (lastError.message && isExtensionError(lastError.message)) {
+          return;
+        }
+      }
+    } catch {
+      // Ignore errors when checking chrome.runtime
+    }
+  }
+  
   originalError.apply(console, args);
 };
 
-// Handle unhandled errors from browser extensions with logging
-window.addEventListener('error', (event) => {
-  const errorMessage = event.message || '';
-  // Log Chrome extension errors before suppressing
-  if (hasChromeRuntime()) {
-    const chrome = (window as any).chrome;
-    if (chrome.runtime && chrome.runtime.lastError) {
-      const lastError = chrome.runtime.lastError;
-      if (lastError.message) {
-        originalWarn('Chrome extension runtime.lastError:', lastError.message);
-      }
-    }
+// Suppress console.warn for extension errors
+console.warn = (...args: any[]) => {
+  const warnMessage = args[0]?.toString() || '';
+  
+  if (isExtensionError(warnMessage)) {
+    return;
   }
-  if (
-    errorMessage.includes('runtime.lastError') ||
-    errorMessage.includes('message port closed') ||
-    errorMessage.includes('Extension context invalidated') ||
-    errorMessage.includes('Unchecked runtime.lastError')
-  ) {
+  
+  originalWarn.apply(console, args);
+};
+
+// Handle unhandled errors from browser extensions
+window.addEventListener('error', (event) => {
+  const errorMessage = event.message || event.error?.message || '';
+  
+  if (isExtensionError(errorMessage)) {
     event.preventDefault();
+    event.stopPropagation();
     return false;
   }
 }, true);
+
+// Handle unhandled promise rejections (where extension errors often appear)
+window.addEventListener('unhandledrejection', (event) => {
+  const errorMessage = event.reason?.message || event.reason?.toString() || '';
+  
+  if (isExtensionError(errorMessage)) {
+    event.preventDefault();
+    return false;
+  }
+});
 
 // Ensure DOM is ready before rendering
 function initApp() {

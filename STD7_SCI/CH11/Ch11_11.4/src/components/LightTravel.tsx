@@ -28,7 +28,7 @@ declare global {
 }
 
 // Simple icon components
-const Lightbulb = ({ className }: { className?: string }) => (
+const ShadowIcon = ({ className }: { className?: string }) => (
   <svg
     className={className}
     fill="none"
@@ -36,7 +36,13 @@ const Lightbulb = ({ className }: { className?: string }) => (
     strokeWidth="2"
     viewBox="0 0 24 24"
   >
-    <path d="M9 18h6M10 22h4M15 8a5 5 0 1 0-6 0c0 2 1 3 1 5h4c0-2 1-3 1-5z" />
+    {/* Circle representing object */}
+    <circle cx="12" cy="8" r="4" fill="currentColor" opacity="0.8" />
+    {/* Ellipse representing shadow */}
+    <ellipse cx="12" cy="16" rx="5" ry="2" fill="currentColor" opacity="0.4" />
+    {/* Light rays */}
+    <line x1="12" y1="4" x2="8" y2="12" stroke="currentColor" strokeWidth="1" opacity="0.3" />
+    <line x1="12" y1="4" x2="16" y2="12" stroke="currentColor" strokeWidth="1" opacity="0.3" />
   </svg>
 );
 
@@ -259,6 +265,11 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = () => {
   const currentObject = objects[selectedObject];
 
   const calculateShadow = () => {
+    // Only calculate shadow if object is between light and screen
+    if (objectPos.x <= lightPos.x || objectPos.x >= screenPos) {
+      return null; // No shadow if object is not between light and screen
+    }
+
     const shadowX = screenPos;
     const distanceToLight = Math.sqrt(
       Math.pow(objectPos.x - lightPos.x, 2) +
@@ -281,6 +292,7 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = () => {
 
   const handleMouseDown = (type: string, e: React.MouseEvent) => {
     e.preventDefault();
+    e.stopPropagation();
     setDragging(type);
   };
 
@@ -294,14 +306,25 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = () => {
     if (dragging === 'light') {
       setLightPos({ x: Math.max(50, Math.min(300, x)), y: Math.max(50, Math.min(450, y)) });
     } else if (dragging === 'object') {
-      const newX = Math.max(320, Math.min(screenPos - 50, x));
+      // Prevent object from going to the left of the light source
+      // Object must stay to the right of the light source (with small margin)
+      const minX = lightPos.x + 20; // 20px margin to prevent overlap
+      const maxX = screenPos - 50; // Keep some margin from screen
+      const newX = Math.max(minX, Math.min(maxX, x));
+      const newY = Math.max(50, Math.min(450, y));
       const oldX = objectPos.x;
-      setObjectPos({ x: newX, y: Math.max(50, Math.min(450, y)) });
+      
+      setObjectPos({ x: newX, y: newY });
 
-      if (Math.abs(newX - lightPos.x) < Math.abs(oldX - lightPos.x)) {
-        giveFeedback(t('shadowSimulator.feedback.shadowBig'));
-      } else if (Math.abs(newX - screenPos) < 80) {
-        giveFeedback(t('shadowSimulator.feedback.shadowTiny'));
+      // Check if object is positioned to cast shadow
+      if (newX > lightPos.x && newX < screenPos) {
+        if (Math.abs(newX - lightPos.x) < Math.abs(oldX - lightPos.x)) {
+          giveFeedback(t('shadowSimulator.feedback.shadowBig'));
+        } else if (Math.abs(newX - screenPos) < 80) {
+          giveFeedback(t('shadowSimulator.feedback.shadowTiny'));
+        }
+      } else if (newX >= screenPos) {
+        giveFeedback(t('shadowSimulator.feedback.objectBeyondScreen') || 'Object is beyond the screen! No shadow.');
       }
     } else if (dragging === 'screen') {
       const newScreen = Math.max(500, Math.min(750, x));
@@ -318,27 +341,37 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = () => {
 
   const getLightRays = () => {
     const rays: JSX.Element[] = [];
-    const numRays = 8;
-    const objectSize = 40;
+    const numRays = 12;
+    const objectSize = 30;
 
     for (let i = 0; i < numRays; i++) {
       const angle = (Math.PI * 2 / numRays) * i;
       const rayX = Math.cos(angle) * objectSize + objectPos.x;
       const rayY = Math.sin(angle) * objectSize + objectPos.y;
 
-      const blocked = Math.sqrt(Math.pow(rayX - objectPos.x, 2) + Math.pow(rayY - objectPos.y, 2)) < objectSize;
+      // Check if ray is blocked by object
+      const dx = rayX - objectPos.x;
+      const dy = rayY - objectPos.y;
+      const distanceFromObject = Math.sqrt(dx * dx + dy * dy);
+      const blocked = distanceFromObject < objectSize;
 
+      // Only draw rays that go towards the screen
       if (!blocked || rayX > objectPos.x) {
+        // Calculate where ray hits the screen
+        const t = (screenPos - lightPos.x) / (rayX - lightPos.x);
+        const screenY = lightPos.y + (rayY - lightPos.y) * t;
+
         rays.push(
           <line
             key={i}
             x1={lightPos.x}
             y1={lightPos.y}
             x2={rayX > objectPos.x ? screenPos : rayX}
-            y2={rayX > objectPos.x ? lightPos.y + (rayY - lightPos.y) * ((screenPos - lightPos.x) / (rayX - lightPos.x)) : rayY}
+            y2={rayX > objectPos.x ? screenY : rayY}
             stroke={rayX > objectPos.x ? '#FFE66D' : '#FFF176'}
             strokeWidth="1"
             opacity={rayX > objectPos.x ? '0.3' : '0.6'}
+            style={{ pointerEvents: 'none' }}
           />
         );
       }
@@ -446,10 +479,11 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = () => {
             <svg
               width="100%"
               height="500"
-              className="cursor-move"
+              className="cursor-default"
               onMouseMove={handleMouseMove}
               onMouseUp={handleMouseUp}
               onMouseLeave={handleMouseUp}
+              style={{ userSelect: 'none' }}
             >
               {/* Light Rays */}
               {showRays && getLightRays()}
@@ -458,6 +492,7 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = () => {
               <g
                 onMouseDown={(e) => handleMouseDown('screen', e)}
                 className="cursor-ew-resize"
+                style={{ cursor: 'ew-resize' }}
               >
                 <rect
                   x={screenPos}
@@ -471,44 +506,64 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = () => {
                 />
               </g>
 
-              {/* Shadow */}
-              <ellipse
-                cx={shadow.x}
-                cy={shadow.y}
-                rx={30 * shadow.scale}
-                ry={30 * shadow.scale}
-                fill="black"
-                opacity={0.3 + (currentObject.opacity * 0.4)}
-                filter={`blur(${shadow.blur}px)`}
-                className="transition-all duration-300"
-              />
+              {/* Shadow - Only render if shadow exists */}
+              {shadow && (
+                <g style={{ pointerEvents: 'none' }}>
+                  <text
+                    x={shadow.x}
+                    y={shadow.y}
+                    textAnchor="middle"
+                    dominantBaseline="middle"
+                    fontSize={60 * shadow.scale}
+                    style={{
+                      filter: `blur(${shadow.blur}px) brightness(0)`,
+                      opacity: 0.6 + (currentObject.opacity * 0.2),
+                    }}
+                  >
+                    {currentObject.emoji}
+                  </text>
+                </g>
+              )}
 
               {/* Object */}
               <g
                 onMouseDown={(e) => handleMouseDown('object', e)}
-                className="cursor-move"
+                style={{ cursor: 'move' }}
               >
+                {/* Invisible larger hit area for better dragging */}
                 <circle
                   cx={objectPos.x}
                   cy={objectPos.y}
-                  r="45"
-                  fill={currentObject.color}
-                  opacity={currentObject.opacity}
-                  stroke="white"
-                  strokeWidth="3"
-                  className="transition-all"
+                  r="50"
+                  fill="transparent"
+                  style={{ cursor: 'move' }}
                 />
+                
+                {/* Emoji */}
                 <text
                   x={objectPos.x}
                   y={objectPos.y}
                   textAnchor="middle"
                   dominantBaseline="middle"
-                  fontSize="40"
-                  className="pointer-events-none"
+                  fontSize="60"
+                  style={{
+                    filter: `drop-shadow(0 0 8px ${currentObject.color})`,
+                    opacity: currentObject.opacity,
+                    pointerEvents: 'none',
+                    userSelect: 'none'
+                  }}
                 >
                   {currentObject.emoji}
                 </text>
-                <text x={objectPos.x - 40} y={objectPos.y - 60} fill="white" fontSize="12" fontWeight="bold">
+                <text 
+                  x={objectPos.x} 
+                  y={objectPos.y - 50} 
+                  fill="white" 
+                  fontSize="12" 
+                  fontWeight="bold"
+                  textAnchor="middle"
+                  style={{ pointerEvents: 'none', userSelect: 'none' }}
+                >
                   {t('shadowSimulator.controls.dragObject')}
                 </text>
               </g>
@@ -516,7 +571,7 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = () => {
               {/* Light Source */}
               <g
                 onMouseDown={(e) => handleMouseDown('light', e)}
-                className="cursor-move"
+                style={{ cursor: 'move' }}
               >
                 <circle
                   cx={lightPos.x}
@@ -524,6 +579,7 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = () => {
                   r={lightSize === 'small' ? '20' : '35'}
                   fill="#FFD700"
                   className="transition-all"
+                  style={{ cursor: 'move' }}
                 />
                 <circle
                   cx={lightPos.x}
@@ -532,6 +588,7 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = () => {
                   fill="#FFD700"
                   opacity="0.3"
                   className="animate-pulse transition-all"
+                  style={{ pointerEvents: 'none' }}
                 />
                 <text
                   x={lightPos.x}
@@ -539,10 +596,18 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = () => {
                   textAnchor="middle"
                   dominantBaseline="middle"
                   fontSize="20"
+                  style={{ pointerEvents: 'none', userSelect: 'none' }}
                 >
                   💡
                 </text>
-                <text x={lightPos.x - 30} y={lightPos.y - 50} fill="white" fontSize="12" fontWeight="bold">
+                <text 
+                  x={lightPos.x - 30} 
+                  y={lightPos.y - 50} 
+                  fill="white" 
+                  fontSize="12" 
+                  fontWeight="bold"
+                  style={{ pointerEvents: 'none', userSelect: 'none' }}
+                >
                   {t('shadowSimulator.controls.lightLabel')}
                 </text>
               </g>
@@ -554,18 +619,26 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = () => {
             {/* Info Box */}
             <div className="mt-4 bg-white/10 backdrop-blur-sm rounded-xl p-4 text-white border-l-4 border-blue-400">
               <h4 className="font-bold text-lg mb-2 text-yellow-300">🔬 {t('shadowSimulator.infoBox.title')}</h4>
-              <p className="text-sm leading-relaxed">
-                {shadow.scale > 2.5
-                  ? t('shadowSimulator.infoBox.hugeShadow')
-                  : shadow.scale < 1.3
-                    ? t('shadowSimulator.infoBox.tinyShadow')
-                    : t('shadowSimulator.infoBox.normalShadow')}
-              </p>
-              <p className="text-sm mt-2 leading-relaxed">
-                {lightSize === 'large'
-                  ? t('shadowSimulator.infoBox.softEdges')
-                  : t('shadowSimulator.infoBox.sharpEdges')}
-              </p>
+              {shadow ? (
+                <>
+                  <p className="text-sm leading-relaxed">
+                    {shadow.scale > 2.5
+                      ? t('shadowSimulator.infoBox.hugeShadow')
+                      : shadow.scale < 1.3
+                        ? t('shadowSimulator.infoBox.tinyShadow')
+                        : t('shadowSimulator.infoBox.normalShadow')}
+                  </p>
+                  <p className="text-sm mt-2 leading-relaxed">
+                    {lightSize === 'large'
+                      ? t('shadowSimulator.infoBox.softEdges')
+                      : t('shadowSimulator.infoBox.sharpEdges')}
+                  </p>
+                </>
+              ) : (
+                <p className="text-sm leading-relaxed">
+                  Position the object between the light source and the screen to see its shadow!
+                </p>
+              )}
             </div>
           </div>
         </div>
@@ -925,7 +998,7 @@ const MainApp: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
-              <Lightbulb className="w-6 h-6 text-blue-600" />
+              <ShadowIcon className="w-6 h-6 text-blue-600" />
               <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-teal-600 bg-clip-text text-transparent">
                 {t('nav.logo')}
               </span>

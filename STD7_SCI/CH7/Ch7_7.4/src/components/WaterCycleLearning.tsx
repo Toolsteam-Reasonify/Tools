@@ -8,67 +8,9 @@ import React, {
   useMemo,
   useCallback,
 } from "react";
+import { Play, Pause, ChevronRight, ChevronLeft, RefreshCw, Droplets, Thermometer, Wind, RotateCcw } from 'lucide-react';
 
-// Simple icon components
-const Play = ({ className }: { className?: string }) => (
-  <svg className={className} fill="currentColor" viewBox="0 0 24 24">
-    <path d="M8 5v14l11-7z" />
-  </svg>
-);
-
-const Pause = ({ className }: { className?: string }) => (
-  <svg className={className} fill="currentColor" viewBox="0 0 24 24">
-    <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
-  </svg>
-);
-
-const ChevronLeft = ({ className }: { className?: string }) => (
-  <svg
-    className={className}
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    viewBox="0 0 24 24"
-  >
-    <path d="M15 18l-6-6 6-6" />
-  </svg>
-);
-
-const ChevronRight = ({ className }: { className?: string }) => (
-  <svg
-    className={className}
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    viewBox="0 0 24 24"
-  >
-    <path d="M9 18l6-6-6-6" />
-  </svg>
-);
-
-const RotateCcw = ({ className }: { className?: string }) => (
-  <svg
-    className={className}
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    viewBox="0 0 24 24"
-  >
-    <path d="M1 4v6h6M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
-  </svg>
-);
-
-const Droplets = ({ className }: { className?: string }) => (
-  <svg
-    className={className}
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    viewBox="0 0 24 24"
-  >
-    <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" />
-  </svg>
-);
+// Icon components from lucide-react are imported above
 
 type StepMode = "learn" | "practice" | "real_world";
 type LearnStage =
@@ -2545,7 +2487,7 @@ const WaterCycleLearning: React.FC<WaterCycleLearningProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0 flex items-center gap-2">
-            <Droplets className="w-6 h-6 text-teal-600" />
+            <Droplets size={24} className="text-teal-600" />
             <span className="text-2xl font-bold bg-gradient-to-r from-teal-600 to-purple-600 bg-clip-text text-transparent">
               {t("nav.logo")}
             </span>
@@ -2615,683 +2557,406 @@ const WaterCycleLearning: React.FC<WaterCycleLearningProps> = ({
 
   // Learn Mode Component
   const LearnMode: React.FC = () => {
-    const { t } = useLanguage();
-    const canvasRef = useRef<HTMLCanvasElement>(null);
-    const animationRef = useRef<number | null>(null);
-    const mountedRef = useRef<boolean>(true);
-    const particleIdCounter = useRef<number>(0);
-    
-    const [currentStep, setCurrentStep] = useState(0);
-    const [isPlaying, setIsPlaying] = useState(true);
-    const [animationProgress, setAnimationProgress] = useState(0);
-    const [particles, setParticles] = useState<Particle[]>([]);
-    const [showInfo, setShowInfo] = useState(true);
+    // --- Types ---
+    type CycleStage = 'intro' | 'evaporation' | 'condensation' | 'precipitation' | 'collection' | 'seepage';
 
-    const steps: Array<{stage: LearnStage; titleKey: string; descKey: string; keyPointsKey: string}> = useMemo(() => [
-      { stage: 'overview', titleKey: 'steps.overview.title', descKey: 'steps.overview.description', keyPointsKey: 'steps.overview.keyPoints' },
-      { stage: 'evaporation', titleKey: 'steps.evaporation.title', descKey: 'steps.evaporation.description', keyPointsKey: 'steps.evaporation.keyPoints' },
-      { stage: 'transpiration', titleKey: 'steps.transpiration.title', descKey: 'steps.transpiration.description', keyPointsKey: 'steps.transpiration.keyPoints' },
-      { stage: 'condensation', titleKey: 'steps.condensation.title', descKey: 'steps.condensation.description', keyPointsKey: 'steps.condensation.keyPoints' },
-      { stage: 'precipitation', titleKey: 'steps.precipitation.title', descKey: 'steps.precipitation.description', keyPointsKey: 'steps.precipitation.keyPoints' },
-      { stage: 'collection', titleKey: 'steps.collection.title', descKey: 'steps.collection.description', keyPointsKey: 'steps.collection.keyPoints' },
-      { stage: 'infiltration', titleKey: 'steps.infiltration.title', descKey: 'steps.infiltration.description', keyPointsKey: 'steps.infiltration.keyPoints' },
-      { stage: 'complete', titleKey: 'steps.complete.title', descKey: 'steps.complete.description', keyPointsKey: 'steps.complete.keyPoints' },
-    ], []);
+    interface StageInfo {
+      id: CycleStage;
+      title: string;
+      description: string;
+      details: string[];
+    }
 
-    // Create particle function
-    const createParticle = useCallback((type: 'vapor' | 'rain', x: number, y: number, color: string): Particle => {
-      particleIdCounter.current += 1;
-      
-      if (type === 'vapor') {
-        return {
-          id: particleIdCounter.current,
-          x: x,
-          y: y,
-          initialX: x,
-          vx: 0, 
-          vy: -2.0, // Slower upward movement for gas
-          size: 5 + Math.random() * 8, // Variable bubble sizes
-          opacity: 0.8, // Start slightly transparent
-          type: 'vapor',
-          color: color,
-          life: 1,
-          wobbleSpeed: 0.05 + Math.random() * 0.05 // Randomize sine wave frequency
-        };
-      } else {
-        return {
-          id: particleIdCounter.current,
-          x: x,
-          y: y,
-          initialX: x,
-          vx: -1.5, // Slight wind to the left
-          vy: 12.0, // MUCH faster downward velocity for rain
-          size: 3, 
-          opacity: 0.9,
-          type: 'rain',
-          color: color,
-          life: 1,
-          wobbleSpeed: 0
-        };
+    // --- Data based on your summary ---
+    const CYCLE_DATA: StageInfo[] = [
+      {
+        id: 'intro',
+        title: "Water's Three States",
+        description: "Water exists in nature in three distinct states, constantly changing form.",
+        details: [
+          "Liquid: Fills oceans, rivers, and lakes.",
+          "Solid: Forms snow, ice sheets, and glaciers.",
+          "Gas: Exists as invisible water vapour in the atmosphere."
+        ]
+      },
+      {
+        id: 'evaporation',
+        title: "Evaporation & Transpiration",
+        description: "The Sun heats the Earth, driving the cycle upwards.",
+        details: [
+          "Evaporation: Water from oceans heats up and turns into vapour.",
+          "Transpiration: Plants and trees release water vapour from leaves.",
+          "Energy Source: The Sun is the main engine of this process."
+        ]
+      },
+      {
+        id: 'condensation',
+        title: "Condensation",
+        description: "As water vapour rises, it cools down.",
+        details: [
+          "Cooling: Rising vapour encounters cooler air.",
+          "Cloud Formation: Vapour turns back into tiny liquid droplets.",
+          "Visibility: These droplets cluster together to form clouds."
+        ]
+      },
+      {
+        id: 'precipitation',
+        title: "Precipitation",
+        description: "Water returns to the Earth's surface.",
+        details: [
+          "Release: Clouds become heavy with water.",
+          "Forms: Comes down as rain, snow, or hail.",
+          "Distribution: Replenishes fresh water sources."
+        ]
+      },
+      {
+        id: 'collection',
+        title: "Return Flow",
+        description: "Water travels across the land back to the oceans.",
+        details: [
+          "Surface Runoff: Flows into ponds, rivers, and lakes.",
+          "Circulation: Ensures continuous movement of water.",
+          "Conservation: Total water on Earth remains constant."
+        ]
+      },
+      {
+        id: 'seepage',
+        title: "Infiltration & Groundwater",
+        description: "Water seeps into the ground (Section 7.4.1).",
+        details: [
+          "Gravel: Seeps fastest (wide spaces).",
+          "Sand: Seeps slower.",
+          "Clay: Seeps slowest (tight spaces).",
+          "Aquifers: Underground layers where water is stored."
+        ]
       }
+    ];
+
+    // --- Sub-components for Visual Elements ---
+    const Sun = ({ active }: { active: boolean }) => (
+      <g className={`transition-all duration-1000 ${active ? 'opacity-100' : 'opacity-80'}`}>
+        <circle cx="80" cy="80" r="40" fill="#FDB813" className="animate-pulse" />
+        <g stroke="#FDB813" strokeWidth="4" transform="translate(80, 80)">
+          {[0, 45, 90, 135, 180, 225, 270, 315].map((angle, i) => {
+            const x2 = 60 * Math.cos(angle * Math.PI / 180);
+            const y2 = 60 * Math.sin(angle * Math.PI / 180);
+            return (
+              <line
+                key={i}
+                x1="0" y1="0"
+                x2={x2}
+                y2={y2}
+                className="animate-spin-slow"
+                style={{ transformBox: 'fill-box', transformOrigin: 'center' }}
+              />
+            );
+          })}
+        </g>
+      </g>
+    );
+
+    const Cloud = ({ x, y, scale = 1, dark = false, visible = true }: { x: number, y: number, scale?: number, dark?: boolean, visible?: boolean }) => (
+      <g transform={`translate(${x}, ${y}) scale(${scale})`} className={`transition-opacity duration-1000 ${visible ? 'opacity-100' : 'opacity-0'}`}>
+        <path
+          d="M25,60 a20,20 0 0,1 0,-40 h50 a20,20 0 0,1 0,40 z"
+          fill={dark ? "#94a3b8" : "#fff"}
+          stroke={dark ? "#64748b" : "#e2e8f0"}
+          strokeWidth="2"
+        />
+        <circle cx="45" cy="40" r="20" fill={dark ? "#94a3b8" : "#fff"} />
+        <circle cx="70" cy="50" r="15" fill={dark ? "#94a3b8" : "#fff"} />
+      </g>
+    );
+
+    const Mountains = () => (
+      <g>
+        <path d="M0,400 L150,150 L300,400 Z" fill="#64748b" stroke="#475569" strokeWidth="2" />
+        {/* Snow cap */}
+        <path d="M115,208 L150,150 L185,208 L165,220 L150,210 L135,220 Z" fill="white" />
+        
+        <path d="M200,400 L300,250 L400,400 Z" fill="#64748b" stroke="#475569" strokeWidth="2" />
+        {/* Snow cap */}
+        <path d="M270,295 L300,250 L330,295 L315,305 L300,295 L285,305 Z" fill="white" />
+      </g>
+    );
+
+    const Tree = ({ x, y }: { x: number, y: number }) => (
+      <g transform={`translate(${x}, ${y})`}>
+        <rect x="8" y="30" width="4" height="20" fill="#78350f" />
+        <path d="M10,5 L25,35 L-5,35 Z" fill="#15803d" />
+        <path d="M10,15 L25,40 L-5,40 Z" fill="#15803d" />
+      </g>
+    );
+
+    const [currentStepIndex, setCurrentStepIndex] = useState(0);
+    const [isPlaying, setIsPlaying] = useState(false);
+
+    const currentStage = CYCLE_DATA[currentStepIndex];
+
+    // Generate stable random positions for rain drops
+    const rainPositions = useMemo(() => {
+      return Array.from({ length: 20 }, () => ({
+        x1: 200 + Math.random() * 400,
+        x2: 200 + Math.random() * 400,
+        duration: 0.5 + Math.random() * 0.5,
+      }));
     }, []);
 
-    // Animation loop
-    useEffect(() => {
-      if (!isPlaying || !mountedRef.current) return;
-
-      let frameCount = 0;
-      
-      const animate = () => {
-        if (!mountedRef.current) return;
-        
-        frameCount++;
-        setAnimationProgress(prev => (prev + 0.015) % 1);
-        
-        const stage = steps[currentStep]?.stage;
-        
-        setParticles(prevParticles => {
-          let newParticles = [...prevParticles];
-          
-          // --- SPAWNING LOGIC ---
-
-          // Evaporation: Spawn frequently from water surface
-          if ((stage === 'evaporation' || stage === 'complete') && frameCount % 3 === 0) {
-            const x = 60 + Math.random() * 300;
-            newParticles.push(createParticle('vapor', x, 458, '#81D4FA')); // Lighter blue for steam
-          }
-          
-          // Transpiration: Spawn from trees
-          if ((stage === 'transpiration' || stage === 'complete') && frameCount % 4 === 0) {
-            const treeIndex = Math.floor(Math.random() * 3);
-            // Add some randomness to height so it comes from different parts of leaves
-            const x = 450 + treeIndex * 80 + (Math.random() - 0.5) * 40;
-            const y = 370 + (Math.random() - 0.5) * 30;
-            newParticles.push(createParticle('vapor', x, y, '#A5D6A7')); // Light green mist
-          }
-          
-          // Precipitation: Spawn heavily from clouds
-          if ((stage === 'precipitation' || stage === 'complete') && frameCount % 2 === 0) {
-            // Spawn multiple drops per frame for heavy rain effect
-            for(let i=0; i<2; i++) {
-                const x = 270 + Math.random() * 380;
-                newParticles.push(createParticle('rain', x, 140, '#1976D2'));
-            }
-          }
-          
-          // --- MOVEMENT LOGIC ---
-          newParticles = newParticles
-            .map(particle => {
-              let newX = particle.x;
-              let newY = particle.y + particle.vy;
-              let newLife = particle.life;
-              let newOpacity = particle.opacity;
-              let newSize = particle.size;
-
-              if (particle.type === 'vapor') {
-                // Sine Wave Movement for Vapor
-                // x = initialX + sin(time * speed) * amplitude
-                // Amplitude grows as particle rises (life decreases)
-                const waveAmplitude = (1 - particle.life) * 30; 
-                newX = particle.initialX + Math.sin(frameCount * particle.wobbleSpeed) * waveAmplitude;
-                
-                // Fade out as it rises
-                if (newY < 200) {
-                  newLife -= 0.015;
-                  newOpacity = Math.max(0, newLife * 0.8);
-                  // Expand size slightly as it rises/dissipates
-                  newSize += 0.05;
-                }
-              } else if (particle.type === 'rain') {
-                // Rain moves with constant wind (vx) and gravity
-                newX = particle.x + particle.vx;
-                
-                if (newY > 445) {
-                  newLife = 0; // Kill immediately on ground contact (splash could go here)
-                }
-              }
-
-              return {
-                ...particle,
-                x: newX,
-                y: newY,
-                life: newLife,
-                opacity: newOpacity,
-                size: newSize
-              };
-            })
-            .filter(p => p.life > 0 && p.y > -50 && p.y < 650); 
-          
-          if (newParticles.length > 250) { // Increased limit for heavier rain
-            newParticles = newParticles.slice(-250);
-          }
-          
-          return newParticles;
-        });
-
-        if (mountedRef.current) {
-          animationRef.current = requestAnimationFrame(animate);
-        }
-      };
-
-      animationRef.current = requestAnimationFrame(animate);
-
-      return () => {
-        if (animationRef.current) {
-          cancelAnimationFrame(animationRef.current);
-          animationRef.current = null;
-        }
-      };
-    }, [isPlaying, currentStep, steps, createParticle]);
-
-    // Canvas drawing
-    useEffect(() => {
-      if (!mountedRef.current) return;
-      
-      const canvas = canvasRef.current;
-      if (!canvas) return;
-
-      const ctx = canvas.getContext('2d', { alpha: false });
-      if (!ctx) return;
-
-      const width = canvas.width;
-      const height = canvas.height;
-
-      try {
-        ctx.clearRect(0, 0, width, height);
-        const stage = steps[currentStep]?.stage;
-        if (!stage) return;
-        drawScene(ctx, width, height, stage, animationProgress, particles, t);
-      } catch (error) {
-        console.error('Canvas rendering error:', error);
-      }
-    }, [currentStep, animationProgress, particles, steps, t]);
-
-    useEffect(() => {
-      mountedRef.current = true;
-      return () => {
-        mountedRef.current = false;
-        if (animationRef.current) {
-          cancelAnimationFrame(animationRef.current);
-        }
-        setParticles([]);
-      };
+    // Generate stable random positions for snow
+    const snowPositions = useMemo(() => {
+      return Array.from({ length: 5 }, () => ({
+        duration: 2 + Math.random() * 1,
+      }));
     }, []);
 
+    // Auto-play logic
     useEffect(() => {
-      setParticles([]);
-      particleIdCounter.current = 0;
-    }, [currentStep]);
-
-    const drawScene = (
-      ctx: CanvasRenderingContext2D,
-      width: number,
-      height: number,
-      stage: string,
-      progress: number,
-      particles: Particle[],
-      translate: (key: string) => string
-    ) => {
-      // --- BACKGROUNDS ---
-      const skyGradient = ctx.createLinearGradient(0, 0, 0, height * 0.6);
-      skyGradient.addColorStop(0, '#87CEEB');
-      skyGradient.addColorStop(1, '#E0F6FF');
-      ctx.fillStyle = skyGradient;
-      ctx.fillRect(0, 0, width, height * 0.6);
-
-      ctx.fillStyle = '#8FBC8F';
-      ctx.fillRect(0, height * 0.6, width, height * 0.15);
-
-      const undergroundGradient = ctx.createLinearGradient(0, height * 0.75, 0, height);
-      undergroundGradient.addColorStop(0, '#8B7355');
-      undergroundGradient.addColorStop(1, '#3E2723');
-      ctx.fillStyle = undergroundGradient;
-      ctx.fillRect(0, height * 0.75, width, height * 0.25);
-
-      // --- SUN ---
-      if (stage === 'evaporation' || stage === 'transpiration' || stage === 'complete' || stage === 'overview') {
-        const sunPulse = 1 + Math.sin(progress * Math.PI * 2) * 0.08;
-        ctx.save();
-        ctx.shadowBlur = 30;
-        ctx.shadowColor = '#FFA500';
-        ctx.fillStyle = '#FFD700';
-        ctx.beginPath();
-        ctx.arc(100, 80, 35 * sunPulse, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
+      let interval: ReturnType<typeof setInterval>;
+      if (isPlaying) {
+        interval = setInterval(() => {
+          setCurrentStepIndex((prev) => (prev + 1) % CYCLE_DATA.length);
+        }, 5000); // 5 seconds per slide
       }
+      return () => clearInterval(interval);
+    }, [isPlaying]);
 
-      // --- WATER BODY ---
-      ctx.fillStyle = '#4682B4';
-      ctx.fillRect(0, height * 0.75, width * 0.45, height * 0.25);
-      
-      ctx.strokeStyle = '#87CEEB';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      for (let x = 0; x < width * 0.45; x += 10) {
-        const y = height * 0.75 + Math.sin((x + progress * 100) * 0.05) * 3;
-        if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-      }
-      ctx.stroke();
-
-      // --- LANDSCAPE ---
-      ctx.fillStyle = '#8B7355';
-      ctx.beginPath();
-      ctx.moveTo(width * 0.65, height * 0.6);
-      ctx.lineTo(width * 0.75, height * 0.35);
-      ctx.lineTo(width * 0.85, height * 0.6);
-      ctx.fill();
-
-      ctx.fillStyle = '#FFFFFF';
-      ctx.beginPath();
-      ctx.moveTo(width * 0.72, height * 0.4);
-      ctx.lineTo(width * 0.75, height * 0.35);
-      ctx.lineTo(width * 0.78, height * 0.4);
-      ctx.fill();
-
-      for (let i = 0; i < 3; i++) {
-        const treeX = 450 + i * 80;
-        const treeY = height * 0.6;
-        ctx.fillStyle = '#8B4513';
-        ctx.fillRect(treeX - 8, treeY, 16, 60);
-        ctx.fillStyle = '#228B22';
-        ctx.beginPath();
-        ctx.arc(treeX, treeY - 10, 30, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.beginPath();
-        ctx.arc(treeX - 20, treeY + 5, 25, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.beginPath();
-        ctx.arc(treeX + 20, treeY + 5, 25, 0, Math.PI * 2);
-        ctx.fill();
-      }
-
-      if (stage === 'condensation' || stage === 'precipitation' || stage === 'complete' || stage === 'overview') {
-        const cloudFloat = Math.sin(progress * Math.PI * 2) * 8;
-        // Darker clouds for rain
-        const isRaining = stage === 'precipitation' || stage === 'complete';
-        const cloudColor = isRaining ? '#D3D3D3' : '#FFFFFF';
-        
-        drawCloud(ctx, 300 + cloudFloat, 120, 90, 0.9, cloudColor);
-        drawCloud(ctx, 450 - cloudFloat, 140, 80, 0.85, cloudColor);
-        drawCloud(ctx, 600 + cloudFloat * 0.7, 110, 85, 0.88, cloudColor);
-      }
-
-      // UPDATED PARTICLE RENDERING
-      particles.forEach(particle => {
-        ctx.save();
-        
-        if (particle.type === 'vapor') {
-          // Soft, gaseous circles
-          const radialGrad = ctx.createRadialGradient(
-            particle.x, particle.y, 0,
-            particle.x, particle.y, particle.size
-          );
-          radialGrad.addColorStop(0, particle.color);
-          radialGrad.addColorStop(1, 'rgba(255,255,255,0)');
-
-          ctx.globalAlpha = particle.opacity;
-          ctx.fillStyle = radialGrad;
-          ctx.beginPath();
-          ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-          ctx.fill();
-
-        } else if (particle.type === 'rain') {
-          // Fast Motion Blur Lines (Streaks)
-          ctx.globalAlpha = particle.opacity;
-          ctx.strokeStyle = particle.color;
-          ctx.lineWidth = 2;
-          ctx.lineCap = 'round';
-          
-          ctx.beginPath();
-          // Draw line opposite to velocity to simulate blur
-          ctx.moveTo(particle.x, particle.y);
-          ctx.lineTo(particle.x - particle.vx * 3, particle.y - particle.vy * 0.5); // Trail length based on speed
-          ctx.stroke();
-        }
-        
-        ctx.restore();
-      });
-
-      // Draw underground water if showing infiltration
-      if (stage === 'infiltration' || stage === 'complete') {
-        // Water seeping down
-        ctx.strokeStyle = '#4682B4';
-        ctx.lineWidth = 2;
-        for (let i = 0; i < 8; i++) {
-          const x = 500 + i * 40 + Math.sin(progress * Math.PI * 2 + i) * 5;
-          const startY = height * 0.6;
-          const endY = height * 0.85;
-          
-          ctx.globalAlpha = 0.5;
-          ctx.beginPath();
-          ctx.moveTo(x, startY);
-          ctx.lineTo(x, startY + (endY - startY) * ((progress * 2 + i * 0.1) % 1));
-          ctx.stroke();
-          ctx.globalAlpha = 1;
-        }
-        
-        // Groundwater layer
-        ctx.fillStyle = 'rgba(70, 130, 180, 0.4)';
-        ctx.fillRect(width * 0.5, height * 0.85, width * 0.5, height * 0.15);
-        
-        // Aquifer rocks
-        ctx.fillStyle = '#696969';
-        for (let i = 0; i < 15; i++) {
-          const rockX = width * 0.5 + Math.random() * width * 0.5;
-          const rockY = height * 0.85 + Math.random() * height * 0.15;
-          ctx.beginPath();
-          ctx.arc(rockX, rockY, 4 + Math.random() * 4, 0, Math.PI * 2);
-          ctx.fill();
-        }
-      }
-
-      // Draw collection (rivers/streams)
-      if (stage === 'collection' || stage === 'complete') {
-        ctx.strokeStyle = '#4169E1';
-        ctx.lineWidth = 8;
-        ctx.lineCap = 'round';
-        
-        // Stream flowing to ocean
-        ctx.beginPath();
-        ctx.moveTo(width * 0.7, height * 0.6);
-        ctx.quadraticCurveTo(
-          width * 0.5, height * 0.68,
-          width * 0.4, height * 0.75
-        );
-        ctx.stroke();
-        
-        // Stream flow animation
-        for (let i = 0; i < 5; i++) {
-          const t = (progress + i * 0.2) % 1;
-          const x = width * 0.7 + (width * 0.3) * t * -1;
-          const y = height * 0.6 + (height * 0.15) * t;
-          
-          ctx.fillStyle = '#87CEEB';
-          ctx.globalAlpha = 1 - t;
-          ctx.beginPath();
-          ctx.arc(x, y, 5, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.globalAlpha = 1;
-        }
-      }
-
-      // --- LABELS ---
-      ctx.font = 'bold 14px Arial';
-      ctx.textAlign = 'center';
-      ctx.shadowColor = 'rgba(255, 255, 255, 0.8)';
-      ctx.shadowBlur = 4;
-
-      const labelColor = (labelStage: string) => {
-        return stage === labelStage || stage === 'complete' ? '#FF4500' : '#000000';
-      };
-
-      if (stage === 'evaporation' || stage === 'complete' || stage === 'overview') {
-        ctx.fillStyle = labelColor('evaporation');
-        ctx.fillText(translate('canvas.evaporation') + ' ↑', 200, height * 0.65);
-      }
-      if (stage === 'transpiration' || stage === 'complete' || stage === 'overview') {
-        ctx.fillStyle = labelColor('transpiration');
-        ctx.fillText(translate('canvas.transpiration') + ' ↑', 520, height * 0.52);
-      }
-      if (stage === 'condensation' || stage === 'complete' || stage === 'overview') {
-        ctx.fillStyle = labelColor('condensation');
-        ctx.fillText(translate('canvas.condensation'), 400, 100);
-      }
-      if (stage === 'precipitation' || stage === 'complete' || stage === 'overview') {
-        ctx.fillStyle = labelColor('precipitation');
-        ctx.fillText(translate('canvas.precipitation') + ' ↓', 500, 200);
-      }
-      if (stage === 'collection' || stage === 'complete') {
-        ctx.fillStyle = labelColor('collection');
-        ctx.fillText(translate('canvas.collection'), width * 0.55, height * 0.72);
-      }
-      if (stage === 'infiltration' || stage === 'complete') {
-        ctx.fillStyle = labelColor('infiltration');
-        ctx.fillText(translate('canvas.infiltration') + ' ↓', width * 0.7, height * 0.65);
-      }
-      ctx.shadowBlur = 0;
+    const handleNext = () => {
+      setCurrentStepIndex((prev) => (prev + 1) % CYCLE_DATA.length);
+      setIsPlaying(false);
     };
 
-    const drawCloud = (ctx: CanvasRenderingContext2D, x: number, y: number, size: number, opacity: number, color: string = '#FFFFFF') => {
-      ctx.save();
-      ctx.globalAlpha = opacity;
-      ctx.fillStyle = color;
-      ctx.shadowColor = 'rgba(0, 0, 0, 0.2)';
-      ctx.shadowBlur = 15;
-      ctx.beginPath();
-      ctx.arc(x, y, size * 0.5, 0, Math.PI * 2);
-      ctx.arc(x + size * 0.4, y - size * 0.1, size * 0.4, 0, Math.PI * 2);
-      ctx.arc(x - size * 0.4, y - size * 0.1, size * 0.4, 0, Math.PI * 2);
-      ctx.arc(x + size * 0.2, y + size * 0.2, size * 0.35, 0, Math.PI * 2);
-      ctx.arc(x - size * 0.2, y + size * 0.2, size * 0.35, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
+    const handlePrev = () => {
+      setCurrentStepIndex((prev) => (prev === 0 ? CYCLE_DATA.length - 1 : prev - 1));
+      setIsPlaying(false);
     };
 
-    const nextStep = useCallback(() => {
-      if (currentStep < steps.length - 1) setCurrentStep(currentStep + 1);
-    }, [currentStep, steps.length]);
-
-    const prevStep = useCallback(() => {
-      if (currentStep > 0) setCurrentStep(currentStep - 1);
-    }, [currentStep]);
-
-    const resetAnimation = useCallback(() => {
-      setCurrentStep(0);
-      setAnimationProgress(0);
-      setParticles([]);
-      particleIdCounter.current = 0;
-    }, []);
-
-    const currentStepData = (currentStep >= 0 && currentStep < steps.length) ? steps[currentStep] : steps[0];
-    const keyPoints = currentStepData ? t(currentStepData.keyPointsKey) : [];
-    const keyPointsArray = Array.isArray(keyPoints) ? keyPoints : [];
+    // --- Animation Classes Helper ---
+    const isEvap = currentStage.id === 'evaporation';
+    const isCond = currentStage.id === 'condensation';
+    const isPrecip = currentStage.id === 'precipitation';
+    const isCollect = currentStage.id === 'collection';
+    const isSeep = currentStage.id === 'seepage';
 
     return (
-      <div className="min-h-screen bg-gradient-to-b from-sky-100 to-blue-200 p-4 sm:p-8 pt-24">
-        <div className="max-w-6xl mx-auto">
-          {/* Header */}
-          <div className="bg-white rounded-2xl shadow-2xl p-6 mb-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <div className="text-5xl">💧</div>
-                <div>
-                  <h1 className="text-3xl sm:text-4xl font-bold text-blue-800">
-                    {t('learn.title')}
-                  </h1>
-                  <p className="text-gray-600">{t('learn.subtitle')}</p>
-                </div>
-              </div>
-              <div className="text-lg bg-blue-100 px-4 py-2 rounded-full font-semibold text-blue-700">
-                {t('controls.step')} {currentStep + 1} {t('controls.of')} {steps.length}
-              </div>
+      <div className="flex flex-col md:flex-row w-full max-w-6xl mx-auto bg-slate-50 rounded-xl shadow-xl overflow-hidden font-sans border border-slate-200">
+        
+        {/* --- Left Panel: Visualization --- */}
+        <div className="relative w-full md:w-2/3 h-[500px] bg-sky-200 overflow-hidden">
+          
+          {/* SVG Scene */}
+          <svg viewBox="0 0 800 500" className="w-full h-full">
+            {/* Sky Gradient */}
+            <defs>
+              <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#0ea5e9" stopOpacity="0.4" />
+                <stop offset="100%" stopColor="#bae6fd" stopOpacity="0.8" />
+              </linearGradient>
+              <linearGradient id="waterGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#3b82f6" />
+                <stop offset="100%" stopColor="#1d4ed8" />
+              </linearGradient>
+              <pattern id="underground" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                <circle cx="2" cy="2" r="1" fill="#a8a29e" />
+              </pattern>
+            </defs>
+
+            {/* Background */}
+            <rect width="800" height="500" fill="url(#skyGradient)" />
+
+            {/* Sun - Pulsates during Evaporation */}
+            <Sun active={isEvap || currentStage.id === 'intro'} />
+
+            {/* Mountains */}
+            <Mountains />
+
+            {/* Ground */}
+            <path d="M0,400 L800,400 L800,500 L0,500 Z" fill="#d6d3d1" />
+            <rect x="0" y="400" width="800" height="100" fill="url(#underground)" opacity="0.5" />
+
+            {/* Ocean */}
+            <path d="M450,420 L800,420 L800,500 L400,500 Z" fill="url(#waterGradient)" opacity="0.9" />
+            <path d="M400,420 Q425,410 450,420 T500,420 T550,420 T600,420 L800,420" fill="none" stroke="#60a5fa" strokeWidth="2" />
+
+            {/* Trees */}
+            <Tree x={350} y={360} />
+            <Tree x={380} y={370} />
+
+            {/* --- Dynamic Animations --- */}
+
+            {/* Evaporation Arrows (Wavy lines going up) */}
+            {isEvap && (
+              <g className="animate-pulse">
+                 {/* Ocean Evap */}
+                <path d="M600,420 Q610,380 600,340" stroke="white" strokeWidth="3" fill="none" strokeDasharray="5,5" className="opacity-70">
+                  <animate attributeName="d" values="M600,420 Q610,380 600,340; M600,410 Q590,370 600,330; M600,420 Q610,380 600,340" dur="2s" repeatCount="indefinite" />
+                </path>
+                <path d="M650,420 Q660,380 650,340" stroke="white" strokeWidth="3" fill="none" strokeDasharray="5,5" className="opacity-70">
+                  <animate attributeName="d" values="M650,420 Q660,380 650,340; M650,410 Q640,370 650,330; M650,420 Q660,380 650,340" dur="2.3s" repeatCount="indefinite" />
+                </path>
+                {/* Transpiration */}
+                <path d="M365,370 Q375,340 365,310" stroke="#86efac" strokeWidth="2" fill="none" strokeDasharray="3,3" className="opacity-80">
+                  <animate attributeName="d" values="M365,370 Q375,340 365,310; M365,360 Q355,330 365,300; M365,370 Q375,340 365,310" dur="1.8s" repeatCount="indefinite" />
+                </path>
+              </g>
+            )}
+
+            {/* Clouds - Forming & Darkening */}
+            <Cloud x={100} y={50} scale={1.2} visible={true} dark={isPrecip} />
+            <Cloud x={300} y={80} scale={1.5} visible={isCond || isPrecip || isCollect || isSeep} dark={isPrecip} />
+            <Cloud x={500} y={40} scale={1.3} visible={isCond || isPrecip} dark={isPrecip} />
+
+            {/* Rain / Snow */}
+            {isPrecip && (
+              <g>
+                {/* Rain */}
+                {rainPositions.map((pos, i) => (
+                  <line 
+                    key={i} 
+                    x1={pos.x1} 
+                    y1={150} 
+                    x2={pos.x2} 
+                    y2={170} 
+                    stroke="#3b82f6" 
+                    strokeWidth="2"
+                    className="opacity-60"
+                  >
+                    <animate attributeName="y1" from="150" to="400" dur={`${pos.duration}s`} repeatCount="indefinite" />
+                    <animate attributeName="y2" from="170" to="420" dur={`${pos.duration}s`} repeatCount="indefinite" />
+                  </line>
+                ))}
+                {/* Snow on mountains */}
+                 {snowPositions.map((pos, i) => (
+                  <circle key={`snow-${i}`} r="2" fill="white">
+                     <animate attributeName="cx" values="100;120;100" dur="3s" repeatCount="indefinite" />
+                     <animate attributeName="cy" from="50" to="200" dur={`${pos.duration}s`} repeatCount="indefinite" />
+                  </circle>
+                 ))}
+              </g>
+            )}
+
+            {/* Surface Runoff */}
+            {isCollect && (
+              <g>
+                <path d="M300,400 Q350,410 450,420" stroke="#3b82f6" strokeWidth="4" fill="none" />
+                <circle r="3" fill="#2563eb">
+                  <animateMotion path="M300,400 Q350,410 450,420" dur="1.5s" repeatCount="indefinite" />
+                </circle>
+                <circle r="3" fill="#2563eb">
+                  <animateMotion path="M300,400 Q350,410 450,420" dur="1.5s" begin="0.5s" repeatCount="indefinite" />
+                </circle>
+              </g>
+            )}
+
+            {/* Seepage / Groundwater */}
+            {isSeep && (
+              <g>
+                {/* Layers text */}
+                <text x="50" y="440" fontSize="12" fill="#444" opacity="0.7">Gravel (Fast)</text>
+                <text x="50" y="460" fontSize="12" fill="#444" opacity="0.7">Sand (Med)</text>
+                <text x="50" y="480" fontSize="12" fill="#444" opacity="0.7">Clay (Slow)</text>
+                
+                {/* Seepage Arrows */}
+                <path d="M400,420 L400,480 L700,480" stroke="#1e40af" strokeWidth="2" strokeDasharray="4,4" fill="none">
+                   <animate attributeName="stroke-dashoffset" from="100" to="0" dur="3s" repeatCount="indefinite" />
+                </path>
+                <path d="M200,400 L200,490 L400,490" stroke="#1e40af" strokeWidth="2" strokeDasharray="4,4" fill="none">
+                   <animate attributeName="stroke-dashoffset" from="100" to="0" dur="4s" repeatCount="indefinite" />
+                </path>
+                
+                <circle cx="600" cy="480" r="4" fill="#3b82f6" opacity="0.5">
+                  <animate attributeName="r" values="4;8;4" dur="2s" repeatCount="indefinite" />
+                </circle>
+                 <text x="620" y="485" fontSize="14" fontWeight="bold" fill="#1e3a8a">Aquifer</text>
+              </g>
+            )}
+
+          </svg>
+
+          {/* Legend / Overlay Tags */}
+          <div className="absolute top-4 left-4 flex gap-2">
+              <span className="px-2 py-1 bg-white/80 rounded text-xs font-bold text-slate-700 shadow border border-slate-200">
+                 State: {isPrecip ? 'Liquid/Solid' : isEvap ? 'Gas' : isCond ? 'Gas -> Liquid' : 'Liquid'}
+              </span>
+          </div>
+        </div>
+
+        {/* --- Right Panel: Info & Controls --- */}
+        <div className="w-full md:w-1/3 bg-white p-6 flex flex-col justify-between border-l border-slate-200">
+          
+          <div>
+            <div className="flex items-center gap-2 mb-2 text-blue-600 font-bold uppercase tracking-wide text-sm">
+              {currentStage.id === 'evaporation' && <Thermometer size={16}/>}
+              {currentStage.id === 'condensation' && <Wind size={16}/>}
+              {currentStage.id === 'precipitation' && <Droplets size={16}/>}
+              {currentStage.id === 'collection' && <RefreshCw size={16}/>}
+              <span>Step {currentStepIndex + 1} of {CYCLE_DATA.length}</span>
             </div>
+            
+            <h2 className="text-2xl font-bold text-slate-800 mb-4">{currentStage.title}</h2>
+            <p className="text-slate-600 mb-6 italic">{currentStage.description}</p>
+            
+            <ul className="space-y-3">
+              {currentStage.details.map((detail, idx) => (
+                <li key={idx} className="flex items-start gap-3 p-3 rounded-lg bg-slate-50 border border-slate-100">
+                  <div className="mt-1.5 w-2 h-2 rounded-full bg-blue-500 shrink-0" />
+                  <span className="text-sm text-slate-700">{detail}</span>
+                </li>
+              ))}
+            </ul>
           </div>
 
-          {/* Main Content */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Canvas Section */}
-            <div className="lg:col-span-2">
-              <div className="bg-white rounded-2xl shadow-xl p-6">
-                <div className="bg-gradient-to-br from-sky-50 to-blue-100 rounded-xl p-4 border-4 border-blue-200">
-                  <canvas
-                    ref={canvasRef}
-                    width={800}
-                    height={600}
-                    className="w-full rounded-lg"
-                  />
-                </div>
+          {/* Controls */}
+          <div className="mt-8 pt-6 border-t border-slate-100">
+            <div className="flex items-center justify-between gap-4">
+              <button 
+                onClick={handlePrev}
+                className="p-2 rounded-full hover:bg-slate-100 text-slate-600 transition-colors"
+                aria-label="Previous step"
+              >
+                <ChevronLeft size={24} />
+              </button>
 
-                {/* Controls */}
-                <div className="mt-6 flex flex-wrap gap-3 justify-center">
-                  <button
-                    onClick={prevStep}
-                    disabled={currentStep === 0}
-                    className="px-6 py-3 bg-gray-500 text-white rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-600 transition flex items-center gap-2"
-                  >
-                    <ChevronLeft className="w-5 h-5" />
-                    {t('controls.previous')}
-                  </button>
-
-                  <button
-                    onClick={() => setIsPlaying(!isPlaying)}
-                    className="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition flex items-center gap-2"
-                  >
-                    {isPlaying ? (
-                      <>
-                        <Pause className="w-5 h-5" />
-                        {t('controls.pause')}
-                      </>
-                    ) : (
-                      <>
-                        <Play className="w-5 h-5" />
-                        {t('controls.play')}
-                      </>
-                    )}
-                  </button>
-
-                  <button
-                    onClick={resetAnimation}
-                    className="px-6 py-3 bg-gray-500 text-white rounded-lg font-semibold hover:bg-gray-600 transition flex items-center gap-2"
-                  >
-                    <RotateCcw className="w-5 h-5" />
-                    {t('controls.reset')}
-                  </button>
-
-                  <button
-                    onClick={nextStep}
-                    disabled={currentStep === steps.length - 1}
-                    className="px-6 py-3 bg-green-600 text-white rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-green-700 transition flex items-center gap-2"
-                  >
-                    {t('controls.next')}
-                    <ChevronRight className="w-5 h-5" />
-                  </button>
-                </div>
-
-                {/* Progress Bar */}
-                <div className="mt-6">
-                  <div className="flex justify-between text-sm text-gray-600 mb-2">
-                    <span>{t('learn.progress')}</span>
-                    <span>{Math.round(((currentStep + 1) / steps.length) * 100)}%</span>
-                  </div>
-                  <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
-                    <div
-                      className="h-full bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-600 transition-all duration-500 rounded-full"
-                      style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Information Panel */}
-            <div className="lg:col-span-1">
-              <div className="bg-white rounded-2xl shadow-xl p-6 sticky top-4">
-                <button
-                  onClick={() => setShowInfo(!showInfo)}
-                  className="w-full flex items-center justify-between mb-4 p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition"
-                >
-                  <span className="font-bold text-blue-800">{t('learn.stepInformation')}</span>
-                  <svg 
-                    className={`w-5 h-5 transition-transform ${showInfo ? 'rotate-180' : ''}`}
-                    fill="currentColor" 
-                    viewBox="0 0 20 20"
-                  >
-                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"/>
-                  </svg>
-                </button>
-
-                {showInfo && (
-                  <div className="space-y-4 animate-fadeIn">
-                    <div>
-                      <h3 className="text-xl font-bold text-gray-800 mb-3">
-                        {t(currentStepData.titleKey)}
-                      </h3>
-                      <p className="text-gray-700 leading-relaxed">
-                        {t(currentStepData.descKey)}
-                      </p>
-                    </div>
-
-                    {keyPointsArray.length > 0 && (
-                      <div className="border-t pt-4">
-                        <h4 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
-                          <span className="text-xl">🔑</span>
-                          {t('learn.keyPoints')}
-                        </h4>
-                        <ul className="space-y-2">
-                          {keyPointsArray.map((point: string, index: number) => (
-                            <li key={index} className="flex items-start gap-2 text-sm text-gray-700">
-                              <span className="text-blue-600 font-bold mt-0.5">•</span>
-                              <span>{point}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-
-                    {/* Quick Navigation */}
-                    <div className="border-t pt-4">
-                      <h4 className="font-semibold text-gray-800 mb-3">{t('learn.quickJump')}</h4>
-                      <div className="grid grid-cols-2 gap-2">
-                        {steps.map((step, index) => (
-                          <button
-                            key={index}
-                            onClick={() => setCurrentStep(index)}
-                            className={`p-2 text-xs rounded-lg font-medium transition ${
-                              currentStep === index
-                                ? 'bg-blue-600 text-white'
-                                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                            }`}
-                          >
-                            {index + 1}. {step.stage.charAt(0).toUpperCase() + step.stage.slice(1)}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
+              <button
+                onClick={() => setIsPlaying(!isPlaying)}
+                className={`flex items-center gap-2 px-6 py-2 rounded-full font-medium transition-all ${
+                  isPlaying 
+                    ? 'bg-blue-100 text-blue-700 hover:bg-blue-200' 
+                    : 'bg-blue-600 text-white hover:bg-blue-700 shadow-lg hover:shadow-blue-200'
+                }`}
+              >
+                {isPlaying ? (
+                  <>
+                    <Pause size={18} /> Pause
+                  </>
+                ) : (
+                  <>
+                    <Play size={18} /> Auto Play
+                  </>
                 )}
-              </div>
+              </button>
 
-              {/* Fun Facts */}
-              <div className="mt-6 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-2xl shadow-xl p-6 text-white">
-                <h3 className="text-xl font-bold mb-3 flex items-center gap-2">
-                  <span className="text-2xl">💡</span>
-                  {t('learn.didYouKnow')}
-                </h3>
-                <div className="space-y-3 text-sm">
-                  {(t('learn.funFacts') as string[]).map((fact: string, index: number) => (
-                    <p key={index}>{fact}</p>
-                  ))}
-                </div>
-              </div>
+              <button 
+                onClick={handleNext}
+                className="p-2 rounded-full hover:bg-slate-100 text-slate-600 transition-colors"
+                aria-label="Next step"
+              >
+                <ChevronRight size={24} />
+              </button>
+            </div>
+            
+            {/* Progress Bar */}
+            <div className="flex gap-1 mt-6">
+              {CYCLE_DATA.map((_, idx) => (
+                <div 
+                  key={idx}
+                  className={`h-1.5 rounded-full flex-1 transition-all duration-500 ${
+                    idx === currentStepIndex ? 'bg-blue-600' : 'bg-slate-200'
+                  }`}
+                />
+              ))}
             </div>
           </div>
 
-          {/* Educational Summary */}
-          <div className="mt-6 bg-white rounded-2xl shadow-xl p-6">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-3">
-              <span className="text-3xl">📚</span>
-              {t('learn.understanding')}
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div className="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
-                <h3 className="font-bold text-blue-800 mb-2">{t('learn.energySource')}</h3>
-                <p className="text-sm text-gray-700">{t('learn.energySourceDesc')}</p>
-              </div>
-              <div className="bg-green-50 p-4 rounded-lg border-l-4 border-green-500">
-                <h3 className="font-bold text-green-800 mb-2">{t('learn.stateChanges')}</h3>
-                <p className="text-sm text-gray-700">{t('learn.stateChangesDesc')}</p>
-              </div>
-              <div className="bg-purple-50 p-4 rounded-lg border-l-4 border-purple-500">
-                <h3 className="font-bold text-purple-800 mb-2">{t('learn.continuousProcess')}</h3>
-                <p className="text-sm text-gray-700">{t('learn.continuousProcessDesc')}</p>
-              </div>
-              <div className="bg-orange-50 p-4 rounded-lg border-l-4 border-orange-500">
-                <h3 className="font-bold text-orange-800 mb-2">{t('learn.lifeSupport')}</h3>
-                <p className="text-sm text-gray-700">{t('learn.lifeSupportDesc')}</p>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     );
