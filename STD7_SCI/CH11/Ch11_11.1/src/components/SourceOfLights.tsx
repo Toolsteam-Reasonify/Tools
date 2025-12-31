@@ -7,7 +7,6 @@ import React, {
   ReactNode,
   useMemo,
 } from "react";
-import translationsData from "../locales/translation.json";
 
 // Simple icon components
 const Play = ({ className }: { className?: string }) => (
@@ -172,25 +171,60 @@ interface TranslationData {
       description: string;
     };
   };
+  canvas: {
+    [key: string]: any;
+  };
+  practice: {
+    title: string;
+    subtitle: string;
+    question: string;
+    score: string;
+    selectAnswer: string;
+    checkAnswer: string;
+    nextQuestion: string;
+    correct: string;
+    incorrect: string;
+    explanation: string;
+    complete: string;
+    finalScore: string;
+    restart: string;
+    questions: Array<{
+      id: number;
+      question: string;
+      options: string[];
+      correctAnswer: number;
+      explanation: string;
+    }>;
+  };
+  realWorld: {
+    title: string;
+    subtitle: string;
+    applications: Array<{
+      id: number;
+      title: string;
+      description: string;
+      icon: string;
+    }>;
+  };
   [key: string]: unknown;
 }
 
 const translations: Record<Language, TranslationData> = {
   en: {
+    language: {
+      en: "English",
+      hi: "हिंदी",
+      gu: "ગુજરાતી",
+      selectorLabel: "Select Language"
+    },
     nav: {
       logo: "Sources of Light Learning",
       tabs: {
         learn: "Learn",
         practice: "Practice",
         applications: "Applications",
-        real_world: "Real World",
-      },
-    },
-    language: {
-      en: "English",
-      hi: "हिंदी",
-      gu: "ગુજરાતી",
-      selectorLabel: "Select Language",
+        real_world: "Real World"
+      }
     },
     controls: {
       step: "Step",
@@ -199,51 +233,167 @@ const translations: Record<Language, TranslationData> = {
       next: "Next",
       play: "Play",
       pause: "Pause",
-      reset: "Reset",
+      reset: "Reset"
     },
     steps: {
       overview: {
         title: "What are Sources of Light?",
-        description:
-          "Light is essential for vision and life on Earth. The Sun is our primary natural source of light. But there are many other sources - both natural and artificial. Let's explore the fascinating world of light sources!",
-      },
-      luminous_objects: {
-        title: "Luminous Objects",
-        description:
-          "Objects that emit their own light are called luminous objects. The Sun, stars, lightning, fire, and certain animals like fireflies produce their own light through various natural processes.",
+        description: "Light is essential for vision and life on Earth. The Sun is our primary natural source of light. But there are many other sources - both natural and artificial. Let's explore the fascinating world of light sources!"
       },
       non_luminous_objects: {
         title: "Non-Luminous Objects",
-        description:
-          "Objects that do not emit their own light are called non-luminous objects. The Moon is a perfect example - it doesn't produce its own light but reflects sunlight that falls on it. This is why we can see the Moon at night!",
+        description: "Objects that do not emit their own light are called non-luminous objects. The Moon is a perfect example - it doesn't produce its own light but reflects sunlight that falls on it. This is why we can see the Moon at night!"
       },
       natural_sources: {
         title: "Natural Sources of Light",
-        description:
-          "The Sun gives out or emits its own light and is the main source of natural light on Earth. Other natural sources include stars, lightning, natural fire, and bioluminescent animals like fireflies that use light to communicate.",
+        description: "The Sun gives out or emits its own light and is the main source of natural light on Earth. Other natural sources include stars, lightning, natural fire, and bioluminescent animals like fireflies that use light to communicate."
       },
       artificial_sources: {
         title: "Artificial Sources of Light",
-        description:
-          "In ancient times, humans learned to create fire - the earliest form of artificial lighting. With time, they created light using different fuels like animal fat, oil, wax, and gas. Today, most lighting needs are met by electric lighting.",
+        description: "In ancient times, humans learned to create fire - the earliest form of artificial lighting. With time, they created light using different fuels like animal fat, oil, wax, and gas. Today, most lighting needs are met by electric lighting."
       },
       complete: {
         title: "Complete Understanding",
-        description:
-          "You now understand the difference between luminous and non-luminous objects, natural and artificial light sources, and the evolution of lighting technology from ancient fire to modern LEDs. Light sources are essential for life and modern society!",
-      },
+        description: "You now understand the difference between luminous and non-luminous objects, natural and artificial light sources. Light sources are essential for life and modern society!"
+      }
     },
+    canvas: {
+      overview: {
+        title: "Sources of Light"
+      },
+      luminous_objects: {
+        title: "Luminous Objects (Emit Own Light)"
+      },
+      non_luminous_objects: {
+        title: "Non-Luminous Objects (Reflect Light)",
+        sunLabel: "☀️ Sun (Luminous)",
+        moonLabel: "🌙 Moon (Non-Luminous)",
+        reflectsLabel: "Reflects Sunlight"
+      },
+      natural_sources: {
+        title: "Natural Sources of Light",
+        sun: "Sun",
+        stars: "Stars",
+        lightning: "Lightning",
+        fireflies: "Fireflies"
+      },
+      artificial_sources: {
+        title: "Artificial Sources of Light",
+        candle: "Candle",
+        oil_lamp: "Oil Lamp",
+        light_bulb: "Light Bulb",
+        led: "LED"
+      },
+      complete: {
+        title: "Complete!",
+        message: "You understand Sources of Light!"
+      }
+    },
+    practice: {
+      title: "Practice Questions",
+      subtitle: "Test your understanding of light sources",
+      question: "Question",
+      score: "Score",
+      selectAnswer: "Please select an answer",
+      checkAnswer: "Check Answer",
+      nextQuestion: "Next Question",
+      correct: "Correct!",
+      incorrect: "Incorrect",
+      explanation: "Explanation:",
+      complete: "Quiz Complete!",
+      finalScore: "Your Final Score",
+      restart: "Restart Quiz",
+      questions: [
+        {
+          id: 1,
+          question: "Which of the following is a luminous object?",
+          options: ["Moon", "Sun", "Earth", "Wall"],
+          correctAnswer: 1,
+          explanation: "The Sun is a luminous object because it emits its own light. The Moon, Earth, and wall are non-luminous objects that only reflect light."
+        },
+        {
+          id: 2,
+          question: "Why can we see the Moon at night?",
+          options: ["The Moon produces its own light", "The Moon reflects sunlight", "The Moon absorbs light during the day", "The Moon is transparent"],
+          correctAnswer: 1,
+          explanation: "The Moon is non-luminous. We see it because it reflects sunlight that falls on its surface."
+        },
+        {
+          id: 3,
+          question: "Which is a natural source of light?",
+          options: ["LED Lamp", "Electric Bulb", "Lightning", "Torch"],
+          correctAnswer: 2,
+          explanation: "Lightning is a natural phenomenon that produces light through electrical discharge in the atmosphere. All other options are artificial light sources."
+        },
+        {
+          id: 4,
+          question: "What is the main advantage of LED lamps?",
+          options: ["They are larger in size", "They consume less power and last longer", "They produce more heat", "They are more expensive"],
+          correctAnswer: 1,
+          explanation: "LED lamps consume 75% less power than traditional bulbs, last 25 times longer, and are more energy-efficient."
+        },
+        {
+          id: 5,
+          question: "Fireflies produce light through:",
+          options: ["Reflection", "Bioluminescence", "Electricity", "Fire"],
+          correctAnswer: 1,
+          explanation: "Fireflies create light through bioluminescence - a chemical reaction in their bodies that produces light."
+        }
+      ]
+    },
+    realWorld: {
+      title: "Real World Applications",
+      subtitle: "Discover how light sources are used in everyday life",
+      applications: [
+        {
+          id: 1,
+          title: "LED Street Lighting",
+          description: "Cities worldwide are replacing traditional street lights with LED lamps. This saves energy, reduces costs, and provides better illumination. India's LED street light program has saved billions in electricity costs.",
+          icon: "💡"
+        },
+        {
+          id: 2,
+          title: "Solar Power",
+          description: "The Sun's light is converted into electricity using solar panels. This renewable energy source is clean, sustainable, and helps reduce dependence on fossil fuels.",
+          icon: "☀️"
+        },
+        {
+          id: 3,
+          title: "Bioluminescence in Nature",
+          description: "Many marine creatures like jellyfish and deep-sea fish use bioluminescence to attract prey, communicate, or defend themselves. Scientists study these natural lights for medical and technological applications.",
+          icon: "🌊"
+        },
+        {
+          id: 4,
+          title: "Medical Applications",
+          description: "LED lights are used in medical devices, phototherapy for treating skin conditions, and surgical lighting. Specialized lights help doctors see better and treat patients effectively.",
+          icon: "🏥"
+        },
+        {
+          id: 5,
+          title: "Communication Technology",
+          description: "Fiber optic cables use light to transmit data at incredible speeds. This technology enables high-speed internet, phone calls, and data transmission worldwide.",
+          icon: "📡"
+        },
+        {
+          id: 6,
+          title: "Agriculture & Growth",
+          description: "LED grow lights help farmers grow crops indoors and extend growing seasons. Different colored lights optimize plant growth, making agriculture more efficient and sustainable.",
+          icon: "🌱"
+        }
+      ]
+    }
   },
   hi: {
-    nav: {
-      logo: "प्रकाश के स्रोत सीखें",
-      tabs: { learn: "सीखें", practice: "अभ्यास", applications: "अनुप्रयोग", real_world: "वास्तविक दुनिया" },
-    },
     language: {
       en: "English",
       hi: "हिंदी",
       gu: "ગુજરાતી",
-      selectorLabel: "भाषा चुनें",
+      selectorLabel: "भाषा चुनें"
+    },
+    nav: {
+      logo: "प्रकाश के स्रोत सीखें",
+      tabs: { learn: "सीखें", practice: "अभ्यास", applications: "अनुप्रयोग", real_world: "वास्तविक दुनिया" }
     },
     controls: {
       step: "चरण",
@@ -252,51 +402,167 @@ const translations: Record<Language, TranslationData> = {
       next: "अगला",
       play: "चलाएं",
       pause: "रोकें",
-      reset: "रीसेट",
+      reset: "रीसेट"
     },
     steps: {
       overview: {
         title: "प्रकाश के स्रोत क्या हैं?",
-        description:
-          "प्रकाश पृथ्वी पर जीवन और दृष्टि के लिए आवश्यक है। सूर्य हमारा प्राथमिक प्राकृतिक प्रकाश स्रोत है। लेकिन कई अन्य स्रोत हैं - प्राकृतिक और कृत्रिम दोनों। आइए प्रकाश स्रोतों की आकर्षक दुनिया का अन्वेषण करें!",
-      },
-      luminous_objects: {
-        title: "दीप्तिमान वस्तुएं",
-        description:
-          "वे वस्तुएं जो अपना स्वयं का प्रकाश उत्सर्जित करती हैं, दीप्तिमान वस्तुएं कहलाती हैं। सूर्य, तारे, बिजली, आग, और जुगनू जैसे कुछ जानवर विभिन्न प्राकृतिक प्रक्रियाओं के माध्यम से अपना स्वयं का प्रकाश उत्पन्न करते हैं।",
+        description: "प्रकाश पृथ्वी पर जीवन और दृष्टि के लिए आवश्यक है। सूर्य हमारा प्राथमिक प्राकृतिक प्रकाश स्रोत है। लेकिन कई अन्य स्रोत हैं - प्राकृतिक और कृत्रिम दोनों। आइए प्रकाश स्रोतों की आकर्षक दुनिया का अन्वेषण करें!"
       },
       non_luminous_objects: {
         title: "गैर-दीप्तिमान वस्तुएं",
-        description:
-          "वे वस्तुएं जो अपना स्वयं का प्रकाश उत्सर्जित नहीं करतीं, गैर-दीप्तिमान वस्तुएं कहलाती हैं। चंद्रमा एक आदर्श उदाहरण है - यह अपना प्रकाश उत्पन्न नहीं करता बल्कि सूर्य के प्रकाश को परावर्तित करता है।",
+        description: "वे वस्तुएं जो अपना स्वयं का प्रकाश उत्सर्जित नहीं करतीं, गैर-दीप्तिमान वस्तुएं कहलाती हैं। चंद्रमा एक आदर्श उदाहरण है - यह अपना प्रकाश उत्पन्न नहीं करता बल्कि सूर्य के प्रकाश को परावर्तित करता है।"
       },
       natural_sources: {
         title: "प्रकाश के प्राकृतिक स्रोत",
-        description:
-          "सूर्य अपना स्वयं का प्रकाश देता है और पृथ्वी पर प्राकृतिक प्रकाश का मुख्य स्रोत है। अन्य प्राकृतिक स्रोतों में तारे, बिजली, प्राकृतिक आग, और जुगनू शामिल हैं।",
+        description: "सूर्य अपना स्वयं का प्रकाश देता है और पृथ्वी पर प्राकृतिक प्रकाश का मुख्य स्रोत है। अन्य प्राकृतिक स्रोतों में तारे, बिजली, प्राकृतिक आग, और जुगनू शामिल हैं।"
       },
       artificial_sources: {
         title: "कृत्रिम प्रकाश स्रोत",
-        description:
-          "प्राचीन काल में, मनुष्यों ने आग बनाना सीखा - कृत्रिम प्रकाश का सबसे पहला रूप। समय के साथ, उन्होंने विभिन्न ईंधनों का उपयोग करके प्रकाश बनाया। आज, अधिकांश प्रकाश आवश्यकताएं विद्युत प्रकाश द्वारा पूरी की जाती हैं।",
+        description: "प्राचीन काल में, मनुष्यों ने आग बनाना सीखा - कृत्रिम प्रकाश का सबसे पहला रूप। समय के साथ, उन्होंने विभिन्न ईंधनों का उपयोग करके प्रकाश बनाया। आज, अधिकांश प्रकाश आवश्यकताएं विद्युत प्रकाश द्वारा पूरी की जाती हैं।"
       },
       complete: {
         title: "पूर्ण समझ",
-        description:
-          "अब आप दीप्तिमान और गैर-दीप्तिमान वस्तुओं, प्राकृतिक और कृत्रिम प्रकाश स्रोतों, और प्राचीन आग से आधुनिक एलईडी तक प्रकाश प्रौद्योगिकी के विकास के बीच अंतर को समझते हैं।",
-      },
+        description: "अब आप दीप्तिमान और गैर-दीप्तिमान वस्तुओं, प्राकृतिक और कृत्रिम प्रकाश स्रोतों के बीच अंतर को समझते हैं।"
+      }
     },
+    canvas: {
+      overview: {
+        title: "प्रकाश के स्रोत"
+      },
+      luminous_objects: {
+        title: "दीप्तिमान वस्तुएं (अपना प्रकाश उत्सर्जित करती हैं)"
+      },
+      non_luminous_objects: {
+        title: "गैर-दीप्तिमान वस्तुएं (प्रकाश को परावर्तित करती हैं)",
+        sunLabel: "☀️ सूर्य (दीप्तिमान)",
+        moonLabel: "🌙 चंद्रमा (गैर-दीप्तिमान)",
+        reflectsLabel: "सूर्य के प्रकाश को परावर्तित करता है"
+      },
+      natural_sources: {
+        title: "प्रकाश के प्राकृतिक स्रोत",
+        sun: "सूर्य",
+        stars: "तारे",
+        lightning: "बिजली",
+        fireflies: "जुगनू"
+      },
+      artificial_sources: {
+        title: "कृत्रिम प्रकाश स्रोत",
+        candle: "मोमबत्ती",
+        oil_lamp: "तेल का दीपक",
+        light_bulb: "विद्युत बल्ब",
+        led: "LED"
+      },
+      complete: {
+        title: "पूर्ण!",
+        message: "आप प्रकाश के स्रोतों को समझते हैं!"
+      }
+    },
+    practice: {
+      title: "अभ्यास प्रश्न",
+      subtitle: "प्रकाश स्रोतों की अपनी समझ का परीक्षण करें",
+      question: "प्रश्न",
+      score: "स्कोर",
+      selectAnswer: "कृपया एक उत्तर चुनें",
+      checkAnswer: "उत्तर जांचें",
+      nextQuestion: "अगला प्रश्न",
+      correct: "सही!",
+      incorrect: "गलत",
+      explanation: "व्याख्या:",
+      complete: "क्विज़ पूर्ण!",
+      finalScore: "आपका अंतिम स्कोर",
+      restart: "क्विज़ दोबारा शुरू करें",
+      questions: [
+        {
+          id: 1,
+          question: "निम्नलिखित में से कौन सी दीप्तिमान वस्तु है?",
+          options: ["चंद्रमा", "सूर्य", "पृथ्वी", "दीवार"],
+          correctAnswer: 1,
+          explanation: "सूर्य एक दीप्तिमान वस्तु है क्योंकि यह अपना प्रकाश उत्सर्जित करता है। चंद्रमा, पृथ्वी और दीवार गैर-दीप्तिमान वस्तुएं हैं जो केवल प्रकाश को परावर्तित करती हैं।"
+        },
+        {
+          id: 2,
+          question: "हम रात में चंद्रमा को क्यों देख सकते हैं?",
+          options: ["चंद्रमा अपना प्रकाश उत्पन्न करता है", "चंद्रमा सूर्य के प्रकाश को परावर्तित करता है", "चंद्रमा दिन के दौरान प्रकाश को अवशोषित करता है", "चंद्रमा पारदर्शी है"],
+          correctAnswer: 1,
+          explanation: "चंद्रमा गैर-दीप्तिमान है। हम इसे देखते हैं क्योंकि यह अपनी सतह पर पड़ने वाले सूर्य के प्रकाश को परावर्तित करता है।"
+        },
+        {
+          id: 3,
+          question: "प्रकाश का प्राकृतिक स्रोत कौन सा है?",
+          options: ["LED लैंप", "विद्युत बल्ब", "बिजली", "टॉर्च"],
+          correctAnswer: 2,
+          explanation: "बिजली एक प्राकृतिक घटना है जो वायुमंडल में विद्युत निर्वहन के माध्यम से प्रकाश उत्पन्न करती है। अन्य सभी विकल्प कृत्रिम प्रकाश स्रोत हैं।"
+        },
+        {
+          id: 4,
+          question: "LED लैंप का मुख्य लाभ क्या है?",
+          options: ["वे आकार में बड़े हैं", "वे कम बिजली की खपत करते हैं और अधिक समय तक चलते हैं", "वे अधिक गर्मी उत्पन्न करते हैं", "वे अधिक महंगे हैं"],
+          correctAnswer: 1,
+          explanation: "LED लैंप पारंपरिक बल्बों की तुलना में 75% कम बिजली की खपत करते हैं, 25 गुना अधिक समय तक चलते हैं, और अधिक ऊर्जा-कुशल हैं।"
+        },
+        {
+          id: 5,
+          question: "जुगनू निम्नलिखित के माध्यम से प्रकाश उत्पन्न करते हैं:",
+          options: ["परावर्तन", "जैव-प्रकाश", "बिजली", "आग"],
+          correctAnswer: 1,
+          explanation: "जुगनू जैव-प्रकाश के माध्यम से प्रकाश बनाते हैं - उनके शरीर में एक रासायनिक प्रतिक्रिया जो प्रकाश उत्पन्न करती है।"
+        }
+      ]
+    },
+    realWorld: {
+      title: "वास्तविक दुनिया के अनुप्रयोग",
+      subtitle: "जानें कि प्रकाश स्रोतों का उपयोग रोजमर्रा के जीवन में कैसे किया जाता है",
+      applications: [
+        {
+          id: 1,
+          title: "LED स्ट्रीट लाइटिंग",
+          description: "दुनिया भर के शहर पारंपरिक स्ट्रीट लाइट्स को LED लैंप से बदल रहे हैं। यह ऊर्जा बचाता है, लागत कम करता है, और बेहतर प्रकाश प्रदान करता है। भारत के LED स्ट्रीट लाइट कार्यक्रम ने बिजली की लागत में अरबों की बचत की है।",
+          icon: "💡"
+        },
+        {
+          id: 2,
+          title: "सौर ऊर्जा",
+          description: "सूर्य के प्रकाश को सोलर पैनल का उपयोग करके बिजली में परिवर्तित किया जाता है। यह नवीकरणीय ऊर्जा स्रोत स्वच्छ, स्थायी है, और जीवाश्म ईंधन पर निर्भरता कम करने में मदद करता है।",
+          icon: "☀️"
+        },
+        {
+          id: 3,
+          title: "प्रकृति में जैव-प्रकाश",
+          description: "कई समुद्री जीव जैसे जेलीफ़िश और गहरे समुद्र की मछलियाँ शिकार को आकर्षित करने, संवाद करने, या खुद का बचाव करने के लिए जैव-प्रकाश का उपयोग करती हैं। वैज्ञानिक चिकित्सा और तकनीकी अनुप्रयोगों के लिए इन प्राकृतिक रोशनी का अध्ययन करते हैं।",
+          icon: "🌊"
+        },
+        {
+          id: 4,
+          title: "चिकित्सा अनुप्रयोग",
+          description: "LED लाइट्स का उपयोग चिकित्सा उपकरणों, त्वचा की स्थितियों के उपचार के लिए फोटोथेरेपी, और सर्जिकल लाइटिंग में किया जाता है। विशेष प्रकाश डॉक्टरों को बेहतर देखने और रोगियों का प्रभावी ढंग से इलाज करने में मदद करते हैं।",
+          icon: "🏥"
+        },
+        {
+          id: 5,
+          title: "संचार प्रौद्योगिकी",
+          description: "फाइबर ऑप्टिक केबल अविश्वसनीय गति से डेटा प्रसारित करने के लिए प्रकाश का उपयोग करते हैं। यह प्रौद्योगिकी उच्च-गति इंटरनेट, फोन कॉल, और दुनिया भर में डेटा ट्रांसमिशन को सक्षम बनाती है।",
+          icon: "📡"
+        },
+        {
+          id: 6,
+          title: "कृषि और विकास",
+          description: "LED ग्रो लाइट्स किसानों को घर के अंदर फसल उगाने और बढ़ते मौसमों को बढ़ाने में मदद करती हैं। विभिन्न रंग की रोशनी पौधों के विकास को अनुकूलित करती है, जिससे कृषि अधिक कुशल और टिकाऊ बनती है।",
+          icon: "🌱"
+        }
+      ]
+    }
   },
   gu: {
-    nav: {
-      logo: "પ્રકાશના સ્રોતો શીખો",
-      tabs: { learn: "શીખો", practice: "અભ્યાસ", applications: "અનુપ્રયોગો", real_world: "વાસ્તવિક દુનિયા" },
-    },
     language: {
       en: "English",
       hi: "हिंदी",
       gu: "ગુજરાતી",
-      selectorLabel: "ભાષા પસંદ કરો",
+      selectorLabel: "ભાષા પસંદ કરો"
+    },
+    nav: {
+      logo: "પ્રકાશના સ્રોતો શીખો",
+      tabs: { learn: "શીખો", practice: "અભ્યાસ", applications: "અનુપ્રયોગો", real_world: "વાસ્તવિક દુનિયા" }
     },
     controls: {
       step: "પગલું",
@@ -305,41 +571,157 @@ const translations: Record<Language, TranslationData> = {
       next: "આગળ",
       play: "ચલાવો",
       pause: "થોભાવો",
-      reset: "રીસેટ",
+      reset: "રીસેટ"
     },
     steps: {
       overview: {
         title: "પ્રકાશના સ્રોતો શું છે?",
-        description:
-          "પૃથ્વી પર જીવન અને દ્રષ્ટિ માટે પ્રકાશ આવશ્યક છે। સૂર્ય આપણો પ્રાથમિક કુદરતી પ્રકાશ સ્રોત છે। પરંતુ ઘણા અન્ય સ્રોતો છે - કુદરતી અને કૃત્રિમ બંને। ચાલો પ્રકાશ સ્રોતોની આકર્ષક દુનિયાનું અન્વેષણ કરીએ!",
-      },
-      luminous_objects: {
-        title: "પ્રકાશિત વસ્તુઓ",
-        description:
-          "જે વસ્તુઓ પોતાનો પ્રકાશ ઉત્સર્જન કરે છે તેને પ્રકાશિત વસ્તુઓ કહેવામાં આવે છે। સૂર્ય, તારાઓ, વીજળી, અગ્નિ અને જુગનુ જેવા કેટલાક પ્રાણીઓ વિવિધ કુદરતી પ્રક્રિયાઓ દ્વારા પોતાનો પ્રકાશ ઉત્પન્ન કરે છે।",
+        description: "પૃથ્વી પર જીવન અને દ્રષ્ટિ માટે પ્રકાશ આવશ્યક છે। સૂર્ય આપણો પ્રાથમિક કુદરતી પ્રકાશ સ્રોત છે। પરંતુ ઘણા અન્ય સ્રોતો છે - કુદરતી અને કૃત્રિમ બંને। ચાલો પ્રકાશ સ્રોતોની આકર્ષક દુનિયાનું અન્વેષણ કરીએ!"
       },
       non_luminous_objects: {
         title: "બિન-પ્રકાશિત વસ્તુઓ",
-        description:
-          "જે વસ્તુઓ પોતાનો પ્રકાશ ઉત્સર્જન કરતી નથી તેને બિન-પ્રકાશિત વસ્તુઓ કહેવામાં આવે છે। ચંદ્ર એક સંપૂર્ણ ઉદાહરણ છે - તે પોતાનો પ્રકાશ ઉત્પન્ન કરતું નથી પરંતુ સૂર્યના પ્રકાશને પ્રતિબિંબિત કરે છે।",
+        description: "જે વસ્તુઓ પોતાનો પ્રકાશ ઉત્સર્જન કરતી નથી તેને બિન-પ્રકાશિત વસ્તુઓ કહેવામાં આવે છે। ચંદ્ર એક સંપૂર્ણ ઉદાહરણ છે - તે પોતાનો પ્રકાશ ઉત્પન્ન કરતું નથી પરંતુ સૂર્યના પ્રકાશને પ્રતિબિંબિત કરે છે।"
       },
       natural_sources: {
         title: "પ્રકાશના કુદરતી સ્રોતો",
-        description:
-          "સૂર્ય પોતાનો પ્રકાશ આપે છે અને પૃથ્વી પર કુદરતી પ્રકાશનો મુખ્ય સ્રોત છે। અન્ય કુદરતી સ્રોતોમાં તારાઓ, વીજળી, કુદરતી અગ્નિ અને જુગનુ સામેલ છે।",
+        description: "સૂર્ય પોતાનો પ્રકાશ આપે છે અને પૃથ્વી પર કુદરતી પ્રકાશનો મુખ્ય સ્રોત છે। અન્ય કુદરતી સ્રોતોમાં તારાઓ, વીજળી, કુદરતી અગ્નિ અને જુગનુ સામેલ છે।"
       },
       artificial_sources: {
         title: "કૃત્રિમ પ્રકાશ સ્રોતો",
-        description:
-          "પ્રાચીન કાળમાં, માનવોએ અગ્નિ બનાવવાનું શીખ્યા - કૃત્રિમ પ્રકાશનું પ્રથમ સ્વરૂપ। સમય સાથે, તેઓએ વિવિધ ઇંધણોનો ઉપયોગ કરીને પ્રકાશ બનાવ્યો। આજે, મોટાભાગની પ્રકાશ જરૂરિયાતો ઇલેક્ટ્રિક પ્રકાશ દ્વારા પૂરી થાય છે।",
+        description: "પ્રાચીન કાળમાં, માનવોએ અગ્નિ બનાવવાનું શીખ્યા - કૃત્રિમ પ્રકાશનું પ્રથમ સ્વરૂપ। સમય સાથે, તેઓએ વિવિધ ઇંધણોનો ઉપયોગ કરીને પ્રકાશ બનાવ્યો। આજે, મોટાભાગની પ્રકાશ જરૂરિયાતો ઇલેક્ટ્રિક પ્રકાશ દ્વારા પૂરી થાય છે।"
       },
       complete: {
         title: "સંપૂર્ણ સમજ",
-        description:
-          "હવે તમે પ્રકાશિત અને બિન-પ્રકાશિત વસ્તુઓ, કુદરતી અને કૃત્રિમ પ્રકાશ સ્રોતો, અને પ્રાચીન અગ્નિથી આધુનિક LEDsમાં પ્રકાશ તકનીકીના વિકાસ વચ્ચેનો તફાવત સમજો છો।",
-      },
+        description: "હવે તમે પ્રકાશિત અને બિન-પ્રકાશિત વસ્તુઓ, કુદરતી અને કૃત્રિમ પ્રકાશ સ્રોતો વચ્ચેનો તફાવત સમજો છો।"
+      }
     },
-  },
+    canvas: {
+      overview: {
+        title: "પ્રકાશના સ્રોતો"
+      },
+      luminous_objects: {
+        title: "પ્રકાશિત વસ્તુઓ (પોતાનો પ્રકાશ ઉત્સર્જન કરે છે)"
+      },
+      non_luminous_objects: {
+        title: "બિન-પ્રકાશિત વસ્તુઓ (પ્રકાશને પ્રતિબિંબિત કરે છે)",
+        sunLabel: "☀️ સૂર્ય (પ્રકાશિત)",
+        moonLabel: "🌙 ચંદ્ર (બિન-પ્રકાશિત)",
+        reflectsLabel: "સૂર્યના પ્રકાશને પ્રતિબિંબિત કરે છે"
+      },
+      natural_sources: {
+        title: "પ્રકાશના કુદરતી સ્રોતો",
+        sun: "સૂર્ય",
+        stars: "તારાઓ",
+        lightning: "વીજળી",
+        fireflies: "જુગનુ"
+      },
+      artificial_sources: {
+        title: "કૃત્રિમ પ્રકાશ સ્રોતો",
+        candle: "મીણબત્તી",
+        oil_lamp: "તેલનો દીવો",
+        light_bulb: "વિદ્યુત બલ્બ",
+        led: "LED"
+      },
+      complete: {
+        title: "પૂર્ણ!",
+        message: "તમે પ્રકાશના સ્રોતોને સમજો છો!"
+      }
+    },
+    practice: {
+      title: "અભ્યાસ પ્રશ્નો",
+      subtitle: "પ્રકાશ સ્રોતોની તમારી સમજની કસોટી કરો",
+      question: "પ્રશ્ન",
+      score: "સ્કોર",
+      selectAnswer: "કૃપા કરીને એક જવાબ પસંદ કરો",
+      checkAnswer: "જવાબ તપાસો",
+      nextQuestion: "આગળનો પ્રશ્ન",
+      correct: "સાચું!",
+      incorrect: "ખોટું",
+      explanation: "સમજૂતી:",
+      complete: "ક્વિઝ પૂર્ણ!",
+      finalScore: "તમારું અંતિમ સ્કોર",
+      restart: "ક્વિઝ ફરી શરૂ કરો",
+      questions: [
+        {
+          id: 1,
+          question: "નીચેનામાંથી કયું પ્રકાશિત વસ્તુ છે?",
+          options: ["ચંદ્ર", "સૂર્ય", "પૃથ્વી", "દીવાલ"],
+          correctAnswer: 1,
+          explanation: "સૂર્ય એક પ્રકાશિત વસ્તુ છે કારણ કે તે પોતાનો પ્રકાશ ઉત્સર્જન કરે છે। ચંદ્ર, પૃથ્વી અને દીવાલ બિન-પ્રકાશિત વસ્તુઓ છે જે માત્ર પ્રકાશને પ્રતિબિંબિત કરે છે।"
+        },
+        {
+          id: 2,
+          question: "આપણે રાત્રે ચંદ્રને શા માટે જોઈ શકીએ છીએ?",
+          options: ["ચંદ્ર પોતાનો પ્રકાશ ઉત્પન્ન કરે છે", "ચંદ્ર સૂર્યના પ્રકાશને પ્રતિબિંબિત કરે છે", "ચંદ્ર દિવસ દરમિયાન પ્રકાશને શોષે છે", "ચંદ્ર પારદર્શક છે"],
+          correctAnswer: 1,
+          explanation: "ચંદ્ર બિન-પ્રકાશિત છે। આપણે તેને જોઈએ છીએ કારણ કે તે તેની સપાટી પર પડતા સૂર્યના પ્રકાશને પ્રતિબિંબિત કરે છે।"
+        },
+        {
+          id: 3,
+          question: "પ્રકાશનો કુદરતી સ્રોત કયો છે?",
+          options: ["LED લેમ્પ", "વિદ્યુત બલ્બ", "વીજળી", "ટૉર્ચ"],
+          correctAnswer: 2,
+          explanation: "વીજળી એ કુદરતી ઘટના છે જે વાતાવરણમાં વિદ્યુત નિકાસ દ્વારા પ્રકાશ ઉત્પન્ન કરે છે। અન્ય બધા વિકલ્પો કૃત્રિમ પ્રકાશ સ્રોતો છે।"
+        },
+        {
+          id: 4,
+          question: "LED લેમ્પનો મુખ્ય ફાયદો શું છે?",
+          options: ["તેઓ કદમાં મોટા છે", "તેઓ ઓછી શક્તિ વાપરે છે અને લાંબા સમય સુધી ચાલે છે", "તેઓ વધુ ગરમી ઉત્પન્ન કરે છે", "તેઓ વધુ ખર્ચાળ છે"],
+          correctAnswer: 1,
+          explanation: "LED લેમ્પ પરંપરાગત બલ્બ કરતાં 75% ઓછી શક્તિ વાપરે છે, 25 ગણા વધુ સમય સુધી ચાલે છે, અને વધુ ઊર્જા-કાર્યક્ષમ છે।"
+        },
+        {
+          id: 5,
+          question: "જુગનુ નીચેનાના માધ્યમથી પ્રકાશ ઉત્પન્ન કરે છે:",
+          options: ["પ્રતિબિંબ", "જૈવ-પ્રકાશ", "વિદ્યુત", "અગ્નિ"],
+          correctAnswer: 1,
+          explanation: "જુગનુ જૈવ-પ્રકાશના માધ્યમથી પ્રકાશ બનાવે છે - તેમના શરીરમાં એક રાસાયણિક પ્રતિક્રિયા જે પ્રકાશ ઉત્પન્ન કરે છે।"
+        }
+      ]
+    },
+    realWorld: {
+      title: "વાસ્તવિક દુનિયાના ઉપયોગો",
+      subtitle: "જાણો કે પ્રકાશ સ્રોતોનો ઉપયોગ રોજબરોજના જીવનમાં કેવી રીતે થાય છે",
+      applications: [
+        {
+          id: 1,
+          title: "LED સ્ટ્રીટ લાઇટિંગ",
+          description: "વિશ્વભરના શહેરો પરંપરાગત સ્ટ્રીટ લાઇટ્સને LED લેમ્પ સાથે બદલી રહ્યા છે। આ ઊર્જા બચાવે છે, ખર્ચ ઘટાડે છે, અને વધુ સારું પ્રકાશ પ્રદાન કરે છે। ભારતના LED સ્ટ્રીટ લાઇટ પ્રોગ્રામે વિદ્યુત ખર્ચમાં અબજોની બચત કરી છે।",
+          icon: "💡"
+        },
+        {
+          id: 2,
+          title: "સૌર ઊર્જા",
+          description: "સૂર્યના પ્રકાશને સોલર પેનલનો ઉપયોગ કરીને વિદ્યુતમાં રૂપાંતરિત કરવામાં આવે છે। આ નવીનીકરણીય ઊર્જા સ્રોત સ્વચ્છ, ટકાઉ છે, અને જીવાશ્મ ઇંધણ પરની નિર્ભરતા ઘટાડવામાં મદદ કરે છે।",
+          icon: "☀️"
+        },
+        {
+          id: 3,
+          title: "પ્રકૃતિમાં જૈવ-પ્રકાશ",
+          description: "ઘણા સમુદ્રી જીવો જેવા કે જેલીફિશ અને ઊંડા સમુદ્રની માછલીઓ શિકારને આકર્ષિત કરવા, સંદેશાવ્યવહાર કરવા, અથવા પોતાનું રક્ષણ કરવા માટે જૈવ-પ્રકાશનો ઉપયોગ કરે છે। વૈજ્ઞાનિકો તબીબી અને તકનીકી ઉપયોગો માટે આ કુદરતી પ્રકાશનો અભ્યાસ કરે છે।",
+          icon: "🌊"
+        },
+        {
+          id: 4,
+          title: "તબીબી ઉપયોગો",
+          description: "LED લાઇટ્સનો ઉપયોગ તબીબી ઉપકરણો, ત્વચાની સ્થિતિઓના સારવાર માટે ફોટોથેરાપી, અને સર્જિકલ લાઇટિંગમાં થાય છે। વિશેષ પ્રકાશ ડૉક્ટરોને વધુ સારું જોવામાં અને રોગીઓની અસરકારક રીતે સારવાર કરવામાં મદદ કરે છે।",
+          icon: "🏥"
+        },
+        {
+          id: 5,
+          title: "સંદેશાવ્યવહાર ટેક્નોલોજી",
+          description: "ફાઇબર ઓપ્ટિક કેબલ અવિશ્વસનીય ઝડપે ડેટા પ્રસારિત કરવા માટે પ્રકાશનો ઉપયોગ કરે છે। આ ટેક્નોલોજી ઊંચી-ઝડપ ઇન્ટરનેટ, ફોન કૉલ, અને વિશ્વભરમાં ડેટા ટ્રાન્સમિશનને સક્ષમ બનાવે છે।",
+          icon: "📡"
+        },
+        {
+          id: 6,
+          title: "કૃષિ અને વિકાસ",
+          description: "LED ગ્રો લાઇટ્સ ખેડૂતોને ઘરની અંદર પાક ઉગાડવામાં અને વધતા મોસમને વિસ્તૃત કરવામાં મદદ કરે છે। વિવિધ રંગની રોશની છોડના વિકાસને ઑપ્ટિમાઇઝ કરે છે, જેનાથી કૃષિ વધુ કાર્યક્ષમ અને ટકાઉ બને છે।",
+          icon: "🌱"
+        }
+      ]
+    }
+  }
 };
 
 // Language Context
@@ -372,17 +754,9 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({
 
   const t = (key: string): string | unknown => {
     const keys = key.split(".");
-    // First try to get from external JSON translations
-    let value: unknown = translationsData[language as keyof typeof translationsData];
+    let value: unknown = translations[language];
     for (const k of keys) {
       value = (value as Record<string, unknown>)?.[k];
-    }
-    // If not found, fallback to internal translations
-    if (value === undefined || value === key) {
-      value = translations[language];
-      for (const k of keys) {
-        value = (value as Record<string, unknown>)?.[k];
-      }
     }
     return value ?? key;
   };

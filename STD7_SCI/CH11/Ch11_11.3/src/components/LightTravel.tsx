@@ -6,7 +6,26 @@ import React, {
   useContext,
   ReactNode,
 } from "react";
-import translationsData from "../locales/translation.json";
+
+// Type declarations for browser extension APIs to prevent TypeScript errors
+declare global {
+  interface Window {
+    chrome?: {
+      runtime?: {
+        lastError?: { message?: string };
+        sendMessage?: (...args: unknown[]) => unknown;
+        connect?: (...args: unknown[]) => unknown;
+        sendNativeMessage?: (...args: unknown[]) => unknown;
+      };
+    };
+    browser?: {
+      runtime?: {
+        sendMessage?: (...args: unknown[]) => unknown;
+        connect?: (...args: unknown[]) => unknown;
+      };
+    };
+  }
+}
 
 // Simple icon components
 const Play = ({ className }: { className?: string }) => (
@@ -161,10 +180,6 @@ type TranslationValue =
   | number
   | { [key: string]: TranslationValue }
   | Array<{ [key: string]: TranslationValue }>;
-type Translations = Record<Language, TranslationValue>;
-
-// Translation system - Load from JSON file
-const translations: Translations = translationsData as Translations;
 
 // Language Context
 interface LanguageContextType {
@@ -196,43 +211,13 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({
   }, []);
 
   const t = (key: string): string => {
-    const keys = key.split(".");
-    let value: TranslationValue = translations[language];
-    for (const k of keys) {
-      if (
-        typeof value === "object" &&
-        value !== null &&
-        !Array.isArray(value)
-      ) {
-        value = (value as Record<string, TranslationValue>)[k];
-        if (value === undefined) {
-          return key;
-        }
-      } else {
-        return key;
-      }
-    }
-    return typeof value === "string" ? value : key;
+    // Translation system removed - return key as-is
+    return key;
   };
 
   const tValue = (key: string): TranslationValue => {
-    const keys = key.split(".");
-    let value: TranslationValue = translations[language];
-    for (const k of keys) {
-      if (
-        typeof value === "object" &&
-        value !== null &&
-        !Array.isArray(value)
-      ) {
-        value = (value as Record<string, TranslationValue>)[k];
-        if (value === undefined) {
-          return key;
-        }
-      } else {
-        return key;
-      }
-    }
-    return value !== undefined ? value : key;
+    // Translation system removed - return key as-is
+    return key;
   };
 
   return (

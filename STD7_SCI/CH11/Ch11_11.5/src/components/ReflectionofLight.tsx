@@ -7,7 +7,7 @@ import React, {
   ReactNode,
 } from "react";
 import translationsData from "../locales/translation.json";
-import { Lightbulb, ArrowRight, ArrowLeft, Play, Pause, RotateCw, CheckCircle, XCircle, RefreshCw, Target, Award, Camera, Car, Eye, Home, Smartphone, Sun, Telescope, ChevronDown, ChevronUp, Sparkles } from 'lucide-react';
+import { Lightbulb, ArrowRight, ArrowLeft, CheckCircle, XCircle, RefreshCw, Award, Camera, Car, Eye, Home, Smartphone, Sun, Telescope, ChevronDown, ChevronUp, Sparkles } from 'lucide-react';
 
 // Type declarations for browser extension APIs to prevent TypeScript errors
 declare global {
@@ -41,6 +41,9 @@ if (typeof window !== 'undefined' && typeof console !== 'undefined') {
     return msg.includes('runtime.lasterror') || 
            msg.includes('message port closed') || 
            msg.includes('unchecked runtime.lasterror') ||
+           msg.includes('the message port closed before a response was received') ||
+           msg.includes('extension context invalidated') ||
+           msg.includes('receiving end does not exist') ||
            (msg.includes('invalid values for props') && (msg.includes('error') || msg.includes('warn') || msg.includes('log')));
   };
   
@@ -137,15 +140,150 @@ if (typeof window !== 'undefined' && typeof console !== 'undefined') {
   
   // Suppress Chrome extension runtime errors
   try {
-    if (window.chrome && window.chrome.runtime && window.chrome.runtime.lastError) {
-      // Override lastError getter to prevent warnings
-      Object.defineProperty(window.chrome.runtime, 'lastError', {
-        get: () => null,
-        configurable: true
-      });
+    if (window.chrome && window.chrome.runtime) {
+      // Override lastError getter to prevent warnings - multiple attempts for maximum compatibility
+      try {
+        const descriptor = Object.getOwnPropertyDescriptor(window.chrome.runtime, 'lastError');
+        if (!descriptor || descriptor.configurable) {
+          Object.defineProperty(window.chrome.runtime, 'lastError', {
+            get: () => null,
+            set: () => {},
+            configurable: true,
+            enumerable: false
+          });
+        }
+      } catch (e) {
+        // Try alternative approach
+        try {
+          (window.chrome.runtime as any).lastError = null;
+          Object.defineProperty(window.chrome.runtime, 'lastError', {
+            get: () => null,
+            set: () => {},
+            configurable: true,
+            enumerable: false
+          });
+        } catch (e2) {
+          // If all else fails, wrap the property
+        }
+      }
+      
+      // Wrap sendMessage to suppress errors
+      if (window.chrome.runtime.sendMessage) {
+        const originalSendMessage = window.chrome.runtime.sendMessage;
+        window.chrome.runtime.sendMessage = function(this: typeof window.chrome.runtime, ...args: unknown[]) {
+          try {
+            const result = originalSendMessage.apply(this, args);
+            // If it returns a promise, catch errors
+            if (result && typeof result === 'object' && 'catch' in result && typeof (result as { catch?: unknown }).catch === 'function') {
+              return (result as Promise<unknown>).catch(() => {
+                // Suppress promise rejections from extensions
+              });
+            }
+            return result;
+          } catch (e) {
+            // Suppress errors from extension messaging
+            return;
+          }
+        } as typeof originalSendMessage;
+      }
+      
+      // Wrap connect to suppress connection errors
+      if (window.chrome.runtime.connect) {
+        const originalConnect = window.chrome.runtime.connect;
+        window.chrome.runtime.connect = function(this: typeof window.chrome.runtime, ...args: unknown[]) {
+          try {
+            const port = originalConnect.apply(this, args);
+            // Suppress errors from port messages
+            if (port && typeof port === 'object' && 'onMessage' in port) {
+              const portWithMessage = port as { onMessage?: { addListener?: (callback: unknown) => void } };
+              if (portWithMessage.onMessage && portWithMessage.onMessage.addListener) {
+                const originalAddListener = portWithMessage.onMessage.addListener;
+                portWithMessage.onMessage.addListener = function(callback: unknown) {
+                  try {
+                    return originalAddListener.call(this, callback);
+                  } catch (e) {
+                    // Suppress listener errors
+                  }
+                };
+              }
+            }
+            return port;
+          } catch (e) {
+            // Suppress connection errors
+            return null as any;
+          }
+        } as typeof originalConnect;
+      }
+    }
+    
+    // Handle browser (Firefox) extension API
+    if (window.browser && window.browser.runtime) {
+      if (window.browser.runtime.sendMessage) {
+        const originalSendMessage = window.browser.runtime.sendMessage;
+        window.browser.runtime.sendMessage = function(this: typeof window.browser.runtime, ...args: unknown[]) {
+          try {
+            const result = originalSendMessage.apply(this, args);
+            if (result && typeof result === 'object' && 'catch' in result && typeof (result as { catch?: unknown }).catch === 'function') {
+              return (result as Promise<unknown>).catch(() => {});
+            }
+            return result;
+          } catch (e) {
+            return;
+          }
+        } as typeof originalSendMessage;
+      }
     }
   } catch (e) {
     // Silently fail if we can't override
+  }
+  
+  // Additional error suppression for extension-related errors
+  try {
+    const originalOnError = window.onerror;
+    window.onerror = function(message, source, lineno, colno, error) {
+      const msg = String(message || '').toLowerCase();
+      if (shouldSuppress(msg)) {
+        return true; // Suppress the error
+      }
+      if (originalOnError) {
+        return originalOnError.call(this, message, source, lineno, colno, error);
+      }
+      return false;
+    };
+  } catch (e) {
+    // Silently fail if we can't override
+  }
+  
+  // Suppress errors that might be logged after page load
+  try {
+    // Periodic check to suppress any new errors (runs every 100ms for first 5 seconds)
+    let checkCount = 0;
+    const maxChecks = 50;
+    const errorCheckInterval = setInterval(() => {
+      checkCount++;
+      if (checkCount >= maxChecks) {
+        clearInterval(errorCheckInterval);
+        return;
+      }
+      
+      // Re-check and suppress chrome.runtime.lastError
+      if (window.chrome && window.chrome.runtime) {
+        try {
+          if (window.chrome.runtime.lastError) {
+            Object.defineProperty(window.chrome.runtime, 'lastError', {
+              get: () => null,
+              set: () => {},
+              configurable: true,
+              enumerable: false
+            });
+          }
+        } catch (e) {
+          // Ignore
+        }
+      }
+    }, 100);
+  } catch (e) {
+    // Ignore
   }
 }
 
@@ -373,508 +511,561 @@ const LanguageSelector: React.FC = () => {
 
 // Reflection of Light Learn Component
 const ReflectionOfLightLearn = () => {
-  const [currentStep, setCurrentStep] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [mirrorAngle, setMirrorAngle] = useState(45);
-  const [animationPhase, setAnimationPhase] = useState(0);
+  const { t, language } = useLanguage();
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const sunlightCanvasRef = useRef<HTMLCanvasElement>(null);
-  const straightLineCanvasRef = useRef<HTMLCanvasElement>(null);
-  const faceCanvasRef = useRef<HTMLCanvasElement>(null);
+  const [selectedDemo, setSelectedDemo] = useState<'law' | 'types' | 'interactive'>('law');
+  const [lightAngle, setLightAngle] = useState<number>(45);
+  const [showNormal, setShowNormal] = useState<boolean>(true);
+  const [showAngles, setShowAngles] = useState<boolean>(true);
+  const [isAnimating, setIsAnimating] = useState<boolean>(true);
   const animationFrameRef = useRef<number>();
 
-  const steps = [
-    {
-      title: "Understanding Reflection of Light",
-      content: "When light hits a shiny surface like a mirror, it bounces back. This bouncing of light is called reflection. Watch how the light beam interacts with the mirror surface.",
-      visual: "intro",
-      phases: 4
-    },
-    {
-      title: "Activity 11.5: Redirecting Sunlight",
-      content: "Take a plane mirror outside on a sunny day. Hold it so sunlight falls on it. Now tilt the mirror slowly and observe how the reflected sunlight moves on a nearby wall.",
-      visual: "sunlight",
-      phases: 5
-    },
-    {
-      title: "Light Travels in Straight Lines",
-      content: "Using a torch and mirror with a thin beam of light, you can see that light travels in a perfectly straight line before hitting the mirror, and continues in another straight line after reflection.",
-      visual: "straightLine",
-      phases: 4
-    },
-    {
-      title: "Activity 11.6: Changing Direction Interactively",
-      content: "Try rotating the mirror below. Notice how the reflected light changes direction, but the incident and reflected rays always remain straight lines.",
-      visual: "interactive",
-      phases: 1
-    },
-    {
-      title: "Seeing Your Reflection",
-      content: "When you look in a mirror, light from your face travels to the mirror, reflects off its surface, and enters your eyes. This reflected light creates the image you see.",
-      visual: "face",
-      phases: 6
+  // Draw arrow
+  const drawArrow = (
+    ctx: CanvasRenderingContext2D,
+    fromX: number,
+    fromY: number,
+    toX: number,
+    toY: number,
+    color: string,
+    width: number = 2
+  ) => {
+    const headLength = 10;
+    const angle = Math.atan2(toY - fromY, toX - fromX);
+
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+    ctx.lineWidth = width;
+
+    // Draw line
+    ctx.beginPath();
+    ctx.moveTo(fromX, fromY);
+    ctx.lineTo(toX, toY);
+    ctx.stroke();
+
+    // Draw arrowhead
+    ctx.beginPath();
+    ctx.moveTo(toX, toY);
+    ctx.lineTo(
+      toX - headLength * Math.cos(angle - Math.PI / 6),
+      toY - headLength * Math.sin(angle - Math.PI / 6)
+    );
+    ctx.lineTo(
+      toX - headLength * Math.cos(angle + Math.PI / 6),
+      toY - headLength * Math.sin(angle + Math.PI / 6)
+    );
+    ctx.closePath();
+    ctx.fill();
+  };
+
+  // Draw Law of Reflection demo
+  const drawLawOfReflection = (ctx: CanvasRenderingContext2D, time: number) => {
+    const width = ctx.canvas.width;
+    const height = ctx.canvas.height;
+
+    // Clear canvas with light background
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, width, height);
+
+    // Mirror position
+    const mirrorY = height / 2;
+    const mirrorX = width / 2;
+    const mirrorLength = 300;
+
+    // Draw mirror
+    ctx.strokeStyle = '#60a5fa';
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(mirrorX - mirrorLength / 2, mirrorY);
+    ctx.lineTo(mirrorX + mirrorLength / 2, mirrorY);
+    ctx.stroke();
+
+    // Draw mirror surface effect
+    ctx.strokeStyle = 'rgba(96, 165, 250, 0.3)';
+    ctx.lineWidth = 8;
+    ctx.beginPath();
+    ctx.moveTo(mirrorX - mirrorLength / 2, mirrorY);
+    ctx.lineTo(mirrorX + mirrorLength / 2, mirrorY);
+    ctx.stroke();
+
+    // Draw normal line
+    if (showNormal) {
+      ctx.setLineDash([5, 5]);
+      ctx.strokeStyle = '#fbbf24';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(mirrorX, mirrorY - 150);
+      ctx.lineTo(mirrorX, mirrorY + 150);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Label normal
+      ctx.fillStyle = '#fbbf24';
+      ctx.font = 'bold 14px Arial';
+      ctx.textAlign = 'center';
+      ctx.fillText(t('learn.canvas.normal'), mirrorX + 40, mirrorY - 160);
     }
-  ];
 
-  // Animation phase progression
-  useEffect(() => {
-    const currentStepData = steps[currentStep];
-    if (animationPhase < currentStepData.phases) {
-      const timer = setTimeout(() => {
-        setAnimationPhase(prev => prev + 1);
-      }, 2500);
-      return () => clearTimeout(timer);
+    // Calculate ray positions
+    const incidentAngle = (lightAngle * Math.PI) / 180;
+    const rayLength = 150;
+
+    // Incident ray start and end points
+    const incidentStartX = mirrorX - rayLength * Math.sin(incidentAngle);
+    const incidentStartY = mirrorY - rayLength * Math.cos(incidentAngle);
+
+    // Reflected ray end point
+    const reflectedEndX = mirrorX + rayLength * Math.sin(incidentAngle);
+    const reflectedEndY = mirrorY - rayLength * Math.cos(incidentAngle);
+
+    // Animation timing: 0-1000ms for incident, 1000-2000ms for reflected
+    const cycleTime = isAnimating ? (time % 2000) : 2000;
+    const incidentProgress = Math.min(1, cycleTime / 1000);
+    const reflectedProgress = cycleTime > 1000 ? Math.min(1, (cycleTime - 1000) / 1000) : 0;
+
+    // Draw incident ray (from start to mirror)
+    const incidentCurrentX = incidentStartX + (mirrorX - incidentStartX) * incidentProgress;
+    const incidentCurrentY = incidentStartY + (mirrorY - incidentStartY) * incidentProgress;
+
+    // Always draw the full incident ray once it reaches the mirror
+    if (incidentProgress >= 1) {
+      // Draw complete incident ray
+      ctx.shadowBlur = 15;
+      ctx.shadowColor = '#ef4444';
+      drawArrow(ctx, incidentStartX, incidentStartY, mirrorX, mirrorY, '#ef4444', 3);
+      ctx.shadowBlur = 0;
+    } else {
+      // Draw animated incident ray
+      ctx.shadowBlur = 15;
+      ctx.shadowColor = '#ef4444';
+      drawArrow(ctx, incidentStartX, incidentStartY, incidentCurrentX, incidentCurrentY, '#ef4444', 3);
+      ctx.shadowBlur = 0;
     }
-  }, [animationPhase, currentStep]);
 
-  // Auto-play
-  useEffect(() => {
-    if (isPlaying && currentStep < steps.length - 1 && animationPhase >= steps[currentStep].phases) {
-      const timer = setTimeout(() => {
-        setCurrentStep(prev => prev + 1);
-        setAnimationPhase(0);
-      }, 2000);
-      return () => clearTimeout(timer);
-    } else if (isPlaying && currentStep === steps.length - 1 && animationPhase >= steps[currentStep].phases) {
-      setIsPlaying(false);
+    // Draw reflected ray (from mirror to end) - only after incident ray reaches mirror
+    if (incidentProgress >= 1) {
+      const reflectedCurrentX = mirrorX + (reflectedEndX - mirrorX) * reflectedProgress;
+      const reflectedCurrentY = mirrorY + (reflectedEndY - mirrorY) * reflectedProgress;
+
+      ctx.shadowBlur = 15;
+      ctx.shadowColor = '#10b981';
+      drawArrow(ctx, mirrorX, mirrorY, reflectedCurrentX, reflectedCurrentY, '#10b981', 3);
+      ctx.shadowBlur = 0;
+
+      // Draw complete reflected ray once animation is done
+      if (reflectedProgress >= 1) {
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = '#10b981';
+        drawArrow(ctx, mirrorX, mirrorY, reflectedEndX, reflectedEndY, '#10b981', 3);
+        ctx.shadowBlur = 0;
+      }
     }
-  }, [isPlaying, currentStep, animationPhase]);
 
-  useEffect(() => {
-    setAnimationPhase(0);
-  }, [currentStep]);
+    // Draw angles - show incident angle once incident ray reaches mirror
+    // Show both angles once reflected ray is complete
+    if (showAngles && incidentProgress >= 1) {
+      const normalAngle = -Math.PI / 2; // Normal points upward (negative Y direction)
+      const angleRadius = 40;
+      const incidentAngleRad = (lightAngle * Math.PI) / 180;
 
-  // Realistic Interactive Mirror Animation
+      // Incident angle: angle between normal and incident ray
+      // Normal is at -90°, incident ray is at normalAngle - incidentAngleRad
+      const incidentRayAngle = normalAngle - incidentAngleRad;
+      
+      // Reflected angle: angle between normal and reflected ray
+      // Reflected ray is at normalAngle + incidentAngleRad
+      const reflectedRayAngle = normalAngle + incidentAngleRad;
+
+      // Draw incident angle arc (only the arc curve between normal and incident ray)
+      if (incidentProgress >= 1) {
+        const incidentArcStart = normalAngle;
+        const incidentArcEnd = incidentRayAngle;
+        
+        ctx.strokeStyle = '#ef4444';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        // Draw only the arc, not a filled sector
+        ctx.arc(mirrorX, mirrorY, angleRadius, incidentArcStart, incidentArcEnd, false);
+        ctx.stroke();
+
+        // Label for incident angle
+        const incidentLabelAngle = (incidentArcStart + incidentArcEnd) / 2;
+        const incidentLabelX = mirrorX + (angleRadius + 30) * Math.cos(incidentLabelAngle);
+        const incidentLabelY = mirrorY + (angleRadius + 30) * Math.sin(incidentLabelAngle);
+        ctx.fillStyle = '#ef4444';
+        ctx.font = 'bold 15px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(t('learn.canvas.incidentAngle').replace('{{angle}}', lightAngle.toString()), incidentLabelX, incidentLabelY);
+      }
+
+      // Draw reflected angle arc (only the arc curve between normal and reflected ray) - only when reflected ray is visible
+      if (incidentProgress >= 1 && reflectedProgress > 0) {
+        const reflectedArcStart = normalAngle;
+        const reflectedArcEnd = reflectedRayAngle;
+        
+        ctx.strokeStyle = '#10b981';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        // Draw only the arc, not a filled sector
+        ctx.arc(mirrorX, mirrorY, angleRadius, reflectedArcStart, reflectedArcEnd, true);
+        ctx.stroke();
+
+        // Label for reflected angle
+        const reflectedLabelAngle = (reflectedArcStart + reflectedArcEnd) / 2;
+        const reflectedLabelX = mirrorX + (angleRadius + 30) * Math.cos(reflectedLabelAngle);
+        const reflectedLabelY = mirrorY + (angleRadius + 30) * Math.sin(reflectedLabelAngle);
+        ctx.fillStyle = '#10b981';
+        ctx.font = 'bold 15px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(t('learn.canvas.reflectedAngle').replace('{{angle}}', lightAngle.toString()), reflectedLabelX, reflectedLabelY);
+      }
+    }
+
+    // Draw labels
+    ctx.fillStyle = '#ef4444';
+    ctx.font = 'bold 16px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText(t('learn.canvas.incidentRay'), incidentStartX, incidentStartY - 20);
+
+    if (incidentProgress >= 1 && reflectedProgress >= 1) {
+      ctx.fillStyle = '#10b981';
+      ctx.fillText(t('learn.canvas.reflectedRay'), reflectedEndX, reflectedEndY - 20);
+    }
+
+    // Draw point of incidence
+    ctx.fillStyle = '#fbbf24';
+    ctx.beginPath();
+    ctx.arc(mirrorX, mirrorY, 5, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Info box
+    drawInfoBox(ctx, width, height);
+  };
+
+  // Draw Types of Reflection demo
+  const drawTypesOfReflection = (ctx: CanvasRenderingContext2D, time: number) => {
+    const width = ctx.canvas.width;
+    const height = ctx.canvas.height;
+
+    // Light background
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, width, height);
+
+    const centerY = height / 2;
+    const leftX = width / 4;
+    const rightX = (3 * width) / 4;
+
+    // Title
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 24px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText(t('learn.types.regularTitle'), leftX, 50);
+    ctx.fillText(t('learn.types.diffuseTitle'), rightX, 50);
+
+    // Draw regular reflection (smooth surface)
+    drawSmoothReflection(ctx, leftX, centerY, time);
+
+    // Draw diffuse reflection (rough surface)
+    drawRoughReflection(ctx, rightX, centerY, time);
+
+    // Descriptions
+    ctx.fillStyle = '#94a3b8';
+    ctx.font = '14px Arial';
+    ctx.textAlign = 'center';
+    
+    const wrapText = (text: string, x: number, y: number, maxWidth: number) => {
+      const words = text.split(' ');
+      let line = '';
+      let lineY = y;
+
+      for (const word of words) {
+        const testLine = line + word + ' ';
+        const metrics = ctx.measureText(testLine);
+        if (metrics.width > maxWidth && line !== '') {
+          ctx.fillText(line, x, lineY);
+          line = word + ' ';
+          lineY += 20;
+        } else {
+          line = testLine;
+        }
+      }
+      ctx.fillText(line, x, lineY);
+    };
+
+    wrapText(
+      'Parallel incident rays remain parallel after reflection',
+      leftX,
+      height - 80,
+      200
+    );
+    wrapText(
+      'Parallel incident rays scatter in different directions',
+      rightX,
+      height - 80,
+      200
+    );
+  };
+
+  const drawSmoothReflection = (ctx: CanvasRenderingContext2D, x: number, y: number, time: number) => {
+    const mirrorLength = 200;
+    const numRays = 5;
+    
+    // Animation timing: 0-1000ms for incident, 1000-2000ms for reflected
+    const cycleTime = isAnimating ? (time % 2000) : 2000;
+    const incidentProgress = Math.min(1, cycleTime / 1000);
+    const reflectedProgress = cycleTime > 1000 ? Math.min(1, (cycleTime - 1000) / 1000) : 0;
+
+    // Draw smooth mirror
+    ctx.strokeStyle = '#60a5fa';
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(x - mirrorLength / 2, y);
+    ctx.lineTo(x + mirrorLength / 2, y);
+    ctx.stroke();
+
+    // Glossy effect
+    const gradient = ctx.createLinearGradient(x - mirrorLength / 2, y - 20, x + mirrorLength / 2, y + 20);
+    gradient.addColorStop(0, 'rgba(96, 165, 250, 0.1)');
+    gradient.addColorStop(0.5, 'rgba(96, 165, 250, 0.3)');
+    gradient.addColorStop(1, 'rgba(96, 165, 250, 0.1)');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(x - mirrorLength / 2, y, mirrorLength, 30);
+
+    // Draw parallel rays
+    for (let i = 0; i < numRays; i++) {
+      const offset = ((i - (numRays - 1) / 2) * 30);
+      const rayX = x + offset;
+      const angle = 30 * (Math.PI / 180);
+      const rayLength = 80;
+
+      // Incident ray start and end points
+      const incidentStartX = rayX - rayLength * Math.sin(angle);
+      const incidentStartY = y - rayLength * Math.cos(angle);
+
+      // Draw incident ray (from start to mirror)
+      if (incidentProgress >= 1) {
+        // Draw complete incident ray
+        ctx.strokeStyle = '#ef4444';
+        ctx.lineWidth = 2;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = '#ef4444';
+        ctx.beginPath();
+        ctx.moveTo(incidentStartX, incidentStartY);
+        ctx.lineTo(rayX, y);
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+      } else {
+        // Draw animated incident ray
+        const incidentCurrentX = incidentStartX + (rayX - incidentStartX) * incidentProgress;
+        const incidentCurrentY = incidentStartY + (y - incidentStartY) * incidentProgress;
+        ctx.strokeStyle = '#ef4444';
+        ctx.lineWidth = 2;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = '#ef4444';
+        ctx.beginPath();
+        ctx.moveTo(incidentStartX, incidentStartY);
+        ctx.lineTo(incidentCurrentX, incidentCurrentY);
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+      }
+
+      // Reflected ray (from mirror to end) - only after incident ray reaches mirror
+      if (incidentProgress >= 1) {
+        const reflectedEndX = rayX + rayLength * Math.sin(angle);
+        const reflectedEndY = y - rayLength * Math.cos(angle);
+        const reflectedCurrentX = rayX + (reflectedEndX - rayX) * reflectedProgress;
+        const reflectedCurrentY = y + (reflectedEndY - y) * reflectedProgress;
+
+        ctx.strokeStyle = '#10b981';
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = '#10b981';
+        ctx.beginPath();
+        ctx.moveTo(rayX, y);
+        ctx.lineTo(reflectedCurrentX, reflectedCurrentY);
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+
+        // Draw complete reflected ray once animation is done
+        if (reflectedProgress >= 1) {
+          ctx.strokeStyle = '#10b981';
+          ctx.shadowBlur = 10;
+          ctx.shadowColor = '#10b981';
+          ctx.beginPath();
+          ctx.moveTo(rayX, y);
+          ctx.lineTo(reflectedEndX, reflectedEndY);
+          ctx.stroke();
+          ctx.shadowBlur = 0;
+        }
+      }
+    }
+
+    // Label
+    ctx.fillStyle = '#60a5fa';
+    ctx.font = 'bold 14px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText(t('learn.types.smoothSurface'), x, y + 60);
+  };
+
+  const drawRoughReflection = (ctx: CanvasRenderingContext2D, x: number, y: number, time: number) => {
+    const surfaceLength = 200;
+    const numRays = 5;
+    
+    // Animation timing: 0-1000ms for incident, 1000-2000ms for reflected
+    const cycleTime = isAnimating ? (time % 2000) : 2000;
+    const incidentProgress = Math.min(1, cycleTime / 1000);
+    const reflectedProgress = cycleTime > 1000 ? Math.min(1, (cycleTime - 1000) / 1000) : 0;
+
+    // Draw rough surface
+    ctx.strokeStyle = '#64748b';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    
+    const segments = 20;
+    for (let i = 0; i <= segments; i++) {
+      const segX = x - surfaceLength / 2 + (i * surfaceLength) / segments;
+      const roughness = Math.sin(i * 1.5) * 5 + Math.cos(i * 2.3) * 3;
+      if (i === 0) {
+        ctx.moveTo(segX, y + roughness);
+      } else {
+        ctx.lineTo(segX, y + roughness);
+      }
+    }
+    ctx.stroke();
+
+    // Draw texture
+    ctx.fillStyle = 'rgba(100, 116, 139, 0.2)';
+    for (let i = 0; i < 30; i++) {
+      const px = x - surfaceLength / 2 + Math.random() * surfaceLength;
+      const py = y + Math.random() * 40;
+      ctx.fillRect(px, py, 2, 2);
+    }
+
+    // Draw scattered rays
+    for (let i = 0; i < numRays; i++) {
+      const offset = ((i - (numRays - 1) / 2) * 30);
+      const rayX = x + offset;
+      const angle = 30 * (Math.PI / 180);
+      const rayLength = 80;
+
+      // Incident ray start and end points
+      const incidentStartX = rayX - rayLength * Math.sin(angle);
+      const incidentStartY = y - rayLength * Math.cos(angle);
+
+      // Draw incident ray (from start to surface)
+      if (incidentProgress >= 1) {
+        // Draw complete incident ray
+        ctx.strokeStyle = '#ef4444';
+        ctx.lineWidth = 2;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = '#ef4444';
+        ctx.beginPath();
+        ctx.moveTo(incidentStartX, incidentStartY);
+        ctx.lineTo(rayX, y);
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+      } else {
+        // Draw animated incident ray
+        const incidentCurrentX = incidentStartX + (rayX - incidentStartX) * incidentProgress;
+        const incidentCurrentY = incidentStartY + (y - incidentStartY) * incidentProgress;
+        ctx.strokeStyle = '#ef4444';
+        ctx.lineWidth = 2;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = '#ef4444';
+        ctx.beginPath();
+        ctx.moveTo(incidentStartX, incidentStartY);
+        ctx.lineTo(incidentCurrentX, incidentCurrentY);
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+      }
+
+      // Scattered reflected rays (from surface to end) - only after incident ray reaches surface
+      if (incidentProgress >= 1) {
+        const scatterAngles = [-50, -30, -10, 10, 30]; // Different scatter angles
+        const scatterAngle = (scatterAngles[i] * Math.PI) / 180;
+        const reflectedEndX = rayX + rayLength * Math.sin(scatterAngle);
+        const reflectedEndY = y - rayLength * Math.abs(Math.cos(scatterAngle));
+        const reflectedCurrentX = rayX + (reflectedEndX - rayX) * reflectedProgress;
+        const reflectedCurrentY = y + (reflectedEndY - y) * reflectedProgress;
+
+        ctx.strokeStyle = '#10b981';
+        ctx.globalAlpha = 0.7;
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = '#10b981';
+        ctx.beginPath();
+        ctx.moveTo(rayX, y);
+        ctx.lineTo(reflectedCurrentX, reflectedCurrentY);
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+        ctx.globalAlpha = 1;
+
+        // Draw complete reflected ray once animation is done
+        if (reflectedProgress >= 1) {
+          ctx.strokeStyle = '#10b981';
+          ctx.globalAlpha = 0.7;
+          ctx.shadowBlur = 8;
+          ctx.shadowColor = '#10b981';
+          ctx.beginPath();
+          ctx.moveTo(rayX, y);
+          ctx.lineTo(reflectedEndX, reflectedEndY);
+          ctx.stroke();
+          ctx.shadowBlur = 0;
+          ctx.globalAlpha = 1;
+        }
+      }
+    }
+
+    // Label
+    ctx.fillStyle = '#64748b';
+    ctx.font = 'bold 14px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText(t('learn.types.roughSurface'), x, y + 60);
+  };
+
+  const drawInfoBox = (ctx: CanvasRenderingContext2D, _width: number, height: number) => {
+    const boxX = 20;
+    const boxY = height - 120;
+    const boxWidth = 300;
+    const boxHeight = 100;
+
+    ctx.fillStyle = 'rgba(30, 41, 59, 0.9)';
+    ctx.fillRect(boxX, boxY, boxWidth, boxHeight);
+    ctx.strokeStyle = '#60a5fa';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(boxX, boxY, boxWidth, boxHeight);
+
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 16px Arial';
+    ctx.textAlign = 'left';
+    ctx.fillText(t('learn.infoBox.lawTitle'), boxX + 10, boxY + 25);
+
+    ctx.font = '14px Arial';
+    ctx.fillStyle = '#94a3b8';
+    ctx.fillText(t('learn.infoBox.lawFormula'), boxX + 10, boxY + 50);
+    ctx.fillText(t('learn.infoBox.lawDesc1'), boxX + 10, boxY + 70);
+    ctx.fillText(t('learn.infoBox.lawDesc2'), boxX + 10, boxY + 87);
+  };
+
+  // Animation loop
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas || steps[currentStep].visual !== 'interactive') return;
+    if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let time = 0;
-
-    const drawRealisticMirror = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      const centerX = canvas.width / 2;
-      const centerY = canvas.height / 2 + 20;
-      const mirrorLength = 160;
-      const angleRad = (mirrorAngle * Math.PI) / 180;
-      
-      // Draw room background with gradient
-      const bgGradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-      bgGradient.addColorStop(0, '#1a1a2e');
-      bgGradient.addColorStop(1, '#16213e');
-      ctx.fillStyle = bgGradient;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
-      // Draw subtle grid for depth
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
-      ctx.lineWidth = 1;
-      for (let i = 0; i < canvas.width; i += 30) {
-        ctx.beginPath();
-        ctx.moveTo(i, 0);
-        ctx.lineTo(i, canvas.height);
-        ctx.stroke();
-      }
-      for (let i = 0; i < canvas.height; i += 30) {
-        ctx.beginPath();
-        ctx.moveTo(0, i);
-        ctx.lineTo(canvas.width, i);
-        ctx.stroke();
-      }
-      
-      // Light source position
-      const lightX = 80;
-      const lightY = 80;
-      
-      // Draw realistic light source (torch/bulb)
-      const lightGlow = ctx.createRadialGradient(lightX, lightY, 0, lightX, lightY, 40);
-      lightGlow.addColorStop(0, 'rgba(255, 220, 100, 1)');
-      lightGlow.addColorStop(0.3, 'rgba(255, 200, 80, 0.8)');
-      lightGlow.addColorStop(0.6, 'rgba(255, 180, 60, 0.3)');
-      lightGlow.addColorStop(1, 'rgba(255, 160, 40, 0)');
-      ctx.fillStyle = lightGlow;
-      ctx.fillRect(lightX - 40, lightY - 40, 80, 80);
-      
-      // Draw light bulb
-      ctx.beginPath();
-      ctx.arc(lightX, lightY, 12, 0, Math.PI * 2);
-      ctx.fillStyle = '#ffd700';
-      ctx.fill();
-      ctx.strokeStyle = '#ffed4e';
-      ctx.lineWidth = 2;
-      ctx.stroke();
-      
-      // Bulb highlight
-      ctx.beginPath();
-      ctx.arc(lightX - 3, lightY - 3, 4, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-      ctx.fill();
-      
-      // Calculate incident ray path
-      const dx = centerX - lightX;
-      const dy = centerY - lightY;
-      const distance = Math.sqrt(dx * dx + dy * dy);
-      
-      // Draw realistic incident light beam with cone
-      const beamWidth = 8;
-      ctx.save();
-      ctx.translate(lightX, lightY);
-      const beamAngle = Math.atan2(dy, dx);
-      ctx.rotate(beamAngle);
-      
-      // Beam gradient
-      const beamGradient = ctx.createLinearGradient(0, 0, distance, 0);
-      beamGradient.addColorStop(0, 'rgba(255, 220, 100, 0.9)');
-      beamGradient.addColorStop(0.5, 'rgba(255, 200, 80, 0.7)');
-      beamGradient.addColorStop(1, 'rgba(255, 180, 60, 0.5)');
-      
-      ctx.fillStyle = beamGradient;
-      ctx.beginPath();
-      ctx.moveTo(0, -beamWidth/2);
-      ctx.lineTo(distance, -beamWidth);
-      ctx.lineTo(distance, beamWidth);
-      ctx.lineTo(0, beamWidth/2);
-      ctx.closePath();
-      ctx.fill();
-      
-      // Beam edges
-      ctx.strokeStyle = 'rgba(255, 200, 80, 0.4)';
-      ctx.lineWidth = 1;
-      ctx.stroke();
-      
-      // Animated particles in beam
-      for (let i = 0; i < 8; i++) {
-        const particleProgress = ((time * 2 + i * 30) % distance) / distance;
-        const px = distance * particleProgress;
-        const py = (Math.sin(time * 0.05 + i) * beamWidth * 0.3);
-        
-        ctx.beginPath();
-        ctx.arc(px, py, 2, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 240, 150, ${0.8 - particleProgress * 0.3})`;
-        ctx.fill();
-      }
-      
-      ctx.restore();
-      
-      // Draw mirror with realistic surface
-      ctx.save();
-      ctx.translate(centerX, centerY);
-      ctx.rotate(angleRad);
-      
-      // Mirror shadow
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
-      ctx.fillRect(-mirrorLength/2, 6, mirrorLength, 8);
-      ctx.filter = 'blur(4px)';
-      ctx.fillRect(-mirrorLength/2, 6, mirrorLength, 8);
-      ctx.filter = 'none';
-      
-      // Mirror frame (dark edges)
-      ctx.fillStyle = '#2c3e50';
-      ctx.fillRect(-mirrorLength/2 - 3, -6, 3, 12);
-      ctx.fillRect(mirrorLength/2, -6, 3, 12);
-      
-      // Mirror surface with metallic gradient
-      const mirrorGradient = ctx.createLinearGradient(0, -4, 0, 4);
-      mirrorGradient.addColorStop(0, '#e8f4f8');
-      mirrorGradient.addColorStop(0.3, '#b8d4e0');
-      mirrorGradient.addColorStop(0.5, '#90b8c8');
-      mirrorGradient.addColorStop(0.7, '#b8d4e0');
-      mirrorGradient.addColorStop(1, '#e8f4f8');
-      ctx.fillStyle = mirrorGradient;
-      ctx.fillRect(-mirrorLength/2, -4, mirrorLength, 8);
-      
-      // Reflective shine
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
-      ctx.fillRect(-mirrorLength/2 + 10, -3, mirrorLength - 20, 2);
-      
-      // Animated reflection shimmer
-      const shimmerX = ((time * 3) % (mirrorLength * 2)) - mirrorLength;
-      const shimmerGradient = ctx.createLinearGradient(shimmerX - 20, 0, shimmerX + 20, 0);
-      shimmerGradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
-      shimmerGradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.4)');
-      shimmerGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
-      ctx.fillStyle = shimmerGradient;
-      ctx.fillRect(shimmerX - 20, -4, 40, 8);
-      
-      ctx.restore();
-      
-      // Calculate reflected beam
-      const normalAngle = angleRad + Math.PI / 2;
-      const incidentAngle = Math.atan2(centerY - lightY, centerX - lightX);
-      const reflectedAngle = 2 * normalAngle - incidentAngle - Math.PI;
-      const reflectLength = 200;
-      const reflectEndX = centerX + Math.cos(reflectedAngle) * reflectLength;
-      const reflectEndY = centerY + Math.sin(reflectedAngle) * reflectLength;
-      
-      // Draw reflected beam cone
-      const reflectDist = Math.sqrt(
-        Math.pow(reflectEndX - centerX, 2) + Math.pow(reflectEndY - centerY, 2)
-      );
-      
-      ctx.save();
-      ctx.translate(centerX, centerY);
-      ctx.rotate(reflectedAngle);
-      
-      const reflectGradient = ctx.createLinearGradient(0, 0, reflectDist, 0);
-      reflectGradient.addColorStop(0, 'rgba(100, 255, 180, 0.5)');
-      reflectGradient.addColorStop(0.5, 'rgba(80, 240, 160, 0.4)');
-      reflectGradient.addColorStop(1, 'rgba(60, 220, 140, 0.2)');
-      
-      ctx.fillStyle = reflectGradient;
-      ctx.beginPath();
-      ctx.moveTo(0, -beamWidth);
-      ctx.lineTo(reflectDist, -beamWidth * 1.5);
-      ctx.lineTo(reflectDist, beamWidth * 1.5);
-      ctx.lineTo(0, beamWidth);
-      ctx.closePath();
-      ctx.fill();
-      
-      ctx.strokeStyle = 'rgba(80, 240, 160, 0.3)';
-      ctx.lineWidth = 1;
-      ctx.stroke();
-      
-      // Animated particles in reflected beam
-      for (let i = 0; i < 8; i++) {
-        const particleProgress = ((time * 2 + i * 30) % reflectDist) / reflectDist;
-        const px = reflectDist * particleProgress;
-        const py = (Math.sin(time * 0.05 + i + Math.PI) * beamWidth * 0.4);
-        
-        ctx.beginPath();
-        ctx.arc(px, py, 2, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(100, 255, 200, ${0.8 - particleProgress * 0.3})`;
-        ctx.fill();
-      }
-      
-      ctx.restore();
-      
-      // Draw labels with better visibility
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-      ctx.fillRect(10, 10, 140, 80);
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
-      ctx.lineWidth = 1;
-      ctx.strokeRect(10, 10, 140, 80);
-      
-      ctx.font = 'bold 13px Lexend';
-      ctx.fillStyle = '#ffd700';
-      ctx.fillText('● Light Source', 20, 30);
-      ctx.fillStyle = '#90b8c8';
-      ctx.fillText('● Mirror Surface', 20, 52);
-      ctx.fillStyle = '#64ffb4';
-      ctx.fillText('● Reflected Light', 20, 74);
-      
-      time += 1;
-      animationFrameRef.current = requestAnimationFrame(drawRealisticMirror);
-    };
-
-    drawRealisticMirror();
-
-    return () => {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-    };
-  }, [mirrorAngle, currentStep]);
-
-  // Realistic Sunlight Animation
-  useEffect(() => {
-    const canvas = sunlightCanvasRef.current;
-    if (!canvas || steps[currentStep].visual !== 'sunlight') return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    let frame = 0;
-    const showSun = animationPhase >= 1;
-    const showBeam = animationPhase >= 2;
-    const showMirror = animationPhase >= 2;
-    const showReflection = animationPhase >= 3;
-    const showWall = animationPhase >= 3;
-    const mirrorTilted = animationPhase >= 4;
+    let startTime = Date.now();
 
     const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      // Sky gradient
-      const skyGradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-      skyGradient.addColorStop(0, '#87CEEB');
-      skyGradient.addColorStop(0.7, '#B0E0E6');
-      skyGradient.addColorStop(1, '#F0F8FF');
-      ctx.fillStyle = skyGradient;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
-      // Sun with realistic glow
-      if (showSun) {
-        const sunX = 120;
-        const sunY = 80;
-        const sunRadius = 35;
-        
-        // Outer glow
-        const outerGlow = ctx.createRadialGradient(sunX, sunY, sunRadius, sunX, sunY, sunRadius * 2.5);
-        outerGlow.addColorStop(0, 'rgba(255, 220, 100, 0.4)');
-        outerGlow.addColorStop(0.5, 'rgba(255, 200, 80, 0.2)');
-        outerGlow.addColorStop(1, 'rgba(255, 180, 60, 0)');
-        ctx.fillStyle = outerGlow;
-        ctx.beginPath();
-        ctx.arc(sunX, sunY, sunRadius * 2.5, 0, Math.PI * 2);
-        ctx.fill();
-        
-        // Sun body
-        const sunGradient = ctx.createRadialGradient(sunX, sunY, 0, sunX, sunY, sunRadius);
-        sunGradient.addColorStop(0, '#FFF9E6');
-        sunGradient.addColorStop(0.7, '#FFE066');
-        sunGradient.addColorStop(1, '#FFD700');
-        ctx.fillStyle = sunGradient;
-        ctx.beginPath();
-        ctx.arc(sunX, sunY, sunRadius, 0, Math.PI * 2);
-        ctx.fill();
-        
-        // Sun rays
-        ctx.save();
-        ctx.translate(sunX, sunY);
-        ctx.rotate((frame * 0.01) % (Math.PI * 2));
-        for (let i = 0; i < 12; i++) {
-          ctx.rotate(Math.PI / 6);
-          ctx.fillStyle = 'rgba(255, 220, 100, 0.4)';
-          ctx.beginPath();
-          ctx.moveTo(0, 0);
-          ctx.lineTo(sunRadius + 15, -3);
-          ctx.lineTo(sunRadius + 20, 0);
-          ctx.lineTo(sunRadius + 15, 3);
-          ctx.closePath();
-          ctx.fill();
-        }
-        ctx.restore();
+      const currentTime = Date.now() - startTime;
+
+      if (selectedDemo === 'law') {
+        drawLawOfReflection(ctx, currentTime);
+      } else if (selectedDemo === 'types') {
+        drawTypesOfReflection(ctx, currentTime);
       }
-      
-      // Sunlight beams to mirror
-      if (showBeam && showMirror) {
-        const mirrorX = 260;
-        const mirrorY = mirrorTilted ? 220 : 200;
-        const mirrorAngleLocal = mirrorTilted ? 30 : 45;
-        
-        // Multiple realistic sun rays
-        for (let i = -1; i <= 1; i++) {
-          const startX = 120 + i * 15;
-          const startY = 80 + i * 10;
-          const endX = mirrorX + i * 12;
-          const endY = mirrorY;
-          
-          const rayGradient = ctx.createLinearGradient(startX, startY, endX, endY);
-          rayGradient.addColorStop(0, `rgba(255, 220, 100, ${0.7 - Math.abs(i) * 0.2})`);
-          rayGradient.addColorStop(1, `rgba(255, 200, 80, ${0.5 - Math.abs(i) * 0.15})`);
-          
-          ctx.strokeStyle = rayGradient;
-          ctx.lineWidth = i === 0 ? 8 : 5;
-          ctx.lineCap = 'round';
-          ctx.beginPath();
-          ctx.moveTo(startX, startY);
-          ctx.lineTo(endX, endY);
-          ctx.stroke();
-          
-          // Light particles
-          const progress = (frame * 0.02) % 1;
-          const px = startX + (endX - startX) * progress;
-          const py = startY + (endY - startY) * progress;
-          ctx.beginPath();
-          ctx.arc(px, py, 3, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(255, 240, 150, ${1 - progress})`;
-          ctx.fill();
-        }
-        
-        // Draw mirror
-        ctx.save();
-        ctx.translate(mirrorX, mirrorY);
-        ctx.rotate((mirrorAngleLocal * Math.PI) / 180);
-        
-        // Mirror shadow
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
-        ctx.fillRect(-50, 8, 100, 6);
-        
-        // Mirror surface
-        const mirrorGrad = ctx.createLinearGradient(0, -5, 0, 5);
-        mirrorGrad.addColorStop(0, '#d0e8f2');
-        mirrorGrad.addColorStop(0.5, '#a0c8d8');
-        mirrorGrad.addColorStop(1, '#d0e8f2');
-        ctx.fillStyle = mirrorGrad;
-        ctx.fillRect(-50, -5, 100, 10);
-        
-        // Shine
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-        ctx.fillRect(-45, -4, 90, 3);
-        
-        ctx.restore();
-      }
-      
-      // Reflected beam to wall
-      if (showReflection && showWall) {
-        const mirrorX = 260;
-        const mirrorY = mirrorTilted ? 220 : 200;
-        const wallX = 380;
-        const wallY = mirrorTilted ? 120 : 100;
-        
-        for (let i = -1; i <= 1; i++) {
-          const startX = mirrorX + i * 12;
-          const startY = mirrorY;
-          const endX = wallX;
-          const endY = wallY + i * 10;
-          
-          const reflectGrad = ctx.createLinearGradient(startX, startY, endX, endY);
-          reflectGrad.addColorStop(0, `rgba(255, 200, 80, ${0.5 - Math.abs(i) * 0.15})`);
-          reflectGrad.addColorStop(1, `rgba(255, 220, 100, ${0.7 - Math.abs(i) * 0.2})`);
-          
-          ctx.strokeStyle = reflectGrad;
-          ctx.lineWidth = i === 0 ? 8 : 5;
-          ctx.lineCap = 'round';
-          ctx.beginPath();
-          ctx.moveTo(startX, startY);
-          ctx.lineTo(endX, endY);
-          ctx.stroke();
-          
-          // Particles
-          const progress = (frame * 0.02 + 0.5) % 1;
-          const px = startX + (endX - startX) * progress;
-          const py = startY + (endY - startY) * progress;
-          ctx.beginPath();
-          ctx.arc(px, py, 3, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(255, 240, 150, ${1 - progress})`;
-          ctx.fill();
-        }
-      }
-      
-      // Wall
-      if (showWall) {
-        const wallGrad = ctx.createLinearGradient(360, 0, 400, 0);
-        wallGrad.addColorStop(0, '#D2B48C');
-        wallGrad.addColorStop(1, '#F5DEB3');
-        ctx.fillStyle = wallGrad;
-        ctx.fillRect(360, 40, 40, 280);
-        
-        // Wall texture
-        ctx.strokeStyle = 'rgba(0, 0, 0, 0.05)';
-        ctx.lineWidth = 1;
-        for (let i = 40; i < 320; i += 20) {
-          ctx.beginPath();
-          ctx.moveTo(360, i);
-          ctx.lineTo(400, i);
-          ctx.stroke();
-        }
-        
-        // Light spot on wall
-        if (showReflection) {
-          const spotY = mirrorTilted ? 120 : 100;
-          const spotGlow = ctx.createRadialGradient(370, spotY, 0, 370, spotY, 40);
-          spotGlow.addColorStop(0, 'rgba(255, 240, 150, 0.9)');
-          spotGlow.addColorStop(0.5, 'rgba(255, 220, 100, 0.5)');
-          spotGlow.addColorStop(1, 'rgba(255, 200, 80, 0)');
-          ctx.fillStyle = spotGlow;
-          ctx.fillRect(360, spotY - 40, 40, 80);
-        }
-      }
-      
-      frame++;
+
       animationFrameRef.current = requestAnimationFrame(animate);
     };
 
@@ -885,535 +1076,7 @@ const ReflectionOfLightLearn = () => {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [animationPhase, currentStep]);
-
-  // Realistic Straight Line Animation
-  useEffect(() => {
-    const canvas = straightLineCanvasRef.current;
-    if (!canvas || steps[currentStep].visual !== 'straightLine') return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    let frame = 0;
-
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      // Dark room background
-      const bgGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
-      bgGrad.addColorStop(0, '#0a0a15');
-      bgGrad.addColorStop(1, '#1a1a2e');
-      ctx.fillStyle = bgGrad;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
-      // Grid for reference
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
-      ctx.lineWidth = 1;
-      for (let i = 0; i < canvas.width; i += 30) {
-        ctx.beginPath();
-        ctx.moveTo(i, 0);
-        ctx.lineTo(i, canvas.height);
-        ctx.stroke();
-      }
-      for (let i = 0; i < canvas.height; i += 30) {
-        ctx.beginPath();
-        ctx.moveTo(0, i);
-        ctx.lineTo(canvas.width, i);
-        ctx.stroke();
-      }
-      
-      const torchX = 60;
-      const torchY = 180;
-      const mirrorX = 260;
-      const mirrorY = 180;
-      
-      // Draw torch
-      if (animationPhase >= 1) {
-        // Torch body
-        ctx.fillStyle = '#34495e';
-        ctx.fillRect(torchX - 15, torchY - 10, 30, 40);
-        ctx.beginPath();
-        ctx.arc(torchX, torchY - 10, 15, 0, Math.PI, true);
-        ctx.fill();
-        
-        // Torch light
-        const torchGlow = ctx.createRadialGradient(torchX, torchY - 10, 0, torchX, torchY - 10, 35);
-        torchGlow.addColorStop(0, 'rgba(255, 220, 100, 1)');
-        torchGlow.addColorStop(0.5, 'rgba(255, 200, 80, 0.6)');
-        torchGlow.addColorStop(1, 'rgba(255, 180, 60, 0)');
-        ctx.fillStyle = torchGlow;
-        ctx.fillRect(torchX - 35, torchY - 45, 70, 70);
-      }
-      
-      // Incident beam
-      if (animationPhase >= 2) {
-        const beamProgress = Math.min((frame - 20) / 40, 1);
-        const currentX = torchX + (mirrorX - torchX) * beamProgress;
-        
-        // Beam cone
-        ctx.fillStyle = 'rgba(255, 220, 100, 0.3)';
-        ctx.beginPath();
-        ctx.moveTo(torchX, torchY - 5);
-        ctx.lineTo(currentX, mirrorY - 8);
-        ctx.lineTo(currentX, mirrorY + 8);
-        ctx.lineTo(torchX, torchY + 5);
-        ctx.closePath();
-        ctx.fill();
-        
-        // Center ray
-        ctx.strokeStyle = '#ffd700';
-        ctx.lineWidth = 4;
-        ctx.shadowBlur = 15;
-        ctx.shadowColor = '#ffd700';
-        ctx.beginPath();
-        ctx.moveTo(torchX, torchY);
-        ctx.lineTo(currentX, mirrorY);
-        ctx.stroke();
-        ctx.shadowBlur = 0;
-        
-        // Light particles
-        for (let i = 0; i < 10; i++) {
-          const particlePos = ((frame * 2 + i * 20) % 200) / 200;
-          if (particlePos <= beamProgress) {
-            const px = torchX + (currentX - torchX) * particlePos;
-            const py = torchY + (mirrorY - torchY) * particlePos;
-            ctx.beginPath();
-            ctx.arc(px, py, 2, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(255, 240, 150, ${1 - particlePos})`;
-            ctx.fill();
-          }
-        }
-      }
-      
-      // Mirror
-      if (animationPhase >= 2) {
-        ctx.save();
-        ctx.translate(mirrorX, mirrorY);
-        ctx.rotate(-Math.PI / 12);
-        
-        // Mirror shadow
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
-        ctx.filter = 'blur(4px)';
-        ctx.fillRect(-60, 8, 120, 8);
-        ctx.filter = 'none';
-        
-        // Mirror surface
-        const mirrorGrad = ctx.createLinearGradient(0, -6, 0, 6);
-        mirrorGrad.addColorStop(0, '#e0f2f7');
-        mirrorGrad.addColorStop(0.5, '#b0d4e0');
-        mirrorGrad.addColorStop(1, '#e0f2f7');
-        ctx.fillStyle = mirrorGrad;
-        ctx.fillRect(-60, -6, 120, 12);
-        
-        // Shine
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-        ctx.fillRect(-55, -5, 110, 4);
-        
-        // Frame
-        ctx.strokeStyle = '#34495e';
-        ctx.lineWidth = 2;
-        ctx.strokeRect(-60, -6, 120, 12);
-        
-        ctx.restore();
-      }
-      
-      // Reflected beam
-      if (animationPhase >= 3) {
-        const reflectProgress = Math.min((frame - 60) / 40, 1);
-        const endX = 380;
-        const endY = 100;
-        const currentEndX = mirrorX + (endX - mirrorX) * reflectProgress;
-        const currentEndY = mirrorY + (endY - mirrorY) * reflectProgress;
-        
-        // Beam cone
-        ctx.fillStyle = 'rgba(100, 255, 180, 0.25)';
-        ctx.beginPath();
-        ctx.moveTo(mirrorX, mirrorY - 8);
-        ctx.lineTo(currentEndX, currentEndY - 12);
-        ctx.lineTo(currentEndX, currentEndY + 12);
-        ctx.lineTo(mirrorX, mirrorY + 8);
-        ctx.closePath();
-        ctx.fill();
-        
-        // Center ray
-        ctx.strokeStyle = '#00ff88';
-        ctx.lineWidth = 4;
-        ctx.shadowBlur = 15;
-        ctx.shadowColor = '#00ff88';
-        ctx.beginPath();
-        ctx.moveTo(mirrorX, mirrorY);
-        ctx.lineTo(currentEndX, currentEndY);
-        ctx.stroke();
-        ctx.shadowBlur = 0;
-        
-        // Particles
-        for (let i = 0; i < 10; i++) {
-          const particlePos = ((frame * 2 + i * 20) % 200) / 200;
-          if (particlePos <= reflectProgress) {
-            const px = mirrorX + (currentEndX - mirrorX) * particlePos;
-            const py = mirrorY + (currentEndY - mirrorY) * particlePos;
-            ctx.beginPath();
-            ctx.arc(px, py, 2, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(100, 255, 200, ${1 - particlePos})`;
-            ctx.fill();
-          }
-        }
-      }
-      
-      // Reference lines
-      if (animationPhase >= 4) {
-        ctx.strokeStyle = 'rgba(100, 150, 255, 0.4)';
-        ctx.lineWidth = 1;
-        ctx.setLineDash([5, 5]);
-        ctx.beginPath();
-        ctx.moveTo(torchX, torchY);
-        ctx.lineTo(mirrorX, mirrorY);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(mirrorX, mirrorY);
-        ctx.lineTo(380, 100);
-        ctx.stroke();
-        ctx.setLineDash([]);
-      }
-      
-      frame++;
-      animationFrameRef.current = requestAnimationFrame(animate);
-    };
-
-    animate();
-
-    return () => {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-    };
-  }, [animationPhase, currentStep]);
-
-  // Realistic Face Reflection Animation
-  useEffect(() => {
-    const canvas = faceCanvasRef.current;
-    if (!canvas || steps[currentStep].visual !== 'face') return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    let frame = 0;
-
-    const drawPerson = (x: number, y: number, mirrored: boolean = false) => {
-      ctx.save();
-      if (mirrored) {
-        ctx.translate(x, y);
-        ctx.scale(-1, 1);
-        ctx.translate(-x, -y);
-      }
-      
-      // Head
-      const headGrad = ctx.createRadialGradient(x, y, 0, x, y, 35);
-      headGrad.addColorStop(0, '#ffd4a3');
-      headGrad.addColorStop(1, '#e6b88a');
-      ctx.fillStyle = headGrad;
-      ctx.beginPath();
-      ctx.ellipse(x, y, 28, 35, 0, 0, Math.PI * 2);
-      ctx.fill();
-      
-      // Hair
-      ctx.fillStyle = '#2c1810';
-      ctx.beginPath();
-      ctx.ellipse(x, y - 15, 30, 20, 0, 0, Math.PI, true);
-      ctx.fill();
-      
-      // Ears
-      ctx.fillStyle = '#f0c9a6';
-      ctx.beginPath();
-      ctx.ellipse(x - 28, y, 8, 12, 0, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.beginPath();
-      ctx.ellipse(x + 28, y, 8, 12, 0, 0, Math.PI * 2);
-      ctx.fill();
-      
-      // Eyes
-      ctx.fillStyle = 'white';
-      ctx.beginPath();
-      ctx.ellipse(x - 12, y - 5, 6, 8, 0, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.beginPath();
-      ctx.ellipse(x + 12, y - 5, 6, 8, 0, 0, Math.PI * 2);
-      ctx.fill();
-      
-      // Pupils with shine
-      if (animationPhase >= 5) {
-        ctx.fillStyle = '#2c1810';
-        ctx.beginPath();
-        ctx.arc(x - 12, y - 5, 4, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.beginPath();
-        ctx.arc(x + 12, y - 5, 4, 0, Math.PI * 2);
-        ctx.fill();
-        
-        ctx.fillStyle = 'white';
-        ctx.beginPath();
-        ctx.arc(x - 10, y - 7, 2, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.beginPath();
-        ctx.arc(x + 14, y - 7, 2, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      
-      // Nose
-      ctx.strokeStyle = '#d4a574';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(x, y);
-      ctx.lineTo(x - 3, y + 8);
-      ctx.stroke();
-      
-      // Mouth
-      ctx.strokeStyle = '#c97b63';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.arc(x, y + 15, 8, 0, Math.PI);
-      ctx.stroke();
-      
-      // Neck
-      ctx.fillStyle = '#f0c9a6';
-      ctx.fillRect(x - 12, y + 35, 24, 15);
-      
-      // Shirt
-      ctx.fillStyle = '#4a90e2';
-      ctx.beginPath();
-      ctx.moveTo(x - 25, y + 50);
-      ctx.lineTo(x - 12, y + 50);
-      ctx.lineTo(x - 12, y + 85);
-      ctx.lineTo(x - 35, y + 85);
-      ctx.closePath();
-      ctx.fill();
-      
-      ctx.beginPath();
-      ctx.moveTo(x + 25, y + 50);
-      ctx.lineTo(x + 12, y + 50);
-      ctx.lineTo(x + 12, y + 85);
-      ctx.lineTo(x + 35, y + 85);
-      ctx.closePath();
-      ctx.fill();
-      
-      ctx.fillRect(x - 12, y + 50, 24, 35);
-      
-      ctx.restore();
-    };
-
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      // Background
-      const bgGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
-      bgGrad.addColorStop(0, '#f5e6ff');
-      bgGrad.addColorStop(1, '#e6f3ff');
-      ctx.fillStyle = bgGrad;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
-      // Person
-      if (animationPhase >= 1) {
-        drawPerson(110, 130);
-      }
-      
-      // Light rays from person to mirror
-      if (animationPhase >= 2) {
-        for (let i = 0; i < 7; i++) {
-          const startX = 110;
-          const startY = 100 + i * 10;
-          const endX = 200;
-          const endY = 100 + i * 10;
-          
-          const rayGrad = ctx.createLinearGradient(startX, startY, endX, endY);
-          rayGrad.addColorStop(0, 'rgba(255, 180, 100, 0.6)');
-          rayGrad.addColorStop(1, 'rgba(255, 160, 80, 0.2)');
-          
-          ctx.strokeStyle = rayGrad;
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.moveTo(startX, startY);
-          ctx.lineTo(endX, endY);
-          ctx.stroke();
-          
-          // Arrow
-          ctx.fillStyle = 'rgba(255, 180, 100, 0.5)';
-          ctx.beginPath();
-          ctx.moveTo(endX - 8, endY - 3);
-          ctx.lineTo(endX, endY);
-          ctx.lineTo(endX - 8, endY + 3);
-          ctx.fill();
-        }
-      }
-      
-      // Mirror
-      if (animationPhase >= 2) {
-        // Mirror frame
-        ctx.fillStyle = '#2c3e50';
-        ctx.fillRect(195, 60, 10, 200);
-        
-        // Mirror surface
-        const mirrorGrad = ctx.createLinearGradient(195, 60, 205, 60);
-        mirrorGrad.addColorStop(0, '#d0e8f2');
-        mirrorGrad.addColorStop(0.5, '#ffffff');
-        mirrorGrad.addColorStop(1, '#d0e8f2');
-        ctx.fillStyle = mirrorGrad;
-        ctx.fillRect(197, 60, 6, 200);
-        
-        // Shine effect
-        const shimmer = ((frame * 2) % 400) - 200;
-        const shimmerGrad = ctx.createLinearGradient(200, shimmer, 200, shimmer + 100);
-        shimmerGrad.addColorStop(0, 'rgba(255, 255, 255, 0)');
-        shimmerGrad.addColorStop(0.5, 'rgba(255, 255, 255, 0.6)');
-        shimmerGrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
-        ctx.fillStyle = shimmerGrad;
-        ctx.fillRect(197, 60, 6, 200);
-      }
-      
-      // Reflected person
-      if (animationPhase >= 3) {
-        ctx.globalAlpha = 0.85;
-        drawPerson(290, 130, true);
-        ctx.globalAlpha = 1;
-      }
-      
-      // Reflected rays back to eyes
-      if (animationPhase >= 4) {
-        for (let i = 0; i < 7; i++) {
-          const startX = 200;
-          const startY = 100 + i * 10;
-          const endX = 110;
-          const endY = 95 + i * 8;
-          
-          const rayGrad = ctx.createLinearGradient(startX, startY, endX, endY);
-          rayGrad.addColorStop(0, 'rgba(100, 255, 180, 0.2)');
-          rayGrad.addColorStop(1, 'rgba(80, 255, 160, 0.6)');
-          
-          ctx.strokeStyle = rayGrad;
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.moveTo(startX, startY);
-          ctx.lineTo(endX, endY);
-          ctx.stroke();
-          
-          // Arrow
-          ctx.fillStyle = 'rgba(100, 255, 180, 0.5)';
-          ctx.beginPath();
-          ctx.moveTo(endX + 8, endY - 3);
-          ctx.lineTo(endX, endY);
-          ctx.lineTo(endX + 8, endY + 3);
-          ctx.fill();
-        }
-      }
-      
-      frame++;
-      animationFrameRef.current = requestAnimationFrame(animate);
-    };
-
-    animate();
-
-    return () => {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-    };
-  }, [animationPhase, currentStep]);
-
-  const IntroVisual = () => (
-    <div className="relative w-full h-80 bg-gradient-to-br from-slate-800 via-indigo-900 to-slate-900 rounded-2xl overflow-hidden shadow-2xl">
-      <canvas ref={canvasRef} width={400} height={320} className="w-full h-full" />
-    </div>
-  );
-
-  const renderVisual = () => {
-    switch (steps[currentStep].visual) {
-      case 'intro':
-        return <IntroVisual />;
-      case 'sunlight':
-        return (
-          <div className="relative w-full h-80 rounded-2xl overflow-hidden shadow-2xl">
-            <canvas ref={sunlightCanvasRef} width={400} height={320} className="w-full h-full" />
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/70 backdrop-blur-md px-6 py-3 rounded-xl">
-              <p className="text-white font-semibold text-center">
-                {animationPhase === 0 && "🌞 Observe the sunlight behavior"}
-                {animationPhase === 1 && "☀️ Sun emits light in all directions"}
-                {animationPhase === 2 && "💡 Sunlight travels in straight lines to mirror"}
-                {animationPhase === 3 && "✨ Mirror reflects light onto the wall"}
-                {animationPhase === 4 && "🔄 Tilting mirror changes reflection direction"}
-                {animationPhase >= 5 && "🎯 You can control where light goes!"}
-              </p>
-            </div>
-          </div>
-        );
-      case 'straightLine':
-        return (
-          <div className="relative w-full h-80 rounded-2xl overflow-hidden shadow-2xl">
-            <canvas ref={straightLineCanvasRef} width={400} height={320} className="w-full h-full" />
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/70 backdrop-blur-md px-6 py-3 rounded-xl">
-              <p className="text-white font-semibold text-center">
-                {animationPhase === 0 && "🔦 Watch the torch experiment"}
-                {animationPhase === 1 && "💡 Torch produces a beam of light"}
-                {animationPhase === 2 && "➡️ Light travels in a STRAIGHT line"}
-                {animationPhase === 3 && "↗️ Reflected light also travels STRAIGHT"}
-                {animationPhase >= 4 && "✨ Light ALWAYS travels in straight lines!"}
-              </p>
-            </div>
-          </div>
-        );
-      case 'interactive':
-        return (
-          <div className="relative w-full h-80 rounded-2xl overflow-hidden shadow-2xl">
-            <canvas ref={canvasRef} width={400} height={320} className="w-full h-full" />
-            <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-900/90 to-purple-900/90 backdrop-blur-md rounded-2xl p-5 border border-cyan-500/30 shadow-2xl">
-              <div className="flex items-center gap-4">
-                <RotateCw className="w-7 h-7 text-cyan-300" />
-                <div className="flex flex-col gap-2">
-                  <label className="text-cyan-200 text-xs font-bold uppercase tracking-wider">Rotate Mirror</label>
-                  <input
-                    type="range"
-                    min="0"
-                    max="90"
-                    value={mirrorAngle}
-                    onChange={(e) => setMirrorAngle(Number(e.target.value))}
-                    className="w-56 h-3 bg-slate-700 rounded-lg appearance-none cursor-pointer"
-                    style={{
-                      background: `linear-gradient(to right, #22d3ee 0%, #22d3ee ${mirrorAngle}%, #334155 ${mirrorAngle}%, #334155 100%)`
-                    }}
-                  />
-                </div>
-                <div className="bg-cyan-400/20 px-5 py-3 rounded-xl border border-cyan-400/40">
-                  <span className="text-cyan-100 text-xl font-bold">{mirrorAngle}°</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-      case 'face':
-        return (
-          <div className="relative w-full h-80 rounded-2xl overflow-hidden shadow-2xl">
-            <canvas ref={faceCanvasRef} width={400} height={320} className="w-full h-full" />
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white/95 backdrop-blur-sm px-6 py-3 rounded-xl shadow-xl">
-              <p className="text-slate-800 font-semibold text-center">
-                {animationPhase === 0 && "👤 How do you see yourself?"}
-                {animationPhase === 1 && "🧍 You stand in front of mirror"}
-                {animationPhase === 2 && "💡 Light from your face reaches mirror"}
-                {animationPhase === 3 && "🪞 Mirror creates your reflection"}
-                {animationPhase === 4 && "✨ Light reflects back to your eyes"}
-                {animationPhase === 5 && "👁️ Your eyes receive the reflected light"}
-                {animationPhase >= 6 && "🎉 That's how you see yourself!"}
-              </p>
-            </div>
-          </div>
-        );
-      default:
-        return <IntroVisual />;
-    }
-  };
-
-  const handleStepChange = (newStep: number) => {
-    setCurrentStep(newStep);
-    setAnimationPhase(0);
-  };
+  }, [selectedDemo, lightAngle, showNormal, showAngles, isAnimating, language, t]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-8">
@@ -1423,168 +1086,160 @@ const ReflectionOfLightLearn = () => {
         * {
           font-family: 'Lexend', sans-serif;
         }
-        
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .animate-fadeIn {
-          animation: fadeIn 0.6s ease-out forwards;
-        }
-        
-        input[type="range"]::-webkit-slider-thumb {
-          appearance: none;
-          width: 24px;
-          height: 24px;
-          border-radius: 50%;
-          background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 100%);
-          cursor: pointer;
-          box-shadow: 0 0 15px rgba(34, 211, 238, 0.8), 0 4px 10px rgba(0, 0, 0, 0.3);
-          transition: transform 0.2s;
-        }
-        
-        input[type="range"]::-webkit-slider-thumb:hover {
-          transform: scale(1.2);
-        }
-        
-        input[type="range"]::-moz-range-thumb {
-          width: 24px;
-          height: 24px;
-          border-radius: 50%;
-          background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 100%);
-          cursor: pointer;
-          border: none;
-          box-shadow: 0 0 15px rgba(34, 211, 238, 0.8), 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
       `}</style>
-      
-      <div className="max-w-5xl mx-auto">
-        {/* Main Card */}
-        <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-200">
-          {/* Progress */}
-          <div className="h-3 bg-slate-100 relative overflow-hidden">
-            <div 
-              className="h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 transition-all duration-700 ease-out"
-              style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
+      {/* Header */}
+      <div style={{ textAlign: 'center', marginBottom: '30px' }}>
+        <h1 style={{ 
+          color: '#1e293b', 
+          fontSize: '36px', 
+          marginBottom: '10px',
+          fontWeight: 'bold'
+        }}>
+          {t('learn.title')}
+        </h1>
+        <p style={{ color: '#64748b', fontSize: '18px' }}>
+          {t('learn.subtitle')}
+        </p>
+      </div>
+
+      {/* Demo Selection */}
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        gap: '15px', 
+        marginBottom: '25px',
+        flexWrap: 'wrap'
+      }}>
+        <button
+          onClick={() => setSelectedDemo('law')}
+          style={{
+            padding: '12px 24px',
+            fontSize: '16px',
+            backgroundColor: selectedDemo === 'law' ? '#3b82f6' : '#1e293b',
+            color: '#ffffff',
+            border: selectedDemo === 'law' ? '2px solid #60a5fa' : '2px solid #334155',
+            borderRadius: '8px',
+            cursor: 'pointer',
+            transition: 'all 0.3s',
+            fontWeight: 'bold'
+          }}
+        >
+          {t('learn.demos.law')}
+        </button>
+        <button
+          onClick={() => setSelectedDemo('types')}
+          style={{
+            padding: '12px 24px',
+            fontSize: '16px',
+            backgroundColor: selectedDemo === 'types' ? '#3b82f6' : '#1e293b',
+            color: '#ffffff',
+            border: selectedDemo === 'types' ? '2px solid #60a5fa' : '2px solid #334155',
+            borderRadius: '8px',
+            cursor: 'pointer',
+            transition: 'all 0.3s',
+            fontWeight: 'bold'
+          }}
+        >
+          {t('learn.demos.types')}
+        </button>
+      </div>
+
+      {/* Canvas */}
+      <div className="flex justify-center mb-6">
+        <canvas
+          ref={canvasRef}
+          width={900}
+          height={600}
+          className="border-3 border-slate-200 rounded-xl shadow-lg bg-white"
+          style={{
+            boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)'
+          }}
+        />
+      </div>
+
+      {/* Controls */}
+      {selectedDemo === 'law' && (
+        <div className="max-w-4xl mx-auto bg-white p-6 rounded-xl shadow-md border border-slate-200 mb-6">
+          <h3 className="text-slate-800 font-bold text-lg mb-5">{t('learn.controls.title')}</h3>
+          
+          <div className="mb-5">
+            <label className="text-slate-700 block mb-2 text-sm font-medium">
+              {t('learn.controls.angleOfIncidence')} <span className="text-blue-600 font-bold">{lightAngle}°</span>
+            </label>
+            <input
+              type="range"
+              min="10"
+              max="80"
+              value={lightAngle}
+              onChange={(e) => setLightAngle(Number(e.target.value))}
+              className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
             />
           </div>
-          
-          {/* Visual */}
-          <div className="p-8">
-            {renderVisual()}
-          </div>
-          
-          {/* Content */}
-          <div className="p-8 bg-gradient-to-br from-slate-50 to-blue-50">
-            <div className="space-y-5 animate-fadeIn" key={currentStep}>
-              <div className="flex items-start gap-5">
-                <div className="flex-shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-600 to-pink-600 flex items-center justify-center text-white font-bold text-3xl shadow-xl">
-                  {currentStep + 1}
-                </div>
-                <div className="flex-1">
-                  <h2 className="text-4xl font-bold text-slate-800 mb-3">
-                    {steps[currentStep].title}
-                  </h2>
-                  <p className="text-lg text-slate-700 leading-relaxed">
-                    {steps[currentStep].content}
-                  </p>
-                </div>
-              </div>
-              
-              {/* Phase Progress */}
-              <div className="flex items-center gap-3 ml-21">
-                <span className="text-sm font-medium text-slate-500">Animation:</span>
-                <div className="flex gap-2">
-                  {[...Array(steps[currentStep].phases)].map((_, idx) => (
-                    <div
-                      key={idx}
-                      className={`h-2 rounded-full transition-all duration-300 ${
-                        idx <= animationPhase ? 'bg-indigo-500 w-10' : 'bg-slate-300 w-2'
-                      }`}
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          {/* Navigation */}
-          <div className="p-6 bg-white border-t border-slate-200">
-            <div className="flex items-center justify-between">
-              <button
-                onClick={() => handleStepChange(Math.max(0, currentStep - 1))}
-                disabled={currentStep === 0}
-                className="flex items-center gap-2 px-8 py-4 rounded-xl font-semibold transition-all disabled:opacity-40 disabled:cursor-not-allowed hover:scale-105 active:scale-95 bg-slate-100 text-slate-700 hover:bg-slate-200 shadow-md"
-              >
-                <ArrowLeft className="w-5 h-5" />
-                Previous
-              </button>
-              
-              <div className="flex items-center gap-3">
-                {steps.map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => handleStepChange(idx)}
-                    className={`transition-all duration-300 rounded-full ${
-                      idx === currentStep 
-                        ? 'bg-indigo-600 w-12 h-4' 
-                        : idx < currentStep
-                        ? 'bg-indigo-400 w-4 h-4'
-                        : 'bg-slate-300 w-4 h-4'
-                    }`}
-                  />
-                ))}
-              </div>
-              
-              <div className="flex gap-3">
-                <button
-                  onClick={() => setIsPlaying(!isPlaying)}
-                  className="flex items-center gap-2 px-6 py-4 rounded-xl font-semibold transition-all hover:scale-105 active:scale-95 bg-purple-100 text-purple-700 hover:bg-purple-200 shadow-md"
-                >
-                  {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
-                  {isPlaying ? 'Pause' : 'Play'}
-                </button>
-                
-                <button
-                  onClick={() => handleStepChange(Math.min(steps.length - 1, currentStep + 1))}
-                  disabled={currentStep === steps.length - 1}
-                  className="flex items-center gap-2 px-8 py-4 rounded-xl font-semibold transition-all disabled:opacity-40 disabled:cursor-not-allowed hover:scale-105 active:scale-95 bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg"
-                >
-                  Next
-                  <ArrowRight className="w-5 h-5" />
-                </button>
-              </div>
-            </div>
+
+          <div className="flex gap-4 flex-wrap">
+            <label className="text-slate-700 flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                checked={showNormal}
+                onChange={(e) => setShowNormal(e.target.checked)}
+                className="mr-2 cursor-pointer accent-blue-600"
+              />
+              {t('learn.controls.showNormalLine')}
+            </label>
+            <label className="text-slate-700 flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                checked={showAngles}
+                onChange={(e) => setShowAngles(e.target.checked)}
+                className="mr-2 cursor-pointer accent-blue-600"
+              />
+              {t('learn.controls.showAngleMeasurements')}
+            </label>
+            <label className="text-slate-700 flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                checked={isAnimating}
+                onChange={(e) => setIsAnimating(e.target.checked)}
+                className="mr-2 cursor-pointer accent-blue-600"
+              />
+              {t('learn.controls.animateLightTravel')}
+            </label>
           </div>
         </div>
+      )}
+
+      {/* Educational Content */}
+      <div className="max-w-4xl mx-auto bg-white p-6 rounded-xl shadow-md border border-slate-200">
+        <h3 className="text-slate-800 font-bold text-lg mb-4">{t('learn.concepts.title')}</h3>
         
-        {/* Key Concepts */}
-        <div className="mt-8 p-8 bg-white rounded-2xl shadow-xl border border-slate-200">
-          <h3 className="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-xl flex items-center justify-center">
-              <Lightbulb className="w-6 h-6 text-white" />
-            </div>
-            Key Learning Points
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-6 bg-gradient-to-br from-yellow-50 to-amber-50 rounded-xl border-2 border-yellow-200 hover:scale-105 transition-transform">
-              <div className="text-3xl mb-3">✨</div>
-              <p className="font-bold text-yellow-900 mb-2">Straight Path</p>
-              <p className="text-sm text-yellow-800">Light always travels in straight lines</p>
-            </div>
-            <div className="p-6 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl border-2 border-blue-200 hover:scale-105 transition-transform">
-              <div className="text-3xl mb-3">🪞</div>
-              <p className="font-bold text-blue-900 mb-2">Reflection</p>
-              <p className="text-sm text-blue-800">Mirrors change light direction</p>
-            </div>
-            <div className="p-6 bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl border-2 border-green-200 hover:scale-105 transition-transform">
-              <div className="text-3xl mb-3">👁️</div>
-              <p className="font-bold text-green-900 mb-2">Vision</p>
-              <p className="text-sm text-green-800">Reflection helps us see images</p>
-            </div>
+        {selectedDemo === 'law' && (
+          <div className="text-slate-700 leading-relaxed">
+            <p className="mb-3">
+              <strong className="text-blue-600">{t('learn.concepts.law.title')}</strong> {t('learn.concepts.law.description')}
+            </p>
+            <ul className="ml-5 mb-3 list-disc space-y-1">
+              <li>{t('learn.concepts.law.point1')}</li>
+              <li>{t('learn.concepts.law.point2')}</li>
+              <li>{t('learn.concepts.law.point3')}</li>
+            </ul>
+            <p>
+              <strong className="text-red-500">{t('learn.concepts.law.redRay')}</strong> {t('learn.concepts.law.redRayDesc')}<br/>
+              <strong className="text-green-500">{t('learn.concepts.law.greenRay')}</strong> {t('learn.concepts.law.greenRayDesc')}<br/>
+              <strong className="text-yellow-500">{t('learn.concepts.law.yellowLine')}</strong> {t('learn.concepts.law.yellowLineDesc')}
+            </p>
           </div>
-        </div>
+        )}
+
+        {selectedDemo === 'types' && (
+          <div className="text-slate-700 leading-relaxed">
+            <p className="mb-3">
+              <strong className="text-blue-600">{t('learn.concepts.types.regularTitle')}</strong> {t('learn.concepts.types.regularDesc')}
+            </p>
+            <p>
+              <strong className="text-slate-600">{t('learn.concepts.types.diffuseTitle')}</strong> {t('learn.concepts.types.diffuseDesc')}
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -1592,6 +1247,7 @@ const ReflectionOfLightLearn = () => {
 
 // Practice Mode Component
 const PracticeMode: React.FC = () => {
+  const { t, tValue } = useLanguage();
   const [currentExercise, setCurrentExercise] = useState(0);
   const [score, setScore] = useState(0);
   const [attempts, setAttempts] = useState(0);
@@ -1602,6 +1258,8 @@ const PracticeMode: React.FC = () => {
   const [targetAngle, setTargetAngle] = useState(60);
   const [userDrawing, setUserDrawing] = useState<{x: number, y: number}[]>([]);
   const [completedExercises, setCompletedExercises] = useState<boolean[]>(new Array(8).fill(false));
+  const [userAnswers, setUserAnswers] = useState<(string | null)[]>(new Array(8).fill(null));
+  const [showOverview, setShowOverview] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const drawingCanvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
@@ -1610,95 +1268,70 @@ const PracticeMode: React.FC = () => {
     {
       id: 1,
       type: 'mcq',
-      question: 'What is the change in direction of light by a mirror called?',
-      options: [
-        'Refraction',
-        'Reflection',
-        'Dispersion',
-        'Absorption'
-      ],
-      correctAnswer: 'Reflection',
-      explanation: 'The change in direction of light by a mirror is called reflection. When light hits a shiny surface, it bounces back.',
+      question: t('practice.exercises.1.question'),
+      options: tValue('practice.exercises.1.options') as string[],
+      correctAnswer: t('practice.exercises.1.options.1'),
+      explanation: t('practice.exercises.1.explanation'),
       difficulty: 'Easy'
     },
     {
       id: 2,
       type: 'mcq',
-      question: 'Which of the following is a luminous object?',
-      options: [
-        'Moon',
-        'Mirror',
-        'Sun',
-        'Wall'
-      ],
-      correctAnswer: 'Sun',
-      explanation: 'The Sun is a luminous object because it emits its own light. The Moon, mirror, and wall are non-luminous objects that only reflect light.',
+      question: t('practice.exercises.2.question'),
+      options: tValue('practice.exercises.2.options') as string[],
+      correctAnswer: t('practice.exercises.2.options.2'),
+      explanation: t('practice.exercises.2.explanation'),
       difficulty: 'Easy'
     },
     {
       id: 3,
       type: 'mcq',
-      question: 'How does light travel?',
-      options: [
-        'In curved lines',
-        'In zigzag patterns',
-        'In straight lines',
-        'In random directions'
-      ],
-      correctAnswer: 'In straight lines',
-      explanation: 'Light always travels in straight lines. This can be observed when you shine a torch or see sunbeams through windows.',
+      question: t('practice.exercises.3.question'),
+      options: tValue('practice.exercises.3.options') as string[],
+      correctAnswer: t('practice.exercises.3.options.2'),
+      explanation: t('practice.exercises.3.explanation'),
       difficulty: 'Easy'
     },
     {
       id: 4,
       type: 'truefalse',
-      question: 'The image formed by a plane mirror can be obtained on a screen.',
+      question: t('practice.exercises.4.question'),
       correctAnswer: 'false',
-      explanation: 'False. The image formed by a plane mirror cannot be obtained on a screen because it is a virtual image formed behind the mirror.',
+      explanation: t('practice.exercises.4.explanation'),
       difficulty: 'Medium'
     },
     {
       id: 5,
       type: 'interactive-mirror',
-      question: 'Adjust the mirror angle to direct the reflected light to the target spot!',
+      question: t('practice.exercises.5.question'),
       targetAngle: 60,
       tolerance: 5,
-      explanation: 'By changing the angle of the mirror, you can control where the reflected light goes. This is how periscopes and other optical instruments work.',
+      explanation: t('practice.exercises.5.explanation'),
       difficulty: 'Medium'
     },
     {
       id: 6,
       type: 'mcq',
-      question: 'What happens when you tilt a mirror while sunlight falls on it?',
-      options: [
-        'The reflected light position stays the same',
-        'The reflected light position changes',
-        'The sunlight stops reflecting',
-        'The mirror becomes transparent'
-      ],
-      correctAnswer: 'The reflected light position changes',
-      explanation: 'When you tilt the mirror, the angle at which light hits it changes, so the direction of reflected light also changes.',
+      question: t('practice.exercises.6.question'),
+      options: tValue('practice.exercises.6.options') as string[],
+      correctAnswer: t('practice.exercises.6.options.1'),
+      explanation: t('practice.exercises.6.explanation'),
       difficulty: 'Medium'
     },
     {
       id: 7,
       type: 'drawing',
-      question: 'Draw the path of reflected light from the mirror!',
-      explanation: 'The reflected ray should travel in a straight line from the mirror at an angle equal to the incident angle.',
+      question: t('practice.exercises.7.question'),
+      explanation: t('practice.exercises.7.explanation'),
       difficulty: 'Hard'
     },
     {
       id: 8,
       type: 'mcq-image',
-      question: 'Why can you see your face in a mirror?',
-      options: [
-        'The mirror emits light',
-        'Light from your face reflects off the mirror and enters your eyes',
-        'Your face passes through the mirror',
-        'The mirror absorbs light'
-      ],
-      correctAnswer: 'Light from your face reflects off the mirror and enters your eyes',
-      explanation: 'You see your face because light from your face travels to the mirror, reflects off it, and enters your eyes. This reflected light creates the image you see.',
+      question: t('practice.exercises.8.question'),
+      options: tValue('practice.exercises.8.options') as string[],
+      correctAnswer: t('practice.exercises.8.options.1'),
+      explanation: t('practice.exercises.8.explanation'),
       difficulty: 'Medium'
     }
   ];
@@ -1827,9 +1460,9 @@ const PracticeMode: React.FC = () => {
       // Labels
       ctx.fillStyle = 'white';
       ctx.font = '12px Lexend';
-      ctx.fillText('Light Source', lightX, lightY + 30);
-      ctx.fillText(`Mirror (${userMirrorAngle}°)`, mirrorX, mirrorY + 30);
-      ctx.fillText('Target', targetEndX, targetEndY + 35);
+      ctx.fillText(t('practice.interactive.lightSource'), lightX, lightY + 30);
+      ctx.fillText(t('practice.interactive.mirror').replace('{{angle}}', userMirrorAngle.toString()), mirrorX, mirrorY + 30);
+      ctx.fillText(t('practice.interactive.target'), targetEndX, targetEndY + 35);
 
       // Check if close to target
       const distance = Math.sqrt(
@@ -1840,7 +1473,7 @@ const PracticeMode: React.FC = () => {
         ctx.fillStyle = '#00ff88';
         ctx.font = 'bold 20px Lexend';
         ctx.textAlign = 'center';
-        ctx.fillText('✓ Perfect!', canvas.width / 2, 30);
+        ctx.fillText(t('practice.interactive.perfect'), canvas.width / 2, 30);
       }
     };
 
@@ -1904,7 +1537,7 @@ const PracticeMode: React.FC = () => {
       // Instruction text
       ctx.fillStyle = '#334155';
       ctx.font = 'bold 14px Lexend';
-      ctx.fillText('Draw the reflected ray:', 20, 30);
+      ctx.fillText(t('practice.drawing.instruction'), 20, 30);
 
       // User's drawing
       if (userDrawing.length > 1) {
@@ -1960,18 +1593,27 @@ const PracticeMode: React.FC = () => {
   const handleSubmit = () => {
     setAttempts(prev => prev + 1);
     let correct = false;
+    let userAnswer: string | null = null;
 
     if (currentEx.type === 'mcq' || currentEx.type === 'mcq-image') {
+      userAnswer = selectedAnswer;
       correct = selectedAnswer === currentEx.correctAnswer;
     } else if (currentEx.type === 'truefalse') {
+      userAnswer = selectedAnswer;
       correct = selectedAnswer === currentEx.correctAnswer;
     } else if (currentEx.type === 'interactive-mirror') {
+      userAnswer = `${userMirrorAngle}°`;
       const diff = Math.abs(userMirrorAngle - targetAngle);
       correct = diff <= (currentEx.tolerance || 5);
     } else if (currentEx.type === 'drawing') {
-      // Simple validation: check if user drew something
+      userAnswer = userDrawing.length > 20 ? t('practice.overview.drawn') : t('practice.overview.notDrawn');
       correct = userDrawing.length > 20;
     }
+
+    // Store user's answer
+    const newUserAnswers = [...userAnswers];
+    newUserAnswers[currentExercise] = userAnswer;
+    setUserAnswers(newUserAnswers);
 
     setIsCorrect(correct);
     setShowFeedback(true);
@@ -2005,6 +1647,8 @@ const PracticeMode: React.FC = () => {
     setIsCorrect(false);
     setUserDrawing([]);
     setCompletedExercises(new Array(8).fill(false));
+    setUserAnswers(new Array(8).fill(null));
+    setShowOverview(false);
   };
 
   const renderExercise = () => {
@@ -2076,7 +1720,7 @@ const PracticeMode: React.FC = () => {
                       : 'bg-white border-2 border-slate-200 text-slate-700 hover:border-indigo-300 hover:bg-indigo-50'
                   } ${showFeedback ? 'cursor-not-allowed' : 'cursor-pointer'}`}
                 >
-                  {option.toUpperCase()}
+                  {option === 'true' ? t('practice.trueFalse.true') : t('practice.trueFalse.false')}
                 </button>
               ))}
             </div>
@@ -2094,7 +1738,7 @@ const PracticeMode: React.FC = () => {
             />
             <div className="bg-indigo-50 p-4 rounded-xl border border-indigo-200">
               <label className="block text-sm font-semibold text-indigo-900 mb-2">
-                Mirror Angle: {userMirrorAngle}°
+                {t('practice.interactive.mirrorAngle')} {userMirrorAngle}°
               </label>
               <input
                 type="range"
@@ -2105,7 +1749,7 @@ const PracticeMode: React.FC = () => {
                 className="w-full h-3 bg-indigo-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
               />
               <p className="text-sm text-indigo-700 mt-2">
-                💡 Tip: Adjust the mirror to make the green beam hit the red target!
+                {t('practice.interactive.tip')}
               </p>
             </div>
           </div>
@@ -2130,11 +1774,11 @@ const PracticeMode: React.FC = () => {
                 className="flex items-center gap-2 px-4 py-2 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition-all font-medium"
               >
                 <RefreshCw className="w-4 h-4" />
-                Clear Drawing
+                {t('practice.drawing.clearDrawing')}
               </button>
               <div className="flex-1 bg-blue-50 p-3 rounded-lg border border-blue-200">
                 <p className="text-sm text-blue-800">
-                  ✏️ Use your mouse to draw the path of the reflected light ray from the mirror
+                  {t('practice.drawing.tip')}
                 </p>
               </div>
             </div>
@@ -2149,6 +1793,173 @@ const PracticeMode: React.FC = () => {
   const progress = ((currentExercise + 1) / exercises.length) * 100;
   const accuracyRate = attempts > 0 ? Math.round((score / attempts) * 100) : 0;
 
+  // Overview Component
+  if (showOverview) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-8">
+        <style>{`
+          @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&display=swap');
+          
+          * {
+            font-family: 'Lexend', sans-serif;
+          }
+        `}</style>
+
+        <div className="max-w-5xl mx-auto">
+          {/* Header */}
+          <div className="bg-white p-6 rounded-xl shadow-md border border-slate-200 mb-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-3xl font-bold text-slate-800 mb-2">{t('practice.overview.title')}</h1>
+                <p className="text-slate-600">{t('practice.overview.subtitle')}</p>
+              </div>
+              <button
+                onClick={() => setShowOverview(false)}
+                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-teal-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all"
+              >
+                <ArrowLeft className="w-5 h-5" />
+                {t('practice.overview.backToPractice')}
+              </button>
+            </div>
+          </div>
+
+          {/* Statistics */}
+          <div className="grid grid-cols-3 gap-4 mb-6">
+            <div className="bg-white p-6 rounded-xl shadow-md border border-slate-200">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center">
+                  <CheckCircle className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <p className="text-sm text-slate-600 font-medium">{t('practice.overview.correct')}</p>
+                  <p className="text-2xl font-bold text-slate-800">{score}/{exercises.length}</p>
+                </div>
+              </div>
+            </div>
+            <div className="bg-white p-6 rounded-xl shadow-md border border-slate-200">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-gradient-to-br from-red-400 to-red-600 rounded-xl flex items-center justify-center">
+                  <XCircle className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <p className="text-sm text-slate-600 font-medium">{t('practice.overview.incorrect')}</p>
+                  <p className="text-2xl font-bold text-slate-800">{exercises.length - score}/{exercises.length}</p>
+                </div>
+              </div>
+            </div>
+            <div className="bg-white p-6 rounded-xl shadow-md border border-slate-200">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl flex items-center justify-center">
+                  <Award className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <p className="text-sm text-slate-600 font-medium">{t('practice.overview.accuracy')}</p>
+                  <p className="text-2xl font-bold text-slate-800">{accuracyRate}%</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Exercise Overview List */}
+          <div className="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
+            <div className="p-6 border-b border-slate-200">
+              <h2 className="text-2xl font-bold text-slate-800">{t('practice.overview.exerciseList')}</h2>
+            </div>
+            <div className="divide-y divide-slate-200">
+              {exercises.map((exercise, idx) => {
+                const userAnswer = userAnswers[idx];
+                const isCorrectAnswer = completedExercises[idx];
+                
+                // Get current translations dynamically
+                const exerciseNum = (idx + 1).toString();
+                const currentQuestion = t(`practice.exercises.${exerciseNum}.question`);
+                const currentExplanation = t(`practice.exercises.${exerciseNum}.explanation`);
+                
+                let correctAnswerText = '';
+                
+                if (exercise.type === 'mcq' || exercise.type === 'mcq-image') {
+                  // For MCQ, get the correct answer index from the exercise
+                  // The correctAnswer is stored as the translated option text
+                  // We need to find which option index it corresponds to
+                  const options = tValue(`practice.exercises.${exerciseNum}.options`) as string[];
+                  if (options && Array.isArray(options)) {
+                    // Find the correct answer - it's stored as the translated string
+                    // We need to match it with current options or use the exercise's correctAnswer
+                    // Since correctAnswer is already translated, we can use it directly
+                    correctAnswerText = exercise.correctAnswer || '';
+                  } else {
+                    correctAnswerText = exercise.correctAnswer || '';
+                  }
+                } else if (exercise.type === 'truefalse') {
+                  // For true/false, translate the boolean value
+                  if (exercise.correctAnswer === 'true') {
+                    correctAnswerText = t('practice.trueFalse.true');
+                  } else if (exercise.correctAnswer === 'false') {
+                    correctAnswerText = t('practice.trueFalse.false');
+                  } else {
+                    correctAnswerText = exercise.correctAnswer || '';
+                  }
+                } else if (exercise.type === 'interactive-mirror') {
+                  correctAnswerText = `${exercise.targetAngle || 0}°`;
+                } else if (exercise.type === 'drawing') {
+                  correctAnswerText = t('practice.overview.drawingRequired');
+                }
+
+                return (
+                  <div key={idx} className="p-6 hover:bg-slate-50 transition-colors">
+                    <div className="flex items-start gap-4">
+                      <div className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center font-bold text-lg ${
+                        isCorrectAnswer 
+                          ? 'bg-green-100 text-green-700' 
+                          : 'bg-red-100 text-red-700'
+                      }`}>
+                        {idx + 1}
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <h3 className="font-semibold text-slate-800">{currentQuestion}</h3>
+                          {isCorrectAnswer ? (
+                            <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
+                          ) : (
+                            <XCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
+                          )}
+                        </div>
+                        <div className="space-y-2 mt-3">
+                          <div className={`p-3 rounded-lg ${
+                            isCorrectAnswer 
+                              ? 'bg-green-50 border border-green-200' 
+                              : 'bg-red-50 border border-red-200'
+                          }`}>
+                            <p className="text-sm font-medium text-slate-600 mb-1">{t('practice.overview.yourAnswer')}</p>
+                            <p className={`font-semibold ${
+                              isCorrectAnswer ? 'text-green-700' : 'text-red-700'
+                            }`}>
+                              {userAnswer || t('practice.overview.notAnswered')}
+                            </p>
+                          </div>
+                          {!isCorrectAnswer && (
+                            <div className="p-3 rounded-lg bg-blue-50 border border-blue-200">
+                              <p className="text-sm font-medium text-slate-600 mb-1">{t('practice.overview.correctAnswer')}</p>
+                              <p className="font-semibold text-blue-700">{correctAnswerText}</p>
+                            </div>
+                          )}
+                          <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
+                            <p className="text-sm font-medium text-slate-600 mb-1">{t('practice.overview.explanation')}</p>
+                            <p className="text-slate-700">{currentExplanation}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-8">
       <style>{`
@@ -2160,42 +1971,6 @@ const PracticeMode: React.FC = () => {
       `}</style>
 
       <div className="max-w-4xl mx-auto">
-        {/* Stats Bar */}
-        <div className="grid grid-cols-3 gap-4 mb-6">
-          <div className="bg-white p-4 rounded-xl shadow-md border border-slate-200">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center">
-                <Award className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <p className="text-sm text-slate-600 font-medium">Score</p>
-                <p className="text-2xl font-bold text-slate-800">{score}/{exercises.length}</p>
-              </div>
-            </div>
-          </div>
-          <div className="bg-white p-4 rounded-xl shadow-md border border-slate-200">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl flex items-center justify-center">
-                <Target className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <p className="text-sm text-slate-600 font-medium">Accuracy</p>
-                <p className="text-2xl font-bold text-slate-800">{accuracyRate}%</p>
-              </div>
-            </div>
-          </div>
-          <div className="bg-white p-4 rounded-xl shadow-md border border-slate-200">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-purple-400 to-purple-600 rounded-xl flex items-center justify-center">
-                <Lightbulb className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <p className="text-sm text-slate-600 font-medium">Progress</p>
-                <p className="text-2xl font-bold text-slate-800">{currentExercise + 1}/{exercises.length}</p>
-              </div>
-            </div>
-          </div>
-        </div>
 
         {/* Main Exercise Card */}
         <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border border-slate-200">
@@ -2216,21 +1991,23 @@ const PracticeMode: React.FC = () => {
                 </div>
                 <div>
                   <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wide">
-                    Exercise {currentExercise + 1}
+                    {t('practice.exercise').replace('{{num}}', (currentExercise + 1).toString())}
                   </h3>
                   <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold mt-1 ${
                     currentEx.difficulty === 'Easy' ? 'bg-green-100 text-green-700' :
                     currentEx.difficulty === 'Medium' ? 'bg-yellow-100 text-yellow-700' :
                     'bg-red-100 text-red-700'
                   }`}>
-                    {currentEx.difficulty}
+                    {currentEx.difficulty === 'Easy' ? t('practice.difficulty.easy') :
+                     currentEx.difficulty === 'Medium' ? t('practice.difficulty.medium') :
+                     t('practice.difficulty.hard')}
                   </span>
                 </div>
               </div>
               {completedExercises[currentExercise] && (
                 <div className="flex items-center gap-2 bg-green-100 text-green-700 px-4 py-2 rounded-lg">
                   <CheckCircle className="w-5 h-5" />
-                  <span className="font-semibold">Completed</span>
+                  <span className="font-semibold">{t('practice.completed')}</span>
                 </div>
               )}
             </div>
@@ -2258,7 +2035,7 @@ const PracticeMode: React.FC = () => {
                     <h3 className={`text-lg font-bold mb-2 ${
                       isCorrect ? 'text-green-800' : 'text-red-800'
                     }`}>
-                      {isCorrect ? '🎉 Excellent!' : '❌ Not quite right'}
+                      {isCorrect ? t('practice.excellent') : t('practice.notQuiteRight')}
                     </h3>
                     <p className={`${isCorrect ? 'text-green-700' : 'text-red-700'}`}>
                       {currentEx.explanation}
@@ -2277,11 +2054,11 @@ const PracticeMode: React.FC = () => {
                 className="flex items-center gap-2 px-6 py-3 bg-slate-200 text-slate-700 rounded-xl font-semibold hover:bg-slate-300 transition-all"
               >
                 <RefreshCw className="w-5 h-5" />
-                Restart
+                {t('practice.restart')}
               </button>
 
               <div className="flex gap-3">
-                {!showFeedback ? (
+                {!showFeedback && (
                   <button
                     onClick={handleSubmit}
                     disabled={
@@ -2289,47 +2066,19 @@ const PracticeMode: React.FC = () => {
                     }
                     className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    Submit Answer
-                  </button>
-                ) : (
-                  <button
-                    onClick={handleNext}
-                    disabled={currentExercise === exercises.length - 1}
-                    className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    {currentExercise === exercises.length - 1 ? 'Completed!' : 'Next Exercise'}
-                    <ArrowRight className="w-5 h-5" />
+                    {t('practice.submitAnswer')}
                   </button>
                 )}
+                <button
+                  onClick={handleNext}
+                  disabled={currentExercise === exercises.length - 1}
+                  className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-teal-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {t('practice.nextExercise')}
+                  <ArrowRight className="w-5 h-5" />
+                </button>
               </div>
             </div>
-          </div>
-        </div>
-
-        {/* Exercise Navigation */}
-        <div className="mt-6 bg-white p-6 rounded-xl shadow-md border border-slate-200">
-          <h3 className="text-lg font-bold text-slate-800 mb-4">Exercise Overview</h3>
-          <div className="grid grid-cols-8 gap-3">
-            {exercises.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => {
-                  setCurrentExercise(idx);
-                  setSelectedAnswer(null);
-                  setShowFeedback(false);
-                  setIsCorrect(false);
-                }}
-                className={`aspect-square rounded-lg font-bold text-lg transition-all ${
-                  idx === currentExercise
-                    ? 'bg-gradient-to-br from-purple-500 to-pink-600 text-white shadow-lg scale-110'
-                    : completedExercises[idx]
-                    ? 'bg-green-100 text-green-700 hover:bg-green-200'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                }`}
-              >
-                {completedExercises[idx] ? '✓' : idx + 1}
-              </button>
-            ))}
           </div>
         </div>
 
@@ -2337,11 +2086,31 @@ const PracticeMode: React.FC = () => {
         {completedExercises.every(Boolean) && (
           <div className="mt-6 bg-gradient-to-r from-green-400 to-emerald-500 p-8 rounded-2xl shadow-2xl text-white text-center">
             <Award className="w-16 h-16 mx-auto mb-4" />
-            <h2 className="text-3xl font-bold mb-2">🎉 Congratulations!</h2>
+            <h2 className="text-3xl font-bold mb-2">{t('practice.congratulations')}</h2>
             <p className="text-lg mb-4">
-              You've completed all exercises with a score of {score}/{exercises.length}!
+              {t('practice.completedAllText').replace('{{score}}', score.toString()).replace('{{total}}', exercises.length.toString())}
             </p>
-            <p className="text-xl font-bold">Accuracy: {accuracyRate}%</p>
+            <p className="text-xl font-bold mb-6">{t('practice.accuracyLabel')} {accuracyRate}%</p>
+            <button
+              onClick={() => setShowOverview(true)}
+              className="flex items-center gap-2 px-8 py-3 bg-white text-green-600 rounded-xl font-semibold hover:shadow-lg transition-all mx-auto"
+            >
+              {t('practice.overview.viewOverview')}
+              <ArrowRight className="w-5 h-5" />
+            </button>
+          </div>
+        )}
+
+        {/* View Overview Button (always visible when there are attempts) */}
+        {!completedExercises.every(Boolean) && attempts > 0 && (
+          <div className="mt-6 flex justify-center">
+            <button
+              onClick={() => setShowOverview(true)}
+              className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all"
+            >
+              {t('practice.overview.viewOverview')}
+              <ArrowRight className="w-5 h-5" />
+            </button>
           </div>
         )}
       </div>
@@ -2352,6 +2121,7 @@ const PracticeMode: React.FC = () => {
 
 // Real World Applications Component
 const RealWorldMode: React.FC = () => {
+  const { t, tValue, language } = useLanguage();
   const [currentApplication, setCurrentApplication] = useState(0);
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -2360,171 +2130,107 @@ const RealWorldMode: React.FC = () => {
   const applications = [
     {
       id: 1,
-      title: 'Mirrors in Daily Life',
+      title: t('realWorld.applications.1.title'),
       icon: Home,
-      category: 'Everyday Use',
-      description: 'We use mirrors every day for grooming, dressing, and checking our appearance. Reflection helps us see ourselves!',
-      realWorldExample: 'Bathroom mirrors, dressing table mirrors, wardrobe mirrors',
-      howItWorks: [
-        'Light from your body and surroundings hits the mirror surface',
-        'The smooth glass surface reflects light in a predictable way',
-        'Reflected light enters your eyes, creating a virtual image',
-        'The image appears to be behind the mirror at the same distance'
-      ],
-      funFacts: [
-        'Ancient mirrors were made of polished bronze or copper',
-        'The first glass mirrors were made in Venice around 1317',
-        'Modern mirrors use a thin layer of aluminum or silver coating'
-      ],
+      category: t('realWorld.applications.1.category'),
+      description: t('realWorld.applications.1.description'),
+      realWorldExample: t('realWorld.applications.1.example'),
+      howItWorks: tValue('realWorld.applications.1.howItWorks') as string[],
+      funFacts: tValue('realWorld.applications.1.funFacts') as string[],
       visualization: 'mirror-daily',
-      color: 'from-blue-400 to-cyan-500'
+      color: 'from-blue-400 to-cyan-500',
+      canvasLabel: t('realWorld.applications.1.canvasLabel')
     },
     {
       id: 2,
-      title: 'Rear-View Mirrors in Vehicles',
+      title: t('realWorld.applications.2.title'),
       icon: Car,
-      category: 'Transportation',
-      description: 'Cars, bikes, and trucks use rear-view mirrors to see behind them without turning around, making driving safer.',
-      realWorldExample: 'Car rear-view mirrors, side mirrors (wing mirrors), bike mirrors',
-      howItWorks: [
-        'Mirrors are positioned to reflect the view from behind the vehicle',
-        'Light from vehicles and objects behind reflects into the mirror',
-        'Driver can see reflected image while looking forward',
-        'Convex mirrors are often used to provide wider field of view'
-      ],
-      funFacts: [
-        'Rear-view mirrors were invented in 1911 for race cars',
-        'Side mirrors have a note: "Objects are closer than they appear"',
-        'Some modern cars use cameras instead of mirrors'
-      ],
+      category: t('realWorld.applications.2.category'),
+      description: t('realWorld.applications.2.description'),
+      realWorldExample: t('realWorld.applications.2.example'),
+      howItWorks: tValue('realWorld.applications.2.howItWorks') as string[],
+      funFacts: tValue('realWorld.applications.2.funFacts') as string[],
       visualization: 'rearview',
-      color: 'from-orange-400 to-red-500'
+      color: 'from-orange-400 to-red-500',
+      canvasLabel: t('realWorld.applications.2.canvasLabel')
     },
     {
       id: 3,
-      title: 'Periscopes in Submarines',
+      title: t('realWorld.applications.3.title'),
       icon: Telescope,
-      category: 'Military & Marine',
-      description: 'Periscopes use two mirrors to let submarine crews see above water while staying underwater.',
-      realWorldExample: 'Submarine periscopes, trench periscopes, crowd viewing at parades',
-      howItWorks: [
-        'Two plane mirrors are placed at 45° angles in a tube',
-        'Top mirror reflects light from above down into the tube',
-        'Bottom mirror reflects this light horizontally to the viewer',
-        'Light travels in straight lines between the two reflections'
-      ],
-      funFacts: [
-        'Periscopes can be several meters long',
-        'Modern submarines use cameras instead of optical periscopes',
-        'You can make a simple periscope with cardboard and mirrors'
-      ],
+      category: t('realWorld.applications.3.category'),
+      description: t('realWorld.applications.3.description'),
+      realWorldExample: t('realWorld.applications.3.example'),
+      howItWorks: tValue('realWorld.applications.3.howItWorks') as string[],
+      funFacts: tValue('realWorld.applications.3.funFacts') as string[],
       visualization: 'periscope',
-      color: 'from-purple-400 to-indigo-500'
+      color: 'from-purple-400 to-indigo-500',
+      canvasLabel: t('realWorld.applications.3.canvasLabel')
     },
     {
       id: 4,
-      title: 'Solar Cookers',
+      title: t('realWorld.applications.4.title'),
       icon: Sun,
-      category: 'Renewable Energy',
-      description: 'Solar cookers use curved mirrors to reflect and focus sunlight, creating enough heat to cook food.',
-      realWorldExample: 'Solar ovens, solar water heaters, concentrated solar power plants',
-      howItWorks: [
-        'Parabolic (curved) mirrors reflect sunlight to a focal point',
-        'All reflected rays converge at one spot, concentrating energy',
-        'Temperature at focal point can reach 200-300°C',
-        'Food placed at focal point gets cooked by concentrated heat'
-      ],
-      funFacts: [
-        'Solar cookers need no fuel - they run on free sunlight',
-        'They work best on sunny days between 10 AM and 3 PM',
-        'Large solar plants use thousands of mirrors to generate electricity'
-      ],
+      category: t('realWorld.applications.4.category'),
+      description: t('realWorld.applications.4.description'),
+      realWorldExample: t('realWorld.applications.4.example'),
+      howItWorks: tValue('realWorld.applications.4.howItWorks') as string[],
+      funFacts: tValue('realWorld.applications.4.funFacts') as string[],
       visualization: 'solar',
-      color: 'from-yellow-400 to-orange-500'
+      color: 'from-yellow-400 to-orange-500',
+      canvasLabel: t('realWorld.applications.4.canvasLabel')
     },
     {
       id: 5,
-      title: 'Telescopes',
+      title: t('realWorld.applications.5.title'),
       icon: Telescope,
-      category: 'Astronomy',
-      description: 'Reflecting telescopes use curved mirrors to collect and focus light from distant stars and planets.',
-      realWorldExample: 'Hubble Space Telescope, James Webb Space Telescope, observatory telescopes',
-      howItWorks: [
-        'Large curved (concave) mirror collects light from distant objects',
-        'Mirror reflects and focuses light to a point',
-        'Secondary mirror redirects focused light to eyepiece or camera',
-        'Larger mirrors can collect more light, seeing fainter objects'
-      ],
-      funFacts: [
-        'Isaac Newton invented the reflecting telescope in 1668',
-        'The largest telescope mirror is 10.4 meters in diameter',
-        'Hubble Telescope has taken over 1.5 million observations'
-      ],
+      category: t('realWorld.applications.5.category'),
+      description: t('realWorld.applications.5.description'),
+      realWorldExample: t('realWorld.applications.5.example'),
+      howItWorks: tValue('realWorld.applications.5.howItWorks') as string[],
+      funFacts: tValue('realWorld.applications.5.funFacts') as string[],
       visualization: 'telescope',
-      color: 'from-indigo-400 to-purple-600'
+      color: 'from-indigo-400 to-purple-600',
+      canvasLabel: t('realWorld.applications.5.canvasLabel')
     },
     {
       id: 6,
-      title: 'Dental Mirrors',
+      title: t('realWorld.applications.6.title'),
       icon: Eye,
-      category: 'Healthcare',
-      description: 'Dentists use small mirrors to see all areas inside your mouth, including hard-to-see places.',
-      realWorldExample: 'Dental examination mirrors, throat examination mirrors, surgical mirrors',
-      howItWorks: [
-        'Small concave or plane mirror attached to a handle',
-        'Dentist positions mirror to see behind teeth and gums',
-        'Light reflects off mirror, showing hidden areas',
-        'Mirror can also reflect light into dark areas of mouth'
-      ],
-      funFacts: [
-        'Dental mirrors are usually double-sided',
-        'They are sterilized after each patient',
-        'Some dental mirrors have built-in LED lights'
-      ],
+      category: t('realWorld.applications.6.category'),
+      description: t('realWorld.applications.6.description'),
+      realWorldExample: t('realWorld.applications.6.example'),
+      howItWorks: tValue('realWorld.applications.6.howItWorks') as string[],
+      funFacts: tValue('realWorld.applications.6.funFacts') as string[],
       visualization: 'dental',
-      color: 'from-green-400 to-teal-500'
+      color: 'from-green-400 to-teal-500',
+      canvasLabel: t('realWorld.applications.6.canvasLabel')
     },
     {
       id: 7,
-      title: 'Security Mirrors',
+      title: t('realWorld.applications.7.title'),
       icon: Camera,
-      category: 'Safety & Security',
-      description: 'Convex mirrors are used in stores, parking lots, and roads to provide a wide field of view for safety.',
-      realWorldExample: 'Store surveillance mirrors, blind spot mirrors on roads, ATM security mirrors',
-      howItWorks: [
-        'Convex (curved outward) mirrors reflect light over a wide angle',
-        'They show a larger area than plane mirrors',
-        'Images appear smaller but cover more space',
-        'Help see around corners and blind spots'
-      ],
-      funFacts: [
-        'Convex mirrors always produce virtual, upright images',
-        'They are also used at dangerous road turns',
-        'Shop mirrors can cover entire store aisles'
-      ],
+      category: t('realWorld.applications.7.category'),
+      description: t('realWorld.applications.7.description'),
+      realWorldExample: t('realWorld.applications.7.example'),
+      howItWorks: tValue('realWorld.applications.7.howItWorks') as string[],
+      funFacts: tValue('realWorld.applications.7.funFacts') as string[],
       visualization: 'security',
-      color: 'from-red-400 to-pink-500'
+      color: 'from-red-400 to-pink-500',
+      canvasLabel: t('realWorld.applications.7.canvasLabel')
     },
     {
       id: 8,
-      title: 'Smartphone Cameras',
+      title: t('realWorld.applications.8.title'),
       icon: Smartphone,
-      category: 'Technology',
-      description: 'Phone cameras use multiple mirrors and lenses to capture photos. The front camera uses reflection for selfies.',
-      realWorldExample: 'Smartphone selfie cameras, digital cameras, webcams',
-      howItWorks: [
-        'Light from scene passes through camera lens',
-        'Small mirror or prism redirects light to sensor',
-        'Sensor captures reflected light as digital image',
-        'Front camera shows mirrored preview so you can frame selfie'
-      ],
-      funFacts: [
-        'Modern phones have 3-5 different camera lenses',
-        'Periscope cameras in phones use mirrors to enable zoom',
-        'Over 1.4 trillion photos are taken every year'
-      ],
+      category: t('realWorld.applications.8.category'),
+      description: t('realWorld.applications.8.description'),
+      realWorldExample: t('realWorld.applications.8.example'),
+      howItWorks: tValue('realWorld.applications.8.howItWorks') as string[],
+      funFacts: tValue('realWorld.applications.8.funFacts') as string[],
       visualization: 'smartphone',
-      color: 'from-pink-400 to-purple-500'
+      color: 'from-pink-400 to-purple-500',
+      canvasLabel: t('realWorld.applications.8.canvasLabel')
     }
   ];
 
@@ -2588,7 +2294,7 @@ const RealWorldMode: React.FC = () => {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [currentApplication]);
+  }, [currentApplication, language, t]);
 
   const drawDailyMirror = (ctx: CanvasRenderingContext2D, frame: number) => {
     // Person
@@ -2643,7 +2349,7 @@ const RealWorldMode: React.FC = () => {
     ctx.fillStyle = '#334155';
     ctx.font = 'bold 14px Lexend';
     ctx.textAlign = 'center';
-    ctx.fillText('You see your reflection!', 250, 260);
+    ctx.fillText(t('realWorld.applications.1.canvasLabel'), 250, 260);
   };
 
   const drawRearView = (ctx: CanvasRenderingContext2D, frame: number) => {
@@ -2681,7 +2387,7 @@ const RealWorldMode: React.FC = () => {
     ctx.fillStyle = '#334155';
     ctx.font = 'bold 14px Lexend';
     ctx.textAlign = 'center';
-    ctx.fillText('See behind without turning!', 250, 260);
+    ctx.fillText(t('realWorld.applications.2.canvasLabel'), 250, 260);
   };
 
   const drawPeriscope = (ctx: CanvasRenderingContext2D, frame: number) => {
@@ -2747,7 +2453,7 @@ const RealWorldMode: React.FC = () => {
     ctx.fillStyle = '#334155';
     ctx.font = 'bold 14px Lexend';
     ctx.textAlign = 'center';
-    ctx.fillText('See above while underwater!', 250, 280);
+    ctx.fillText(t('realWorld.applications.3.canvasLabel'), 250, 280);
   };
 
   const drawSolarCooker = (ctx: CanvasRenderingContext2D, frame: number) => {
@@ -2818,7 +2524,7 @@ const RealWorldMode: React.FC = () => {
     ctx.fillStyle = '#334155';
     ctx.font = 'bold 14px Lexend';
     ctx.textAlign = 'center';
-    ctx.fillText('Sunlight focused to cook food!', 250, 280);
+    ctx.fillText(t('realWorld.applications.4.canvasLabel'), 250, 280);
   };
 
   const drawTelescope = (ctx: CanvasRenderingContext2D, frame: number) => {
@@ -2888,7 +2594,7 @@ const RealWorldMode: React.FC = () => {
     ctx.fillStyle = '#334155';
     ctx.font = 'bold 14px Lexend';
     ctx.textAlign = 'center';
-    ctx.fillText('Collect light from distant stars!', 250, 280);
+    ctx.fillText(t('realWorld.applications.5.canvasLabel'), 250, 280);
   };
 
   const drawDentalMirror = (ctx: CanvasRenderingContext2D, _frame: number) => {
@@ -2955,7 +2661,7 @@ const RealWorldMode: React.FC = () => {
     ctx.fillStyle = '#334155';
     ctx.font = 'bold 14px Lexend';
     ctx.textAlign = 'center';
-    ctx.fillText('See hidden areas in mouth!', 250, 280);
+    ctx.fillText(t('realWorld.applications.6.canvasLabel'), 250, 280);
   };
 
   const drawSecurityMirror = (ctx: CanvasRenderingContext2D, frame: number) => {
@@ -3015,7 +2721,7 @@ const RealWorldMode: React.FC = () => {
     ctx.fillStyle = '#334155';
     ctx.font = 'bold 14px Lexend';
     ctx.textAlign = 'center';
-    ctx.fillText('Wide view for safety!', 250, 290);
+    ctx.fillText(t('realWorld.applications.7.canvasLabel'), 250, 290);
   };
 
   const drawSmartphone = (ctx: CanvasRenderingContext2D, frame: number) => {
@@ -3068,7 +2774,7 @@ const RealWorldMode: React.FC = () => {
     ctx.fillStyle = '#334155';
     ctx.font = 'bold 14px Lexend';
     ctx.textAlign = 'center';
-    ctx.fillText('Mirror preview for selfies!', 250, 290);
+    ctx.fillText(t('realWorld.applications.8.canvasLabel'), 250, 290);
   };
 
   const toggleSection = (section: string) => {
@@ -3163,7 +2869,7 @@ const RealWorldMode: React.FC = () => {
               <div className="bg-gradient-to-br from-blue-50 to-cyan-50 p-6 rounded-xl border border-blue-200">
                 <h3 className="text-xl font-bold text-blue-900 mb-2 flex items-center gap-2">
                   <Sparkles className="w-5 h-5" />
-                  Examples in Real Life
+                  {t('realWorld.example')}
                 </h3>
                 <p className="text-blue-800">{currentApp.realWorldExample}</p>
               </div>
@@ -3174,7 +2880,7 @@ const RealWorldMode: React.FC = () => {
                   onClick={() => toggleSection('howItWorks')}
                   className="w-full flex items-center justify-between bg-purple-50 p-4 rounded-xl border border-purple-200 hover:bg-purple-100 transition-all"
                 >
-                  <h3 className="text-xl font-bold text-purple-900">How Does It Work?</h3>
+                  <h3 className="text-xl font-bold text-purple-900">{t('realWorld.howItWorks')}</h3>
                   {expandedSection === 'howItWorks' ? (
                     <ChevronUp className="w-6 h-6 text-purple-600" />
                   ) : (
@@ -3201,7 +2907,7 @@ const RealWorldMode: React.FC = () => {
                   onClick={() => toggleSection('funFacts')}
                   className="w-full flex items-center justify-between bg-green-50 p-4 rounded-xl border border-green-200 hover:bg-green-100 transition-all"
                 >
-                  <h3 className="text-xl font-bold text-green-900">Fun Facts</h3>
+                  <h3 className="text-xl font-bold text-green-900">{t('realWorld.funFacts')}</h3>
                   {expandedSection === 'funFacts' ? (
                     <ChevronUp className="w-6 h-6 text-green-600" />
                   ) : (
@@ -3231,7 +2937,7 @@ const RealWorldMode: React.FC = () => {
                 className="flex items-center gap-2 px-6 py-3 bg-slate-200 text-slate-700 rounded-xl font-semibold hover:bg-slate-300 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 <ArrowLeft className="w-5 h-5" />
-                Previous
+                {t('realWorld.previous')}
               </button>
               
               <button
@@ -3239,7 +2945,7 @@ const RealWorldMode: React.FC = () => {
                 disabled={currentApplication === applications.length - 1}
                 className={`flex items-center gap-2 px-6 py-3 bg-gradient-to-r ${currentApp.color} text-white rounded-xl font-semibold hover:shadow-lg transition-all disabled:opacity-40 disabled:cursor-not-allowed`}
               >
-                Next
+                {t('realWorld.next')}
                 <ArrowRight className="w-5 h-5" />
               </button>
             </div>
@@ -3250,10 +2956,10 @@ const RealWorldMode: React.FC = () => {
         <div className="mt-8 bg-gradient-to-r from-indigo-500 to-purple-600 p-8 rounded-2xl shadow-2xl text-white">
           <div className="flex items-center gap-4 mb-4">
             <Lightbulb className="w-10 h-10" />
-            <h3 className="text-2xl font-bold">Key Takeaway</h3>
+            <h3 className="text-2xl font-bold">{t('realWorld.keyTakeaway')}</h3>
           </div>
           <p className="text-lg leading-relaxed">
-            Reflection of light is not just a physics concept - it's a fundamental principle that powers countless technologies we use every day. From the mirror you use each morning to the satellites orbiting Earth, reflection helps us see, communicate, and understand our world better!
+            {t('realWorld.keyTakeawayText')}
           </p>
         </div>
       </div>
@@ -3308,7 +3014,7 @@ const MainApp: React.FC = () => {
             <div className="flex items-center gap-2">
               <Lightbulb className="w-6 h-6 text-blue-600" />
               <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-teal-600 bg-clip-text text-transparent">
-                Reflection of Light
+                {t('nav.logo')}
               </span>
             </div>
 
