@@ -56,10 +56,22 @@
             '(index)',
             '(index):',
             '(index):1',
-            'unchecked runtime'
+            'unchecked runtime',
+            // React warnings about invalid props (from DevTools/extensions)
+            'invalid values for props',
+            'props.*error.*warn.*log.*on',
+            'circle.*tag'
           ];
+          // Special handling for React warnings about invalid props
+          if (lowerMsg.indexOf('invalid values for props') !== -1 && 
+              (lowerMsg.indexOf('circle') !== -1 || 
+               (lowerMsg.indexOf('error') !== -1 && lowerMsg.indexOf('warn') !== -1 && lowerMsg.indexOf('log') !== -1))) {
+            return true;
+          }
           // Check if any pattern matches (including partial matches)
           return patterns.some(function(p) { 
+            // Skip patterns with .* for React warnings (handled above)
+            if (p.indexOf('.*') !== -1) return false;
             return lowerMsg.indexOf(p) !== -1 || 
                    lowerMsg.includes(p.replace(/\s/g, '')) ||
                    lowerMsg.includes(p.replace(/\./g, ' '));
@@ -164,10 +176,22 @@
             '(index)',
             '(index):',
             '(index):1',
-            'unchecked runtime'
+            'unchecked runtime',
+            // React warnings about invalid props (from DevTools/extensions)
+            'invalid values for props',
+            'props.*error.*warn.*log.*on',
+            'circle.*tag'
           ];
+          // Special handling for React warnings about invalid props
+          if (lower.indexOf('invalid values for props') !== -1 && 
+              (lower.indexOf('circle') !== -1 || 
+               (lower.indexOf('error') !== -1 && lower.indexOf('warn') !== -1 && lower.indexOf('log') !== -1))) {
+            return true;
+          }
           // Check if any pattern matches (including partial matches)
           return patterns.some(function(p) { 
+            // Skip patterns with .* for React warnings (handled above)
+            if (p.indexOf('.*') !== -1) return false;
             return lower.indexOf(p) !== -1 || 
                    lower.includes(p.replace(/\s/g, '')) ||
                    lower.includes(p.replace(/\./g, ' '));
@@ -291,9 +315,21 @@
             '(index)',
             '(index):',
             '(index):1',
-            'unchecked runtime'
+            'unchecked runtime',
+            // React warnings about invalid props (from DevTools/extensions)
+            'invalid values for props',
+            'props.*error.*warn.*log.*on',
+            'circle.*tag'
           ];
+          // Special handling for React warnings about invalid props
+          if (lowerMessage.indexOf('invalid values for props') !== -1 && 
+              (lowerMessage.indexOf('circle') !== -1 || 
+               (lowerMessage.indexOf('error') !== -1 && lowerMessage.indexOf('warn') !== -1 && lowerMessage.indexOf('log') !== -1))) {
+            return true;
+          }
           return patterns.some(function(pattern) {
+            // Skip patterns with .* for React warnings (handled above)
+            if (pattern.indexOf('.*') !== -1) return false;
             return lowerMessage.indexOf(pattern) !== -1;
           });
         }

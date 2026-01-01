@@ -1,5 +1,5 @@
 import React from 'react';
-import { LightTravelApp } from './components/LightTravel';
+import { LightTravelApp } from './components/ShadowFormation';
 
 const App: React.FC = () => {
   return <LightTravelApp />;

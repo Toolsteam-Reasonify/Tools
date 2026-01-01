@@ -36,11 +36,25 @@ const suppressExtensionError = (message: string): boolean => {
     '(index)',
     '(index):',
     '(index):1',
-    'unchecked runtime'
+    'unchecked runtime',
+    // React warnings about invalid props (from DevTools/extensions)
+    'invalid values for props',
+    'props.*error.*warn.*log.*on',
+    'circle.*tag'
   ];
   // Check if any pattern matches (including variations with spaces, dots, colons)
+  // Special handling for React warnings
+  if (lowerMessage.includes('invalid values for props') && 
+      (lowerMessage.includes('circle') || lowerMessage.includes('error') && lowerMessage.includes('warn') && lowerMessage.includes('log'))) {
+    return true;
+  }
+  
   return patterns.some(pattern => {
     const normalizedPattern = pattern.toLowerCase();
+    // Skip patterns with .* for now, handle them separately
+    if (pattern.includes('.*')) {
+      return false; // Handled above for React warnings
+    }
     return lowerMessage.includes(normalizedPattern) ||
            lowerMessage.includes(normalizedPattern.replace(/\s/g, '')) ||
            lowerMessage.includes(normalizedPattern.replace(/\./g, ' ')) ||
@@ -57,27 +71,47 @@ const originalConsole = {
   debug: console.debug
 };
 
-// Override console.error
-console.error = (...args: unknown[]) => {
+// Override console.error - must suppress chrome extension errors
+console.error = function(...args: unknown[]) {
   try {
     const fullMessage = args.map(arg => String(arg || '')).join(' ');
     if (suppressExtensionError(fullMessage)) {
       return; // Silently ignore
     }
-    originalConsole.error.apply(console, args);
+    return originalConsole.error.apply(console, args);
   } catch (e) {
-    // Fallback if error occurs during suppression
-    originalConsole.error.apply(console, args);
+    // Fallback if error occurs during suppression - but still check if it's an extension error
+    try {
+      const fullMessage = args.map(arg => String(arg || '')).join(' ');
+      if (!suppressExtensionError(fullMessage)) {
+        originalConsole.error.apply(console, args);
+      }
+    } catch (e2) {
+      // Complete fallback
+      originalConsole.error.apply(console, args);
+    }
   }
 };
 
 // Override console.warn (sometimes extensions use warn instead of error)
-console.warn = (...args: unknown[]) => {
-  const fullMessage = args.map(arg => String(arg || '')).join(' ');
-  if (suppressExtensionError(fullMessage)) {
-    return; // Silently ignore
+console.warn = function(...args: unknown[]) {
+  try {
+    const fullMessage = args.map(arg => String(arg || '')).join(' ');
+    if (suppressExtensionError(fullMessage)) {
+      return; // Silently ignore
+    }
+    return originalConsole.warn.apply(console, args);
+  } catch (e) {
+    // Fallback
+    try {
+      const fullMessage = args.map(arg => String(arg || '')).join(' ');
+      if (!suppressExtensionError(fullMessage)) {
+        originalConsole.warn.apply(console, args);
+      }
+    } catch (e2) {
+      originalConsole.warn.apply(console, args);
+    }
   }
-  originalConsole.warn.apply(console, args);
 };
 
 // Also intercept console.log for safety
@@ -152,6 +186,7 @@ window.addEventListener('unhandledrejection', (event) => {
 // This runs immediately when the module loads
 (function suppressChromeErrors() {
   try {
+    const chrome = (window as any).chrome;
     if (typeof chrome !== 'undefined' && chrome && chrome.runtime) {
       // First, try to completely override lastError - multiple strategies
       try {
@@ -167,7 +202,6 @@ window.addEventListener('unhandledrejection', (event) => {
       } catch (e) {
         // If direct override fails, try alternative approach
         try {
-          const originalLastError = (chrome.runtime as { lastError?: unknown }).lastError;
           Object.defineProperty(chrome.runtime, 'lastError', {
             get: function() { 
               try {
@@ -255,7 +289,8 @@ try {
 }
 
 // Also suppress browser API errors (Firefox)
-if (typeof browser !== 'undefined' && browser.runtime) {
+const browser = (window as any).browser;
+if (typeof browser !== 'undefined' && browser && browser.runtime) {
   try {
     const wrapBrowserMethod = (obj: Record<string, unknown>, methodName: string) => {
       if (obj && obj[methodName] && typeof obj[methodName] === 'function') {

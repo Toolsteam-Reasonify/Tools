@@ -393,7 +393,12 @@ const translations: Record<Language, TranslationData> = {
     },
     nav: {
       logo: "प्रकाश के स्रोत सीखें",
-      tabs: { learn: "सीखें", practice: "अभ्यास", applications: "अनुप्रयोग", real_world: "वास्तविक दुनिया" }
+      tabs: {
+        learn: "सीखें",
+        practice: "अभ्यास",
+        applications: "अनुप्रयोग",
+        real_world: "वास्तविक दुनिया"
+      }
     },
     controls: {
       step: "चरण",
@@ -562,7 +567,12 @@ const translations: Record<Language, TranslationData> = {
     },
     nav: {
       logo: "પ્રકાશના સ્રોતો શીખો",
-      tabs: { learn: "શીખો", practice: "અભ્યાસ", applications: "અનુપ્રયોગો", real_world: "વાસ્તવિક દુનિયા" }
+      tabs: {
+        learn: "શીખો",
+        practice: "અભ્યાસ",
+        applications: "અનુપ્રયોગો",
+        real_world: "વાસ્તવિક દુનિયા"
+      }
     },
     controls: {
       step: "પગલું",

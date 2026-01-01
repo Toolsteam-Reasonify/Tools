@@ -7,7 +7,6 @@ import React, {
   ReactNode,
   useMemo,
 } from "react";
-import translationsData from "../locales/translation.json";
 
 // Simple icon components
 const Play = ({ className }: { className?: string }) => (

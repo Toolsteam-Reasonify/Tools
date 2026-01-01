@@ -1,457 +1,258 @@
 {
-  "chapter_title": "Light & Materials",
-  "chapter_description": "Understanding how light interacts with different types of materials: transparent, translucent, and opaque",
+  "chapter_title": "Does Light Travel in a Straight Line?",
+  "chapter_description": "Understanding how light travels in a straight line through experiments with matchboxes and pipes",
   "steps": [
     {
       "id": 1,
-      "title": "Introduction to Materials",
-      "description": "Light behaves differently when it encounters different materials",
+      "title": "Does Light Travel in a Straight Line?",
+      "description": "",
       "activity": "intro"
     },
     {
       "id": 2,
-      "title": "Types of Materials",
-      "description": "Understanding transparent, translucent, and opaque materials",
-      "activity": "materials"
+      "title": "Activity 11.1: Matchbox Experiment Setup",
+      "description": "Take three matchboxes and make a hole in the inner tray of each matchbox, exactly at the same position. Arrange these three matchboxes in a straight line.",
+      "activity": "matchbox_setup"
     },
     {
       "id": 3,
-      "title": "Transparent Materials",
-      "description": "Light passes almost completely through transparent materials",
-      "activity": "transparent"
+      "title": "Aligned Matchboxes - Light Passes Through",
+      "description": "Make sure that all three holes are exactly at the same height and are in a line. Place a torch light on one side and a screen on the other side. You can see a bright spot on the screen!",
+      "activity": "matchbox_aligned"
     },
     {
       "id": 4,
-      "title": "Translucent Materials",
-      "description": "Light passes partially through translucent materials",
-      "activity": "translucent"
+      "title": "Misaligned Matchboxes - Light is Blocked",
+      "description": "Move one of the matchboxes slightly to a side or up and down. When all three holes are not in the same line, we cannot obtain the light spot on the screen. This suggests that light travels in a straight line.",
+      "activity": "matchbox_misaligned"
     },
     {
       "id": 5,
-      "title": "Opaque Materials",
-      "description": "Light does not pass through opaque materials",
-      "activity": "opaque"
+      "title": "Activity 11.2: Pipe Experiment",
+      "description": "Can we check this in some other way? Let us try to see the candle flame through a bent pipe! Take a long hollow pipe of some flexible material.",
+      "activity": "pipe_intro"
     },
     {
       "id": 6,
-      "title": "Conclusion",
-      "description": "Summary of light behavior with materials",
+      "title": "Conclusion: Light Travels in a Straight Line",
+      "description": "Through both experiments, we have observed that light travels in a straight line. When the path is straight and unobstructed, light can pass through. When the path is blocked or bent, light cannot reach the other end.",
       "activity": "conclusion"
     }
   ],
   "practice_questions": [
     {
       "id": 1,
-      "question": "Which type of material allows light to pass almost completely through it?",
+      "question": "What happens when you place three matchboxes with holes in a straight line and shine light through them?",
       "options": [
-        "Opaque",
-        "Transparent",
-        "Translucent",
-        "Reflective"
+        "Light bends around the holes",
+        "Light passes through all holes and creates a spot on the screen",
+        "Light stops at the first matchbox",
+        "Light spreads in all directions"
       ],
       "correctAnswer": 1,
-      "explanation": "Transparent materials like clear glass allow light to pass almost completely through them, so we can see clearly through them.",
-      "visualType": "transparent"
+      "explanation": "When the holes are aligned in a straight line, light passes through all of them and creates a bright spot on the screen. This proves that light travels in a straight line.",
+      "visualType": "matchbox"
     },
     {
       "id": 2,
-      "question": "What happens when light hits an opaque object?",
+      "question": "In the matchbox experiment, what happens when one matchbox is moved slightly up or down?",
       "options": [
-        "Light passes completely through",
-        "Light passes partially through",
-        "Light does not pass through at all",
-        "Light speeds up"
+        "Light still passes through normally",
+        "Light becomes brighter",
+        "The light spot on the screen disappears",
+        "Light changes color"
       ],
       "correctAnswer": 2,
-      "explanation": "Opaque materials like wood or metal do not allow light to pass through them. This is why they form dark shadows.",
-      "visualType": "opaque"
+      "explanation": "When the matchboxes are not aligned, the holes are not in the same straight line. Since light travels in a straight line, it cannot pass through misaligned holes.",
+      "visualType": "matchbox"
     },
     {
       "id": 3,
-      "question": "Which of these is an example of a translucent material?",
+      "question": "Can you see a candle flame through a straight pipe?",
       "options": [
-        "Clear window glass",
-        "Wooden door",
-        "Frosted glass",
-        "Metal plate"
+        "No, never",
+        "Yes, if the pipe is aligned properly",
+        "Only if the pipe is very short",
+        "Only if there is a mirror inside"
       ],
-      "correctAnswer": 2,
-      "explanation": "Frosted glass is translucent - it allows some light to pass through but scatters it, so you cannot see clearly through it.",
-      "visualType": "translucent"
+      "correctAnswer": 1,
+      "explanation": "You can see the candle flame through a straight pipe when it is properly aligned. Light from the candle travels in a straight line through the pipe.",
+      "visualType": "pipe"
     },
     {
       "id": 4,
-      "question": "Why do opaque objects form darker shadows than translucent objects?",
+      "question": "What happens when you try to see a candle flame through a bent pipe?",
       "options": [
-        "Because they are bigger",
-        "Because they are heavier",
-        "Because they block all light completely",
-        "Because they reflect more light"
+        "You can see it more clearly",
+        "You cannot see the flame",
+        "The flame appears upside down",
+        "The flame appears larger"
       ],
-      "correctAnswer": 2,
-      "explanation": "Opaque objects block all the light that hits them, creating darker shadows. Translucent objects let some light through, so their shadows are lighter.",
-      "visualType": "shadow"
+      "correctAnswer": 1,
+      "explanation": "You cannot see the candle flame through a bent pipe because light travels in a straight line and cannot follow the curve.",
+      "visualType": "pipe"
     },
     {
       "id": 5,
-      "question": "If you shine a torch through tracing paper, what type of material is the tracing paper?",
+      "question": "Why does light not travel through a bent pipe?",
       "options": [
-        "Transparent",
-        "Translucent",
-        "Opaque",
-        "Luminous"
+        "The pipe is too long",
+        "Light is absorbed by the pipe material",
+        "Light travels in a straight line and cannot follow the curve",
+        "There is not enough light"
       ],
-      "correctAnswer": 1,
-      "explanation": "Tracing paper is translucent. You can see light through it, but objects on the other side appear blurry because the light is scattered.",
-      "visualType": "translucent"
+      "correctAnswer": 2,
+      "explanation": "Light travels in a straight line and cannot change direction to follow a curved path.",
+      "visualType": "concept"
     },
     {
       "id": 6,
-      "question": "Which statement is TRUE about transparent materials?",
+      "question": "What do both the matchbox and pipe experiments prove?",
       "options": [
-        "They form the darkest shadows",
-        "They can create faint shadows",
-        "They never allow any light through",
-        "They always change the color of light"
+        "Light can bend around corners",
+        "Light needs air to travel",
+        "Light travels in a straight line",
+        "Light travels in circles"
       ],
-      "correctAnswer": 1,
-      "explanation": "Even transparent materials can create faint shadows because they may absorb or reflect a small amount of light.",
-      "visualType": "transparent"
+      "correctAnswer": 2,
+      "explanation": "Both experiments demonstrate that light travels in a straight line.",
+      "visualType": "concept"
     },
     {
       "id": 7,
-      "question": "What is the main difference between transparent and translucent materials?",
+      "question": "If you want to see around a corner, what property of light prevents you from doing so directly?",
       "options": [
-        "Transparent materials are always colored",
-        "You can see clearly through transparent materials but not through translucent ones",
-        "Translucent materials block all light",
-        "There is no difference"
+        "Light is too slow",
+        "Light travels in a straight line",
+        "Light is too bright",
+        "Light has no color"
       ],
       "correctAnswer": 1,
-      "explanation": "Transparent materials like clear glass allow you to see clearly through them, while translucent materials like frosted glass scatter light so you cannot see clearly through them.",
-      "visualType": "comparison"
+      "explanation": "You cannot see directly around a corner because light travels in a straight line.",
+      "visualType": "concept"
     },
     {
       "id": 8,
-      "question": "Which of the following materials would block the most light?",
+      "question": "In which situation would light NOT be able to pass through?",
       "options": [
-        "Clear plastic bottle",
-        "Tissue paper",
-        "Cardboard",
-        "Clean water"
+        "Three holes arranged in a perfect line",
+        "A completely straight tunnel",
+        "Three holes where the middle one is offset",
+        "A straight glass tube"
       ],
       "correctAnswer": 2,
-      "explanation": "Cardboard is an opaque material that blocks all light, while the others allow varying amounts of light to pass through.",
-      "visualType": "opaque"
-    },
-    {
-      "id": 9,
-      "question": "A student places different objects between a torch and a screen. Which object will create NO shadow on the screen?",
-      "options": [
-        "A clear glass plate",
-        "A book",
-        "Butter paper",
-        "None - all objects create some shadow"
-      ],
-      "correctAnswer": 3,
-      "explanation": "All objects create at least some shadow. Even transparent objects can create faint shadows because they absorb or reflect a small amount of light.",
-      "visualType": "shadow"
-    },
-    {
-      "id": 10,
-      "question": "Why is frosted glass used in bathroom windows instead of clear glass?",
-      "options": [
-        "It is cheaper than clear glass",
-        "It provides privacy while still allowing light to enter",
-        "It blocks all light completely",
-        "It is stronger than clear glass"
-      ],
-      "correctAnswer": 1,
-      "explanation": "Frosted glass is translucent - it scatters light so people cannot see clearly through it (providing privacy), but still allows light to pass through (keeping the room bright).",
-      "visualType": "translucent"
-    },
-    {
-      "id": 11,
-      "question": "Which type of material would be best for making an umbrella?",
-      "options": [
-        "Transparent material",
-        "Translucent material",
-        "Opaque material",
-        "Any material works equally well"
-      ],
-      "correctAnswer": 2,
-      "explanation": "Opaque materials are best for umbrellas because they block all light and rain completely, providing maximum protection from sun and rain.",
-      "visualType": "opaque"
-    },
-    {
-      "id": 12,
-      "question": "A greenhouse is built using transparent glass. What is the main advantage of this?",
-      "options": [
-        "Glass is the cheapest material",
-        "Maximum sunlight can reach the plants inside",
-        "It keeps the greenhouse very cold",
-        "It blocks all insects"
-      ],
-      "correctAnswer": 1,
-      "explanation": "Transparent glass allows almost all sunlight to pass through to the plants inside, while still protecting them from wind and cold. Plants need maximum sunlight for photosynthesis.",
-      "visualType": "transparent"
-    },
-    {
-      "id": 13,
-      "question": "If you cannot see clearly through a material but light passes through it, the material is:",
-      "options": [
-        "Transparent",
-        "Translucent",
-        "Opaque",
-        "Luminous"
-      ],
-      "correctAnswer": 1,
-      "explanation": "Translucent materials allow light to pass through but scatter it, so you cannot see clearly through them. Examples include frosted glass, butter paper, and thin fabric.",
-      "visualType": "translucent"
-    },
-    {
-      "id": 14,
-      "question": "Which combination is CORRECT?",
-      "options": [
-        "Clear water - Opaque, Cardboard - Transparent",
-        "Glass window - Transparent, Tracing paper - Translucent",
-        "Frosted glass - Opaque, Metal sheet - Transparent",
-        "Tissue paper - Opaque, Wood - Translucent"
-      ],
-      "correctAnswer": 1,
-      "explanation": "Glass windows are transparent (you can see clearly through them), and tracing paper is translucent (light passes through but you cannot see clearly).",
-      "visualType": "comparison"
-    },
-    {
-      "id": 15,
-      "question": "What would happen if you replaced a transparent window with an opaque wall?",
-      "options": [
-        "More light would enter the room",
-        "The same amount of light would enter",
-        "No natural light would enter the room",
-        "Only some light would enter"
-      ],
-      "correctAnswer": 2,
-      "explanation": "An opaque wall blocks all light completely. No natural light would be able to pass through it into the room, making the room dark during the day.",
-      "visualType": "opaque"
+      "explanation": "Light cannot pass through when the middle hole is offset because the three holes are not in a straight line.",
+      "visualType": "matchbox"
     }
   ],
   "real_world_applications": [
     {
       "id": 1,
-      "title": "Windows & Doors",
-      "description": "Homes use transparent glass for windows to let light in while protecting from weather. Frosted or translucent glass is used for bathroom windows for privacy while still allowing light.",
-      "icon": "🏠",
-      "category": "Architecture",
-      "example": "Clear glass windows let you see outside, while frosted bathroom windows give privacy",
+      "title": "Periscopes in Submarines",
+      "description": "Submarines use periscopes to see above water while staying submerged. Periscopes use mirrors to redirect light in straight paths, allowing submariners to see the surface from below.",
+      "icon": "🔭",
+      "category": "Military & Navigation",
+      "example": "Two mirrors at 45° angles reflect light in straight lines to see over obstacles.",
       "materialType": "mixed"
     },
     {
       "id": 2,
-      "title": "Greenhouses",
-      "description": "Greenhouses use transparent materials like glass or clear plastic to allow maximum sunlight to reach plants while protecting them from cold and wind.",
-      "icon": "🌱",
-      "category": "Agriculture",
-      "example": "Farmers grow vegetables year-round in transparent greenhouses",
-      "materialType": "transparent"
+      "title": "Laser Pointers & Alignment",
+      "description": "Laser pointers create perfectly straight reference lines in construction and surveying. Because light travels in a straight line, lasers can accurately mark straight paths over long distances.",
+      "icon": "🔦",
+      "category": "Construction & Engineering",
+      "example": "Construction workers use laser levels to ensure walls are perfectly vertical.",
+      "materialType": "mixed"
     },
     {
       "id": 3,
-      "title": "Sunglasses & Goggles",
-      "description": "Sunglasses use translucent tinted materials that block some light to protect eyes from bright sunlight while still allowing us to see clearly.",
-      "icon": "🕶️",
-      "category": "Eye Protection",
-      "example": "Sunglasses reduce bright sunlight but you can still see through them",
-      "materialType": "translucent"
+      "title": "Fiber Optic Cables",
+      "description": "Fiber optic cables use the principle that light travels in straight lines within glass fiber. Light signals travel through long fiber paths to transmit internet data at the speed of light.",
+      "icon": "🌐",
+      "category": "Communication Technology",
+      "example": "Your internet uses fiber optics where light travels through thin glass fibers.",
+      "materialType": "transparent"
     },
     {
       "id": 4,
-      "title": "Lampshades",
-      "description": "Lampshades are often made from translucent materials that soften and diffuse light, creating pleasant ambient lighting instead of harsh direct light.",
-      "icon": "💡",
-      "category": "Lighting",
-      "example": "Paper lampshades spread light evenly across a room",
-      "materialType": "translucent"
+      "title": "Flashlights & Spotlights",
+      "description": "Flashlights create focused beams of light that travel in straight lines. Reflectors direct the light into a straight beam for illuminating specific areas.",
+      "icon": "🔦",
+      "category": "Lighting & Safety",
+      "example": "Emergency responders use spotlights that send straight beams to search in darkness.",
+      "materialType": "mixed"
     },
     {
       "id": 5,
-      "title": "Privacy Screens",
-      "description": "Office dividers and hospital curtains use translucent materials to provide privacy while still allowing light to pass through, keeping spaces bright.",
-      "icon": "🏥",
-      "category": "Privacy",
-      "example": "Hospital curtains around beds let light through but hide patients",
-      "materialType": "translucent"
+      "title": "Cameras & Photography",
+      "description": "Cameras work because light travels in straight lines from the subject through the lens to the sensor. The straight-line path creates sharp, clear images.",
+      "icon": "📷",
+      "category": "Imaging & Art",
+      "example": "When you take a photo, light travels in straight lines through the camera lens.",
+      "materialType": "mixed"
     },
     {
       "id": 6,
-      "title": "Curtains & Blinds",
-      "description": "Homes use different materials - transparent curtains for light, translucent ones for soft light with privacy, and opaque blinds to block light completely for sleeping.",
-      "icon": "🪟",
-      "category": "Home Design",
-      "example": "Thick curtains block morning sunlight so you can sleep longer",
+      "title": "Solar Cookers",
+      "description": "Solar cookers use curved mirrors to redirect sunlight to a single point. Sunlight travels in straight lines, reflects off mirrors, and concentrates at the cooking pot.",
+      "icon": "☀️",
+      "category": "Sustainable Energy",
+      "example": "Solar cookers provide a free, clean way to cook food using focused sunlight.",
       "materialType": "mixed"
     },
     {
       "id": 7,
-      "title": "Camera Filters",
-      "description": "Photographers use transparent and translucent filters on cameras to control how much light enters, creating different effects in photos.",
-      "icon": "📷",
-      "category": "Photography",
-      "example": "UV filters protect camera lenses while still allowing light through",
-      "materialType": "transparent"
+      "title": "Shadows & Sundials",
+      "description": "Shadows form because light travels in straight lines and cannot bend around opaque objects. Ancient sundials used this to tell time by tracking shadows.",
+      "icon": "🌤️",
+      "category": "Astronomy & Time",
+      "example": "Sundials have been used for thousands of years using shadow positions.",
+      "materialType": "mixed"
     },
     {
       "id": 8,
-      "title": "Solar Panels",
-      "description": "Solar panels have a transparent glass cover that lets sunlight reach the solar cells inside while protecting them from rain and damage.",
-      "icon": "☀️",
-      "category": "Energy",
-      "example": "Clear glass on solar panels lets maximum sunlight in to generate electricity",
-      "materialType": "transparent"
+      "title": "Traffic Signals",
+      "description": "Traffic lights are positioned so drivers have a clear straight-line view. Traffic engineers use the straight-line property to ensure signals are visible from safe distances.",
+      "icon": "🚦",
+      "category": "Transportation & Safety",
+      "example": "Traffic lights are placed high at intersections for clear straight-path visibility.",
+      "materialType": "mixed"
     },
     {
       "id": 9,
-      "title": "Food Packaging",
-      "description": "Clear plastic packaging for fruits and vegetables is transparent so shoppers can see the food inside. Some packaging is translucent to protect sensitive items from too much light.",
-      "icon": "🥗",
-      "category": "Food Industry",
-      "example": "Transparent plastic boxes let you check if strawberries are fresh",
-      "materialType": "transparent"
+      "title": "Optical Instruments",
+      "description": "Microscopes, telescopes, and binoculars rely on light traveling in straight lines through lenses and mirrors to magnify distant or tiny objects.",
+      "icon": "🔬",
+      "category": "Science & Research",
+      "example": "Astronomers use telescopes that collect light traveling from distant stars.",
+      "materialType": "mixed"
     },
     {
       "id": 10,
-      "title": "Aquariums",
-      "description": "Aquarium walls are made of transparent glass or acrylic so we can observe fish and marine life clearly while keeping water contained.",
-      "icon": "🐠",
-      "category": "Entertainment",
-      "example": "Thick transparent glass in aquariums lets visitors see underwater creatures",
-      "materialType": "transparent"
+      "title": "Barcode Scanners",
+      "description": "Barcode scanners use laser light that travels in straight lines to read patterns on products. The straight beam reflects differently from light and dark bars.",
+      "icon": "🏪",
+      "category": "Retail & Commerce",
+      "example": "Checkout scanners send straight beams across barcodes to read product codes.",
+      "materialType": "mixed"
     },
     {
       "id": 11,
-      "title": "Umbrellas",
-      "description": "Most umbrellas use opaque fabric to completely block rain and sunlight, while some decorative umbrellas use translucent materials for style.",
-      "icon": "☂️",
-      "category": "Daily Use",
-      "example": "Black opaque umbrellas block all sunlight and rain",
-      "materialType": "opaque"
+      "title": "Medical Endoscopes",
+      "description": "Doctors use endoscopes to see inside the body. These instruments use fiber optic cables that guide light in straight paths through flexible tubes.",
+      "icon": "🏥",
+      "category": "Medical Technology",
+      "example": "Doctors examine internal organs using light through thin tubes.",
+      "materialType": "mixed"
     },
     {
       "id": 12,
-      "title": "Traffic Signals",
-      "description": "Traffic light covers use translucent colored materials (red, yellow, green) that allow light to shine through while adding color for different signals.",
-      "icon": "🚦",
-      "category": "Transportation",
-      "example": "Red translucent covers let light through but make it appear red",
-      "materialType": "translucent"
-    },
-    {
-      "id": 13,
-      "title": "Book Covers",
-      "description": "Books use opaque covers to protect pages from light, dust, and damage. The pages inside are also opaque so text on one side doesn't show through to the other.",
-      "icon": "📚",
-      "category": "Education",
-      "example": "Cardboard book covers completely block light and protect pages",
-      "materialType": "opaque"
-    },
-    {
-      "id": 14,
-      "title": "Car Windshields",
-      "description": "Car windshields are made of transparent glass or plastic so drivers can see clearly. Side windows may have translucent tinting to reduce glare and heat.",
-      "icon": "🚗",
-      "category": "Transportation",
-      "example": "Clear windshields provide full visibility for safe driving",
+      "title": "Stage Lighting",
+      "description": "Theater spotlights create dramatic effects by directing bright beams in straight lines onto performers. Lighting designers use predictable straight-path behavior.",
+      "icon": "🎭",
+      "category": "Entertainment & Arts",
+      "example": "Follow-spots track performers with straight beams creating dramatic effects.",
       "materialType": "mixed"
-    },
-    {
-      "id": 15,
-      "title": "Stained Glass Windows",
-      "description": "Churches and decorative buildings use translucent colored glass that creates beautiful patterns with light while partially obscuring the view.",
-      "icon": "⛪",
-      "category": "Art & Architecture",
-      "example": "Colored glass in churches creates colorful light patterns inside",
-      "materialType": "translucent"
-    },
-    {
-      "id": 16,
-      "title": "Swimming Pool Covers",
-      "description": "Pool covers are usually opaque to block sunlight, preventing algae growth and reducing water evaporation. Some safety covers use translucent materials.",
-      "icon": "🏊",
-      "category": "Recreation",
-      "example": "Opaque pool covers keep water clean by blocking sunlight",
-      "materialType": "opaque"
-    },
-    {
-      "id": 17,
-      "title": "X-Ray Films",
-      "description": "Medical X-ray films are translucent, allowing doctors to see bones and internal structures when light is shone through them.",
-      "icon": "🏥",
-      "category": "Medical",
-      "example": "Doctors hold X-ray films up to light to see bone fractures",
-      "materialType": "translucent"
-    },
-    {
-      "id": 18,
-      "title": "Smartphone Screens",
-      "description": "Phone screens use transparent glass or plastic over the display, allowing you to see images clearly while protecting the electronics inside.",
-      "icon": "📱",
-      "category": "Technology",
-      "example": "Transparent screen protectors shield your phone while letting you see the display",
-      "materialType": "transparent"
-    },
-    {
-      "id": 19,
-      "title": "Tents & Camping Gear",
-      "description": "Tent fabric is opaque to provide shade and privacy. Some tents have transparent windows for ventilation and to see outside.",
-      "icon": "⛺",
-      "category": "Outdoor Activities",
-      "example": "Opaque tent walls provide shelter and privacy while camping",
-      "materialType": "mixed"
-    },
-    {
-      "id": 20,
-      "title": "Glasses & Contact Lenses",
-      "description": "Eyeglasses and contact lenses are made of transparent materials to correct vision without blocking sight. They allow light to pass through clearly.",
-      "icon": "👓",
-      "category": "Vision Correction",
-      "example": "Transparent lenses help you see clearly without blocking your view",
-      "materialType": "transparent"
-    },
-    {
-      "id": 21,
-      "title": "Plastic Bottles",
-      "description": "Water bottles are transparent so you can see the contents and check cleanliness. Milk bottles may be translucent to protect from light damage.",
-      "icon": "🍶",
-      "category": "Packaging",
-      "example": "Clear plastic bottles let you see how much water is left",
-      "materialType": "transparent"
-    },
-    {
-      "id": 22,
-      "title": "Shower Doors",
-      "description": "Bathrooms use frosted or textured translucent glass for shower doors to provide privacy while still allowing light to enter the shower area.",
-      "icon": "🚿",
-      "category": "Home Design",
-      "example": "Frosted shower doors give privacy but keep the bathroom bright",
-      "materialType": "translucent"
-    },
-    {
-      "id": 23,
-      "title": "Projection Screens",
-      "description": "Movie theater screens are typically opaque white surfaces that reflect projected light to create bright, clear images for viewers.",
-      "icon": "🎬",
-      "category": "Entertainment",
-      "example": "White opaque screens in theaters reflect movie projector light",
-      "materialType": "opaque"
-    },
-    {
-      "id": 24,
-      "title": "Diving Masks",
-      "description": "Scuba diving and snorkeling masks use transparent glass or plastic so divers can see underwater clearly while protecting their eyes.",
-      "icon": "🤿",
-      "category": "Water Sports",
-      "example": "Clear diving masks let you see colorful fish and coral underwater",
-      "materialType": "transparent"
     }
   ]
 }

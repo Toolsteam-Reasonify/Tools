@@ -140,20 +140,6 @@ const Globe = ({ className }: { className?: string }) => (
 type Language = "en" | "hi" | "gu";
 type TabType = "learn" | "practice" | "realWorld";
 
-interface Step {
-  id: number;
-  title: string;
-  description: string;
-  activity:
-    | "intro"
-    | "materials"
-    | "transparent"
-    | "translucent"
-    | "opaque"
-    | "comparison"
-    | "conclusion";
-}
-
 interface PracticeQuestion {
   id: number;
   question: string;
@@ -180,6 +166,1002 @@ type TranslationValue =
   | number
   | { [key: string]: TranslationValue }
   | Array<{ [key: string]: TranslationValue }>;
+
+// Translations object converted from JSON
+const translations = {
+  en: {
+    nav: {
+      logo: "Does Light Travel in a Straight Line?",
+      tabs: {
+        learn: "Learn",
+        practice: "Practice",
+        realWorld: "Real World",
+      },
+    },
+    language: {
+      en: "English",
+      hi: "हिंदी",
+      gu: "ગુજરાતી",
+      selectorLabel: "Select Language",
+    },
+    controls: {
+      step: "Step",
+      of: "of",
+      previous: "Previous",
+      next: "Next",
+      play: "Play",
+      pause: "Pause",
+      reset: "Reset",
+    },
+    steps: {
+      intro: {
+        title: "Does Light Travel in a Straight Line?",
+        description: "",
+      },
+      matchbox_setup: {
+        title: "Activity 11.1: Matchbox Experiment Setup",
+        description:
+          "Take three matchboxes and make a hole in the inner tray of each matchbox, exactly at the same position. Arrange these three matchboxes in a straight line.",
+      },
+      matchbox_aligned: {
+        title: "Aligned Matchboxes - Light Passes Through",
+        description:
+          "Make sure that all three holes are exactly at the same height and are in a line. Place a torch light on one side and a screen on the other side. You can see a bright spot on the screen!",
+      },
+      matchbox_misaligned: {
+        title: "Misaligned Matchboxes - Light is Blocked",
+        description:
+          "Move one of the matchboxes slightly to a side or up and down. When all three holes are not in the same line, we cannot obtain the light spot on the screen. This suggests that light travels in a straight line.",
+      },
+      pipe_intro: {
+        title: "Activity 11.2: Pipe Experiment",
+        description:
+          "Can we check this in some other way? Let us try to see the candle flame through a bent pipe! Take a long hollow pipe of some flexible material.",
+      },
+      pipe_straight: {
+        title: "Straight Pipe - Candle Visible",
+        description:
+          "Align the pipe so that you can see the candle flame through the straight pipe. Light travels through the pipe and reaches your eyes.",
+      },
+      pipe_bent: {
+        title: "Bent Pipe - Candle Not Visible",
+        description:
+          "Now, bend the pipe and try to see the candle flame again. Can you still see it? You cannot see the candle flame through a bent pipe. This shows that light travels in a straight line.",
+      },
+      conclusion: {
+        title: "Conclusion: Light Travels in a Straight Line",
+        description:
+          "Through both experiments, we have observed that light travels in a straight line. When the path is straight and unobstructed, light can pass through. When the path is blocked or bent, light cannot reach the other end.",
+      },
+    },
+    canvas: {
+      intro: {
+        title: "Does Light Travel in a Straight Line?",
+        questionMark: "?",
+      },
+      matchbox_setup: {
+        instruction: "Make holes in the same position on each matchbox",
+        boxLabel: "Box",
+      },
+      matchbox_aligned: {
+        message: "Aligned holes - Light passes through!",
+      },
+      matchbox_misaligned: {
+        message: "Misaligned holes - Light is blocked!",
+      },
+      pipe_intro: {
+        question: "Can we see through a pipe?",
+      },
+      pipe_straight: {
+        message: "Straight pipe - You can see the flame!",
+      },
+      pipe_bent: {
+        message: "Bent pipe - Cannot see the flame!",
+      },
+      conclusion: {
+        title: "Light Travels in a Straight Line!",
+        subtitle: "Both experiments confirm this important property of light",
+      },
+      labels: {
+        lightSource: "Light source",
+        screen: "Screen",
+        transparent: "Transparent",
+        translucent: "Translucent",
+        opaque: "Opaque",
+        transparentTitle: "Transparent: Light passes almost completely",
+        translucentTitle: "Translucent: Light passes partially",
+        opaqueTitle: "Opaque: Light does NOT pass through",
+        threeTypes: "Three Types of Materials",
+        transparentComplete: "Transparent: Light passes completely",
+        translucentComplete: "Translucent: Light passes partially",
+        opaqueComplete: "Opaque: Light blocked completely",
+      },
+    },
+    practice: {
+      title: "Practice Questions",
+      subtitle: "Test your understanding of how light travels",
+      question: "Question",
+      score: "Score",
+      selectAnswer: "Please select an answer!",
+      checkAnswer: "Check Answer",
+      nextQuestion: "Next Question",
+      correct: "Correct! Well done! 🎉",
+      incorrect: "Not quite right. Let's learn from this!",
+      explanation: "Explanation:",
+      complete: "Quiz Complete!",
+      finalScore: "Your Final Score:",
+      restart: "Restart Quiz",
+      loading: "Loading questions...",
+      scoreMessages: {
+        perfect: "Perfect score! You're a light expert! 🌟",
+        great: "Great job! You understand the concepts well! 👏",
+        good: "Good effort! Keep practicing! 💪",
+        keepLearning: "Keep learning! Review and try again! 📚",
+      },
+      questions: [
+        {
+          id: 1,
+          question:
+            "What happens when you place three matchboxes with holes in a straight line and shine light through them?",
+          options: [
+            "Light bends around the holes",
+            "Light passes through all holes and creates a spot on the screen",
+            "Light stops at the first matchbox",
+            "Light spreads in all directions",
+          ],
+          correctAnswer: 1,
+          explanation:
+            "When the holes are aligned in a straight line, light passes through all of them and creates a bright spot on the screen. This proves that light travels in a straight line.",
+          visualType: "matchbox",
+        },
+        {
+          id: 2,
+          question:
+            "In the matchbox experiment, what happens when one matchbox is moved slightly up or down?",
+          options: [
+            "Light still passes through normally",
+            "Light becomes brighter",
+            "The light spot on the screen disappears",
+            "Light changes color",
+          ],
+          correctAnswer: 2,
+          explanation:
+            "When the matchboxes are not aligned, the holes are not in the same straight line. Since light travels in a straight line, it cannot pass through misaligned holes.",
+          visualType: "matchbox",
+        },
+        {
+          id: 3,
+          question: "Can you see a candle flame through a straight pipe?",
+          options: [
+            "No, never",
+            "Yes, if the pipe is aligned properly",
+            "Only if the pipe is very short",
+            "Only if there is a mirror inside",
+          ],
+          correctAnswer: 1,
+          explanation:
+            "You can see the candle flame through a straight pipe when it is properly aligned. Light from the candle travels in a straight line through the pipe.",
+          visualType: "pipe",
+        },
+        {
+          id: 4,
+          question:
+            "What happens when you try to see a candle flame through a bent pipe?",
+          options: [
+            "You can see it more clearly",
+            "You cannot see the flame",
+            "The flame appears upside down",
+            "The flame appears larger",
+          ],
+          correctAnswer: 1,
+          explanation:
+            "You cannot see the candle flame through a bent pipe because light travels in a straight line and cannot follow the curve.",
+          visualType: "pipe",
+        },
+        {
+          id: 5,
+          question: "Why does light not travel through a bent pipe?",
+          options: [
+            "The pipe is too long",
+            "Light is absorbed by the pipe material",
+            "Light travels in a straight line and cannot follow the curve",
+            "There is not enough light",
+          ],
+          correctAnswer: 2,
+          explanation:
+            "Light travels in a straight line and cannot change direction to follow a curved path.",
+          visualType: "concept",
+        },
+        {
+          id: 6,
+          question:
+            "What do both the matchbox and pipe experiments prove?",
+          options: [
+            "Light can bend around corners",
+            "Light needs air to travel",
+            "Light travels in a straight line",
+            "Light travels in circles",
+          ],
+          correctAnswer: 2,
+          explanation:
+            "Both experiments demonstrate that light travels in a straight line.",
+          visualType: "concept",
+        },
+        {
+          id: 7,
+          question:
+            "If you want to see around a corner, what property of light prevents you from doing so directly?",
+          options: [
+            "Light is too slow",
+            "Light travels in a straight line",
+            "Light is too bright",
+            "Light has no color",
+          ],
+          correctAnswer: 1,
+          explanation:
+            "You cannot see directly around a corner because light travels in a straight line.",
+          visualType: "concept",
+        },
+        {
+          id: 8,
+          question:
+            "In which situation would light NOT be able to pass through?",
+          options: [
+            "Three holes arranged in a perfect line",
+            "A completely straight tunnel",
+            "Three holes where the middle one is offset",
+            "A straight glass tube",
+          ],
+          correctAnswer: 2,
+          explanation:
+            "Light cannot pass through when the middle hole is offset because the three holes are not in a straight line.",
+          visualType: "matchbox",
+        },
+      ],
+    },
+    realWorld: {
+      title: "Real World Applications",
+      subtitle:
+        "Discover how the straight-line property of light is used in everyday life",
+      searchPlaceholder: "Search applications...",
+      allCategories: "All Categories",
+      loading: "Loading applications...",
+      example: "Example:",
+      applications: [
+        {
+          id: 1,
+          title: "Periscopes in Submarines",
+          description:
+            "Submarines use periscopes to see above water while staying submerged. Periscopes use mirrors to redirect light in straight paths, allowing submariners to see the surface from below.",
+          icon: "🔭",
+          category: "Military & Navigation",
+          example:
+            "Two mirrors at 45° angles reflect light in straight lines to see over obstacles.",
+        },
+        {
+          id: 2,
+          title: "Laser Pointers & Alignment",
+          description:
+            "Laser pointers create perfectly straight reference lines in construction and surveying. Because light travels in a straight line, lasers can accurately mark straight paths over long distances.",
+          icon: "🔦",
+          category: "Construction & Engineering",
+          example:
+            "Construction workers use laser levels to ensure walls are perfectly vertical.",
+        },
+        {
+          id: 3,
+          title: "Fiber Optic Cables",
+          description:
+            "Fiber optic cables use the principle that light travels in straight lines within glass fiber. Light signals travel through long fiber paths to transmit internet data at the speed of light.",
+          icon: "🌐",
+          category: "Communication Technology",
+          example:
+            "Your internet uses fiber optics where light travels through thin glass fibers.",
+        },
+        {
+          id: 4,
+          title: "Flashlights & Spotlights",
+          description:
+            "Flashlights create focused beams of light that travel in straight lines. Reflectors direct the light into a straight beam for illuminating specific areas.",
+          icon: "🔦",
+          category: "Lighting & Safety",
+          example:
+            "Emergency responders use spotlights that send straight beams to search in darkness.",
+        },
+        {
+          id: 5,
+          title: "Cameras & Photography",
+          description:
+            "Cameras work because light travels in straight lines from the subject through the lens to the sensor. The straight-line path creates sharp, clear images.",
+          icon: "📷",
+          category: "Imaging & Art",
+          example:
+            "When you take a photo, light travels in straight lines through the camera lens.",
+        },
+        {
+          id: 6,
+          title: "Solar Cookers",
+          description:
+            "Solar cookers use curved mirrors to redirect sunlight to a single point. Sunlight travels in straight lines, reflects off mirrors, and concentrates at the cooking pot.",
+          icon: "☀️",
+          category: "Sustainable Energy",
+          example:
+            "Solar cookers provide a free, clean way to cook food using focused sunlight.",
+        },
+        {
+          id: 7,
+          title: "Shadows & Sundials",
+          description:
+            "Shadows form because light travels in straight lines and cannot bend around opaque objects. Ancient sundials used this to tell time by tracking shadows.",
+          icon: "🌤️",
+          category: "Astronomy & Time",
+          example:
+            "Sundials have been used for thousands of years using shadow positions.",
+        },
+        {
+          id: 8,
+          title: "Traffic Signals",
+          description:
+            "Traffic lights are positioned so drivers have a clear straight-line view. Traffic engineers use the straight-line property to ensure signals are visible from safe distances.",
+          icon: "🚦",
+          category: "Transportation & Safety",
+          example:
+            "Traffic lights are placed high at intersections for clear straight-path visibility.",
+        },
+        {
+          id: 9,
+          title: "Optical Instruments",
+          description:
+            "Microscopes, telescopes, and binoculars rely on light traveling in straight lines through lenses and mirrors to magnify distant or tiny objects.",
+          icon: "🔬",
+          category: "Science & Research",
+          example:
+            "Astronomers use telescopes that collect light traveling from distant stars.",
+        },
+        {
+          id: 10,
+          title: "Barcode Scanners",
+          description:
+            "Barcode scanners use laser light that travels in straight lines to read patterns on products. The straight beam reflects differently from light and dark bars.",
+          icon: "🏪",
+          category: "Retail & Commerce",
+          example:
+            "Checkout scanners send straight beams across barcodes to read product codes.",
+        },
+        {
+          id: 11,
+          title: "Medical Endoscopes",
+          description:
+            "Doctors use endoscopes to see inside the body. These instruments use fiber optic cables that guide light in straight paths through flexible tubes.",
+          icon: "🏥",
+          category: "Medical Technology",
+          example:
+            "Doctors examine internal organs using light through thin tubes.",
+        },
+        {
+          id: 12,
+          title: "Stage Lighting",
+          description:
+            "Theater spotlights create dramatic effects by directing bright beams in straight lines onto performers. Lighting designers use predictable straight-path behavior.",
+          icon: "🎭",
+          category: "Entertainment & Arts",
+          example:
+            "Follow-spots track performers with straight beams creating dramatic effects.",
+        },
+      ],
+    },
+  },
+  hi: {
+    nav: {
+      logo: "क्या प्रकाश सीधी रेखा में यात्रा करता है?",
+      tabs: {
+        learn: "सीखें",
+        practice: "अभ्यास",
+        realWorld: "वास्तविक दुनिया",
+      },
+    },
+    language: {
+      en: "English",
+      hi: "हिंदी",
+      gu: "ગુજરાતી",
+      selectorLabel: "भाषा चुनें",
+    },
+    controls: {
+      step: "चरण",
+      of: "का",
+      previous: "पिछला",
+      next: "अगला",
+      play: "चलाएं",
+      pause: "रोकें",
+      reset: "रीसेट",
+    },
+    steps: {
+      intro: {
+        title: "क्या प्रकाश सीधी रेखा में यात्रा करता है?",
+        description: "",
+      },
+    },
+    canvas: {
+      labels: {
+        lightSource: "प्रकाश स्रोत",
+        screen: "स्क्रीन",
+        transparent: "पारदर्शी",
+        translucent: "अर्ध-पारदर्शी",
+        opaque: "अपारदर्शी",
+        transparentTitle: "पारदर्शी: प्रकाश लगभग पूरी तरह से गुजरता है",
+        translucentTitle: "अर्ध-पारदर्शी: प्रकाश आंशिक रूप से गुजरता है",
+        opaqueTitle: "अपारदर्शी: प्रकाश गुजरता नहीं है",
+        threeTypes: "तीन प्रकार की सामग्री",
+        transparentComplete: "पारदर्शी: प्रकाश पूरी तरह से गुजरता है",
+        translucentComplete: "अर्ध-पारदर्शी: प्रकाश आंशिक रूप से गुजरता है",
+        opaqueComplete: "अपारदर्शी: प्रकाश पूरी तरह से अवरुद्ध है",
+      },
+    },
+    practice: {
+      title: "अभ्यास प्रश्न",
+      subtitle: "प्रकाश कैसे यात्रा करता है, इसकी अपनी समझ का परीक्षण करें",
+      question: "प्रश्न",
+      score: "स्कोर",
+      selectAnswer: "कृपया एक उत्तर चुनें!",
+      checkAnswer: "उत्तर जांचें",
+      nextQuestion: "अगला प्रश्न",
+      correct: "सही! बहुत बढ़िया! 🎉",
+      incorrect: "बिल्कुल सही नहीं। आइए इससे सीखें!",
+      explanation: "व्याख्या:",
+      complete: "प्रश्नोत्तरी पूर्ण!",
+      finalScore: "आपका अंतिम स्कोर:",
+      restart: "पुनः आरंभ करें",
+      loading: "प्रश्न लोड हो रहे हैं...",
+      scoreMessages: {
+        perfect: "पूर्ण स्कोर! आप प्रकाश के विशेषज्ञ हैं! 🌟",
+        great: "बहुत बढ़िया! आप अवधारणाओं को अच्छी तरह समझते हैं! 👏",
+        good: "अच्छा प्रयास! अभ्यास जारी रखें! 💪",
+        keepLearning: "सीखना जारी रखें! समीक्षा करें और फिर से कोशिश करें! 📚",
+      },
+      questions: [
+        {
+          id: 1,
+          question:
+            "जब आप तीन माचिस की डिब्बियों को छेद के साथ सीधी रेखा में रखते हैं और उनके माध्यम से प्रकाश चमकाते हैं तो क्या होता है?",
+          options: [
+            "प्रकाश छेद के चारों ओर मुड़ता है",
+            "प्रकाश सभी छेदों से गुजरता है और स्क्रीन पर एक स्थान बनाता है",
+            "प्रकाश पहले माचिस के डिब्बे पर रुक जाता है",
+            "प्रकाश सभी दिशाओं में फैलता है",
+          ],
+          correctAnswer: 1,
+          explanation:
+            "जब छेद एक सीधी रेखा में संरेखित होते हैं, तो प्रकाश उन सभी से गुजरता है और स्क्रीन पर एक चमकीला स्थान बनाता है। यह साबित करता है कि प्रकाश सीधी रेखा में यात्रा करता है।",
+          visualType: "matchbox",
+        },
+        {
+          id: 2,
+          question:
+            "माचिस के डिब्बे के प्रयोग में, जब एक माचिस के डिब्बे को थोड़ा ऊपर या नीचे ले जाया जाता है तो क्या होता है?",
+          options: [
+            "प्रकाश अभी भी सामान्य रूप से गुजरता है",
+            "प्रकाश अधिक चमकीला हो जाता है",
+            "स्क्रीन पर प्रकाश स्थान गायब हो जाता है",
+            "प्रकाश रंग बदलता है",
+          ],
+          correctAnswer: 2,
+          explanation:
+            "जब माचिस के डिब्बे संरेखित नहीं होते हैं, तो छेद एक ही सीधी रेखा में नहीं होते हैं। चूंकि प्रकाश सीधी रेखा में यात्रा करता है, यह गलत संरेखित छेदों से नहीं गुजर सकता।",
+          visualType: "matchbox",
+        },
+        {
+          id: 3,
+          question: "क्या आप सीधे पाइप के माध्यम से मोमबत्ती की लौ देख सकते हैं?",
+          options: [
+            "नहीं, कभी नहीं",
+            "हाँ, अगर पाइप ठीक से संरेखित है",
+            "केवल अगर पाइप बहुत छोटा है",
+            "केवल अगर अंदर एक दर्पण है",
+          ],
+          correctAnswer: 1,
+          explanation:
+            "जब पाइप ठीक से संरेखित होता है तो आप सीधे पाइप के माध्यम से मोमबत्ती की लौ देख सकते हैं। मोमबत्ती से प्रकाश सीधी रेखा में पाइप के माध्यम से यात्रा करता है।",
+          visualType: "pipe",
+        },
+        {
+          id: 4,
+          question:
+            "जब आप मुड़े हुए पाइप के माध्यम से मोमबत्ती की लौ देखने की कोशिश करते हैं तो क्या होता है?",
+          options: [
+            "आप इसे अधिक स्पष्ट रूप से देख सकते हैं",
+            "आप लौ नहीं देख सकते",
+            "लौ उल्टा दिखाई देती है",
+            "लौ बड़ा दिखाई देता है",
+          ],
+          correctAnswer: 1,
+          explanation:
+            "आप मुड़े हुए पाइप के माध्यम से मोमबत्ती की लौ नहीं देख सकते क्योंकि प्रकाश सीधी रेखा में यात्रा करता है और वक्र का पालन नहीं कर सकता।",
+          visualType: "pipe",
+        },
+        {
+          id: 5,
+          question: "प्रकाश मुड़े हुए पाइप के माध्यम से क्यों नहीं जाता है?",
+          options: [
+            "पाइप बहुत लंबा है",
+            "प्रकाश पाइप सामग्री द्वारा अवशोषित होता है",
+            "प्रकाश सीधी रेखा में यात्रा करता है और वक्र का पालन नहीं कर सकता",
+            "पर्याप्त प्रकाश नहीं है",
+          ],
+          correctAnswer: 2,
+          explanation:
+            "प्रकाश सीधी रेखा में यात्रा करता है और वक्र पथ का पालन करने के लिए दिशा नहीं बदल सकता।",
+          visualType: "concept",
+        },
+        {
+          id: 6,
+          question:
+            "माचिस के डिब्बे और पाइप दोनों प्रयोग क्या साबित करते हैं?",
+          options: [
+            "प्रकाश कोनों के चारों ओर मुड़ सकता है",
+            "प्रकाश को यात्रा करने के लिए हवा की आवश्यकता होती है",
+            "प्रकाश सीधी रेखा में यात्रा करता है",
+            "प्रकाश वृत्त में यात्रा करता है",
+          ],
+          correctAnswer: 2,
+          explanation:
+            "दोनों प्रयोग यह प्रदर्शित करते हैं कि प्रकाश सीधी रेखा में यात्रा करता है।",
+          visualType: "concept",
+        },
+        {
+          id: 7,
+          question:
+            "यदि आप कोने के चारों ओर देखना चाहते हैं, तो प्रकाश की कौन सी संपत्ति आपको रोकती है?",
+          options: [
+            "प्रकाश बहुत धीमा है",
+            "प्रकाश सीधी रेखा में यात्रा करता है",
+            "प्रकाश बहुत उज्ज्वल है",
+            "प्रकाश का कोई रंग नहीं है",
+          ],
+          correctAnswer: 1,
+          explanation:
+            "आप सीधे कोने के चारों ओर नहीं देख सकते क्योंकि प्रकाश सीधी रेखा में यात्रा करता है।",
+          visualType: "concept",
+        },
+        {
+          id: 8,
+          question:
+            "किस स्थिति में प्रकाश गुजरने में सक्षम नहीं होगा?",
+          options: [
+            "एक पूर्ण रेखा में व्यवस्थित तीन छेद",
+            "एक पूरी तरह से सीधी सुरंग",
+            "तीन छेद जहाँ बीच वाला ऑफसेट है",
+            "एक सीधी कांच की नली",
+          ],
+          correctAnswer: 2,
+          explanation:
+            "जब बीच का छेद ऑफसेट होता है तो प्रकाश पास नहीं हो सकता क्योंकि तीन छेद एक सीधी रेखा में नहीं हैं।",
+          visualType: "matchbox",
+        },
+      ],
+    },
+    realWorld: {
+      title: "वास्तविक दुनिया के अनुप्रयोग",
+      subtitle:
+        "जानें कि रोजमर्रा की जिंदगी में प्रकाश की सीधी-रेखा संपत्ति का उपयोग कैसे किया जाता है",
+      searchPlaceholder: "अनुप्रयोग खोजें...",
+      allCategories: "सभी श्रेणियां",
+      loading: "अनुप्रयोग लोड हो रहे हैं...",
+      example: "उदाहरण:",
+      applications: [
+        {
+          id: 1,
+          title: "पनडुब्बियों में पेरिस्कोप",
+          description:
+            "पनडुब्बियां पानी के नीचे रहते हुए पानी के ऊपर देखने के लिए पेरिस्कोप का उपयोग करती हैं। पेरिस्कोप सीधे पथों में प्रकाश को पुनर्निर्देशित करने के लिए दर्पणों का उपयोग करते हैं।",
+          icon: "🔭",
+          category: "सैन्य और नेविगेशन",
+          example: "45° कोण पर दो दर्पण प्रकाश को प्रतिबिंबित करते हैं।",
+        },
+        {
+          id: 2,
+          title: "लेजर पॉइंटर",
+          description:
+            "निर्माण में पूरी तरह से सीधी संदर्भ रेखाएं बनाने के लिए उपयोग किया जाता है।",
+          icon: "🔦",
+          category: "निर्माण और इंजीनियरिंग",
+          example: "निर्माण कार्यकर्ता लेजर स्तरों का उपयोग करते हैं।",
+        },
+        {
+          id: 3,
+          title: "फाइबर ऑप्टिक केबल",
+          description:
+            "इंटरनेट डेटा संचारित करने के लिए प्रकाश का उपयोग करते हैं।",
+          icon: "🌐",
+          category: "संचार प्रौद्योगिकी",
+          example: "आपका इंटरनेट फाइबर ऑप्टिक्स का उपयोग करता है।",
+        },
+        {
+          id: 4,
+          title: "टॉर्च और स्पॉटलाइट",
+          description: "केंद्रित प्रकाश बीम बनाते हैं।",
+          icon: "🔦",
+          category: "प्रकाश और सुरक्षा",
+          example: "आपातकालीन उत्तरदाता स्पॉटलाइट का उपयोग करते हैं।",
+        },
+        {
+          id: 5,
+          title: "कैमरा और फोटोग्राफी",
+          description: "सीधी रेखाओं में प्रकाश यात्रा के कारण काम करते हैं।",
+          icon: "📷",
+          category: "इमेजिंग और कला",
+          example: "फोटो लेते समय प्रकाश सीधी रेखाओं में यात्रा करता है।",
+        },
+        {
+          id: 6,
+          title: "सौर कुकर",
+          description: "सूर्य के प्रकाश को केंद्रित करने के लिए दर्पणों का उपयोग करते हैं।",
+          icon: "☀️",
+          category: "सतत ऊर्जा",
+          example: "सौर कुकर भोजन पकाने का स्वच्छ तरीका प्रदान करते हैं।",
+        },
+        {
+          id: 7,
+          title: "छाया और धूपघड़ी",
+          description: "प्रकाश की सीधी रेखा गति के कारण छाया बनती है।",
+          icon: "🌤️",
+          category: "खगोल विज्ञान",
+          example: "धूपघड़ी का उपयोग हजारों वर्षों से किया जाता है।",
+        },
+        {
+          id: 8,
+          title: "यातायात संकेत",
+          description: "स्पष्ट दृश्य के लिए रखे गए हैं।",
+          icon: "🚦",
+          category: "परिवहन",
+          example: "यातायात लाइट चौराहों पर ऊंची रखी जाती हैं।",
+        },
+        {
+          id: 9,
+          title: "ऑप्टिकल उपकरण",
+          description: "माइक्रोस्कोप और टेलीस्कोप।",
+          icon: "🔬",
+          category: "विज्ञान",
+          example: "खगोलविद टेलीस्कोप का उपयोग करते हैं।",
+        },
+        {
+          id: 10,
+          title: "बारकोड स्कैनर",
+          description: "उत्पाद कोड पढ़ने के लिए लेजर का उपयोग करते हैं।",
+          icon: "🏪",
+          category: "खुदरा",
+          example: "स्कैनर बारकोड पर सीधी बीम भेजते हैं।",
+        },
+        {
+          id: 11,
+          title: "चिकित्सा एंडोस्कोप",
+          description: "शरीर के अंदर देखने के लिए।",
+          icon: "🏥",
+          category: "चिकित्सा",
+          example: "डॉक्टर पतली ट्यूबों के माध्यम से प्रकाश का उपयोग करते हैं।",
+        },
+        {
+          id: 12,
+          title: "मंच प्रकाश",
+          description: "नाटकीय प्रभाव बनाते हैं।",
+          icon: "🎭",
+          category: "मनोरंजन",
+          example: "थिएटर में स्पॉटलाइट कलाकारों को ट्रैक करते हैं।",
+        },
+      ],
+    },
+  },
+  gu: {
+    nav: {
+      logo: "શું પ્રકાશ સીધી રેખામાં મુસાફરી કરે છે?",
+      tabs: {
+        learn: "શીખો",
+        practice: "અભ્યાસ",
+        realWorld: "વાસ્તવિક દુનિયા",
+      },
+    },
+    language: {
+      en: "English",
+      hi: "हिंदी",
+      gu: "ગુજરાતી",
+      selectorLabel: "ભાષા પસંદ કરો",
+    },
+    controls: {
+      step: "પગલું",
+      of: "નું",
+      previous: "અગાઉ",
+      next: "આગળ",
+      play: "ચલાવો",
+      pause: "થોભાવો",
+      reset: "રીસેટ",
+    },
+    steps: {
+      intro: {
+        title: "શું પ્રકાશ સીધી રેખામાં મુસાફરી કરે છે?",
+        description: "",
+      },
+    },
+    canvas: {
+      labels: {
+        lightSource: "પ્રકાશ સ્રોત",
+        screen: "સ્ક્રીન",
+        transparent: "પારદર્શક",
+        translucent: "અર્ધ-પારદર્શક",
+        opaque: "અપારદર્શક",
+        transparentTitle: "પારદર્શક: પ્રકાશ લગભગ સંપૂર્ણપણે પસાર થાય છે",
+        translucentTitle: "અર્ધ-પારદર્શક: પ્રકાશ આંશિક રીતે પસાર થાય છે",
+        opaqueTitle: "અપારદર્શક: પ્રકાશ પસાર થતો નથી",
+        threeTypes: "ત્રણ પ્રકારની સામગ્રી",
+        transparentComplete: "પારદર્શક: પ્રકાશ સંપૂર્ણપણે પસાર થાય છે",
+        translucentComplete: "અર્ધ-પારદર્શક: પ્રકાશ આંશિક રીતે પસાર થાય છે",
+        opaqueComplete: "અપારદર્શક: પ્રકાશ સંપૂર્ણપણે અવરોધાયો છે",
+      },
+    },
+    practice: {
+      title: "અભ્યાસ પ્રશ્નો",
+      subtitle: "પ્રકાશ કેવી રીતે મુસાફરી કરે છે તેની સમજણ ચકાસો",
+      question: "પ્રશ્ન",
+      score: "સ્કોર",
+      selectAnswer: "કૃપા કરીને જવાબ પસંદ કરો!",
+      checkAnswer: "જવાબ તપાસો",
+      nextQuestion: "આગળનો પ્રશ્ન",
+      correct: "સાચું! સારું કર્યું! 🎉",
+      incorrect: "બરાબર સાચું નથી। આપણે આનાથી શીખીએ!",
+      explanation: "સમજૂતી:",
+      complete: "ક્વિઝ પૂર્ણ!",
+      finalScore: "તમારો અંતિમ સ્કોર:",
+      restart: "ફરી શરૂ કરો",
+      loading: "પ્રશ્નો લોડ થઈ રહ્યા છે...",
+      scoreMessages: {
+        perfect: "પરફેક્ટ સ્કોર! તમે પ્રકાશના નિષ્ણાત છો! 🌟",
+        great: "સારું કામ! તમે ખ્યાલોને સારી રીતે સમજો છો! 👏",
+        good: "સારો પ્રયાસ! અભ્યાસ ચાલુ રાખો! 💪",
+        keepLearning: "શીખવાનું ચાલુ રાખો! સમીક્ષા કરો અને ફરીથી પ્રયાસ કરો! 📚",
+      },
+      questions: [
+        {
+          id: 1,
+          question:
+            "જ્યારે તમે ત્રણ માચીસની પેટીઓને સીધી રેખામાં મૂકો અને પ્રકાશ ચમકાવો ત્યારે શું થાય?",
+          options: [
+            "પ્રકાશ છિદ્રોની આસપાસ વળે છે",
+            "પ્રકાશ બધા છિદ્રોમાંથી પસાર થાય છે અને સ્ક્રીન પર એક સ્થાન બનાવે છે",
+            "પ્રકાશ પ્રથમ પેટી પર અટકે છે",
+            "પ્રકાશ બધી દિશાઓમાં ફેલાય છે",
+          ],
+          correctAnswer: 1,
+          explanation:
+            "જ્યારે છિદ્રો સીધી રેખામાં સંરેખિત હોય, પ્રકાશ બધામાંથી પસાર થાય છે અને સ્ક્રીન પર એક તેજસ્વી સ્થાન બનાવે છે. આ સાબિત કરે છે કે પ્રકાશ સીધી રેખામાં મુસાફરી કરે છે.",
+          visualType: "matchbox",
+        },
+        {
+          id: 2,
+          question:
+            "માચીસની પેટીના પ્રયોગમાં, જ્યારે એક પેટીને થોડી ઉપર અથવા નીચે ખસેડવામાં આવે ત્યારે શું થાય?",
+          options: [
+            "પ્રકાશ હજુ પણ સામાન્ય રીતે પસાર થાય છે",
+            "પ્રકાશ વધુ તેજસ્વી બને છે",
+            "સ્ક્રીન પર પ્રકાશ સ્થાન અદૃશ્ય થઈ જાય છે",
+            "પ્રકાશ રંગ બદલે છે",
+          ],
+          correctAnswer: 2,
+          explanation:
+            "જ્યારે પેટીઓ સંરેખિત ન હોય, છિદ્રો એક જ સીધી રેખામાં નથી. કારણ કે પ્રકાશ સીધી રેખામાં મુસાફરી કરે છે, તે ખોટી સંરેખિત છિદ્રોમાંથી પસાર થઈ શકતો નથી.",
+          visualType: "matchbox",
+        },
+        {
+          id: 3,
+          question: "શું તમે સીધી પાઈપ દ્વારા મીણબત્તીની જ્યોત જોઈ શકો છો?",
+          options: [
+            "ના, ક્યારેય નહીં",
+            "હા, જો પાઈપ યોગ્ય રીતે સંરેખિત હોય",
+            "ફક્ત જો પાઈપ ખૂબ ટૂંકી હોય",
+            "ફક્ત જો અંદર એક અરીસો હોય",
+          ],
+          correctAnswer: 1,
+          explanation:
+            "જ્યારે પાઈપ યોગ્ય રીતે સંરેખિત હોય ત્યારે તમે સીધી પાઈપ દ્વારા મીણબત્તીની જ્યોત જોઈ શકો છો. મીણબત્તીમાંથી પ્રકાશ સીધી રેખામાં પાઈપ દ્વારા મુસાફરી કરે છે.",
+          visualType: "pipe",
+        },
+        {
+          id: 4,
+          question:
+            "જ્યારે તમે વળેલી પાઈપ દ્વારા મીણબત્તીની જ્યોત જોવાનો પ્રયાસ કરો છો ત્યારે શું થાય છે?",
+          options: [
+            "તમે તેને વધુ સ્પષ્ટપણે જોઈ શકો છો",
+            "તમે જ્યોત જોઈ શકતા નથી",
+            "જ્યોત ઊલટી દેખાય છે",
+            "જ્યોત મોટી દેખાય છે",
+          ],
+          correctAnswer: 1,
+          explanation:
+            "તમે વળેલી પાઈપ દ્વારા મીણબત્તીની જ્યોત જોઈ શકતા નથી કારણ કે પ્રકાશ સીધી રેખામાં મુસાફરી કરે છે અને વળાંકનો અનુસરણ કરી શકતો નથી.",
+          visualType: "pipe",
+        },
+        {
+          id: 5,
+          question: "પ્રકાશ વળેલી પાઈપ દ્વારા શા માટે મુસાફરી કરતો નથી?",
+          options: [
+            "પાઈપ ખૂબ લાંબી છે",
+            "પ્રકાશ પાઈપ સામગ્રી દ્વારા શોષાય છે",
+            "પ્રકાશ સીધી રેખામાં મુસાફરી કરે છે અને વળાંકનો અનુસરણ કરી શકતો નથી",
+            "પૂરતો પ્રકાશ નથી",
+          ],
+          correctAnswer: 2,
+          explanation:
+            "પ્રકાશ સીધી રેખામાં મુસાફરી કરે છે અને વળેલા માર્ગનો અનુસરણ કરવા માટે દિશા બદલી શકતો નથી.",
+          visualType: "concept",
+        },
+        {
+          id: 6,
+          question:
+            "માચીસની પેટી અને પાઈપ બંને પ્રયોગો શું સાબિત કરે છે?",
+          options: [
+            "પ્રકાશ ખૂણાની આસપાસ વળી શકે છે",
+            "પ્રકાશને મુસાફરી કરવા માટે હવાની જરૂર છે",
+            "પ્રકાશ સીધી રેખામાં મુસાફરી કરે છે",
+            "પ્રકાશ વર્તુળોમાં મુસાફરી કરે છે",
+          ],
+          correctAnswer: 2,
+          explanation:
+            "બંને પ્રયોગો દર્શાવે છે કે પ્રકાશ સીધી રેખામાં મુસાફરી કરે છે.",
+          visualType: "concept",
+        },
+        {
+          id: 7,
+          question:
+            "જો તમે ખૂણાની આસપાસ જોવા માંગો છો, તો પ્રકાશની કઈ ગુણધર્મ તમને સીધા આ કરવાથી અટકાવે છે?",
+          options: [
+            "પ્રકાશ ખૂબ ધીમો છે",
+            "પ્રકાશ સીધી રેખામાં મુસાફરી કરે છે",
+            "પ્રકાશ ખૂબ તેજસ્વી છે",
+            "પ્રકાશનો કોઈ રંગ નથી",
+          ],
+          correctAnswer: 1,
+          explanation:
+            "તમે સીધા ખૂણાની આસપાસ જોઈ શકતા નથી કારણ કે પ્રકાશ સીધી રેખામાં મુસાફરી કરે છે.",
+          visualType: "concept",
+        },
+        {
+          id: 8,
+          question:
+            "કઈ પરિસ્થિતિમાં પ્રકાશ પસાર થઈ શકશે નહીં?",
+          options: [
+            "સંપૂર્ણ રેખામાં ગોઠવાયેલા ત્રણ છિદ્રો",
+            "સંપૂર્ણ સીધી સુરંગ",
+            "ત્રણ છિદ્રો જ્યાં મધ્યમ એક ઓફસેટ છે",
+            "સીધી કાચની નળી",
+          ],
+          correctAnswer: 2,
+          explanation:
+            "જ્યારે મધ્યમ છિદ્ર ઓફસેટ હોય ત્યારે પ્રકાશ પસાર થઈ શકતો નથી કારણ કે ત્રણ છિદ્રો એક સીધી રેખામાં નથી.",
+          visualType: "matchbox",
+        },
+      ],
+    },
+    realWorld: {
+      title: "વાસ્તવિક દુનિયા એપ્લિકેશન્સ",
+      subtitle:
+        "રોજિંદા જીવનમાં પ્રકાશની સીધી-રેખા ગુણધર્મનો ઉપયોગ જાણો",
+      searchPlaceholder: "એપ્લિકેશન્સ શોધો...",
+      allCategories: "બધી શ્રેણીઓ",
+      loading: "એપ્લિકેશન્સ લોડ થઈ રહ્યા છે...",
+      example: "ઉદાહરણ:",
+      applications: [
+        {
+          id: 1,
+          title: "સબમરીનમાં પેરિસ્કોપ",
+          description:
+            "સબમરીન પાણીની નીચે રહીને જોવા માટે પેરિસ્કોપનો ઉપયોગ કરે છે।",
+          icon: "🔭",
+          category: "લશ્કરી",
+          example: "બે અરીસાઓ પ્રકાશને પ્રતિબિંબિત કરે છે।",
+        },
+        {
+          id: 2,
+          title: "લેસર પોઇન્ટર",
+          description: "બાંધકામમાં સીધી રેખાઓ બનાવવા માટે વપરાય છે।",
+          icon: "🔦",
+          category: "બાંધકામ",
+          example: "બાંધકામ કામદારો લેસરનો ઉપયોગ કરે છે।",
+        },
+        {
+          id: 3,
+          title: "ફાઇબર ઓપ્ટિક કેબલ્સ",
+          description: "ઇન્ટરનેટ ડેટા માટે પ્રકાશનો ઉપયોગ કરે છે।",
+          icon: "🌐",
+          category: "સંચાર",
+          example: "તમારું ઇન્ટરનેટ ફાઇબર ઓપ્ટિક્સનો ઉપયોગ કરે છે।",
+        },
+        {
+          id: 4,
+          title: "ટોર્ચ અને સ્પોટલાઇટ્સ",
+          description: "કેન્દ્રિત બીમ બનાવે છે।",
+          icon: "🔦",
+          category: "પ્રકાશ",
+          example: "કટોકટી સ્પોટલાઇટ્સનો ઉપયોગ કરે છે।",
+        },
+        {
+          id: 5,
+          title: "કેમેરા અને ફોટોગ્રાફી",
+          description: "સીધી રેખાઓમાં પ્રકાશનો ઉપયોગ કરે છે।",
+          icon: "📷",
+          category: "કલા",
+          example: "ફોટો લેતી વખતે પ્રકાશ સીધી રેખાઓમાં મુસાફરી કરે છે।",
+        },
+        {
+          id: 6,
+          title: "સોલર કૂકર",
+          description: "સૂર્યપ્રકાશને કેન્દ્રિત કરે છે।",
+          icon: "☀️",
+          category: "ઊર્જા",
+          example: "સોલર કૂકર સ્વચ્છ રીત પ્રદાન કરે છે।",
+        },
+        {
+          id: 7,
+          title: "પડછાયા અને સૂર્યઘડિયાળ",
+          description: "પ્રકાશની સીધી રેખા ગતિને કારણે પડછાયા રચાય છે।",
+          icon: "🌤️",
+          category: "ખગોળશાસ્ત્ર",
+          example: "સૂર્યઘડિયાળનો ઉપયોગ હજારો વર્ષોથી થાય છે।",
+        },
+        {
+          id: 8,
+          title: "ટ્રાફિક સિગ્નલ્સ",
+          description: "સ્પષ્ટ દૃશ્ય માટે સ્થિત છે।",
+          icon: "🚦",
+          category: "પરિવહન",
+          example: "ટ્રાફિક લાઇટ્સ ઊંચી મૂકવામાં આવે છે।",
+        },
+        {
+          id: 9,
+          title: "ઓપ્ટિકલ સાધનો",
+          description: "માઇક્રોસ્કોપ અને ટેલિસ્કોપ।",
+          icon: "🔬",
+          category: "વિજ્ઞાન",
+          example: "ખગોળશાસ્ત્રીઓ ટેલિસ્કોપનો ઉપયોગ કરે છે।",
+        },
+        {
+          id: 10,
+          title: "બારકોડ સ્કેનર્સ",
+          description: "ઉત્પાદન કોડ વાંચવા માટે લેસરનો ઉપયોગ કરે છે।",
+          icon: "🏪",
+          category: "રિટેલ",
+          example: "સ્કેનર બારકોડ પર સીધો બીમ મોકલે છે।",
+        },
+        {
+          id: 11,
+          title: "તબીબી એન્ડોસ્કોપ",
+          description: "શરીરની અંદર જોવા માટે।",
+          icon: "🏥",
+          category: "તબીબી",
+          example: "ડોક્ટર પાતળી નળી દ્વારા પ્રકાશનો ઉપયોગ કરે છે।",
+        },
+        {
+          id: 12,
+          title: "સ્ટેજ લાઇટિંગ",
+          description: "નાટકીય અસરો બનાવે છે।",
+          icon: "🎭",
+          category: "મનોરંજન",
+          example: "થિયેટરમાં સ્પોટલાઇટ્સ કલાકારોને ટ્રેક કરે છે।",
+        },
+      ],
+    },
+  },
+} as const;
+
+// Helper function to get nested value from object using dot notation
+const getNestedValue = (obj: any, path: string): TranslationValue => {
+  const keys = path.split(".");
+  let result: any = obj;
+  for (const key of keys) {
+    if (result && typeof result === "object" && key in result) {
+      result = result[key];
+    } else {
+      return path; // Return path as fallback
+    }
+  }
+  return result;
+};
 
 // Language Context
 interface LanguageContextType {
@@ -211,13 +1193,12 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({
   }, []);
 
   const t = (key: string): string => {
-    // Translation system removed - return key as-is
-    return key;
+    const value = getNestedValue(translations[language], key);
+    return typeof value === "string" ? value : key;
   };
 
   const tValue = (key: string): TranslationValue => {
-    // Translation system removed - return key as-is
-    return key;
+    return getNestedValue(translations[language], key);
   };
 
   return (
@@ -239,18 +1220,18 @@ export const useLanguage = () => {
 
 // Language Selector
 const LanguageSelector: React.FC = () => {
-  const { language, setLanguage } = useLanguage();
+  const { language, setLanguage, t } = useLanguage();
 
   const languages: { code: Language; name: string; flag: string }[] = [
-    { code: "en", name: "English", flag: "🇬🇧" },
-    { code: "hi", name: "हिंदी", flag: "🇮🇳" },
-    { code: "gu", name: "ગુજરાતી", flag: "🇮🇳" },
+    { code: "en", name: t("language.en"), flag: "🇬🇧" },
+    { code: "hi", name: t("language.hi"), flag: "🇮🇳" },
+    { code: "gu", name: t("language.gu"), flag: "🇮🇳" },
   ];
 
   return (
     <div className="relative">
       <select
-        aria-label="Select Language"
+        aria-label={t("language.selectorLabel")}
         value={language}
         onChange={(e) => setLanguage(e.target.value as Language)}
         className="appearance-none bg-white border-2 border-blue-500 rounded-lg px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 pr-6 sm:pr-8 w-40 sm:w-48 md:w-56 text-xs sm:text-sm md:text-base text-blue-700 font-medium cursor-pointer hover:border-teal-500 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-300"
@@ -274,47 +1255,6 @@ const LanguageSelector: React.FC = () => {
   );
 };
 
-// Default steps data for Topic 11.3
-const DEFAULT_STEPS: Step[] = [
-  {
-    id: 1,
-    title: "Introduction to Materials",
-    description:
-      "Light behaves differently when it encounters different materials",
-    activity: "intro",
-  },
-  {
-    id: 2,
-    title: "Types of Materials",
-    description: "Understanding transparent, translucent, and opaque materials",
-    activity: "materials",
-  },
-  {
-    id: 3,
-    title: "Transparent Materials",
-    description: "Light passes almost completely through transparent materials",
-    activity: "transparent",
-  },
-  {
-    id: 4,
-    title: "Translucent Materials",
-    description: "Light passes partially through translucent materials",
-    activity: "translucent",
-  },
-  {
-    id: 5,
-    title: "Opaque Materials",
-    description: "Light does not pass through opaque materials",
-    activity: "opaque",
-  },
-  {
-    id: 6,
-    title: "Conclusion",
-    description: "Summary of light behavior with materials",
-    activity: "conclusion",
-  },
-];
-
 interface LightTravelProps {
   width?: number;
   height?: number;
@@ -324,6 +1264,7 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = ({
   width = 800,
   height = 600,
 }) => {
+  const { t } = useLanguage();
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [animationProgress, setAnimationProgress] = useState(0);
@@ -331,7 +1272,45 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = ({
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const animationFrameRef = useRef<number | null>(null);
 
-  const steps = DEFAULT_STEPS;
+  // Get translated steps
+  const steps = [
+    {
+      id: 1,
+      title: t("steps.intro.title"),
+      description: t("steps.intro.description"),
+      activity: "intro" as const,
+    },
+    {
+      id: 2,
+      title: t("steps.matchbox_setup.title"),
+      description: t("steps.matchbox_setup.description"),
+      activity: "materials" as const,
+    },
+    {
+      id: 3,
+      title: t("steps.matchbox_aligned.title"),
+      description: t("steps.matchbox_aligned.description"),
+      activity: "transparent" as const,
+    },
+    {
+      id: 4,
+      title: t("steps.matchbox_misaligned.title"),
+      description: t("steps.matchbox_misaligned.description"),
+      activity: "translucent" as const,
+    },
+    {
+      id: 5,
+      title: t("steps.pipe_intro.title"),
+      description: t("steps.pipe_intro.description"),
+      activity: "opaque" as const,
+    },
+    {
+      id: 6,
+      title: t("steps.conclusion.title"),
+      description: t("steps.conclusion.description"),
+      activity: "conclusion" as const,
+    },
+  ];
 
   // Auto-play timer
   useEffect(() => {
@@ -371,8 +1350,8 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = ({
     ctx.clearRect(0, 0, width, height);
 
     const step = steps[currentStepIndex];
-    drawVisualization(ctx, width, height, step.activity, animationProgress);
-  }, [currentStepIndex, animationProgress, width, height, steps]);
+    drawVisualization(ctx, width, height, step.activity, animationProgress, t);
+  }, [currentStepIndex, animationProgress, width, height, steps, t]);
 
   const nextStep = () => {
     if (currentStepIndex < steps.length - 1) {
@@ -403,7 +1382,7 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = ({
                 {step.title}
               </h2>
               <div className="text-sm bg-white/20 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full backdrop-blur-sm">
-                Step {currentStepIndex + 1} of {steps.length}
+                {t("controls.step")} {currentStepIndex + 1} {t("controls.of")} {steps.length}
               </div>
             </div>
           </div>
@@ -431,7 +1410,7 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = ({
                 className="flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-300 transition-all w-full sm:w-auto"
               >
                 <ChevronLeft className="w-5 h-5" />
-                Previous
+                {t("controls.previous")}
               </button>
 
               <div className="flex gap-2 sm:gap-3 w-full sm:w-auto">
@@ -442,12 +1421,12 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = ({
                   {isPlaying ? (
                     <>
                       <Pause className="w-5 h-5" />
-                      Pause
+                      {t("controls.pause")}
                     </>
                   ) : (
                     <>
                       <Play className="w-5 h-5" />
-                      Play
+                      {t("controls.play")}
                     </>
                   )}
                 </button>
@@ -457,7 +1436,7 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = ({
                   className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition-all flex-1 sm:flex-none"
                 >
                   <RotateCcw className="w-5 h-5" />
-                  Reset
+                  {t("controls.reset")}
                 </button>
               </div>
 
@@ -466,7 +1445,7 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = ({
                 disabled={currentStepIndex === steps.length - 1}
                 className="flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-blue-600 to-teal-600 text-white rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg transition-all w-full sm:w-auto"
               >
-                Next
+                {t("controls.next")}
                 <ChevronRight className="w-5 h-5" />
               </button>
             </div>
@@ -494,7 +1473,8 @@ function drawVisualization(
   width: number,
   height: number,
   stage: string,
-  progress: number
+  progress: number,
+  t: (key: string) => string
 ) {
   // Dark background
   const bgGradient = ctx.createRadialGradient(
@@ -511,17 +1491,17 @@ function drawVisualization(
   ctx.fillRect(0, 0, width, height);
 
   if (stage === "intro") {
-    drawIntro(ctx, width, height, progress);
+    drawIntro(ctx, width, height, progress, t);
   } else if (stage === "materials") {
-    drawMaterials(ctx, width, height, progress);
+    drawMaterials(ctx, width, height, progress, t);
   } else if (stage === "transparent") {
-    drawTransparent(ctx, width, height, progress);
+    drawTransparent(ctx, width, height, progress, t);
   } else if (stage === "translucent") {
-    drawTranslucent(ctx, width, height, progress);
+    drawTranslucent(ctx, width, height, progress, t);
   } else if (stage === "opaque") {
-    drawOpaque(ctx, width, height, progress);
+    drawOpaque(ctx, width, height, progress, t);
   } else if (stage === "conclusion") {
-    drawConclusion(ctx, width, height, progress);
+    drawConclusion(ctx, width, height, progress, t);
   }
 }
 
@@ -529,7 +1509,8 @@ function drawIntro(
   ctx: CanvasRenderingContext2D,
   width: number,
   height: number,
-  progress: number
+  progress: number,
+  t: (key: string) => string
 ) {
   const centerX = width / 2;
   const centerY = height / 2;
@@ -541,7 +1522,7 @@ function drawIntro(
   ctx.textBaseline = "middle";
   ctx.shadowColor = "rgba(96, 165, 250, 0.5)";
   ctx.shadowBlur = 20;
-  ctx.fillText("Light & Materials", centerX, centerY - 80);
+  ctx.fillText(t("steps.intro.title"), centerX, centerY - 80);
   ctx.shadowBlur = 0;
 
   // Animated light beam
@@ -575,7 +1556,7 @@ function drawIntro(
   ctx.fillStyle = "#FFF";
   ctx.font = "20px Arial";
   ctx.fillText(
-    "How does light interact with different materials?",
+    t("steps.intro.description"),
     centerX,
     centerY + 100
   );
@@ -585,7 +1566,8 @@ function drawMaterials(
   ctx: CanvasRenderingContext2D,
   width: number,
   height: number,
-  progress: number
+  progress: number,
+  t: (key: string) => string
 ) {
   const centerX = width / 2;
   const spacing = width / 3;
@@ -757,7 +1739,10 @@ function drawMaterials(
         ctx.textAlign = "center";
         ctx.shadowColor = "rgba(0, 0, 0, 0.8)";
         ctx.shadowBlur = 5;
-        ctx.fillText(mat.name, columnX, materialY + 100);
+        const labelKey = mat.name === "Transparent" ? "canvas.labels.transparent" 
+          : mat.name === "Translucent" ? "canvas.labels.translucent"
+          : "canvas.labels.opaque";
+        ctx.fillText(t(labelKey), columnX, materialY + 100);
         ctx.shadowBlur = 0;
       }
     }
@@ -769,7 +1754,7 @@ function drawMaterials(
   ctx.textAlign = "center";
   ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
   ctx.shadowBlur = 10;
-  ctx.fillText("Three Types of Materials", centerX, 50);
+  ctx.fillText(t("canvas.labels.threeTypes"), centerX, 50);
   ctx.shadowBlur = 0;
 }
 
@@ -777,7 +1762,8 @@ function drawTransparent(
   ctx: CanvasRenderingContext2D,
   width: number,
   height: number,
-  progress: number
+  progress: number,
+  t: (key: string) => string
 ) {
   const centerX = width / 2;
   const centerY = height / 2;
@@ -865,7 +1851,7 @@ function drawTransparent(
   ctx.textAlign = "center";
   ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
   ctx.shadowBlur = 10;
-  ctx.fillText("Transparent: Light passes almost completely", centerX, 80);
+  ctx.fillText(t("canvas.labels.transparentTitle"), centerX, 80);
   ctx.shadowBlur = 0;
 
   // Component labels
@@ -876,13 +1862,13 @@ function drawTransparent(
   ctx.shadowBlur = 5;
   
   // Light source label
-  ctx.fillText("Light source", torchX, centerY + 50);
+  ctx.fillText(t("canvas.labels.lightSource"), torchX, centerY + 50);
   
   // Material type label
-  ctx.fillText("Transparent", materialX, centerY + 100);
+  ctx.fillText(t("canvas.labels.transparent"), materialX, centerY + 100);
   
   // Screen label (below the screen object)
-  ctx.fillText("Screen", screenX - 5, centerY + 120);
+  ctx.fillText(t("canvas.labels.screen"), screenX - 5, centerY + 120);
   
   ctx.shadowBlur = 0;
 }
@@ -891,7 +1877,8 @@ function drawTranslucent(
   ctx: CanvasRenderingContext2D,
   width: number,
   height: number,
-  progress: number
+  progress: number,
+  t: (key: string) => string
 ) {
   const centerX = width / 2;
   const centerY = height / 2;
@@ -992,7 +1979,7 @@ function drawTranslucent(
   ctx.textAlign = "center";
   ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
   ctx.shadowBlur = 10;
-  ctx.fillText("Translucent: Light passes partially", centerX, 80);
+  ctx.fillText(t("canvas.labels.translucentTitle"), centerX, 80);
   ctx.shadowBlur = 0;
 
   // Component labels
@@ -1003,13 +1990,13 @@ function drawTranslucent(
   ctx.shadowBlur = 5;
   
   // Light source label
-  ctx.fillText("Light source", torchX, centerY + 50);
+  ctx.fillText(t("canvas.labels.lightSource"), torchX, centerY + 50);
   
   // Material type label
-  ctx.fillText("Translucent", materialX, centerY + 100);
+  ctx.fillText(t("canvas.labels.translucent"), materialX, centerY + 100);
   
   // Screen label (below the screen object)
-  ctx.fillText("Screen", screenX - 5, centerY + 120);
+  ctx.fillText(t("canvas.labels.screen"), screenX - 5, centerY + 120);
   
   ctx.shadowBlur = 0;
 }
@@ -1018,7 +2005,8 @@ function drawOpaque(
   ctx: CanvasRenderingContext2D,
   width: number,
   height: number,
-  progress: number
+  progress: number,
+  t: (key: string) => string
 ) {
   const centerX = width / 2;
   const centerY = height / 2;
@@ -1098,7 +2086,7 @@ function drawOpaque(
   ctx.textAlign = "center";
   ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
   ctx.shadowBlur = 10;
-  ctx.fillText("Opaque: Light does NOT pass through", centerX, 80);
+  ctx.fillText(t("canvas.labels.opaqueTitle"), centerX, 80);
   ctx.shadowBlur = 0;
 
   // Component labels
@@ -1109,13 +2097,13 @@ function drawOpaque(
   ctx.shadowBlur = 5;
   
   // Light source label
-  ctx.fillText("Light source", torchX, centerY + 50);
+  ctx.fillText(t("canvas.labels.lightSource"), torchX, centerY + 50);
   
   // Material type label
-  ctx.fillText("Opaque", materialX, centerY + 100);
+  ctx.fillText(t("canvas.labels.opaque"), materialX, centerY + 100);
   
   // Screen label (below the screen object)
-  ctx.fillText("Screen", screenX - 5, centerY + 120);
+  ctx.fillText(t("canvas.labels.screen"), screenX - 5, centerY + 120);
   
   ctx.shadowBlur = 0;
 }
@@ -1124,7 +2112,8 @@ function drawConclusion(
   ctx: CanvasRenderingContext2D,
   width: number,
   height: number,
-  progress: number
+  progress: number,
+  t: (key: string) => string
 ) {
   const centerX = width / 2;
   const centerY = height / 2;
@@ -1158,9 +2147,9 @@ function drawConclusion(
 
   // Key points
   const points = [
-    { text: "Transparent: Light passes completely", y: centerY - 150 },
-    { text: "Translucent: Light passes partially", y: centerY + 120 },
-    { text: "Opaque: Light blocked completely", y: centerY + 170 },
+    { text: t("canvas.labels.transparentComplete"), y: centerY - 150 },
+    { text: t("canvas.labels.translucentComplete"), y: centerY + 120 },
+    { text: t("canvas.labels.opaqueComplete"), y: centerY + 170 },
   ];
 
   points.forEach((point, i) => {
@@ -1191,209 +2180,26 @@ function drawConclusion(
 
 // Practice Mode Component
 const PracticeMode: React.FC = () => {
-  const questions: PracticeQuestion[] = [
-    {
-      id: 1,
-      question: "Which type of material allows light to pass almost completely through it?",
-      options: [
-        "Opaque",
-        "Transparent",
-        "Translucent",
-        "Reflective"
-      ],
-      correctAnswer: 1,
-      explanation: "Transparent materials like clear glass allow light to pass almost completely through them, so we can see clearly through them.",
-      visualType: "transparent"
-    },
-    {
-      id: 2,
-      question: "What happens when light hits an opaque object?",
-      options: [
-        "Light passes completely through",
-        "Light passes partially through",
-        "Light does not pass through at all",
-        "Light speeds up"
-      ],
-      correctAnswer: 2,
-      explanation: "Opaque materials like wood or metal do not allow light to pass through them. This is why they form dark shadows.",
-      visualType: "opaque"
-    },
-    {
-      id: 3,
-      question: "Which of these is an example of a translucent material?",
-      options: [
-        "Clear window glass",
-        "Wooden door",
-        "Frosted glass",
-        "Metal plate"
-      ],
-      correctAnswer: 2,
-      explanation: "Frosted glass is translucent - it allows some light to pass through but scatters it, so you cannot see clearly through it.",
-      visualType: "translucent"
-    },
-    {
-      id: 4,
-      question: "Why do opaque objects form darker shadows than translucent objects?",
-      options: [
-        "Because they are bigger",
-        "Because they are heavier",
-        "Because they block all light completely",
-        "Because they reflect more light"
-      ],
-      correctAnswer: 2,
-      explanation: "Opaque objects block all the light that hits them, creating darker shadows. Translucent objects let some light through, so their shadows are lighter.",
-      visualType: "shadow"
-    },
-    {
-      id: 5,
-      question: "If you shine a torch through tracing paper, what type of material is the tracing paper?",
-      options: [
-        "Transparent",
-        "Translucent",
-        "Opaque",
-        "Luminous"
-      ],
-      correctAnswer: 1,
-      explanation: "Tracing paper is translucent. You can see light through it, but objects on the other side appear blurry because the light is scattered.",
-      visualType: "translucent"
-    },
-    {
-      id: 6,
-      question: "Which statement is TRUE about transparent materials?",
-      options: [
-        "They form the darkest shadows",
-        "They can create faint shadows",
-        "They never allow any light through",
-        "They always change the color of light"
-      ],
-      correctAnswer: 1,
-      explanation: "Even transparent materials can create faint shadows because they may absorb or reflect a small amount of light.",
-      visualType: "transparent"
-    },
-    {
-      id: 7,
-      question: "What is the main difference between transparent and translucent materials?",
-      options: [
-        "Transparent materials are always colored",
-        "You can see clearly through transparent materials but not through translucent ones",
-        "Translucent materials block all light",
-        "There is no difference"
-      ],
-      correctAnswer: 1,
-      explanation: "Transparent materials like clear glass allow you to see clearly through them, while translucent materials like frosted glass scatter light so you cannot see clearly through them.",
-      visualType: "comparison"
-    },
-    {
-      id: 8,
-      question: "Which of the following materials would block the most light?",
-      options: [
-        "Clear plastic bottle",
-        "Tissue paper",
-        "Cardboard",
-        "Clean water"
-      ],
-      correctAnswer: 2,
-      explanation: "Cardboard is an opaque material that blocks all light, while the others allow varying amounts of light to pass through.",
-      visualType: "opaque"
-    },
-    {
-      id: 9,
-      question: "A student places different objects between a torch and a screen. Which object will create NO shadow on the screen?",
-      options: [
-        "A clear glass plate",
-        "A book",
-        "Butter paper",
-        "None - all objects create some shadow"
-      ],
-      correctAnswer: 3,
-      explanation: "All objects create at least some shadow. Even transparent objects can create faint shadows because they absorb or reflect a small amount of light.",
-      visualType: "shadow"
-    },
-    {
-      id: 10,
-      question: "Why is frosted glass used in bathroom windows instead of clear glass?",
-      options: [
-        "It is cheaper than clear glass",
-        "It provides privacy while still allowing light to enter",
-        "It blocks all light completely",
-        "It is stronger than clear glass"
-      ],
-      correctAnswer: 1,
-      explanation: "Frosted glass is translucent - it scatters light so people cannot see clearly through it (providing privacy), but still allows light to pass through (keeping the room bright).",
-      visualType: "translucent"
-    },
-    {
-      id: 11,
-      question: "Which type of material would be best for making an umbrella?",
-      options: [
-        "Transparent material",
-        "Translucent material",
-        "Opaque material",
-        "Any material works equally well"
-      ],
-      correctAnswer: 2,
-      explanation: "Opaque materials are best for umbrellas because they block all light and rain completely, providing maximum protection from sun and rain.",
-      visualType: "opaque"
-    },
-    {
-      id: 12,
-      question: "A greenhouse is built using transparent glass. What is the main advantage of this?",
-      options: [
-        "Glass is the cheapest material",
-        "Maximum sunlight can reach the plants inside",
-        "It keeps the greenhouse very cold",
-        "It blocks all insects"
-      ],
-      correctAnswer: 1,
-      explanation: "Transparent glass allows almost all sunlight to pass through to the plants inside, while still protecting them from wind and cold. Plants need maximum sunlight for photosynthesis.",
-      visualType: "transparent"
-    },
-    {
-      id: 13,
-      question: "If you cannot see clearly through a material but light passes through it, the material is:",
-      options: [
-        "Transparent",
-        "Translucent",
-        "Opaque",
-        "Luminous"
-      ],
-      correctAnswer: 1,
-      explanation: "Translucent materials allow light to pass through but scatter it, so you cannot see clearly through them. Examples include frosted glass, butter paper, and thin fabric.",
-      visualType: "translucent"
-    },
-    {
-      id: 14,
-      question: "Which combination is CORRECT?",
-      options: [
-        "Clear water - Opaque, Cardboard - Transparent",
-        "Glass window - Transparent, Tracing paper - Translucent",
-        "Frosted glass - Opaque, Metal sheet - Transparent",
-        "Tissue paper - Opaque, Wood - Translucent"
-      ],
-      correctAnswer: 1,
-      explanation: "Glass windows are transparent (you can see clearly through them), and tracing paper is translucent (light passes through but you cannot see clearly).",
-      visualType: "comparison"
-    },
-    {
-      id: 15,
-      question: "What would happen if you replaced a transparent window with an opaque wall?",
-      options: [
-        "More light would enter the room",
-        "The same amount of light would enter",
-        "No natural light would enter the room",
-        "Only some light would enter"
-      ],
-      correctAnswer: 2,
-      explanation: "An opaque wall blocks all light completely. No natural light would be able to pass through it into the room, making the room dark during the day.",
-      visualType: "opaque"
-    }
-  ];
+  const { t, tValue } = useLanguage();
+  const questionsData = tValue("practice.questions");
+  
+  // Ensure questionsData is an array and properly typed
+  const questions: PracticeQuestion[] = Array.isArray(questionsData) 
+    ? (questionsData as unknown as PracticeQuestion[])
+    : [];
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
   const [answeredQuestions, setAnsweredQuestions] = useState<number[]>([]);
+
+  // Ensure currentQuestion is within valid range
+  useEffect(() => {
+    if (questions.length > 0 && currentQuestion >= questions.length) {
+      setCurrentQuestion(0);
+    }
+  }, [questions.length, currentQuestion]);
 
   const handleAnswerSelect = (answerIndex: number) => {
     if (!showResult) {
@@ -1403,7 +2209,10 @@ const PracticeMode: React.FC = () => {
 
   const handleCheckAnswer = () => {
     if (selectedAnswer === null) {
-      alert("Please select an answer!");
+      alert(t("practice.selectAnswer"));
+      return;
+    }
+    if (questions.length === 0 || !questions[currentQuestion]) {
       return;
     }
     setShowResult(true);
@@ -1453,10 +2262,10 @@ const PracticeMode: React.FC = () => {
               <CheckCircle className="w-24 h-24 text-green-500 mx-auto animate-bounce" />
             </div>
             <h2 className="text-4xl font-bold text-gray-800 mb-4">
-              Quiz Complete! 🎉
+              {t("practice.complete")} 🎉
             </h2>
             <p className="text-2xl text-gray-600 mb-3">
-              Your Final Score
+              {t("practice.finalScore")}
             </p>
             <p className="text-6xl font-bold bg-gradient-to-r from-blue-600 to-teal-600 bg-clip-text text-transparent mb-8">
               {score} / {questions.length}
@@ -1464,14 +2273,12 @@ const PracticeMode: React.FC = () => {
             <div className="mb-8">
               <p className="text-lg text-gray-700">
                 {percentage === 100
-                  ? "Perfect! You're a materials expert! 🌟"
+                  ? t("practice.scoreMessages.perfect")
                   : percentage >= 80
-                  ? "Excellent! You have a great understanding! 🎊"
-                  : percentage >= 70
-                  ? "Great job! You understand materials well! 🎉"
+                  ? t("practice.scoreMessages.great")
                   : percentage >= 60
-                  ? "Good effort! Keep learning! 📚"
-                  : "Keep practicing to improve! 💪"}
+                  ? t("practice.scoreMessages.good")
+                  : t("practice.scoreMessages.keepLearning")}
               </p>
             </div>
             <div className="flex gap-4 justify-center">
@@ -1479,7 +2286,7 @@ const PracticeMode: React.FC = () => {
                 onClick={handleRestart}
                 className="px-10 py-4 bg-gradient-to-r from-blue-600 to-teal-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg hover:scale-105 transition-all"
               >
-                Try Again
+                {t("practice.restart")}
               </button>
             </div>
           </div>
@@ -1488,7 +2295,31 @@ const PracticeMode: React.FC = () => {
     );
   }
 
-  const question = questions[currentQuestion];
+  // Safety check: if no questions, show loading message
+  if (questions.length === 0) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-teal-50 to-blue-50 flex items-center justify-center p-4">
+        <div className="bg-white rounded-2xl shadow-xl p-8 max-w-2xl w-full text-center">
+          <p className="text-xl text-gray-600">{t("practice.loading")}</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Clamp currentQuestion to valid range
+  const validQuestionIndex = Math.min(currentQuestion, Math.max(0, questions.length - 1));
+  const question = questions[validQuestionIndex];
+  
+  if (!question) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-teal-50 to-blue-50 flex items-center justify-center p-4">
+        <div className="bg-white rounded-2xl shadow-xl p-8 max-w-2xl w-full text-center">
+          <p className="text-xl text-gray-600">{t("practice.loading")}</p>
+        </div>
+      </div>
+    );
+  }
+
   const isCorrect = showResult && selectedAnswer === question.correctAnswer;
 
   return (
@@ -1496,14 +2327,14 @@ const PracticeMode: React.FC = () => {
       <div className="max-w-5xl mx-auto py-8">
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
           <div className="bg-gradient-to-r from-blue-500 via-teal-500 to-blue-500 text-white p-6">
-            <h2 className="text-3xl font-bold mb-2">Practice: Materials & Light</h2>
-            <p className="text-blue-100 text-lg">Test your understanding of transparent, translucent, and opaque materials</p>
+            <h2 className="text-3xl font-bold mb-2">{t("practice.title")}</h2>
+            <p className="text-blue-100 text-lg">{t("practice.subtitle")}</p>
             <div className="mt-6 flex justify-between items-center flex-wrap gap-4">
               <span className="text-sm bg-white/20 px-5 py-2.5 rounded-full font-semibold">
-                Question {currentQuestion + 1} / {questions.length}
+                {t("practice.question")} {currentQuestion + 1} / {questions.length}
               </span>
               <span className="text-sm bg-white/20 px-5 py-2.5 rounded-full font-semibold">
-                Score: {score} / {answeredQuestions.length}
+                {t("practice.score")}: {score} / {answeredQuestions.length}
               </span>
             </div>
           </div>
@@ -1592,10 +2423,10 @@ const PracticeMode: React.FC = () => {
                   )}
                   <div>
                     <p className="font-bold text-xl mb-2">
-                      {isCorrect ? "Correct! 🎉" : "Not quite right"}
+                      {isCorrect ? t("practice.correct") : t("practice.incorrect")}
                     </p>
                     <p className="text-gray-800 leading-relaxed">
-                      <span className="font-semibold">Explanation: </span>
+                      <span className="font-semibold">{t("practice.explanation")} </span>
                       {question.explanation}
                     </p>
                   </div>
@@ -1609,7 +2440,7 @@ const PracticeMode: React.FC = () => {
                 disabled={currentQuestion === 0}
                 className="px-6 py-3 bg-gray-200 text-gray-700 rounded-xl font-semibold hover:bg-gray-300 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                ← Previous
+                ← {t("controls.previous")}
               </button>
               
               <div className="flex-1 flex gap-4">
@@ -1619,7 +2450,7 @@ const PracticeMode: React.FC = () => {
                     disabled={selectedAnswer === null}
                     className="flex-1 px-8 py-4 bg-gradient-to-r from-blue-600 to-teal-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    Check Answer
+                    {t("practice.checkAnswer")}
                   </button>
                 ) : (
                   <button
@@ -1627,26 +2458,12 @@ const PracticeMode: React.FC = () => {
                     disabled={currentQuestion === questions.length - 1}
                     className="flex-1 px-8 py-4 bg-gradient-to-r from-blue-600 to-teal-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    Next Question
+                    {t("practice.nextQuestion")}
                   </button>
                 )}
               </div>
             </div>
           </div>
-        </div>
-
-        <div className="mt-6 bg-white rounded-full p-2 shadow-md">
-          <div className="relative h-4 bg-gray-200 rounded-full overflow-hidden">
-            <div
-              className="absolute top-0 left-0 h-full bg-gradient-to-r from-blue-500 to-teal-500 transition-all duration-500"
-              style={{
-                width: `${(answeredQuestions.length / questions.length) * 100}%`,
-              }}
-            />
-          </div>
-          <p className="text-center text-sm text-gray-600 mt-2">
-            {answeredQuestions.length} of {questions.length} questions answered
-          </p>
         </div>
       </div>
     </div>
@@ -1655,227 +2472,26 @@ const PracticeMode: React.FC = () => {
 
 // Real World Applications Component
 const RealWorldMode: React.FC = () => {
+  const { t, tValue } = useLanguage();
   const [filterCategory, setFilterCategory] = useState<string>("all");
   const [filterMaterial, setFilterMaterial] = useState<string>("all");
 
-  const applications: RealWorldApp[] = [
-    {
-      id: 1,
-      title: "Windows & Doors",
-      description: "Homes use transparent glass for windows to let light in while protecting from weather. Frosted or translucent glass is used for bathroom windows for privacy while still allowing light.",
-      icon: "🏠",
-      category: "Architecture",
-      example: "Clear glass windows let you see outside, while frosted bathroom windows give privacy",
-      materialType: "mixed"
-    },
-    {
-      id: 2,
-      title: "Greenhouses",
-      description: "Greenhouses use transparent materials like glass or clear plastic to allow maximum sunlight to reach plants while protecting them from cold and wind.",
-      icon: "🌱",
-      category: "Agriculture",
-      example: "Farmers grow vegetables year-round in transparent greenhouses",
-      materialType: "transparent"
-    },
-    {
-      id: 3,
-      title: "Sunglasses & Goggles",
-      description: "Sunglasses use translucent tinted materials that block some light to protect eyes from bright sunlight while still allowing us to see clearly.",
-      icon: "🕶️",
-      category: "Eye Protection",
-      example: "Sunglasses reduce bright sunlight but you can still see through them",
-      materialType: "translucent"
-    },
-    {
-      id: 4,
-      title: "Lampshades",
-      description: "Lampshades are often made from translucent materials that soften and diffuse light, creating pleasant ambient lighting instead of harsh direct light.",
-      icon: "💡",
-      category: "Lighting",
-      example: "Paper lampshades spread light evenly across a room",
-      materialType: "translucent"
-    },
-    {
-      id: 5,
-      title: "Privacy Screens",
-      description: "Office dividers and hospital curtains use translucent materials to provide privacy while still allowing light to pass through, keeping spaces bright.",
-      icon: "🏥",
-      category: "Privacy",
-      example: "Hospital curtains around beds let light through but hide patients",
-      materialType: "translucent"
-    },
-    {
-      id: 6,
-      title: "Curtains & Blinds",
-      description: "Homes use different materials - transparent curtains for light, translucent ones for soft light with privacy, and opaque blinds to block light completely for sleeping.",
-      icon: "🪟",
-      category: "Home Design",
-      example: "Thick curtains block morning sunlight so you can sleep longer",
-      materialType: "mixed"
-    },
-    {
-      id: 7,
-      title: "Camera Filters",
-      description: "Photographers use transparent and translucent filters on cameras to control how much light enters, creating different effects in photos.",
-      icon: "📷",
-      category: "Photography",
-      example: "UV filters protect camera lenses while still allowing light through",
-      materialType: "transparent"
-    },
-    {
-      id: 8,
-      title: "Solar Panels",
-      description: "Solar panels have a transparent glass cover that lets sunlight reach the solar cells inside while protecting them from rain and damage.",
-      icon: "☀️",
-      category: "Energy",
-      example: "Clear glass on solar panels lets maximum sunlight in to generate electricity",
-      materialType: "transparent"
-    },
-    {
-      id: 9,
-      title: "Food Packaging",
-      description: "Clear plastic packaging for fruits and vegetables is transparent so shoppers can see the food inside. Some packaging is translucent to protect sensitive items from too much light.",
-      icon: "🥗",
-      category: "Food Industry",
-      example: "Transparent plastic boxes let you check if strawberries are fresh",
-      materialType: "transparent"
-    },
-    {
-      id: 10,
-      title: "Aquariums",
-      description: "Aquarium walls are made of transparent glass or acrylic so we can observe fish and marine life clearly while keeping water contained.",
-      icon: "🐠",
-      category: "Entertainment",
-      example: "Thick transparent glass in aquariums lets visitors see underwater creatures",
-      materialType: "transparent"
-    },
-    {
-      id: 11,
-      title: "Umbrellas",
-      description: "Most umbrellas use opaque fabric to completely block rain and sunlight, while some decorative umbrellas use translucent materials for style.",
-      icon: "☂️",
-      category: "Daily Use",
-      example: "Black opaque umbrellas block all sunlight and rain",
-      materialType: "opaque"
-    },
-    {
-      id: 12,
-      title: "Traffic Signals",
-      description: "Traffic light covers use translucent colored materials (red, yellow, green) that allow light to shine through while adding color for different signals.",
-      icon: "🚦",
-      category: "Transportation",
-      example: "Red translucent covers let light through but make it appear red",
-      materialType: "translucent"
-    },
-    {
-      id: 13,
-      title: "Book Covers",
-      description: "Books use opaque covers to protect pages from light, dust, and damage. The pages inside are also opaque so text on one side doesn't show through to the other.",
-      icon: "📚",
-      category: "Education",
-      example: "Cardboard book covers completely block light and protect pages",
-      materialType: "opaque"
-    },
-    {
-      id: 14,
-      title: "Car Windshields",
-      description: "Car windshields are made of transparent glass or plastic so drivers can see clearly. Side windows may have translucent tinting to reduce glare and heat.",
-      icon: "🚗",
-      category: "Transportation",
-      example: "Clear windshields provide full visibility for safe driving",
-      materialType: "mixed"
-    },
-    {
-      id: 15,
-      title: "Stained Glass Windows",
-      description: "Churches and decorative buildings use translucent colored glass that creates beautiful patterns with light while partially obscuring the view.",
-      icon: "⛪",
-      category: "Art & Architecture",
-      example: "Colored glass in churches creates colorful light patterns inside",
-      materialType: "translucent"
-    },
-    {
-      id: 16,
-      title: "Swimming Pool Covers",
-      description: "Pool covers are usually opaque to block sunlight, preventing algae growth and reducing water evaporation. Some safety covers use translucent materials.",
-      icon: "🏊",
-      category: "Recreation",
-      example: "Opaque pool covers keep water clean by blocking sunlight",
-      materialType: "opaque"
-    },
-    {
-      id: 17,
-      title: "X-Ray Films",
-      description: "Medical X-ray films are translucent, allowing doctors to see bones and internal structures when light is shone through them.",
-      icon: "🏥",
-      category: "Medical",
-      example: "Doctors hold X-ray films up to light to see bone fractures",
-      materialType: "translucent"
-    },
-    {
-      id: 18,
-      title: "Smartphone Screens",
-      description: "Phone screens use transparent glass or plastic over the display, allowing you to see images clearly while protecting the electronics inside.",
-      icon: "📱",
-      category: "Technology",
-      example: "Transparent screen protectors shield your phone while letting you see the display",
-      materialType: "transparent"
-    },
-    {
-      id: 19,
-      title: "Tents & Camping Gear",
-      description: "Tent fabric is opaque to provide shade and privacy. Some tents have transparent windows for ventilation and to see outside.",
-      icon: "⛺",
-      category: "Outdoor Activities",
-      example: "Opaque tent walls provide shelter and privacy while camping",
-      materialType: "mixed"
-    },
-    {
-      id: 20,
-      title: "Glasses & Contact Lenses",
-      description: "Eyeglasses and contact lenses are made of transparent materials to correct vision without blocking sight. They allow light to pass through clearly.",
-      icon: "👓",
-      category: "Vision Correction",
-      example: "Transparent lenses help you see clearly without blocking your view",
-      materialType: "transparent"
-    },
-    {
-      id: 21,
-      title: "Plastic Bottles",
-      description: "Water bottles are transparent so you can see the contents and check cleanliness. Milk bottles may be translucent to protect from light damage.",
-      icon: "🍶",
-      category: "Packaging",
-      example: "Clear plastic bottles let you see how much water is left",
-      materialType: "transparent"
-    },
-    {
-      id: 22,
-      title: "Shower Doors",
-      description: "Bathrooms use frosted or textured translucent glass for shower doors to provide privacy while still allowing light to enter the shower area.",
-      icon: "🚿",
-      category: "Home Design",
-      example: "Frosted shower doors give privacy but keep the bathroom bright",
-      materialType: "translucent"
-    },
-    {
-      id: 23,
-      title: "Projection Screens",
-      description: "Movie theater screens are typically opaque white surfaces that reflect projected light to create bright, clear images for viewers.",
-      icon: "🎬",
-      category: "Entertainment",
-      example: "White opaque screens in theaters reflect movie projector light",
-      materialType: "opaque"
-    },
-    {
-      id: 24,
-      title: "Diving Masks",
-      description: "Scuba diving and snorkeling masks use transparent glass or plastic so divers can see underwater clearly while protecting their eyes.",
-      icon: "🤿",
-      category: "Water Sports",
-      example: "Clear diving masks let you see colorful fish and coral underwater",
-      materialType: "transparent"
-    }
-  ];
+  const applicationsData = tValue("realWorld.applications");
+  
+  // Ensure applicationsData is an array
+  const applications: RealWorldApp[] = Array.isArray(applicationsData)
+    ? (applicationsData as Array<{
+        id: number;
+        title: string;
+        description: string;
+        icon: string;
+        category: string;
+        example: string;
+      }>).map(app => ({
+        ...app,
+        materialType: "mixed" as const, // Default, can be enhanced later
+      }))
+    : [];
 
   const categories = ["all", ...Array.from(new Set(applications.map(app => app.category)))];
   const materials = ["all", "transparent", "translucent", "opaque", "mixed"];
@@ -1909,10 +2525,10 @@ const RealWorldMode: React.FC = () => {
           <div className="bg-gradient-to-r from-blue-500 via-teal-500 to-blue-500 text-white p-8">
             <div className="flex items-center gap-3 mb-4">
               <Globe className="w-10 h-10" />
-              <h2 className="text-4xl font-bold">Real World Applications</h2>
+              <h2 className="text-4xl font-bold">{t("realWorld.title")}</h2>
             </div>
             <p className="text-blue-100 text-xl">
-              Discover how transparent, translucent, and opaque materials are used in everyday life
+              {t("realWorld.subtitle")}
             </p>
           </div>
 
@@ -1930,7 +2546,7 @@ const RealWorldMode: React.FC = () => {
                 >
                   {categories.map(cat => (
                     <option key={cat} value={cat}>
-                      {cat === "all" ? "All Categories" : cat}
+                      {cat === "all" ? t("realWorld.allCategories") : cat}
                     </option>
                   ))}
                 </select>
@@ -1955,7 +2571,7 @@ const RealWorldMode: React.FC = () => {
             </div>
 
             <div className="mt-4 text-sm text-gray-600">
-              Showing {filteredApplications.length} of {applications.length} applications
+              Showing {filteredApplications.length} {t("controls.of")} {applications.length} applications
             </div>
           </div>
         </div>
@@ -1989,7 +2605,7 @@ const RealWorldMode: React.FC = () => {
 
               <div className="bg-gradient-to-r from-blue-50 to-teal-50 rounded-lg p-4 border-l-4 border-blue-500">
                 <p className="text-sm text-gray-700">
-                  <span className="font-semibold">💡 Example: </span>
+                  <span className="font-semibold">💡 {t("realWorld.example")} </span>
                   {app.example}
                 </p>
               </div>
@@ -2001,7 +2617,7 @@ const RealWorldMode: React.FC = () => {
         {filteredApplications.length === 0 && (
           <div className="text-center py-12">
             <p className="text-xl text-gray-600">
-              No applications found with the selected filters.
+              {t("realWorld.loading")}
             </p>
             <button
               onClick={() => {
@@ -2010,7 +2626,7 @@ const RealWorldMode: React.FC = () => {
               }}
               className="mt-4 px-6 py-3 bg-gradient-to-r from-blue-600 to-teal-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all"
             >
-              Reset Filters
+              {t("controls.reset")}
             </button>
           </div>
         )}
@@ -2054,6 +2670,7 @@ const RealWorldMode: React.FC = () => {
 // Main App Component (internal, uses LanguageProvider)
 const MainApp: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabType>("learn");
+  const { t } = useLanguage();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-teal-50 to-blue-50">
@@ -2063,7 +2680,7 @@ const MainApp: React.FC = () => {
             <div className="flex items-center gap-2">
               <Lightbulb className="w-6 h-6 text-blue-600" />
               <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-teal-600 bg-clip-text text-transparent">
-                Light & Materials
+                {t("nav.logo")}
               </span>
             </div>
 
@@ -2078,7 +2695,7 @@ const MainApp: React.FC = () => {
                   }`}
                 >
                   <BookOpen className="w-5 h-5" />
-                  Learn
+                  {t("nav.tabs.learn")}
                 </button>
                 <button
                   onClick={() => setActiveTab("practice")}
@@ -2089,7 +2706,7 @@ const MainApp: React.FC = () => {
                   }`}
                 >
                   <ClipboardCheck className="w-5 h-5" />
-                  Practice
+                  {t("nav.tabs.practice")}
                 </button>
                 <button
                   onClick={() => setActiveTab("realWorld")}
@@ -2100,7 +2717,7 @@ const MainApp: React.FC = () => {
                   }`}
                 >
                   <Globe className="w-5 h-5" />
-                  Real World
+                  {t("nav.tabs.realWorld")}
                 </button>
               </div>
               <LanguageSelector />

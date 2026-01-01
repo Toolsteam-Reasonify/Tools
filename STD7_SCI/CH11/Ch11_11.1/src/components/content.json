@@ -2755,25 +2755,98 @@
         }
       },
       "practice": {
-        "title": "Practice Exercise",
-        "subtitle": "Answer the following questions to test your understanding.",
+        "title": "Practice Questions",
+        "subtitle": "Test your understanding of light sources",
         "question": "Question",
         "score": "Score",
-        "correct": "Correct!",
-        "incorrect": "Incorrect",
-        "explanation": "Explanation",
+        "selectAnswer": "Please select an answer",
         "checkAnswer": "Check Answer",
         "nextQuestion": "Next Question",
-        "selectAnswer": "Please select an answer first",
-        "complete": "Practice Complete!",
+        "correct": "Correct!",
+        "incorrect": "Incorrect",
+        "explanation": "Explanation:",
+        "complete": "Quiz Complete!",
         "finalScore": "Your Final Score",
-        "restart": "Restart Practice",
-        "questions": []
+        "restart": "Restart Quiz",
+        "questions": [
+          {
+            "id": 1,
+            "question": "Which of the following is a luminous object?",
+            "options": ["Moon", "Sun", "Earth", "Wall"],
+            "correctAnswer": 1,
+            "explanation": "The Sun is a luminous object because it emits its own light. The Moon, Earth, and wall are non-luminous objects that only reflect light."
+          },
+          {
+            "id": 2,
+            "question": "Why can we see the Moon at night?",
+            "options": ["The Moon produces its own light", "The Moon reflects sunlight", "The Moon absorbs light during the day", "The Moon is transparent"],
+            "correctAnswer": 1,
+            "explanation": "The Moon is non-luminous. We see it because it reflects sunlight that falls on its surface."
+          },
+          {
+            "id": 3,
+            "question": "Which is a natural source of light?",
+            "options": ["LED Lamp", "Electric Bulb", "Lightning", "Torch"],
+            "correctAnswer": 2,
+            "explanation": "Lightning is a natural phenomenon that produces light through electrical discharge in the atmosphere. All other options are artificial light sources."
+          },
+          {
+            "id": 4,
+            "question": "What is the main advantage of LED lamps?",
+            "options": ["They are larger in size", "They consume less power and last longer", "They produce more heat", "They are more expensive"],
+            "correctAnswer": 1,
+            "explanation": "LED lamps consume 75% less power than traditional bulbs, last 25 times longer, and are more energy-efficient."
+          },
+          {
+            "id": 5,
+            "question": "Fireflies produce light through:",
+            "options": ["Reflection", "Bioluminescence", "Electricity", "Fire"],
+            "correctAnswer": 1,
+            "explanation": "Fireflies create light through bioluminescence - a chemical reaction in their bodies that produces light."
+          }
+        ]
       },
       "realWorld": {
         "title": "Real World Applications",
-        "subtitle": "Discover how sources of light are used in everyday life",
-        "applications": []
+        "subtitle": "Discover how light sources are used in everyday life",
+        "applications": [
+          {
+            "id": 1,
+            "title": "LED Street Lighting",
+            "description": "Cities worldwide are replacing traditional street lights with LED lamps. This saves energy, reduces costs, and provides better illumination. India's LED street light program has saved billions in electricity costs.",
+            "icon": "💡"
+          },
+          {
+            "id": 2,
+            "title": "Solar Power",
+            "description": "The Sun's light is converted into electricity using solar panels. This renewable energy source is clean, sustainable, and helps reduce dependence on fossil fuels.",
+            "icon": "☀️"
+          },
+          {
+            "id": 3,
+            "title": "Bioluminescence in Nature",
+            "description": "Many marine creatures like jellyfish and deep-sea fish use bioluminescence to attract prey, communicate, or defend themselves. Scientists study these natural lights for medical and technological applications.",
+            "icon": "🌊"
+          },
+          {
+            "id": 4,
+            "title": "Medical Applications",
+            "description": "LED lights are used in medical devices, phototherapy for treating skin conditions, and surgical lighting. Specialized lights help doctors see better and treat patients effectively.",
+            "icon": "🏥"
+          },
+          {
+            "id": 5,
+            "title": "Communication Technology",
+            "description": "Fiber optic cables use light to transmit data at incredible speeds. This technology enables high-speed internet, phone calls, and data transmission worldwide.",
+            "icon": "📡"
+          },
+          {
+            "id": 6,
+            "title": "Agriculture & Growth",
+            "description": "LED grow lights help farmers grow crops indoors and extend growing seasons. Different colored lights optimize plant growth, making agriculture more efficient and sustainable.",
+            "icon": "🌱"
+          }
+        ]
       }
     },
     "Learn": "Learn",
