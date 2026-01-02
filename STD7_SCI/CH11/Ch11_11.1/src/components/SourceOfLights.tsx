@@ -172,7 +172,7 @@ interface TranslationData {
     };
   };
   canvas: {
-    [key: string]: any;
+    [key: string]: unknown;
   };
   practice: {
     title: string;
@@ -1290,41 +1290,40 @@ const SourcesOfLight: React.FC<SourcesOfLightProps> = ({
               </span>
             </div>
 
-            {/* Mode Buttons */}
-            <div className="flex items-center gap-2 mx-2 sm:mx-4">
-              <button
-                onClick={() => setCurrentMode("learn")}
-                className={`px-3 sm:px-4 py-2 rounded-lg font-semibold text-sm sm:text-base transition-all ${
-                  activeMode === "learn"
-                    ? "bg-gradient-to-r from-blue-600 to-teal-600 text-white shadow-lg"
-                    : "bg-white text-gray-700 hover:bg-gray-100"
-                }`}
-              >
-                {String(t("nav.tabs.learn") || "Learn")}
-              </button>
-              <button
-                onClick={() => setCurrentMode("practice")}
-                className={`px-3 sm:px-4 py-2 rounded-lg font-semibold text-sm sm:text-base transition-all ${
-                  activeMode === "practice"
-                    ? "bg-gradient-to-r from-blue-600 to-teal-600 text-white shadow-lg"
-                    : "bg-white text-gray-700 hover:bg-gray-100"
-                }`}
-              >
-                {String(t("nav.tabs.practice") || "Practice")}
-              </button>
-              <button
-                onClick={() => setCurrentMode("real_world")}
-                className={`px-3 sm:px-4 py-2 rounded-lg font-semibold text-sm sm:text-base transition-all ${
-                  activeMode === "real_world"
-                    ? "bg-gradient-to-r from-blue-600 to-teal-600 text-white shadow-lg"
-                    : "bg-white text-gray-700 hover:bg-gray-100"
-                }`}
-              >
-                {String(t("nav.tabs.real_world") || "Real World")}
-              </button>
-            </div>
-
-            <div className="ml-auto flex items-center gap-4">
+            <div className="ml-auto flex items-center gap-2 sm:gap-4">
+              {/* Mode Buttons */}
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setCurrentMode("learn")}
+                  className={`px-3 sm:px-4 py-2 rounded-lg font-semibold text-sm sm:text-base transition-all ${
+                    activeMode === "learn"
+                      ? "bg-gradient-to-r from-blue-600 to-teal-600 text-white shadow-lg"
+                      : "bg-white text-gray-700 hover:bg-gray-100"
+                  }`}
+                >
+                  {String(t("nav.tabs.learn") || "Learn")}
+                </button>
+                <button
+                  onClick={() => setCurrentMode("practice")}
+                  className={`px-3 sm:px-4 py-2 rounded-lg font-semibold text-sm sm:text-base transition-all ${
+                    activeMode === "practice"
+                      ? "bg-gradient-to-r from-blue-600 to-teal-600 text-white shadow-lg"
+                      : "bg-white text-gray-700 hover:bg-gray-100"
+                  }`}
+                >
+                  {String(t("nav.tabs.practice") || "Practice")}
+                </button>
+                <button
+                  onClick={() => setCurrentMode("real_world")}
+                  className={`px-3 sm:px-4 py-2 rounded-lg font-semibold text-sm sm:text-base transition-all ${
+                    activeMode === "real_world"
+                      ? "bg-gradient-to-r from-blue-600 to-teal-600 text-white shadow-lg"
+                      : "bg-white text-gray-700 hover:bg-gray-100"
+                  }`}
+                >
+                  {String(t("nav.tabs.real_world") || "Real World")}
+                </button>
+              </div>
               <LanguageSelector />
             </div>
           </div>

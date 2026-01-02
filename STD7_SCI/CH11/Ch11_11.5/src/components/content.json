@@ -2867,6 +2867,7 @@
         "controls": {
           "showRays": "Show Light Rays",
           "dragHelper": "Drag the light, object, and screen to see shadows change!",
+          "screenLabel": "Screen (Drag me!)",
           "lightLabel": "Light",
           "dragObject": "Drag me!"
         },
@@ -2887,9 +2888,123 @@
           "positionObject": "Position the object between the light source and the screen to see its shadow!"
         }
       },
+      "learn": {
+        "title": "✨ Reflection of Light ✨",
+        "subtitle": "Interactive demonstrations of how light reflects off surfaces",
+        "demos": {
+          "law": "📐 Law of Reflection",
+          "types": "🔄 Types of Reflection"
+        },
+        "canvas": {
+          "normal": "Normal",
+          "incidentRay": "Incident Ray",
+          "reflectedRay": "Reflected Ray",
+          "incidentAngle": "∠i = {{angle}}°",
+          "reflectedAngle": "∠r = {{angle}}°"
+        },
+        "controls": {
+          "title": "⚙️ Controls",
+          "angleOfIncidence": "Angle of Incidence:",
+          "showNormalLine": "Show Normal Line",
+          "showAngleMeasurements": "Show Angle Measurements",
+          "animateLightTravel": "Animate Light Travel"
+        },
+        "concepts": {
+          "title": "📚 Key Concepts",
+          "law": {
+            "title": "The Law of Reflection",
+            "description": "states that when light reflects off a surface:",
+            "point1": "The incident ray, reflected ray, and normal all lie in the same plane",
+            "point2": "The angle of incidence (∠i) equals the angle of reflection (∠r)",
+            "point3": "Both angles are measured from the normal (perpendicular line to the surface)",
+            "redRay": "Red ray:",
+            "redRayDesc": "Incident light approaching the mirror",
+            "greenRay": "Green ray:",
+            "greenRayDesc": "Reflected light bouncing off the mirror",
+            "yellowLine": "Yellow dashed line:",
+            "yellowLineDesc": "Normal (perpendicular to surface)"
+          },
+          "types": {
+            "regularTitle": "Regular (Specular) Reflection:",
+            "regularDesc": "Occurs on smooth surfaces like mirrors and calm water. Parallel incident rays remain parallel after reflection, creating clear images.",
+            "diffuseTitle": "Diffuse Reflection:",
+            "diffuseDesc": "Occurs on rough surfaces like paper, walls, and clothing. Parallel incident rays scatter in different directions, which is why we can see most objects from any angle but they don't form clear reflections."
+          }
+        },
+        "infoBox": {
+          "lawTitle": "Law of Reflection:",
+          "lawFormula": "∠i = ∠r",
+          "lawDesc1": "Angle of incidence equals",
+          "lawDesc2": "angle of reflection"
+        },
+        "types": {
+          "regularTitle": "Regular Reflection",
+          "diffuseTitle": "Diffuse Reflection",
+          "smoothSurface": "Smooth Surface",
+          "roughSurface": "Rough Surface",
+          "regularDesc": "Parallel incident rays remain parallel after reflection",
+          "diffuseDesc": "Parallel incident rays scatter in different directions"
+        }
+      },
       "practice": {
-        "title": "🌍 Shadows in Real World",
-        "subtitle": "Discover how shadow formation affects our daily lives",
+        "title": "Practice Mode",
+        "subtitle": "Test your knowledge",
+        "stats": {
+          "score": "Score",
+          "accuracy": "Accuracy",
+          "progress": "Progress"
+        },
+        "exercise": "Exercise {{num}}",
+        "difficulty": {
+          "easy": "Easy",
+          "medium": "Medium",
+          "hard": "Hard"
+        },
+        "completed": "Completed",
+        "restart": "Restart",
+        "submitAnswer": "Submit Answer",
+        "nextExercise": "Next Exercise",
+        "completedAll": "Completed All",
+        "overview": "Overview",
+        "congratulations": "Congratulations!",
+        "completedAllText": "You completed all exercises! Score: {{score}}/{{total}}",
+        "accuracyLabel": "Accuracy",
+        "excellent": "Excellent!",
+        "notQuiteRight": "Not Quite Right",
+        "interactive": {
+          "mirrorAngle": "Mirror Angle:",
+          "tip": "Adjust the mirror angle to reflect light to the target",
+          "lightSource": "Light Source",
+          "mirror": "Mirror ({{angle}}°)",
+          "target": "Target",
+          "perfect": "Perfect!"
+        },
+        "drawing": {
+          "instruction": "Draw the reflected ray on the canvas",
+          "clearDrawing": "Clear Drawing",
+          "tip": "Draw the reflected ray starting from the mirror"
+        },
+        "trueFalse": {
+          "true": "True",
+          "false": "False"
+        },
+        "overview": {
+          "title": "Practice Overview",
+          "subtitle": "Review your performance",
+          "backToPractice": "Back to Practice",
+          "correct": "Correct",
+          "incorrect": "Incorrect",
+          "accuracy": "Accuracy",
+          "exerciseList": "Exercise List",
+          "yourAnswer": "Your Answer",
+          "notAnswered": "Not Answered",
+          "correctAnswer": "Correct Answer",
+          "explanation": "Explanation",
+          "drawn": "Drawn",
+          "notDrawn": "Not Drawn",
+          "drawingRequired": "Drawing Required",
+          "viewOverview": "View Overview"
+        },
         "scenarios": [
           {
             "id": 1,
@@ -3076,11 +3191,17 @@
       },
       "realWorld": {
         "title": "Real World Applications",
-        "subtitle": "Discover how the straight-line property of light is used in everyday life",
+        "subtitle": "Discover how reflection of light is used in everyday life",
+        "previous": "Previous",
+        "next": "Next",
+        "keyTakeaway": "Key Takeaway",
+        "keyTakeawayText": "Reflection of light is not just a physics concept - it's a fundamental principle that powers countless technologies we use every day.",
+        "howItWorks": "How Does It Work?",
+        "funFacts": "Fun Facts",
+        "example": "Example:",
         "searchPlaceholder": "Search applications...",
         "allCategories": "All Categories",
         "loading": "Loading applications...",
-        "example": "Example:",
         "applications": [
           {
             "id": 1,

@@ -108,193 +108,6 @@
         "subtitle": "Both experiments confirm this important property of light"
       }
     },
-    "practice": {
-      "title": "🌍 Shadows in Real World",
-      "subtitle": "Discover how shadow formation affects our daily lives",
-      "scenarios": [
-        {
-          "id": 1,
-          "title": "Shadow Play Performance",
-          "situation": "Priya is performing shadow puppetry (Togalu Gombeyaata) for her school's cultural program. She notices that when she moves the puppet closer to the light source, something interesting happens to the shadow on the screen.",
-          "question": "What should Priya do to make the shadow of her puppet appear LARGER on the screen?",
-          "options": [
-            "Move the puppet closer to the screen",
-            "Move the puppet closer to the light source",
-            "Move the light source closer to the screen",
-            "Use a brighter light"
-          ],
-          "correctAnswer": 1,
-          "explanation": "When Priya moves the puppet closer to the light source (keeping the screen fixed), the shadow becomes larger. This is because light rays from the source spread out more after passing around the puppet, creating a bigger shadow on the screen. Shadow puppeteers use this principle to control the size of their characters!",
-          "realWorldTip": "Traditional Indian shadow puppetry forms like Tholu Bommalata (Andhra Pradesh), Togalu Gombeyaata (Karnataka), and Ravana Chhaya (Odisha) have been using this principle for centuries to create dramatic effects in their performances!",
-          "imageEmoji": "🎭"
-        },
-        {
-          "id": 2,
-          "title": "Cricket Match at Sunset",
-          "situation": "Rohan and his friends are playing cricket in the evening. As the Sun gets lower in the sky, Rohan notices that their shadows on the ground are getting much longer compared to when they were playing at noon.",
-          "question": "Why do shadows become longer in the evening compared to noon?",
-          "options": [
-            "People grow taller in the evening",
-            "The Sun is lower in the sky, creating a different angle of light",
-            "The ground becomes softer in the evening",
-            "There is more dust in the air during evening"
-          ],
-          "correctAnswer": 1,
-          "explanation": "At noon, the Sun is high in the sky, almost directly overhead. Light falls at a steep angle, creating short shadows. In the evening, the Sun is lower near the horizon. Light travels at a shallow angle, similar to how Priya's puppet creates a larger shadow when the light source is positioned differently. This is why shadows are shortest at noon and longest during sunrise and sunset!",
-          "realWorldTip": "This is why photographers prefer 'golden hour' (early morning or late evening) for outdoor photography - the long, soft shadows add depth and drama to pictures!",
-          "imageEmoji": "🏏"
-        },
-        {
-          "id": 3,
-          "title": "Traffic Signal Safety",
-          "situation": "Kavya notices that at a busy traffic intersection, there are very tall streetlights. Her uncle explains that these lights are positioned high up for a good reason related to shadows.",
-          "question": "Why are streetlights placed high above the ground at traffic intersections?",
-          "options": [
-            "To make them look more decorative",
-            "To minimize shadows on the road and improve visibility",
-            "To save electricity",
-            "To protect them from damage"
-          ],
-          "correctAnswer": 1,
-          "explanation": "When light sources are placed high, shadows of objects (like vehicles, poles, and people) become smaller and less prominent. This reduces dark patches on the road and improves visibility for all road users. If lights were placed low, they would create large, confusing shadows that could hide hazards and make driving dangerous. The positioning of the light source directly affects shadow size and road safety!",
-          "realWorldTip": "Modern street lighting design considers shadow formation carefully. LED streetlights are positioned to minimize shadows while providing even illumination, making roads safer at night!",
-          "imageEmoji": "🚦"
-        },
-        {
-          "id": 4,
-          "title": "Solar Eclipse Observation",
-          "situation": "During a solar eclipse, Aditya's science teacher set up a pinhole projector to safely view the eclipse. Aditya sees a crescent-shaped image on the screen and wonders why we can't look directly at the eclipse.",
-          "question": "Why is it dangerous to look directly at a solar eclipse, and how does the pinhole projector help?",
-          "options": [
-            "The eclipse emits harmful rays that the pinhole blocks",
-            "The pinhole magnifies the eclipse safely",
-            "Looking directly can damage eyes; the pinhole projects a safe image on screen",
-            "The pinhole creates a fake eclipse image"
-          ],
-          "correctAnswer": 2,
-          "explanation": "During a solar eclipse, the Sun is still very bright and can damage your eyes permanently if viewed directly. A pinhole projector works on the same principle as shadow formation - light from the eclipse passes through a tiny hole and creates an image on a screen. This allows us to safely observe the eclipse's shadow pattern without looking at the Sun directly. The Moon is casting a shadow on Earth during an eclipse!",
-          "realWorldTip": "During solar eclipses, astronomers and educators set up pinhole projectors in communities to help people safely observe this rare astronomical event. Never look directly at the Sun or an eclipse without proper equipment!",
-          "imageEmoji": "🌑"
-        },
-        {
-          "id": 5,
-          "title": "Archaeological Discovery",
-          "situation": "Dr. Sharma, an archaeologist in Hampi, Karnataka, needs to photograph ancient rock carvings. She notices that during certain times of the day, the carvings are much easier to see and photograph.",
-          "question": "When would be the BEST time for Dr. Sharma to photograph the rock carvings to make the details most visible?",
-          "options": [
-            "At noon when the Sun is directly overhead",
-            "During early morning or late evening when Sun is at an angle",
-            "At night with a flashlight",
-            "On a cloudy day with no direct sunlight"
-          ],
-          "correctAnswer": 1,
-          "explanation": "When the Sun is at an angle (early morning or late evening), it creates shadows in the carved grooves and details of the rock. These shadows make the three-dimensional features more visible and dramatic. At noon, when the Sun is overhead, there are minimal shadows, making the carvings appear flat and harder to see. This is the same principle of shadow formation - the position of the light source affects how shadows reveal or hide details!",
-          "realWorldTip": "Archaeologists, architects, and art historians use 'raking light' (light at a shallow angle) to study artifacts and structures. This technique reveals textures, tool marks, and wear patterns that might otherwise be invisible!",
-          "imageEmoji": "🏛️"
-        },
-        {
-          "id": 6,
-          "title": "Farmers and Sundials",
-          "situation": "In a village in Rajasthan, elderly farmers still use traditional knowledge to estimate time during the day by observing their shadow length. Ramesh's grandfather taught him this ancient skill.",
-          "question": "How can farmers estimate approximate time using shadow length?",
-          "options": [
-            "Shadows are random and cannot indicate time",
-            "Shadow length changes predictably: shortest at noon, longer morning/evening",
-            "Shadows always point north",
-            "Shadow color changes with time"
-          ],
-          "correctAnswer": 1,
-          "explanation": "The position of the Sun changes predictably throughout the day. At sunrise, shadows are long and point west. As the Sun rises, shadows get shorter and rotate. At noon (solar noon), shadows are shortest and point north (in locations north of the Tropic of Cancer like most of India). After noon, shadows lengthen again and point east. This predictable pattern of shadow formation has been used for centuries in sundials and traditional timekeeping!",
-          "realWorldTip": "Sundials are one of humanity's oldest scientific instruments, used for over 5,000 years! Many ancient Indian temples have sundial markings. You can even make a simple sundial at home using a stick and marking shadow positions hourly on a sunny day!",
-          "imageEmoji": "🌾"
-        },
-        {
-          "id": 7,
-          "title": "Firefighters and Shadows",
-          "situation": "During a fire safety demonstration, firefighter Lakshmi explains to students why firefighters sometimes use powerful lights from multiple angles when searching through smoke-filled buildings.",
-          "question": "Why do firefighters use multiple light sources from different angles during rescue operations?",
-          "options": [
-            "To make the building brighter only",
-            "To reduce confusing shadows and see obstacles clearly",
-            "To scare away smoke",
-            "To signal other firefighters"
-          ],
-          "correctAnswer": 1,
-          "explanation": "A single light source creates strong shadows that can hide obstacles, victims, or hazards. When light comes from only one direction, objects block the light and create dark shadow regions where nothing can be seen. By using multiple lights from different angles, firefighters reduce these shadowed areas. If one light creates a shadow, another light from a different angle illuminates it. This is a practical application of understanding shadow formation!",
-          "realWorldTip": "Film and photography studios also use multiple light sources (key light, fill light, back light) to control shadows and create the desired effect. Understanding shadow formation is crucial in many professions!",
-          "imageEmoji": "🚒"
-        },
-        {
-          "id": 8,
-          "title": "Building Design and Shadows",
-          "situation": "Architect Mrs. Patel is designing a new apartment building in Bangalore. She needs to plan the building's position carefully to ensure that it doesn't cast long shadows on the neighboring playground during afternoon hours when children play.",
-          "question": "What should Mrs. Patel consider about shadow formation when positioning the building?",
-          "options": [
-            "Shadows don't matter in building design",
-            "Building height, Sun's path, and shadow direction throughout the day",
-            "Only the building's color affects shadows",
-            "Shadows are the same size all day"
-          ],
-          "correctAnswer": 1,
-          "explanation": "The building acts as an opaque object that blocks sunlight. Taller buildings create longer shadows. The Sun's position changes throughout the day and across seasons - it's higher in summer (shorter shadows) and lower in winter (longer shadows). Mrs. Patel must calculate where shadows will fall at different times and seasons. In hot climates like Bangalore, shadows can provide valuable cooling, but blocking playground light reduces safety and usability. This is why 'shadow impact studies' are required for new construction in many cities!",
-          "realWorldTip": "Modern sustainable architecture uses 'shadow analysis' software to optimize building design. Some buildings are designed to deliberately create shaded courtyards for natural cooling, while others use shadow patterns to create interesting architectural effects throughout the day!",
-          "imageEmoji": "🏢"
-        }
-      ],
-      "controls": {
-        "previous": "← Previous",
-        "checkAnswer": "Check Answer",
-        "nextScenario": "Next Scenario →",
-        "scenarioCount": "Scenario {{current}} of {{total}}"
-      },
-      "headers": {
-        "realWorldSituation": "📖 Real-World Situation",
-        "scientificExplanation": "💡 Scientific Explanation",
-        "realWorldApplication": "🌍 Real-World Application"
-      },
-      "progress": {
-        "title": "📊 Your Progress",
-        "completed": "Scenarios Completed:",
-        "congrats": "🎉 Congratulations! You've completed all real-world scenarios!"
-      },
-      "facts": {
-        "title": "🌟 Amazing Shadow Facts from India",
-        "list": [
-          "<strong>Konark Sun Temple</strong> (Odisha) was designed so that the first rays of the Sun would fall on its main entrance, creating spectacular shadow patterns",
-          "<strong>Jantar Mantar</strong> observatories in Delhi, Jaipur, and other cities use giant shadow-casting instruments (sundials) to track time and astronomical positions with incredible accuracy",
-          "Ancient Indian mathematicians like <strong>Aryabhata</strong> (5th century CE) studied shadows to calculate Earth's circumference and the distances to celestial bodies",
-          "Traditional <strong>shadow puppetry</strong> performances in India often last through the night, with stories from epics like Ramayana and Mahabharata told through moving shadows",
-          "The <strong>Dilwara Temples</strong> in Rajasthan are positioned to create changing shadow patterns on intricate marble carvings throughout the day"
-        ]
-      },
-      "simulation": {
-        "title": "🎭 Shadow Puppetry Simulator",
-        "show": "Show Simulation",
-        "hide": "Hide Simulation",
-        "intro": "Try moving the puppet and adjusting the light distance to see how shadows change in traditional Indian shadow puppetry!",
-        "shadowSize": "Shadow Size",
-        "large": "Large",
-        "medium": "Medium",
-        "small": "Small",
-        "puppetPosLabel": "🎭 Puppet Position (closer to light = larger shadow)",
-        "puppetShapeLabel": "Choose Puppet Shape",
-        "shapes": {
-          "hand": {
-            "label": "Hand",
-            "emoji": "✋"
-          },
-          "bird": {
-            "label": "Bird",
-            "emoji": "🦅"
-          },
-          "dog": {
-            "label": "Dog",
-            "emoji": "🐕"
-          }
-        },
-        "tip": "<strong>💡 Try this:</strong> Move the puppet closer to the light source (left) to make the shadow larger! Traditional shadow puppeteers use this technique to make characters appear to grow or shrink during performances."
-      }
-    },
     "learn": {
       "title": "✨ Reflection of Light ✨",
       "subtitle": "Interactive demonstrations of how light reflects off surfaces",
@@ -371,7 +184,6 @@
       "submitAnswer": "Submit Answer",
       "nextExercise": "Next Exercise",
       "completedAll": "Completed!",
-      "overview": "Exercise Overview",
       "congratulations": "🎉 Congratulations!",
       "completedAllText": "You've completed all exercises with a score of {{score}}/{{total}}!",
       "accuracyLabel": "Accuracy:",
@@ -607,6 +419,229 @@
           "canvasLabel": "Mirror preview for selfies!"
         }
       }
+    },
+    "planeMirrorLearn": {
+      "title": "🪞 Image Formation in Plane Mirror 🪞",
+      "subtitle": "Explore how plane mirrors create virtual images",
+      "demos": {
+        "basic": "📐 Basic Formation",
+        "properties": "✨ Image Properties",
+        "interactive": "🎮 Interactive Demo"
+      },
+      "controls": {
+        "title": "⚙️ Controls",
+        "objectDistance": "Object Distance from Mirror",
+        "objectType": "Object Type",
+        "showRayDiagram": "Show Ray Diagram",
+        "showMeasurements": "Show Measurements",
+        "showConstructionLines": "Show Construction Lines",
+        "candle": "candle",
+        "person": "person",
+        "flower": "flower",
+        "ball": "ball"
+      },
+      "canvas": {
+        "object": "Object",
+        "real": "(Real)",
+        "image": "Image",
+        "virtual": "(Virtual)",
+        "propertiesTitle": "Properties of Image in Plane Mirror",
+        "keyPoints": "📐 Key Points:",
+        "basicPoints": {
+          "point1": "• Image is virtual (behind mirror)",
+          "point2": "• Same size as object",
+          "point3": "• Equal distance from mirror",
+          "point4": "• Laterally inverted"
+        },
+        "interactivePoints": {
+          "point1": "• Use slider to move object",
+          "point2": "• Notice image moves equally",
+          "point3": "• Distance always remains equal"
+        },
+        "properties": {
+          "virtualImage": {
+            "title": "1. Virtual Image",
+            "description": "Image forms behind the mirror, cannot be projected on screen"
+          },
+          "sameSize": {
+            "title": "2. Same Size",
+            "description": "Image size equals object size (magnification = 1)"
+          },
+          "equalDistance": {
+            "title": "3. Equal Distance",
+            "description": "Image distance = Object distance from mirror"
+          },
+          "laterallyInverted": {
+            "title": "4. Laterally Inverted",
+            "description": "Left and right sides appear swapped"
+          },
+          "upright": {
+            "title": "5. Upright/Erect",
+            "description": "Image has same orientation as object"
+          }
+        }
+      },
+      "content": {
+        "title": "📚 Understanding Image Formation",
+        "howImagesForm": "How Images Form:",
+        "howImagesFormText": "When light rays from an object hit a plane mirror, they reflect according to the law of reflection. The reflected rays appear to come from a point behind the mirror, creating a virtual image.",
+        "imageCharacteristics": "Image Characteristics:",
+        "characteristics": {
+          "virtual": "Virtual: The image cannot be projected on a screen as light doesn't actually pass through it",
+          "erect": "Erect: The image is upright, same orientation as the object",
+          "sameSize": "Same Size: The image has the same dimensions as the object",
+          "equalDistance": "Equal Distance: Image distance from mirror equals object distance",
+          "laterallyInverted": "Laterally Inverted: Left and right sides are swapped"
+        },
+        "formula": "Formula:",
+        "formulaText": "For plane mirrors, if object distance is d, then image distance is also d (behind the mirror). Magnification = 1 (same size).",
+        "realLifeExamples": "Real-Life Examples:",
+        "realLifeExamplesText": "Looking at yourself in a bathroom mirror, rear-view mirrors in vehicles, dressing room mirrors, and periscopes all use plane mirror image formation."
+      }
+    },
+    "planeMirrorPractice": {
+      "title": "📝 Plane Mirror - Practice Mode",
+      "subtitle": "Test your knowledge with interactive questions",
+      "progress": {
+        "question": "Question",
+        "of": "of",
+        "score": "Score"
+      },
+      "difficulty": {
+        "easy": "easy",
+        "medium": "medium",
+        "hard": "hard"
+      },
+      "feedback": {
+        "correct": "✓ Correct!",
+        "incorrect": "✗ Incorrect"
+      },
+      "buttons": {
+        "nextQuestion": "Next Question →",
+        "viewResults": "View Results →",
+        "tryAgain": "Try Again 🔄"
+      },
+      "quizComplete": {
+        "title": "Quiz Complete!",
+        "yourScore": "Your Score:",
+        "perfect": "Perfect! You have mastered plane mirror concepts! 🌟",
+        "greatJob": "Great job! You have a strong understanding! 👏",
+        "keepPracticing": "Keep practicing! Review the concepts and try again! 💪"
+      },
+      "questions": [
+        {
+          "id": 1,
+          "question": "What type of image is formed by a plane mirror?",
+          "options": ["Real and inverted", "Virtual and erect", "Real and erect", "Virtual and inverted"],
+          "explanation": "A plane mirror always forms a VIRTUAL and ERECT image. Virtual means the image cannot be projected on a screen, and erect means it has the same orientation as the object.",
+          "difficulty": "easy"
+        },
+        {
+          "id": 2,
+          "question": "If an object is placed 5 cm in front of a plane mirror, how far behind the mirror will the image appear?",
+          "options": ["2.5 cm", "5 cm", "10 cm", "15 cm"],
+          "explanation": "The image distance equals the object distance. If the object is 5 cm in front, the image appears 5 cm behind the mirror. This is one of the fundamental properties of plane mirrors.",
+          "difficulty": "easy"
+        },
+        {
+          "id": 3,
+          "question": "What is the magnification produced by a plane mirror?",
+          "options": ["0.5", "1", "2", "Variable"],
+          "explanation": "Magnification = Image height / Object height. For plane mirrors, the image size equals object size, so magnification = 1. This means no enlargement or reduction occurs.",
+          "difficulty": "medium"
+        },
+        {
+          "id": 4,
+          "question": "Why does the word 'AMBULANCE' appear reversed on the front of ambulances?",
+          "options": ["It's a design choice", "So drivers see it correctly in their rear-view mirrors", "To make it look unique", "It's written in a different language"],
+          "explanation": "The word is laterally inverted so that when drivers look in their rear-view mirrors (which are plane mirrors), they see the word correctly and can identify the ambulance quickly.",
+          "difficulty": "medium"
+        },
+        {
+          "id": 5,
+          "question": "A person stands 2 meters from a plane mirror. What is the distance between the person and their image?",
+          "options": ["2 meters", "4 meters", "1 meter", "3 meters"],
+          "explanation": "The person is 2m in front of the mirror, and the image is 2m behind the mirror. Total distance = 2m + 2m = 4 meters. This is object distance + image distance.",
+          "difficulty": "medium"
+        },
+        {
+          "id": 6,
+          "question": "Which of the following is NOT a characteristic of an image formed by a plane mirror?",
+          "options": ["Same size as object", "Laterally inverted", "Can be projected on screen", "Appears as far behind mirror as object is in front"],
+          "explanation": "Virtual images CANNOT be projected on a screen because light rays don't actually pass through the image position. All other options are true characteristics of plane mirror images.",
+          "difficulty": "hard"
+        },
+        {
+          "id": 7,
+          "question": "If you raise your right hand in front of a mirror, which hand appears to be raised in the image?",
+          "options": ["Right hand", "Left hand", "Both hands", "Neither hand"],
+          "explanation": "Due to lateral inversion, your right hand appears as the left hand of your mirror image. This is why when you raise your right hand, the image appears to raise its left hand.",
+          "difficulty": "easy"
+        },
+        {
+          "id": 8,
+          "question": "A 6 ft tall person stands in front of a plane mirror. What is the height of the image?",
+          "options": ["3 ft", "6 ft", "12 ft", "9 ft"],
+          "explanation": "The image height equals the object height in a plane mirror. Since magnification = 1, a 6 ft tall person produces a 6 ft tall image.",
+          "difficulty": "easy"
+        },
+        {
+          "id": 9,
+          "question": "What happens to the image if you move closer to a plane mirror?",
+          "options": ["Image size increases", "Image moves closer to mirror from behind", "Image size decreases", "Image becomes real"],
+          "explanation": "As you move closer, the image also moves closer to the mirror from behind, maintaining equal distance. The image size remains the same (magnification = 1), but it appears larger to your eye because it's closer.",
+          "difficulty": "hard"
+        },
+        {
+          "id": 10,
+          "question": "A clock shows 3:00. What time will appear to show in a plane mirror?",
+          "options": ["3:00", "9:00", "12:00", "6:00"],
+          "explanation": "Due to lateral inversion, 3:00 (where the hour hand points right) appears as 9:00 (hour hand pointing left) in the mirror. The image is horizontally flipped.",
+          "difficulty": "hard"
+        }
+      ]
+    },
+    "planeMirrorRealWorld": {
+      "title": "🌍 Plane Mirror - Real World Applications",
+      "subtitle": "See how plane mirrors are used in everyday life",
+      "scenarios": [
+        {
+          "id": 1,
+          "title": "🚑 Ambulance Mirror Writing",
+          "description": "Emergency vehicles use lateral inversion",
+          "scenario": "Why is 'AMBULANCE' written backwards on emergency vehicles? When drivers look in their rear-view mirrors (plane mirrors), the laterally inverted text appears correctly, allowing them to quickly identify the emergency vehicle and give way."
+        },
+        {
+          "id": 2,
+          "title": "🪞 Dressing Room Mirrors",
+          "description": "Full-length mirrors for outfit checking",
+          "scenario": "A full-length plane mirror needs to be only half your height to show your complete image! This is because the angle of incidence equals the angle of reflection, allowing you to see from head to toe in a smaller mirror."
+        },
+        {
+          "id": 3,
+          "title": "🚗 Vehicle Rear-View Mirrors",
+          "description": "Plane mirrors in cars for rear visibility",
+          "scenario": "The inside rear-view mirror in cars is a plane mirror. It gives you a true sense of distance to vehicles behind you because the image distance equals object distance. Side mirrors are often convex for wider field of view."
+        },
+        {
+          "id": 4,
+          "title": "💃 Dance Studio Mirrors",
+          "description": "Dancers use mirrors to check their form",
+          "scenario": "Dance studios have large plane mirrors so dancers can see their movements in real-time. The virtual image appears at the same distance behind the mirror, helping dancers judge their positioning and synchronization accurately."
+        },
+        {
+          "id": 5,
+          "title": "🔬 Periscope in Submarines",
+          "description": "Multiple plane mirrors for seeing above water",
+          "scenario": "Periscopes use two plane mirrors at 45° angles. Light reflects off the top mirror, travels down, reflects off the bottom mirror, and reaches your eyes. Each reflection follows the law of reflection, allowing submarine crews to see above the water surface."
+        },
+        {
+          "id": 6,
+          "title": "✂️ Barber Shop Mirrors",
+          "description": "Two mirrors showing back of head",
+          "scenario": "Barbers use two mirrors - one in front and one behind you. You see multiple reflections: your back in the rear mirror appears in the front mirror. Each reflection is a virtual image, allowing you to check your haircut from all angles."
+        }
+      ]
     }
   },
   "hi": {
@@ -718,13 +753,14 @@
         "subtitle": "दोनों प्रयोग इस प्रकाश के महत्वपूर्ण गुण की पुष्टि करते हैं"
       }
     },
-    "practice": {
-      "title": "🌍 वास्तविक दुनिया में छायाएं",
-      "subtitle": "जानें कि छाया निर्माण हमारे दैनिक जीवन को कैसे प्रभावित करता है",
-      "scenarios": [
-        {
-          "id": 1,
-          "title": "छाया कठपुतली प्रदर्शन",
+    "learn": {
+      "title": "✨ प्रकाश का परावर्तन ✨",
+      "subtitle": "सतहों से प्रकाश के परावर्तन के इंटरैक्टिव प्रदर्शन",
+      "demos": {
+        "law": "📐 परावर्तन का नियम",
+        "types": "🔄 परावर्तन के प्रकार"
+      },
+      "canvas": {
           "situation": "प्रिया अपने स्कूल के सांस्कृतिक कार्यक्रम के लिए छाया कठपुतली (तोगालू गोम्बेयाता) प्रदर्शन कर रही है। उसने देखा कि जब वह कठपुतली को प्रकाश स्रोत के करीब ले जाती है, तो स्क्रीन पर छाया में कुछ दिलचस्प होता है।",
           "question": "प्रिया को अपनी कठपुतली की छाया स्क्रीन पर बड़ी दिखाने के लिए क्या करना चाहिए?",
           "options": [
@@ -1087,7 +1123,6 @@
       "submitAnswer": "उत्तर जमा करें",
       "nextExercise": "अगला अभ्यास",
       "completedAll": "पूर्ण!",
-      "overview": "अभ्यास अवलोकन",
       "congratulations": "🎉 बधाई हो!",
       "completedAllText": "आपने सभी अभ्यास {{score}}/{{total}} के स्कोर के साथ पूरे कर लिए हैं!",
       "accuracyLabel": "सटीकता:",
@@ -1323,6 +1358,229 @@
           "canvasLabel": "सेल्फी के लिए मिरर प्रीव्यू!"
         }
       }
+    },
+    "planeMirrorLearn": {
+      "title": "🪞 समतल दर्पण में छवि निर्माण 🪞",
+      "subtitle": "जानें कि समतल दर्पण आभासी छवियां कैसे बनाते हैं",
+      "demos": {
+        "basic": "📐 मूल निर्माण",
+        "properties": "✨ छवि गुण",
+        "interactive": "🎮 इंटरैक्टिव डेमो"
+      },
+      "controls": {
+        "title": "⚙️ नियंत्रण",
+        "objectDistance": "दर्पण से वस्तु की दूरी",
+        "objectType": "वस्तु का प्रकार",
+        "showRayDiagram": "किरण आरेख दिखाएं",
+        "showMeasurements": "माप दिखाएं",
+        "showConstructionLines": "निर्माण रेखाएं दिखाएं",
+        "candle": "मोमबत्ती",
+        "person": "व्यक्ति",
+        "flower": "फूल",
+        "ball": "गेंद"
+      },
+      "canvas": {
+        "object": "वस्तु",
+        "real": "(वास्तविक)",
+        "image": "छवि",
+        "virtual": "(आभासी)",
+        "propertiesTitle": "समतल दर्पण में छवि के गुण",
+        "keyPoints": "📐 मुख्य बिंदु:",
+        "basicPoints": {
+          "point1": "• छवि आभासी है (दर्पण के पीछे)",
+          "point2": "• वस्तु के समान आकार",
+          "point3": "• दर्पण से समान दूरी",
+          "point4": "• पार्श्व रूप से उलटी"
+        },
+        "interactivePoints": {
+          "point1": "• वस्तु को हिलाने के लिए स्लाइडर का उपयोग करें",
+          "point2": "• ध्यान दें कि छवि समान रूप से चलती है",
+          "point3": "• दूरी हमेशा समान रहती है"
+        },
+        "properties": {
+          "virtualImage": {
+            "title": "1. आभासी छवि",
+            "description": "छवि दर्पण के पीछे बनती है, स्क्रीन पर प्रक्षेपित नहीं की जा सकती"
+          },
+          "sameSize": {
+            "title": "2. समान आकार",
+            "description": "छवि का आकार वस्तु के आकार के बराबर (आवर्धन = 1)"
+          },
+          "equalDistance": {
+            "title": "3. समान दूरी",
+            "description": "छवि की दूरी = दर्पण से वस्तु की दूरी"
+          },
+          "laterallyInverted": {
+            "title": "4. पार्श्व रूप से उलटी",
+            "description": "बाएं और दाएं पक्ष बदले हुए दिखाई देते हैं"
+          },
+          "upright": {
+            "title": "5. सीधी/खड़ी",
+            "description": "छवि का अभिविन्यास वस्तु के समान है"
+          }
+        }
+      },
+      "content": {
+        "title": "📚 छवि निर्माण को समझना",
+        "howImagesForm": "छवियां कैसे बनती हैं:",
+        "howImagesFormText": "जब किसी वस्तु से प्रकाश किरणें समतल दर्पण पर टकराती हैं, तो वे परावर्तन के नियम के अनुसार परावर्तित होती हैं। परावर्तित किरणें दर्पण के पीछे एक बिंदु से आती हुई प्रतीत होती हैं, जिससे एक आभासी छवि बनती है।",
+        "imageCharacteristics": "छवि की विशेषताएं:",
+        "characteristics": {
+          "virtual": "आभासी: छवि को स्क्रीन पर प्रक्षेपित नहीं किया जा सकता क्योंकि प्रकाश वास्तव में इससे होकर नहीं गुजरता",
+          "erect": "सीधी: छवि सीधी है, वस्तु के समान अभिविन्यास",
+          "sameSize": "समान आकार: छवि के आयाम वस्तु के समान हैं",
+          "equalDistance": "समान दूरी: दर्पण से छवि की दूरी वस्तु की दूरी के बराबर है",
+          "laterallyInverted": "पार्श्व रूप से उलटी: बाएं और दाएं पक्ष बदले हुए हैं"
+        },
+        "formula": "सूत्र:",
+        "formulaText": "समतल दर्पणों के लिए, यदि वस्तु की दूरी d है, तो छवि की दूरी भी d है (दर्पण के पीछे)। आवर्धन = 1 (समान आकार)।",
+        "realLifeExamples": "वास्तविक जीवन के उदाहरण:",
+        "realLifeExamplesText": "बाथरूम के दर्पण में अपने आप को देखना, वाहनों में रियर-व्यू दर्पण, ड्रेसिंग रूम के दर्पण, और पेरिस्कोप सभी समतल दर्पण छवि निर्माण का उपयोग करते हैं।"
+      }
+    },
+    "planeMirrorPractice": {
+      "title": "📝 समतल दर्पण - अभ्यास मोड",
+      "subtitle": "इंटरैक्टिव प्रश्नों के साथ अपने ज्ञान का परीक्षण करें",
+      "progress": {
+        "question": "प्रश्न",
+        "of": "का",
+        "score": "स्कोर"
+      },
+      "difficulty": {
+        "easy": "आसान",
+        "medium": "मध्यम",
+        "hard": "कठिन"
+      },
+      "feedback": {
+        "correct": "✓ सही!",
+        "incorrect": "✗ गलत"
+      },
+      "buttons": {
+        "nextQuestion": "अगला प्रश्न →",
+        "viewResults": "परिणाम देखें →",
+        "tryAgain": "पुनः प्रयास करें 🔄"
+      },
+      "quizComplete": {
+        "title": "क्विज पूर्ण!",
+        "yourScore": "आपका स्कोर:",
+        "perfect": "उत्तम! आपने समतल दर्पण की अवधारणाओं में महारत हासिल कर ली है! 🌟",
+        "greatJob": "बहुत बढ़िया! आपकी समझ मजबूत है! 👏",
+        "keepPracticing": "अभ्यास जारी रखें! अवधारणाओं की समीक्षा करें और फिर से कोशिश करें! 💪"
+      },
+      "questions": [
+        {
+          "id": 1,
+          "question": "समतल दर्पण द्वारा किस प्रकार की छवि बनती है?",
+          "options": ["वास्तविक और उलटी", "आभासी और सीधी", "वास्तविक और सीधी", "आभासी और उलटी"],
+          "explanation": "एक समतल दर्पण हमेशा एक आभासी और सीधी छवि बनाता है। आभासी का अर्थ है कि छवि को स्क्रीन पर प्रक्षेपित नहीं किया जा सकता, और सीधी का अर्थ है कि इसका अभिविन्यास वस्तु के समान है।",
+          "difficulty": "easy"
+        },
+        {
+          "id": 2,
+          "question": "यदि एक वस्तु को समतल दर्पण के सामने 5 सेमी की दूरी पर रखा जाता है, तो छवि दर्पण के पीछे कितनी दूरी पर दिखाई देगी?",
+          "options": ["2.5 सेमी", "5 सेमी", "10 सेमी", "15 सेमी"],
+          "explanation": "छवि की दूरी वस्तु की दूरी के बराबर होती है। यदि वस्तु 5 सेमी सामने है, तो छवि दर्पण के पीछे 5 सेमी दिखाई देती है। यह समतल दर्पणों के मूलभूत गुणों में से एक है।",
+          "difficulty": "easy"
+        },
+        {
+          "id": 3,
+          "question": "समतल दर्पण द्वारा उत्पादित आवर्धन क्या है?",
+          "options": ["0.5", "1", "2", "परिवर्तनशील"],
+          "explanation": "आवर्धन = छवि की ऊंचाई / वस्तु की ऊंचाई। समतल दर्पणों के लिए, छवि का आकार वस्तु के आकार के बराबर होता है, इसलिए आवर्धन = 1। इसका अर्थ है कि कोई बढ़ाव या कमी नहीं होती।",
+          "difficulty": "medium"
+        },
+        {
+          "id": 4,
+          "question": "एम्बुलेंस के सामने 'AMBULANCE' शब्द उल्टा क्यों लिखा होता है?",
+          "options": ["यह एक डिज़ाइन विकल्प है", "ताकि ड्राइवर अपने रियर-व्यू दर्पण में इसे सही देख सकें", "इसे अनोखा बनाने के लिए", "यह एक अलग भाषा में लिखा गया है"],
+          "explanation": "शब्द पार्श्व रूप से उलटा होता है ताकि जब ड्राइवर अपने रियर-व्यू दर्पणों (जो समतल दर्पण हैं) में देखते हैं, तो वे शब्द को सही देख सकें और एम्बुलेंस को तुरंत पहचान सकें।",
+          "difficulty": "medium"
+        },
+        {
+          "id": 5,
+          "question": "एक व्यक्ति समतल दर्पण से 2 मीटर की दूरी पर खड़ा है। व्यक्ति और उसकी छवि के बीच की दूरी क्या है?",
+          "options": ["2 मीटर", "4 मीटर", "1 मीटर", "3 मीटर"],
+          "explanation": "व्यक्ति दर्पण के सामने 2 मीटर है, और छवि दर्पण के पीछे 2 मीटर है। कुल दूरी = 2 मीटर + 2 मीटर = 4 मीटर। यह वस्तु की दूरी + छवि की दूरी है।",
+          "difficulty": "medium"
+        },
+        {
+          "id": 6,
+          "question": "निम्नलिखित में से कौन सा समतल दर्पण द्वारा बनी छवि की विशेषता नहीं है?",
+          "options": ["वस्तु के समान आकार", "पार्श्व रूप से उलटी", "स्क्रीन पर प्रक्षेपित की जा सकती है", "दर्पण के पीछे उतनी ही दूरी पर दिखाई देती है जितनी वस्तु सामने है"],
+          "explanation": "आभासी छवियों को स्क्रीन पर प्रक्षेपित नहीं किया जा सकता क्योंकि प्रकाश किरणें वास्तव में छवि की स्थिति से होकर नहीं गुजरती हैं। अन्य सभी विकल्प समतल दर्पण छवियों की सच्ची विशेषताएं हैं।",
+          "difficulty": "hard"
+        },
+        {
+          "id": 7,
+          "question": "यदि आप दर्पण के सामने अपना दाहिना हाथ उठाते हैं, तो छवि में कौन सा हाथ उठा हुआ दिखाई देगा?",
+          "options": ["दाहिना हाथ", "बायां हाथ", "दोनों हाथ", "कोई भी हाथ नहीं"],
+          "explanation": "पार्श्व उलटने के कारण, आपका दाहिना हाथ आपकी दर्पण छवि के बाएं हाथ के रूप में दिखाई देता है। इसीलिए जब आप अपना दाहिना हाथ उठाते हैं, तो छवि अपना बायां हाथ उठाती हुई दिखाई देती है।",
+          "difficulty": "easy"
+        },
+        {
+          "id": 8,
+          "question": "एक 6 फीट लंबा व्यक्ति समतल दर्पण के सामने खड़ा है। छवि की ऊंचाई क्या है?",
+          "options": ["3 फीट", "6 फीट", "12 फीट", "9 फीट"],
+          "explanation": "समतल दर्पण में छवि की ऊंचाई वस्तु की ऊंचाई के बराबर होती है। चूंकि आवर्धन = 1, 6 फीट लंबा व्यक्ति 6 फीट लंबी छवि बनाता है।",
+          "difficulty": "easy"
+        },
+        {
+          "id": 9,
+          "question": "यदि आप समतल दर्पण के करीब जाते हैं, तो छवि का क्या होता है?",
+          "options": ["छवि का आकार बढ़ता है", "छवि पीछे से दर्पण के करीब आती है", "छवि का आकार घटता है", "छवि वास्तविक हो जाती है"],
+          "explanation": "जैसे-जैसे आप करीब जाते हैं, छवि भी पीछे से दर्पण के करीब आती है, समान दूरी बनाए रखते हुए। छवि का आकार समान रहता है (आवर्धन = 1), लेकिन यह आपकी आंख को बड़ी दिखती है क्योंकि यह करीब है।",
+          "difficulty": "hard"
+        },
+        {
+          "id": 10,
+          "question": "एक घड़ी 3:00 दिखाती है। समतल दर्पण में क्या समय दिखाई देगा?",
+          "options": ["3:00", "9:00", "12:00", "6:00"],
+          "explanation": "पार्श्व उलटने के कारण, 3:00 (जहां घंटे की सुई दाएं इंगित करती है) दर्पण में 9:00 (घंटे की सुई बाएं इंगित करती है) के रूप में दिखाई देती है। छवि क्षैतिज रूप से पलटी हुई है।",
+          "difficulty": "hard"
+        }
+      ]
+    },
+    "planeMirrorRealWorld": {
+      "title": "🌍 समतल दर्पण - वास्तविक दुनिया के अनुप्रयोग",
+      "subtitle": "देखें कि समतल दर्पणों का उपयोग रोजमर्रा की जिंदगी में कैसे किया जाता है",
+      "scenarios": [
+        {
+          "id": 1,
+          "title": "🚑 एम्बुलेंस दर्पण लेखन",
+          "description": "आपातकालीन वाहन पार्श्व उलटने का उपयोग करते हैं",
+          "scenario": "आपातकालीन वाहनों पर 'AMBULANCE' शब्द उल्टा क्यों लिखा होता है? जब ड्राइवर अपने रियर-व्यू दर्पणों (समतल दर्पण) में देखते हैं, तो पार्श्व रूप से उलटा पाठ सही दिखाई देता है, जिससे वे आपातकालीन वाहन को तुरंत पहचान सकते हैं और रास्ता दे सकते हैं।"
+        },
+        {
+          "id": 2,
+          "title": "🪞 ड्रेसिंग रूम दर्पण",
+          "description": "पूर्ण-लंबाई वाले दर्पण पोशाक जांच के लिए",
+          "scenario": "एक पूर्ण-लंबाई वाले समतल दर्पण को आपकी पूरी छवि दिखाने के लिए केवल आपकी ऊंचाई का आधा होना चाहिए! यह इसलिए है क्योंकि आपतन कोण परावर्तन कोण के बराबर होता है, जिससे आप एक छोटे दर्पण में सिर से पैर तक देख सकते हैं।"
+        },
+        {
+          "id": 3,
+          "title": "🚗 वाहन रियर-व्यू दर्पण",
+          "description": "पीछे की दृश्यता के लिए कारों में समतल दर्पण",
+          "scenario": "कारों में अंदर का रियर-व्यू दर्पण एक समतल दर्पण होता है। यह आपको पीछे के वाहनों तक की दूरी का सही अहसास देता है क्योंकि छवि की दूरी वस्तु की दूरी के बराबर होती है। साइड मिरर अक्सर व्यापक दृश्य के लिए उत्तल होते हैं।"
+        },
+        {
+          "id": 4,
+          "title": "💃 डांस स्टूडियो दर्पण",
+          "description": "नर्तक अपने रूप की जांच के लिए दर्पण का उपयोग करते हैं",
+          "scenario": "डांस स्टूडियो में बड़े समतल दर्पण होते हैं ताकि नर्तक अपनी गतिविधियों को वास्तविक समय में देख सकें। आभासी छवि दर्पण के पीछे समान दूरी पर दिखाई देती है, जिससे नर्तक अपनी स्थिति और समन्वय का सटीक आकलन कर सकते हैं।"
+        },
+        {
+          "id": 5,
+          "title": "🔬 पनडुब्बियों में पेरिस्कोप",
+          "description": "पानी के ऊपर देखने के लिए कई समतल दर्पण",
+          "scenario": "पेरिस्कोप 45° कोण पर दो समतल दर्पणों का उपयोग करते हैं। प्रकाश ऊपरी दर्पण से परावर्तित होता है, नीचे जाता है, निचले दर्पण से परावर्तित होता है, और आपकी आंखों तक पहुंचता है। प्रत्येक परावर्तन परावर्तन के नियम का पालन करता है, जिससे पनडुब्बी के चालक दल पानी की सतह के ऊपर देख सकते हैं।"
+        },
+        {
+          "id": 6,
+          "title": "✂️ नाई की दुकान के दर्पण",
+          "description": "दो दर्पण सिर के पीछे दिखा रहे हैं",
+          "scenario": "नाई दो दर्पणों का उपयोग करते हैं - एक सामने और एक पीछे। आप कई परावर्तन देखते हैं: पीछे के दर्पण में आपकी पीठ सामने के दर्पण में दिखाई देती है। प्रत्येक परावर्तन एक आभासी छवि है, जिससे आप अपने बाल कटवाने को सभी कोणों से जांच सकते हैं।"
+        }
+      ]
     }
   },
   "gu": {
@@ -1803,7 +2061,6 @@
       "submitAnswer": "જવાબ સબમિટ કરો",
       "nextExercise": "આગળનો અભ્યાસ",
       "completedAll": "પૂર્ણ!",
-      "overview": "અભ્યાસ અવલોકન",
       "congratulations": "🎉 અભિનંદન!",
       "completedAllText": "તમે બધા અભ્યાસ {{score}}/{{total}} ના સ્કોર સાથે પૂર્ણ કર્યા છે!",
       "accuracyLabel": "ચોકસાઈ:",
@@ -2039,6 +2296,229 @@
           "canvasLabel": "સેલ્ફી માટે મિરર પ્રીવ્યુ!"
         }
       }
+    },
+    "planeMirrorLearn": {
+      "title": "🪞 સમતલ અરીસામાં છબી નિર્માણ 🪞",
+      "subtitle": "જાણો કે સમતલ અરીસા કેવી રીતે કાલ્પનિક છબીઓ બનાવે છે",
+      "demos": {
+        "basic": "📐 મૂળભૂત નિર્માણ",
+        "properties": "✨ છબી ગુણધર્મો",
+        "interactive": "🎮 ઇન્ટરએક્ટિવ ડેમો"
+      },
+      "controls": {
+        "title": "⚙️ નિયંત્રણો",
+        "objectDistance": "અરીસાથી પદાર્થનું અંતર",
+        "objectType": "પદાર્થનો પ્રકાર",
+        "showRayDiagram": "કિરણ આકૃતિ બતાવો",
+        "showMeasurements": "માપ બતાવો",
+        "showConstructionLines": "નિર્માણ રેખાઓ બતાવો",
+        "candle": "મીણબત્તી",
+        "person": "વ્યક્તિ",
+        "flower": "ફૂલ",
+        "ball": "દડો"
+      },
+      "canvas": {
+        "object": "પદાર્થ",
+        "real": "(વાસ્તવિક)",
+        "image": "છબી",
+        "virtual": "(કાલ્પનિક)",
+        "propertiesTitle": "સમતલ અરીસામાં છબીના ગુણધર્મો",
+        "keyPoints": "📐 મુખ્ય મુદ્દાઓ:",
+        "basicPoints": {
+          "point1": "• છબી કાલ્પનિક છે (અરીસાની પાછળ)",
+          "point2": "• પદાર્થ જેટલું જ કદ",
+          "point3": "• અરીસાથી સમાન અંતર",
+          "point4": "• બાજુથી ઊંધી"
+        },
+        "interactivePoints": {
+          "point1": "• પદાર્થને ખસેડવા માટે સ્લાઇડરનો ઉપયોગ કરો",
+          "point2": "• ધ્યાન આપો કે છબી સમાન રીતે ખસે છે",
+          "point3": "• અંતર હંમેશા સમાન રહે છે"
+        },
+        "properties": {
+          "virtualImage": {
+            "title": "1. કાલ્પનિક છબી",
+            "description": "છબી અરીસાની પાછળ બને છે, સ્ક્રીન પર પ્રક્ષેપિત કરી શકાતી નથી"
+          },
+          "sameSize": {
+            "title": "2. સમાન કદ",
+            "description": "છબીનું કદ પદાર્થના કદ જેટલું (વિસ્તરણ = 1)"
+          },
+          "equalDistance": {
+            "title": "3. સમાન અંતર",
+            "description": "છબીનું અંતર = અરીસાથી પદાર્થનું અંતર"
+          },
+          "laterallyInverted": {
+            "title": "4. બાજુથી ઊંધી",
+            "description": "ડાબી અને જમણી બાજુઓ બદલાયેલી દેખાય છે"
+          },
+          "upright": {
+            "title": "5. સીધી/ઊભી",
+            "description": "છબીનું અભિમુખીકરણ પદાર્થ જેટલું જ છે"
+          }
+        }
+      },
+      "content": {
+        "title": "📚 છબી નિર્માણ સમજવું",
+        "howImagesForm": "છબીઓ કેવી રીતે બને છે:",
+        "howImagesFormText": "જ્યારે પદાર્થમાંથી પ્રકાશ કિરણો સમતલ અરીસા પર અથડાય છે, તો તે પરાવર્તનના નિયમ અનુસાર પરાવર્તિત થાય છે. પરાવર્તિત કિરણો અરીસાની પાછળના બિંદુથી આવતી લાગે છે, જે એક કાલ્પનિક છબી બનાવે છે।",
+        "imageCharacteristics": "છબીની લાક્ષણિકતાઓ:",
+        "characteristics": {
+          "virtual": "કાલ્પનિક: છબીને સ્ક્રીન પર પ્રક્ષેપિત કરી શકાતી નથી કારણ કે પ્રકાશ ખરેખર તેમાંથી પસાર થતો નથી",
+          "erect": "સીધી: છબી સીધી છે, પદાર્થ જેટલું જ અભિમુખીકરણ",
+          "sameSize": "સમાન કદ: છબીના પરિમાણો પદાર્થ જેટલા જ છે",
+          "equalDistance": "સમાન અંતર: અરીસાથી છબીનું અંતર પદાર્થના અંતર જેટલું છે",
+          "laterallyInverted": "બાજુથી ઊંધી: ડાબી અને જમણી બાજુઓ બદલાયેલી છે"
+        },
+        "formula": "સૂત્ર:",
+        "formulaText": "સમતલ અરીસા માટે, જો પદાર્થનું અંતર d છે, તો છબીનું અંતર પણ d છે (અરીસાની પાછળ). વિસ્તરણ = 1 (સમાન કદ).",
+        "realLifeExamples": "વાસ્તવિક જીવનના ઉદાહરણો:",
+        "realLifeExamplesText": "બાથરૂમના અરીસામાં પોતાને જોવું, વાહનોમાં રિયર-વ્યૂ અરીસા, ડ્રેસિંગ રૂમના અરીસા, અને પેરિસ્કોપ બધા સમતલ અરીસા છબી નિર્માણનો ઉપયોગ કરે છે।"
+      }
+    },
+    "planeMirrorPractice": {
+      "title": "📝 સમતલ અરીસો - અભ્યાસ મોડ",
+      "subtitle": "ઇન્ટરએક્ટિવ પ્રશ્નો સાથે તમારું જ્ઞાન ચકાસો",
+      "progress": {
+        "question": "પ્રશ્ન",
+        "of": "નો",
+        "score": "સ્કોર"
+      },
+      "difficulty": {
+        "easy": "સરળ",
+        "medium": "મધ્યમ",
+        "hard": "કઠિન"
+      },
+      "feedback": {
+        "correct": "✓ સાચું!",
+        "incorrect": "✗ ખોટું"
+      },
+      "buttons": {
+        "nextQuestion": "આગળનો પ્રશ્ન →",
+        "viewResults": "પરિણામો જુઓ →",
+        "tryAgain": "ફરીથી પ્રયાસ કરો 🔄"
+      },
+      "quizComplete": {
+        "title": "ક્વિઝ પૂર્ણ!",
+        "yourScore": "તમારો સ્કોર:",
+        "perfect": "પરફેક્ટ! તમે સમતલ અરીસાની વિભાવનાઓમાં નિપુણતા પ્રાપ્ત કરી છે! 🌟",
+        "greatJob": "સરસ કામ! તમારી સમજ મજબૂત છે! 👏",
+        "keepPracticing": "અભ્યાસ ચાલુ રાખો! વિભાવનાઓની સમીક્ષા કરો અને ફરીથી પ્રયાસ કરો! 💪"
+      },
+      "questions": [
+        {
+          "id": 1,
+          "question": "સમતલ અરીસા દ્વારા કયા પ્રકારની છબી બને છે?",
+          "options": ["વાસ્તવિક અને ઊંધી", "કાલ્પનિક અને સીધી", "વાસ્તવિક અને સીધી", "કાલ્પનિક અને ઊંધી"],
+          "explanation": "સમતલ અરીસો હંમેશા કાલ્પનિક અને સીધી છબી બનાવે છે. કાલ્પનિકનો અર્થ છે કે છબીને સ્ક્રીન પર પ્રક્ષેપિત કરી શકાતી નથી, અને સીધીનો અર્થ છે કે તેનું અભિમુખીકરણ પદાર્થ જેટલું જ છે।",
+          "difficulty": "easy"
+        },
+        {
+          "id": 2,
+          "question": "જો પદાર્થને સમતલ અરીસાની સામે 5 સેમી અંતરે મૂકવામાં આવે, તો છબી અરીસાની પાછળ કેટલા અંતરે દેખાશે?",
+          "options": ["2.5 સેમી", "5 સેમી", "10 સેમી", "15 સેમી"],
+          "explanation": "છબીનું અંતર પદાર્થના અંતર જેટલું હોય છે. જો પદાર્થ 5 સેમી આગળ છે, તો છબી અરીસાની પાછળ 5 સેમી દેખાય છે. આ સમતલ અરીસાના મૂળભૂત ગુણધર્મોમાંથી એક છે।",
+          "difficulty": "easy"
+        },
+        {
+          "id": 3,
+          "question": "સમતલ અરીસા દ્વારા ઉત્પન્ન કરેલ વિસ્તરણ શું છે?",
+          "options": ["0.5", "1", "2", "ચલ"],
+          "explanation": "વિસ્તરણ = છબીની ઊંચાઈ / પદાર્થની ઊંચાઈ. સમતલ અરીસા માટે, છબીનું કદ પદાર્થના કદ જેટલું હોય છે, તેથી વિસ્તરણ = 1. આનો અર્થ છે કે કોઈ વધારો અથવા ઘટાડો થતો નથી।",
+          "difficulty": "medium"
+        },
+        {
+          "id": 4,
+          "question": "એમ્બ્યુલન્સની આગળ 'AMBULANCE' શબ્દ ઊંધો કેમ લખેલો છે?",
+          "options": ["તે એક ડિઝાઇન પસંદગી છે", "જેથી ડ્રાઇવરો તેમના રિયર-વ્યૂ અરીસામાં તેને સાચું જોઈ શકે", "તેને અનન્ય બનાવવા માટે", "તે અલગ ભાષામાં લખેલું છે"],
+          "explanation": "શબ્દ બાજુથી ઊંધો હોય છે જેથી જ્યારે ડ્રાઇવરો તેમના રિયર-વ્યૂ અરીસામાં (જે સમતલ અરીસા છે) જુએ છે, ત્યારે તેઓ શબ્દને સાચું જોઈ શકે અને એમ્બ્યુલન્સને ઝડપથી ઓળખી શકે।",
+          "difficulty": "medium"
+        },
+        {
+          "id": 5,
+          "question": "વ્યક્તિ સમતલ અરીસાથી 2 મીટર અંતરે ઊભી છે. વ્યક્તિ અને તેની છબી વચ્ચેનું અંતર શું છે?",
+          "options": ["2 મીટર", "4 મીટર", "1 મીટર", "3 મીટર"],
+          "explanation": "વ્યક્તિ અરીસાની આગળ 2 મીટર છે, અને છબી અરીસાની પાછળ 2 મીટર છે. કુલ અંતર = 2 મીટર + 2 મીટર = 4 મીટર. આ પદાર્થનું અંતર + છબીનું અંતર છે।",
+          "difficulty": "medium"
+        },
+        {
+          "id": 6,
+          "question": "નીચેનામાંથી કયું સમતલ અરીસા દ્વારા બનેલી છબીની લાક્ષણિકતા નથી?",
+          "options": ["પદાર્થ જેટલું જ કદ", "બાજુથી ઊંધી", "સ્ક્રીન પર પ્રક્ષેપિત કરી શકાય છે", "અરીસાની પાછળ તેટલું જ અંતરે દેખાય છે જેટલું પદાર્થ આગળ છે"],
+          "explanation": "કાલ્પનિક છબીઓને સ્ક્રીન પર પ્રક્ષેપિત કરી શકાતી નથી કારણ કે પ્રકાશ કિરણો ખરેખર છબીની સ્થિતિમાંથી પસાર થતી નથી. અન્ય બધા વિકલ્પો સમતલ અરીસા છબીઓની સાચી લાક્ષણિકતાઓ છે।",
+          "difficulty": "hard"
+        },
+        {
+          "id": 7,
+          "question": "જો તમે અરીસાની આગળ તમારો જમણો હાથ ઉઠાવો, તો છબીમાં કયો હાથ ઉઠાવેલો દેખાશે?",
+          "options": ["જમણો હાથ", "ડાબો હાથ", "બંને હાથ", "કોઈ પણ હાથ નહીં"],
+          "explanation": "બાજુથી ઊંધું થવાને કારણે, તમારો જમણો હાથ તમારી અરીસા છબીના ડાબા હાથ તરીકે દેખાય છે. તેથી જ જ્યારે તમે તમારો જમણો હાથ ઉઠાવો છો, ત્યારે છબી તેનો ડાબો હાથ ઉઠાવતી દેખાય છે।",
+          "difficulty": "easy"
+        },
+        {
+          "id": 8,
+          "question": "6 ફુટ ઊંચો વ્યક્તિ સમતલ અરીસાની આગળ ઊભો છે. છબીની ઊંચાઈ શું છે?",
+          "options": ["3 ફુટ", "6 ફુટ", "12 ફુટ", "9 ફુટ"],
+          "explanation": "સમતલ અરીસામાં છબીની ઊંચાઈ પદાર્થની ઊંચાઈ જેટલી હોય છે. વિસ્તરણ = 1 હોવાથી, 6 ફુટ ઊંચો વ્યક્તિ 6 ફુટ ઊંચી છબી બનાવે છે।",
+          "difficulty": "easy"
+        },
+        {
+          "id": 9,
+          "question": "જો તમે સમતલ અરીસાની નજીક જાઓ, તો છબીનું શું થાય છે?",
+          "options": ["છબીનું કદ વધે છે", "છબી પાછળથી અરીસાની નજીક આવે છે", "છબીનું કદ ઘટે છે", "છબી વાસ્તવિક બને છે"],
+          "explanation": "જેમ જેમ તમે નજીક જાઓ છો, છબી પણ પાછળથી અરીસાની નજીક આવે છે, સમાન અંતર જાળવી રાખે છે. છબીનું કદ સમાન રહે છે (વિસ્તરણ = 1), પરંતુ તે તમારી આંખને મોટી લાગે છે કારણ કે તે નજીક છે।",
+          "difficulty": "hard"
+        },
+        {
+          "id": 10,
+          "question": "એક ઘડિયાળ 3:00 બતાવે છે. સમતલ અરીસામાં કયો સમય દેખાશે?",
+          "options": ["3:00", "9:00", "12:00", "6:00"],
+          "explanation": "બાજુથી ઊંધું થવાને કારણે, 3:00 (જ્યાં કલાકની સોય જમણી તરફ નિર્દેશ કરે છે) અરીસામાં 9:00 (કલાકની સોય ડાબી તરફ નિર્દેશ કરે છે) તરીકે દેખાય છે. છબી આડી રીતે ફ્લિપ થયેલી છે।",
+          "difficulty": "hard"
+        }
+      ]
+    },
+    "planeMirrorRealWorld": {
+      "title": "🌍 સમતલ અરીસો - વાસ્તવિક દુનિયાના કાર્યક્રમો",
+      "subtitle": "જુઓ કે સમતલ અરીસાનો ઉપયોગ રોજબરોજની જિંદગીમાં કેવી રીતે કરવામાં આવે છે",
+      "scenarios": [
+        {
+          "id": 1,
+          "title": "🚑 એમ્બ્યુલન્સ અરીસો લેખન",
+          "description": "જરૂરી વાહનો બાજુથી ઊંધું થવાનો ઉપયોગ કરે છે",
+          "scenario": "જરૂરી વાહનો પર 'AMBULANCE' શબ્દ ઊંધો કેમ લખેલો છે? જ્યારે ડ્રાઇવરો તેમના રિયર-વ્યૂ અરીસામાં (સમતલ અરીસા) જુએ છે, ત્યારે બાજુથી ઊંધું લખાણ સાચું દેખાય છે, જે તેઓને જરૂરી વાહનને ઝડપથી ઓળખવા અને રસ્તો આપવાની મંજૂરી આપે છે।"
+        },
+        {
+          "id": 2,
+          "title": "🪞 ડ્રેસિંગ રૂમ અરીસા",
+          "description": "પૂર્ણ-લંબાઈના અરીસા પોશાક તપાસ માટે",
+          "scenario": "પૂર્ણ-લંબાઈનો સમતલ અરીસો તમારી સંપૂર્ણ છબી બતાવવા માટે તમારી ઊંચાઈનો માત્ર અડધો હોવો જોઈએ! આ એટલા માટે કારણ કે આપત્તિનો કોણ પ્રતિબિંબિત કોણ જેટલો હોય છે, જે તમને નાના અરીસામાં માથાથી પગ સુધી જોવાની મંજૂરી આપે છે।"
+        },
+        {
+          "id": 3,
+          "title": "🚗 વાહન રિયર-વ્યૂ અરીસા",
+          "description": "પાછળની દૃશ્યતા માટે કારમાં સમતલ અરીસા",
+          "scenario": "કારોમાં અંદરનો રિયર-વ્યૂ અરીસો એક સમતલ અરીસો છે. તે તમને પાછળના વાહનોનું સાચું અંતરની ભાવના આપે છે કારણ કે છબીનું અંતર પદાર્થના અંતર જેટલું હોય છે. વધુ વ્યાપક દ્રશ્ય માટે સાઇડ મિરર અક્સર ઉત્તળ હોય છે।"
+        },
+        {
+          "id": 4,
+          "title": "💃 ડાન્સ સ્ટુડિયો અરીસા",
+          "description": "નર્તકો તેમના સ્વરૂપને તપાસવા માટે અરીસાનો ઉપયોગ કરે છે",
+          "scenario": "ડાન્સ સ્ટુડિયોમાં મોટા સમતલ અરીસા હોય છે જેથી નર્તકો તેમની હિલચાલને વાસ્તવિક સમયે જોઈ શકે. કાલ્પનિક છબી અરીસાની પાછળ સમાન અંતરે દેખાય છે, જે નર્તકોને તેમની સ્થિતિ અને સમન્વયનું ચોક્કસ નિર્ણય કરવામાં મદદ કરે છે।"
+        },
+        {
+          "id": 5,
+          "title": "🔬 પનડુબ્બીમાં પેરિસ્કોપ",
+          "description": "પાણીની ઉપર જોવા માટે અનેક સમતલ અરીસા",
+          "scenario": "પેરિસ્કોપ 45° કોણ પર બે સમતલ અરીસાનો ઉપયોગ કરે છે. પ્રકાશ ટોચના અરીસાથી પ્રતિબિંબિત થાય છે, નીચે જાય છે, નીચેના અરીસાથી પ્રતિબિંબિત થાય છે, અને તમારી આંખો સુધી પહોંચે છે. દરેક પ્રતિબિંબ પ્રતિબિંબના નિયમનું પાલન કરે છે, જે પનડુબ્બીના ક્રૂને પાણીની સપાટીની ઉપર જોવાની મંજૂરી આપે છે।"
+        },
+        {
+          "id": 6,
+          "title": "✂️ નાઈની દુકાનના અરીસા",
+          "description": "બે અરીસા માથાની પાછળ બતાવે છે",
+          "scenario": "નાઈ બે અરીસાનો ઉપયોગ કરે છે - એક આગળ અને એક પાછળ. તમે અનેક પ્રતિબિંબો જુઓ છો: પાછળના અરીસામાં તમારી પીઠ આગળના અરીસામાં દેખાય છે. દરેક પ્રતિબિંબ એક કાલ્પનિક છબી છે, જે તમને તમારા હેરકટને બધા ખૂણાઓથી તપાસવાની મંજૂરી આપે છે।"
+        }
+      ]
     }
   }
 }

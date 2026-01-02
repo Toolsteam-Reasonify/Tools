@@ -511,6 +511,7 @@ const LanguageSelector: React.FC = () => {
 
 // Reflection of Light Learn Component
 const ReflectionOfLightLearn = () => {
+  const { t } = useLanguage();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [selectedDemo, setSelectedDemo] = useState<'basic' | 'properties' | 'interactive'>('basic');
   const [objectDistance, setObjectDistance] = useState<number>(150);
@@ -994,42 +995,42 @@ const ReflectionOfLightLearn = () => {
     ctx.fillStyle = '#ffffff';
     ctx.font = 'bold 28px Arial';
     ctx.textAlign = 'center';
-    ctx.fillText('Properties of Image in Plane Mirror', width / 2, 40);
+    ctx.fillText(t('planeMirrorLearn.canvas.propertiesTitle'), width / 2, 40);
 
     const propertyBoxes = [
       {
         x: width * 0.15,
         y: 100,
-        title: '1. Virtual Image',
-        description: 'Image forms behind the mirror, cannot be projected on screen',
+        title: '1. ' + t('planeMirrorLearn.canvas.properties.virtualImage.title'),
+        description: t('planeMirrorLearn.canvas.properties.virtualImage.description'),
         icon: '🔮'
       },
       {
         x: width * 0.5,
         y: 100,
-        title: '2. Same Size',
-        description: 'Image size equals object size (magnification = 1)',
+        title: '2. ' + t('planeMirrorLearn.canvas.properties.sameSize.title'),
+        description: t('planeMirrorLearn.canvas.properties.sameSize.description'),
         icon: '📏'
       },
       {
         x: width * 0.85,
         y: 100,
-        title: '3. Equal Distance',
-        description: 'Image distance = Object distance from mirror',
+        title: '3. ' + t('planeMirrorLearn.canvas.properties.equalDistance.title'),
+        description: t('planeMirrorLearn.canvas.properties.equalDistance.description'),
         icon: '↔️'
       },
       {
         x: width * 0.25,
         y: 320,
-        title: '4. Laterally Inverted',
-        description: 'Left and right sides appear swapped',
+        title: '4. ' + t('planeMirrorLearn.canvas.properties.laterallyInverted.title'),
+        description: t('planeMirrorLearn.canvas.properties.laterallyInverted.description'),
         icon: '🔄'
       },
       {
         x: width * 0.75,
         y: 320,
-        title: '5. Upright/Erect',
-        description: 'Image has same orientation as object',
+        title: '5. ' + t('planeMirrorLearn.canvas.properties.upright.title'),
+        description: t('planeMirrorLearn.canvas.properties.upright.description'),
         icon: '⬆️'
       }
     ];
@@ -1297,12 +1298,12 @@ const ReflectionOfLightLearn = () => {
     ctx.fillStyle = '#ffffff';
     ctx.font = 'bold 14px Arial';
     ctx.textAlign = 'center';
-    ctx.fillText('Object', objectX, groundY + 80);
-    ctx.fillText('(Real)', objectX, groundY + 95);
+    ctx.fillText(t('planeMirrorLearn.canvas.object'), objectX, groundY + 80);
+    ctx.fillText(t('planeMirrorLearn.canvas.real'), objectX, groundY + 95);
 
     ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
-    ctx.fillText('Image', imageX, groundY + 80);
-    ctx.fillText('(Virtual)', imageX, groundY + 95);
+    ctx.fillText(t('planeMirrorLearn.canvas.image'), imageX, groundY + 80);
+    ctx.fillText(t('planeMirrorLearn.canvas.virtual'), imageX, groundY + 95);
 
     // Draw info box
     drawInfoBox(ctx, width, height, 'interactive');
@@ -1323,20 +1324,20 @@ const ReflectionOfLightLearn = () => {
     ctx.fillStyle = '#60a5fa';
     ctx.font = 'bold 16px Arial';
     ctx.textAlign = 'left';
-    ctx.fillText('📐 Key Points:', boxX + 10, boxY + 25);
+    ctx.fillText(t('planeMirrorLearn.canvas.keyPoints'), boxX + 10, boxY + 25);
 
     ctx.font = '13px Arial';
     ctx.fillStyle = '#94a3b8';
     
     if (mode === 'basic') {
-      ctx.fillText('• Image is virtual (behind mirror)', boxX + 10, boxY + 50);
-      ctx.fillText('• Same size as object', boxX + 10, boxY + 70);
-      ctx.fillText('• Equal distance from mirror', boxX + 10, boxY + 90);
-      ctx.fillText('• Laterally inverted', boxX + 10, boxY + 110);
+      ctx.fillText(t('planeMirrorLearn.canvas.basicPoints.point1'), boxX + 10, boxY + 50);
+      ctx.fillText(t('planeMirrorLearn.canvas.basicPoints.point2'), boxX + 10, boxY + 70);
+      ctx.fillText(t('planeMirrorLearn.canvas.basicPoints.point3'), boxX + 10, boxY + 90);
+      ctx.fillText(t('planeMirrorLearn.canvas.basicPoints.point4'), boxX + 10, boxY + 110);
     } else if (mode === 'interactive') {
-      ctx.fillText('• Use slider to move object', boxX + 10, boxY + 50);
-      ctx.fillText('• Notice image moves equally', boxX + 10, boxY + 70);
-      ctx.fillText('• Distance always remains equal', boxX + 10, boxY + 90);
+      ctx.fillText(t('planeMirrorLearn.canvas.interactivePoints.point1'), boxX + 10, boxY + 50);
+      ctx.fillText(t('planeMirrorLearn.canvas.interactivePoints.point2'), boxX + 10, boxY + 70);
+      ctx.fillText(t('planeMirrorLearn.canvas.interactivePoints.point3'), boxX + 10, boxY + 90);
     }
   };
 
@@ -1390,10 +1391,10 @@ const ReflectionOfLightLearn = () => {
           marginBottom: '10px',
           textShadow: '0 0 20px rgba(96, 165, 250, 0.5)'
         }}>
-          🪞 Image Formation in Plane Mirror 🪞
+          {t('planeMirrorLearn.title')}
         </h1>
         <p style={{ color: '#94a3b8', fontSize: '18px' }}>
-          Explore how plane mirrors create virtual images
+          {t('planeMirrorLearn.subtitle')}
         </p>
       </div>
 
@@ -1419,7 +1420,7 @@ const ReflectionOfLightLearn = () => {
             fontWeight: 'bold'
           }}
         >
-          📐 Basic Formation
+          {t('planeMirrorLearn.demos.basic')}
         </button>
         <button
           onClick={() => setSelectedDemo('properties')}
@@ -1435,7 +1436,7 @@ const ReflectionOfLightLearn = () => {
             fontWeight: 'bold'
           }}
         >
-          ✨ Image Properties
+          {t('planeMirrorLearn.demos.properties')}
         </button>
         <button
           onClick={() => setSelectedDemo('interactive')}
@@ -1451,7 +1452,7 @@ const ReflectionOfLightLearn = () => {
             fontWeight: 'bold'
           }}
         >
-          🎮 Interactive Demo
+          {t('planeMirrorLearn.demos.interactive')}
         </button>
       </div>
 
@@ -1485,11 +1486,11 @@ const ReflectionOfLightLearn = () => {
           border: '2px solid #334155',
           marginBottom: '25px'
         }}>
-          <h3 style={{ color: '#ffffff', marginBottom: '20px' }}>⚙️ Controls</h3>
+          <h3 style={{ color: '#ffffff', marginBottom: '20px' }}>{t('planeMirrorLearn.controls.title')}</h3>
           
           <div style={{ marginBottom: '20px' }}>
             <label style={{ color: '#94a3b8', display: 'block', marginBottom: '8px', fontSize: '14px' }}>
-              Object Distance from Mirror: <span style={{ color: '#60a5fa', fontWeight: 'bold' }}>{objectDistance} cm</span>
+              {t('planeMirrorLearn.controls.objectDistance')}: <span style={{ color: '#60a5fa', fontWeight: 'bold' }}>{objectDistance} cm</span>
             </label>
             <input
               type="range"
@@ -1503,7 +1504,7 @@ const ReflectionOfLightLearn = () => {
 
           <div style={{ marginBottom: '20px' }}>
             <label style={{ color: '#94a3b8', display: 'block', marginBottom: '8px', fontSize: '14px' }}>
-              Object Type:
+              {t('planeMirrorLearn.controls.objectType')}:
             </label>
             <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
               {['candle', 'person', 'flower', 'ball'].map((type) => (
@@ -1521,7 +1522,7 @@ const ReflectionOfLightLearn = () => {
                     textTransform: 'capitalize'
                   }}
                 >
-                  {type === 'candle' && '🕯️'} {type === 'person' && '🧍'} {type === 'flower' && '🌸'} {type === 'ball' && '⚽'} {type}
+                  {type === 'candle' && '🕯️'} {type === 'person' && '🧍'} {type === 'flower' && '🌸'} {type === 'ball' && '⚽'} {t(`planeMirrorLearn.controls.${type}`)}
                 </button>
               ))}
             </div>
@@ -1535,7 +1536,7 @@ const ReflectionOfLightLearn = () => {
                 onChange={(e) => setShowRayDiagram(e.target.checked)}
                 style={{ marginRight: '8px', cursor: 'pointer' }}
               />
-              Show Ray Diagram
+              {t('planeMirrorLearn.controls.showRayDiagram')}
             </label>
             <label style={{ color: '#94a3b8', display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
               <input
@@ -1544,7 +1545,7 @@ const ReflectionOfLightLearn = () => {
                 onChange={(e) => setShowMeasurements(e.target.checked)}
                 style={{ marginRight: '8px', cursor: 'pointer' }}
               />
-              Show Measurements
+              {t('planeMirrorLearn.controls.showMeasurements')}
             </label>
             <label style={{ color: '#94a3b8', display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
               <input
@@ -1553,7 +1554,7 @@ const ReflectionOfLightLearn = () => {
                 onChange={(e) => setShowConstructionLines(e.target.checked)}
                 style={{ marginRight: '8px', cursor: 'pointer' }}
               />
-              Show Construction Lines
+              {t('planeMirrorLearn.controls.showConstructionLines')}
             </label>
           </div>
         </div>
@@ -1568,30 +1569,30 @@ const ReflectionOfLightLearn = () => {
         borderRadius: '12px',
         border: '2px solid #334155'
       }}>
-        <h3 style={{ color: '#ffffff', marginBottom: '15px' }}>📚 Understanding Image Formation</h3>
+        <h3 style={{ color: '#ffffff', marginBottom: '15px' }}>{t('planeMirrorLearn.content.title')}</h3>
         
         <div style={{ color: '#94a3b8', lineHeight: '1.8' }}>
           <p style={{ marginBottom: '12px' }}>
-            <strong style={{ color: '#60a5fa' }}>How Images Form:</strong> When light rays from an object hit a plane mirror, they reflect according to the law of reflection. The reflected rays appear to come from a point behind the mirror, creating a virtual image.
+            <strong style={{ color: '#60a5fa' }}>{t('planeMirrorLearn.content.howImagesForm')}</strong> {t('planeMirrorLearn.content.howImagesFormText')}
           </p>
 
           <p style={{ marginBottom: '12px' }}>
-            <strong style={{ color: '#10b981' }}>Image Characteristics:</strong>
+            <strong style={{ color: '#10b981' }}>{t('planeMirrorLearn.content.imageCharacteristics')}</strong>
           </p>
           <ul style={{ marginLeft: '20px', marginBottom: '12px' }}>
-            <li><strong>Virtual:</strong> The image cannot be projected on a screen as light doesn't actually pass through it</li>
-            <li><strong>Erect:</strong> The image is upright, same orientation as the object</li>
-            <li><strong>Same Size:</strong> The image has the same dimensions as the object</li>
-            <li><strong>Equal Distance:</strong> Image distance from mirror equals object distance</li>
-            <li><strong>Laterally Inverted:</strong> Left and right sides are swapped</li>
+            <li><strong>{t('planeMirrorLearn.content.characteristics.virtual')}</strong></li>
+            <li><strong>{t('planeMirrorLearn.content.characteristics.erect')}</strong></li>
+            <li><strong>{t('planeMirrorLearn.content.characteristics.sameSize')}</strong></li>
+            <li><strong>{t('planeMirrorLearn.content.characteristics.equalDistance')}</strong></li>
+            <li><strong>{t('planeMirrorLearn.content.characteristics.laterallyInverted')}</strong></li>
           </ul>
 
           <p style={{ marginBottom: '12px' }}>
-            <strong style={{ color: '#fbbf24' }}>Formula:</strong> For plane mirrors, if object distance is <em>d</em>, then image distance is also <em>d</em> (behind the mirror). Magnification = 1 (same size).
+            <strong style={{ color: '#fbbf24' }}>{t('planeMirrorLearn.content.formula')}</strong> {t('planeMirrorLearn.content.formulaText')}
           </p>
 
           <p>
-            <strong style={{ color: '#ec4899' }}>Real-Life Examples:</strong> Looking at yourself in a bathroom mirror, rear-view mirrors in vehicles, dressing room mirrors, and periscopes all use plane mirror image formation.
+            <strong style={{ color: '#ec4899' }}>{t('planeMirrorLearn.content.realLifeExamples')}</strong> {t('planeMirrorLearn.content.realLifeExamplesText')}
           </p>
         </div>
       </div>
@@ -1610,6 +1611,7 @@ interface Question {
 }
 
 const PracticeMode: React.FC = () => {
+  const { t, tValue } = useLanguage();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [currentQuestion, setCurrentQuestion] = useState<number>(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
@@ -1619,104 +1621,16 @@ const PracticeMode: React.FC = () => {
   const [quizComplete, setQuizComplete] = useState<boolean>(false);
   const animationFrameRef = useRef<number>();
 
-  // Practice Questions
-  const questions: Question[] = [
-    {
-      id: 1,
-      question: "What type of image is formed by a plane mirror?",
-      options: ["Real and inverted", "Virtual and erect", "Real and erect", "Virtual and inverted"],
-      correctAnswer: 1,
-      explanation: "A plane mirror always forms a VIRTUAL and ERECT image. Virtual means the image cannot be projected on a screen, and erect means it has the same orientation as the object.",
-      difficulty: 'easy'
-    },
-    {
-      id: 2,
-      question: "If an object is placed 5 cm in front of a plane mirror, how far behind the mirror will the image appear?",
-      options: ["2.5 cm", "5 cm", "10 cm", "15 cm"],
-      correctAnswer: 1,
-      explanation: "The image distance equals the object distance. If the object is 5 cm in front, the image appears 5 cm behind the mirror. This is one of the fundamental properties of plane mirrors.",
-      difficulty: 'easy'
-    },
-    {
-      id: 3,
-      question: "What is the magnification produced by a plane mirror?",
-      options: ["0.5", "1", "2", "Variable"],
-      correctAnswer: 1,
-      explanation: "Magnification = Image height / Object height. For plane mirrors, the image size equals object size, so magnification = 1. This means no enlargement or reduction occurs.",
-      difficulty: 'medium'
-    },
-    {
-      id: 4,
-      question: "Why does the word 'AMBULANCE' appear reversed on the front of ambulances?",
-      options: [
-        "It's a design choice",
-        "So drivers see it correctly in their rear-view mirrors",
-        "To make it look unique",
-        "It's written in a different language"
-      ],
-      correctAnswer: 1,
-      explanation: "The word is laterally inverted so that when drivers look in their rear-view mirrors (which are plane mirrors), they see the word correctly and can identify the ambulance quickly.",
-      difficulty: 'medium'
-    },
-    {
-      id: 5,
-      question: "A person stands 2 meters from a plane mirror. What is the distance between the person and their image?",
-      options: ["2 meters", "4 meters", "1 meter", "3 meters"],
-      correctAnswer: 1,
-      explanation: "The person is 2m in front of the mirror, and the image is 2m behind the mirror. Total distance = 2m + 2m = 4 meters. This is object distance + image distance.",
-      difficulty: 'medium'
-    },
-    {
-      id: 6,
-      question: "Which of the following is NOT a characteristic of an image formed by a plane mirror?",
-      options: [
-        "Same size as object",
-        "Laterally inverted",
-        "Can be projected on screen",
-        "Appears as far behind mirror as object is in front"
-      ],
-      correctAnswer: 2,
-      explanation: "Virtual images CANNOT be projected on a screen because light rays don't actually pass through the image position. All other options are true characteristics of plane mirror images.",
-      difficulty: 'hard'
-    },
-    {
-      id: 7,
-      question: "If you raise your right hand in front of a mirror, which hand appears to be raised in the image?",
-      options: ["Right hand", "Left hand", "Both hands", "Neither hand"],
-      correctAnswer: 1,
-      explanation: "Due to lateral inversion, your right hand appears as the left hand of your mirror image. This is why when you raise your right hand, the image appears to raise its left hand.",
-      difficulty: 'easy'
-    },
-    {
-      id: 8,
-      question: "A 6 ft tall person stands in front of a plane mirror. What is the height of the image?",
-      options: ["3 ft", "6 ft", "12 ft", "9 ft"],
-      correctAnswer: 1,
-      explanation: "The image height equals the object height in a plane mirror. Since magnification = 1, a 6 ft tall person produces a 6 ft tall image.",
-      difficulty: 'easy'
-    },
-    {
-      id: 9,
-      question: "What happens to the image if you move closer to a plane mirror?",
-      options: [
-        "Image size increases",
-        "Image moves closer to mirror from behind",
-        "Image size decreases",
-        "Image becomes real"
-      ],
-      correctAnswer: 1,
-      explanation: "As you move closer, the image also moves closer to the mirror from behind, maintaining equal distance. The image size remains the same (magnification = 1), but it appears larger to your eye because it's closer.",
-      difficulty: 'hard'
-    },
-    {
-      id: 10,
-      question: "A clock shows 3:00. What time will appear to show in a plane mirror?",
-      options: ["3:00", "9:00", "12:00", "6:00"],
-      correctAnswer: 1,
-      explanation: "Due to lateral inversion, 3:00 (where the hour hand points right) appears as 9:00 (hour hand pointing left) in the mirror. The image is horizontally flipped.",
-      difficulty: 'hard'
-    }
-  ];
+  // Practice Questions - Load from translations
+  const questionsData = tValue('planeMirrorPractice.questions') as any[];
+  const questions: Question[] = questionsData.map((q: any) => ({
+    id: q.id,
+    question: q.question,
+    options: q.options,
+    correctAnswer: q.correctAnswer,
+    explanation: q.explanation,
+    difficulty: q.difficulty as 'easy' | 'medium' | 'hard'
+  }));
 
   // Draw arrow head helper
   const drawArrowHead = (
@@ -2390,10 +2304,10 @@ const PracticeMode: React.FC = () => {
           <div style={{ marginBottom: '25px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
               <span style={{ color: '#94a3b8', fontSize: '14px' }}>
-                Question {currentQuestion + 1} of {questions.length}
+                {t('planeMirrorPractice.progress.question')} {currentQuestion + 1} {t('planeMirrorPractice.progress.of')} {questions.length}
               </span>
               <span style={{ color: '#10b981', fontSize: '14px', fontWeight: 'bold' }}>
-                Score: {score}/{questions.length}
+                {t('planeMirrorPractice.progress.score')}: {score}/{questions.length}
               </span>
             </div>
             <div style={{ 
@@ -2425,7 +2339,7 @@ const PracticeMode: React.FC = () => {
               marginBottom: '15px',
               textTransform: 'uppercase'
             }}>
-              {question.difficulty}
+              {t(`planeMirrorPractice.difficulty.${question.difficulty}`)}
             </div>
             <h3 style={{ color: '#ffffff', fontSize: '22px', lineHeight: '1.6' }}>
               {question.question}
@@ -2515,7 +2429,7 @@ const PracticeMode: React.FC = () => {
                 marginBottom: '10px',
                 fontSize: '18px'
               }}>
-                {selectedAnswer === question.correctAnswer ? '✓ Correct!' : '✗ Incorrect'}
+                {selectedAnswer === question.correctAnswer ? t('planeMirrorPractice.feedback.correct') : t('planeMirrorPractice.feedback.incorrect')}
               </h4>
               <p style={{ color: '#94a3b8', lineHeight: '1.6', margin: 0 }}>
                 {question.explanation}
@@ -2540,7 +2454,7 @@ const PracticeMode: React.FC = () => {
                 transition: 'all 0.3s'
               }}
             >
-              {currentQuestion < questions.length - 1 ? 'Next Question →' : 'View Results →'}
+              {currentQuestion < questions.length - 1 ? t('planeMirrorPractice.buttons.nextQuestion') : t('planeMirrorPractice.buttons.viewResults')}
             </button>
           )}
         </div>
@@ -2559,10 +2473,10 @@ const PracticeMode: React.FC = () => {
             {score === questions.length ? '🏆' : score >= questions.length * 0.7 ? '🎉' : '📚'}
           </div>
           <h2 style={{ color: '#ffffff', fontSize: '32px', marginBottom: '15px' }}>
-            Quiz Complete!
+            {t('planeMirrorPractice.quizComplete.title')}
           </h2>
           <p style={{ color: '#94a3b8', fontSize: '24px', marginBottom: '30px' }}>
-            Your Score: <span style={{ color: '#10b981', fontWeight: 'bold' }}>{score}/{questions.length}</span>
+            {t('planeMirrorPractice.quizComplete.yourScore')}: <span style={{ color: '#10b981', fontWeight: 'bold' }}>{score}/{questions.length}</span>
           </p>
           <div style={{ 
             width: '100%', 
@@ -2581,9 +2495,9 @@ const PracticeMode: React.FC = () => {
             }} />
           </div>
           <p style={{ color: '#94a3b8', marginBottom: '30px', fontSize: '16px' }}>
-            {score === questions.length && 'Perfect! You have mastered plane mirror concepts! 🌟'}
-            {score >= questions.length * 0.7 && score < questions.length && 'Great job! You have a strong understanding! 👏'}
-            {score < questions.length * 0.7 && 'Keep practicing! Review the concepts and try again! 💪'}
+            {score === questions.length && t('planeMirrorPractice.quizComplete.perfect')}
+            {score >= questions.length * 0.7 && score < questions.length && t('planeMirrorPractice.quizComplete.greatJob')}
+            {score < questions.length * 0.7 && t('planeMirrorPractice.quizComplete.keepPracticing')}
           </p>
           <button
             onClick={handleResetQuiz}
@@ -2599,7 +2513,7 @@ const PracticeMode: React.FC = () => {
               transition: 'all 0.3s'
             }}
           >
-            Try Again 🔄
+            {t('planeMirrorPractice.buttons.tryAgain')}
           </button>
         </div>
       )}
@@ -2610,11 +2524,12 @@ const PracticeMode: React.FC = () => {
 
 // Real World Applications Component
 const RealWorldMode: React.FC = () => {
+  const { t, tValue } = useLanguage();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [selectedScenario, setSelectedScenario] = useState<number>(0);
   const animationFrameRef = useRef<number>();
 
-  // Real World Scenarios
+  // Real World Scenarios - Load from translations
   interface RealWorldScenario {
     id: number;
     title: string;
@@ -2623,50 +2538,14 @@ const RealWorldMode: React.FC = () => {
     icon: string;
   }
 
-  const realWorldScenarios: RealWorldScenario[] = [
-    {
-      id: 1,
-      title: "🚑 Ambulance Mirror Writing",
-      description: "Emergency vehicles use lateral inversion",
-      scenario: "Why is 'AMBULANCE' written backwards on emergency vehicles? When drivers look in their rear-view mirrors (plane mirrors), the laterally inverted text appears correctly, allowing them to quickly identify the emergency vehicle and give way.",
-      icon: "🚑"
-    },
-    {
-      id: 2,
-      title: "🪞 Dressing Room Mirrors",
-      description: "Full-length mirrors for outfit checking",
-      scenario: "A full-length plane mirror needs to be only half your height to show your complete image! This is because the angle of incidence equals the angle of reflection, allowing you to see from head to toe in a smaller mirror.",
-      icon: "🪞"
-    },
-    {
-      id: 3,
-      title: "🚗 Vehicle Rear-View Mirrors",
-      description: "Plane mirrors in cars for rear visibility",
-      scenario: "The inside rear-view mirror in cars is a plane mirror. It gives you a true sense of distance to vehicles behind you because the image distance equals object distance. Side mirrors are often convex for wider field of view.",
-      icon: "🚗"
-    },
-    {
-      id: 4,
-      title: "💃 Dance Studio Mirrors",
-      description: "Dancers use mirrors to check their form",
-      scenario: "Dance studios have large plane mirrors so dancers can see their movements in real-time. The virtual image appears at the same distance behind the mirror, helping dancers judge their positioning and synchronization accurately.",
-      icon: "💃"
-    },
-    {
-      id: 5,
-      title: "🔬 Periscope in Submarines",
-      description: "Multiple plane mirrors for seeing above water",
-      scenario: "Periscopes use two plane mirrors at 45° angles. Light reflects off the top mirror, travels down, reflects off the bottom mirror, and reaches your eyes. Each reflection follows the law of reflection, allowing submarine crews to see above the water surface.",
-      icon: "🔬"
-    },
-    {
-      id: 6,
-      title: "✂️ Barber Shop Mirrors",
-      description: "Two mirrors showing back of head",
-      scenario: "Barbers use two mirrors - one in front and one behind you. You see multiple reflections: your back in the rear mirror appears in the front mirror. Each reflection is a virtual image, allowing you to check your haircut from all angles.",
-      icon: "✂️"
-    }
-  ];
+  const scenariosData = tValue('planeMirrorRealWorld.scenarios') as any[];
+  const realWorldScenarios: RealWorldScenario[] = scenariosData.map((s: any) => ({
+    id: s.id,
+    title: s.title,
+    description: s.description,
+    scenario: s.scenario,
+    icon: s.title.split(' ')[0] // Extract emoji from title (first word)
+  }));
 
   // Draw person helper
   const drawPerson = (
@@ -3367,10 +3246,10 @@ const RealWorldMode: React.FC = () => {
           marginBottom: '10px',
           textShadow: '0 0 20px rgba(96, 165, 250, 0.5)'
         }}>
-          🌍 Plane Mirror - Real World Applications
+          {t('planeMirrorRealWorld.title')}
         </h1>
         <p style={{ color: '#94a3b8', fontSize: '18px' }}>
-          See how plane mirrors are used in everyday life
+          {t('planeMirrorRealWorld.subtitle')}
         </p>
       </div>
 
@@ -3494,7 +3373,7 @@ const MainApp: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-teal-50 to-blue-50">
+    <div className="min-h-screen bg-white">
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-blue-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-between h-16">

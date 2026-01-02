@@ -6,7 +6,6 @@ import React, {
   useContext,
   ReactNode,
 } from "react";
-import translationsData from "../locales/translation.json";
 import { Lightbulb, ArrowRight, ArrowLeft, CheckCircle, XCircle, RefreshCw, Award, Camera, Car, Eye, Home, Smartphone, Sun, Telescope, ChevronDown, ChevronUp, Sparkles } from 'lucide-react';
 
 // Type declarations for browser extension APIs to prevent TypeScript errors
@@ -374,17 +373,965 @@ type TabType = "learn" | "practice" | "realWorld";
 
 
 
-// Translation type definition
+// Translation interface
+export interface Translation {
+  nav: {
+    logo: string;
+    tabs: {
+      learn: string;
+      practice: string;
+      realWorld: string;
+    };
+  };
+  language: {
+    en: string;
+    hi: string;
+    gu: string;
+    selectorLabel: string;
+  };
+  controls: {
+    step: string;
+    of: string;
+    previous: string;
+    next: string;
+    play: string;
+    pause: string;
+    reset: string;
+  };
+  shadowSimulator: {
+    title: string;
+    subtitle: string;
+    objects: {
+      title: string;
+      cat: string;
+      superhero: string;
+      bottle: string;
+      glass: string;
+      paper: string;
+      football: string;
+      tree: string;
+      selected: string;
+    };
+    lightSize: {
+      title: string;
+      small: string;
+      large: string;
+      smallFeedback: string;
+      largeFeedback: string;
+    };
+    shadowFacts: {
+      title: string;
+      opaque: string;
+      translucent: string;
+      transparent: string;
+      currentObject: {
+        opaque: string;
+        translucent: string;
+        semiTransparent: string;
+      };
+    };
+    controls: {
+      showRays: string;
+      dragHelper: string;
+      screenLabel: string;
+      lightLabel: string;
+      dragObject: string;
+    };
+    feedback: {
+      shadowBig: string;
+      shadowTiny: string;
+      shadowShrinking: string;
+      objectBehindLight: string;
+      objectBeyondScreen: string;
+    };
+    infoBox: {
+      title: string;
+      hugeShadow: string;
+      tinyShadow: string;
+      normalShadow: string;
+      softEdges: string;
+      sharpEdges: string;
+      positionObject: string;
+    };
+  };
+  canvas: {
+    intro: {
+      title: string;
+      questionMark: string;
+    };
+    matchbox_setup: {
+      instruction: string;
+      boxLabel: string;
+    };
+    matchbox_aligned: {
+      message: string;
+    };
+    matchbox_misaligned: {
+      message: string;
+    };
+    pipe_intro: {
+      question: string;
+    };
+    pipe_straight: {
+      message: string;
+    };
+    pipe_bent: {
+      message: string;
+    };
+    conclusion: {
+      title: string;
+      subtitle: string;
+    };
+  };
+  practice: {
+    title: string;
+    subtitle?: string;
+    stats?: {
+      score: string;
+      accuracy: string;
+      progress: string;
+    };
+    exercise?: string;
+    difficulty?: {
+      easy: string;
+      medium: string;
+      hard: string;
+    };
+    completed?: string;
+    restart?: string;
+    submitAnswer?: string;
+    nextExercise?: string;
+    completedAll?: string;
+    overview?: string;
+    congratulations?: string;
+    completedAllText?: string;
+    accuracyLabel?: string;
+    excellent?: string;
+    notQuiteRight?: string;
+    interactive?: {
+      mirrorAngle: string;
+      tip: string;
+      lightSource: string;
+      mirror: string;
+      target: string;
+      perfect: string;
+    };
+    drawing?: {
+      instruction: string;
+      clearDrawing: string;
+      tip: string;
+    };
+    exercises?: {
+      [key: string]: {
+        question: string;
+        options?: string[];
+        explanation: string;
+      };
+    };
+    trueFalse?: {
+      true: string;
+      false: string;
+    };
+    scenarios?: Array<{
+      id: number;
+      title: string;
+      situation: string;
+      question: string;
+      options: string[];
+      correctAnswer: number;
+      explanation: string;
+      realWorldTip: string;
+      imageEmoji: string;
+    }>;
+    controls?: {
+      previous: string;
+      checkAnswer: string;
+      nextScenario: string;
+      scenarioCount: string;
+    };
+    headers?: {
+      realWorldSituation: string;
+      scientificExplanation: string;
+      realWorldApplication: string;
+    };
+    progress?: {
+      title: string;
+      completed: string;
+      congrats: string;
+    };
+    facts?: {
+      title: string;
+      list: string[];
+    };
+    simulation?: {
+      title: string;
+      show: string;
+      hide: string;
+      intro: string;
+      shadowSize: string;
+      large: string;
+      medium: string;
+      small: string;
+      puppetPosLabel: string;
+      puppetShapeLabel: string;
+      shapes: {
+        hand: {
+          label: string;
+          emoji: string;
+        };
+        bird: {
+          label: string;
+          emoji: string;
+        };
+        dog: {
+          label: string;
+          emoji: string;
+        };
+      };
+      tip: string;
+    };
+  };
+  learn: {
+    title: string;
+    subtitle: string;
+    demos: {
+      law: string;
+      types: string;
+    };
+    canvas: {
+      normal: string;
+      incidentRay: string;
+      reflectedRay: string;
+      incidentAngle: string;
+      reflectedAngle: string;
+    };
+    controls: {
+      title: string;
+      angleOfIncidence: string;
+      showNormalLine: string;
+      showAngleMeasurements: string;
+      animateLightTravel: string;
+    };
+    concepts: {
+      title: string;
+      law: {
+        title: string;
+        description: string;
+        point1: string;
+        point2: string;
+        point3: string;
+        redRay: string;
+        redRayDesc: string;
+        greenRay: string;
+        greenRayDesc: string;
+        yellowLine: string;
+        yellowLineDesc: string;
+      };
+      types: {
+        regularTitle: string;
+        regularDesc: string;
+        diffuseTitle: string;
+        diffuseDesc: string;
+      };
+    };
+    infoBox: {
+      lawTitle: string;
+      lawFormula: string;
+      lawDesc1: string;
+      lawDesc2: string;
+    };
+    types: {
+      regularTitle: string;
+      diffuseTitle: string;
+      smoothSurface: string;
+      roughSurface: string;
+      regularDesc: string;
+      diffuseDesc: string;
+    };
+  };
+  realWorld: {
+    title: string;
+    subtitle: string;
+    previous?: string;
+    next?: string;
+    keyTakeaway?: string;
+    keyTakeawayText?: string;
+    howItWorks?: string;
+    funFacts?: string;
+    example?: string;
+    searchPlaceholder?: string;
+    allCategories?: string;
+    loading?: string;
+    applications:
+      | Array<{
+          id: number;
+          title: string;
+          description: string;
+          icon?: string;
+          category: string;
+          example: string;
+          howItWorks?: string[];
+          funFacts?: string[];
+          canvasLabel?: string;
+        }>
+      | {
+          [key: string]: {
+            title: string;
+            category: string;
+            description: string;
+            example: string;
+            howItWorks: string[];
+            funFacts: string[];
+            canvasLabel: string;
+          };
+        };
+  };
+}
+
+// Translation type definition for compatibility
 type TranslationValue =
   | string
   | string[]
   | number
   | { [key: string]: TranslationValue }
   | Array<{ [key: string]: TranslationValue }>;
-type Translations = Record<Language, TranslationValue>;
 
-// Translation system - Load from JSON file
-const translations: Translations = translationsData as Translations;
+// Translation system - Inline translations
+export const translations: Record<string, Translation> = {
+  en: {
+    nav: {
+      logo: "Reflection of Light",
+      tabs: {
+        learn: "Learn",
+        practice: "Practice",
+        realWorld: "Real World",
+      },
+    },
+    language: {
+      en: "English",
+      hi: "हिंदी",
+      gu: "ગુજરાતી",
+      selectorLabel: "Select Language",
+    },
+    controls: {
+      step: "Step",
+      of: "of",
+      previous: "Previous",
+      next: "Next",
+      play: "Play",
+      pause: "Pause",
+      reset: "Reset",
+    },
+    shadowSimulator: {
+      title: "Shadow Maker Simulator",
+      subtitle: "Play with light and shadows like a scientist!",
+      objects: {
+        title: "Choose Your Object!",
+        cat: "Cat Cut-out",
+        superhero: "Superhero",
+        bottle: "Water Bottle",
+        glass: "Frosted Glass",
+        paper: "Paper Sheet",
+        football: "Football",
+        tree: "Tree",
+        selected: "selected! Drag it around!",
+      },
+      lightSize: {
+        title: "Light Size",
+        small: "Small Light (Sharp Shadow)",
+        large: "Large Light (Soft Shadow)",
+        smallFeedback: "Sharp shadow activated!",
+        largeFeedback: "Soft, blurry shadow mode!",
+      },
+      shadowFacts: {
+        title: "Shadow Facts!",
+        opaque: "Opaque objects = Dark shadows",
+        translucent: "Translucent objects = Faint shadows",
+        transparent: "Transparent objects = Almost no shadow",
+        currentObject: {
+          opaque: "Opaque",
+          translucent: "Translucent",
+          semiTransparent: "Semi-transparent",
+        },
+      },
+      controls: {
+        showRays: "Show Light Rays",
+        dragHelper: "Drag the light, object, and screen to see shadows change!",
+        screenLabel: "Screen (Drag me!)",
+        lightLabel: "Light",
+        dragObject: "Drag me!",
+      },
+      feedback: {
+        shadowBig: "Whoa! Your shadow grew SUPER BIG!",
+        shadowTiny: "Nice move! You made a tiny shadow!",
+        shadowShrinking: "Getting closer! Shadow shrinking!",
+        objectBehindLight: "Object is behind the light source! No shadow.",
+        objectBeyondScreen: "Object is beyond the screen! No shadow.",
+      },
+      infoBox: {
+        title: "What's Happening?",
+        hugeShadow: "HUGE shadow! The object is super close to the light!",
+        tinyShadow: "Tiny shadow! The object is close to the screen!",
+        normalShadow: "Normal shadow size! Try moving things around!",
+        softEdges: "Soft edges because the light is BIG!",
+        sharpEdges: "Sharp edges because the light is SMALL!",
+        positionObject:
+          "Position the object between the light source and the screen to see its shadow!",
+      },
+    },
+    canvas: {
+      intro: {
+        title: "Does Light Travel in a Straight Line?",
+        questionMark: "?",
+      },
+      matchbox_setup: {
+        instruction: "Make holes in the same position on each matchbox",
+        boxLabel: "Box",
+      },
+      matchbox_aligned: {
+        message: "Aligned holes - Light passes through!",
+      },
+      matchbox_misaligned: {
+        message: "Misaligned holes - Light is blocked!",
+      },
+      pipe_intro: {
+        question: "Can we see through a pipe?",
+      },
+      pipe_straight: {
+        message: "Straight pipe - You can see the flame!",
+      },
+      pipe_bent: {
+        message: "Bent pipe - Cannot see the flame!",
+      },
+      conclusion: {
+        title: "Light Travels in a Straight Line!",
+        subtitle: "Both experiments confirm this important property of light",
+      },
+    },
+    practice: {
+      title: "Practice Mode",
+      subtitle: "Test your knowledge",
+      stats: {
+        score: "Score",
+        accuracy: "Accuracy",
+        progress: "Progress",
+      },
+    },
+    learn: {
+      title: "✨ Reflection of Light ✨",
+      subtitle: "Interactive demonstrations of how light reflects off surfaces",
+      demos: {
+        law: "📐 Law of Reflection",
+        types: "🔄 Types of Reflection",
+      },
+      canvas: {
+        normal: "Normal",
+        incidentRay: "Incident Ray",
+        reflectedRay: "Reflected Ray",
+        incidentAngle: "∠i = {{angle}}°",
+        reflectedAngle: "∠r = {{angle}}°",
+      },
+      controls: {
+        title: "⚙️ Controls",
+        angleOfIncidence: "Angle of Incidence:",
+        showNormalLine: "Show Normal Line",
+        showAngleMeasurements: "Show Angle Measurements",
+        animateLightTravel: "Animate Light Travel",
+      },
+      concepts: {
+        title: "📚 Key Concepts",
+        law: {
+          title: "The Law of Reflection",
+          description: "states that when light reflects off a surface:",
+          point1:
+            "The incident ray, reflected ray, and normal all lie in the same plane",
+          point2:
+            "The angle of incidence (∠i) equals the angle of reflection (∠r)",
+          point3:
+            "Both angles are measured from the normal (perpendicular line to the surface)",
+          redRay: "Red ray:",
+          redRayDesc: "Incident light approaching the mirror",
+          greenRay: "Green ray:",
+          greenRayDesc: "Reflected light bouncing off the mirror",
+          yellowLine: "Yellow dashed line:",
+          yellowLineDesc: "Normal (perpendicular to surface)",
+        },
+        types: {
+          regularTitle: "Regular (Specular) Reflection:",
+          regularDesc:
+            "Occurs on smooth surfaces like mirrors and calm water. Parallel incident rays remain parallel after reflection, creating clear images.",
+          diffuseTitle: "Diffuse Reflection:",
+          diffuseDesc:
+            "Occurs on rough surfaces like paper, walls, and clothing. Parallel incident rays scatter in different directions, which is why we can see most objects from any angle but they don't form clear reflections.",
+        },
+      },
+      infoBox: {
+        lawTitle: "Law of Reflection:",
+        lawFormula: "∠i = ∠r",
+        lawDesc1: "Angle of incidence equals",
+        lawDesc2: "angle of reflection",
+      },
+      types: {
+        regularTitle: "Regular Reflection",
+        diffuseTitle: "Diffuse Reflection",
+        smoothSurface: "Smooth Surface",
+        roughSurface: "Rough Surface",
+        regularDesc: "Parallel incident rays remain parallel after reflection",
+        diffuseDesc: "Parallel incident rays scatter in different directions",
+      },
+    },
+    realWorld: {
+      title: "Real World Applications",
+      subtitle: "Discover how reflection of light is used in everyday life",
+      previous: "Previous",
+      next: "Next",
+      keyTakeaway: "Key Takeaway",
+      keyTakeawayText:
+        "Reflection of light is not just a physics concept - it's a fundamental principle that powers countless technologies we use every day.",
+      howItWorks: "How Does It Work?",
+      funFacts: "Fun Facts",
+      example: "Example:",
+      applications: [
+        {
+          id: 1,
+          title: "Mirrors in Daily Life",
+          category: "Everyday Use",
+          description:
+            "We use mirrors every day for grooming, dressing, and checking our appearance.",
+          example: "Bathroom mirrors, dressing table mirrors, wardrobe mirrors",
+          howItWorks: [
+            "Light from your body and surroundings hits the mirror surface",
+            "The smooth glass surface reflects light in a predictable way",
+            "Reflected light enters your eyes, creating a virtual image",
+            "The image appears to be behind the mirror at the same distance",
+          ],
+          funFacts: [
+            "Ancient mirrors were made of polished bronze or copper",
+            "The first glass mirrors were made in Venice around 1317",
+            "Modern mirrors use a thin layer of aluminum or silver coating",
+          ],
+          canvasLabel: "You see your reflection!",
+        },
+      ],
+    },
+  },
+  hi: {
+    nav: {
+      logo: "प्रकाश का परावर्तन",
+      tabs: {
+        learn: "सीखें",
+        practice: "अभ्यास",
+        realWorld: "वास्तविक दुनिया",
+      },
+    },
+    language: {
+      en: "English",
+      hi: "हिंदी",
+      gu: "ગુજરાતી",
+      selectorLabel: "भाषा चुनें",
+    },
+    controls: {
+      step: "चरण",
+      of: "का",
+      previous: "पिछला",
+      next: "अगला",
+      play: "चलाएं",
+      pause: "रोकें",
+      reset: "रीसेट",
+    },
+    shadowSimulator: {
+      title: "छाया निर्माता सिम्युलेटर",
+      subtitle: "एक वैज्ञानिक की तरह प्रकाश और छाया के साथ खेलें!",
+      objects: {
+        title: "अपना वस्तु चुनें!",
+        cat: "बिल्ली कट-आउट",
+        superhero: "सुपरहीरो",
+        bottle: "पानी की बोतल",
+        glass: "फ्रॉस्टेड ग्लास",
+        paper: "कागज की शीट",
+        football: "फुटबॉल",
+        tree: "पेड़",
+        selected: "चुना गया! इसे चारों ओर खींचें!",
+      },
+      lightSize: {
+        title: "प्रकाश का आकार",
+        small: "छोटा प्रकाश (तीव्र छाया)",
+        large: "बड़ा प्रकाश (नरम छाया)",
+        smallFeedback: "तीव्र छाया सक्रिय!",
+        largeFeedback: "नरम, धुंधली छाया मोड!",
+      },
+      shadowFacts: {
+        title: "छाया तथ्य!",
+        opaque: "अपारदर्शी वस्तुएं = गहरी छाया",
+        translucent: "अर्ध-पारदर्शी वस्तुएं = हल्की छाया",
+        transparent: "पारदर्शी वस्तुएं = लगभग कोई छाया नहीं",
+        currentObject: {
+          opaque: "अपारदर्शी",
+          translucent: "अर्ध-पारदर्शी",
+          semiTransparent: "अर्ध-पारदर्शी",
+        },
+      },
+      controls: {
+        showRays: "प्रकाश किरणें दिखाएं",
+        dragHelper:
+          "छाया बदलते देखने के लिए प्रकाश, वस्तु और स्क्रीन को खींचें!",
+        screenLabel: "स्क्रीन (मुझे खींचें!)",
+        lightLabel: "प्रकाश",
+        dragObject: "मुझे खींचें!",
+      },
+      feedback: {
+        shadowBig: "वाह! आपकी छाया बहुत बड़ी हो गई!",
+        shadowTiny: "अच्छी चाल! आपने एक छोटी छाया बनाई!",
+        shadowShrinking: "करीब आ रहे हैं! छाया सिकुड़ रही है!",
+        objectBehindLight: "वस्तु प्रकाश स्रोत के पीछे है! कोई छाया नहीं।",
+        objectBeyondScreen: "वस्तु स्क्रीन के पार है! कोई छाया नहीं।",
+      },
+      infoBox: {
+        title: "क्या हो रहा है?",
+        hugeShadow: "विशाल छाया! वस्तु प्रकाश के बहुत करीब है!",
+        tinyShadow: "छोटी छाया! वस्तु स्क्रीन के करीब है!",
+        normalShadow:
+          "सामान्य छाया आकार! चीजों को इधर-उधर घुमाने का प्रयास करें!",
+        softEdges: "नरम किनारे क्योंकि प्रकाश बड़ा है!",
+        sharpEdges: "तीव्र किनारे क्योंकि प्रकाश छोटा है!",
+        positionObject:
+          "छाया देखने के लिए वस्तु को प्रकाश स्रोत और स्क्रीन के बीच रखें!",
+      },
+    },
+    canvas: {
+      intro: {
+        title: "क्या प्रकाश सीधी रेखा में यात्रा करता है?",
+        questionMark: "?",
+      },
+      matchbox_setup: {
+        instruction: "प्रत्येक माचिस के डिब्बे में एक ही स्थान पर छेद करें",
+        boxLabel: "डिब्बा",
+      },
+      matchbox_aligned: {
+        message: "संरेखित छेद - प्रकाश गुजरता है!",
+      },
+      matchbox_misaligned: {
+        message: "गलत संरेखित छेद - प्रकाश अवरुद्ध है!",
+      },
+      pipe_intro: {
+        question: "क्या हम पाइप के माध्यम से देख सकते हैं?",
+      },
+      pipe_straight: {
+        message: "सीधा पाइप - आप लौ देख सकते हैं!",
+      },
+      pipe_bent: {
+        message: "मुड़ा हुआ पाइप - लौ नहीं देख सकते!",
+      },
+      conclusion: {
+        title: "प्रकाश सीधी रेखा में यात्रा करता है!",
+        subtitle: "दोनों प्रयोग इस प्रकाश के महत्वपूर्ण गुण की पुष्टि करते हैं",
+      },
+    },
+    practice: {
+      title: "अभ्यास मोड",
+      subtitle: "अपने ज्ञान का परीक्षण करें",
+      stats: {
+        score: "स्कोर",
+        accuracy: "सटीकता",
+        progress: "प्रगति",
+      },
+    },
+    learn: {
+      title: "✨ प्रकाश का परावर्तन ✨",
+      subtitle: "सतहों से प्रकाश के परावर्तन के इंटरैक्टिव प्रदर्शन",
+      demos: {
+        law: "📐 परावर्तन का नियम",
+        types: "🔄 परावर्तन के प्रकार",
+      },
+      canvas: {
+        normal: "अभिलंब",
+        incidentRay: "आपतित किरण",
+        reflectedRay: "परावर्तित किरण",
+        incidentAngle: "∠i = {{angle}}°",
+        reflectedAngle: "∠r = {{angle}}°",
+      },
+      controls: {
+        title: "⚙️ नियंत्रण",
+        angleOfIncidence: "आपतन कोण:",
+        showNormalLine: "अभिलंब रेखा दिखाएं",
+        showAngleMeasurements: "कोण माप दिखाएं",
+        animateLightTravel: "प्रकाश यात्रा को एनिमेट करें",
+      },
+      concepts: {
+        title: "📚 मुख्य अवधारणाएं",
+        law: {
+          title: "परावर्तन का नियम",
+          description: "कहता है कि जब प्रकाश एक सतह से परावर्तित होता है:",
+          point1:
+            "आपतित किरण, परावर्तित किरण और अभिलंब सभी एक ही तल में स्थित होते हैं",
+          point2: "आपतन कोण (∠i) परावर्तन कोण (∠r) के बराबर होता है",
+          point3: "दोनों कोण अभिलंब (सतह के लंबवत रेखा) से मापे जाते हैं",
+          redRay: "लाल किरण:",
+          redRayDesc: "दर्पण की ओर आने वाला आपतित प्रकाश",
+          greenRay: "हरी किरण:",
+          greenRayDesc: "दर्पण से टकराकर वापस जाने वाला परावर्तित प्रकाश",
+          yellowLine: "पीली धराशायी रेखा:",
+          yellowLineDesc: "अभिलंब (सतह के लंबवत)",
+        },
+        types: {
+          regularTitle: "नियमित (स्पेक्युलर) परावर्तन:",
+          regularDesc: "दर्पण और शांत पानी जैसी चिकनी सतहों पर होता है।",
+          diffuseTitle: "विवर्तित परावर्तन:",
+          diffuseDesc: "कागज, दीवारें और कपड़े जैसी खुरदरी सतहों पर होता है।",
+        },
+      },
+      infoBox: {
+        lawTitle: "परावर्तन का नियम:",
+        lawFormula: "∠i = ∠r",
+        lawDesc1: "आपतन कोण बराबर होता है",
+        lawDesc2: "परावर्तन कोण के",
+      },
+      types: {
+        regularTitle: "नियमित परावर्तन",
+        diffuseTitle: "विवर्तित परावर्तन",
+        smoothSurface: "चिकनी सतह",
+        roughSurface: "खुरदरी सतह",
+        regularDesc:
+          "समानांतर आपतित किरणें परावर्तन के बाद भी समानांतर रहती हैं",
+        diffuseDesc: "समानांतर आपतित किरणें अलग-अलग दिशाओं में बिखर जाती हैं",
+      },
+    },
+    realWorld: {
+      title: "वास्तविक दुनिया के अनुप्रयोग",
+      subtitle:
+        "जानें कि प्रकाश के परावर्तन का उपयोग रोजमर्रा की जिंदगी में कैसे किया जाता है",
+      previous: "पिछला",
+      next: "अगला",
+      keyTakeaway: "मुख्य बात",
+      keyTakeawayText: "प्रकाश का परावर्तन केवल एक भौतिकी अवधारणा नहीं है।",
+      howItWorks: "यह कैसे काम करता है?",
+      funFacts: "रोचक तथ्य",
+      example: "उदाहरण:",
+      applications: [
+        {
+          id: 1,
+          title: "दैनिक जीवन में दर्पण",
+          category: "रोजमर्रा का उपयोग",
+          description: "हम हर दिन दर्पण का उपयोग करते हैं।",
+          example: "बाथरूम के दर्पण, ड्रेसिंग टेबल के दर्पण",
+          howItWorks: [
+            "प्रकाश दर्पण की सतह से टकराता है",
+            "चिकनी सतह प्रकाश को परावर्तित करती है",
+          ],
+          funFacts: ["प्राचीन दर्पण कांसे से बने होते थे"],
+          canvasLabel: "आप अपना प्रतिबिंब देखते हैं!",
+        },
+      ],
+    },
+  },
+  gu: {
+    nav: {
+      logo: "પ્રકાશનું પરાવર્તન",
+      tabs: {
+        learn: "શીખો",
+        practice: "અભ્યાસ",
+        realWorld: "વાસ્તવિક દુનિયા",
+      },
+    },
+    language: {
+      en: "English",
+      hi: "हिंदी",
+      gu: "ગુજરાતી",
+      selectorLabel: "ભાષા પસંદ કરો",
+    },
+    controls: {
+      step: "પગલું",
+      of: "નું",
+      previous: "અગાઉ",
+      next: "આગળ",
+      play: "ચલાવો",
+      pause: "થોભાવો",
+      reset: "રીસેટ",
+    },
+    shadowSimulator: {
+      title: "છાયા બનાવનાર સિમ્યુલેટર",
+      subtitle: "વૈજ્ઞાનિકની જેમ પ્રકાશ અને છાયા સાથે ખેલો!",
+      objects: {
+        title: "તમારી વસ્તુ પસંદ કરો!",
+        cat: "બિલાડી કટ-આઉટ",
+        superhero: "સુપરહીરો",
+        bottle: "પાણીની બોટલ",
+        glass: "ફ્રોસ્ટેડ ગ્લાસ",
+        paper: "કાગળની શીટ",
+        football: "ફૂટબોલ",
+        tree: "વૃક્ષ",
+        selected: "પસંદ કર્યું! તેને ચારેબાજુ ખેંચો!",
+      },
+      lightSize: {
+        title: "પ્રકાશનું કદ",
+        small: "નાનો પ્રકાશ (તીક્ષ્ણ છાયા)",
+        large: "મોટો પ્રકાશ (મૃદુ છાયા)",
+        smallFeedback: "તીક્ષ્ણ છાયા સક્રિય!",
+        largeFeedback: "મૃદુ, ધૂંધળી છાયા મોડ!",
+      },
+      shadowFacts: {
+        title: "છાયા તથ્યો!",
+        opaque: "અપારદર્શક વસ્તુઓ = ઘેરી છાયા",
+        translucent: "અર્ધ-પારદર્શક વસ્તુઓ = હળવી છાયા",
+        transparent: "પારદર્શક વસ્તુઓ = લગભગ કોઈ છાયા નહીં",
+        currentObject: {
+          opaque: "અપારદર્શક",
+          translucent: "અર્ધ-પારદર્શક",
+          semiTransparent: "અર્ધ-પારદર્શક",
+        },
+      },
+      controls: {
+        showRays: "પ્રકાશ કિરણો બતાવો",
+        dragHelper: "છાયા બદલાતી જોવા માટે પ્રકાશ, વસ્તુ અને સ્ક્રીનને ખેંચો!",
+        screenLabel: "સ્ક્રીન (મને ખેંચો!)",
+        lightLabel: "પ્રકાશ",
+        dragObject: "મને ખેંચો!",
+      },
+      feedback: {
+        shadowBig: "વાહ! તમારી છાયા ખૂબ મોટી થઈ ગઈ!",
+        shadowTiny: "સારી ચાલ! તમે નાની છાયા બનાવી!",
+        shadowShrinking: "નજીક આવી રહ્યા છો! છાયા સંકોચાઈ રહી છે!",
+        objectBehindLight: "વસ્તુ પ્રકાશ સ્ત્રોતની પાછળ છે! કોઈ છાયા નહીં.",
+        objectBeyondScreen: "વસ્તુ સ્ક્રીનની પાર છે! કોઈ છાયા નહીં.",
+      },
+      infoBox: {
+        title: "શું થઈ રહ્યું છે?",
+        hugeShadow: "વિશાળ છાયા! વસ્તુ પ્રકાશની ખૂબ નજીક છે!",
+        tinyShadow: "નાની છાયા! વસ્તુ સ્ક્રીનની નજીક છે!",
+        normalShadow: "સામાન્ય છાયા કદ! વસ્તુઓને આસપાસ ખસેડવાનો પ્રયાસ કરો!",
+        softEdges: "મૃદુ ધાર કારણ કે પ્રકાશ મોટો છે!",
+        sharpEdges: "તીક્ષ્ણ ધાર કારણ કે પ્રકાશ નાનો છે!",
+        positionObject:
+          "તેની છાયા જોવા માટે વસ્તુને પ્રકાશ સ્ત્રોત અને સ્ક્રીન વચ્ચે મૂકો!",
+      },
+    },
+    canvas: {
+      intro: {
+        title: "શું પ્રકાશ સીધી રેખામાં મુસાફરી કરે છે?",
+        questionMark: "?",
+      },
+      matchbox_setup: {
+        instruction: "દરેક માચીસની પેટીમાં એક જ સ્થાને છિદ્ર બનાવો",
+        boxLabel: "પેટી",
+      },
+      matchbox_aligned: {
+        message: "સંરેખિત છિદ્રો - પ્રકાશ પસાર થાય છે!",
+      },
+      matchbox_misaligned: {
+        message: "ખોટી સંરેખિત છિદ્રો - પ્રકાશ અવરોધાયો છે!",
+      },
+      pipe_intro: {
+        question: "શું આપણે પાઈપ દ્વારા જોઈ શકીએ છીએ?",
+      },
+      pipe_straight: {
+        message: "સીધી પાઈપ - તમે જ્યોત જોઈ શકો છો!",
+      },
+      pipe_bent: {
+        message: "વળેલી પાઈપ - જ્યોત જોઈ શકતા નથી!",
+      },
+      conclusion: {
+        title: "પ્રકાશ સીધી રેખામાં મુસાફરી કરે છે!",
+        subtitle: "બંને પ્રયોગો પ્રકાશના આ મહત્વપૂર્ણ ગુણધર્મની પુષ્ટિ કરે છે",
+      },
+    },
+    practice: {
+      title: "અભ્યાસ મોડ",
+      subtitle: "તમારા જ્ઞાનનું પરીક્ષણ કરો",
+      stats: {
+        score: "સ્કોર",
+        accuracy: "ચોકસાઈ",
+        progress: "પ્રગતિ",
+      },
+    },
+    learn: {
+      title: "✨ પ્રકાશનું પરાવર્તન ✨",
+      subtitle:
+        "સપાટીઓથી પ્રકાશ કેવી રીતે પરાવર્તિત થાય છે તેના ઇન્ટરેક્ટિવ પ્રદર્શન",
+      demos: {
+        law: "📐 પરાવર્તનનો નિયમ",
+        types: "🔄 પરાવર્તનના પ્રકાર",
+      },
+      canvas: {
+        normal: "સામાન્ય",
+        incidentRay: "આપતિત કિરણ",
+        reflectedRay: "પરાવર્તિત કિરણ",
+        incidentAngle: "∠i = {{angle}}°",
+        reflectedAngle: "∠r = {{angle}}°",
+      },
+      controls: {
+        title: "⚙️ નિયંત્રણો",
+        angleOfIncidence: "આપતન કોણ:",
+        showNormalLine: "સામાન્ય રેખા બતાવો",
+        showAngleMeasurements: "કોણ માપ બતાવો",
+        animateLightTravel: "પ્રકાશ મુસાફરીને એનિમેટ કરો",
+      },
+      concepts: {
+        title: "📚 મુખ્ય ખ્યાલો",
+        law: {
+          title: "પરાવર્તનનો નિયમ",
+          description: "કહે છે કે જ્યારે પ્રકાશ સપાટીથી પરાવર્તિત થાય છે:",
+          point1:
+            "આપતિત કિરણ, પરાવર્તિત કિરણ અને સામાન્ય બધા એક જ પ્લેનમાં આવેલા છે",
+          point2: "આપતન કોણ (∠i) પરાવર્તન કોણ (∠r) ની બરાબર છે",
+          point3: "બંને કોણ સામાન્ય (સપાટી પર લંબ રેખા) થી માપવામાં આવે છે",
+          redRay: "લાલ કિરણ:",
+          redRayDesc: "અરીસા તરફ આવતું આપતિત પ્રકાશ",
+          greenRay: "લીલું કિરણ:",
+          greenRayDesc: "અરીસાથી ટકરાઈને પાછું જતું પરાવર્તિત પ્રકાશ",
+          yellowLine: "પીળી ડેશ લાઇન:",
+          yellowLineDesc: "સામાન્ય (સપાટી પર લંબ)",
+        },
+        types: {
+          regularTitle: "નિયમિત (સ્પેક્યુલર) પરાવર્તન:",
+          regularDesc: "અરીસા અને શાંત પાણી જેવી સરળ સપાટીઓ પર થાય છે.",
+          diffuseTitle: "વિસર્જિત પરાવર્તન:",
+          diffuseDesc: "કાગળ, દિવાલો અને કપડાં જેવી રફ સપાટીઓ પર થાય છે.",
+        },
+      },
+      infoBox: {
+        lawTitle: "પરાવર્તનનો નિયમ:",
+        lawFormula: "∠i = ∠r",
+        lawDesc1: "આપતન કોણ બરાબર છે",
+        lawDesc2: "પરાવર્તન કોણ",
+      },
+      types: {
+        regularTitle: "નિયમિત પરાવર્તન",
+        diffuseTitle: "વિસર્જિત પરાવર્તન",
+        smoothSurface: "સરળ સપાટી",
+        roughSurface: "રફ સપાટી",
+        regularDesc: "સમાંતર આપતિત કિરણો પરાવર્તન પછી પણ સમાંતર રહે છે",
+        diffuseDesc: "સમાંતર આપતિત કિરણો વિવિધ દિશાઓમાં વિખેરાય છે",
+      },
+    },
+    realWorld: {
+      title: "વાસ્તવિક દુનિયા એપ્લિકેશન્સ",
+      subtitle:
+        "જાણો કે પ્રકાશના પરાવર્તનનો ઉપયોગ રોજિંદા જીવનમાં કેવી રીતે થાય છે",
+      previous: "અગાઉ",
+      next: "આગળ",
+      keyTakeaway: "મુખ્ય ટેકઅવે",
+      keyTakeawayText: "પ્રકાશનું પરાવર્તન માત્ર એક ભૌતિકશાસ્ત્રનો ખ્યાલ નથી।",
+      howItWorks: "તે કેવી રીતે કામ કરે છે?",
+      funFacts: "મજાના તથ્યો",
+      example: "ઉદાહરણ:",
+      applications: [
+        {
+          id: 1,
+          title: "દૈનિક જીવનમાં અરીસા",
+          category: "રોજિંદો ઉપયોગ",
+          description: "આપણે દરરોજ અરીસાનો ઉપયોગ કરીએ છીએ.",
+          example: "બાથરૂમ અરીસા, ડ્રેસિંગ ટેબલ અરીસા",
+          howItWorks: [
+            "પ્રકાશ અરીસાની સપાટી પર પડે છે",
+            "સરળ સપાટી પ્રકાશને પરાવર્તિત કરે છે",
+          ],
+          funFacts: ["પ્રાચીન અરીસા કાંસ્યમાંથી બનાવવામાં આવતા હતા"],
+          canvasLabel: "તમે તમારું પ્રતિબિંબ જુઓ છો!",
+        },
+      ],
+    },
+  },
+};
 
 // Language Context
 interface LanguageContextType {
@@ -417,7 +1364,7 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({
 
   const t = (key: string): string => {
     const keys = key.split(".");
-    let value: TranslationValue = translations[language];
+    let value: TranslationValue = translations[language] as unknown as TranslationValue;
     for (const k of keys) {
       if (
         typeof value === "object" &&
@@ -437,7 +1384,7 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({
 
   const tValue = (key: string): TranslationValue => {
     const keys = key.split(".");
-    let value: TranslationValue = translations[language];
+    let value: TranslationValue = translations[language] as unknown as TranslationValue;
     for (const k of keys) {
       if (
         typeof value === "object" &&

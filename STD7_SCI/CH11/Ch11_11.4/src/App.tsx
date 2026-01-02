@@ -1,8 +1,8 @@
 import React from 'react';
-import { LightTravelApp } from './components/ShadowFormation';
+import { ShadowFormation } from './components/ShadowFormation';
 
 const App: React.FC = () => {
-  return <LightTravelApp />;
+  return <ShadowFormation />;
 };
 
 export default App;

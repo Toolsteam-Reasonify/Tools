@@ -14,7 +14,57 @@
       html, body {
         font-family: "Poppins", "Noto Sans", "Noto Sans Devanagari", "Noto Sans Gujarati", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
       }
+      /* Hide Jinno banner completely */
+      [id*="fixMeDetectBox"],
+      [class*="jinno"],
+      [id*="jinno"],
+      [class*="Jinno"],
+      [id*="Jinno"],
+      [data-jinno],
+      iframe[src*="jinno"] {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        height: 0 !important;
+        width: 0 !important;
+        overflow: hidden !important;
+        position: absolute !important;
+        left: -9999px !important;
+        pointer-events: none !important;
+      }
     </style>
+    <script>
+      (function() {
+        function hideJinnoBanner() {
+          const selectors = [
+            '[id*="fixMeDetectBox"]',
+            '[class*="jinno"]',
+            '[id*="jinno"]',
+            '[class*="Jinno"]',
+            '[id*="Jinno"]',
+            '[data-jinno]',
+            'iframe[src*="jinno"]'
+          ];
+          selectors.forEach(selector => {
+            try {
+              document.querySelectorAll(selector).forEach(el => {
+                if (el.textContent && (el.textContent.includes('Welcome to Jinno') || el.textContent.includes('Start for free') || el.textContent.includes('login'))) {
+                  el.remove();
+                }
+              });
+            } catch(e) {}
+          });
+        }
+        hideJinnoBanner();
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', hideJinnoBanner);
+        }
+        const observer = new MutationObserver(hideJinnoBanner);
+        observer.observe(document.body, { childList: true, subtree: true });
+        setInterval(hideJinnoBanner, 100);
+        setTimeout(() => observer.disconnect(), 10000);
+      })();
+    </script>
     <div id="root"></div>
     <script>
       // Comprehensive browser extension error suppression - runs immediately
