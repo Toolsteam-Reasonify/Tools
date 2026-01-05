@@ -61,3 +61,20 @@ body {
   animation: glow 2s ease-in-out infinite;
 }
 
+/* Hide Jinno feature block/banner */
+*[class*="jinno" i],
+*[id*="jinno" i],
+*[data-jinno],
+*[class*="Jinno"],
+*[id*="Jinno"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  width: 0 !important;
+  overflow: hidden !important;
+  position: absolute !important;
+  left: -9999px !important;
+  pointer-events: none !important;
+}
+

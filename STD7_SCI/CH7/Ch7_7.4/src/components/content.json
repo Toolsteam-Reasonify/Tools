@@ -2613,7 +2613,7 @@
         "tabs": {
           "learn": "Learn",
           "practice": "Practice",
-          "applications": "Applications"
+          "applications": "Real World"
         }
       },
       "language": {
@@ -2631,102 +2631,102 @@
         "pause": "Pause",
         "reset": "Reset"
       },
+      "steps": {
+        "overview": {
+          "title": "The Water Cycle - An Overview",
+          "description": "The water cycle, also called the hydrological cycle, is the continuous movement of water on, above, and below the surface of Earth. Water can change states among liquid, vapor, and ice at various places in the water cycle.",
+          "keyPoints": [
+            "Water constantly moves through different states",
+            "The cycle is powered by the Sun's energy",
+            "Water moves between oceans, atmosphere, and land",
+            "The total amount of water on Earth remains constant"
+          ]
+        },
+        "evaporation": {
+          "title": "Step 1: Evaporation",
+          "description": "Evaporation is the process where liquid water transforms into water vapor (gas). When the Sun heats water in oceans, rivers, lakes, and puddles, the water molecules gain enough energy to break free from the liquid surface and rise into the atmosphere as invisible water vapor.",
+          "keyPoints": [
+            "Heat from the Sun provides energy for evaporation",
+            "Water changes from liquid to gas (vapor)",
+            "Occurs from oceans, rivers, lakes, and soil",
+            "About 86% of global evaporation comes from oceans"
+          ]
+        },
+        "transpiration": {
+          "title": "Step 2: Transpiration",
+          "description": "Transpiration is the process where plants absorb water through their roots and release water vapor through tiny pores (stomata) in their leaves. This is how plants contribute to the water cycle and cool themselves, just like humans sweating.",
+          "keyPoints": [
+            "Plants absorb water through roots from soil",
+            "Water travels up through the plant's stem",
+            "Water vapor exits through stomata in leaves",
+            "About 10% of atmospheric moisture comes from plants"
+          ]
+        },
+        "condensation": {
+          "title": "Step 3: Condensation",
+          "description": "Condensation occurs when water vapor in the atmosphere cools down and changes back into liquid water droplets. As warm, moist air rises, it expands and cools. When the air cools to its dew point, water vapor condenses around tiny particles like dust, salt, or smoke to form clouds.",
+          "keyPoints": [
+            "Water vapor cools and turns back into liquid",
+            "Forms tiny water droplets around dust particles",
+            "Creates clouds, fog, and dew",
+            "Higher altitude = cooler temperature = more condensation"
+          ]
+        },
+        "precipitation": {
+          "title": "Step 4: Precipitation",
+          "description": "Precipitation is when water falls from clouds to Earth. As cloud droplets collide and merge, they become heavier. When they're too heavy for air currents to hold them up, they fall as rain, snow, sleet, or hail depending on the temperature.",
+          "keyPoints": [
+            "Water droplets in clouds grow larger and heavier",
+            "Falls as rain when temperature is above 0°C",
+            "Falls as snow when temperature is below 0°C",
+            "Average raindrop falls at 20 mph (32 km/h)"
+          ]
+        },
+        "collection": {
+          "title": "Step 5: Collection (Surface Runoff)",
+          "description": "Collection is when precipitation gathers in bodies of water. Some water flows over land as surface runoff into streams and rivers, eventually reaching lakes and oceans. This runoff can erode soil and carry nutrients and pollutants.",
+          "keyPoints": [
+            "Water flows downhill due to gravity",
+            "Forms streams, rivers, and eventually reaches oceans",
+            "Some water collects in lakes and ponds",
+            "Runoff can cause erosion and flooding"
+          ]
+        },
+        "infiltration": {
+          "title": "Step 6: Infiltration & Groundwater",
+          "description": "Infiltration is the process where water soaks into the ground through soil and rocks. This water becomes groundwater, stored in underground layers called aquifers. Groundwater slowly moves through the ground and can take years to centuries to return to the surface through springs or wells.",
+          "keyPoints": [
+            "Water seeps through soil into underground layers",
+            "Stored in aquifers between rock and soil layers",
+            "Provides drinking water for many communities",
+            "Can take hundreds of years to recharge"
+          ]
+        },
+        "complete": {
+          "title": "The Complete Water Cycle",
+          "description": "The water cycle is continuous and interconnected. Solar energy drives evaporation and transpiration, sending water vapor into the atmosphere. Cooling causes condensation into clouds, which release precipitation. Water then collects in bodies of water and infiltrates the ground, completing the cycle and beginning again.",
+          "keyPoints": [
+            "All steps work together continuously",
+            "Powered by solar energy and gravity",
+            "Distributes fresh water across the planet",
+            "Essential for all life on Earth"
+          ]
+        }
+      },
+      "canvas": {
+        "evaporation": "EVAPORATION",
+        "transpiration": "TRANSPIRATION",
+        "condensation": "CONDENSATION",
+        "precipitation": "PRECIPITATION",
+        "collection": "COLLECTION (Runoff)",
+        "infiltration": "INFILTRATION",
+        "groundwater": "GROUNDWATER",
+        "sun": "Sun",
+        "waterBody": "Water Body",
+        "clouds": "Clouds",
+        "rain": "Rain"
+      },
       "learn": {
-        "steps": {
-          "overview": {
-            "title": "The Water Cycle - An Overview",
-            "description": "The water cycle, also called the hydrological cycle, is the continuous movement of water on, above, and below the surface of Earth. Water can change states among liquid, vapor, and ice at various places in the water cycle.",
-            "keyPoints": [
-              "Water constantly moves through different states",
-              "The cycle is powered by the Sun's energy",
-              "Water moves between oceans, atmosphere, and land",
-              "The total amount of water on Earth remains constant"
-            ]
-          },
-          "evaporation": {
-            "title": "Step 1: Evaporation",
-            "description": "Evaporation is the process where liquid water transforms into water vapor (gas). When the Sun heats water in oceans, rivers, lakes, and puddles, the water molecules gain enough energy to break free from the liquid surface and rise into the atmosphere as invisible water vapor.",
-            "keyPoints": [
-              "Heat from the Sun provides energy for evaporation",
-              "Water changes from liquid to gas (vapor)",
-              "Occurs from oceans, rivers, lakes, and soil",
-              "About 86% of global evaporation comes from oceans"
-            ]
-          },
-          "transpiration": {
-            "title": "Step 2: Transpiration",
-            "description": "Transpiration is the process where plants absorb water through their roots and release water vapor through tiny pores (stomata) in their leaves. This is how plants contribute to the water cycle and cool themselves, just like humans sweating.",
-            "keyPoints": [
-              "Plants absorb water through roots from soil",
-              "Water travels up through the plant's stem",
-              "Water vapor exits through stomata in leaves",
-              "About 10% of atmospheric moisture comes from plants"
-            ]
-          },
-          "condensation": {
-            "title": "Step 3: Condensation",
-            "description": "Condensation occurs when water vapor in the atmosphere cools down and changes back into liquid water droplets. As warm, moist air rises, it expands and cools. When the air cools to its dew point, water vapor condenses around tiny particles like dust, salt, or smoke to form clouds.",
-            "keyPoints": [
-              "Water vapor cools and turns back into liquid",
-              "Forms tiny water droplets around dust particles",
-              "Creates clouds, fog, and dew",
-              "Higher altitude = cooler temperature = more condensation"
-            ]
-          },
-          "precipitation": {
-            "title": "Step 4: Precipitation",
-            "description": "Precipitation is when water falls from clouds to Earth. As cloud droplets collide and merge, they become heavier. When they're too heavy for air currents to hold them up, they fall as rain, snow, sleet, or hail depending on the temperature.",
-            "keyPoints": [
-              "Water droplets in clouds grow larger and heavier",
-              "Falls as rain when temperature is above 0°C",
-              "Falls as snow when temperature is below 0°C",
-              "Average raindrop falls at 20 mph (32 km/h)"
-            ]
-          },
-          "collection": {
-            "title": "Step 5: Collection (Surface Runoff)",
-            "description": "Collection is when precipitation gathers in bodies of water. Some water flows over land as surface runoff into streams and rivers, eventually reaching lakes and oceans. This runoff can erode soil and carry nutrients and pollutants.",
-            "keyPoints": [
-              "Water flows downhill due to gravity",
-              "Forms streams, rivers, and eventually reaches oceans",
-              "Some water collects in lakes and ponds",
-              "Runoff can cause erosion and flooding"
-            ]
-          },
-          "infiltration": {
-            "title": "Step 6: Infiltration & Groundwater",
-            "description": "Infiltration is the process where water soaks into the ground through soil and rocks. This water becomes groundwater, stored in underground layers called aquifers. Groundwater slowly moves through the ground and can take years to centuries to return to the surface through springs or wells.",
-            "keyPoints": [
-              "Water seeps through soil into underground layers",
-              "Stored in aquifers between rock and soil layers",
-              "Provides drinking water for many communities",
-              "Can take hundreds of years to recharge"
-            ]
-          },
-          "complete": {
-            "title": "The Complete Water Cycle",
-            "description": "The water cycle is continuous and interconnected. Solar energy drives evaporation and transpiration, sending water vapor into the atmosphere. Cooling causes condensation into clouds, which release precipitation. Water then collects in bodies of water and infiltrates the ground, completing the cycle and beginning again.",
-            "keyPoints": [
-              "All steps work together continuously",
-              "Powered by solar energy and gravity",
-              "Distributes fresh water across the planet",
-              "Essential for all life on Earth"
-            ]
-          }
-        },
-        "canvas": {
-          "evaporation": "EVAPORATION",
-          "transpiration": "TRANSPIRATION",
-          "condensation": "CONDENSATION",
-          "precipitation": "PRECIPITATION",
-          "collection": "COLLECTION (Runoff)",
-          "infiltration": "INFILTRATION",
-          "groundwater": "GROUNDWATER",
-          "sun": "Sun",
-          "waterBody": "Water Body",
-          "clouds": "Clouds",
-          "rain": "Rain"
-        },
         "title": "The Water Cycle",
         "subtitle": "Interactive Learning Experience",
         "stepInformation": "Step Information",
@@ -2750,6 +2750,250 @@
           "🌳 A large oak tree can transpire 40,000 gallons per year"
         ],
         "progress": "Progress"
+      },
+      "practice": {
+        "title": "Water Cycle - Practice Mode",
+        "subtitle": "Click on stages to connect them and build the water cycle!",
+        "score": "Score",
+        "reset": "Reset",
+        "showAnswers": "Show Answers",
+        "instructions": "Instructions: Click on a stage, then click on another stage to create a connection. Build the complete water cycle by connecting all stages correctly!",
+        "correct": "✓ Correct connection!",
+        "incorrect": "✗ Incorrect connection. Try again!",
+        "alreadyConnected": "✓ Connection already made!",
+        "progress": "Your Progress",
+        "connectionsMade": "connections made",
+        "stages": {
+          "sun": "Sun",
+          "ocean": "Ocean/Water Bodies",
+          "evaporation": "Evaporation",
+          "transpiration": "Transpiration",
+          "condensation": "Condensation",
+          "precipitation": "Precipitation",
+          "infiltration": "Infiltration",
+          "groundwater": "Groundwater"
+        },
+        "stageDescriptions": {
+          "sun": "Main source of heat for evaporation",
+          "ocean": "Source of water for evaporation",
+          "evaporation": "Water turns into water vapour due to heat",
+          "transpiration": "Water evaporates from trees and plants",
+          "condensation": "Water vapour cools and forms clouds",
+          "precipitation": "Rain, snow, or hail falls from clouds",
+          "infiltration": "Water seeps through soil and rocks",
+          "groundwater": "Water stored in aquifers underground"
+        },
+        "concepts": {
+          "evaporation": {
+            "title": "🌊 Evaporation",
+            "description": "Water from oceans, rivers, and lakes gets heated by the Sun and turns into water vapour."
+          },
+          "transpiration": {
+            "title": "🌳 Transpiration",
+            "description": "Plants release water vapour through their leaves into the atmosphere."
+          },
+          "condensation": {
+            "title": "☁️ Condensation",
+            "description": "Water vapour rises, cools down, and forms tiny droplets that create clouds."
+          },
+          "precipitation": {
+            "title": "🌧️ Precipitation",
+            "description": "Clouds release water as rain, snow, or hail, which falls back to Earth."
+          }
+        }
+      },
+      "realWorld": {
+        "title": "Water Cycle - Real World Applications",
+        "subtitle": "Explore how the water cycle impacts our daily lives and environment",
+        "score": "Score",
+        "completed": "Completed",
+        "tabs": {
+          "scenarios": "🌍 Real-World Scenarios",
+          "seepage": "🧪 Seepage Experiment",
+          "conservation": "💧 Water Conservation"
+        },
+        "scenario": "Scenario",
+        "of": "of",
+        "previous": "← Previous",
+        "next": "Next →",
+        "correct": "✅ Correct!",
+        "incorrect": "❌ Incorrect",
+        "scenarios": {
+          "coastal": {
+            "title": "Coastal City Weather",
+            "description": "Mumbai, a coastal city in India, experiences different weather patterns compared to inland cities.",
+            "question": "Why does Mumbai have a more moderate climate throughout the year?",
+            "options": {
+              "a": "Because it has more trees",
+              "b": "Because water bodies heat up and cool down slowly",
+              "c": "Because of air conditioning in buildings",
+              "d": "Because of the buildings blocking wind"
+            },
+            "explanations": {
+              "a": "While trees help, they are not the primary reason for moderate coastal climate.",
+              "b": "Correct! Large water bodies like oceans heat up and cool down slowly. During the day, the sea is cooler than land (creating sea breeze), and at night, the sea is warmer than land (creating land breeze). This moderates the temperature.",
+              "c": "Air conditioning affects indoor temperatures but not the overall city climate.",
+              "d": "Buildings can affect local wind patterns but not the overall moderate climate."
+            }
+          },
+          "drying": {
+            "title": "Drying Clothes",
+            "description": "Your mother hangs wet clothes on the terrace on two different days.",
+            "question": "On which day will clothes dry faster?",
+            "options": {
+              "a": "A cloudy, humid day",
+              "b": "A sunny, dry day",
+              "c": "Both days will be the same",
+              "d": "At night when it's cooler"
+            },
+            "explanations": {
+              "a": "On cloudy days with high humidity, evaporation is slower because the air already contains moisture.",
+              "b": "Correct! Clothes dry faster on sunny days because the Sun's heat increases evaporation. Dry air can absorb more moisture, speeding up the drying process.",
+              "c": "No, the rate of evaporation depends on temperature and humidity.",
+              "d": "Lower temperatures reduce evaporation rate, so drying is slower at night."
+            }
+          },
+          "monsoon": {
+            "title": "Monsoon Season",
+            "description": "During monsoons, Kerala receives heavy rainfall while some parts of Rajasthan remain dry.",
+            "question": "What role does the water cycle play in this difference?",
+            "options": {
+              "a": "Kerala has more water bodies",
+              "b": "Water evaporates from the Arabian Sea, forms clouds, and releases rain when it reaches Kerala's coast",
+              "c": "Rajasthan has no clouds",
+              "d": "Kerala uses more water"
+            },
+            "explanations": {
+              "a": "While Kerala has water bodies, the main reason is its proximity to the sea and monsoon wind patterns.",
+              "b": "Correct! The monsoon winds carry moisture-laden air from the Arabian Sea. When this air rises over Kerala's Western Ghats, it cools, condenses, and causes heavy precipitation. Rajasthan receives less rainfall as it's far from the sea.",
+              "c": "Rajasthan does have clouds, but receives less moisture from the monsoon winds.",
+              "d": "Water usage doesn't affect rainfall patterns."
+            }
+          },
+          "groundwater": {
+            "title": "Groundwater Depletion",
+            "description": "A village in Haryana has been using bore wells extensively for the past 10 years.",
+            "question": "What is likely happening to the groundwater level?",
+            "options": {
+              "a": "It remains the same",
+              "b": "It is increasing",
+              "c": "It is decreasing because extraction exceeds natural recharge",
+              "d": "Bore wells create more groundwater"
+            },
+            "explanations": {
+              "a": "If extraction exceeds recharge through the water cycle, levels will drop.",
+              "b": "Excessive extraction without adequate infiltration decreases groundwater levels.",
+              "c": "Correct! Excessive groundwater extraction, combined with reduced infiltration (due to concrete surfaces), depletes aquifers faster than the water cycle can recharge them. This is why rainwater harvesting is important.",
+              "d": "Bore wells only extract existing groundwater; they don't create it."
+            }
+          },
+          "iceStupa": {
+            "title": "Ice Stupa in Ladakh",
+            "description": "In Ladakh, people create ice stupas to store water during winter for use in spring.",
+            "question": "How does this innovation work with the water cycle?",
+            "options": {
+              "a": "It stops the water cycle",
+              "b": "It stores frozen water that melts slowly in spring when needed",
+              "c": "It makes rain fall in Ladakh",
+              "d": "It prevents evaporation completely"
+            },
+            "explanations": {
+              "a": "Ice stupas don't stop the water cycle; they work within it.",
+              "b": "Correct! Water is sprayed in winter and freezes into ice stupas. In spring, when radiation from the Sun increases, the ice melts slowly, providing water when streams are dry. This clever use of the water cycle helps overcome water scarcity.",
+              "c": "Ice stupas don't affect precipitation; they store existing water.",
+              "d": "Some evaporation still occurs, but ice stupas minimize water loss."
+            }
+          }
+        },
+        "seepage": {
+          "title": "Water Infiltration Experiment",
+          "materials": {
+            "clay": {
+              "name": "Clay",
+              "porosity": "Porosity: 15%",
+              "description": "Clay has very small pore spaces. Water seeps very slowly through clay."
+            },
+            "sand": {
+              "name": "Sand",
+              "porosity": "Porosity: 45%",
+              "description": "Sand has medium-sized pore spaces. Water seeps moderately through sand."
+            },
+            "gravel": {
+              "name": "Gravel",
+              "porosity": "Porosity: 85%",
+              "description": "Gravel has large, interconnected pore spaces. Water seeps rapidly through gravel."
+            }
+          },
+          "waterAmount": "200 mL Water",
+          "collected": "Collected",
+          "rate": {
+            "title": "Seepage Rate",
+            "slow": "Slow",
+            "medium": "Medium",
+            "fast": "Fast"
+          },
+          "time": {
+            "title": "Time to Seep",
+            "slow": "10+ min",
+            "medium": "5 min",
+            "fast": "1 min"
+          },
+          "bestFor": {
+            "title": "Best For",
+            "storage": "Water Storage",
+            "farming": "Farming",
+            "drainage": "Drainage"
+          }
+        },
+        "conservation": {
+          "title": "Water Conservation Simulator",
+          "aquiferLevel": "Aquifer Water Level",
+          "markers": {
+            "full": "100% - Full",
+            "good": "75% - Good",
+            "warning": "50% - Warning",
+            "critical": "25% - Critical",
+            "depleted": "0% - Depleted"
+          },
+          "useWater": "🚰 Use Water (-10%)",
+          "rainfall": "🌧️ Rainfall (+20%)",
+          "criticalWarning": "⚠️ Critical Water Level!",
+          "criticalMessage": "Implement water conservation measures immediately.",
+          "solutions": {
+            "title": "Conservation Solutions",
+            "rainwater": {
+              "title": "🏠 Rainwater Harvesting",
+              "description": "Collect rainwater from rooftops and direct it to recharge pits to refill aquifers."
+            },
+            "greenCover": {
+              "title": "🌳 Increase Green Cover",
+              "description": "Plant trees and reduce concrete surfaces to improve water infiltration."
+            },
+            "reduceWastage": {
+              "title": "🔧 Reduce Wastage",
+              "description": "Fix leaky taps, use water-efficient appliances, and reuse water where possible."
+            },
+            "rechargePits": {
+              "title": "💧 Recharge Pits",
+              "description": "Create pits filled with gravel and sand to help rainwater seep into the ground."
+            }
+          },
+          "successStory": {
+            "title": "🌟 Success Story: Rajasthan's Water Revival",
+            "para1": "In several villages of Rajasthan, traditional water harvesting methods like johads (small earthen dams) and tankas (underground tanks) have been revived.",
+            "para2": "These structures capture rainwater during monsoons, allowing it to infiltrate and recharge groundwater. As a result, dried-up wells have been revived, and the water table has risen significantly!"
+          }
+        },
+        "takeaways": {
+          "title": "🎯 Key Takeaways",
+          "items": [
+            "The water cycle is essential for life and affects weather, climate, and water availability",
+            "Different materials have different infiltration rates - gravel > sand > clay",
+            "Groundwater is not unlimited and requires conservation and recharge",
+            "Understanding the water cycle helps us solve real-world problems like water scarcity",
+            "Simple actions like rainwater harvesting can make a big difference"
+          ]
+        }
       }
     },
     "Learn": "Learn",

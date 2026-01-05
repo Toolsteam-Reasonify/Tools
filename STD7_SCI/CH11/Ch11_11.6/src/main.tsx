@@ -3,6 +3,23 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 import './index.css'
 
+// Type declarations for browser extension APIs
+declare const chrome: {
+  runtime?: {
+    lastError?: { message?: string };
+    sendMessage?: (...args: unknown[]) => unknown;
+    connect?: (...args: unknown[]) => unknown;
+    sendNativeMessage?: (...args: unknown[]) => unknown;
+  };
+} | undefined;
+
+declare const browser: {
+  runtime?: {
+    sendMessage?: (...args: unknown[]) => unknown;
+    connect?: (...args: unknown[]) => unknown;
+  };
+} | undefined;
+
 // Comprehensive browser extension error suppression
 const suppressExtensionError = (message: string): boolean => {
   if (!message) return false;
@@ -167,7 +184,6 @@ window.addEventListener('unhandledrejection', (event) => {
       } catch (e) {
         // If direct override fails, try alternative approach
         try {
-          const originalLastError = (chrome.runtime as { lastError?: unknown }).lastError;
           Object.defineProperty(chrome.runtime, 'lastError', {
             get: function() { 
               try {

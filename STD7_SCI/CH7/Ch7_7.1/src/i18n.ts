@@ -3,7 +3,8 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import ICU from 'i18next-icu';
 import { initReactI18next } from 'react-i18next';
 
-import translations from './locales/translation.json';
+// Import translations from content.json
+import translations from './components/content.json';
 
 const resources = {
   en: { translation: translations.en },

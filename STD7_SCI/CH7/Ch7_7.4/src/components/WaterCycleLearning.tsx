@@ -8,10 +8,357 @@ import React, {
   useMemo,
   useCallback,
 } from "react";
-import { Play, Pause, ChevronRight, ChevronLeft, RefreshCw, Droplets, Thermometer, Wind, RotateCcw } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Droplets } from 'lucide-react';
 
 // Icon components from lucide-react are imported above
 
+// ============================================================================
+// Type Definitions (merged from heatTransferTranslations.ts)
+// ============================================================================
+
+export type Language = "en" | "hi" | "gu";
+
+// Common types
+export interface LanguageLabels {
+  en: string;
+  hi: string;
+  gu: string;
+  selectorLabel: string;
+}
+
+export interface NavTranslations {
+  logo: string;
+  tabs: {
+    learn: string;
+    practice: string;
+    applications: string;
+  };
+}
+
+// Water Cycle types
+export interface WaterCycleNav {
+  logo: string;
+  tabs: {
+    learn: string;
+    practice: string;
+    applications: string;
+  };
+}
+
+export interface WaterCycleControls {
+  step: string;
+  of: string;
+  previous: string;
+  next: string;
+  play: string;
+  pause: string;
+  reset: string;
+}
+
+export interface WaterCycleStep {
+  title: string;
+  description: string;
+  keyPoints: string[];
+}
+
+export interface WaterCycleSteps {
+  overview: WaterCycleStep;
+  evaporation: WaterCycleStep;
+  transpiration: WaterCycleStep;
+  condensation: WaterCycleStep;
+  precipitation: WaterCycleStep;
+  collection: WaterCycleStep;
+  infiltration: WaterCycleStep;
+  complete: WaterCycleStep;
+}
+
+export interface WaterCycleCanvas {
+  evaporation: string;
+  transpiration: string;
+  condensation: string;
+  precipitation: string;
+  collection: string;
+  infiltration: string;
+  groundwater: string;
+  sun: string;
+  waterBody: string;
+  clouds: string;
+  rain: string;
+}
+
+export interface WaterCycleLearn {
+  title: string;
+  subtitle: string;
+  stepInformation: string;
+  keyPoints: string;
+  quickJump: string;
+  didYouKnow: string;
+  understanding: string;
+  energySource: string;
+  energySourceDesc: string;
+  stateChanges: string;
+  stateChangesDesc: string;
+  continuousProcess: string;
+  continuousProcessDesc: string;
+  lifeSupport: string;
+  lifeSupportDesc: string;
+  funFacts: string[];
+  progress: string;
+}
+
+export interface WaterCyclePractice {
+  title: string;
+  subtitle: string;
+  score: string;
+  reset: string;
+  showAnswers: string;
+  instructions: string;
+  correct: string;
+  incorrect: string;
+  alreadyConnected: string;
+  progress: string;
+  connectionsMade: string;
+  stages: {
+    sun: string;
+    ocean: string;
+    evaporation: string;
+    transpiration: string;
+    condensation: string;
+    precipitation: string;
+    infiltration: string;
+    groundwater: string;
+  };
+  stageDescriptions: {
+    sun: string;
+    ocean: string;
+    evaporation: string;
+    transpiration: string;
+    condensation: string;
+    precipitation: string;
+    infiltration: string;
+    groundwater: string;
+  };
+  concepts: {
+    evaporation: {
+      title: string;
+      description: string;
+    };
+    transpiration: {
+      title: string;
+      description: string;
+    };
+    condensation: {
+      title: string;
+      description: string;
+    };
+    precipitation: {
+      title: string;
+      description: string;
+    };
+  };
+}
+
+export interface WaterCycleRealWorld {
+  title: string;
+  subtitle: string;
+  score: string;
+  completed: string;
+  tabs: {
+    scenarios: string;
+    seepage: string;
+    conservation: string;
+  };
+  scenario: string;
+  of: string;
+  previous: string;
+  next: string;
+  correct: string;
+  incorrect: string;
+  scenarios: {
+    coastal: {
+      title: string;
+      description: string;
+      question: string;
+      options: {
+        a: string;
+        b: string;
+        c: string;
+        d: string;
+      };
+      explanations: {
+        a: string;
+        b: string;
+        c: string;
+        d: string;
+      };
+    };
+    drying: {
+      title: string;
+      description: string;
+      question: string;
+      options: {
+        a: string;
+        b: string;
+        c: string;
+        d: string;
+      };
+      explanations: {
+        a: string;
+        b: string;
+        c: string;
+        d: string;
+      };
+    };
+    monsoon: {
+      title: string;
+      description: string;
+      question: string;
+      options: {
+        a: string;
+        b: string;
+        c: string;
+        d: string;
+      };
+      explanations: {
+        a: string;
+        b: string;
+        c: string;
+        d: string;
+      };
+    };
+    groundwater: {
+      title: string;
+      description: string;
+      question: string;
+      options: {
+        a: string;
+        b: string;
+        c: string;
+        d: string;
+      };
+      explanations: {
+        a: string;
+        b: string;
+        c: string;
+        d: string;
+      };
+    };
+    iceStupa: {
+      title: string;
+      description: string;
+      question: string;
+      options: {
+        a: string;
+        b: string;
+        c: string;
+        d: string;
+      };
+      explanations: {
+        a: string;
+        b: string;
+        c: string;
+        d: string;
+      };
+    };
+  };
+  seepage: {
+    title: string;
+    materials: {
+      clay: {
+        name: string;
+        porosity: string;
+        description: string;
+      };
+      sand: {
+        name: string;
+        porosity: string;
+        description: string;
+      };
+      gravel: {
+        name: string;
+        porosity: string;
+        description: string;
+      };
+    };
+    waterAmount: string;
+    collected: string;
+    rate: {
+      title: string;
+      slow: string;
+      medium: string;
+      fast: string;
+    };
+    time: {
+      title: string;
+      slow: string;
+      medium: string;
+      fast: string;
+    };
+    bestFor: {
+      title: string;
+      storage: string;
+      farming: string;
+      drainage: string;
+    };
+  };
+  conservation: {
+    title: string;
+    aquiferLevel: string;
+    markers: {
+      full: string;
+      good: string;
+      warning: string;
+      critical: string;
+      depleted: string;
+    };
+    useWater: string;
+    rainfall: string;
+    criticalWarning: string;
+    criticalMessage: string;
+    solutions: {
+      title: string;
+      rainwater: {
+        title: string;
+        description: string;
+      };
+      greenCover: {
+        title: string;
+        description: string;
+      };
+      reduceWastage: {
+        title: string;
+        description: string;
+      };
+      rechargePits: {
+        title: string;
+        description: string;
+      };
+    };
+    successStory: {
+      title: string;
+      para1: string;
+      para2: string;
+    };
+  };
+  takeaways: {
+    title: string;
+    items: string[];
+  };
+}
+
+export interface WaterCycleContent {
+  nav: WaterCycleNav;
+  language: LanguageLabels;
+  controls: WaterCycleControls;
+  steps: WaterCycleSteps;
+  canvas: WaterCycleCanvas;
+  learn: WaterCycleLearn;
+  practice: WaterCyclePractice;
+  realWorld: WaterCycleRealWorld;
+}
+
+// Component-specific types
 type StepMode = "learn" | "practice" | "real_world";
 type LearnStage =
   | "overview"
@@ -32,7 +379,6 @@ type LearnActiveElement =
   | "underground"
   | "plants"
   | "all";
-type Language = "en" | "hi" | "gu";
 
 interface BaseStep {
   id: number;
@@ -68,7 +414,7 @@ interface Particle {
 }
 
 // Translation system
-const translations: Record<Language, any> = {
+const translations: Record<Language, WaterCycleContent> = {
   en: {
     nav: {
       logo: "Water Cycle Learning",
@@ -502,21 +848,45 @@ const translations: Record<Language, any> = {
         title: "चरण 1: वाष्पीकरण",
         description:
           "जब सूर्य महासागरों, नदियों और झीलों में पानी को गर्म करता है, तो यह वाष्पित होकर जलवाष्प बन जाता है। देखें कि पानी की बूंदें कैसे पानी की सतह से ऊपर उठती हैं।",
+        keyPoints: [
+          "सूर्य की गर्मी वाष्पीकरण के लिए ऊर्जा प्रदान करती है",
+          "पानी तरल से गैस (वाष्प) में बदलता है",
+          "महासागरों, नदियों, झीलों और मिट्टी से होता है",
+          "लगभग 86% वैश्विक वाष्पीकरण महासागरों से आता है"
+        ],
       },
       transpiration: {
         title: "चरण 2: वाष्पोत्सर्जन",
         description:
           "पेड़ों और पौधों से भी वाष्पोत्सर्जन के माध्यम से पानी वाष्पित होता है। पौधे अपनी जड़ों के माध्यम से पानी को अवशोषित करते हैं और अपनी पत्तियों में छोटे छिद्रों के माध्यम से जलवाष्प छोड़ते हैं।",
+        keyPoints: [
+          "पौधे मिट्टी से जड़ों के माध्यम से पानी अवशोषित करते हैं",
+          "पानी पौधे के तने के माध्यम से ऊपर जाता है",
+          "जलवाष्प पत्तियों में स्टोमाटा के माध्यम से निकलता है",
+          "लगभग 10% वायुमंडलीय नमी पौधों से आती है"
+        ],
       },
       condensation: {
         title: "चरण 3: संघनन",
         description:
           "जैसे ही जलवाष्प वायुमंडल में ऊपर उठता है, यह ठंडा हो जाता है। जब यह पर्याप्त ठंडा हो जाता है, तो जलवाष्प छोटी पानी की बूंदों में संघनित होकर बादल बनाता है।",
+        keyPoints: [
+          "जलवाष्प ठंडा होकर वापस तरल में बदल जाता है",
+          "धूल कणों के चारों ओर छोटी पानी की बूंदें बनाता है",
+          "बादल, कोहरा और ओस बनाता है",
+          "अधिक ऊंचाई = कम तापमान = अधिक संघनन"
+        ],
       },
       precipitation: {
         title: "चरण 4: वर्षा",
         description:
           "जब बादल पानी की बूंदों से भारी हो जाते हैं, तो वे पानी को वर्षा के रूप में पृथ्वी पर वापस छोड़ते हैं - बारिश, बर्फ या ओले के रूप में।",
+        keyPoints: [
+          "बादलों में पानी की बूंदें बड़ी और भारी हो जाती हैं",
+          "तापमान 0°C से ऊपर होने पर बारिश के रूप में गिरता है",
+          "तापमान 0°C से नीचे होने पर बर्फ के रूप में गिरता है",
+          "औसत बारिश की बूंद 20 मील प्रति घंटे (32 किमी/घंटा) की गति से गिरती है"
+        ],
       },
       collection: {
         title: "चरण 5: संग्रहण (सतह अपवाह)",
@@ -871,21 +1241,45 @@ const translations: Record<Language, any> = {
         title: "પગલું 1: બાષ્પીભવન",
         description:
           "જ્યારે સૂર્ય મહાસાગરો, નદીઓ અને તળાવોમાં પાણીને ગરમ કરે છે, ત્યારે તે બાષ્પીભવન થાય છે અને જળ વરાળ બને છે। જુઓ કે પાણીના ટીપાં કેવી રીતે પાણીની સપાટીથી ઉપર જાય છે।",
+        keyPoints: [
+          "સૂર્યની ગરમી બાષ્પીભવન માટે ઊર્જા પ્રદાન કરે છે",
+          "પાણી પ્રવાહીથી ગેસ (વરાળ) માં ફેરવાય છે",
+          "મહાસાગરો, નદીઓ, તળાવો અને માટીમાંથી થાય છે",
+          "લગભગ 86% વૈશ્વિક બાષ્પીભવન મહાસાગરોમાંથી આવે છે"
+        ],
       },
       transpiration: {
         title: "પગલું 2: વાષ્પોત્સર્જન",
         description:
           "વૃક્ષો અને છોડમાંથી પણ વાષ્પોત્સર્જન દ્વારા પાણી બાષ્પીભવન થાય છે। છોડ તેમના મૂળ દ્વારા પાણી શોષી લે છે અને તેમના પાંદડાઓમાં નાના છિદ્રો દ્વારા જળ વરાળ મુક્ત કરે છે।",
+        keyPoints: [
+          "છોડ માટીમાંથી મૂળ દ્વારા પાણી શોષે છે",
+          "પાણી છોડના દાંડા દ્વારા ઉપર જાય છે",
+          "જળ વરાળ પાંદડાઓમાં સ્ટોમાટા દ્વારા બહાર નીકળે છે",
+          "લગભગ 10% વાતાવરણીય ભેજ છોડમાંથી આવે છે"
+        ],
       },
       condensation: {
         title: "પગલું 3: સંઘનન",
         description:
           "જેમ જેમ જળ વરાળ વાતાવરણમાં ઉપર જાય છે, તે ઠંડુ થાય છે। જ્યારે તે પૂરતું ઠંડુ થાય છે, ત્યારે જળ વરાળ નાના પાણીના ટીપાંમાં સંઘનિત થઈને વાદળો બનાવે છે।",
+        keyPoints: [
+          "જળ વરાળ ઠંડી થઈને પાછી પ્રવાહીમાં ફેરવાય છે",
+          "ધૂળ કણોની આસપાસ નાના પાણીના ટીપાં બનાવે છે",
+          "વાદળો, ધુમ્મસ અને ઓસ બનાવે છે",
+          "ઉચ્ચ ઊંચાઈ = ઠંડુ તાપમાન = વધુ સંઘનન"
+        ],
       },
       precipitation: {
         title: "પગલું 4: વરસાદ",
         description:
           "જ્યારે વાદળો પાણીના ટીપાંથી ભારે થાય છે, ત્યારે તેઓ પાણીને વરસાદ તરીકે પૃથ્વી પર પાછા છોડે છે - વરસાદ, બરફ અથવા કરાના રૂપમાં।",
+        keyPoints: [
+          "વાદળોમાં પાણીના ટીપાં મોટા અને ભારે થાય છે",
+          "તાપમાન 0°C થી ઉપર હોય ત્યારે વરસાદ તરીકે પડે છે",
+          "તાપમાન 0°C થી નીચે હોય ત્યારે બરફ તરીકે પડે છે",
+          "સરેરાશ વરસાદનું ટીપું 20 માઇલ પ્રતિ કલાક (32 કિમી/કલાક) ની ઝડપથી પડે છે"
+        ],
       },
       collection: {
         title: "પગલું 5: સંગ્રહ (સપાટી રનઓફ)",
@@ -2557,406 +2951,109 @@ const WaterCycleLearning: React.FC<WaterCycleLearningProps> = ({
 
   // Learn Mode Component
   const LearnMode: React.FC = () => {
-    // --- Types ---
-    type CycleStage = 'intro' | 'evaporation' | 'condensation' | 'precipitation' | 'collection' | 'seepage';
-
-    interface StageInfo {
-      id: CycleStage;
-      title: string;
-      description: string;
-      details: string[];
-    }
-
-    // --- Data based on your summary ---
-    const CYCLE_DATA: StageInfo[] = [
-      {
-        id: 'intro',
-        title: "Water's Three States",
-        description: "Water exists in nature in three distinct states, constantly changing form.",
-        details: [
-          "Liquid: Fills oceans, rivers, and lakes.",
-          "Solid: Forms snow, ice sheets, and glaciers.",
-          "Gas: Exists as invisible water vapour in the atmosphere."
-        ]
-      },
-      {
-        id: 'evaporation',
-        title: "Evaporation & Transpiration",
-        description: "The Sun heats the Earth, driving the cycle upwards.",
-        details: [
-          "Evaporation: Water from oceans heats up and turns into vapour.",
-          "Transpiration: Plants and trees release water vapour from leaves.",
-          "Energy Source: The Sun is the main engine of this process."
-        ]
-      },
-      {
-        id: 'condensation',
-        title: "Condensation",
-        description: "As water vapour rises, it cools down.",
-        details: [
-          "Cooling: Rising vapour encounters cooler air.",
-          "Cloud Formation: Vapour turns back into tiny liquid droplets.",
-          "Visibility: These droplets cluster together to form clouds."
-        ]
-      },
-      {
-        id: 'precipitation',
-        title: "Precipitation",
-        description: "Water returns to the Earth's surface.",
-        details: [
-          "Release: Clouds become heavy with water.",
-          "Forms: Comes down as rain, snow, or hail.",
-          "Distribution: Replenishes fresh water sources."
-        ]
-      },
-      {
-        id: 'collection',
-        title: "Return Flow",
-        description: "Water travels across the land back to the oceans.",
-        details: [
-          "Surface Runoff: Flows into ponds, rivers, and lakes.",
-          "Circulation: Ensures continuous movement of water.",
-          "Conservation: Total water on Earth remains constant."
-        ]
-      },
-      {
-        id: 'seepage',
-        title: "Infiltration & Groundwater",
-        description: "Water seeps into the ground (Section 7.4.1).",
-        details: [
-          "Gravel: Seeps fastest (wide spaces).",
-          "Sand: Seeps slower.",
-          "Clay: Seeps slowest (tight spaces).",
-          "Aquifers: Underground layers where water is stored."
-        ]
-      }
-    ];
-
-    // --- Sub-components for Visual Elements ---
-    const Sun = ({ active }: { active: boolean }) => (
-      <g className={`transition-all duration-1000 ${active ? 'opacity-100' : 'opacity-80'}`}>
-        <circle cx="80" cy="80" r="40" fill="#FDB813" className="animate-pulse" />
-        <g stroke="#FDB813" strokeWidth="4" transform="translate(80, 80)">
-          {[0, 45, 90, 135, 180, 225, 270, 315].map((angle, i) => {
-            const x2 = 60 * Math.cos(angle * Math.PI / 180);
-            const y2 = 60 * Math.sin(angle * Math.PI / 180);
-            return (
-              <line
-                key={i}
-                x1="0" y1="0"
-                x2={x2}
-                y2={y2}
-                className="animate-spin-slow"
-                style={{ transformBox: 'fill-box', transformOrigin: 'center' }}
-              />
-            );
-          })}
-        </g>
-      </g>
-    );
-
-    const Cloud = ({ x, y, scale = 1, dark = false, visible = true }: { x: number, y: number, scale?: number, dark?: boolean, visible?: boolean }) => (
-      <g transform={`translate(${x}, ${y}) scale(${scale})`} className={`transition-opacity duration-1000 ${visible ? 'opacity-100' : 'opacity-0'}`}>
-        <path
-          d="M25,60 a20,20 0 0,1 0,-40 h50 a20,20 0 0,1 0,40 z"
-          fill={dark ? "#94a3b8" : "#fff"}
-          stroke={dark ? "#64748b" : "#e2e8f0"}
-          strokeWidth="2"
-        />
-        <circle cx="45" cy="40" r="20" fill={dark ? "#94a3b8" : "#fff"} />
-        <circle cx="70" cy="50" r="15" fill={dark ? "#94a3b8" : "#fff"} />
-      </g>
-    );
-
-    const Mountains = () => (
-      <g>
-        <path d="M0,400 L150,150 L300,400 Z" fill="#64748b" stroke="#475569" strokeWidth="2" />
-        {/* Snow cap */}
-        <path d="M115,208 L150,150 L185,208 L165,220 L150,210 L135,220 Z" fill="white" />
-        
-        <path d="M200,400 L300,250 L400,400 Z" fill="#64748b" stroke="#475569" strokeWidth="2" />
-        {/* Snow cap */}
-        <path d="M270,295 L300,250 L330,295 L315,305 L300,295 L285,305 Z" fill="white" />
-      </g>
-    );
-
-    const Tree = ({ x, y }: { x: number, y: number }) => (
-      <g transform={`translate(${x}, ${y})`}>
-        <rect x="8" y="30" width="4" height="20" fill="#78350f" />
-        <path d="M10,5 L25,35 L-5,35 Z" fill="#15803d" />
-        <path d="M10,15 L25,40 L-5,40 Z" fill="#15803d" />
-      </g>
-    );
-
-    const [currentStepIndex, setCurrentStepIndex] = useState(0);
-    const [isPlaying, setIsPlaying] = useState(false);
-
-    const currentStage = CYCLE_DATA[currentStepIndex];
-
-    // Generate stable random positions for rain drops
-    const rainPositions = useMemo(() => {
-      return Array.from({ length: 20 }, () => ({
-        x1: 200 + Math.random() * 400,
-        x2: 200 + Math.random() * 400,
-        duration: 0.5 + Math.random() * 0.5,
-      }));
-    }, []);
-
-    // Generate stable random positions for snow
-    const snowPositions = useMemo(() => {
-      return Array.from({ length: 5 }, () => ({
-        duration: 2 + Math.random() * 1,
-      }));
-    }, []);
-
-    // Auto-play logic
-    useEffect(() => {
-      let interval: ReturnType<typeof setInterval>;
-      if (isPlaying) {
-        interval = setInterval(() => {
-          setCurrentStepIndex((prev) => (prev + 1) % CYCLE_DATA.length);
-        }, 5000); // 5 seconds per slide
-      }
-      return () => clearInterval(interval);
-    }, [isPlaying]);
-
-    const handleNext = () => {
-      setCurrentStepIndex((prev) => (prev + 1) % CYCLE_DATA.length);
-      setIsPlaying(false);
-    };
-
-    const handlePrev = () => {
-      setCurrentStepIndex((prev) => (prev === 0 ? CYCLE_DATA.length - 1 : prev - 1));
-      setIsPlaying(false);
-    };
-
-    // --- Animation Classes Helper ---
-    const isEvap = currentStage.id === 'evaporation';
-    const isCond = currentStage.id === 'condensation';
-    const isPrecip = currentStage.id === 'precipitation';
-    const isCollect = currentStage.id === 'collection';
-    const isSeep = currentStage.id === 'seepage';
 
     return (
-      <div className="flex flex-col md:flex-row w-full max-w-6xl mx-auto bg-slate-50 rounded-xl shadow-xl overflow-hidden font-sans border border-slate-200">
-        
-        {/* --- Left Panel: Visualization --- */}
-        <div className="relative w-full md:w-2/3 h-[500px] bg-sky-200 overflow-hidden">
+      <div className="flex flex-col items-center p-8 bg-blue-50 min-h-screen font-sans pt-24">
+        <h1 className="text-3xl font-bold text-blue-800 mb-4">The Water Cycle</h1>
+        <p className="text-gray-600 mb-8 max-w-2xl text-center">
+          The continuous movement of water upward as vapour and downward as precipitation 
+          is called the <strong>Water Cycle</strong>.
+        </p>
+
+        <div className="relative w-full max-w-4xl h-[500px] bg-white rounded-xl shadow-2xl overflow-hidden border-4 border-blue-200">
           
-          {/* SVG Scene */}
-          <svg viewBox="0 0 800 500" className="w-full h-full">
-            {/* Sky Gradient */}
-            <defs>
-              <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#0ea5e9" stopOpacity="0.4" />
-                <stop offset="100%" stopColor="#bae6fd" stopOpacity="0.8" />
-              </linearGradient>
-              <linearGradient id="waterGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#3b82f6" />
-                <stop offset="100%" stopColor="#1d4ed8" />
-              </linearGradient>
-              <pattern id="underground" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-                <circle cx="2" cy="2" r="1" fill="#a8a29e" />
-              </pattern>
-            </defs>
+          {/* The Sun - Source of Heat  */}
+          <motion.div 
+            className="absolute top-4 right-4 w-24 h-24 bg-yellow-400 rounded-full shadow-[0_0_50px_rgba(250,204,21,0.8)]"
+            animate={{ scale: [1, 1.1, 1] }}
+            transition={{ duration: 4, repeat: Infinity }}
+          />
 
-            {/* Background */}
-            <rect width="800" height="500" fill="url(#skyGradient)" />
-
-            {/* Sun - Pulsates during Evaporation */}
-            <Sun active={isEvap || currentStage.id === 'intro'} />
-
-            {/* Mountains */}
-            <Mountains />
-
-            {/* Ground */}
-            <path d="M0,400 L800,400 L800,500 L0,500 Z" fill="#d6d3d1" />
-            <rect x="0" y="400" width="800" height="100" fill="url(#underground)" opacity="0.5" />
-
-            {/* Ocean */}
-            <path d="M450,420 L800,420 L800,500 L400,500 Z" fill="url(#waterGradient)" opacity="0.9" />
-            <path d="M400,420 Q425,410 450,420 T500,420 T550,420 T600,420 L800,420" fill="none" stroke="#60a5fa" strokeWidth="2" />
-
-            {/* Trees */}
-            <Tree x={350} y={360} />
-            <Tree x={380} y={370} />
-
-            {/* --- Dynamic Animations --- */}
-
-            {/* Evaporation Arrows (Wavy lines going up) */}
-            {isEvap && (
-              <g className="animate-pulse">
-                 {/* Ocean Evap */}
-                <path d="M600,420 Q610,380 600,340" stroke="white" strokeWidth="3" fill="none" strokeDasharray="5,5" className="opacity-70">
-                  <animate attributeName="d" values="M600,420 Q610,380 600,340; M600,410 Q590,370 600,330; M600,420 Q610,380 600,340" dur="2s" repeatCount="indefinite" />
-                </path>
-                <path d="M650,420 Q660,380 650,340" stroke="white" strokeWidth="3" fill="none" strokeDasharray="5,5" className="opacity-70">
-                  <animate attributeName="d" values="M650,420 Q660,380 650,340; M650,410 Q640,370 650,330; M650,420 Q660,380 650,340" dur="2.3s" repeatCount="indefinite" />
-                </path>
-                {/* Transpiration */}
-                <path d="M365,370 Q375,340 365,310" stroke="#86efac" strokeWidth="2" fill="none" strokeDasharray="3,3" className="opacity-80">
-                  <animate attributeName="d" values="M365,370 Q375,340 365,310; M365,360 Q355,330 365,300; M365,370 Q375,340 365,310" dur="1.8s" repeatCount="indefinite" />
-                </path>
-              </g>
-            )}
-
-            {/* Clouds - Forming & Darkening */}
-            <Cloud x={100} y={50} scale={1.2} visible={true} dark={isPrecip} />
-            <Cloud x={300} y={80} scale={1.5} visible={isCond || isPrecip || isCollect || isSeep} dark={isPrecip} />
-            <Cloud x={500} y={40} scale={1.3} visible={isCond || isPrecip} dark={isPrecip} />
-
-            {/* Rain / Snow */}
-            {isPrecip && (
-              <g>
-                {/* Rain */}
-                {rainPositions.map((pos, i) => (
-                  <line 
-                    key={i} 
-                    x1={pos.x1} 
-                    y1={150} 
-                    x2={pos.x2} 
-                    y2={170} 
-                    stroke="#3b82f6" 
-                    strokeWidth="2"
-                    className="opacity-60"
-                  >
-                    <animate attributeName="y1" from="150" to="400" dur={`${pos.duration}s`} repeatCount="indefinite" />
-                    <animate attributeName="y2" from="170" to="420" dur={`${pos.duration}s`} repeatCount="indefinite" />
-                  </line>
-                ))}
-                {/* Snow on mountains */}
-                 {snowPositions.map((pos, i) => (
-                  <circle key={`snow-${i}`} r="2" fill="white">
-                     <animate attributeName="cx" values="100;120;100" dur="3s" repeatCount="indefinite" />
-                     <animate attributeName="cy" from="50" to="200" dur={`${pos.duration}s`} repeatCount="indefinite" />
-                  </circle>
-                 ))}
-              </g>
-            )}
-
-            {/* Surface Runoff */}
-            {isCollect && (
-              <g>
-                <path d="M300,400 Q350,410 450,420" stroke="#3b82f6" strokeWidth="4" fill="none" />
-                <circle r="3" fill="#2563eb">
-                  <animateMotion path="M300,400 Q350,410 450,420" dur="1.5s" repeatCount="indefinite" />
-                </circle>
-                <circle r="3" fill="#2563eb">
-                  <animateMotion path="M300,400 Q350,410 450,420" dur="1.5s" begin="0.5s" repeatCount="indefinite" />
-                </circle>
-              </g>
-            )}
-
-            {/* Seepage / Groundwater */}
-            {isSeep && (
-              <g>
-                {/* Layers text */}
-                <text x="50" y="440" fontSize="12" fill="#444" opacity="0.7">Gravel (Fast)</text>
-                <text x="50" y="460" fontSize="12" fill="#444" opacity="0.7">Sand (Med)</text>
-                <text x="50" y="480" fontSize="12" fill="#444" opacity="0.7">Clay (Slow)</text>
-                
-                {/* Seepage Arrows */}
-                <path d="M400,420 L400,480 L700,480" stroke="#1e40af" strokeWidth="2" strokeDasharray="4,4" fill="none">
-                   <animate attributeName="stroke-dashoffset" from="100" to="0" dur="3s" repeatCount="indefinite" />
-                </path>
-                <path d="M200,400 L200,490 L400,490" stroke="#1e40af" strokeWidth="2" strokeDasharray="4,4" fill="none">
-                   <animate attributeName="stroke-dashoffset" from="100" to="0" dur="4s" repeatCount="indefinite" />
-                </path>
-                
-                <circle cx="600" cy="480" r="4" fill="#3b82f6" opacity="0.5">
-                  <animate attributeName="r" values="4;8;4" dur="2s" repeatCount="indefinite" />
-                </circle>
-                 <text x="620" y="485" fontSize="14" fontWeight="bold" fill="#1e3a8a">Aquifer</text>
-              </g>
-            )}
-
-          </svg>
-
-          {/* Legend / Overlay Tags */}
-          <div className="absolute top-4 left-4 flex gap-2">
-              <span className="px-2 py-1 bg-white/80 rounded text-xs font-bold text-slate-700 shadow border border-slate-200">
-                 State: {isPrecip ? 'Liquid/Solid' : isEvap ? 'Gas' : isCond ? 'Gas -> Liquid' : 'Liquid'}
-              </span>
-          </div>
-        </div>
-
-        {/* --- Right Panel: Info & Controls --- */}
-        <div className="w-full md:w-1/3 bg-white p-6 flex flex-col justify-between border-l border-slate-200">
-          
-          <div>
-            <div className="flex items-center gap-2 mb-2 text-blue-600 font-bold uppercase tracking-wide text-sm">
-              {currentStage.id === 'evaporation' && <Thermometer size={16}/>}
-              {currentStage.id === 'condensation' && <Wind size={16}/>}
-              {currentStage.id === 'precipitation' && <Droplets size={16}/>}
-              {currentStage.id === 'collection' && <RefreshCw size={16}/>}
-              <span>Step {currentStepIndex + 1} of {CYCLE_DATA.length}</span>
-            </div>
-            
-            <h2 className="text-2xl font-bold text-slate-800 mb-4">{currentStage.title}</h2>
-            <p className="text-slate-600 mb-6 italic">{currentStage.description}</p>
-            
-            <ul className="space-y-3">
-              {currentStage.details.map((detail, idx) => (
-                <li key={idx} className="flex items-start gap-3 p-3 rounded-lg bg-slate-50 border border-slate-100">
-                  <div className="mt-1.5 w-2 h-2 rounded-full bg-blue-500 shrink-0" />
-                  <span className="text-sm text-slate-700">{detail}</span>
-                </li>
-              ))}
-            </ul>
+          {/* Ocean/Water Bodies [cite: 147, 152] */}
+          <div className="absolute bottom-0 w-full h-32 bg-blue-500">
+            <div className="absolute top-0 w-full h-4 bg-blue-400 opacity-50 animate-pulse" />
+            <p className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white font-bold">Oceans & Lakes</p>
           </div>
 
-          {/* Controls */}
-          <div className="mt-8 pt-6 border-t border-slate-100">
-            <div className="flex items-center justify-between gap-4">
-              <button 
-                onClick={handlePrev}
-                className="p-2 rounded-full hover:bg-slate-100 text-slate-600 transition-colors"
-                aria-label="Previous step"
-              >
-                <ChevronLeft size={24} />
-              </button>
-
-              <button
-                onClick={() => setIsPlaying(!isPlaying)}
-                className={`flex items-center gap-2 px-6 py-2 rounded-full font-medium transition-all ${
-                  isPlaying 
-                    ? 'bg-blue-100 text-blue-700 hover:bg-blue-200' 
-                    : 'bg-blue-600 text-white hover:bg-blue-700 shadow-lg hover:shadow-blue-200'
-                }`}
-              >
-                {isPlaying ? (
-                  <>
-                    <Pause size={18} /> Pause
-                  </>
-                ) : (
-                  <>
-                    <Play size={18} /> Auto Play
-                  </>
-                )}
-              </button>
-
-              <button 
-                onClick={handleNext}
-                className="p-2 rounded-full hover:bg-slate-100 text-slate-600 transition-colors"
-                aria-label="Next step"
-              >
-                <ChevronRight size={24} />
-              </button>
+          {/* Land and Trees (Transpiration)  */}
+          <div className="absolute bottom-32 left-0 w-1/3 h-24 bg-green-600 rounded-tr-full">
+            <div className="absolute bottom-4 left-10 w-8 h-12 bg-green-800 rounded-t-lg">
+               <span className="text-xs text-white absolute -top-6">Trees</span>
             </div>
+          </div>
+
+          {/* 1. Evaporation & Transpiration  */}
+          <div className="absolute bottom-32 left-1/2 flex space-x-8">
+            {[1, 2, 3, 4, 5].map((i) => (
+              <motion.div
+                key={`vapour-${i}`}
+                className="w-2 h-2 bg-blue-200 rounded-full"
+                animate={{
+                  y: [0, -200],
+                  opacity: [0, 1, 0],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "linear",
+                  delay: i * 0.5
+                }}
+              />
+            ))}
+            <div className="absolute -top-10 -left-10 text-blue-600 font-semibold text-sm bg-white/80 px-2 rounded">
+              Evaporation & Transpiration
+            </div>
+          </div>
+
+          {/* 2. Condensation (Clouds)  */}
+          <motion.div 
+            className="absolute top-20 left-1/4 w-40 h-16 bg-gray-100 rounded-full shadow-lg"
+            animate={{ x: [0, 20, 0] }}
+            transition={{ duration: 10, repeat: Infinity }}
+          >
+            <div className="absolute -top-5 left-10 text-gray-600 font-semibold text-sm">Clouds (Condensation)</div>
             
-            {/* Progress Bar */}
-            <div className="flex gap-1 mt-6">
-              {CYCLE_DATA.map((_, idx) => (
-                <div 
-                  key={idx}
-                  className={`h-1.5 rounded-full flex-1 transition-all duration-500 ${
-                    idx === currentStepIndex ? 'bg-blue-600' : 'bg-slate-200'
-                  }`}
+            {/* 3. Precipitation (Rain) [cite: 154] */}
+            <div className="flex justify-around mt-12">
+              {[1, 2, 3].map((i) => (
+                <motion.div
+                  key={`rain-${i}`}
+                  className="w-1 h-4 bg-blue-400 rounded-full"
+                  animate={{
+                    y: [-20, 250],
+                    opacity: [0, 1, 0],
+                  }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    ease: "linear",
+                    delay: i * 0.3
+                  }}
                 />
               ))}
             </div>
-          </div>
+          </motion.div>
 
+          {/* Ground Infiltration  */}
+          <div className="absolute bottom-32 left-1/4 w-4 h-32 bg-blue-300 opacity-40">
+             <p className="text-[10px] rotate-90 mt-10 font-bold text-blue-900">Infiltration</p>
+          </div>
+        </div>
+
+        {/* Educational Labels based on Textbook Content */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8 w-full max-w-4xl">
+          <div className="p-4 bg-white rounded-lg shadow border-l-4 border-yellow-400">
+            <h3 className="font-bold text-yellow-700">1. Evaporation</h3>
+            <p className="text-sm text-gray-600">The Sun heats water in oceans and lakes, turning it into water vapour[cite: 152].</p>
+          </div>
+          <div className="p-4 bg-white rounded-lg shadow border-l-4 border-gray-400">
+            <h3 className="font-bold text-gray-700">2. Condensation</h3>
+            <p className="text-sm text-gray-600">As vapour rises, it cools and condenses to form clouds.</p>
+          </div>
+          <div className="p-4 bg-white rounded-lg shadow border-l-4 border-blue-400">
+            <h3 className="font-bold text-blue-700">3. Precipitation</h3>
+            <p className="text-sm text-gray-600">Water returns to Earth as rain, snow, or hail[cite: 154].</p>
+          </div>
         </div>
       </div>
     );
@@ -3235,5 +3332,65 @@ function drawCloud(
 
   ctx.shadowBlur = 0;
 }
+
+// ============================================================================
+// Helper Functions (merged from heatTransferTranslations.ts)
+// ============================================================================
+
+/**
+ * Get the complete language content for a given language
+ */
+export const getWaterCycleContent = (lang: Language): WaterCycleContent => {
+  return translations[lang];
+};
+
+/**
+ * Get navigation translations for a given language
+ */
+export const getWaterCycleNav = (lang: Language): WaterCycleNav => {
+  return translations[lang].nav;
+};
+
+/**
+ * Get controls translations for a given language
+ */
+export const getWaterCycleControls = (lang: Language): WaterCycleControls => {
+  return translations[lang].controls;
+};
+
+/**
+ * Get steps translations for a given language
+ */
+export const getWaterCycleSteps = (lang: Language): WaterCycleSteps => {
+  return translations[lang].steps;
+};
+
+/**
+ * Get canvas labels for a given language
+ */
+export const getWaterCycleCanvas = (lang: Language): WaterCycleCanvas => {
+  return translations[lang].canvas;
+};
+
+/**
+ * Get learn section translations for a given language
+ */
+export const getWaterCycleLearn = (lang: Language): WaterCycleLearn => {
+  return translations[lang].learn;
+};
+
+/**
+ * Get practice section translations for a given language
+ */
+export const getWaterCyclePractice = (lang: Language): WaterCyclePractice => {
+  return translations[lang].practice;
+};
+
+/**
+ * Get real world section translations for a given language
+ */
+export const getWaterCycleRealWorld = (lang: Language): WaterCycleRealWorld => {
+  return translations[lang].realWorld;
+};
 
 export default WaterCycleLearning;

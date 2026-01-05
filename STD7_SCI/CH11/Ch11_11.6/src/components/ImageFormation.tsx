@@ -384,7 +384,7 @@ type TranslationValue =
 type Translations = Record<Language, TranslationValue>;
 
 // Translation system - Load from JSON file
-const translations: Translations = translationsData as Translations;
+const translations: Translations = translationsData as unknown as Translations;
 
 // Language Context
 interface LanguageContextType {

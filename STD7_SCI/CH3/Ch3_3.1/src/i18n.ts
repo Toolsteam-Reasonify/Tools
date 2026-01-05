@@ -3,12 +3,15 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import ICU from 'i18next-icu';
 import { initReactI18next } from 'react-i18next';
 
-import translation from './locales/translation.json';
+import contentData from './components/content.json';
+
+// Extract translation_keys from content.json
+const translations = (contentData as { translation_keys?: Record<string, unknown> }).translation_keys || {};
 
 const resources = {
-  en: { translation },
-  hi: { translation },
-  gu: { translation },
+  en: { translation: translations },
+  hi: { translation: translations },
+  gu: { translation: translations },
 };
 
 i18n

@@ -6,7 +6,6 @@ import './index.css'
 // Enhanced error handling for Chrome extension runtime errors
 const originalError = console.error;
 const originalWarn = console.warn;
-const originalLog = console.log;
 
 // Type guard for Chrome extension API
 const hasChromeRuntime = (): boolean => {

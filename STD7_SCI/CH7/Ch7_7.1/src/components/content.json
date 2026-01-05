@@ -1,1213 +1,92 @@
 {
-  "circuit_tool_data": {
-    "tool_type": "torchlight_circuit",
-    "session_id": "session_001",
-    "mode": "mixed",
-    "demonstration": {
-      "steps": [
-        {
-          "step_number": 1,
-          "title": "demo.intro.title",
-          "description": "demo.intro.desc",
-          "type": "explanation",
-          "visual_state": {
-            "components": [
-              {
-                "id": "cell_1",
-                "type": "cell",
-                "position": { "x": 100, "y": 200 },
-                "connections": ["wire_1"],
-                "state": "on",
-                "polarity": "correct"
-              },
-              {
-                "id": "wire_1",
-                "type": "wire",
-                "position": { "x": 200, "y": 200 },
-                "connections": ["cell_1", "switch_1"],
-                "state": "on"
-              },
-              {
-                "id": "switch_1",
-                "type": "switch",
-                "position": { "x": 300, "y": 200 },
-                "connections": ["wire_1", "wire_2"],
-                "state": "closed"
-              },
-              {
-                "id": "wire_2",
-                "type": "wire",
-                "position": { "x": 400, "y": 200 },
-                "connections": ["switch_1", "lamp_1"],
-                "state": "on"
-              },
-              {
-                "id": "lamp_1",
-                "type": "lamp",
-                "position": { "x": 500, "y": 200 },
-                "connections": ["wire_2", "wire_3"],
-                "state": "on"
-              },
-              {
-                "id": "wire_3",
-                "type": "wire",
-                "position": { "x": 600, "y": 200 },
-                "connections": ["lamp_1", "cell_1"],
-                "state": "on"
-              }
-            ],
-            "circuit_complete": true,
-            "current_flowing": true
-          },
-          "interactions": [
-            {
-              "type": "click",
-              "target": "switch_1",
-              "expectedValue": "closed",
-              "hint": "Click on the switch to see how it controls the circuit"
-            }
-          ],
-          "completion_criteria": {
-            "type": "user_confirm"
-          },
-          "learning_notes": "demo.intro.note",
-          "common_mistakes": [
-            "Forgetting to close the switch",
-            "Not connecting all components in a loop",
-            "Reversing polarity of the cell"
-          ]
-        },
-        {
-          "step_number": 2,
-          "title": "demo.cell.title",
-          "description": "demo.cell.desc",
-          "type": "visualization",
-          "visual_state": {
-            "components": [
-              {
-                "id": "symbol_cell",
-                "type": "cell",
-                "position": { "x": 150, "y": 150 },
-                "connections": [],
-                "polarity": "correct"
-              },
-              {
-                "id": "symbol_battery",
-                "type": "battery",
-                "position": { "x": 300, "y": 150 },
-                "connections": [],
-                "polarity": "correct"
-              },
-              {
-                "id": "symbol_lamp",
-                "type": "lamp",
-                "position": { "x": 450, "y": 150 },
-                "connections": [],
-                "state": "on"
-              },
-              {
-                "id": "symbol_led",
-                "type": "led",
-                "position": { "x": 600, "y": 150 },
-                "connections": [],
-                "state": "on",
-                "polarity": "correct"
-              },
-              {
-                "id": "symbol_switch_on",
-                "type": "switch",
-                "position": { "x": 150, "y": 300 },
-                "connections": [],
-                "state": "closed"
-              },
-              {
-                "id": "symbol_switch_off",
-                "type": "switch",
-                "position": { "x": 300, "y": 300 },
-                "connections": [],
-                "state": "open"
-              },
-              {
-                "id": "symbol_wire",
-                "type": "wire",
-                "position": { "x": 450, "y": 300 },
-                "connections": [],
-                "state": "on"
-              }
-            ],
-            "circuit_complete": false,
-            "current_flowing": false
-          },
-          "interactions": [
-            {
-              "type": "select",
-              "target": "component_type",
-              "hint": "Select different components to see their symbols"
-            }
-          ],
-          "completion_criteria": {
-            "type": "automatic",
-            "condition": "all_symbols_viewed"
-          },
-          "learning_notes": "Each component has a unique symbol that represents it in circuit diagrams.",
-          "common_mistakes": [
-            "Confusing cell and battery symbols",
-            "Mixing up switch on and off positions",
-            "Forgetting LED polarity"
-          ]
-        },
-        {
-          "step_number": 3,
-          "title": "demo.complete.title",
-          "description": "demo.complete.desc",
-          "type": "interaction",
-          "visual_state": {
-            "components": [],
-            "circuit_complete": false,
-            "current_flowing": false
-          },
-          "interactions": [
-            {
-              "type": "drag",
-              "target": "component",
-              "hint": "Drag components from the toolbox to build your circuit"
-            },
-            {
-              "type": "click",
-              "target": "connection_point",
-              "hint": "demo.complete.hint"
-            }
-          ],
-          "completion_criteria": {
-            "type": "user_confirm"
-          },
-          "learning_notes": "A working circuit must form a complete loop from positive to negative terminal.",
-          "common_mistakes": [
-            "Creating an open circuit",
-            "Short circuiting components",
-            "Incorrect component placement"
-          ]
-        }
-      ],
-      "auto_progression": false,
-      "step_duration": 3000
-    },
-    "practice": {
-      "exercises": [
-        {
-          "exercise_id": "practice_001",
-          "title": "Identify Complete Circuits",
-          "description": "Select which diagram shows a complete, working circuit.",
-          "difficulty": "beginner",
-          "problem_data": {
-            "circuit_setup": [
-              {
-                "id": "p1_cell",
-                "type": "cell",
-                "position": { "x": 100, "y": 200 },
-                "connections": ["p1_wire1"],
-                "polarity": "correct"
-              },
-              {
-                "id": "p1_wire1",
-                "type": "wire",
-                "position": { "x": 200, "y": 200 },
-                "connections": ["p1_cell", "p1_lamp"],
-                "state": "on"
-              },
-              {
-                "id": "p1_lamp",
-                "type": "lamp",
-                "position": { "x": 300, "y": 200 },
-                "connections": ["p1_wire1", "p1_wire2"],
-                "state": "on"
-              },
-              {
-                "id": "p1_wire2",
-                "type": "wire",
-                "position": { "x": 400, "y": 200 },
-                "connections": ["p1_lamp", "p1_cell"],
-                "state": "on"
-              }
-            ],
-            "question_type": "build_circuit",
-            "correct_solution": {
-              "components": ["p1_cell", "p1_wire1", "p1_lamp", "p1_wire2"],
-              "circuit_complete": true,
-              "current_flowing": true
-            }
-          },
-          "solution": {
-            "correct_answer": {
-              "components": ["p1_cell", "p1_wire1", "p1_lamp", "p1_wire2"],
-              "circuit_complete": true,
-              "current_flowing": true
-            },
-            "solution_steps": [
-              "Place the cell with correct polarity",
-              "Connect wire from positive terminal",
-              "Add lamp in the circuit",
-              "Complete the loop back to negative terminal"
-            ],
-            "multiple_solutions": false
-          },
-          "interaction_config": {
-            "input_methods": ["drag", "click", "select"],
-            "max_attempts": 3,
-            "hint_system": true,
-            "progressive_hints": [
-              "Remember, a circuit needs to form a complete loop",
-              "Check if all components are connected",
-              "Make sure the cell polarity is correct"
-            ]
-          },
-          "assessment": {
-            "accuracy_weight": 0.8,
-            "time_weight": 0.1,
-            "attempt_weight": 0.1
-          }
-        },
-        {
-          "exercise_id": "practice_002",
-          "title": "LED Polarity Test",
-          "description": "Build a circuit with an LED, ensuring correct polarity for it to light up.",
-          "difficulty": "intermediate",
-          "problem_data": {
-            "circuit_setup": [
-              {
-                "id": "p2_battery",
-                "type": "battery",
-                "position": { "x": 100, "y": 200 },
-                "connections": ["p2_wire1"],
-                "polarity": "correct"
-              },
-              {
-                "id": "p2_wire1",
-                "type": "wire",
-                "position": { "x": 200, "y": 200 },
-                "connections": ["p2_battery", "p2_led"],
-                "state": "on"
-              },
-              {
-                "id": "p2_led",
-                "type": "led",
-                "position": { "x": 300, "y": 200 },
-                "connections": ["p2_wire1", "p2_wire2"],
-                "state": "on",
-                "polarity": "correct"
-              },
-              {
-                "id": "p2_wire2",
-                "type": "wire",
-                "position": { "x": 400, "y": 200 },
-                "connections": ["p2_led", "p2_battery"],
-                "state": "on"
-              }
-            ],
-            "question_type": "build_circuit",
-            "correct_solution": {
-              "led_polarity": "correct",
-              "circuit_complete": true,
-              "led_illuminated": true
-            }
-          },
-          "solution": {
-            "correct_answer": {
-              "led_polarity": "correct",
-              "circuit_complete": true,
-              "led_illuminated": true
-            },
-            "solution_steps": [
-              "Connect positive terminal to LED anode (long leg)",
-              "Connect LED cathode (short leg) to negative terminal",
-              "Ensure complete circuit loop",
-              "Verify LED lights up"
-            ],
-            "multiple_solutions": false
-          },
-          "interaction_config": {
-            "input_methods": ["drag", "rotate", "click"],
-            "max_attempts": 5,
-            "hint_system": true,
-            "progressive_hints": [
-              "LEDs have polarity - they only work one way",
-              "The longer leg is positive (anode)",
-              "The shorter leg is negative (cathode)",
-              "Check if LED is connected in the right direction"
-            ]
-          },
-          "assessment": {
-            "accuracy_weight": 0.9,
-            "time_weight": 0.05,
-            "attempt_weight": 0.05
-          }
-        },
-        {
-          "exercise_id": "practice_003",
-          "title": "Troubleshoot Broken Circuit",
-          "description": "Identify and fix the problem in this non-working circuit.",
-          "difficulty": "advanced",
-          "problem_data": {
-            "circuit_setup": [
-              {
-                "id": "p3_cell",
-                "type": "cell",
-                "position": { "x": 100, "y": 200 },
-                "connections": ["p3_wire1"],
-                "polarity": "correct"
-              },
-              {
-                "id": "p3_wire1",
-                "type": "wire",
-                "position": { "x": 200, "y": 200 },
-                "connections": ["p3_cell", "p3_switch"],
-                "state": "on"
-              },
-              {
-                "id": "p3_switch",
-                "type": "switch",
-                "position": { "x": 300, "y": 200 },
-                "connections": ["p3_wire1"],
-                "state": "open"
-              }
-            ],
-            "question_type": "troubleshoot",
-            "correct_solution": {
-              "issue": "open_switch",
-              "fix": "close_switch",
-              "circuit_complete": true
-            }
-          },
-          "solution": {
-            "correct_answer": {
-              "issue": "open_switch",
-              "fix": "close_switch",
-              "circuit_complete": true
-            },
-            "solution_steps": [
-              "Identify the switch is open",
-              "Close the switch to complete the circuit",
-              "Verify current flows and lamp lights up"
-            ],
-            "multiple_solutions": false
-          },
-          "interaction_config": {
-            "input_methods": ["click", "select", "input"],
-            "max_attempts": 4,
-            "hint_system": true,
-            "progressive_hints": [
-              "Check if all components are properly connected",
-              "Look for any breaks in the circuit",
-              "Is the switch in the correct position?",
-              "A closed switch allows current to flow"
-            ]
-          },
-          "assessment": {
-            "accuracy_weight": 0.7,
-            "time_weight": 0.2,
-            "attempt_weight": 0.1
-          }
-        },
-        {
-          "exercise_id": "practice_004",
-          "title": "Test Conductor vs Insulator",
-          "description": "Identify which materials allow electricity to flow through them.",
-          "difficulty": "beginner",
-          "problem_data": {
-            "circuit_setup": [
-              {
-                "id": "p4_cell",
-                "type": "cell",
-                "position": { "x": 100, "y": 200 },
-                "connections": ["p4_wire1"],
-                "polarity": "correct"
-              },
-              {
-                "id": "p4_wire1",
-                "type": "wire",
-                "position": { "x": 200, "y": 200 },
-                "connections": ["p4_cell", "p4_test_material"],
-                "state": "on"
-              },
-              {
-                "id": "p4_test_material",
-                "type": "conductor",
-                "position": { "x": 300, "y": 200 },
-                "connections": ["p4_wire1", "p4_wire2"],
-                "state": "on"
-              },
-              {
-                "id": "p4_wire2",
-                "type": "wire",
-                "position": { "x": 400, "y": 200 },
-                "connections": ["p4_test_material", "p4_lamp"],
-                "state": "on"
-              },
-              {
-                "id": "p4_lamp",
-                "type": "lamp",
-                "position": { "x": 500, "y": 200 },
-                "connections": ["p4_wire2", "p4_wire3"],
-                "state": "on"
-              },
-              {
-                "id": "p4_wire3",
-                "type": "wire",
-                "position": { "x": 600, "y": 200 },
-                "connections": ["p4_lamp", "p4_cell"],
-                "state": "on"
-              }
-            ],
-            "question_type": "test_conductor",
-            "correct_solution": {
-              "material_type": "conductor",
-              "current_flows": true,
-              "lamp_lights": true
-            }
-          },
-          "solution": {
-            "correct_answer": {
-              "material_type": "conductor",
-              "current_flows": true,
-              "lamp_lights": true
-            },
-            "solution_steps": [
-              "Test material in circuit",
-              "Observe if lamp lights up",
-              "If lamp lights, material is conductor",
-              "If lamp doesn't light, material is insulator"
-            ],
-            "multiple_solutions": false
-          },
-          "interaction_config": {
-            "input_methods": ["select", "click"],
-            "max_attempts": 3,
-            "hint_system": true,
-            "progressive_hints": [
-              "Conductors allow electricity to flow",
-              "Metals are usually good conductors",
-              "If the lamp lights, current is flowing"
-            ]
-          },
-          "assessment": {
-            "accuracy_weight": 0.85,
-            "time_weight": 0.1,
-            "attempt_weight": 0.05
-          }
-        },
-        {
-          "exercise_id": "practice_005",
-          "title": "Build Series Circuit",
-          "description": "Create a circuit with multiple components connected in series.",
-          "difficulty": "intermediate",
-          "problem_data": {
-            "circuit_setup": [
-              {
-                "id": "p5_battery",
-                "type": "battery",
-                "position": { "x": 100, "y": 200 },
-                "connections": ["p5_wire1"],
-                "polarity": "correct"
-              },
-              {
-                "id": "p5_wire1",
-                "type": "wire",
-                "position": { "x": 200, "y": 200 },
-                "connections": ["p5_battery", "p5_lamp1"],
-                "state": "on"
-              },
-              {
-                "id": "p5_lamp1",
-                "type": "lamp",
-                "position": { "x": 300, "y": 200 },
-                "connections": ["p5_wire1", "p5_wire2"],
-                "state": "on"
-              },
-              {
-                "id": "p5_wire2",
-                "type": "wire",
-                "position": { "x": 400, "y": 200 },
-                "connections": ["p5_lamp1", "p5_lamp2"],
-                "state": "on"
-              },
-              {
-                "id": "p5_lamp2",
-                "type": "lamp",
-                "position": { "x": 500, "y": 200 },
-                "connections": ["p5_wire2", "p5_wire3"],
-                "state": "on"
-              },
-              {
-                "id": "p5_wire3",
-                "type": "wire",
-                "position": { "x": 600, "y": 200 },
-                "connections": ["p5_lamp2", "p5_battery"],
-                "state": "on"
-              }
-            ],
-            "question_type": "build_circuit",
-            "correct_solution": {
-              "circuit_type": "series",
-              "all_lamps_lit": true,
-              "circuit_complete": true
-            }
-          },
-          "solution": {
-            "correct_answer": {
-              "circuit_type": "series",
-              "all_lamps_lit": true,
-              "circuit_complete": true
-            },
-            "solution_steps": [
-              "Connect battery positive terminal",
-              "Add first lamp in series",
-              "Connect second lamp after first",
-              "Complete loop back to battery negative",
-              "Verify both lamps light up"
-            ],
-            "multiple_solutions": false
-          },
-          "interaction_config": {
-            "input_methods": ["drag", "click", "connect"],
-            "max_attempts": 5,
-            "hint_system": true,
-            "progressive_hints": [
-              "In a series circuit, components are connected one after another",
-              "Current flows through each component in order",
-              "All components must be connected in a single path",
-              "Check that both lamps are in the circuit path"
-            ]
-          },
-          "assessment": {
-            "accuracy_weight": 0.75,
-            "time_weight": 0.15,
-            "attempt_weight": 0.1
-          }
-        }
-      ],
-      "session_config": {
-        "max_exercises": 5,
-        "difficulty_adaptation": true,
-        "immediate_feedback": true
-      }
-    },
-    "student_context": {
-      "current_level": "beginner",
-      "learning_preferences": ["visual", "interactive", "hands-on"],
-      "previous_performance": {
-        "accuracy": 0.75,
-        "avg_time": 120,
-        "completed_exercises": 3
-      }
-    },
-    "metadata": {
-      "learning_objectives": [
-        "objective.1",
-        "objective.2",
-        "objective.3",
-        "objective.4"
-      ],
-      "estimated_duration": 600,
-      "prerequisite_skills": [
-        "Basic understanding of electricity",
-        "Familiarity with simple tools"
-      ],
-      "difficulty_level": "beginner"
-    }
-  },
-  "ui_config": {
-    "theme": "modern",
-    "layout": "standard",
-    "auto_play": false,
-    "step_duration": 5000,
-    "show_controls": true,
-    "show_progress": true,
-    "hint_system": true,
-    "progressive_difficulty": true,
-    "immediate_feedback": true,
-    "celebration_animations": true,
-    "high_contrast": false,
-    "large_text": false,
-    "keyboard_navigation": true,
-    "screen_reader_support": true
-  },
-  "component_definitions": {
-    "cell": {
-      "name": "Electric Cell",
-      "description": "A single cell that provides electrical energy. Has positive and negative terminals.",
-      "symbol": "cell",
-      "properties": {
-        "voltage": "1.5V",
-        "polarity": true,
-        "terminal_positive": "long line",
-        "terminal_negative": "short line"
-      }
-    },
-    "battery": {
-      "name": "Battery",
-      "description": "Multiple cells connected together to provide higher voltage.",
-      "symbol": "battery",
-      "properties": {
-        "voltage": "3V or more",
-        "polarity": true,
-        "terminal_positive": "long line",
-        "terminal_negative": "short line"
-      }
-    },
-    "lamp": {
-      "name": "Electric Lamp",
-      "description": "A device that converts electrical energy into light energy.",
-      "symbol": "lamp",
-      "properties": {
-        "polarity": false,
-        "lights_when_current_flows": true
-      }
-    },
-    "led": {
-      "name": "Light Emitting Diode",
-      "description": "A semiconductor device that emits light when current flows in the correct direction.",
-      "symbol": "led",
-      "properties": {
-        "polarity": true,
-        "anode": "long leg (positive)",
-        "cathode": "short leg (negative)",
-        "requires_correct_polarity": true
-      }
-    },
-    "switch": {
-      "name": "Switch",
-      "description": "A device that opens or closes a circuit to control current flow.",
-      "symbol": "switch",
-      "properties": {
-        "states": ["open", "closed"],
-        "open": "no current flows",
-        "closed": "current flows"
-      }
-    },
-    "wire": {
-      "name": "Wire",
-      "description": "A conductor that connects components in a circuit.",
-      "symbol": "wire",
-      "properties": {
-        "material": "metal",
-        "conducts_electricity": true
-      }
-    },
-    "conductor": {
-      "name": "Conductor",
-      "description": "A material that allows electricity to flow through it.",
-      "symbol": "conductor",
-      "properties": {
-        "examples": ["copper", "aluminum", "iron"],
-        "allows_current": true
-      }
-    },
-    "insulator": {
-      "name": "Insulator",
-      "description": "A material that does not allow electricity to flow through it.",
-      "symbol": "insulator",
-      "properties": {
-        "examples": ["rubber", "plastic", "wood"],
-        "allows_current": false
-      }
-    }
-  },
-  "practice_questions": {
-    "questions": [
-      {
-        "id": "p1",
-        "question": "Which circuit diagram shows a complete, working circuit?",
-        "type": "diagram",
-        "correct_answer": "p1a",
-        "explanation": "A complete circuit must form a closed loop from the positive terminal of the cell, through components, and back to the negative terminal.",
-        "hint": "Look for a circuit that forms a complete loop without any breaks."
-      },
-      {
-        "id": "p2",
-        "question": "In which circuit is the LED connected with correct polarity?",
-        "type": "diagram",
-        "correct_answer": "p2a",
-        "explanation": "LEDs have polarity. The positive terminal (anode) should connect to the positive terminal of the battery, and the negative terminal (cathode) to the negative terminal.",
-        "hint": "Remember: LED anode (long leg) connects to positive, cathode (short leg) connects to negative."
-      },
-      {
-        "id": "p3",
-        "question": "Why won't the lamp light up in this circuit?",
-        "type": "diagram",
-        "correct_answer": "p3a",
-        "explanation": "The switch is open, which breaks the circuit. No current can flow when the switch is open, so the lamp won't light.",
-        "hint": "Check the position of the switch - is it allowing current to flow?"
-      },
-      {
-        "id": "p4",
-        "question": "Which terminal of the cell is positive?",
-        "type": "diagram",
-        "correct_answer": "p4a",
-        "explanation": "In a cell symbol, the longer line represents the positive terminal, and the shorter line represents the negative terminal.",
-        "hint": "Look at the lengths of the lines in the cell symbol."
-      },
-      {
-        "id": "p5",
-        "question": "In which direction does current flow from the battery?",
-        "type": "diagram",
-        "correct_answer": "p5a",
-        "explanation": "Current flows from the positive terminal of the battery, through the circuit components, and back to the negative terminal.",
-        "hint": "Current flows from positive to negative terminal through the circuit."
-      }
-    ]
-  },
-  "translation_keys": {
-    "learn": {
-      "symbols": {
-        "cell": {
-          "name": "Electric Cell",
-          "description": "A single cell that provides electrical energy"
-        },
-        "battery": {
-          "name": "Battery",
-          "description": "Multiple cells connected together"
-        },
-        "lamp": {
-          "name": "Electric Lamp",
-          "description": "Converts electrical energy into light"
-        },
-        "led": {
-          "name": "LED",
-          "description": "Light Emitting Diode - emits light with correct polarity"
-        },
-        "switchOn": {
-          "name": "Switch (On)",
-          "description": "Switch in closed position - current flows"
-        },
-        "switchOff": {
-          "name": "Switch (Off)",
-          "description": "Switch in open position - no current flows"
-        },
-        "wire": {
-          "name": "Wire",
-          "description": "Conductor that connects circuit components"
-        }
-      },
-      "examples": {
-        "labels": {
-          "positive": "+",
-          "negative": "-"
-        }
-      }
-    },
-    "practice": {
-      "exercise": "Exercise",
-      "attempt": "Attempt",
-      "attempts": "Attempts",
-      "time": "Time",
-      "placeholder": "Type your answer here...",
-      "mode": "Practice Mode",
-      "selectTopic": "Select a topic to practice",
-      "mixedPractice": "Mixed Practice",
-      "allTopics": "All Topics",
-      "question": "Question",
-      "of": "of",
-      "score": "Score",
-      "submit": "Submit",
-      "correct": "Correct!",
-      "incorrect": "Incorrect",
-      "explanation": "Explanation",
-      "correctAnswer": "Correct Answer",
-      "excellent": "Excellent!",
-      "good": "Good Job!",
-      "keepPracticing": "Keep Practicing!",
-      "result": {
-        "excellent": "Outstanding work! You have mastered this topic.",
-        "good": "Well done! Keep practicing to improve further.",
-        "keepPracticing": "Good effort! Review the concepts and try again."
-      },
-      "tryAgain": "Try Again",
-      "backToTopics": "Back to Topics",
-      "easy": "Easy",
-      "medium": "Medium",
-      "hard": "Hard",
-      "noComponents": {
-        "title": "Add or arrange components to see the circuit.",
-        "desc": "Use the hints and description to decide what to connect."
-      },
-      "ex1": {
-        "notLabeled": "Not labeled"
-      },
-      "ex6": {
-        "question": "Question",
-        "of": "of",
-        "checkQuiz": "Check Quiz",
-        "q1": "What is the main purpose of a switch in an electric circuit?",
-        "q1o1": "To provide electricity",
-        "q1o2": "To control the flow of current",
-        "q1o3": "To produce light",
-        "q1o4": "To store energy",
-        "q2": "Which component provides electrical energy in a torch?",
-        "q2o1": "Lamp",
-        "q2o2": "Cells",
-        "q2o3": "Switch",
-        "q2o4": "Wires",
-        "q3": "What happens when a switch is turned ON?",
-        "q3o1": "The circuit breaks",
-        "q3o2": "Current flows through the circuit",
-        "q3o3": "The lamp turns off",
-        "q3o4": "No electricity flows",
-        "q4": "In a complete circuit, current flows from:",
-        "q4o1": "Negative to positive terminal",
-        "q4o2": "Lamp to cell",
-        "q4o3": "Positive to negative terminal",
-        "q4o4": "Switch to lamp",
-        "q5": "What is needed for a lamp to glow in a circuit?",
-        "q5o1": "Only a cell",
-        "q5o2": "Only wires",
-        "q5o3": "A complete closed circuit",
-        "q5o4": "Only a switch"
-      },
-      "header": {
-        "title": "Practice Exercise",
-        "subtitle": "Answer the following questions to test your understanding."
-      },
-      "summary": {
-        "title": "Practice Complete!",
-        "excellent": "Excellent Work!",
-        "good": "Good Job!",
-        "keepPracticing": "Keep Practicing!",
-        "totalScore": "Total Score",
-        "scoreLine": "You got {{correct}} out of {{total}} questions correct ({{percentage}}%)",
-        "exerciseCount": "You completed {{count}} exercises",
-        "restart": "Restart Practice",
-        "backToLearn": "Back to Learning"
-      },
-      "questions": {
-        "p1": {
-          "question": "Which circuit diagram shows a complete, working circuit?",
-          "explanation": "A complete circuit must form a closed loop from the positive terminal of the cell, through components, and back to the negative terminal.",
-          "hint": "Look for a circuit that forms a complete loop without any breaks."
-        },
-        "p2": {
-          "question": "In which circuit is the LED connected with correct polarity?",
-          "explanation": "LEDs have polarity. The positive terminal (anode) should connect to the positive terminal of the battery, and the negative terminal (cathode) to the negative terminal.",
-          "hint": "Remember: LED anode (long leg) connects to positive, cathode (short leg) connects to negative."
-        },
-        "p3": {
-          "question": "Why won't the lamp light up in this circuit?",
-          "explanation": "The switch is open, which breaks the circuit. No current can flow when the switch is open, so the lamp won't light.",
-          "hint": "Check the position of the switch - is it allowing current to flow?"
-        },
-        "p4": {
-          "question": "Which terminal of the cell is positive?",
-          "explanation": "In a cell symbol, the longer line represents the positive terminal, and the shorter line represents the negative terminal.",
-          "hint": "Look at the lengths of the lines in the cell symbol."
-        },
-        "p5": {
-          "question": "In which direction does current flow from the battery?",
-          "explanation": "Current flows from the positive terminal of the battery, through the circuit components, and back to the negative terminal.",
-          "hint": "Current flows from positive to negative terminal through the circuit."
-        }
-      },
-      "svg": {
-        "positive": "+",
-        "negative": "-",
-        "switchOn": "ON",
-        "switchOff": "OFF",
-        "longLine": "Long line",
-        "shortLine": "Short line",
-        "currentFlow": "Current Flow"
-      },
-      "ui": {
-        "selectInstruction": "Select the correct answer from the options below.",
-        "showHint": "Show Hint",
-        "hideHint": "Hide Hint",
-        "checkAnswer": "Check Answer",
-        "selectPrompt": "Please select an answer first",
-        "correct": "Correct",
-        "wrong": "Wrong",
-        "correctTitle": "Correct!",
-        "incorrectTitle": "Not quite right",
-        "previous": "Previous",
-        "next": "Next",
-        "footer": "Take your time to understand each concept before moving to the next question."
-      }
-    },
-    "nav": {
-      "logo": "Circuits",
-      "learn": "Learn",
-      "practice": "Practice",
-      "assess": "Assess",
-      "applications": "Real World Applications",
-      "tabs": {
-        "applications": "Real World Applications"
-      }
-    },
+  "en": {
     "language": {
       "en": "English",
       "hi": "Hindi",
       "gu": "Gujarati",
-      "selectorLabel": "Select Language"
+      "selectorLabel": "Choose language"
     },
-    "component": {
-      "cell": "Electric Cell",
-      "battery": "Battery",
-      "lamp": "Lamp",
-      "led": "LED",
-      "switch": "Switch",
-      "wire": "Wire",
-      "on": "ON",
-      "off": "OFF"
-    },
-    "learnSymbols": {
-      "header": {
-        "title": "Circuit Component Symbols",
-        "subtitle": "Learn the standard symbols used in circuit diagrams"
-      },
-      "example": {
-        "title": "Complete Circuit Example",
-        "batteryLabel": "Battery",
-        "currentFlow": "Current Flow",
-        "circuitHeading": "Complete Circuit:",
-        "circuitExplanation": "This diagram shows a complete circuit with a battery (power source), switch (control), and lamp (load). When the switch is closed, current flows from the positive terminal, through the switch and lamp, and back to the negative terminal, causing the lamp to light up."
-      },
-      "categories": {
-        "power": "Power Source",
-        "output": "Output Device",
-        "control": "Control Device",
-        "conductor": "Conductor"
-      },
-      "aria": {
-        "page": "Circuit component symbols learning page",
-        "symbolsGrid": "Grid of circuit component symbols",
-        "symbolPreview": "Preview of {component} symbol"
+    "nav": {
+      "logo": "Conduction of Heat",
+      "tabs": {
+        "learn": "Learn",
+        "practice": "Practice",
+        "applications": "Real World Applications"
       }
-    },
-    "realworld": {
-      "cooking": "Cooking & Heating",
-      "desc": {
-        "cooking": "Electric stoves, ovens, and appliances use electrical circuits to generate heat for cooking.",
-        "lighting": "Light bulbs and LED lights convert electrical energy into light through circuit connections.",
-        "transportation": "Electric vehicles use complex circuits to power motors and control systems.",
-        "heating": "Heaters and air conditioners use circuits to regulate temperature.",
-        "entertainment": "Televisions, computers, and gaming consoles rely on circuits for power and signal processing.",
-        "communication": "Phones, routers, and communication devices use circuits to transmit and receive signals."
-      },
-      "lighting": "Lighting",
-      "transportation": "Transportation",
-      "heating": "Heating & Cooling",
-      "entertainment": "Entertainment",
-      "communication": "Communication",
-      "usageCategories": "Usage Categories",
-      "example": {
-        "cooking": {
-          "stove": "Electric Stove",
-          "microwave": "Microwave Oven",
-          "kettle": "Electric Kettle",
-          "toaster": "Toaster"
-        },
-        "lighting": {
-          "bulbs": "Light Bulbs",
-          "street": "Street Lights",
-          "flashlight": "Flashlight",
-          "lamp": "Table Lamp"
-        },
-        "transportation": {
-          "cars": "Electric Cars",
-          "trains": "Electric Trains",
-          "trams": "Trams",
-          "ebikes": "E-Bikes"
-        },
-        "heating": {
-          "ac": "Air Conditioner",
-          "heater": "Electric Heater",
-          "blanket": "Electric Blanket",
-          "fan": "Electric Fan"
-        },
-        "entertainment": {
-          "tv": "Television",
-          "computer": "Computer",
-          "console": "Gaming Console",
-          "speakers": "Speakers"
-        },
-        "communication": {
-          "phones": "Mobile Phones",
-          "router": "Wi-Fi Router",
-          "radio": "Radio",
-          "satellite": "Satellite"
-        }
-      }
-    },
-    "torch": {
-      "observe": {
-        "title": "Observe the Torch",
-        "clickTorch": "Click the torch to turn it on/off",
-        "lampGlowing": "The lamp is glowing!",
-        "lampNotGlowing": "The lamp is not glowing.",
-        "whatNotice": "What do you notice?",
-        "definition": "A torchlight works when all its parts are connected properly. When you turn on the switch, electric current flows from the cells through the wires to the lamp, making it glow.",
-        "nextParts": "Next: Learn about Parts"
-      },
-      "parts": {
-        "title": "Parts of a Torch",
-        "lamp": "Lamp",
-        "switch": "Switch",
-        "cells": "Cells",
-        "wires": "Wires",
-        "lampCard": "Lamp",
-        "lampDesc": "Produces light",
-        "switchCard": "Switch",
-        "switchDesc": "Controls current flow",
-        "cellCard": "Cells",
-        "cellDesc": "Provides electricity",
-        "wiresCard": "Wires",
-        "wiresDesc": "Connects components",
-        "back": "Back"
-      }
-    },
-    "common": {
-      "examples": "Examples",
-      "next": "Next",
-      "previous": "Previous",
-      "submit": "Submit",
-      "reset": "Reset",
-      "continue": "Continue",
-      "gotIt": "Got it!",
-      "hint": "Hint",
-      "correct": "Correct",
-      "incorrect": "Incorrect",
-      "processing": "Processing...",
-      "yourAnswer": "Your Answer:",
-      "answerPlaceholder": "Type your answer here...",
-      "invalidMode": "Invalid mode",
-      "mistakesTitle": "Common Mistakes to Avoid",
-      "status": {
-        "incomplete": "Incomplete Circuit",
-        "complete": "Circuit Complete",
-        "flowing": "Current Flowing"
-      }
-    },
-    "title": {
-      "circuits": "Electrical Circuits"
-    },
-    "electricity": {
-      "lessons": "Lessons",
-      "lesson": {
-        "cell": "Cell",
-        "battery": "Battery",
-        "lamps": "Lamps",
-        "circuit": "Circuit",
-        "switch": "Switch"
-      },
-      "cell": {
-        "title": "Electric Cell",
-        "icon": "⚡",
-        "definition": "An electric cell is a portable source of electrical energy. It has two terminals: positive (+) and negative (-).",
-        "keyPoints": "Key Points",
-        "point1": "Portable source of electricity",
-        "point2": "Has 2 terminals: Positive (+) and Negative (-)",
-        "point3": "Metal cap = Positive terminal",
-        "point4": "Flat disc = Negative terminal",
-        "point5": "Provides 1.5V of electrical energy",
-        "point6": "Used in torches, remote controls, and clocks"
-      },
-      "metalCap": "Metal Cap",
-      "flatDisc": "Flat Disc",
-      "battery": {
-        "title": "Battery",
-        "icon": "🔋",
-        "definition": "A battery is a combination of two or more electric cells connected together in series.",
-        "keyPoints": "Key Points",
-        "point1": "Made of 2 or more cells connected together",
-        "point2": "Cells connected positive to negative",
-        "point3": "Provides more energy than a single cell",
-        "point4": "Used in torches, toys, and portable devices",
-        "point5": "More cells = More voltage",
-        "point6": "Must be connected correctly to work",
-        "cell": "Cell {number}",
-        "multipleCells": "Multiple Cells = Battery",
-        "totalVoltage": "Total Voltage = Sum of all cells",
-        "label": "Battery"
-      },
-      "lamps": {
-        "title": "Electric Lamps",
-        "icon": "💡",
-        "definition": "Electric lamps produce light when electric current passes through them.",
-        "keyPoints": "Key Points",
-        "point1": "Incandescent lamps have a filament that glows",
-        "point2": "LED lamps are more efficient and last longer",
-        "point3": "Filament gets hot and produces light",
-        "point4": "LEDs produce light without getting very hot",
-        "point5": "Both need electricity to work",
-        "point6": "LEDs have positive and negative terminals"
-      },
-      "lamp": {
-        "filamentHeats": "Filament heats up",
-        "andGlows": "and glows",
-        "tungsten": "Tungsten",
-        "filament": "Filament"
-      },
-      "circuit": {
-        "title": "Electric Circuit",
-        "icon": "🔌",
-        "definition": "An electric circuit is a complete path for electric current to flow from positive terminal through the device back to negative terminal.",
-        "keyPoints": "Key Points",
-        "point1": "Must be a complete closed path",
-        "point2": "Current flows from positive to negative",
-        "point3": "All components must be connected properly",
-        "point4": "No gaps or breaks in the circuit",
-        "point5": "Switch can open or close the circuit",
-        "point6": "Lamp glows only when circuit is complete",
-        "bulb": "Bulb",
-        "currentFlow": "Current Flow",
-        "completeCircuit": "Complete Circuit - Current Can Flow"
-      },
-      "switch": {
-        "title": "Switch",
-        "icon": "🔘",
-        "definition": "A switch is used to complete or break an electric circuit.",
-        "keyPoints": "Key Points",
-        "point1": "Controls the flow of electricity",
-        "point2": "ON = Circuit closed, current flows",
-        "point3": "OFF = Circuit open, no current",
-        "point4": "Can be placed anywhere in the circuit",
-        "point5": "Makes devices safe to use",
-        "point6": "Prevents wastage of electricity",
-        "on": "Switch ON",
-        "off": "Switch OFF",
-        "bulbOn": "Bulb ON",
-        "bulbOff": "Bulb OFF",
-        "gap": "Gap",
-        "whenOn": "When switch is ON, circuit is complete and bulb glows",
-        "whenOff": "When switch is OFF, circuit is broken and bulb does not glow"
-      },
-      "definition": "Definition"
-    },
-    "demo": {
-      "stepType": {
-        "explanation": "explanation",
-        "visualization": "visualization",
-        "interaction": "interaction"
-      },
-      "unknownType": "Unknown step type",
-      "intro": {
-        "title": "Introduction to Electric Circuits",
-        "desc": "Learn how a torchlight works with electric cells and a lamp",
-        "note": "A complete circuit is needed for current to flow"
-      },
-      "cell": {
-        "title": "Electric Cell",
-        "desc": "An electric cell has two terminals: positive (+) and negative (-)"
-      },
-      "complete": {
-        "title": "Complete Circuit",
-        "desc": "Connect cell, wire, switch, and lamp to make a complete circuit",
-        "hint": "Click the switch to close the circuit"
-      }
-    },
-    "objective": {
-      "1": "Understand how electrical circuits work",
-      "2": "Identify circuit components",
-      "3": "Build complete circuits",
-      "4": "Distinguish conductors and insulators"
     },
     "conduction": {
+      "header": {
+        "badge": "Topic 7.1 - Interactive",
+        "title": "Conduction of Heat",
+        "subtitle": "Drag, Drop & Discover How Heat Travels!"
+      },
+      "intro": {
+        "title": "Why Are Cooking Utensils Made of Metal?",
+        "para1": "Pema observed her grandmother cooking thukpa in a large metal pan. She wondered: \"Why are cooking utensils made of metals?\"",
+        "para2": "Let's discover the answer through interactive experiments!"
+      },
+      "activity": {
+        "sectionTitle": "Interactive: Heat Transfer Experiment",
+        "safetyTitle": "⚠️ SAFETY CAUTION",
+        "safetyText": "This activity should be carried out under the supervision of a teacher or an adult.",
+        "simulationTitle": "Interactive Simulation",
+        "controls": {
+          "start": "Start Heating",
+          "reset": "Reset",
+          "heatIntensity": "Heat Intensity:"
+        },
+        "heatFlowDirection": "Heat Flow Direction →",
+        "pinCard": {
+          "pinLabel": "Pin",
+          "order": "Order: {order}",
+          "fallen": "✓ Fallen",
+          "falling": "⏳ Falling...",
+          "waiting": "Waiting"
+        },
+        "observations": {
+          "title": "What Did We Observe?",
+          "item1Title": "Pin I falls FIRST",
+          "item1Body": "It's closest to the heat source, so wax melts first",
+          "item2Title": "Pins fall in ORDER (I → II → III → IV)",
+          "item2Body": "Heat travels along the metal strip progressively",
+          "item3Title": "This proves CONDUCTION!",
+          "item3Body": "Heat transfers from hot end to cold end through the metal"
+        },
+        "table": {
+          "title": "Table 7.1: Observation Record",
+          "pin": "Pin",
+          "order": "Order",
+          "status": "Status",
+          "reason": "Reason",
+          "fallen": "✓ Fallen",
+          "notFallen": "Not fallen",
+          "reasonClosest": "Closest to heat source",
+          "reasonProgress": "Heat reaches here progressively",
+          "reasonFarthest": "Farthest from heat source"
+        }
+      },
+      "testing": {
+        "sectionTitle": "Test Materials: Conductor or Insulator?",
+        "callout": "Click on materials below to test them, or drag them to the test zone!",
+        "zoneTitle": "Heat Transfer Testing Zone",
+        "dropHere": "Drop Here to Test",
+        "heatSource": "Heat Source",
+        "heatPasses": "Heat Passes!",
+        "heatBlocked": "Heat Blocked!",
+        "testResult": {
+          "title": "Test Result",
+          "material": "Material:",
+          "type": "Type:",
+          "good": "⚡ Good Conductor",
+          "poor": "🛡️ Poor Conductor",
+          "heatPasses": "✓ Heat Passes Through",
+          "heatStops": "✗ Heat is Blocked",
+          "goodDesc": "This material allows heat to flow easily, making it useful for cooking utensils.",
+          "poorDesc": "This material blocks heat flow, making it good for handles and insulation."
+        },
+        "quickTest": "Quick Test:",
+        "tested": "Tested ({count}/{total}):"
+      },
       "materials": {
         "steel": "Steel",
         "copper": "Copper",
@@ -1216,86 +95,406 @@
         "plastic": "Plastic",
         "glass": "Glass"
       },
-      "activity": {
-        "sectionTitle": "Heat Conduction Activity",
-        "safetyTitle": "Safety Reminder",
-        "safetyText": "This is a simulation. In real experiments, always handle heat sources with care and adult supervision.",
-        "simulationTitle": "Heat Conduction Simulation",
-        "controls": {
-          "start": "Start Heating",
-          "reset": "Reset",
-          "heatIntensity": "Heat Intensity"
-        },
-        "heatFlowDirection": "Heat Flow Direction",
-        "pinCard": {
-          "pinLabel": "Pin",
-          "order": "Order: {{order}}",
-          "fallen": "Fallen",
-          "falling": "Falling...",
-          "waiting": "Waiting"
-        },
-        "observations": {
-          "title": "Observations",
-          "item1Title": "Heat travels through the metal strip",
-          "item1Body": "As heat is applied, it moves from the heat source along the metal strip, causing the wax to melt.",
-          "item2Title": "Pins fall in order of distance",
-          "item2Body": "The pin closest to the heat source falls first, followed by pins further away, showing heat conduction.",
-          "item3Title": "Metal is a good conductor",
-          "item3Body": "This demonstrates that metals conduct heat well, allowing thermal energy to flow through them."
-        },
-        "table": {
-          "title": "Pin Fall Analysis",
-          "pin": "Pin",
-          "order": "Order",
-          "status": "Status",
-          "reason": "Reason",
-          "fallen": "Fallen",
-          "notFallen": "Not Fallen",
-          "reasonClosest": "Closest to heat source",
-          "reasonFarthest": "Farthest from heat source",
-          "reasonProgress": "Heat reaches progressively"
-        }
+      "takeaways": {
+        "title": "Key Takeaways",
+        "conductionTitle": "Conduction",
+        "conductionPoints": [
+          "Heat transfer from hot to cold",
+          "Particles pass heat to neighbors",
+          "Particles stay in positions",
+          "Main process in solids"
+        ],
+        "goodTitle": "Good Conductors",
+        "goodPoints": [
+          "Metals: Steel, Copper, Aluminum",
+          "Allow heat to pass easily",
+          "Used for cooking utensils",
+          "Transfer heat quickly"
+        ],
+        "poorTitle": "Poor Conductors",
+        "poorPoints": [
+          "Wood, Glass, Plastic",
+          "Block heat flow",
+          "Used for handles, cups",
+          "Keep heat inside/outside"
+        ],
+        "footer": "In conduction, heat travels but particles don't move from their positions!"
       },
-      "testing": {
-        "sectionTitle": "Material Testing",
-        "callout": "Drag materials to the test zone to see if they conduct heat",
-        "zoneTitle": "Test Zone",
-        "dropHere": "Drop Material Here",
-        "heatSource": "Heat Source",
-        "heatPasses": "Heat Passes Through",
-        "heatBlocked": "Heat Blocked",
-        "testResult": {
-          "title": "Test Result",
-          "material": "Material",
-          "type": "Type",
-          "good": "Good Conductor",
-          "poor": "Poor Conductor (Insulator)",
-          "heatPasses": "Heat passes through this material",
-          "heatStops": "Heat does not pass through this material",
-          "goodDesc": "This material allows heat to flow through it easily.",
-          "poorDesc": "This material prevents heat from flowing through it."
+      "practice": {
+        "ui": {
+          "questionLabel": "Question {current} of {total}",
+          "difficulty": {
+            "easy": "EASY",
+            "medium": "MEDIUM",
+            "hard": "HARD"
+          },
+          "pointsLabel": "{points} pts",
+          "fillBlankHint": "Select the correct option to fill in the blank",
+          "matchHint": "Drag or click to match each item with its category:",
+          "materials": "Materials:",
+          "categories": "Categories:",
+          "selectCategory": "Select category...",
+          "orderingHint": "Use the arrows to arrange items in the correct order:",
+          "classifyHint": "Classify each material:",
+          "goodConductor": "Good Conductor",
+          "poorConductor": "Poor Conductor",
+          "goodConductorLabel": "⚡ Good Conductor",
+          "poorConductorLabel": "🛡️ Poor Conductor",
+          "noItemsClassified": "No items classified yet",
+          "noItemsMatched": "No items matched yet",
+          "previousButton": "← Previous",
+          "submitButton": "Submit Answer",
+          "nextButton": "Next Question",
+          "tryAgainButton": "Try Again",
+          "completeTitle": "Practice Complete! 🎉",
+          "scoreSummary": "You scored {score} out of {total} points",
+          "questionsAnswered": "Questions Answered",
+          "scorePercentage": "Score Percentage",
+          "gradeLabel": "Grade",
+          "startOverButton": "Start Over",
+          "correctTitle": "🎉 Correct!",
+          "incorrectTitle": "❌ Incorrect",
+          "correctAnswerLabel": "Correct Answer:",
+          "progressLabel": "Progress",
+          "progressQuestions": "questions",
+          "headerTitle": "Practice Mode",
+          "headerSubtitle": "Topic 7.1: Conduction of Heat",
+          "noQuestionsTitle": "Practice questions coming soon",
+          "noQuestionsBody": "Practice questions are not yet configured for this language. Please switch to English or try again later."
         },
-        "quickTest": "Quick Test",
-        "tested": "Tested {{count}} of {{total}} materials"
+        "questions": [
+          {
+            "id": 1,
+            "type": "mcq",
+            "question": "What is the process of heat transfer from the hotter part to the colder part of an object called?",
+            "options": [
+              "Convection",
+              "Conduction",
+              "Radiation",
+              "Evaporation"
+            ],
+            "correctAnswer": "Conduction",
+            "explanation": "Conduction is the process where heat transfers from the hotter part to the colder part through direct contact. Particles pass heat to neighboring particles without moving from their positions.",
+            "difficulty": "easy",
+            "points": 10
+          },
+          {
+            "id": 2,
+            "type": "mcq",
+            "question": "In Activity 7.1, which pin falls FIRST when the metal strip is heated?",
+            "options": [
+              "Pin IV (farthest from heat)",
+              "Pin II",
+              "Pin III",
+              "Pin I (closest to heat)"
+            ],
+            "correctAnswer": "Pin I (closest to heat)",
+            "explanation": "Pin I falls first because it is closest to the heat source. The heat travels along the metal strip and reaches Pin I first, melting the wax that holds it.",
+            "difficulty": "easy",
+            "points": 10
+          },
+          {
+            "id": 3,
+            "type": "mcq",
+            "question": "Why are cooking utensils made of metals?",
+            "options": [
+              "Metals are cheap",
+              "Metals are good conductors of heat",
+              "Metals are shiny",
+              "Metals are light"
+            ],
+            "correctAnswer": "Metals are good conductors of heat",
+            "explanation": "Metals allow heat to pass through them easily, making them excellent for cooking as heat from the stove quickly reaches the food.",
+            "difficulty": "easy",
+            "points": 10
+          },
+          {
+            "id": 4,
+            "type": "mcq",
+            "question": "Which of the following is a POOR conductor of heat?",
+            "options": [
+              "Copper",
+              "Aluminum",
+              "Wood",
+              "Iron"
+            ],
+            "correctAnswer": "Wood",
+            "explanation": "Wood is a poor conductor (insulator) of heat. It does not allow heat to pass through easily, which is why wooden handles are used for utensils.",
+            "difficulty": "easy",
+            "points": 10
+          },
+          {
+            "id": 5,
+            "type": "mcq",
+            "question": "In the conduction process, what happens to the particles?",
+            "options": [
+              "Particles move from hot to cold region",
+              "Particles stay in their positions and pass heat to neighbors",
+              "Particles evaporate",
+              "Particles cool down"
+            ],
+            "correctAnswer": "Particles stay in their positions and pass heat to neighbors",
+            "explanation": "During conduction, particles vibrate and transfer energy to neighboring particles but do NOT move from their positions. This is what makes conduction different from convection.",
+            "difficulty": "medium",
+            "points": 15
+          },
+          {
+            "id": 6,
+            "type": "mcq",
+            "question": "Why does tea or coffee stay hot longer in a porcelain cup than in a metal cup?",
+            "options": [
+              "Porcelain is prettier",
+              "Porcelain is a poor conductor of heat",
+              "Porcelain is a good conductor of heat",
+              "Metal cools the drink"
+            ],
+            "correctAnswer": "Porcelain is a poor conductor of heat",
+            "explanation": "Porcelain (clay) is a poor conductor of heat, so it does not allow heat to escape quickly from the beverage. Metal, being a good conductor, would quickly transfer heat away.",
+            "difficulty": "medium",
+            "points": 15
+          },
+          {
+            "id": 7,
+            "type": "mcq",
+            "question": "What material is used for the handles of cooking utensils to prevent burns?",
+            "options": [
+              "Steel",
+              "Copper",
+              "Wood or plastic (insulators)",
+              "Aluminum"
+            ],
+            "correctAnswer": "Wood or plastic (insulators)",
+            "explanation": "Handles are made of insulators like wood or plastic because they are poor conductors of heat and prevent the handle from getting too hot to hold.",
+            "difficulty": "medium",
+            "points": 15
+          },
+          {
+            "id": 8,
+            "type": "mcq",
+            "question": "Why do we prefer wearing woolen clothes in winter?",
+            "options": [
+              "Wool generates heat",
+              "Wool traps air which is a poor conductor of heat",
+              "Wool is waterproof",
+              "Wool is heavy"
+            ],
+            "correctAnswer": "Wool traps air which is a poor conductor of heat",
+            "explanation": "Woolen fabric has air pockets that trap air. Since air is a very poor conductor of heat, it prevents our body heat from escaping, keeping us warm.",
+            "difficulty": "medium",
+            "points": 15
+          },
+          {
+            "id": 9,
+            "type": "true-false",
+            "question": "In solids, heat transfer takes place mainly through the process of conduction.",
+            "options": [
+              "True",
+              "False"
+            ],
+            "correctAnswer": "True",
+            "explanation": "Correct! In solids, particles are closely packed and heat transfers mainly through conduction as particles pass energy to their neighbors.",
+            "difficulty": "easy",
+            "points": 10
+          },
+          {
+            "id": 10,
+            "type": "true-false",
+            "question": "Glass and wood are good conductors of heat.",
+            "options": [
+              "True",
+              "False"
+            ],
+            "correctAnswer": "False",
+            "explanation": "False! Glass and wood are poor conductors (insulators) of heat. They do not allow heat to pass through easily.",
+            "difficulty": "easy",
+            "points": 10
+          },
+          {
+            "id": 11,
+            "type": "true-false",
+            "question": "During conduction, particles move from the hot region to the cold region.",
+            "options": [
+              "True",
+              "False"
+            ],
+            "correctAnswer": "False",
+            "explanation": "False! During conduction, particles do NOT move from their positions. They vibrate and pass energy to neighboring particles while staying in place.",
+            "difficulty": "medium",
+            "points": 15
+          },
+          {
+            "id": 12,
+            "type": "true-false",
+            "question": "Two thin blankets provide more warmth than one thick blanket because air trapped between them acts as an insulator.",
+            "options": [
+              "True",
+              "False"
+            ],
+            "correctAnswer": "True",
+            "explanation": "True! The air layer between two blankets acts as an insulator (poor conductor), preventing heat loss and providing better warmth.",
+            "difficulty": "medium",
+            "points": 15
+          },
+          {
+            "id": 13,
+            "type": "fill-blank",
+            "question": "Materials that allow heat to pass through them easily are called _____ of heat.",
+            "options": [
+              "good conductors",
+              "poor conductors",
+              "insulators",
+              "radiators"
+            ],
+            "correctAnswer": "good conductors",
+            "explanation": "Good conductors allow heat to pass through easily. Metals like copper, aluminum, and iron are good conductors of heat.",
+            "difficulty": "easy",
+            "points": 10
+          },
+          {
+            "id": 14,
+            "type": "fill-blank",
+            "question": "Materials that do NOT allow heat to pass through them easily are called _____ of heat.",
+            "options": [
+              "good conductors",
+              "poor conductors",
+              "metals",
+              "solids"
+            ],
+            "correctAnswer": "poor conductors",
+            "explanation": "Poor conductors (also called insulators) do not allow heat to pass easily. Examples include wood, plastic, glass, and air.",
+            "difficulty": "easy",
+            "points": 10
+          },
+          {
+            "id": 15,
+            "type": "fill-blank",
+            "question": "_____ is a very poor conductor of heat, which is why it is trapped in woolen clothes to keep us warm.",
+            "options": [
+              "Water",
+              "Metal",
+              "Air",
+              "Glass"
+            ],
+            "correctAnswer": "Air",
+            "explanation": "Air is a very poor conductor of heat. Woolen fabric traps air in its pores, which prevents heat loss from our body.",
+            "difficulty": "medium",
+            "points": 15
+          },
+          {
+            "id": 16,
+            "type": "match",
+            "question": "Match the materials with their heat conduction property:",
+            "options": [
+              "Steel|Good Conductor",
+              "Wood|Poor Conductor",
+              "Copper|Good Conductor",
+              "Plastic|Poor Conductor"
+            ],
+            "correctAnswer": [
+              "Steel|Good Conductor",
+              "Wood|Poor Conductor",
+              "Copper|Good Conductor",
+              "Plastic|Poor Conductor"
+            ],
+            "explanation": "Metals (Steel, Copper) are good conductors. Non-metals (Wood, Plastic) are poor conductors/insulators.",
+            "difficulty": "medium",
+            "points": 20
+          },
+          {
+            "id": 17,
+            "type": "ordering",
+            "question": "Arrange the pins in the ORDER they fall when the metal strip is heated (from FIRST to LAST):",
+            "options": [
+              "Pin IV",
+              "Pin I",
+              "Pin III",
+              "Pin II"
+            ],
+            "correctAnswer": [
+              "Pin I",
+              "Pin II",
+              "Pin III",
+              "Pin IV"
+            ],
+            "explanation": "Pins fall in order from closest to the heat source to farthest: Pin I (closest) → Pin II → Pin III → Pin IV (farthest).",
+            "difficulty": "medium",
+            "points": 20
+          },
+          {
+            "id": 18,
+            "type": "classify",
+            "question": "Classify the following materials as Good Conductors or Poor Conductors (Insulators):",
+            "options": [
+              "Iron",
+              "Glass",
+              "Aluminum",
+              "Air",
+              "Rubber",
+              "Brass"
+            ],
+            "correctAnswer": [
+              "Iron|Good Conductor",
+              "Glass|Poor Conductor",
+              "Aluminum|Good Conductor",
+              "Air|Poor Conductor",
+              "Rubber|Poor Conductor",
+              "Brass|Good Conductor"
+            ],
+            "explanation": "Metals (Iron, Aluminum, Brass) are good conductors. Non-metals and air (Glass, Air, Rubber) are poor conductors.",
+            "difficulty": "hard",
+            "points": 25
+          },
+          {
+            "id": 19,
+            "type": "mcq",
+            "question": "Why are houses in cold regions built with hollow bricks containing air?",
+            "options": [
+              "To make them lighter",
+              "Air in hollow bricks acts as an insulator preventing heat loss",
+              "To save material costs",
+              "Hollow bricks are stronger"
+            ],
+            "correctAnswer": "Air in hollow bricks acts as an insulator preventing heat loss",
+            "explanation": "Hollow bricks trap air inside. Since air is a poor conductor of heat, it prevents heat from escaping the house in winter and keeps it cool in summer.",
+            "difficulty": "hard",
+            "points": 20
+          },
+          {
+            "id": 20,
+            "type": "mcq",
+            "question": "In the Himalayan regions, houses have walls made of two wooden layers with mud between them. Why?",
+            "options": [
+              "For decoration",
+              "Wood and mud are poor conductors that prevent heat loss",
+              "To make walls stronger",
+              "Wood is easily available"
+            ],
+            "correctAnswer": "Wood and mud are poor conductors that prevent heat loss",
+            "explanation": "Both wood and mud are poor conductors of heat. This double-layer construction with insulating materials helps keep houses warm in extremely cold climates.",
+            "difficulty": "hard",
+            "points": 20
+          }
+        ]
       },
       "realWorld": {
-        "filterTitle": "Filter by Category",
+        "filterTitle": "Filter by Category:",
+        "allApplications": "All Applications",
         "showing": "Showing",
         "application": "application",
         "applicationsPlural": "applications",
-        "realLifeExample": "Real Life Example",
-        "howItWorks": "How It Works",
-        "goodConductorUsed": "Good Conductor Used",
-        "insulatorUsed": "Insulator Used",
-        "scienceBehind": "Science Behind It",
-        "benefitsImpact": "Benefits & Impact",
+        "howItWorks": "How It Works:",
+        "goodConductorUsed": "⚡ Good Conductor Used:",
+        "insulatorUsed": "🛡️ Insulator Used:",
+        "scienceBehind": "🔬 The Science Behind It:",
+        "realLifeExample": "🌟 Real-Life Example:",
+        "benefitsImpact": "✨ Benefits & Impact:",
         "difficulty": {
-          "everyday": "Everyday",
+          "everyday": "Everyday Life",
           "industrial": "Industrial",
-          "advanced": "Advanced"
+          "advanced": "Advanced Tech"
         },
         "categories": {
-          "all": "All Categories",
+          "all": "All Applications",
           "Kitchen": "Kitchen",
           "Clothing": "Clothing",
           "Building": "Building",
@@ -1308,326 +507,1707 @@
         "applications": [
           {
             "id": 1,
-            "title": "Cooking Pans",
+            "title": "Cooking Utensils & Cookware",
             "category": "Kitchen",
-            "description": "Metal pans conduct heat from the stove to cook food evenly.",
-            "howItWorks": "When you place a metal pan on a hot stove, heat flows from the burner through the metal base to the food. Metals like aluminum and copper are excellent conductors, spreading heat quickly and evenly across the pan's surface.",
-            "conductor": "Aluminum, Copper, Stainless Steel",
-            "insulator": "Plastic handles, Wooden handles",
-            "scienceBehind": "Metals have free electrons that can move easily, allowing thermal energy to transfer rapidly through the material. This is why metal pans heat up quickly and distribute heat evenly.",
-            "realExample": "Non-stick frying pans with aluminum base and plastic handles",
+            "description": "Pots, pans, and cooking utensils use both conductors and insulators to cook food efficiently while protecting our hands.",
+            "howItWorks": "The metal body (copper, aluminum, or steel) conducts heat from the stove to the food quickly and evenly. The handle is made of wood or plastic (insulators) to stay cool and safe to hold.",
+            "conductor": "Metal body (Copper, Aluminum, Stainless Steel)",
+            "insulator": "Wooden or plastic handles, silicone grips",
+            "scienceBehind": "Metals have free electrons that can move easily, allowing rapid heat transfer through conduction. Non-metals like wood and plastic have tightly bound electrons, blocking heat flow and keeping handles cool.",
+            "realExample": "A typical frying pan has an aluminum or steel base that heats up quickly when placed on a stove. The heat conducts through the metal to cook eggs or vegetables. Meanwhile, the bakelite or wooden handle remains cool enough to hold with bare hands.",
             "benefits": [
-              "Efficient cooking with even heat distribution",
-              "Food cooks faster and more uniformly",
-              "Energy efficient - less heat wasted"
+              "Fast and even cooking",
+              "Energy efficient - less cooking time",
+              "Safe to handle during cooking",
+              "Food gets cooked uniformly",
+              "Prevents burns and accidents"
             ],
             "difficulty": "everyday"
           },
           {
             "id": 2,
-            "title": "Thermal Clothing",
-            "category": "Clothing",
-            "description": "Clothing uses insulating materials to keep body heat in during cold weather.",
-            "howItWorks": "Insulating materials like wool, down, and synthetic fibers trap air pockets that prevent body heat from escaping. These materials are poor conductors, so they slow down heat loss from your body to the cold environment.",
-            "conductor": "Metal zippers (minimal contact)",
-            "insulator": "Wool, Down feathers, Synthetic fibers",
-            "scienceBehind": "Insulators have tightly bound molecules that don't transfer heat well. Air pockets in insulating materials create barriers that reduce heat conduction, keeping you warm.",
-            "realExample": "Winter jackets with down insulation and wool sweaters",
+            "title": "Thermos Flask (Vacuum Flask)",
+            "category": "Kitchen",
+            "description": "Keeps hot liquids hot and cold liquids cold for hours using insulation principles.",
+            "howItWorks": "Double-walled container with vacuum (no air) between walls. The inner wall is reflective. Vacuum prevents conduction, reflection prevents radiation, and sealed design prevents convection.",
+            "conductor": "Inner metal container for holding liquid",
+            "insulator": "Vacuum between walls (best insulator), plastic/cork stopper, outer protective case",
+            "scienceBehind": "Heat transfer needs a medium (particles) for conduction. In a vacuum, there are no particles, so heat cannot travel by conduction. The reflective coating prevents heat loss by radiation. This triple-protection keeps temperature constant.",
+            "realExample": "Pour hot tea at 80°C into a good thermos flask. After 6 hours, the tea is still around 70-75°C! The vacuum between walls stops heat from escaping through conduction, keeping your beverage hot all day.",
             "benefits": [
-              "Keeps body warm in cold conditions",
-              "Reduces energy needed for heating",
-              "Comfortable in various weather conditions"
+              "Keeps drinks hot for 12+ hours",
+              "Keeps cold drinks cold for 24+ hours",
+              "No external power needed",
+              "Portable and convenient",
+              "Saves energy (no reheating needed)"
             ],
             "difficulty": "everyday"
           },
           {
             "id": 3,
-            "title": "Building Insulation",
-            "category": "Building",
-            "description": "Homes use insulating materials in walls and roofs to maintain comfortable temperatures.",
-            "howItWorks": "Insulation materials like fiberglass, foam, and cellulose are placed in walls, attics, and roofs. These materials slow down heat transfer, keeping homes warm in winter and cool in summer by preventing heat from entering or escaping.",
-            "conductor": "Metal frames (minimal)",
-            "insulator": "Fiberglass, Foam board, Cellulose",
-            "scienceBehind": "Insulation works by trapping air in small pockets, creating barriers to heat flow. The trapped air has low thermal conductivity, significantly reducing heat transfer through walls and roofs.",
-            "realExample": "Fiberglass insulation in walls and spray foam in attics",
+            "title": "Winter Clothing - Woolen Sweaters",
+            "category": "Clothing",
+            "description": "Woolen clothes keep us warm in winter by trapping air, which is an excellent insulator.",
+            "howItWorks": "Wool fibers have a crimped, wavy structure that creates thousands of tiny air pockets. These pockets trap warm air close to your body. Since air is a very poor conductor of heat, it prevents body heat from escaping.",
+            "conductor": "None (that's the point!)",
+            "insulator": "Wool fibers and trapped air",
+            "scienceBehind": "Air molecules are far apart compared to solids. When particles are far apart, they cannot easily pass heat to each other through conduction. The trapped air in wool acts like a thermal barrier, with a thermal conductivity of only 0.024 W/mK.",
+            "realExample": "In Ladakh or Shimla during winter (-10°C), people wear woolen sweaters and shawls. The wool traps air heated by body temperature (37°C). This warm air layer insulates them from the cold outside air, keeping them comfortable.",
             "benefits": [
-              "Reduces heating and cooling costs",
-              "Maintains comfortable indoor temperature",
-              "Environmentally friendly - less energy consumption"
+              "Retains body heat effectively",
+              "Lightweight yet warm",
+              "Breathable - allows moisture to escape",
+              "Natural and sustainable material",
+              "Works even when slightly damp"
             ],
-            "difficulty": "industrial"
+            "difficulty": "everyday"
           },
           {
             "id": 4,
-            "title": "Heat Sinks in Electronics",
-            "category": "Appliances",
-            "description": "Metal heat sinks conduct heat away from electronic components to prevent overheating.",
-            "howItWorks": "Heat sinks are made of highly conductive metals like aluminum or copper. They attach to hot components (like computer processors) and use their large surface area and high thermal conductivity to quickly transfer heat away from the device into the surrounding air.",
-            "conductor": "Aluminum, Copper",
-            "insulator": "Plastic casing, Ceramic substrates",
-            "scienceBehind": "Metals conduct heat efficiently due to free electrons. Heat sinks maximize surface area with fins, allowing more air contact for better heat dissipation through convection.",
-            "realExample": "CPU heat sinks in computers and heat sinks in LED lights",
+            "title": "Double-Glazed Windows",
+            "category": "Building",
+            "description": "Two layers of glass with air gap between them provide excellent insulation for homes in cold climates.",
+            "howItWorks": "Two parallel glass panes separated by 6-20mm air gap (or inert gas like argon). The air/gas layer acts as an insulator, preventing heat from escaping in winter and entering in summer.",
+            "conductor": "Glass panes (but glass is only a moderate conductor)",
+            "insulator": "Air or argon gas trapped between panes",
+            "scienceBehind": "A single glass pane conducts heat quickly (thermal conductivity ~1.0 W/mK). Adding an air gap (0.024 W/mK) between two panes creates an insulating layer that dramatically reduces heat transfer. The air cannot circulate, so convection is also minimized.",
+            "realExample": "Modern apartments in Delhi, Mumbai, and Bangalore use double-glazed windows. In summer, they block outside heat (45°C) from entering, keeping rooms at 25°C with less AC. In winter (hill stations), they prevent indoor heat from escaping.",
             "benefits": [
-              "Prevents electronic component damage",
-              "Extends device lifespan",
-              "Maintains optimal performance"
+              "Reduces heating/cooling costs by 30-50%",
+              "Reduces outside noise significantly",
+              "Prevents condensation on windows",
+              "Increases property value",
+              "Environmentally friendly - less energy use"
             ],
-            "difficulty": "advanced"
+            "difficulty": "everyday"
           },
           {
             "id": 5,
-            "title": "Double-Pane Windows",
-            "category": "Architecture",
-            "description": "Windows with two glass panes separated by air or gas provide better insulation than single panes.",
-            "howItWorks": "Double-pane windows have two layers of glass with air or inert gas (like argon) between them. The air gap acts as an insulator, significantly reducing heat transfer. The glass itself also provides some insulation compared to metal frames.",
-            "conductor": "Metal window frames (minimal)",
-            "insulator": "Glass panes, Air gap, Inert gases (argon, krypton)",
-            "scienceBehind": "The air or gas between panes has low thermal conductivity. This creates a thermal barrier that slows heat conduction, keeping indoor temperatures stable regardless of outside weather.",
-            "realExample": "Energy-efficient windows in modern buildings",
+            "title": "Refrigerator Insulation",
+            "category": "Appliances",
+            "description": "Refrigerators use thick insulation to keep cold air inside and prevent warm air from entering.",
+            "howItWorks": "The walls of a refrigerator contain thick layers of polyurethane foam or fiberglass insulation. Door seals (rubber gaskets) prevent air leakage. This insulation keeps the cold air (2-4°C) inside separated from room temperature air (25-30°C).",
+            "conductor": "Metal cooling coils inside, metal outer body",
+            "insulator": "Polyurethane foam insulation (50-100mm thick), rubber door gaskets",
+            "scienceBehind": "Polyurethane foam has millions of tiny air bubbles, giving it very low thermal conductivity (0.02-0.03 W/mK). This means heat from outside takes a very long time to conduct through to the cold interior. The compressor only needs to run occasionally to maintain temperature.",
+            "realExample": "Open your refrigerator and feel the door - it's thick (5-8 cm). That thickness is insulation! Without it, the compressor would run continuously, consuming 10x more electricity. Good insulation keeps food fresh for days while using minimal power.",
             "benefits": [
-              "Reduces energy costs for heating and cooling",
-              "Prevents condensation",
-              "Improves comfort and reduces noise"
+              "Reduces electricity consumption by 40-60%",
+              "Maintains consistent temperature",
+              "Food stays fresh longer",
+              "Compressor lasts longer (less wear)",
+              "Lower electricity bills"
             ],
-            "difficulty": "industrial"
+            "difficulty": "everyday"
           },
           {
             "id": 6,
-            "title": "Firefighter Protective Gear",
-            "category": "Safety",
-            "description": "Firefighter suits use insulating materials to protect against extreme heat.",
-            "howItWorks": "Firefighter gear uses multiple layers of insulating materials like Nomex and Kevlar. These materials are poor conductors, creating a barrier that slows heat transfer from flames to the body, protecting firefighters from burns.",
-            "conductor": "Metal fasteners (minimal, protected)",
-            "insulator": "Nomex, Kevlar, Fire-resistant fabrics",
-            "scienceBehind": "Specialized insulating materials have high heat resistance and low thermal conductivity. They create multiple barriers that prevent heat from reaching the skin, even in extreme temperatures.",
-            "realExample": "Firefighter turnout gear with Nomex outer shell",
+            "title": "Igloo - Snow Houses of Arctic",
+            "category": "Architecture",
+            "description": "Igloos built from snow blocks provide excellent insulation in temperatures as low as -40°C.",
+            "howItWorks": "Compressed snow blocks contain trapped air between ice crystals. The dome shape minimizes surface area. Body heat and sometimes a small oil lamp heat the interior. The snow insulation prevents this heat from escaping.",
+            "conductor": "Ice crystals in snow (minimal)",
+            "insulator": "Air trapped in snow structure",
+            "scienceBehind": "Fresh snow is 90-95% trapped air! While ice conducts heat moderately, the air pockets in snow make it an excellent insulator (thermal conductivity ~0.05-0.25 W/mK depending on density). The thick walls (30-60 cm) provide substantial thermal resistance.",
+            "realExample": "In Arctic regions where outside temperature is -40°C, the inside of an igloo can be maintained at -7°C with just body heat, or 0-10°C with a small lamp. That's a 30-50°C difference! The snow walls act as a thermal barrier.",
             "benefits": [
-              "Protects lives in dangerous situations",
-              "Allows firefighters to work in extreme heat",
-              "Prevents serious injuries"
+              "Provides shelter in extreme cold",
+              "Built from readily available material (snow)",
+              "No external heating required for survival",
+              "Dome shape is structurally strong",
+              "Natural and sustainable"
             ],
             "difficulty": "advanced"
           },
           {
             "id": 7,
-            "title": "Industrial Furnaces",
-            "category": "Industry",
-            "description": "Furnaces use insulating materials to contain high temperatures efficiently.",
-            "howItWorks": "Industrial furnaces are lined with refractory materials (ceramics, firebrick) that are excellent insulators. These materials can withstand very high temperatures while preventing heat from escaping, making furnaces more energy-efficient.",
-            "conductor": "Metal heating elements (inside)",
-            "insulator": "Firebrick, Ceramic fiber, Refractory materials",
-            "scienceBehind": "Refractory materials have extremely low thermal conductivity and high melting points. They create effective thermal barriers that contain heat within the furnace while protecting the outer structure.",
-            "realExample": "Steel production furnaces and glass manufacturing kilns",
+            "title": "Hollow Bricks in Construction",
+            "category": "Building",
+            "description": "Modern buildings use hollow bricks with air cavities for better thermal insulation.",
+            "howItWorks": "These bricks have hollow spaces (30-60% of volume) filled with air. When stacked to make walls, they create multiple air layers. Air being a poor conductor prevents heat transfer through the wall.",
+            "conductor": "Clay/ceramic material of the brick",
+            "insulator": "Air-filled cavities inside bricks",
+            "scienceBehind": "Solid brick: thermal conductivity ~0.6-1.0 W/mK. Hollow brick with air: effective thermal conductivity ~0.2-0.4 W/mK. The air pockets interrupt the path of heat conduction, making the wall a better insulator.",
+            "realExample": "In Rajasthan where summer temperatures reach 45-48°C, houses built with hollow bricks stay 5-7°C cooler inside than solid brick houses. In winter (5-10°C), they retain heat better, reducing heating costs.",
             "benefits": [
-              "Increases energy efficiency",
-              "Reduces operating costs",
-              "Enables high-temperature industrial processes"
+              "Reduces cooling costs in summer by 25-35%",
+              "Reduces heating costs in winter",
+              "Lighter than solid bricks (easier construction)",
+              "Better sound insulation",
+              "Environmentally friendly (less material used)"
+            ],
+            "difficulty": "everyday"
+          },
+          {
+            "id": 8,
+            "title": "Electric Iron with Thermostat",
+            "category": "Appliances",
+            "description": "Electric irons use a metal base plate for heat conduction and an insulated handle for safety.",
+            "howItWorks": "An electric heating element heats a metal (aluminum/steel) baseplate through direct contact (conduction). The heat spreads evenly across the plate. The handle and body are made of heat-resistant plastic (insulator) to stay cool.",
+            "conductor": "Metal baseplate (aluminum or stainless steel), heating coil",
+            "insulator": "Plastic body and handle, heat-resistant coating",
+            "scienceBehind": "The heating element reaches 150-200°C. This heat conducts rapidly through the metal plate due to free electron movement in metals. The plastic handle (thermal conductivity ~0.2 W/mK) prevents this heat from reaching your hand.",
+            "realExample": "When ironing clothes, the metal plate is at 150°C, hot enough to remove wrinkles. But you can comfortably hold the plastic handle which stays near room temperature (30-35°C), even after 30 minutes of continuous use.",
+            "benefits": [
+              "Efficient wrinkle removal",
+              "Safe to operate - cool handle",
+              "Even heat distribution",
+              "Thermostat prevents overheating",
+              "Energy efficient"
+            ],
+            "difficulty": "everyday"
+          },
+          {
+            "id": 9,
+            "title": "Firefighter Protective Gear",
+            "category": "Safety",
+            "description": "Special suits protect firefighters from extreme heat using advanced insulating materials.",
+            "howItWorks": "Multi-layered suits with outer layer (heat-reflective), middle layer (insulating), and inner layer (moisture barrier). Reflects radiation, blocks conduction, provides air gaps.",
+            "conductor": "Outer reflective metallic layer (reflects rather than absorbs)",
+            "insulator": "Aramid fibers (Kevlar/Nomex), air gaps between layers",
+            "scienceBehind": "Aramid fibers have extremely low thermal conductivity (~0.04 W/mK) and can withstand 400°C without melting. Multiple layers with air gaps create thermal resistance. The outer layer reflects radiant heat away.",
+            "realExample": "When firefighters enter a building at 800-1000°C, their suits keep skin temperature under 45°C for 10-15 minutes. The insulation is so effective that despite being surrounded by flames, they can work safely.",
+            "benefits": [
+              "Life-saving protection from extreme heat",
+              "Allows firefighters to work in dangerous conditions",
+              "Protects against burns and heat stress",
+              "Durable and reusable",
+              "Protects against chemical burns too"
             ],
             "difficulty": "advanced"
           },
           {
-            "id": 8,
-            "title": "Spacecraft Thermal Protection",
+            "id": 10,
+            "title": "Spacecraft Heat Shields",
             "category": "Space Technology",
-            "description": "Spacecraft use advanced insulating materials to protect against extreme temperature changes in space.",
-            "howItWorks": "Spacecraft are covered with thermal protection systems using materials like ceramic tiles and aerogels. These materials are excellent insulators that protect the craft from extreme heat during re-entry and extreme cold in space.",
-            "conductor": "Metal structure (protected by insulation)",
-            "insulator": "Ceramic tiles, Aerogels, Multi-layer insulation",
-            "scienceBehind": "Spacecraft face extreme temperature variations. Insulating materials with very low thermal conductivity create barriers that prevent heat transfer, protecting both the craft and astronauts from temperature extremes.",
-            "realExample": "Space Shuttle thermal tiles and Mars rover insulation",
+            "description": "Spacecraft use advanced thermal protection to survive re-entry temperatures of 1650°C.",
+            "howItWorks": "Ablative heat shields made of special materials that slowly burn away (ablate), carrying heat away. Multiple insulating layers underneath protect the crew cabin. Heat is dissipated through controlled ablation rather than conducted inward.",
+            "conductor": "Minimal - outer ablative material designed to vaporize",
+            "insulator": "Reinforced carbon-carbon composite, silica tiles, ablative phenolic resin",
+            "scienceBehind": "During re-entry, friction with atmosphere creates 1650°C+ temperatures. Ablative materials have very low thermal conductivity and endothermic decomposition (absorbs heat while breaking down). This prevents heat from conducting to the spacecraft interior.",
+            "realExample": "When ISRO's Gaganyaan or NASA's space capsules re-enter Earth with the outer shield reaching ~1650°C, the crew cabin stays near room temperature (25-30°C).",
             "benefits": [
-              "Enables space exploration",
-              "Protects expensive equipment",
-              "Ensures mission success"
+              "Protects astronauts during re-entry",
+              "Enables safe return from space",
+              "Withstands extreme temperature gradients",
+              "Critical for space exploration"
             ],
             "difficulty": "advanced"
+          },
+          {
+            "id": 11,
+            "title": "Himalayan Traditional Houses",
+            "category": "Architecture",
+            "description": "Houses in cold Himalayan regions use double wooden walls with mud insulation.",
+            "howItWorks": "Two layers of wooden walls with 15-30 cm gap filled with mud, straw, or cow dung mixture. Small windows reduce heat loss. Low ceilings trap warm air. Stone foundation prevents ground cold.",
+            "conductor": "None intentionally used",
+            "insulator": "Wood (thermal conductivity ~0.15 W/mK), mud filling (~0.25 W/mK), air gaps",
+            "scienceBehind": "Both wood and mud are poor conductors. The double-wall design creates multiple thermal barriers. Wood's cellular structure traps air. Mud's density and moisture content provide thermal mass and insulation.",
+            "realExample": "In Mori region of Uttarkashi, where winter temperatures drop to -15°C with heavy snowfall, these traditional houses maintain indoor temperatures of 10-15°C with just a small bukhari (wood stove).",
+            "benefits": [
+              "Stays warm in extreme cold (-20°C outside)",
+              "Built from locally available materials",
+              "No modern heating needed",
+              "Culturally traditional and sustainable",
+              "Lasts for decades with maintenance"
+            ],
+            "difficulty": "everyday"
+          },
+          {
+            "id": 12,
+            "title": "Industrial Furnaces & Kilns",
+            "category": "Industry",
+            "description": "High-temperature industrial furnaces use specialized refractory insulation to contain heat up to 1500°C.",
+            "howItWorks": "Multiple layers: inner refractory bricks (withstand heat), middle insulating firebricks (prevent heat escape), outer steel shell. Heat is contained inside for efficient operation.",
+            "conductor": "Inner chamber where heat is needed",
+            "insulator": "Refractory ceramic bricks, ceramic fiber insulation, air gaps",
+            "scienceBehind": "Refractory materials (alumina, silica) have low thermal conductivity at high temperatures. Ceramic fibers create air pockets. Multiple layers create thermal resistance, preventing heat loss.",
+            "realExample": "A steel furnace operates at 1500°C inside. With proper insulation (30-60 cm thick walls), the outer surface stays at 60-80°C—hot to touch but not dangerous—saving fuel and improving safety.",
+            "benefits": [
+              "Massive energy savings (30-50% fuel reduction)",
+              "Enables higher operating temperatures",
+              "Worker safety around furnaces",
+              "Faster heating and cooling cycles",
+              "Longer furnace lifespan"
+            ],
+            "difficulty": "industrial"
           }
         ]
+      }
+    }
+  },
+  "gu": {
+    "language": {
+      "en": "English",
+      "hi": "હિન્દી",
+      "gu": "ગુજરાતી",
+      "selectorLabel": "ભાષા પસંદ કરો"
+    },
+    "nav": {
+      "logo": "ઉષ્ણતાનું સંચાર",
+      "tabs": {
+        "learn": "શીખો",
+        "practice": "પ્રેક્ટિસ કરો",
+        "applications": "વાસ્તવિક દુનિયાના ઉપયોગો"
+      }
+    },
+    "conduction": {
+      "header": {
+        "badge": "પાઠ 7.1 - ઇન્ટરેક્ટિવ",
+        "title": "ઉષ્ણતાનું conduction",
+        "subtitle": "ખેંચો, મૂકો અને જાણો ઉષ્ણતા કેવી રીતે ચાલે છે!"
+      },
+      "intro": {
+        "title": "રસોઈના વાસણ ધાતુના જ કેમ હોય છે?",
+        "para1": "પેમાએ તેની દાદીને મોટાં ધાતુના પેનમાં થુપ્પા બનાવતાં જોયાં. તેણે વિચાર્યું: \"રસોઈના વાસણ ધાતુથી જ કેમ બને છે?\"",
+        "para2": "ચાલો, ઇન્ટરેક્ટિવ પ્રયોગોથી જવાબ શોધીએ!"
+      },
+      "activity": {
+        "sectionTitle": "ઇન્ટરેક્ટિવ: Heat Transfer પ્રયોગ",
+        "safetyTitle": "⚠️ સુરક્ષા સૂચના",
+        "safetyText": "આ પ્રવૃતિ શિક્ષક અથવા વયસ્કની દેખરેખ હેઠળ કરવી જોઈએ.",
+        "simulationTitle": "ઇન્ટરેક્ટિવ સિમ્યુલેશન",
+        "controls": {
+          "start": "હીટ શરૂ કરો",
+          "reset": "રીસેટ",
+          "heatIntensity": "હીટની તીવ્રતા:"
+        },
+        "heatFlowDirection": "Heat Flow ની દિશા →",
+        "pinCard": {
+          "pinLabel": "પિન",
+          "order": "ક્રમ: {order}",
+          "fallen": "✓ પડી ગઈ",
+          "falling": "⏳ પડી રહી છે...",
+          "waiting": "રાહ જોવાઈ રહી છે"
+        },
+        "observations": {
+          "title": "અમે શું જોયું?",
+          "item1Title": "પિન I સૌથી પહેલા પડે છે",
+          "item1Body": "તે heat source પાસે છે, તેથી મોમ પહેલા ઓગળે છે",
+          "item2Title": "પિન ક્રમમાં પડે છે (I → II → III → IV)",
+          "item2Body": "Heat ધાતુની પટ્ટીમાં ધીમે ધીમે આગળ વધે છે",
+          "item3Title": "આ conduction સાબિત કરે છે!",
+          "item3Body": "Heat ગરમ છેડા થી ઠંડા છેડા સુધી ધાતુમાં જાય છે"
+        },
+        "table": {
+          "title": "સારણી 7.1: અવલોકન નોંધ",
+          "pin": "પિન",
+          "order": "ક્રમ",
+          "status": "સ્થિતિ",
+          "reason": "કારણ",
+          "fallen": "✓ પડી ગઈ",
+          "notFallen": "પડી નથી",
+          "reasonClosest": "Heat source ને સૌથી નજીક",
+          "reasonProgress": "Heat ધીમે ધીમે અહીં પહોંચે છે",
+          "reasonFarthest": "Heat source થી સૌથી દૂર"
+        }
+      },
+      "testing": {
+        "sectionTitle": "સામગ્રી ચકાસો: Conductor કે Insulator?",
+        "callout": "નીચેની સામગ્રી પર ક્લિક કરો અથવા તેને ટેસ્ટ ઝોનમાં ખેંચો!",
+        "zoneTitle": "Heat Transfer ટેસ્ટ ઝોન",
+        "dropHere": "ટેસ્ટ માટે અહીં મૂકો",
+        "heatSource": "Heat Source",
+        "heatPasses": "Heat પહોંચે છે!",
+        "heatBlocked": "Heat અટકાઈ જાય છે!",
+        "testResult": {
+          "title": "ટેસ્ટ પરિણામ",
+          "material": "સામગ્રી:",
+          "type": "પ્રકાર:",
+          "good": "⚡ સારો conductor",
+          "poor": "🛡️ નબળો conductor",
+          "heatPasses": "✓ Heat પસાર થાય છે",
+          "heatStops": "✗ Heat અટકાય છે",
+          "goodDesc": "આ સામગ્રી heat ને સરળતાથી વહેવા દે છે, તેથી વાસણોમાં ઉપયોગી છે.",
+          "poorDesc": "આ સામગ્રી heat ને રોકે છે, તેથી હેન્ડલ અને ઇન્સ્યુલેશનમાં ઉપયોગી છે."
+        },
+        "quickTest": "ઝડપી ટેસ્ટ:",
+        "tested": "ચકાસેલ ({count}/{total}):"
+      },
+      "materials": {
+        "steel": "સ્ટીલ (Steel)",
+        "copper": "તાંબું (Copper)",
+        "aluminum": "એલ્યુમિનિયમ (Aluminum)",
+        "wood": "લાકડું (Wood)",
+        "plastic": "પ્લાસ્ટિક (Plastic)",
+        "glass": "કાચ (Glass)"
+      },
+      "takeaways": {
+        "title": "મુખ્ય મુદ્દા",
+        "conductionTitle": "Conduction",
+        "conductionPoints": [
+          "Heat ગરમથી ઠંડા તરફ જાય છે",
+          "કણો heat પાડોશીને આપે છે",
+          "કણો પોતાની જગ્યાએ રહે છે",
+          "મુખ્યત્વે ઘન પદાર્થોમાં થાય છે"
+        ],
+        "goodTitle": "સારા Conductors",
+        "goodPoints": [
+          "ધાતુઓ: Steel, Copper, Aluminum",
+          "Heat સરળતાથી પસાર થવા આપે છે",
+          "રસોઈના વાસણોમાં ઉપયોગ થાય છે",
+          "Heat ઝડપથી પહોંચાડે છે"
+        ],
+        "poorTitle": "નબળા Conductors",
+        "poorPoints": [
+          "લાકડું, કાચ, પ્લાસ્ટિક",
+          "Heat નો પ્રવાહ રોકે છે",
+          "હેન્ડલ, કપમાં ઉપયોગ",
+          "Heat અંદર/બહાર રોકે છે"
+        ],
+        "footer": "Conduction માં heat ચાલે છે, પણ કણો પોતાની જગ્યાથી હલતા નથી!"
       },
       "practice": {
         "ui": {
-          "noQuestionsTitle": "No Questions Available",
-          "noQuestionsBody": "Questions are being prepared. Please check back later.",
-          "questionLabel": "Question {{current}} of {{total}}",
-          "pointsLabel": "{{points}} Points",
+          "questionLabel": "પ્રશ્ન {current} / {total}",
           "difficulty": {
-            "easy": "Easy",
-            "medium": "Medium",
-            "hard": "Hard"
+            "easy": "સરળ",
+            "medium": "મધ્યમ",
+            "hard": "મુષ્કેલ"
           },
-          "fillBlankHint": "Select the correct option to fill in the blank",
-          "matchHint": "Match each material with its category",
-          "orderingHint": "Arrange the items in the correct order",
-          "classifyHint": "Classify each material as a good or poor conductor",
-          "materials": "Materials",
-          "categories": "Categories",
-          "selectCategory": "Select Category",
-          "noItemsMatched": "No items matched yet",
-          "noItemsClassified": "No items classified yet",
-          "goodConductor": "Good Conductor",
-          "poorConductor": "Poor Conductor",
-          "goodConductorLabel": "Good Conductor",
-          "poorConductorLabel": "Poor Conductor",
-          "correctTitle": "Correct!",
-          "incorrectTitle": "Not Quite Right",
-          "correctAnswerLabel": "Correct Answer:",
-          "previousButton": "Previous",
-          "nextButton": "Next",
-          "submitButton": "Submit Answer",
-          "tryAgainButton": "Try Again",
-          "startOverButton": "Start Over",
-          "completeTitle": "Practice Complete!",
-          "scoreSummary": "Your Score: {{score}} / {{total}} points",
-          "questionsAnswered": "Questions Answered",
-          "scorePercentage": "Score Percentage",
-          "gradeLabel": "Grade"
+          "pointsLabel": "{points} ગુણ",
+          "fillBlankHint": "ખાલી જગ્યા પૂરવા માટે સાચો વિકલ્પ પસંદ કરો",
+          "matchHint": "દરેક વસ્તુને તેના યોગ્ય વર્ગ સાથે મેળવો:",
+          "materials": "સામગ્રી:",
+          "categories": "વર્ગો:",
+          "selectCategory": "વર્ગ પસંદ કરો...",
+          "orderingHint": "સાચો ક્રમ ગોઠવવા તીર બટનોનો ઉપયોગ કરો:",
+          "classifyHint": "દરેક સામગ્રીને યોગ્ય વર્ગમાં મૂકો:",
+          "goodConductor": "સારો Conductor",
+          "poorConductor": "નબળો Conductor",
+          "goodConductorLabel": "⚡ સારો Conductor",
+          "poorConductorLabel": "🛡️ નબળો Conductor",
+          "noItemsClassified": "હજી કોઈ વસ્તુ વર્ગીકૃત નથી",
+          "noItemsMatched": "હજી કોઈ વસ્તુ મેળ ખાતી નથી",
+          "previousButton": "← પાછળ",
+          "submitButton": "જવાબ તપાસો",
+          "nextButton": "આગળનો પ્રશ્ન",
+          "tryAgainButton": "ફરી પ્રયત્ન કરો",
+          "completeTitle": "પ્રેક્ટિસ પૂર્ણ! 🎉",
+          "scoreSummary": "તમે {total} માંથી {score} ગુણ મેળવ્યા",
+          "questionsAnswered": "આપેલા પ્રશ્નો",
+          "scorePercentage": "ટકાવારી ગુણ",
+          "gradeLabel": "ગ્રેડ",
+          "startOverButton": "ફરીથી શરૂ કરો",
+          "correctTitle": "🎉 સાચો જવાબ!",
+          "incorrectTitle": "❌ ખોટો જવાબ",
+          "correctAnswerLabel": "સાચો જવાબ:",
+          "progressLabel": "પ્રગતિ",
+          "progressQuestions": "પ્રશ્ન",
+          "headerTitle": "પ્રેક્ટિસ મોડ",
+          "headerSubtitle": "વિષય 7.1: ઉષ્ણતાનું સંચાલન",
+          "noQuestionsTitle": "પ્રેક્ટિસ પ્રશ્નો ટૂંક સમયમાં ઉમેરાશે",
+          "noQuestionsBody": "આ ભાષા માટે પ્રેક્ટિસ પ્રશ્નો હજી સેટ કરવામાં આવ્યા નથી. કૃપા કરીને English પસંદ કરો અથવા પછી ફરી તપાસો."
         },
         "questions": [
           {
             "id": 1,
             "type": "mcq",
-            "question": "Which material is the best conductor of heat?",
+            "question": "વસ્તુના ગરમ ભાગથી ઠંડા ભાગમાં ઉષ્ણતા સ્થાનાંતરણની પ્રક્રિયાને શું કહેવામાં આવે છે?",
             "options": [
-              "Wood",
-              "Plastic",
-              "Copper",
-              "Glass"
+              "સંવહન",
+              "વહન",
+              "વિકિરણ",
+              "બાષ્પીભવન"
             ],
-            "correctAnswer": "Copper",
-            "explanation": "Copper is an excellent conductor of heat because it has free electrons that can move easily, allowing thermal energy to transfer rapidly through the material.",
+            "correctAnswer": "વહન",
+            "explanation": "વહન એ પ્રક્રિયા છે જ્યાં ઉષ્ણતા સીધા સંપર્ક દ્વારા ગરમ ભાગથી ઠંડા ભાગમાં સ્થાનાંતરિત થાય છે. કણો પોતાની સ્થિતિથી ખસ્યા વગર પડોશી કણોને ઉષ્ણતા પહોંચાડે છે.",
             "difficulty": "easy",
             "points": 10
           },
           {
             "id": 2,
-            "type": "true-false",
-            "question": "Metals are generally good conductors of heat.",
+            "type": "mcq",
+            "question": "ક્રિયા 7.1 માં, જ્યારે ધાતુની પટ્ટીને ગરમ કરવામાં આવે છે, ત્યારે કયો પિન પહેલો પડે છે?",
             "options": [
-              "True",
-              "False"
+              "પિન IV (ઉષ્ણતાથી સૌથી દૂર)",
+              "પિન II",
+              "પિન III",
+              "પિન I (ઉષ્ણતાની નજીક)"
             ],
-            "correctAnswer": "True",
-            "explanation": "Most metals are good conductors of heat because they have free electrons that can transfer thermal energy efficiently.",
+            "correctAnswer": "પિન I (ઉષ્ણતાની નજીક)",
+            "explanation": "પિન I પહેલો પડે છે કારણ કે તે ઉષ્ણતા સ્રોતની નજીક છે. ઉષ્ણતા ધાતુની પટ્ટી સાથે પ્રવાસ કરે છે અને પહેલા પિન I સુધી પહોંચે છે, જે તેને પકડી રાખતી મીણને ઓગળાવે છે.",
             "difficulty": "easy",
             "points": 10
           },
           {
             "id": 3,
             "type": "mcq",
-            "question": "What happens to the pins in the heat conduction activity as heat intensity increases?",
+            "question": "રસોઈના વાસણો ધાતુથી કેમ બનાવવામાં આવે છે?",
             "options": [
-              "All pins fall at the same time",
-              "Pins fall in random order",
-              "Pins fall in order from closest to farthest from heat source",
-              "No pins fall"
+              "ધાતુ સસ્તી છે",
+              "ધાતુ ઉષ્ણતાના સારા વાહક છે",
+              "ધાતુ ચમકદાર છે",
+              "ધાતુ હળવી છે"
             ],
-            "correctAnswer": "Pins fall in order from closest to farthest from heat source",
-            "explanation": "Heat travels through the metal strip from the heat source. The pin closest to the heat source falls first because it receives heat first, followed by pins further away as heat continues to flow.",
-            "difficulty": "medium",
-            "points": 15
-          },
-          {
-            "id": 4,
-            "type": "match",
-            "question": "Match each material with its heat conduction property:",
-            "options": [
-              "Copper|Good Conductor",
-              "Aluminum|Good Conductor",
-              "Steel|Good Conductor",
-              "Wood|Poor Conductor",
-              "Plastic|Poor Conductor",
-              "Glass|Poor Conductor"
-            ],
-            "correctAnswer": [
-              "Copper|Good Conductor",
-              "Aluminum|Good Conductor",
-              "Steel|Good Conductor",
-              "Wood|Poor Conductor",
-              "Plastic|Poor Conductor",
-              "Glass|Poor Conductor"
-            ],
-            "explanation": "Metals like copper, aluminum, and steel are good conductors because they have free electrons. Non-metals like wood, plastic, and glass are poor conductors (insulators) because their molecules are tightly bound.",
-            "difficulty": "medium",
-            "points": 20
-          },
-          {
-            "id": 5,
-            "type": "ordering",
-            "question": "Arrange these materials in order from best to worst heat conductor:",
-            "options": [
-              "Copper",
-              "Aluminum",
-              "Wood",
-              "Plastic"
-            ],
-            "correctAnswer": [
-              "Copper",
-              "Aluminum",
-              "Wood",
-              "Plastic"
-            ],
-            "explanation": "Copper is the best conductor, followed by aluminum (both are metals). Wood and plastic are insulators, with wood being slightly better than plastic.",
-            "difficulty": "hard",
-            "points": 25
-          },
-          {
-            "id": 6,
-            "type": "classify",
-            "question": "Classify each material as a good conductor or poor conductor:",
-            "options": [
-              "Steel",
-              "Copper",
-              "Aluminum",
-              "Wood",
-              "Plastic",
-              "Glass"
-            ],
-            "correctAnswer": [
-              "Steel|Good Conductor",
-              "Copper|Good Conductor",
-              "Aluminum|Good Conductor",
-              "Wood|Poor Conductor",
-              "Plastic|Poor Conductor",
-              "Glass|Poor Conductor"
-            ],
-            "explanation": "Metals (steel, copper, aluminum) are good conductors. Non-metals (wood, plastic, glass) are poor conductors or insulators.",
-            "difficulty": "medium",
-            "points": 20
-          },
-          {
-            "id": 7,
-            "type": "fill-blank",
-            "question": "Materials that allow heat to flow through them easily are called _____.",
-            "options": [
-              "Insulators",
-              "Conductors",
-              "Resistors",
-              "Transformers"
-            ],
-            "correctAnswer": "Conductors",
-            "explanation": "Conductors are materials that allow heat (or electricity) to flow through them easily. Metals are typically good conductors.",
+            "correctAnswer": "ધાતુ ઉષ્ણતાના સારા વાહક છે",
+            "explanation": "ધાતુ ઉષ્ણતાને સરળતાથી પોતાનામાંથી પસાર થવા દે છે, જે તેમને રસોઈ માટે ઉત્કૃષ્ટ બનાવે છે કારણ કે સ્ટોવથી ઉષ્ણતા ઝડપથી ખોરાક સુધી પહોંચે છે.",
             "difficulty": "easy",
             "points": 10
           },
           {
-            "id": 8,
+            "id": 4,
             "type": "mcq",
-            "question": "Why do cooking pans have metal bases but plastic or wooden handles?",
+            "question": "નીચેનામાંથી કયું ઉષ્ણતાનો ખરાબ વાહક છે?",
             "options": [
-              "To make them lighter",
-              "To save money",
-              "Metal conducts heat well for cooking, while plastic/wood insulates to keep handles cool",
-              "For decoration"
+              "તાંબું",
+              "એલ્યુમિનિયમ",
+              "લાકડું",
+              "લોખંડ"
             ],
-            "correctAnswer": "Metal conducts heat well for cooking, while plastic/wood insulates to keep handles cool",
-            "explanation": "Metal bases conduct heat efficiently for cooking, while plastic or wooden handles are insulators that prevent heat from reaching your hands, making the pan safe to hold.",
+            "correctAnswer": "લાકડું",
+            "explanation": "લાકડું ઉષ્ણતાનો ખરાબ વાહક (ઇન્સ્યુલેટર) છે. તે ઉષ્ણતાને સરળતાથી પસાર થવા દેતું નથી, તેથી જ વાસણો માટે લાકડાના હેન્ડલનો ઉપયોગ કરવામાં આવે છે.",
+            "difficulty": "easy",
+            "points": 10
+          },
+          {
+            "id": 5,
+            "type": "mcq",
+            "question": "વહન પ્રક્રિયામાં, કણો સાથે શું થાય છે?",
+            "options": [
+              "કણો ગરમથી ઠંડા પ્રદેશમાં જાય છે",
+              "કણો પોતાની સ્થિતિમાં રહે છે અને પડોશીઓને ઉષ્ણતા પહોંચાડે છે",
+              "કણો બાષ્પ બને છે",
+              "કણો ઠંડા થાય છે"
+            ],
+            "correctAnswer": "કણો પોતાની સ્થિતિમાં રહે છે અને પડોશીઓને ઉષ્ણતા પહોંચાડે છે",
+            "explanation": "વહન દરમિયાન, કણો કંપન કરે છે અને પડોશી કણોને ઊર્જા સ્થાનાંતરિત કરે છે પરંતુ પોતાની સ્થિતિથી ખસતા નથી. આ વહનને સંવહનથી અલગ બનાવે છે.",
             "difficulty": "medium",
             "points": 15
+          },
+          {
+            "id": 6,
+            "type": "mcq",
+            "question": "ચા અથવા કોફી પોર્સેલિન કપમાં ધાતુના કપ કરતાં વધુ સમય સુધી ગરમ કેમ રહે છે?",
+            "options": [
+              "પોર્સેલિન સુંદર છે",
+              "પોર્સેલિન ઉષ્ણતાનો ખરાબ વાહક છે",
+              "પોર્સેલિન ઉષ્ણતાનો સારો વાહક છે",
+              "ધાતુ પીણાને ઠંડું કરે છે"
+            ],
+            "correctAnswer": "પોર્સેલિન ઉષ્ણતાનો ખરાબ વાહક છે",
+            "explanation": "પોર્સેલિન (માટી) ઉષ્ણતાનો ખરાબ વાહક છે, તેથી તે પીણામાંથી ઉષ્ણતાને ઝડપથી બહાર નીકળવા દેતું નથી. ધાતુ, સારો વાહક હોવાને કારણે, ઉષ્ણતાને ઝડપથી દૂર સ્થાનાંતરિત કરશે.",
+            "difficulty": "medium",
+            "points": 15
+          },
+          {
+            "id": 7,
+            "type": "mcq",
+            "question": "જલનથી બચાવવા માટે રસોઈના વાસણોના હેન્ડલ માટે કયી સામગ્રીનો ઉપયોગ કરવામાં આવે છે?",
+            "options": [
+              "સ્ટીલ",
+              "તાંબું",
+              "લાકડું અથવા પ્લાસ્ટિક (ઇન્સ્યુલેટર)",
+              "એલ્યુમિનિયમ"
+            ],
+            "correctAnswer": "લાકડું અથવા પ્લાસ્ટિક (ઇન્સ્યુલેટર)",
+            "explanation": "હેન્ડલ લાકડું અથવા પ્લાસ્ટિક જેવા ઇન્સ્યુલેટરથી બનાવવામાં આવે છે કારણ કે તેઓ ઉષ્ણતાના ખરાબ વાહક છે અને હેન્ડલને પકડવા માટે ખૂબ ગરમ થવાથી રોકે છે.",
+            "difficulty": "medium",
+            "points": 15
+          },
+          {
+            "id": 8,
+            "type": "mcq",
+            "question": "શિયાળામાં આપણે ઊનના કપડા પહેરવાનું કેમ પસંદ કરીએ છીએ?",
+            "options": [
+              "ઊન ઉષ્ણતા ઉત્પન્ન કરે છે",
+              "ઊન હવાને ફસાવે છે જે ઉષ્ણતાનો ખરાબ વાહક છે",
+              "ઊન પાણીરોધક છે",
+              "ઊન ભારે છે"
+            ],
+            "correctAnswer": "ઊન હવાને ફસાવે છે જે ઉષ્ણતાનો ખરાબ વાહક છે",
+            "explanation": "ઊનના કપડામાં હવાના પોકેટ હોય છે જે હવાને ફસાવે છે. હવા ઉષ્ણતાનો ખૂબ ખરાબ વાહક હોવાથી, તે આપણા શરીરની ઉષ્ણતાને બહાર નીકળવાથી રોકે છે, આપણને ગરમ રાખે છે.",
+            "difficulty": "medium",
+            "points": 15
+          },
+          {
+            "id": 9,
+            "type": "true-false",
+            "question": "ઘન પદાર્થોમાં, ઉષ્ણતા સ્થાનાંતરણ મુખ્યત્વે વહનની પ્રક્રિયા દ્વારા થાય છે.",
+            "options": [
+              "સત્ય",
+              "અસત્ય"
+            ],
+            "correctAnswer": "સત્ય",
+            "explanation": "સાચું! ઘન પદાર્થોમાં, કણો નજીકથી પેક થયેલા હોય છે અને ઉષ્ણતા મુખ્યત્વે વહન દ્વારા સ્થાનાંતરિત થાય છે કારણ કે કણો પોતાના પડોશીઓને ઊર્જા પહોંચાડે છે.",
+            "difficulty": "easy",
+            "points": 10
+          },
+          {
+            "id": 10,
+            "type": "true-false",
+            "question": "કાચ અને લાકડું ઉષ્ણતાના સારા વાહક છે.",
+            "options": [
+              "સત્ય",
+              "અસત્ય"
+            ],
+            "correctAnswer": "અસત્ય",
+            "explanation": "ખોટું! કાચ અને લાકડું ઉષ્ણતાના ખરાબ વાહક (ઇન્સ્યુલેટર) છે. તેઓ ઉષ્ણતાને સરળતાથી પસાર થવા દેતા નથી.",
+            "difficulty": "easy",
+            "points": 10
+          },
+          {
+            "id": 11,
+            "type": "true-false",
+            "question": "વહન દરમિયાન, કણો ગરમ પ્રદેશથી ઠંડા પ્રદેશમાં જાય છે.",
+            "options": [
+              "સત્ય",
+              "અસત્ય"
+            ],
+            "correctAnswer": "અસત્ય",
+            "explanation": "ખોટું! વહન દરમિયાન, કણો પોતાની સ્થિતિથી ખસતા નથી. તેઓ કંપન કરે છે અને પોતાની જગ્યાએ રહીને પડોશી કણોને ઊર્જા પહોંચાડે છે.",
+            "difficulty": "medium",
+            "points": 15
+          },
+          {
+            "id": 12,
+            "type": "true-false",
+            "question": "બે પાતળા ગાદલા એક જાડા ગાદલા કરતાં વધુ ગરમી પ્રદાન કરે છે કારણ કે તેમની વચ્ચે ફસાયેલી હવા ઇન્સ્યુલેટર તરીકે કાર્ય કરે છે.",
+            "options": [
+              "સત્ય",
+              "અસત્ય"
+            ],
+            "correctAnswer": "સત્ય",
+            "explanation": "સાચું! બે ગાદલા વચ્ચેની હવાની પરત ઇન્સ્યુલેટર (ખરાબ વાહક) તરીકે કાર્ય કરે છે, ઉષ્ણતા નુકસાનને રોકે છે અને વધુ સારી ગરમી પ્રદાન કરે છે.",
+            "difficulty": "medium",
+            "points": 15
+          },
+          {
+            "id": 13,
+            "type": "fill-blank",
+            "question": "જે સામગ્રી ઉષ્ણતાને સરળતાથી પોતાનામાંથી પસાર થવા દે છે, તેમને ઉષ્ણતાના _____ કહેવામાં આવે છે.",
+            "options": [
+              "સારા વાહક",
+              "ખરાબ વાહક",
+              "ઇન્સ્યુલેટર",
+              "રેડિયેટર"
+            ],
+            "correctAnswer": "સારા વાહક",
+            "explanation": "સારા વાહક ઉષ્ણતાને સરળતાથી પસાર થવા દે છે. તાંબું, એલ્યુમિનિયમ અને લોખંડ જેવી ધાતુઓ ઉષ્ણતાના સારા વાહક છે.",
+            "difficulty": "easy",
+            "points": 10
+          },
+          {
+            "id": 14,
+            "type": "fill-blank",
+            "question": "જે સામગ્રી ઉષ્ણતાને સરળતાથી પોતાનામાંથી પસાર થવા દેતી નથી, તેમને ઉષ્ણતાના _____ કહેવામાં આવે છે.",
+            "options": [
+              "સારા વાહક",
+              "ખરાબ વાહક",
+              "ધાતુ",
+              "ઘન"
+            ],
+            "correctAnswer": "ખરાબ વાહક",
+            "explanation": "ખરાબ વાહક (જેને ઇન્સ્યુલેટર પણ કહેવામાં આવે છે) ઉષ્ણતાને સરળતાથી પસાર થવા દેતા નથી. ઉદાહરણોમાં લાકડું, પ્લાસ્ટિક, કાચ અને હવા શામેલ છે.",
+            "difficulty": "easy",
+            "points": 10
+          },
+          {
+            "id": 15,
+            "type": "fill-blank",
+            "question": "_____ ઉષ્ણતાનો ખૂબ ખરાબ વાહક છે, તેથી જ તેને આપણને ગરમ રાખવા માટે ઊનના કપડામાં ફસાવવામાં આવે છે.",
+            "options": [
+              "પાણી",
+              "ધાતુ",
+              "હવા",
+              "કાચ"
+            ],
+            "correctAnswer": "હવા",
+            "explanation": "હવા ઉષ્ણતાનો ખૂબ ખરાબ વાહક છે. ઊનનો કપડો પોતાના છિદ્રોમાં હવાને ફસાવે છે, જે આપણા શરીરથી ઉષ્ણતા નુકસાનને રોકે છે.",
+            "difficulty": "medium",
+            "points": 15
+          },
+          {
+            "id": 16,
+            "type": "match",
+            "question": "સામગ્રીને તેમની ઉષ્ણતા વહન ગુણધર્મ સાથે મેળખો:",
+            "options": [
+              "સ્ટીલ|સારો વાહક",
+              "લાકડું|ખરાબ વાહક",
+              "તાંબું|સારો વાહક",
+              "પ્લાસ્ટિક|ખરાબ વાહક"
+            ],
+            "correctAnswer": [
+              "સ્ટીલ|સારો વાહક",
+              "લાકડું|ખરાબ વાહક",
+              "તાંબું|સારો વાહક",
+              "પ્લાસ્ટિક|ખરાબ વાહક"
+            ],
+            "explanation": "ધાતુ (સ્ટીલ, તાંબું) સારા વાહક છે. અધાતુ (લાકડું, પ્લાસ્ટિક) ખરાબ વાહક/ઇન્સ્યુલેટર છે.",
+            "difficulty": "medium",
+            "points": 20
+          },
+          {
+            "id": 17,
+            "type": "ordering",
+            "question": "જ્યારે ધાતુની પટ્ટીને ગરમ કરવામાં આવે છે ત્યારે પિનને તે ક્રમમાં ગોઠવો જેમાં તેઓ પડે છે (પહેલાથી છેલ્લા સુધી):",
+            "options": [
+              "પિન IV",
+              "પિન I",
+              "પિન III",
+              "પિન II"
+            ],
+            "correctAnswer": [
+              "પિન I",
+              "પિન II",
+              "પિન III",
+              "પિન IV"
+            ],
+            "explanation": "પિન ઉષ્ણતા સ્રોતની નજીકથી સૌથી દૂરના ક્રમમાં પડે છે: પિન I (નજીક) → પિન II → પિન III → પિન IV (સૌથી દૂર).",
+            "difficulty": "medium",
+            "points": 20
+          },
+          {
+            "id": 18,
+            "type": "classify",
+            "question": "નીચેની સામગ્રીને સારા વાહક અથવા ખરાબ વાહક (ઇન્સ્યુલેટર) તરીકે વર્ગીકૃત કરો:",
+            "options": [
+              "લોખંડ",
+              "કાચ",
+              "એલ્યુમિનિયમ",
+              "હવા",
+              "રબર",
+              "પિત્તળ"
+            ],
+            "correctAnswer": [
+              "લોખંડ|સારો વાહક",
+              "કાચ|ખરાબ વાહક",
+              "એલ્યુમિનિયમ|સારો વાહક",
+              "હવા|ખરાબ વાહક",
+              "રબર|ખરાબ વાહક",
+              "પિત્તળ|સારો વાહક"
+            ],
+            "explanation": "ધાતુ (લોખંડ, એલ્યુમિનિયમ, પિત્તળ) સારા વાહક છે. અધાતુ અને હવા (કાચ, હવા, રબર) ખરાબ વાહક છે.",
+            "difficulty": "hard",
+            "points": 25
+          },
+          {
+            "id": 19,
+            "type": "mcq",
+            "question": "ઠંડા પ્રદેશોમાં ઘરો હવા યુક્ત પોલી ઇંટોથી કેમ બનાવવામાં આવે છે?",
+            "options": [
+              "તેમને હળવા બનાવવા માટે",
+              "પોલી ઇંટોમાં હવા ઇન્સ્યુલેટર તરીકે કાર્ય કરે છે જે ઉષ્ણતા નુકસાનને રોકે છે",
+              "સામગ્રી ખર્ચ બચાવવા માટે",
+              "પોલી ઇંટો મજબૂત છે"
+            ],
+            "correctAnswer": "પોલી ઇંટોમાં હવા ઇન્સ્યુલેટર તરીકે કાર્ય કરે છે જે ઉષ્ણતા નુકસાનને રોકે છે",
+            "explanation": "પોલી ઇંટો અંદર હવાને ફસાવે છે. હવા ઉષ્ણતાનો ખરાબ વાહક હોવાથી, તે શિયાળામાં ઘરથી ઉષ્ણતાને બહાર નીકળવાથી રોકે છે અને ઉનાળામાં તેને ઠંડી રાખે છે.",
+            "difficulty": "hard",
+            "points": 20
+          },
+          {
+            "id": 20,
+            "type": "mcq",
+            "question": "હિમાલયી પ્રદેશોમાં, ઘરોમાં બે લાકડાની પરતો સાથે તેમની વચ્ચે માટીની દીવાલો હોય છે. કેમ?",
+            "options": [
+              "સજાવટ માટે",
+              "લાકડું અને માટી ખરાબ વાહક છે જે ઉષ્ણતા નુકસાનને રોકે છે",
+              "દીવાલોને મજબૂત બનાવવા માટે",
+              "લાકડું સરળતાથી ઉપલબ્ધ છે"
+            ],
+            "correctAnswer": "લાકડું અને માટી ખરાબ વાહક છે જે ઉષ્ણતા નુકસાનને રોકે છે",
+            "explanation": "લાકડું અને માટી બંને ઉષ્ણતાના ખરાબ વાહક છે. ઇન્સ્યુલેટિંગ સામગ્રી સાથે આ ડબલ-લેયર બાંધકામ અત્યંત ઠંડા આબોહવામાં ઘરોને ગરમ રાખવામાં મદદ કરે છે.",
+            "difficulty": "hard",
+            "points": 20
+          }
+        ]
+      },
+      "realWorld": {
+        "filterTitle": "શ્રેણી દ્વારા ફિલ્ટર કરો:",
+        "allApplications": "બધા એપ્લિકેશન",
+        "showing": "દર્શાવી રહ્યા છીએ",
+        "application": "એપ્લિકેશન",
+        "applicationsPlural": "એપ્લિકેશન",
+        "howItWorks": "તે કેવી રીતે કામ કરે છે:",
+        "goodConductorUsed": "⚡ ઉપયોગમાં લેવાયેલ સારો Conductor:",
+        "insulatorUsed": "🛡️ ઉપયોગમાં લેવાયેલ Insulator:",
+        "scienceBehind": "🔬 તેની પાછળનું વિજ્ઞાન:",
+        "realLifeExample": "🌟 વાસ્તવિક જીવન ઉદાહરણ:",
+        "benefitsImpact": "✨ લાભ અને અસર:",
+        "difficulty": {
+          "everyday": "રોજિંદા જીવન",
+          "industrial": "ઔદ્યોગિક",
+          "advanced": "અદ્યતન ટેકનોલોજી"
+        },
+        "categories": {
+          "all": "બધા એપ્લિકેશન",
+          "Kitchen": "રસોડું",
+          "Clothing": "કપડાં",
+          "Building": "બિલ્ડિંગ",
+          "Appliances": "ઉપકરણો",
+          "Architecture": "આર્કિટેક્ચર",
+          "Safety": "સુરક્ષા",
+          "Industry": "ઉદ્યોગ",
+          "Space Technology": "અવકાશ ટેકનોલોજી"
+        },
+        "applications": [
+          {
+            "id": 1,
+            "title": "રસોઈના વાસણો અને કુકવેર",
+            "category": "Kitchen",
+            "description": "હાંડી, પાન અને રસોઈના વાસણો ખોરાકને કાર્યક્ષમ રીતે રાંધવા માટે વાહક અને ઇન્સ્યુલેટર બંનેનો ઉપયોગ કરે છે જ્યારે અમારા હાથોની રક્ષા કરે છે.",
+            "howItWorks": "ધાતુનું શરીર (તાંબું, એલ્યુમિનિયમ અથવા સ્ટીલ) સ્ટોવથી ખોરાક સુધી ઉષ્ણતાને ઝડપથી અને સમાન રીતે વહન કરે છે. હેન્ડલ લાકડું અથવા પ્લાસ્ટિક (ઇન્સ્યુલેટર) થી બનાવવામાં આવે છે જેથી ઠંડું અને પકડવા માટે સુરક્ષિત રહે.",
+            "conductor": "ધાતુનું શરીર (તાંબું, એલ્યુમિનિયમ, સ્ટેનલેસ સ્ટીલ)",
+            "insulator": "લાકડાના અથવા પ્લાસ્ટિકના હેન્ડલ, સિલિકોન ગ્રિપ",
+            "scienceBehind": "ધાતુઓમાં મુક્ત ઇલેક્ટ્રોન હોય છે જે સરળતાથી ખસી શકે છે, જે વહન દ્વારા ઝડપી ઉષ્ણતા સ્થાનાંતરણને મંજૂરી આપે છે. લાકડું અને પ્લાસ્ટિક જેવી અધાતુમાં ચુસ્ત રીતે બંધાયેલા ઇલેક્ટ્રોન હોય છે, જે ઉષ્ણતા પ્રવાહને અવરોધિત કરે છે અને હેન્ડલને ઠંડા રાખે છે.",
+            "realExample": "એક લાક્ષણિક ફ્રાયિંગ પાનમાં એલ્યુમિનિયમ અથવા સ્ટીલનો આધાર હોય છે જે સ્ટોવ પર મૂકવામાં આવે ત્યારે ઝડપથી ગરમ થાય છે. ઉષ્ણતા ધાતુ દ્વારા વહન કરે છે અને ઇંડા અથવા શાકભાજી રાંધે છે. આ દરમિયાન, બેકેલાઇટ અથવા લાકડાનું હેન્ડલ નગ્ન હાથથી પકડવા માટે પૂરતું ઠંડું રહે છે.",
+            "benefits": [
+              "ઝડપી અને સમાન રાંધવું",
+              "ઊર્જા કાર્યક્ષમ - ઓછો રાંધવાનો સમય",
+              "રાંધવાના સમય દરમિયાન પકડવા માટે સુરક્ષિત",
+              "ખોરાક સમાન રીતે રાંધાય છે",
+              "જલન અને અકસ્માતોને રોકે છે"
+            ],
+            "difficulty": "everyday"
+          },
+          {
+            "id": 2,
+            "title": "થર્મોસ ફ્લાસ્ક (વેક્યૂમ ફ્લાસ્ક)",
+            "category": "Kitchen",
+            "description": "ઇન્સ્યુલેશન સિદ્ધાંતોનો ઉપયોગ કરીને ગરમ પ્રવાહીને ગરમ અને ઠંડા પ્રવાહીને કલાકો સુધી ઠંડા રાખે છે.",
+            "howItWorks": "બેવડી દીવાલવાળું કન્ટેનર જેમાં દીવાલો વચ્ચે વેક્યૂમ (કોઈ હવા નહીં) હોય છે. આંતરિક દીવાલ પ્રતિબિંબિત છે. વેક્યૂમ વહનને રોકે છે, પ્રતિબિંબ વિકિરણને રોકે છે, અને સીલ કરેલી ડિઝાઇન સંવહનને રોકે છે.",
+            "conductor": "પ્રવાહી રાખવા માટે આંતરિક ધાતુ કન્ટેનર",
+            "insulator": "દીવાલો વચ્ચે વેક્યૂમ (સૌથી સારો ઇન્સ્યુલેટર), પ્લાસ્ટિક/કોર્ક સ્ટોપર, બાહ્ય રક્ષણાત્મક કેસ",
+            "scienceBehind": "ઉષ્ણતા સ્થાનાંતરણને વહન માટે માધ્યમ (કણો) ની જરૂર છે. વેક્યૂમમાં, કોઈ કણો નથી, તેથી ઉષ્ણતા વહન દ્વારા પ્રવાસ કરી શકતી નથી. પ્રતિબિંબિત કોટિંગ વિકિરણ દ્વારા ઉષ્ણતા નુકસાનને રોકે છે. આ ત્રિ-સુરક્ષા તાપમાનને સ્થિર રાખે છે.",
+            "realExample": "80°C પર ગરમ ચાને સારા થર્મોસ ફ્લાસ્કમાં રેડો. 6 કલાક પછી, ચા હજુ પણ લગભગ 70-75°C પર છે! દીવાલો વચ્ચે વેક્યૂમ વહન દ્વારા ઉષ્ણતાને બહાર નીકળવાથી રોકે છે, તમારા પીણાને આખો દિવસ ગરમ રાખે છે.",
+            "benefits": [
+              "12+ કલાક સુધી પીણાને ગરમ રાખે છે",
+              "24+ કલાક સુધી ઠંડા પીણાને ઠંડા રાખે છે",
+              "કોઈ બાહ્ય શક્તિની જરૂર નથી",
+              "પોર્ટેબલ અને સુવિધાજનક",
+              "ઊર્જા બચાવે છે (પુનઃ ગરમ કરવાની જરૂર નથી)"
+            ],
+            "difficulty": "everyday"
+          },
+          {
+            "id": 3,
+            "title": "શિયાળાના કપડા - ઊનના સ્વેટર",
+            "category": "Clothing",
+            "description": "ઊનના કપડા હવાને ફસાવીને શિયાળામાં આપણને ગરમ રાખે છે, જે એક ઉત્કૃષ્ટ ઇન્સ્યુલેટર છે.",
+            "howItWorks": "ઊનના તંતુઓમાં એક ક્રિમ્પ્ડ, તરંગી સ્થાપત્ય હોય છે જે હજારો નાના હવાના પોકેટ બનાવે છે. આ પોકેટ તમારા શરીરની નજીક ગરમ હવાને ફસાવે છે. હવા ઉષ્ણતાનો ખૂબ ખરાબ વાહક હોવાથી, તે શરીરની ઉષ્ણતાને બહાર નીકળવાથી રોકે છે.",
+            "conductor": "કોઈ નહીં (તે જ બાબત છે!)",
+            "insulator": "ઊનના તંતુઓ અને ફસાયેલી હવા",
+            "scienceBehind": "હવાના અણુઓ ઘન પદાર્થોની તુલનામાં દૂર હોય છે. જ્યારે કણો દૂર હોય છે, ત્યારે તેઓ વહન દ્વારા એકબીજાને સરળતાથી ઉષ્ણતા પહોંચાડી શકતા નથી. ઊનમાં ફસાયેલી હવા થર્મલ બેરિયર તરીકે કાર્ય કરે છે, જેની થર્મલ વાહકતા માત્ર 0.024 W/mK છે.",
+            "realExample": "લદાખ અથવા શિમલામાં શિયાળા દરમિયાન (-10°C), લોકો ઊનના સ્વેટર અને શોલ પહેરે છે. ઊન શરીરના તાપમાન (37°C) દ્વારા ગરમ કરેલી હવાને ફસાવે છે. આ ગરમ હવાની પરત તેમને બાહ્ય ઠંડી હવાથી અલગ કરે છે, તેમને આરામદાયક રાખે છે.",
+            "benefits": [
+              "શરીરની ઉષ્ણતાને અસરકારક રીતે જાળવી રાખે છે",
+              "હળવું છતાં ગરમ",
+              "શ્વાસ લેવા યોગ્ય - ભેજને બહાર નીકળવા દે છે",
+              "પ્રાકૃતિક અને ટકાઉ સામગ્રી",
+              "થોડું ભીનું હોય ત્યારે પણ કામ કરે છે"
+            ],
+            "difficulty": "everyday"
+          },
+          {
+            "id": 4,
+            "title": "ડબલ-ગ્લેઝ્ડ વિંડોઝ",
+            "category": "Building",
+            "description": "તેમની વચ્ચે હવાના અંતરાલ સાથે કાચની બે પરતો ઠંડા આબોહવામાં ઘરો માટે ઉત્કૃષ્ટ ઇન્સ્યુલેશન પ્રદાન કરે છે.",
+            "howItWorks": "6-20mm હવાના અંતરાલ (અથવા આર્ગોન જેવી નિષ્ક્રિય ગેસ) દ્વારા અલગ કરાયેલા બે સમાંતર કાચના પેન. હવા/ગેસની પરત ઇન્સ્યુલેટર તરીકે કાર્ય કરે છે, શિયાળામાં ઉષ્ણતાને બહાર નીકળવાથી રોકે છે અને ઉનાળામાં પ્રવેશવાથી રોકે છે.",
+            "conductor": "કાચના પેન (પરંતુ કાચ માત્ર મધ્યમ વાહક છે)",
+            "insulator": "પેન વચ્ચે ફસાયેલી હવા અથવા આર્ગોન ગેસ",
+            "scienceBehind": "એક કાચનો પેન ઉષ્ણતાને ઝડપથી વહન કરે છે (થર્મલ વાહકતા ~1.0 W/mK). બે પેન વચ્ચે હવાનું અંતરાલ (0.024 W/mK) ઉમેરવાથી ઇન્સ્યુલેટિંગ પરત બનાવે છે જે ઉષ્ણતા સ્થાનાંતરણને નાટકીય રીતે ઘટાડે છે. હવા પરિભ્રમણ કરી શકતી નથી, તેથી સંવહન પણ ઓછામાં ઓછું થાય છે.",
+            "realExample": "દિલ્હી, મુંબઈ અને બેંગલોરમાં આધુનિક એપાર્ટમેન્ટ ડબલ-ગ્લેઝ્ડ વિંડોઝનો ઉપયોગ કરે છે. ઉનાળામાં, તેઓ બાહ્ય ઉષ્ણતા (45°C) ને અંદર પ્રવેશવાથી રોકે છે, ઓછા AC સાથે રૂમને 25°C પર રાખે છે. શિયાળામાં (પહાડી સ્ટેશન), તેઓ આંતરિક ઉષ્ણતાને બહાર નીકળવાથી રોકે છે.",
+            "benefits": [
+              "હીટિંગ/કૂલિંગ ખર્ચને 30-50% ઘટાડે છે",
+              "બાહ્ય અવાજને નોંધપાત્ર રીતે ઘટાડે છે",
+              "વિંડોઝ પર સંઘનનને રોકે છે",
+              "મિલકત મૂલ્ય વધારે છે",
+              "પર્યાવરણ મૈત્રીપૂર્ણ - ઓછી ઊર્જા ઉપયોગ"
+            ],
+            "difficulty": "everyday"
+          },
+          {
+            "id": 5,
+            "title": "રેફ્રિજરેટર ઇન્સ્યુલેશન",
+            "category": "Appliances",
+            "description": "રેફ્રિજરેટર અંદર ઠંડી હવાને રાખવા અને ગરમ હવાના પ્રવેશને રોકવા માટે જાડા ઇન્સ્યુલેશનનો ઉપયોગ કરે છે.",
+            "howItWorks": "રેફ્રિજરેટરની દીવાલોમાં પોલિયુરેથેન ફોમ અથવા ફાઇબરગ્લાસ ઇન્સ્યુલેશનની જાડી પરતો હોય છે. દરવાજાની સીલ (રબર ગેસ્કેટ) હવાના લીકેજને રોકે છે. આ ઇન્સ્યુલેશન ઠંડી હવા (2-4°C) ને રૂમ તાપમાનની હવા (25-30°C) થી અલગ રાખે છે.",
+            "conductor": "અંદર ધાતુ ઠંડક કોઇલ, ધાતુ બાહ્ય શરીર",
+            "insulator": "પોલિયુરેથેન ફોમ ઇન્સ્યુલેશન (50-100mm જાડું), રબર દરવાજો ગેસ્કેટ",
+            "scienceBehind": "પોલિયુરેથેન ફોમમાં લાખો નાના હવાના બબલ હોય છે, જે તેને ખૂબ ઓછી થર્મલ વાહકતા (0.02-0.03 W/mK) આપે છે. આનો અર્થ એ છે કે બહારથી ઉષ્ણતા ઠંડા આંતરિક ભાગ સુધી વહન કરવા માટે ખૂબ લાંબો સમય લે છે. કમ્પ્રેસરને તાપમાન જાળવવા માટે માત્ર ક્યારેક ચલાવવાની જરૂર પડે છે.",
+            "realExample": "તમારા રેફ્રિજરેટરને ખોલો અને દરવાજાને અનુભવો - તે જાડું છે (5-8 સેમી). તે જાડાઈ ઇન્સ્યુલેશન છે! તે વગર, કમ્પ્રેસર સતત ચાલશે, 10 ગણી વધુ વીજળીનો વપરાશ કરશે. સારું ઇન્સ્યુલેશન ઓછામાં ઓછી શક્તિનો ઉપયોગ કરીને દિવસો સુધી ખોરાકને તાજો રાખે છે.",
+            "benefits": [
+              "વીજળીના વપરાશને 40-60% ઘટાડે છે",
+              "સુસંગત તાપમાન જાળવે છે",
+              "ખોરાક લાંબા સમય સુધી તાજો રહે છે",
+              "કમ્પ્રેસર લાંબા સમય સુધી ચાલે છે (ઓછું ઘસારું)",
+              "ઓછા વીજળી બિલ"
+            ],
+            "difficulty": "everyday"
+          },
+          {
+            "id": 6,
+            "title": "ઇગ્લૂ - આર્કટિકના બરફના ઘરો",
+            "category": "Architecture",
+            "description": "બરફના બ્લોકથી બનેલા ઇગ્લૂ -40°C જેટલા ઓછા તાપમાનમાં ઉત્કૃષ્ટ ઇન્સ્યુલેશન પ્રદાન કરે છે.",
+            "howItWorks": "સંકુચિત બરફના બ્લોકમાં બરફના સ્ફટિકો વચ્ચે ફસાયેલી હવા હોય છે. ગુંબજ આકાર સપાટી વિસ્તારને ઘટાડે છે. શરીરની ઉષ્ણતા અને ક્યારેક નાનો તેલનો દીવો આંતરિક ભાગને ગરમ કરે છે. બરફનું ઇન્સ્યુલેશન આ ઉષ્ણતાને બહાર નીકળવાથી રોકે છે.",
+            "conductor": "બરફમાં બરફના સ્ફટિકો (ન્યૂનતમ)",
+            "insulator": "બરફની રચનામાં ફસાયેલી હવા",
+            "scienceBehind": "તાજો બરફ 90-95% ફસાયેલી હવા છે! જ્યારે બરફ મધ્યમ રીતે ઉષ્ણતા વહન કરે છે, બરફમાં હવાના પોકેટ તેને ઉત્કૃષ્ટ ઇન્સ્યુલેટર બનાવે છે (થર્મલ વાહકતા ~0.05-0.25 W/mK ઘનતાના આધારે). જાડી દીવાલો (30-60 સેમી) નોંધપાત્ર થર્મલ પ્રતિકાર પ્રદાન કરે છે.",
+            "realExample": "આર્કટિક પ્રદેશોમાં જ્યાં બાહ્ય તાપમાન -40°C છે, ઇગ્લૂની અંદર માત્ર શરીરની ઉષ્ણતા સાથે -7°C પર જાળવી શકાય છે, અથવા નાના દીવા સાથે 0-10°C. તે 30-50°C નો તફાવત છે! બરફની દીવાલો થર્મલ બેરિયર તરીકે કાર્ય કરે છે.",
+            "benefits": [
+              "અત્યંત ઠંડકમાં આશ્રય પ્રદાન કરે છે",
+              "સરળતાથી ઉપલબ્ધ સામગ્રી (બરફ) થી બનાવેલ",
+              "અસ્તિત્વ માટે કોઈ બાહ્ય હીટિંગની જરૂર નથી",
+              "ગુંબજ આકાર માળખાકીય રીતે મજબૂત છે",
+              "પ્રાકૃતિક અને ટકાઉ"
+            ],
+            "difficulty": "advanced"
+          },
+          {
+            "id": 7,
+            "title": "બાંધકામમાં પોલી ઇંટો",
+            "category": "Building",
+            "description": "આધુનિક ઇમારતો વધુ સારી થર્મલ ઇન્સ્યુલેશન માટે હવાના ગુહાઓ સાથે પોલી ઇંટોનો ઉપયોગ કરે છે.",
+            "howItWorks": "આ ઇંટોમાં પોલી જગ્યાઓ (30-60% વોલ્યુમ) હોય છે જે હવાથી ભરેલી હોય છે. જ્યારે દીવાલો બનાવવા માટે ઢગલો કરવામાં આવે છે, ત્યારે તેઓ બહુવિધ હવાની પરતો બનાવે છે. હવા ખરાબ વાહક હોવાથી દીવાલ દ્વારા ઉષ્ણતા સ્થાનાંતરણને રોકે છે.",
+            "conductor": "ઇંટની માટી/સિરામિક સામગ્રી",
+            "insulator": "ઇંટોની અંદર હવાથી ભરેલા ગુહા",
+            "scienceBehind": "ઘન ઇંટ: થર્મલ વાહકતા ~0.6-1.0 W/mK. હવા સાથે પોલી ઇંટ: અસરકારક થર્મલ વાહકતા ~0.2-0.4 W/mK. હવાના પોકેટ ઉષ્ણતા વહનના માર્ગને અવરોધિત કરે છે, દીવાલને વધુ સારો ઇન્સ્યુલેટર બનાવે છે.",
+            "realExample": "રાજસ્થાનમાં જ્યાં ઉનાળાનું તાપમાન 45-48°C સુધી પહોંચે છે, પોલી ઇંટોથી બનેલા ઘરો ઘન ઇંટના ઘરો કરતાં અંદર 5-7°C ઠંડા રહે છે. શિયાળામાં (5-10°C), તેઓ ઉષ્ણતાને વધુ સારી રીતે જાળવે છે, હીટિંગ ખર્ચ ઘટાડે છે.",
+            "benefits": [
+              "ઉનાળામાં કૂલિંગ ખર્ચને 25-35% ઘટાડે છે",
+              "શિયાળામાં હીટિંગ ખર્ચ ઘટાડે છે",
+              "ઘન ઇંટો કરતાં હળવા (સરળ બાંધકામ)",
+              "વધુ સારી અવાજ ઇન્સ્યુલેશન",
+              "પર્યાવરણ મૈત્રીપૂર્ણ (ઓછી સામગ્રીનો ઉપયોગ)"
+            ],
+            "difficulty": "everyday"
+          },
+          {
+            "id": 8,
+            "title": "થર્મોસ્ટેટ સાથે ઇલેક્ટ્રિક આયર્ન",
+            "category": "Appliances",
+            "description": "ઇલેક્ટ્રિક આયર્ન ઉષ્ણતા વહન માટે ધાતુના આધાર પ્લેટનો ઉપયોગ કરે છે અને સુરક્ષા માટે ઇન્સ્યુલેટેડ હેન્ડલનો ઉપયોગ કરે છે.",
+            "howItWorks": "ઇલેક્ટ્રિક હીટિંગ એલિમેન્ટ સીધા સંપર્ક (વહન) દ્વારા ધાતુ (એલ્યુમિનિયમ/સ્ટીલ) આધાર પ્લેટને ગરમ કરે છે. ઉષ્ણતા પ્લેટ પર સમાન રીતે ફેલાય છે. હેન્ડલ અને શરીર ગરમી પ્રતિરોધક પ્લાસ્ટિક (ઇન્સ્યુલેટર) થી બનાવવામાં આવે છે જેથી ઠંડા રહે.",
+            "conductor": "ધાતુ આધાર પ્લેટ (એલ્યુમિનિયમ અથવા સ્ટેનલેસ સ્ટીલ), હીટિંગ કોઇલ",
+            "insulator": "પ્લાસ્ટિક શરીર અને હેન્ડલ, ગરમી પ્રતિરોધક કોટિંગ",
+            "scienceBehind": "હીટિંગ એલિમેન્ટ 150-200°C સુધી પહોંચે છે. ધાતુઓમાં મુક્ત ઇલેક્ટ્રોન આંદોલનને કારણે આ ઉષ્ણતા ધાતુ પ્લેટ દ્વારા ઝડપથી વહન કરે છે. પ્લાસ્ટિક હેન્ડલ (થર્મલ વાહકતા ~0.2 W/mK) આ ઉષ્ણતાને તમારા હાથ સુધી પહોંચવાથી રોકે છે.",
+            "realExample": "કપડા આયર્ન કરતી વખતે, ધાતુ પ્લેટ 150°C પર હોય છે, કરચલીઓ દૂર કરવા માટે પૂરતી ગરમ. પરંતુ તમે આરામથી પ્લાસ્ટિક હેન્ડલને પકડી શકો છો જે સતત 30 મિનિટના ઉપયોગ પછી પણ રૂમ તાપમાન (30-35°C) ની નજીક રહે છે.",
+            "benefits": [
+              "કાર્યક્ષમ કરચલી દૂર કરવી",
+              "સંચાલન કરવા માટે સુરક્ષિત - ઠંડું હેન્ડલ",
+              "સમાન ઉષ્ણતા વિતરણ",
+              "થર્મોસ્ટેટ ઓવરહીટિંગને રોકે છે",
+              "ઊર્જા કાર્યક્ષમ"
+            ],
+            "difficulty": "everyday"
+          },
+          {
+            "id": 9,
+            "title": "ફાયરફાઇટર રક્ષણાત્મક ગિયર",
+            "category": "Safety",
+            "description": "વિશેષ સૂટ અદ્યતન ઇન્સ્યુલેટિંગ સામગ્રીનો ઉપયોગ કરીને અત્યંત ઉષ્ણતાથી ફાયરફાઇટર્સની રક્ષા કરે છે.",
+            "howItWorks": "બાહ્ય પરત (ઉષ્ણતા-પ્રતિબિંબિત), મધ્ય પરત (ઇન્સ્યુલેટિંગ), અને આંતરિક પરત (ભેજ બેરિયર) સાથે બહુ-પરત સૂટ. વિકિરણને પ્રતિબિંબિત કરે છે, વહનને અવરોધિત કરે છે, હવાના અંતરાલ પ્રદાન કરે છે.",
+            "conductor": "બાહ્ય પ્રતિબિંબિત ધાતુ પરત (અવશોષિત કરવાને બદલે પ્રતિબિંબિત કરે છે)",
+            "insulator": "એરામિડ ફાઇબર (Kevlar/Nomex), પરતો વચ્ચે હવાના અંતરાલ",
+            "scienceBehind": "એરામિડ ફાઇબરમાં અત્યંત ઓછી થર્મલ વાહકતા (~0.04 W/mK) હોય છે અને 400°C સુધી પીગળ્યા વગર સહન કરી શકે છે. હવાના અંતરાલ સાથે બહુવિધ પરતો થર્મલ પ્રતિકાર બનાવે છે. બાહ્ય પરત વિકિરણ ઉષ્ણતાને દૂર પ્રતિબિંબિત કરે છે.",
+            "realExample": "જ્યારે ફાયરફાઇટર્સ 800-1000°C પર ઇમારતમાં પ્રવેશ કરે છે, તેમના સૂટ 10-15 મિનિટ માટે ત્વચાના તાપમાનને 45°C નીચે રાખે છે. ઇન્સ્યુલેશન એટલું અસરકારક છે કે આગથી ઘેરાયેલા હોવા છતાં, તેઓ સુરક્ષિત રીતે કામ કરી શકે છે.",
+            "benefits": [
+              "અત્યંત ઉષ્ણતાથી જીવન-રક્ષક સુરક્ષા",
+              "ફાયરફાઇટર્સને ખતરનાક પરિસ્થિતિઓમાં કામ કરવાની મંજૂરી આપે છે",
+              "જલન અને ઉષ્ણતા તણાવથી રક્ષા",
+              "ટકાઉ અને પુનઃ ઉપયોગ યોગ્ય",
+              "રાસાયણિક જલનથી પણ રક્ષા"
+            ],
+            "difficulty": "advanced"
+          },
+          {
+            "id": 10,
+            "title": "સ્પેસક્રાફ્ટ હીટ શીલ્ડ",
+            "category": "Space Technology",
+            "description": "સ્પેસક્રાફ્ટ 1650°C ના પુનઃ પ્રવેશ તાપમાનથી બચવા માટે અદ્યતન થર્મલ સુરક્ષાનો ઉપયોગ કરે છે.",
+            "howItWorks": "વિશેષ સામગ્રીથી બનેલા એબ્લેટિવ હીટ શીલ્ડ જે ધીમે ધીમે બળી જાય છે (એબ્લેટ), ઉષ્ણતાને દૂર લઈ જાય છે. નીચે બહુવિધ ઇન્સ્યુલેટિંગ પરતો ક્રૂ કેબિનની રક્ષા કરે છે. ઉષ્ણતા અંદર વહન કરવાને બદલે નિયંત્રિત એબ્લેશન દ્વારા વિખેરાય છે.",
+            "conductor": "ન્યૂનતમ - બાહ્ય એબ્લેટિવ સામગ્રી જે બાષ્પીભવન માટે ડિઝાઇન કરવામાં આવી છે",
+            "insulator": "પ્રબલિત કાર્બન-કાર્બન કમ્પોઝિટ, સિલિકા ટાઇલ્સ, એબ્લેટિવ ફેનોલિક રેઝિન",
+            "scienceBehind": "પુનઃ પ્રવેશ દરમિયાન, વાતાવરણ સાથે ઘર્ષણ 1650°C+ તાપમાન બનાવે છે. એબ્લેટિવ સામગ્રીમાં ખૂબ ઓછી થર્મલ વાહકતા અને એન્ડોથર્મિક વિઘટન (ટૂટતી વખતે ઉષ્ણતા શોષે છે) હોય છે. આ ઉષ્ણતાને સ્પેસક્રાફ્ટના આંતરિક ભાગમાં વહન કરવાથી રોકે છે.",
+            "realExample": "જ્યારે ISRO ના Gaganyaan અથવા NASA ના સ્પેસ કેપ્સ્યુલ બાહ્ય શીલ્ડ ~1650°C સુધી પહોંચીને પૃથ્વીમાં પુનઃ પ્રવેશ કરે છે, ક્રૂ કેબિન રૂમ તાપમાન (25-30°C) ની નજીક રહે છે.",
+            "benefits": [
+              "પુનઃ પ્રવેશ દરમિયાન અસ્ટ્રોનોટ્સની રક્ષા કરે છે",
+              "અવકાશથી સુરક્ષિત વળતર સક્ષમ કરે છે",
+              "અત્યંત તાપમાન ઢાળનો સામનો કરે છે",
+              "અવકાશ અન્વેષણ માટે મહત્વપૂર્ણ"
+            ],
+            "difficulty": "advanced"
+          },
+          {
+            "id": 11,
+            "title": "હિમાલયી પરંપરાગત ઘરો",
+            "category": "Architecture",
+            "description": "ઠંડા હિમાલયી પ્રદેશોમાં ઘરો માટીના ઇન્સ્યુલેશન સાથે બેવડી લાકડાની દીવાલોનો ઉપયોગ કરે છે.",
+            "howItWorks": "15-30 સેમી અંતરાલ સાથે લાકડાની બે પરતો જે માટી, તૂડ, અથવા ગાયના ગોબરના મિશ્રણથી ભરેલી હોય છે. નાની વિંડોઝ ઉષ્ણતા નુકસાન ઘટાડે છે. નીચી છત ગરમ હવાને ફસાવે છે. પથ્થરની નીંદર જમીનની ઠંડકને રોકે છે.",
+            "conductor": "ઇરાદાપૂર્વક કોઈ ઉપયોગ નથી",
+            "insulator": "લાકડું (થર્મલ વાહકતા ~0.15 W/mK), માટી ભરવું (~0.25 W/mK), હવાના અંતરાલ",
+            "scienceBehind": "લાકડું અને માટી બંને ખરાબ વાહક છે. બેવડી-દીવાલ ડિઝાઇન બહુવિધ થર્મલ બેરિયર બનાવે છે. લાકડાની સેલ્યુલર સ્થાપત્ય હવાને ફસાવે છે. માટીની ઘનતા અને ભેજ સામગ્રી થર્મલ માસ અને ઇન્સ્યુલેશન પ્રદાન કરે છે.",
+            "realExample": "ઉત્તરકાશીના મોરી પ્રદેશમાં, જ્યાં શિયાળાનું તાપમાન ભારે બરફબારી સાથે -15°C સુધી ઘટે છે, આ પરંપરાગત ઘરો માત્ર નાના બુખારી (લાકડાનો સ્ટોવ) સાથે 10-15°C ના આંતરિક તાપમાનને જાળવે છે.",
+            "benefits": [
+              "અત્યંત ઠંડક (-20°C બહાર) માં ગરમ રહે છે",
+              "સ્થાનિક રીતે ઉપલબ્ધ સામગ્રીથી બનાવેલ",
+              "કોઈ આધુનિક હીટિંગની જરૂર નથી",
+              "સાંસ્કૃતિક રીતે પરંપરાગત અને ટકાઉ",
+              "રખાવટ સાથે દાયકાઓ સુધી ચાલે છે"
+            ],
+            "difficulty": "everyday"
+          },
+          {
+            "id": 12,
+            "title": "ઔદ્યોગિક ભઠ્ઠીઓ અને કિલ્ન",
+            "category": "Industry",
+            "description": "ઉચ્ચ-તાપમાન ઔદ્યોગિક ભઠ્ઠીઓ 1500°C સુધી ઉષ્ણતાને રોકવા માટે વિશેષ રિફ્રેક્ટરી ઇન્સ્યુલેશનનો ઉપયોગ કરે છે.",
+            "howItWorks": "બહુવિધ પરતો: આંતરિક રિફ્રેક્ટરી ઇંટો (ઉષ્ણતાનો સામનો કરે છે), મધ્ય ઇન્સ્યુલેટિંગ ફાયરબ્રિક્સ (ઉષ્ણતા લીકેજને રોકે છે), બાહ્ય સ્ટીલ શેલ. કાર્યક્ષમ સંચાલન માટે ઉષ્ણતા અંદર રાખવામાં આવે છે.",
+            "conductor": "આંતરિક કક્ષ જ્યાં ઉષ્ણતાની જરૂર છે",
+            "insulator": "રિફ્રેક્ટરી સિરામિક ઇંટો, સિરામિક ફાઇબર ઇન્સ્યુલેશન, હવાના અંતરાલ",
+            "scienceBehind": "રિફ્રેક્ટરી સામગ્રી (એલ્યુમિના, સિલિકા) માં ઉચ્ચ તાપમાન પર ઓછી થર્મલ વાહકતા હોય છે. સિરામિક ફાઇબર હવાના પોકેટ બનાવે છે. બહુવિધ પરતો થર્મલ પ્રતિકાર બનાવે છે, ઉષ્ણતા નુકસાનને રોકે છે.",
+            "realExample": "સ્ટીલ ભઠ્ઠી અંદર 1500°C પર કામ કરે છે. યોગ્ય ઇન્સ્યુલેશન (30-60 સેમી જાડી દીવાલો) સાથે, બાહ્ય સપાટી 60-80°C પર રહે છે - સ્પર્શ માટે ગરમ પરંતુ ખતરનાક નથી - ઇંધણ બચાવે છે અને સુરક્ષા સુધારે છે.",
+            "benefits": [
+              "વિશાળ ઊર્જા બચત (30-50% ઇંધણ ઘટાડો)",
+              "ઉચ્ચ સંચાલન તાપમાન સક્ષમ કરે છે",
+              "ભઠ્ઠીઓની આસપાસ કામદાર સુરક્ષા",
+              "ઝડપી હીટિંગ અને કૂલિંગ ચક્ર",
+              "લાંબી ભઠ્ઠી જીવનકાળ"
+            ],
+            "difficulty": "industrial"
           }
         ]
       }
+    }
+  },
+  "hi": {
+    "language": {
+      "en": "अंग्रेज़ी",
+      "hi": "हिंदी",
+      "gu": "गुजराती",
+      "selectorLabel": "भाषा चुनें"
     },
-    "Learn": "Learn",
-    "Practice": "Practice"
+    "nav": {
+      "logo": "ऊष्मा का संचार",
+      "tabs": {
+        "learn": "सीखें",
+        "practice": "अभ्यास करें",
+        "applications": "वास्तविक दुनिया के अनुप्रयोग"
+      }
+    },
+    "conduction": {
+      "header": {
+        "badge": "पाठ 7.1 - इंटरैक्टिव",
+        "title": "ऊष्मा का conduction",
+        "subtitle": "खींचो, छोड़ो और जानो ऊष्मा कैसे चलती है!"
+      },
+      "intro": {
+        "title": "खाना बनाने के बर्तन धातु के ही क्यों होते हैं?",
+        "para1": "पेम़ा ने अपनी दादी को बड़े धातु के पैन में थुक्पा बनाते देखा। उसने सोचा: \"खाना बनाने के बर्तन धातुओं से ही क्यों बने होते हैं?\"",
+        "para2": "आओ, इसे इंटरैक्टिव प्रयोगों से जानें!"
+      },
+      "activity": {
+        "sectionTitle": "इंटरैक्टिव: Heat Transfer प्रयोग",
+        "safetyTitle": "⚠️ सुरक्षा सावधानी",
+        "safetyText": "यह गतिविधि शिक्षक या किसी वयस्क की देखरेख में करनी चाहिए।",
+        "simulationTitle": "इंटरैक्टिव सिमुलेशन",
+        "controls": {
+          "start": "हीट शुरू करें",
+          "reset": "रीसेट",
+          "heatIntensity": "हीट की तीव्रता:"
+        },
+        "heatFlowDirection": "Heat Flow की दिशा →",
+        "pinCard": {
+          "pinLabel": "पिन",
+          "order": "क्रम: {order}",
+          "fallen": "✓ गिर गई",
+          "falling": "⏳ गिर रही है...",
+          "waiting": "प्रतीक्षा"
+        },
+        "observations": {
+          "title": "हमने क्या देखा?",
+          "item1Title": "पिन I सबसे पहले गिरती है",
+          "item1Body": "यह heat source के सबसे पास है, इसलिए मोम पहले पिघलता है",
+          "item2Title": "पिन क्रम से गिरती हैं (I → II → III → IV)",
+          "item2Body": "Heat धातु की पट्टी में आगे बढ़ती है",
+          "item3Title": "यह conduction सिद्ध करता है!",
+          "item3Body": "Heat गरम छोर से ठंडे छोर तक धातु में जाती है"
+        },
+        "table": {
+          "title": "तालिका 7.1: अवलोकन रिकॉर्ड",
+          "pin": "पिन",
+          "order": "क्रम",
+          "status": "स्थिति",
+          "reason": "कारण",
+          "fallen": "✓ गिर गई",
+          "notFallen": "नहीं गिरी",
+          "reasonClosest": "Heat source के सबसे पास",
+          "reasonProgress": "Heat धीरे-धीरे यहाँ पहुँचती है",
+          "reasonFarthest": "Heat source से सबसे दूर"
+        }
+      },
+      "testing": {
+        "sectionTitle": "सामग्री जाँचें: Conductor या Insulator?",
+        "callout": "नीचे की सामग्री पर क्लिक करें या उन्हें टेस्ट ज़ोन में खींचें!",
+        "zoneTitle": "Heat Transfer टेस्ट ज़ोन",
+        "dropHere": "टेस्ट करने के लिए यहाँ छोड़ें",
+        "heatSource": "Heat Source",
+        "heatPasses": "Heat पहुँचती है!",
+        "heatBlocked": "Heat रुक जाती है!",
+        "testResult": {
+          "title": "टेस्ट परिणाम",
+          "material": "सामग्री:",
+          "type": "प्रकार:",
+          "good": "⚡ अच्छा conductor",
+          "poor": "🛡️ कमजोर conductor",
+          "heatPasses": "✓ Heat पार होती है",
+          "heatStops": "✗ Heat रुकती है",
+          "goodDesc": "यह सामग्री heat को आसानी से बहने देती है, इसलिए बर्तनों में उपयोगी है।",
+          "poorDesc": "यह सामग्री heat को रोकती है, इसलिए हैंडल और इंसुलेशन में उपयोगी है।"
+        },
+        "quickTest": "त्वरित परीक्षण:",
+        "tested": "परीक्षित ({count}/{total}):"
+      },
+      "materials": {
+        "steel": "स्टील (Steel)",
+        "copper": "तांबा (Copper)",
+        "aluminum": "एल्यूमिनियम (Aluminum)",
+        "wood": "लकड़ी (Wood)",
+        "plastic": "प्लास्टिक (Plastic)",
+        "glass": "काँच (Glass)"
+      },
+      "takeaways": {
+        "title": "मुख्य बातें",
+        "conductionTitle": "Conduction",
+        "conductionPoints": [
+          "Heat गरम से ठंडे की ओर जाती है",
+          "कण अपने पड़ोसी को heat देते हैं",
+          "कण जगह पर ही रहते हैं",
+          "मुख्यतः ठोस में होता है"
+        ],
+        "goodTitle": "अच्छे Conductors",
+        "goodPoints": [
+          "धातुएँ: Steel, Copper, Aluminum",
+          "Heat आसानी से जाने देती हैं",
+          "खाना पकाने के बर्तनों में उपयोग",
+          "Heat जल्दी पहुँचाती हैं"
+        ],
+        "poorTitle": "कमज़ोर Conductors",
+        "poorPoints": [
+          "लकड़ी, काँच, प्लास्टिक",
+          "Heat का प्रवाह रोकते हैं",
+          "हैंडल, कप में उपयोग",
+          "Heat अंदर/बाहर रोकते हैं"
+        ],
+        "footer": "Conduction में heat चलती है, पर कण अपनी जगह नहीं छोड़ते!"
+      },
+      "practice": {
+        "ui": {
+          "questionLabel": "प्रश्न {current} / {total}",
+          "difficulty": {
+            "easy": "आसान",
+            "medium": "मध्यम",
+            "hard": "कठिन"
+          },
+          "pointsLabel": "{points} अंक",
+          "fillBlankHint": "रिक्त स्थान भरने के लिए सही विकल्प चुनें",
+          "matchHint": "हर वस्तु को उसके सही वर्ग से मिलाएँ:",
+          "materials": "सामग्री:",
+          "categories": "वर्ग:",
+          "selectCategory": "वर्ग चुनें...",
+          "orderingHint": "क्रम ठीक करने के लिए तीर बटन का उपयोग करें:",
+          "classifyHint": "हर सामग्री को सही वर्ग में रखें:",
+          "goodConductor": "अच्छा Conductor",
+          "poorConductor": "कमज़ोर Conductor",
+          "goodConductorLabel": "⚡ अच्छा Conductor",
+          "poorConductorLabel": "🛡️ कमज़ोर Conductor",
+          "noItemsClassified": "अभी कोई वस्तु वर्गीकृत नहीं हुई",
+          "noItemsMatched": "अभी कोई वस्तु मेल नहीं खाई",
+          "previousButton": "← पिछला",
+          "submitButton": "उत्तर जाँचें",
+          "nextButton": "अगला प्रश्न",
+          "tryAgainButton": "फिर से कोशिश करें",
+          "completeTitle": "Practice समाप्त! 🎉",
+          "scoreSummary": "आपने {total} में से {score} अंक प्राप्त किए",
+          "questionsAnswered": "दिए गए प्रश्न",
+          "scorePercentage": "प्रतिशत अंक",
+          "gradeLabel": "ग्रेड",
+          "startOverButton": "शुरू से करें",
+          "correctTitle": "🎉 सही उत्तर!",
+          "incorrectTitle": "❌ गलत उत्तर",
+          "correctAnswerLabel": "सही उत्तर:",
+          "progressLabel": "प्रगति",
+          "progressQuestions": "प्रश्न",
+          "headerTitle": "प्रैक्टिस मोड",
+          "headerSubtitle": "टॉपिक 7.1: ऊष्मा का संचरण",
+          "noQuestionsTitle": "प्रैक्टिस प्रश्न जल्द ही जोड़े जाएंगे",
+          "noQuestionsBody": "इस भाषा के लिए प्रैक्टिस प्रश्न अभी सेट नहीं किए गए हैं। कृपया अंग्रेज़ी चुनें या बाद में दोबारा देखें।"
+        },
+        "questions": [
+          {
+            "id": 1,
+            "type": "mcq",
+            "question": "किसी वस्तु के गर्म हिस्से से ठंडे हिस्से में ऊष्मा स्थानांतरण की प्रक्रिया को क्या कहा जाता है?",
+            "options": [
+              "संवहन",
+              "चालन",
+              "विकिरण",
+              "वाष्पीकरण"
+            ],
+            "correctAnswer": "चालन",
+            "explanation": "चालन वह प्रक्रिया है जहाँ ऊष्मा सीधे संपर्क के माध्यम से गर्म हिस्से से ठंडे हिस्से में स्थानांतरित होती है। कण अपनी स्थिति से हिले बिना पड़ोसी कणों को ऊष्मा पहुंचाते हैं।",
+            "difficulty": "easy",
+            "points": 10
+          },
+          {
+            "id": 2,
+            "type": "mcq",
+            "question": "गतिविधि 7.1 में, जब धातु की पट्टी को गर्म किया जाता है, तो कौन सा पिन पहले गिरता है?",
+            "options": [
+              "पिन IV (ऊष्मा से सबसे दूर)",
+              "पिन II",
+              "पिन III",
+              "पिन I (ऊष्मा के सबसे निकट)"
+            ],
+            "correctAnswer": "पिन I (ऊष्मा के सबसे निकट)",
+            "explanation": "पिन I पहले गिरता है क्योंकि यह ऊष्मा स्रोत के सबसे निकट है। ऊष्मा धातु की पट्टी के साथ यात्रा करती है और पहले पिन I तक पहुंचती है, जो इसे पकड़ने वाली मोम को पिघला देती है।",
+            "difficulty": "easy",
+            "points": 10
+          },
+          {
+            "id": 3,
+            "type": "mcq",
+            "question": "खाना पकाने के बर्तन धातु से क्यों बनाए जाते हैं?",
+            "options": [
+              "धातु सस्ती होती हैं",
+              "धातु ऊष्मा की अच्छी चालक होती हैं",
+              "धातु चमकदार होती हैं",
+              "धातु हल्की होती हैं"
+            ],
+            "correctAnswer": "धातु ऊष्मा की अच्छी चालक होती हैं",
+            "explanation": "धातु ऊष्मा को आसानी से अपने से गुजरने देती हैं, जिससे वे खाना पकाने के लिए उत्कृष्ट होती हैं क्योंकि चूल्हे से ऊष्मा जल्दी से भोजन तक पहुंचती है।",
+            "difficulty": "easy",
+            "points": 10
+          },
+          {
+            "id": 4,
+            "type": "mcq",
+            "question": "निम्नलिखित में से कौन ऊष्मा का खराब चालक है?",
+            "options": [
+              "तांबा",
+              "एल्यूमीनियम",
+              "लकड़ी",
+              "लोहा"
+            ],
+            "correctAnswer": "लकड़ी",
+            "explanation": "लकड़ी ऊष्मा का खराब चालक (अवरोधक) है। यह ऊष्मा को आसानी से गुजरने नहीं देती, इसीलिए बर्तनों के लिए लकड़ी के हैंडल का उपयोग किया जाता है।",
+            "difficulty": "easy",
+            "points": 10
+          },
+          {
+            "id": 5,
+            "type": "mcq",
+            "question": "चालन प्रक्रिया में, कणों के साथ क्या होता है?",
+            "options": [
+              "कण गर्म से ठंडे क्षेत्र में चले जाते हैं",
+              "कण अपनी स्थिति में रहते हैं और पड़ोसियों को ऊष्मा पहुंचाते हैं",
+              "कण वाष्पित हो जाते हैं",
+              "कण ठंडे हो जाते हैं"
+            ],
+            "correctAnswer": "कण अपनी स्थिति में रहते हैं और पड़ोसियों को ऊष्मा पहुंचाते हैं",
+            "explanation": "चालन के दौरान, कण कंपन करते हैं और पड़ोसी कणों को ऊर्जा स्थानांतरित करते हैं लेकिन अपनी स्थिति से नहीं हिलते। यही चालन को संवहन से अलग बनाता है।",
+            "difficulty": "medium",
+            "points": 15
+          },
+          {
+            "id": 6,
+            "type": "mcq",
+            "question": "चाय या कॉफी पोर्सिलेन कप में धातु के कप की तुलना में अधिक समय तक गर्म क्यों रहती है?",
+            "options": [
+              "पोर्सिलेन सुंदर है",
+              "पोर्सिलेन ऊष्मा का खराब चालक है",
+              "पोर्सिलेन ऊष्मा का अच्छा चालक है",
+              "धातु पेय को ठंडा करती है"
+            ],
+            "correctAnswer": "पोर्सिलेन ऊष्मा का खराब चालक है",
+            "explanation": "पोर्सिलेन (मिट्टी) ऊष्मा का खराब चालक है, इसलिए यह पेय से ऊष्मा को जल्दी से बाहर नहीं निकलने देता। धातु, एक अच्छा चालक होने के नाते, ऊष्मा को जल्दी से दूर स्थानांतरित कर देगी।",
+            "difficulty": "medium",
+            "points": 15
+          },
+          {
+            "id": 7,
+            "type": "mcq",
+            "question": "जलने से बचाने के लिए खाना पकाने के बर्तनों के हैंडल के लिए किस सामग्री का उपयोग किया जाता है?",
+            "options": [
+              "स्टील",
+              "तांबा",
+              "लकड़ी या प्लास्टिक (अवरोधक)",
+              "एल्यूमीनियम"
+            ],
+            "correctAnswer": "लकड़ी या प्लास्टिक (अवरोधक)",
+            "explanation": "हैंडल लकड़ी या प्लास्टिक जैसे अवरोधकों से बनाए जाते हैं क्योंकि वे ऊष्मा के खराब चालक होते हैं और हैंडल को पकड़ने के लिए बहुत गर्म होने से रोकते हैं।",
+            "difficulty": "medium",
+            "points": 15
+          },
+          {
+            "id": 8,
+            "type": "mcq",
+            "question": "हम सर्दियों में ऊनी कपड़े पहनना क्यों पसंद करते हैं?",
+            "options": [
+              "ऊन ऊष्मा उत्पन्न करती है",
+              "ऊन हवा को फंसाती है जो ऊष्मा का खराब चालक है",
+              "ऊन जलरोधक है",
+              "ऊन भारी है"
+            ],
+            "correctAnswer": "ऊन हवा को फंसाती है जो ऊष्मा का खराब चालक है",
+            "explanation": "ऊनी कपड़े में हवा के पॉकेट होते हैं जो हवा को फंसाते हैं। चूंकि हवा ऊष्मा का बहुत खराब चालक है, यह हमारे शरीर की ऊष्मा को बाहर निकलने से रोकती है, हमें गर्म रखती है।",
+            "difficulty": "medium",
+            "points": 15
+          },
+          {
+            "id": 9,
+            "type": "true-false",
+            "question": "ठोस पदार्थों में, ऊष्मा स्थानांतरण मुख्य रूप से चालन की प्रक्रिया के माध्यम से होता है।",
+            "options": [
+              "सत्य",
+              "असत्य"
+            ],
+            "correctAnswer": "सत्य",
+            "explanation": "सही! ठोस पदार्थों में, कण निकट से पैक होते हैं और ऊष्मा मुख्य रूप से चालन के माध्यम से स्थानांतरित होती है क्योंकि कण अपने पड़ोसियों को ऊर्जा पहुंचाते हैं।",
+            "difficulty": "easy",
+            "points": 10
+          },
+          {
+            "id": 10,
+            "type": "true-false",
+            "question": "कांच और लकड़ी ऊष्मा के अच्छे चालक हैं।",
+            "options": [
+              "सत्य",
+              "असत्य"
+            ],
+            "correctAnswer": "असत्य",
+            "explanation": "गलत! कांच और लकड़ी ऊष्मा के खराब चालक (अवरोधक) हैं। वे ऊष्मा को आसानी से गुजरने नहीं देते।",
+            "difficulty": "easy",
+            "points": 10
+          },
+          {
+            "id": 11,
+            "type": "true-false",
+            "question": "चालन के दौरान, कण गर्म क्षेत्र से ठंडे क्षेत्र में चले जाते हैं।",
+            "options": [
+              "सत्य",
+              "असत्य"
+            ],
+            "correctAnswer": "असत्य",
+            "explanation": "गलत! चालन के दौरान, कण अपनी स्थिति से नहीं हिलते। वे कंपन करते हैं और अपनी जगह पर रहते हुए पड़ोसी कणों को ऊर्जा पहुंचाते हैं।",
+            "difficulty": "medium",
+            "points": 15
+          },
+          {
+            "id": 12,
+            "type": "true-false",
+            "question": "दो पतली कंबल एक मोटी कंबल से अधिक गर्मी प्रदान करते हैं क्योंकि उनके बीच फंसी हवा अवरोधक के रूप में कार्य करती है।",
+            "options": [
+              "सत्य",
+              "असत्य"
+            ],
+            "correctAnswer": "सत्य",
+            "explanation": "सही! दो कंबलों के बीच की हवा की परत अवरोधक (खराब चालक) के रूप में कार्य करती है, ऊष्मा हानि को रोकती है और बेहतर गर्मी प्रदान करती है।",
+            "difficulty": "medium",
+            "points": 15
+          },
+          {
+            "id": 13,
+            "type": "fill-blank",
+            "question": "जो सामग्री ऊष्मा को आसानी से अपने से गुजरने देती है, उन्हें ऊष्मा के _____ कहा जाता है।",
+            "options": [
+              "अच्छे चालक",
+              "खराब चालक",
+              "अवरोधक",
+              "रेडिएटर"
+            ],
+            "correctAnswer": "अच्छे चालक",
+            "explanation": "अच्छे चालक ऊष्मा को आसानी से गुजरने देते हैं। तांबा, एल्यूमीनियम और लोहा जैसी धातुएं ऊष्मा के अच्छे चालक हैं।",
+            "difficulty": "easy",
+            "points": 10
+          },
+          {
+            "id": 14,
+            "type": "fill-blank",
+            "question": "जो सामग्री ऊष्मा को आसानी से अपने से गुजरने नहीं देती, उन्हें ऊष्मा के _____ कहा जाता है।",
+            "options": [
+              "अच्छे चालक",
+              "खराब चालक",
+              "धातु",
+              "ठोस"
+            ],
+            "correctAnswer": "खराब चालक",
+            "explanation": "खराब चालक (जिन्हें अवरोधक भी कहा जाता है) ऊष्मा को आसानी से गुजरने नहीं देते। उदाहरणों में लकड़ी, प्लास्टिक, कांच और हवा शामिल हैं।",
+            "difficulty": "easy",
+            "points": 10
+          },
+          {
+            "id": 15,
+            "type": "fill-blank",
+            "question": "_____ ऊष्मा का बहुत खराब चालक है, इसीलिए इसे हमें गर्म रखने के लिए ऊनी कपड़ों में फंसाया जाता है।",
+            "options": [
+              "पानी",
+              "धातु",
+              "हवा",
+              "कांच"
+            ],
+            "correctAnswer": "हवा",
+            "explanation": "हवा ऊष्मा का बहुत खराब चालक है। ऊनी कपड़ा अपने छिद्रों में हवा को फंसाता है, जो हमारे शरीर से ऊष्मा हानि को रोकता है।",
+            "difficulty": "medium",
+            "points": 15
+          },
+          {
+            "id": 16,
+            "type": "match",
+            "question": "सामग्रियों को उनकी ऊष्मा चालन संपत्ति के साथ मिलाएं:",
+            "options": [
+              "स्टील|अच्छा चालक",
+              "लकड़ी|खराब चालक",
+              "तांबा|अच्छा चालक",
+              "प्लास्टिक|खराब चालक"
+            ],
+            "correctAnswer": [
+              "स्टील|अच्छा चालक",
+              "लकड़ी|खराब चालक",
+              "तांबा|अच्छा चालक",
+              "प्लास्टिक|खराब चालक"
+            ],
+            "explanation": "धातु (स्टील, तांबा) अच्छे चालक हैं। अधातु (लकड़ी, प्लास्टिक) खराब चालक/अवरोधक हैं।",
+            "difficulty": "medium",
+            "points": 20
+          },
+          {
+            "id": 17,
+            "type": "ordering",
+            "question": "जब धातु की पट्टी को गर्म किया जाता है तो पिनों को उस क्रम में व्यवस्थित करें जिसमें वे गिरते हैं (पहले से अंतिम तक):",
+            "options": [
+              "पिन IV",
+              "पिन I",
+              "पिन III",
+              "पिन II"
+            ],
+            "correctAnswer": [
+              "पिन I",
+              "पिन II",
+              "पिन III",
+              "पिन IV"
+            ],
+            "explanation": "पिन ऊष्मा स्रोत के निकटतम से सबसे दूर तक के क्रम में गिरते हैं: पिन I (निकटतम) → पिन II → पिन III → पिन IV (सबसे दूर)।",
+            "difficulty": "medium",
+            "points": 20
+          },
+          {
+            "id": 18,
+            "type": "classify",
+            "question": "निम्नलिखित सामग्रियों को अच्छे चालक या खराब चालक (अवरोधक) के रूप में वर्गीकृत करें:",
+            "options": [
+              "लोहा",
+              "कांच",
+              "एल्यूमीनियम",
+              "हवा",
+              "रबर",
+              "पीतल"
+            ],
+            "correctAnswer": [
+              "लोहा|अच्छा चालक",
+              "कांच|खराब चालक",
+              "एल्यूमीनियम|अच्छा चालक",
+              "हवा|खराब चालक",
+              "रबर|खराब चालक",
+              "पीतल|अच्छा चालक"
+            ],
+            "explanation": "धातु (लोहा, एल्यूमीनियम, पीतल) अच्छे चालक हैं। अधातु और हवा (कांच, हवा, रबर) खराब चालक हैं।",
+            "difficulty": "hard",
+            "points": 25
+          },
+          {
+            "id": 19,
+            "type": "mcq",
+            "question": "ठंडे क्षेत्रों में घर हवा युक्त खोखली ईंटों से क्यों बनाए जाते हैं?",
+            "options": [
+              "उन्हें हल्का बनाने के लिए",
+              "खोखली ईंटों में हवा अवरोधक के रूप में कार्य करती है जो ऊष्मा हानि को रोकती है",
+              "सामग्री लागत बचाने के लिए",
+              "खोखली ईंटें मजबूत होती हैं"
+            ],
+            "correctAnswer": "खोखली ईंटों में हवा अवरोधक के रूप में कार्य करती है जो ऊष्मा हानि को रोकती है",
+            "explanation": "खोखली ईंटें अंदर हवा को फंसाती हैं। चूंकि हवा ऊष्मा का खराब चालक है, यह सर्दियों में घर से ऊष्मा को बाहर निकलने से रोकती है और गर्मियों में इसे ठंडा रखती है।",
+            "difficulty": "hard",
+            "points": 20
+          },
+          {
+            "id": 20,
+            "type": "mcq",
+            "question": "हिमालयी क्षेत्रों में, घरों में दो लकड़ी की परतों के साथ उनके बीच मिट्टी से बनी दीवारें होती हैं। क्यों?",
+            "options": [
+              "सजावट के लिए",
+              "लकड़ी और मिट्टी खराब चालक हैं जो ऊष्मा हानि को रोकते हैं",
+              "दीवारों को मजबूत बनाने के लिए",
+              "लकड़ी आसानी से उपलब्ध है"
+            ],
+            "correctAnswer": "लकड़ी और मिट्टी खराब चालक हैं जो ऊष्मा हानि को रोकते हैं",
+            "explanation": "लकड़ी और मिट्टी दोनों ऊष्मा के खराब चालक हैं। अवरोधक सामग्रियों के साथ यह दोहरी-परत निर्माण अत्यधिक ठंडे जलवायु में घरों को गर्म रखने में मदद करता है।",
+            "difficulty": "hard",
+            "points": 20
+          }
+        ]
+      },
+      "realWorld": {
+        "filterTitle": "श्रेणी से फ़िल्टर करें:",
+        "allApplications": "सभी अनुप्रयोग",
+        "showing": "दिखा रहे हैं",
+        "application": "अनुप्रयोग",
+        "applicationsPlural": "अनुप्रयोग",
+        "howItWorks": "यह कैसे काम करता है:",
+        "goodConductorUsed": "⚡ उपयोग किया गया अच्छा Conductor:",
+        "insulatorUsed": "🛡️ उपयोग किया गया Insulator:",
+        "scienceBehind": "🔬 इसके पीछे का विज्ञान:",
+        "realLifeExample": "🌟 वास्तविक जीवन उदाहरण:",
+        "benefitsImpact": "✨ लाभ और प्रभाव:",
+        "difficulty": {
+          "everyday": "दैनिक जीवन",
+          "industrial": "औद्योगिक",
+          "advanced": "उन्नत तकनीक"
+        },
+        "categories": {
+          "all": "सभी अनुप्रयोग",
+          "Kitchen": "रसोई",
+          "Clothing": "कपड़े",
+          "Building": "भवन",
+          "Appliances": "उपकरण",
+          "Architecture": "वास्तुकला",
+          "Safety": "सुरक्षा",
+          "Industry": "उद्योग",
+          "Space Technology": "अंतरिक्ष प्रौद्योगिकी"
+        },
+        "applications": [
+          {
+            "id": 1,
+            "title": "खाना पकाने के बर्तन और कुकवेयर",
+            "category": "Kitchen",
+            "description": "बर्तन, पैन और खाना पकाने के बर्तन भोजन को कुशलतापूर्वक पकाने के लिए चालक और अवरोधक दोनों का उपयोग करते हैं जबकि हमारे हाथों की सुरक्षा करते हैं।",
+            "howItWorks": "धातु का शरीर (तांबा, एल्यूमीनियम या स्टील) चूल्हे से भोजन तक ऊष्मा को जल्दी और समान रूप से चालन करता है। हैंडल लकड़ी या प्लास्टिक (अवरोधक) से बना होता है ताकि ठंडा और पकड़ने में सुरक्षित रहे।",
+            "conductor": "धातु का शरीर (तांबा, एल्यूमीनियम, स्टेनलेस स्टील)",
+            "insulator": "लकड़ी या प्लास्टिक के हैंडल, सिलिकॉन ग्रिप",
+            "scienceBehind": "धातुओं में मुक्त इलेक्ट्रॉन होते हैं जो आसानी से चल सकते हैं, जिससे चालन के माध्यम से तेजी से ऊष्मा स्थानांतरण होता है। लकड़ी और प्लास्टिक जैसी अधातु में कसकर बंधे इलेक्ट्रॉन होते हैं, जो ऊष्मा प्रवाह को अवरुद्ध करते हैं और हैंडल को ठंडा रखते हैं।",
+            "realExample": "एक विशिष्ट फ्राइंग पैन में एल्यूमीनियम या स्टील का आधार होता है जो चूल्हे पर रखने पर जल्दी गर्म हो जाता है। ऊष्मा धातु के माध्यम से चालन करती है और अंडे या सब्जियों को पकाती है। इस बीच, बेकेलाइट या लकड़ी का हैंडल नंगे हाथों से पकड़ने के लिए पर्याप्त ठंडा रहता है।",
+            "benefits": [
+              "तेज और समान पकाना",
+              "ऊर्जा कुशल - कम पकाने का समय",
+              "पकाने के दौरान पकड़ने में सुरक्षित",
+              "भोजन समान रूप से पकता है",
+              "जलने और दुर्घटनाओं को रोकता है"
+            ],
+            "difficulty": "everyday"
+          },
+          {
+            "id": 2,
+            "title": "थर्मस फ्लास्क (वैक्यूम फ्लास्क)",
+            "category": "Kitchen",
+            "description": "अवरोधन सिद्धांतों का उपयोग करके गर्म तरल पदार्थों को गर्म और ठंडे तरल पदार्थों को घंटों तक ठंडा रखता है।",
+            "howItWorks": "दोहरी दीवार वाला कंटेनर जिसमें दीवारों के बीच वैक्यूम (कोई हवा नहीं) होता है। आंतरिक दीवार परावर्तक होती है। वैक्यूम चालन को रोकता है, परावर्तन विकिरण को रोकता है, और सीलबंद डिज़ाइन संवहन को रोकता है।",
+            "conductor": "तरल पदार्थ रखने के लिए आंतरिक धातु कंटेनर",
+            "insulator": "दीवारों के बीच वैक्यूम (सबसे अच्छा अवरोधक), प्लास्टिक/कॉर्क स्टॉपर, बाहरी सुरक्षात्मक केस",
+            "scienceBehind": "ऊष्मा स्थानांतरण के लिए चालन के लिए एक माध्यम (कण) की आवश्यकता होती है। वैक्यूम में, कोई कण नहीं होते, इसलिए ऊष्मा चालन द्वारा यात्रा नहीं कर सकती। परावर्तक कोटिंग विकिरण द्वारा ऊष्मा हानि को रोकती है। यह त्रि-सुरक्षा तापमान को स्थिर रखती है।",
+            "realExample": "80°C पर गर्म चाय को एक अच्छे थर्मस फ्लास्क में डालें। 6 घंटे बाद, चाय अभी भी लगभग 70-75°C पर है! दीवारों के बीच वैक्यूम चालन के माध्यम से ऊष्मा को बाहर निकलने से रोकता है, आपके पेय को पूरे दिन गर्म रखता है।",
+            "benefits": [
+              "12+ घंटे तक पेय को गर्म रखता है",
+              "24+ घंटे तक ठंडे पेय को ठंडा रखता है",
+              "कोई बाहरी बिजली की आवश्यकता नहीं",
+              "पोर्टेबल और सुविधाजनक",
+              "ऊर्जा बचाता है (पुनः गर्म करने की आवश्यकता नहीं)"
+            ],
+            "difficulty": "everyday"
+          },
+          {
+            "id": 3,
+            "title": "सर्दियों के कपड़े - ऊनी स्वेटर",
+            "category": "Clothing",
+            "description": "ऊनी कपड़े हवा को फंसाकर सर्दियों में हमें गर्म रखते हैं, जो एक उत्कृष्ट अवरोधक है।",
+            "howItWorks": "ऊन के रेशों में एक कुंचित, लहरदार संरचना होती है जो हजारों छोटे हवा के पॉकेट बनाती है। ये पॉकेट आपके शरीर के करीब गर्म हवा को फंसाते हैं। चूंकि हवा ऊष्मा का बहुत खराब चालक है, यह शरीर की ऊष्मा को बाहर निकलने से रोकती है।",
+            "conductor": "कोई नहीं (यही बात है!)",
+            "insulator": "ऊन के रेशे और फंसी हवा",
+            "scienceBehind": "हवा के अणु ठोस पदार्थों की तुलना में दूर होते हैं। जब कण दूर होते हैं, तो वे चालन के माध्यम से एक दूसरे को आसानी से ऊष्मा नहीं पहुंचा सकते। ऊन में फंसी हवा एक थर्मल बैरियर की तरह कार्य करती है, जिसकी थर्मल चालकता केवल 0.024 W/mK होती है।",
+            "realExample": "लद्दाख या शिमला में सर्दियों के दौरान (-10°C), लोग ऊनी स्वेटर और शॉल पहनते हैं। ऊन शरीर के तापमान (37°C) द्वारा गर्म की गई हवा को फंसाती है। यह गर्म हवा की परत उन्हें बाहरी ठंडी हवा से अलग करती है, उन्हें आरामदायक रखती है।",
+            "benefits": [
+              "शरीर की ऊष्मा को प्रभावी ढंग से बनाए रखता है",
+              "हल्का लेकिन गर्म",
+              "सांस लेने योग्य - नमी को बाहर निकलने देता है",
+              "प्राकृतिक और टिकाऊ सामग्री",
+              "थोड़ा नम होने पर भी काम करता है"
+            ],
+            "difficulty": "everyday"
+          },
+          {
+            "id": 4,
+            "title": "डबल-ग्लेज़्ड खिड़कियां",
+            "category": "Building",
+            "description": "उनके बीच हवा के अंतराल के साथ कांच की दो परतें ठंडे जलवायु में घरों के लिए उत्कृष्ट अवरोधन प्रदान करती हैं।",
+            "howItWorks": "6-20mm हवा के अंतराल (या आर्गन जैसी अक्रिय गैस) से अलग किए गए दो समानांतर कांच के पैन। हवा/गैस की परत एक अवरोधक के रूप में कार्य करती है, सर्दियों में ऊष्मा को बाहर निकलने से रोकती है और गर्मियों में प्रवेश करने से रोकती है।",
+            "conductor": "कांच के पैन (लेकिन कांच केवल एक मध्यम चालक है)",
+            "insulator": "पैन के बीच फंसी हवा या आर्गन गैस",
+            "scienceBehind": "एक एकल कांच का पैन ऊष्मा को जल्दी से चालन करता है (थर्मल चालकता ~1.0 W/mK)। दो पैन के बीच एक हवा का अंतराल (0.024 W/mK) जोड़ने से एक अवरोधक परत बनती है जो ऊष्मा स्थानांतरण को नाटकीय रूप से कम करती है। हवा परिसंचारित नहीं हो सकती, इसलिए संवहन भी कम से कम हो जाता है।",
+            "realExample": "दिल्ली, मुंबई और बैंगलोर में आधुनिक अपार्टमेंट डबल-ग्लेज़्ड खिड़कियों का उपयोग करते हैं। गर्मियों में, वे बाहरी ऊष्मा (45°C) को अंदर प्रवेश करने से रोकते हैं, कम AC के साथ कमरों को 25°C पर रखते हैं। सर्दियों में (पहाड़ी स्टेशन), वे आंतरिक ऊष्मा को बाहर निकलने से रोकते हैं।",
+            "benefits": [
+              "हीटिंग/कूलिंग लागत को 30-50% कम करता है",
+              "बाहरी शोर को काफी कम करता है",
+              "खिड़कियों पर संघनन को रोकता है",
+              "संपत्ति मूल्य बढ़ाता है",
+              "पर्यावरण के अनुकूल - कम ऊर्जा उपयोग"
+            ],
+            "difficulty": "everyday"
+          },
+          {
+            "id": 5,
+            "title": "रेफ्रिजरेटर अवरोधन",
+            "category": "Appliances",
+            "description": "रेफ्रिजरेटर अंदर ठंडी हवा को रखने और गर्म हवा के प्रवेश को रोकने के लिए मोटी अवरोधन का उपयोग करते हैं।",
+            "howItWorks": "रेफ्रिजरेटर की दीवारों में पॉलीयुरेथेन फोम या फाइबरग्लास अवरोधन की मोटी परतें होती हैं। दरवाजे की सील (रबर गैस्केट) हवा के रिसाव को रोकती है। यह अवरोधन ठंडी हवा (2-4°C) को कमरे के तापमान की हवा (25-30°C) से अलग रखता है।",
+            "conductor": "अंदर धातु शीतलन कॉइल, धातु बाहरी शरीर",
+            "insulator": "पॉलीयुरेथेन फोम अवरोधन (50-100mm मोटा), रबर दरवाजा गैस्केट",
+            "scienceBehind": "पॉलीयुरेथेन फोम में लाखों छोटे हवा के बुलबुले होते हैं, जिससे यह बहुत कम थर्मल चालकता (0.02-0.03 W/mK) देता है। इसका मतलब है कि बाहर से ऊष्मा को ठंडे आंतरिक भाग तक चालन करने में बहुत लंबा समय लगता है। कंप्रेसर को तापमान बनाए रखने के लिए केवल कभी-कभी चलने की आवश्यकता होती है।",
+            "realExample": "अपने रेफ्रिजरेटर को खोलें और दरवाजे को महसूस करें - यह मोटा है (5-8 सेमी)। वह मोटाई अवरोधन है! इसके बिना, कंप्रेसर लगातार चलता रहेगा, 10 गुना अधिक बिजली की खपत करेगा। अच्छा अवरोधन न्यूनतम शक्ति का उपयोग करते हुए दिनों तक भोजन को ताजा रखता है।",
+            "benefits": [
+              "बिजली की खपत को 40-60% कम करता है",
+              "सुसंगत तापमान बनाए रखता है",
+              "भोजन लंबे समय तक ताजा रहता है",
+              "कंप्रेसर अधिक समय तक चलता है (कम घिसाव)",
+              "कम बिजली बिल"
+            ],
+            "difficulty": "everyday"
+          },
+          {
+            "id": 6,
+            "title": "इग्लू - आर्कटिक के बर्फ के घर",
+            "category": "Architecture",
+            "description": "बर्फ के ब्लॉक से बने इग्लू -40°C जितने कम तापमान में उत्कृष्ट अवरोधन प्रदान करते हैं।",
+            "howItWorks": "संपीड़ित बर्फ के ब्लॉक में बर्फ के क्रिस्टल के बीच फंसी हवा होती है। गुंबद आकार सतह क्षेत्र को कम करता है। शरीर की ऊष्मा और कभी-कभी एक छोटा तेल का दीपक आंतरिक भाग को गर्म करता है। बर्फ का अवरोधन इस ऊष्मा को बाहर निकलने से रोकता है।",
+            "conductor": "बर्फ में बर्फ के क्रिस्टल (न्यूनतम)",
+            "insulator": "बर्फ की संरचना में फंसी हवा",
+            "scienceBehind": "ताजी बर्फ 90-95% फंसी हवा है! जबकि बर्फ मध्यम रूप से ऊष्मा चालन करती है, बर्फ में हवा के पॉकेट इसे एक उत्कृष्ट अवरोधक बनाते हैं (थर्मल चालकता ~0.05-0.25 W/mK घनत्व के आधार पर)। मोटी दीवारें (30-60 सेमी) पर्याप्त थर्मल प्रतिरोध प्रदान करती हैं।",
+            "realExample": "आर्कटिक क्षेत्रों में जहां बाहरी तापमान -40°C है, केवल शरीर की ऊष्मा के साथ इग्लू के अंदर -7°C पर बनाए रखा जा सकता है, या एक छोटे दीपक के साथ 0-10°C। यह 30-50°C का अंतर है! बर्फ की दीवारें एक थर्मल बैरियर के रूप में कार्य करती हैं।",
+            "benefits": [
+              "अत्यधिक ठंड में आश्रय प्रदान करता है",
+              "आसानी से उपलब्ध सामग्री (बर्फ) से बनाया गया",
+              "अस्तित्व के लिए कोई बाहरी हीटिंग की आवश्यकता नहीं",
+              "गुंबद आकार संरचनात्मक रूप से मजबूत है",
+              "प्राकृतिक और टिकाऊ"
+            ],
+            "difficulty": "advanced"
+          },
+          {
+            "id": 7,
+            "title": "निर्माण में खोखली ईंटें",
+            "category": "Building",
+            "description": "आधुनिक इमारतें बेहतर थर्मल अवरोधन के लिए हवा के गुहाओं के साथ खोखली ईंटों का उपयोग करती हैं।",
+            "howItWorks": "इन ईंटों में खोखली जगहें (30-60% मात्रा) होती हैं जो हवा से भरी होती हैं। जब दीवारें बनाने के लिए ढेर लगाए जाते हैं, तो वे कई हवा की परतें बनाते हैं। हवा एक खराब चालक होने के कारण दीवार के माध्यम से ऊष्मा स्थानांतरण को रोकती है।",
+            "conductor": "ईंट की मिट्टी/सिरेमिक सामग्री",
+            "insulator": "ईंटों के अंदर हवा से भरे गुहा",
+            "scienceBehind": "ठोस ईंट: थर्मल चालकता ~0.6-1.0 W/mK। हवा के साथ खोखली ईंट: प्रभावी थर्मल चालकता ~0.2-0.4 W/mK। हवा के पॉकेट ऊष्मा चालन के मार्ग को बाधित करते हैं, दीवार को एक बेहतर अवरोधक बनाते हैं।",
+            "realExample": "राजस्थान में जहां गर्मियों का तापमान 45-48°C तक पहुंच जाता है, खोखली ईंटों से बने घर ठोस ईंट के घरों की तुलना में अंदर 5-7°C ठंडे रहते हैं। सर्दियों में (5-10°C), वे ऊष्मा को बेहतर बनाए रखते हैं, हीटिंग लागत को कम करते हैं।",
+            "benefits": [
+              "गर्मियों में कूलिंग लागत को 25-35% कम करता है",
+              "सर्दियों में हीटिंग लागत को कम करता है",
+              "ठोस ईंटों से हल्का (आसान निर्माण)",
+              "बेहतर ध्वनि अवरोधन",
+              "पर्यावरण के अनुकूल (कम सामग्री का उपयोग)"
+            ],
+            "difficulty": "everyday"
+          },
+          {
+            "id": 8,
+            "title": "थर्मोस्टैट के साथ इलेक्ट्रिक आयरन",
+            "category": "Appliances",
+            "description": "इलेक्ट्रिक आयरन ऊष्मा चालन के लिए धातु के आधार प्लेट का उपयोग करते हैं और सुरक्षा के लिए एक अवरोधक हैंडल का उपयोग करते हैं।",
+            "howItWorks": "एक इलेक्ट्रिक हीटिंग तत्व सीधे संपर्क (चालन) के माध्यम से एक धातु (एल्यूमीनियम/स्टील) आधार प्लेट को गर्म करता है। ऊष्मा प्लेट पर समान रूप से फैलती है। हैंडल और शरीर गर्मी प्रतिरोधी प्लास्टिक (अवरोधक) से बने होते हैं ताकि ठंडे रहें।",
+            "conductor": "धातु आधार प्लेट (एल्यूमीनियम या स्टेनलेस स्टील), हीटिंग कॉइल",
+            "insulator": "प्लास्टिक शरीर और हैंडल, गर्मी प्रतिरोधी कोटिंग",
+            "scienceBehind": "हीटिंग तत्व 150-200°C तक पहुंचता है। यह ऊष्मा धातुओं में मुक्त इलेक्ट्रॉन आंदोलन के कारण धातु प्लेट के माध्यम से तेजी से चालन करती है। प्लास्टिक हैंडल (थर्मल चालकता ~0.2 W/mK) इस ऊष्मा को आपके हाथ तक पहुंचने से रोकता है।",
+            "realExample": "कपड़े इस्त्री करते समय, धातु प्लेट 150°C पर होती है, सिलवटों को हटाने के लिए पर्याप्त गर्म। लेकिन आप आराम से प्लास्टिक हैंडल को पकड़ सकते हैं जो लगातार 30 मिनट के उपयोग के बाद भी कमरे के तापमान (30-35°C) के निकट रहता है।",
+            "benefits": [
+              "कुशल सिलवट हटाना",
+              "संचालन करने में सुरक्षित - ठंडा हैंडल",
+              "समान ऊष्मा वितरण",
+              "थर्मोस्टैट अधिक गर्म होने से रोकता है",
+              "ऊर्जा कुशल"
+            ],
+            "difficulty": "everyday"
+          },
+          {
+            "id": 9,
+            "title": "अग्निशामक सुरक्षात्मक गियर",
+            "category": "Safety",
+            "description": "विशेष सूट उन्नत अवरोधक सामग्री का उपयोग करके अत्यधिक ऊष्मा से अग्निशामकों की सुरक्षा करते हैं।",
+            "howItWorks": "बाहरी परत (ऊष्मा-परावर्तक), मध्य परत (अवरोधक), और आंतरिक परत (नमी बैरियर) के साथ बहु-परत सूट। विकिरण को दर्शाता है, चालन को अवरुद्ध करता है, हवा के अंतराल प्रदान करता है।",
+            "conductor": "बाहरी परावर्तक धातु परत (अवशोषित करने के बजाय दर्शाता है)",
+            "insulator": "अरामिड फाइबर (Kevlar/Nomex), परतों के बीच हवा के अंतराल",
+            "scienceBehind": "अरामिड फाइबर में अत्यधिक कम थर्मल चालकता (~0.04 W/mK) होती है और 400°C तक पिघले बिना सहन कर सकते हैं। हवा के अंतराल के साथ कई परतें थर्मल प्रतिरोध बनाती हैं। बाहरी परत विकिरण ऊष्मा को दूर दर्शाती है।",
+            "realExample": "जब अग्निशामक 800-1000°C पर एक इमारत में प्रवेश करते हैं, तो उनके सूट 10-15 मिनट के लिए त्वचा के तापमान को 45°C से नीचे रखते हैं। अवरोधन इतना प्रभावी है कि आग से घिरे होने के बावजूद, वे सुरक्षित रूप से काम कर सकते हैं।",
+            "benefits": [
+              "अत्यधिक ऊष्मा से जीवन-रक्षक सुरक्षा",
+              "अग्निशामकों को खतरनाक स्थितियों में काम करने की अनुमति देता है",
+              "जलने और ऊष्मा तनाव से सुरक्षा",
+              "टिकाऊ और पुन: उपयोग योग्य",
+              "रासायनिक जलने से भी सुरक्षा"
+            ],
+            "difficulty": "advanced"
+          },
+          {
+            "id": 10,
+            "title": "अंतरिक्ष यान ऊष्मा शील्ड",
+            "category": "Space Technology",
+            "description": "अंतरिक्ष यान 1650°C के पुन: प्रवेश तापमान से बचने के लिए उन्नत थर्मल सुरक्षा का उपयोग करते हैं।",
+            "howItWorks": "विशेष सामग्री से बने एब्लेटिव ऊष्मा शील्ड जो धीरे-धीरे जल जाते हैं (एब्लेट), ऊष्मा को दूर ले जाते हैं। नीचे कई अवरोधक परतें क्रू केबिन की सुरक्षा करती हैं। ऊष्मा को अंदर चालन करने के बजाय नियंत्रित एब्लेशन के माध्यम से नष्ट किया जाता है।",
+            "conductor": "न्यूनतम - बाहरी एब्लेटिव सामग्री जो वाष्पित होने के लिए डिज़ाइन की गई है",
+            "insulator": "प्रबलित कार्बन-कार्बन मिश्र धातु, सिलिका टाइल्स, एब्लेटिव फेनोलिक रेजिन",
+            "scienceBehind": "पुन: प्रवेश के दौरान, वायुमंडल के साथ घर्षण 1650°C+ तापमान बनाता है। एब्लेटिव सामग्री में बहुत कम थर्मल चालकता और एंडोथर्मिक अपघटन (टूटने के दौरान ऊष्मा अवशोषित करता है) होता है। यह ऊष्मा को अंतरिक्ष यान के आंतरिक भाग में चालन करने से रोकता है।",
+            "realExample": "जब ISRO का Gaganyaan या NASA के अंतरिक्ष कैप्सूल बाहरी शील्ड ~1650°C तक पहुंचने के साथ पृथ्वी में पुन: प्रवेश करते हैं, तो क्रू केबिन कमरे के तापमान (25-30°C) के निकट रहता है।",
+            "benefits": [
+              "पुन: प्रवेश के दौरान अंतरिक्ष यात्रियों की सुरक्षा करता है",
+              "अंतरिक्ष से सुरक्षित वापसी सक्षम करता है",
+              "अत्यधिक तापमान ढाल का सामना करता है",
+              "अंतरिक्ष अन्वेषण के लिए महत्वपूर्ण"
+            ],
+            "difficulty": "advanced"
+          },
+          {
+            "id": 11,
+            "title": "हिमालयी पारंपरिक घर",
+            "category": "Architecture",
+            "description": "ठंडे हिमालयी क्षेत्रों में घर दोहरी लकड़ी की दीवारों के साथ मिट्टी के अवरोधन का उपयोग करते हैं।",
+            "howItWorks": "15-30 सेमी अंतराल के साथ लकड़ी की दो परतें जो मिट्टी, भूसे, या गाय के गोबर के मिश्रण से भरी होती हैं। छोटी खिड़कियां ऊष्मा हानि को कम करती हैं। कम छतें गर्म हवा को फंसाती हैं। पत्थर की नींव जमीन की ठंड को रोकती है।",
+            "conductor": "जानबूझकर कोई उपयोग नहीं किया गया",
+            "insulator": "लकड़ी (थर्मल चालकता ~0.15 W/mK), मिट्टी भरना (~0.25 W/mK), हवा के अंतराल",
+            "scienceBehind": "लकड़ी और मिट्टी दोनों खराब चालक हैं। दोहरी-दीवार डिज़ाइन कई थर्मल बैरियर बनाता है। लकड़ी की कोशिकीय संरचना हवा को फंसाती है। मिट्टी का घनत्व और नमी सामग्री थर्मल द्रव्यमान और अवरोधन प्रदान करती है।",
+            "realExample": "उत्तरकाशी के मोरी क्षेत्र में, जहां सर्दियों का तापमान भारी बर्फबारी के साथ -15°C तक गिर जाता है, ये पारंपरिक घर केवल एक छोटे बुखारी (लकड़ी का चूल्हा) के साथ 10-15°C के आंतरिक तापमान को बनाए रखते हैं।",
+            "benefits": [
+              "अत्यधिक ठंड (-20°C बाहर) में गर्म रहता है",
+              "स्थानीय रूप से उपलब्ध सामग्री से बनाया गया",
+              "कोई आधुनिक हीटिंग की आवश्यकता नहीं",
+              "सांस्कृतिक रूप से पारंपरिक और टिकाऊ",
+              "रखरखाव के साथ दशकों तक चलता है"
+            ],
+            "difficulty": "everyday"
+          },
+          {
+            "id": 12,
+            "title": "औद्योगिक भट्टियां और भट्टियां",
+            "category": "Industry",
+            "description": "उच्च-तापमान औद्योगिक भट्टियां 1500°C तक ऊष्मा को रोकने के लिए विशेष रिफ्रैक्टरी अवरोधन का उपयोग करती हैं।",
+            "howItWorks": "कई परतें: आंतरिक रिफ्रैक्टरी ईंटें (ऊष्मा का सामना करती हैं), मध्य अवरोधक फायरब्रिक्स (ऊष्मा रिसाव को रोकते हैं), बाहरी स्टील शेल। कुशल संचालन के लिए ऊष्मा अंदर रखी जाती है।",
+            "conductor": "आंतरिक कक्ष जहां ऊष्मा की आवश्यकता है",
+            "insulator": "रिफ्रैक्टरी सिरेमिक ईंटें, सिरेमिक फाइबर अवरोधन, हवा के अंतराल",
+            "scienceBehind": "रिफ्रैक्टरी सामग्री (अल्यूमिना, सिलिका) में उच्च तापमान पर कम थर्मल चालकता होती है। सिरेमिक फाइबर हवा के पॉकेट बनाते हैं। कई परतें थर्मल प्रतिरोध बनाती हैं, ऊष्मा हानि को रोकती हैं।",
+            "realExample": "एक स्टील भट्टी अंदर 1500°C पर काम करती है। उचित अवरोधन (30-60 सेमी मोटी दीवारें) के साथ, बाहरी सतह 60-80°C पर रहती है - छूने के लिए गर्म लेकिन खतरनाक नहीं - ईंधन बचाती है और सुरक्षा में सुधार करती है।",
+            "benefits": [
+              "विशाल ऊर्जा बचत (30-50% ईंधन कमी)",
+              "उच्च संचालन तापमान सक्षम करता है",
+              "भट्टियों के आसपास कर्मचारी सुरक्षा",
+              "तेज हीटिंग और कूलिंग चक्र",
+              "लंबी भट्टी जीवनकाल"
+            ],
+            "difficulty": "industrial"
+          }
+        ]
+      }
+    }
   }
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { LanguageProvider, ModeProvider, Navbar, CircuitVisualization, RealWorldApplications } from './components/AllComponents';
+import { LanguageProvider, ModeProvider, Navbar, CircuitVisualization, RealWorldApplications } from './components/TorchLight';
 
 const App: React.FC = () => {
   return (

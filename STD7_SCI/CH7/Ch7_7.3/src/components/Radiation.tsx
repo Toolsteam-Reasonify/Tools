@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import i18n from '@/i18n';
+import translationJson from '@/locales/translation.json';
 
 // Type declaration for Chrome extension APIs (to suppress runtime.lastError warnings)
 declare global {
@@ -56,6 +57,498 @@ export const getFontFamilyForLanguage = (language: LanguageCode) => {
   if (language === "hi") return '"Noto Sans Devanagari", system-ui, sans-serif';
   if (language === "gu") return '"Noto Sans Gujarati", system-ui, sans-serif';
   return '"Inter", system-ui, sans-serif';
+};
+
+// ============================================================================
+// New Translation Types Structure (from translationsNew.tsx)
+// ============================================================================
+
+// Language selector types
+export interface LanguageLabels {
+  en: string;
+  hi: string;
+  gu: string;
+  selectorLabel: string;
+}
+
+export interface NavTranslations {
+  logo: string;
+  tabs: {
+    learn: string;
+    practice: string;
+    applications: string;
+  };
+}
+
+// Base language structure (top level)
+export interface BaseLanguageContent {
+  language: LanguageLabels;
+  nav: NavTranslations;
+}
+
+// Conduction types
+export interface ConductionHeader {
+  badge: string;
+  title: string;
+  subtitle: string;
+}
+
+export interface ConductionIntro {
+  title: string;
+  para1: string;
+  para2: string;
+}
+
+export interface ConductionActivity {
+  sectionTitle: string;
+  safetyTitle: string;
+  safetyText: string;
+  simulationTitle: string;
+  controls: {
+    start: string;
+    reset: string;
+    heatIntensity: string;
+  };
+  heatFlowDirection: string;
+  pinCard: {
+    pinLabel: string;
+    order: string;
+    fallen: string;
+    falling: string;
+    waiting: string;
+  };
+  observations: {
+    title: string;
+    item1Title: string;
+    item1Body: string;
+    item2Title: string;
+    item2Body: string;
+    item3Title: string;
+    item3Body: string;
+  };
+  table: {
+    title: string;
+    pin: string;
+    order: string;
+    status: string;
+    reason: string;
+    fallen: string;
+    notFallen: string;
+    reasonClosest: string;
+    reasonProgress: string;
+    reasonFarthest: string;
+  };
+}
+
+export interface ConductionTesting {
+  sectionTitle: string;
+  callout: string;
+  zoneTitle: string;
+  dropHere: string;
+  heatSource: string;
+  heatPasses: string;
+  heatBlocked: string;
+  testResult: {
+    title: string;
+    material: string;
+    type: string;
+    good: string;
+    poor: string;
+    heatPasses: string;
+    heatStops: string;
+    goodDesc: string;
+    poorDesc: string;
+  };
+  quickTest: string;
+  tested: string;
+}
+
+export interface ConductionMaterials {
+  steel: string;
+  copper: string;
+  aluminum: string;
+  wood: string;
+  plastic: string;
+  glass: string;
+}
+
+export interface ConductionTakeaways {
+  title: string;
+  conductionTitle: string;
+  conductionPoints: string[];
+  goodTitle: string;
+  goodPoints: string[];
+  poorTitle: string;
+  poorPoints: string[];
+  footer: string;
+}
+
+export interface PracticeUI {
+  questionLabel: string;
+  difficulty: {
+    easy: string;
+    medium: string;
+    hard: string;
+  };
+  pointsLabel: string;
+  fillBlankHint: string;
+  matchHint: string;
+  materials: string;
+  categories: string;
+  selectCategory: string;
+  orderingHint: string;
+  classifyHint: string;
+  goodConductor: string;
+  poorConductor: string;
+  goodConductorLabel: string;
+  poorConductorLabel: string;
+  noItemsClassified: string;
+  noItemsMatched: string;
+  previousButton: string;
+  previousButtonShort: string;
+  submitButton: string;
+  submitButtonShort: string;
+  nextButton: string;
+  nextButtonShort: string;
+  tryAgainButton: string;
+  tryAgainButtonShort: string;
+  completeTitle: string;
+  scoreSummary: string;
+  questionsAnswered: string;
+  scorePercentage: string;
+  gradeLabel: string;
+  startOverButton: string;
+  correctTitle: string;
+  incorrectTitle: string;
+  correctAnswerLabel: string;
+  progressLabel: string;
+  progressQuestions: string;
+  headerTitle: string;
+  headerSubtitle: string;
+  noQuestionsTitle: string;
+  noQuestionsBody: string;
+}
+
+export interface Question {
+  id: number;
+  type: 'mcq' | 'true_false' | 'true-false' | 'fill-blank' | 'match' | 'ordering' | 'classify' | 'sequence';
+  question: string;
+  options?: string[];
+  correctAnswer: string | string[] | Record<string, string> | { [key: string]: string };
+  explanation: string;
+  difficulty: 'easy' | 'medium' | 'hard';
+  points: number;
+  pairs?: {
+    left: string[];
+    right: string[];
+  };
+  sequence?: string[];
+}
+
+export interface ConductionPractice {
+  ui: PracticeUI;
+  questions: Question[];
+}
+
+export interface RealWorldApplication {
+  id: number;
+  title: string;
+  category: string;
+  description: string;
+  howItWorks: string;
+  conductor: string;
+  insulator: string;
+  scienceBehind: string;
+  realExample: string;
+  benefits: string[];
+  difficulty: 'everyday' | 'industrial' | 'advanced';
+}
+
+export interface ConductionRealWorld {
+  filterTitle: string;
+  allApplications: string;
+  showing: string;
+  application: string;
+  applicationsPlural: string;
+  howItWorks: string;
+  goodConductorUsed: string;
+  insulatorUsed: string;
+  scienceBehind: string;
+  realLifeExample: string;
+  benefitsImpact: string;
+  difficulty: {
+    everyday: string;
+    industrial: string;
+    advanced: string;
+  };
+  categories: {
+    all: string;
+    Kitchen: string;
+    Clothing: string;
+    Building: string;
+    Appliances: string;
+    Architecture: string;
+    Safety: string;
+    Industry: string;
+    'Space Technology': string;
+  };
+  applications: RealWorldApplication[];
+}
+
+export interface ConductionTranslations {
+  header: ConductionHeader;
+  intro: ConductionIntro;
+  activity: ConductionActivity;
+  testing: ConductionTesting;
+  materials: ConductionMaterials;
+  takeaways: ConductionTakeaways;
+  practice: ConductionPractice;
+  realWorld: ConductionRealWorld;
+}
+
+// Convection types
+export interface ConvectionLearnStep {
+  id: number;
+  title: string;
+  description: string;
+}
+
+export interface ConvectionLearn {
+  header: {
+    title: string;
+    subtitle: string;
+  };
+  step: string;
+  controls: {
+    previous: string;
+    next: string;
+    play: string;
+    pause: string;
+    reset: string;
+  };
+  indicators: {
+    practice: string;
+    realWorld: string;
+  };
+  steps: ConvectionLearnStep[];
+  canvas: {
+    cup1: string;
+    cup2: string;
+    cup2Heated: string;
+    hotAirRises: string;
+    coldAirSinks: string;
+    hotWaterRises: string;
+    coldWaterSinks: string;
+    daytime: string;
+    nighttime: string;
+    warmerLand: string;
+    coolerSea: string;
+    coolerLand: string;
+    warmerSea: string;
+    seaBreeze: string;
+    landBreeze: string;
+    hot: string;
+    cold: string;
+    convectionCurrent: string;
+  };
+}
+
+export interface ConvectionPracticeUI {
+  questionLabel: string;
+  difficulty: {
+    easy: string;
+    medium: string;
+    hard: string;
+  };
+  pointsLabel: string;
+  progress: string;
+  progressQuestions: string;
+  outOf: string;
+  previousButton: string;
+  previousButtonShort: string;
+  submitButton: string;
+  submitButtonShort: string;
+  nextButton: string;
+  nextButtonShort: string;
+  tryAgainButton: string;
+  tryAgainButtonShort: string;
+  startOverButton: string;
+  completeTitle: string;
+  scoreSummary: string;
+  questionsAnswered: string;
+  scorePercentage: string;
+  gradeLabel: string;
+  correctTitle: string;
+  incorrectTitle: string;
+  matchHint: string;
+  processes: string;
+  characteristics: string;
+  select: string;
+  sequenceHint: string;
+  studyTips: string;
+  tip1: string;
+  tip2: string;
+  tip3: string;
+  tip4: string;
+}
+
+export interface ConvectionPractice {
+  header: {
+    title: string;
+    subtitle: string;
+  };
+  ui: ConvectionPracticeUI;
+  questions: Question[];
+}
+
+export interface ConvectionRealWorldApplication {
+  id: number;
+  title: string;
+  category: string;
+  description: string;
+  howItWorks: string;
+  scienceBehind: string;
+  realExample: string;
+  benefits: string[];
+  difficulty: 'everyday' | 'nature' | 'technology';
+}
+
+export interface ConvectionRealWorld {
+  header: {
+    title: string;
+    subtitle: string;
+    topic: string;
+  };
+  intro: {
+    title: string;
+    para1: string;
+    para2: string;
+    para3: string;
+    para4: string;
+    para5: string;
+    para6: string;
+  };
+  filter: {
+    title: string;
+    all: string;
+    showing: string;
+    application: string;
+    applications: string;
+  };
+  categories: {
+    all: string;
+    Nature: string;
+    Home: string;
+    Kitchen: string;
+    Everyday: string;
+    Technology: string;
+  };
+  difficulty: {
+    everyday: string;
+    nature: string;
+    technology: string;
+  };
+  labels: {
+    howItWorks: string;
+    scienceBehind: string;
+    realExample: string;
+    benefits: string;
+  };
+  summary: {
+    title: string;
+    particleMovement: {
+      title: string;
+      description: string;
+    };
+    universalProcess: {
+      title: string;
+      description: string;
+    };
+    planetaryImpact: {
+      title: string;
+      description: string;
+    };
+    remember: string;
+  };
+  applications: ConvectionRealWorldApplication[];
+}
+
+export interface ConvectionTranslations {
+  learn: ConvectionLearn;
+  practice: ConvectionPractice;
+  realWorld: ConvectionRealWorld;
+}
+
+// Radiation types (from new structure - aligns with existing RadiationLearn)
+export interface RadiationLearnNew {
+  heatingWater: {
+    temperatureLabel: string;
+    phaseLabel: string;
+    phaseNameCold: string;
+    phaseNameWarming: string;
+    phaseNameHot: string;
+    phaseNameBoiling: string;
+    phaseNameSteam: string;
+    phaseCold: string;
+    phaseWarming: string;
+    phaseHot: string;
+    phaseBoiling: string;
+    phaseSteam: string;
+    startHeating: string;
+    reset: string;
+    keyPoints: string;
+    keyPoint1: string;
+    keyPoint2: string;
+    keyPoint3: string;
+    keyPoint4: string;
+  };
+}
+
+export interface RadiationTranslationsNew {
+  learn: RadiationLearnNew;
+}
+
+// Topic translations container
+export interface TopicTranslations {
+  conduction: ConductionTranslations;
+  convection: ConvectionTranslations;
+  radiation: RadiationTranslationsNew;
+}
+
+// Main translations structure
+export interface TranslationsData {
+  en: BaseLanguageContent;
+  hi: BaseLanguageContent;
+  gu: BaseLanguageContent;
+  translation: TopicTranslations;
+}
+
+// ============================================================================
+// Translations Data (converted from translation.json - now embedded in TypeScript)
+// ============================================================================
+export const translationsData: TranslationsData = translationJson as unknown as TranslationsData;
+
+// Helper function to get base language content
+export const getBaseLanguage = (lang: Language): BaseLanguageContent => {
+  return translationsData[lang];
+};
+
+// Helper function to get topic translations (language-independent)
+export const getTopicTranslations = (): TopicTranslations => {
+  return translationsData.translation;
+};
+
+// Helper function to get specific topic
+export const getConductionTranslations = (): ConductionTranslations => {
+  return translationsData.translation.conduction;
+};
+
+export const getConvectionTranslations = (): ConvectionTranslations => {
+  return translationsData.translation.convection;
+};
+
+export const getRadiationTranslationsNew = (): RadiationTranslationsNew => {
+  return translationsData.translation.radiation;
 };
 
 // ============================================================================
@@ -3758,16 +4251,7 @@ export { RadiationRealWorld };
 
 // Imports already at top of file
 
-interface Question {
-  id: number;
-  question: string;
-  type: "mcq" | "true_false" | "match" | "sequence";
-  options?: string[];
-  correctAnswer: string | string[] | { [key: string]: string };
-  explanation: string;
-  difficulty: "easy" | "medium" | "hard";
-  points: number;
-}
+// Question interface is now exported above with comprehensive types
 
 interface RadiationPracticeModeProps {
   props?: {

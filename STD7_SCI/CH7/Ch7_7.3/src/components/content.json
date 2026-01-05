@@ -2164,13 +2164,32 @@
               "experiment": "heating_water"
             }
           }
-        ]
+        ],
+        "heatingWater": {
+          "temperatureLabel": "Temperature:",
+          "phaseLabel": "Phase:",
+          "phaseNameCold": "Cold",
+          "phaseNameWarming": "Warming",
+          "phaseNameHot": "Hot",
+          "phaseNameBoiling": "Boiling",
+          "phaseNameSteam": "Steam",
+          "phaseCold": "Water is cold - molecules moving slowly",
+          "phaseWarming": "Water is warming - molecules moving faster",
+          "phaseHot": "Water is hot - molecules moving rapidly",
+          "phaseBoiling": "Water is boiling - bubbles forming!",
+          "phaseSteam": "Steam forming - water turning to vapor!",
+          "startHeating": "🔥 Start Heating",
+          "reset": "❄️ Reset",
+          "keyPoints": "🌡️ Key Points:",
+          "keyPoint1": "Water boils at 100°C (212°F) at sea level",
+          "keyPoint2": "Heat energy increases molecular movement",
+          "keyPoint3": "Bubbles form when water vapor pressure exceeds atmospheric pressure",
+          "keyPoint4": "Steam is water in gaseous state"
+        }
       },
       "realWorld": {
-        "header": {
-          "title": "Radiation in the Real World",
-          "subtitle": "Discover How Radiation Works in Daily Life"
-        },
+        "headerTitle": "Radiation in the Real World",
+        "headerSubtitle": "Discover How Radiation Works in Daily Life",
         "categories": {
           "all": "All Applications",
           "nature": "Nature",
@@ -2180,7 +2199,7 @@
           "clothing": "Clothing"
         },
         "showingCount": "Showing {{count}} application{{plural}}",
-        "difficulty": {
+        "difficultyLabels": {
           "everyday": "Everyday Life",
           "nature": "Natural Process",
           "technology": "Technology"
@@ -2192,22 +2211,14 @@
           "realExample": "Real Indian Example",
           "benefits": "Benefits & Importance"
         },
-        "summary": {
-          "title": "Key Insights About Radiation",
-          "cards": {
-            "noMedium": {
-              "title": "No Medium Needed",
-              "body": "Radiation can travel through vacuum - unlike conduction and convection which require a medium with particles."
-            },
-            "allObjects": {
-              "title": "All Objects Radiate",
-              "body": "Every object above absolute zero radiates heat. Hotter objects radiate more intensely than cooler ones."
-            },
-            "emWaves": {
-              "title": "Electromagnetic Waves",
-              "body": "Heat radiation travels as infrared electromagnetic waves at the speed of light (300,000 km/s)."
-            }
-          }
+        "summaryTitle": "Key Insights About Radiation",
+        "summaryCards": {
+          "noMediumTitle": "No Medium Needed",
+          "noMediumBody": "Radiation can travel through vacuum - unlike conduction and convection which require a medium with particles.",
+          "allObjectsTitle": "All Objects Radiate",
+          "allObjectsBody": "Every object above absolute zero radiates heat. Hotter objects radiate more intensely than cooler ones.",
+          "emWavesTitle": "Electromagnetic Waves",
+          "emWavesBody": "Heat radiation travels as infrared electromagnetic waves at the speed of light (300,000 km/s)."
         },
         "applications": [
           {
@@ -2383,10 +2394,8 @@
         ]
       },
       "practice": {
-        "header": {
-          "title": "Radiation Practice Quiz",
-          "subtitle": "Test Your Understanding"
-        },
+        "headerTitle": "Radiation Practice Quiz",
+        "headerSubtitle": "Test Your Understanding",
         "pointsLabel": "points",
         "progressLabel": "{{answered}} of {{total}} questions answered",
         "questionLabel": "Q{{id}}",
@@ -2394,34 +2403,28 @@
         "next": "Next",
         "previous": "Previous",
         "restartQuiz": "Restart Quiz",
-        "final": {
-          "title": "Quiz Complete! 🎉",
-          "subtitle": "Great job completing the radiation quiz!"
-        },
+        "finalTitle": "Quiz Complete! 🎉",
+        "finalSubtitle": "Great job completing the radiation quiz!",
         "totalPoints": "Total Points",
         "scoreLabel": "Score",
         "correctLabel": "Correct",
         "gradeLabel": "Grade",
-        "keyReminders": {
-          "title": "📚 Key Reminders:",
-          "items": [
-            "Radiation does NOT need any medium - works in vacuum!",
-            "Sun's heat reaches Earth through radiation across 150 million km",
-            "Light colors reflect heat, dark colors absorb heat",
-            "All objects radiate heat to their surroundings",
-            "Conduction and convection need a medium, radiation doesn't"
-          ]
-        },
+        "keyRemindersTitle": "📚 Key Reminders:",
+        "keyReminders": [
+          "Radiation does NOT need any medium - works in vacuum!",
+          "Sun's heat reaches Earth through radiation across 150 million km",
+          "Light colors reflect heat, dark colors absorb heat",
+          "All objects radiate heat to their surroundings",
+          "Conduction and convection need a medium, radiation doesn't"
+        ],
         "correctFeedback": "✓ Correct!",
         "incorrectFeedback": "✗ Incorrect",
         "arrangeSequenceHint": "Use the arrows to arrange these steps in the correct order",
         "selectAnswerPlaceholder": "Select answer...",
-        "grade": {
-          "excellent": "Excellent! 🌟",
-          "good": "Good Job! 👍",
-          "keepPracticing": "Keep Practicing! 📚"
-        },
-        "difficulty": {
+        "gradeExcellent": "Excellent! 🌟",
+        "gradeGood": "Good Job! 👍",
+        "gradeKeepPracticing": "Keep Practicing! 📚",
+        "difficultyLabels": {
           "easy": "EASY",
           "medium": "MEDIUM",
           "hard": "HARD"

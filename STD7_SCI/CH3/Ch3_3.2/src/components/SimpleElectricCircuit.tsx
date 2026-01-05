@@ -3005,6 +3005,6 @@ export const PracticeMode: React.FC = () => {
 //
 // All components are exported and can be imported from this single file.
 // For example:
-//   import { Battery, CircuitCanvas, useLanguage, LanguageProvider } from './components/AllComponents';
+//   import { Battery, CircuitCanvas, useLanguage, LanguageProvider } from './components/SimpleElectricCircuit';
 //
 

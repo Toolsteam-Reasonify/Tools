@@ -1,4 +1,4 @@
-{
+export const translations = {
   "en": {
     "language": {
       "en": "English",
@@ -171,7 +171,12 @@
             "id": 1,
             "type": "mcq",
             "question": "What is the process of heat transfer from the hotter part to the colder part of an object called?",
-            "options": ["Convection", "Conduction", "Radiation", "Evaporation"],
+            "options": [
+              "Convection",
+              "Conduction",
+              "Radiation",
+              "Evaporation"
+            ],
             "correctAnswer": "Conduction",
             "explanation": "Conduction is the process where heat transfers from the hotter part to the colder part through direct contact. Particles pass heat to neighboring particles without moving from their positions.",
             "difficulty": "easy",
@@ -211,7 +216,12 @@
             "id": 4,
             "type": "mcq",
             "question": "Which of the following is a POOR conductor of heat?",
-            "options": ["Copper", "Aluminum", "Wood", "Iron"],
+            "options": [
+              "Copper",
+              "Aluminum",
+              "Wood",
+              "Iron"
+            ],
             "correctAnswer": "Wood",
             "explanation": "Wood is a poor conductor (insulator) of heat. It does not allow heat to pass through easily, which is why wooden handles are used for utensils.",
             "difficulty": "easy",
@@ -281,7 +291,10 @@
             "id": 9,
             "type": "true-false",
             "question": "In solids, heat transfer takes place mainly through the process of conduction.",
-            "options": ["True", "False"],
+            "options": [
+              "True",
+              "False"
+            ],
             "correctAnswer": "True",
             "explanation": "Correct! In solids, particles are closely packed and heat transfers mainly through conduction as particles pass energy to their neighbors.",
             "difficulty": "easy",
@@ -291,7 +304,10 @@
             "id": 10,
             "type": "true-false",
             "question": "Glass and wood are good conductors of heat.",
-            "options": ["True", "False"],
+            "options": [
+              "True",
+              "False"
+            ],
             "correctAnswer": "False",
             "explanation": "False! Glass and wood are poor conductors (insulators) of heat. They do not allow heat to pass through easily.",
             "difficulty": "easy",
@@ -301,7 +317,10 @@
             "id": 11,
             "type": "true-false",
             "question": "During conduction, particles move from the hot region to the cold region.",
-            "options": ["True", "False"],
+            "options": [
+              "True",
+              "False"
+            ],
             "correctAnswer": "False",
             "explanation": "False! During conduction, particles do NOT move from their positions. They vibrate and pass energy to neighboring particles while staying in place.",
             "difficulty": "medium",
@@ -311,7 +330,10 @@
             "id": 12,
             "type": "true-false",
             "question": "Two thin blankets provide more warmth than one thick blanket because air trapped between them acts as an insulator.",
-            "options": ["True", "False"],
+            "options": [
+              "True",
+              "False"
+            ],
             "correctAnswer": "True",
             "explanation": "True! The air layer between two blankets acts as an insulator (poor conductor), preventing heat loss and providing better warmth.",
             "difficulty": "medium",
@@ -351,7 +373,12 @@
             "id": 15,
             "type": "fill-blank",
             "question": "_____ is a very poor conductor of heat, which is why it is trapped in woolen clothes to keep us warm.",
-            "options": ["Water", "Metal", "Air", "Glass"],
+            "options": [
+              "Water",
+              "Metal",
+              "Air",
+              "Glass"
+            ],
             "correctAnswer": "Air",
             "explanation": "Air is a very poor conductor of heat. Woolen fabric traps air in its pores, which prevents heat loss from our body.",
             "difficulty": "medium",
@@ -381,8 +408,18 @@
             "id": 17,
             "type": "ordering",
             "question": "Arrange the pins in the ORDER they fall when the metal strip is heated (from FIRST to LAST):",
-            "options": ["Pin IV", "Pin I", "Pin III", "Pin II"],
-            "correctAnswer": ["Pin I", "Pin II", "Pin III", "Pin IV"],
+            "options": [
+              "Pin IV",
+              "Pin I",
+              "Pin III",
+              "Pin II"
+            ],
+            "correctAnswer": [
+              "Pin I",
+              "Pin II",
+              "Pin III",
+              "Pin IV"
+            ],
             "explanation": "Pins fall in order from closest to the heat source to farthest: Pin I (closest) → Pin II → Pin III → Pin IV (farthest).",
             "difficulty": "medium",
             "points": 20
@@ -391,7 +428,14 @@
             "id": 18,
             "type": "classify",
             "question": "Classify the following materials as Good Conductors or Poor Conductors (Insulators):",
-            "options": ["Iron", "Glass", "Aluminum", "Air", "Rubber", "Brass"],
+            "options": [
+              "Iron",
+              "Glass",
+              "Aluminum",
+              "Air",
+              "Rubber",
+              "Brass"
+            ],
             "correctAnswer": [
               "Iron|Good Conductor",
               "Glass|Poor Conductor",
@@ -743,21 +787,6 @@
             "id": 6,
             "title": "Interactive: Land Breeze (Night)",
             "description": "At night, land cools faster than water. Air above the sea is warmer and rises. Cooler air from the land moves toward the sea. This is called land breeze, and it reverses the direction of daytime winds."
-          },
-          {
-            "id": 7,
-            "title": "Real World: Coastal Climate",
-            "description": "People living near the seashore experience sea breeze during the day (cool wind from sea) and land breeze at night (cool wind from land). This is why coastal areas have moderate temperatures and windows facing the sea are preferred."
-          },
-          {
-            "id": 8,
-            "title": "Real World: Smoke from Incense",
-            "description": "When you burn an incense stick (agarbatti), the smoke rises upward. This happens because smoke is a mixture of hot gases and tiny particles. Being warmer than surrounding air, it rises up through convection."
-          },
-          {
-            "id": 9,
-            "title": "Real World: Heating Your Room",
-            "description": "Room heaters work on convection. Hot air from the heater rises to the ceiling, then cools and comes down. This creates a convection current that circulates warm air throughout the room, heating it evenly."
           }
         ],
         "canvas": {
@@ -844,7 +873,10 @@
             "id": 2,
             "type": "true-false",
             "question": "In Activity 7.2, the paper cup above the candle rises because hot air is heavier than cold air.",
-            "options": ["True", "False"],
+            "options": [
+              "True",
+              "False"
+            ],
             "correctAnswer": "False",
             "explanation": "False! Hot air is LIGHTER than cold air. When air is heated, it expands and becomes less dense, making it rise. That's why the cup tilts upward.",
             "difficulty": "easy",
@@ -914,7 +946,10 @@
             "id": 7,
             "type": "true-false",
             "question": "Convection can occur in solids.",
-            "options": ["True", "False"],
+            "options": [
+              "True",
+              "False"
+            ],
             "correctAnswer": "False",
             "explanation": "False! Convection requires particles to move from one place to another. In solids, particles are fixed in position, so convection cannot occur. Convection only happens in fluids (liquids and gases).",
             "difficulty": "medium",
@@ -954,7 +989,10 @@
             "id": 10,
             "type": "true-false",
             "question": "At night, the direction of wind near the seashore reverses compared to daytime.",
-            "options": ["True", "False"],
+            "options": [
+              "True",
+              "False"
+            ],
             "correctAnswer": "True",
             "explanation": "True! During the day, we have sea breeze (sea to land). At night, we have land breeze (land to sea). The direction reverses because of different heating and cooling rates.",
             "difficulty": "easy",
@@ -1382,7 +1420,12 @@
             "id": 1,
             "type": "mcq",
             "question": "What is the process of heat transfer from the hotter part to the colder part of an object called?",
-            "options": ["Convection", "Conduction", "Radiation", "Evaporation"],
+            "options": [
+              "Convection",
+              "Conduction",
+              "Radiation",
+              "Evaporation"
+            ],
             "correctAnswer": "Conduction",
             "explanation": "Conduction is the process where heat transfers from the hotter part to the colder part through direct contact. Particles pass heat to neighboring particles without moving from their positions.",
             "difficulty": "easy",
@@ -1422,7 +1465,12 @@
             "id": 4,
             "type": "mcq",
             "question": "Which of the following is a POOR conductor of heat?",
-            "options": ["Copper", "Aluminum", "Wood", "Iron"],
+            "options": [
+              "Copper",
+              "Aluminum",
+              "Wood",
+              "Iron"
+            ],
             "correctAnswer": "Wood",
             "explanation": "Wood is a poor conductor (insulator) of heat. It does not allow heat to pass through easily, which is why wooden handles are used for utensils.",
             "difficulty": "easy",
@@ -1492,7 +1540,10 @@
             "id": 9,
             "type": "true-false",
             "question": "In solids, heat transfer takes place mainly through the process of conduction.",
-            "options": ["True", "False"],
+            "options": [
+              "True",
+              "False"
+            ],
             "correctAnswer": "True",
             "explanation": "Correct! In solids, particles are closely packed and heat transfers mainly through conduction as particles pass energy to their neighbors.",
             "difficulty": "easy",
@@ -1502,7 +1553,10 @@
             "id": 10,
             "type": "true-false",
             "question": "Glass and wood are good conductors of heat.",
-            "options": ["True", "False"],
+            "options": [
+              "True",
+              "False"
+            ],
             "correctAnswer": "False",
             "explanation": "False! Glass and wood are poor conductors (insulators) of heat. They do not allow heat to pass through easily.",
             "difficulty": "easy",
@@ -1512,7 +1566,10 @@
             "id": 11,
             "type": "true-false",
             "question": "During conduction, particles move from the hot region to the cold region.",
-            "options": ["True", "False"],
+            "options": [
+              "True",
+              "False"
+            ],
             "correctAnswer": "False",
             "explanation": "False! During conduction, particles do NOT move from their positions. They vibrate and pass energy to neighboring particles while staying in place.",
             "difficulty": "medium",
@@ -1522,7 +1579,10 @@
             "id": 12,
             "type": "true-false",
             "question": "Two thin blankets provide more warmth than one thick blanket because air trapped between them acts as an insulator.",
-            "options": ["True", "False"],
+            "options": [
+              "True",
+              "False"
+            ],
             "correctAnswer": "True",
             "explanation": "True! The air layer between two blankets acts as an insulator (poor conductor), preventing heat loss and providing better warmth.",
             "difficulty": "medium",
@@ -1562,7 +1622,12 @@
             "id": 15,
             "type": "fill-blank",
             "question": "_____ is a very poor conductor of heat, which is why it is trapped in woolen clothes to keep us warm.",
-            "options": ["Water", "Metal", "Air", "Glass"],
+            "options": [
+              "Water",
+              "Metal",
+              "Air",
+              "Glass"
+            ],
             "correctAnswer": "Air",
             "explanation": "Air is a very poor conductor of heat. Woolen fabric traps air in its pores, which prevents heat loss from our body.",
             "difficulty": "medium",
@@ -1592,8 +1657,18 @@
             "id": 17,
             "type": "ordering",
             "question": "Arrange the pins in the ORDER they fall when the metal strip is heated (from FIRST to LAST):",
-            "options": ["Pin IV", "Pin I", "Pin III", "Pin II"],
-            "correctAnswer": ["Pin I", "Pin II", "Pin III", "Pin IV"],
+            "options": [
+              "Pin IV",
+              "Pin I",
+              "Pin III",
+              "Pin II"
+            ],
+            "correctAnswer": [
+              "Pin I",
+              "Pin II",
+              "Pin III",
+              "Pin IV"
+            ],
             "explanation": "Pins fall in order from closest to the heat source to farthest: Pin I (closest) → Pin II → Pin III → Pin IV (farthest).",
             "difficulty": "medium",
             "points": 20
@@ -1602,7 +1677,14 @@
             "id": 18,
             "type": "classify",
             "question": "Classify the following materials as Good Conductors or Poor Conductors (Insulators):",
-            "options": ["Iron", "Glass", "Aluminum", "Air", "Rubber", "Brass"],
+            "options": [
+              "Iron",
+              "Glass",
+              "Aluminum",
+              "Air",
+              "Rubber",
+              "Brass"
+            ],
             "correctAnswer": [
               "Iron|Good Conductor",
               "Glass|Poor Conductor",
@@ -1954,21 +2036,6 @@
             "id": 6,
             "title": "इंटरैक्टिव: भूमि हवा (रात)",
             "description": "रात में, जमीन पानी से तेजी से ठंडी होती है। समुद्र के ऊपर की हवा गर्म होती है और ऊपर उठती है। जमीन से ठंडी हवा समुद्र की ओर चलती है। इसे भूमि हवा कहा जाता है, और यह दिन के हवाओं की दिशा को उलट देती है।"
-          },
-          {
-            "id": 7,
-            "title": "वास्तविक दुनिया: तटीय जलवायु",
-            "description": "समुद्र तट के पास रहने वाले लोग दिन में समुद्री हवा (समुद्र से ठंडी हवा) और रात में भूमि हवा (जमीन से ठंडी हवा) का अनुभव करते हैं। इसीलिए तटीय क्षेत्रों में मध्यम तापमान होता है और समुद्र की ओर वाली खिड़कियां पसंद की जाती हैं।"
-          },
-          {
-            "id": 8,
-            "title": "वास्तविक दुनिया: अगरबत्ती से धुआं",
-            "description": "जब आप अगरबत्ती (अगरबत्ती) जलाते हैं, तो धुआं ऊपर की ओर उठता है। ऐसा इसलिए होता है क्योंकि धुआं गर्म गैसों और छोटे कणों का मिश्रण है। आसपास की हवा से गर्म होने के कारण, यह संवहन के माध्यम से ऊपर उठता है।"
-          },
-          {
-            "id": 9,
-            "title": "वास्तविक दुनिया: अपने कमरे को गर्म करना",
-            "description": "कमरे के हीटर संवहन पर काम करते हैं। हीटर से गर्म हवा छत तक उठती है, फिर ठंडी होकर नीचे आती है। यह एक संवहन धारा बनाता है जो पूरे कमरे में गर्म हवा को प्रसारित करती है, इसे समान रूप से गर्म करती है।"
           }
         ],
         "canvas": {
@@ -2055,7 +2122,10 @@
             "id": 2,
             "type": "true-false",
             "question": "गतिविधि 7.2 में, मोमबत्ती के ऊपर का कागज़ का कप ऊपर उठता है क्योंकि गर्म हवा ठंडी हवा से भारी होती है।",
-            "options": ["सत्य", "असत्य"],
+            "options": [
+              "सत्य",
+              "असत्य"
+            ],
             "correctAnswer": "असत्य",
             "explanation": "असत्य! गर्म हवा ठंडी हवा से हल्की होती है। जब हवा गर्म होती है, तो यह फैलती है और कम घनत्व वाली हो जाती है, जिससे यह ऊपर उठती है। इसीलिए कप ऊपर की ओर झुक जाता है।",
             "difficulty": "easy",
@@ -2125,7 +2195,10 @@
             "id": 7,
             "type": "true-false",
             "question": "संवहन ठोस में हो सकता है।",
-            "options": ["सत्य", "असत्य"],
+            "options": [
+              "सत्य",
+              "असत्य"
+            ],
             "correctAnswer": "असत्य",
             "explanation": "असत्य! संवहन के लिए कणों का एक स्थान से दूसरे स्थान पर चलना आवश्यक है। ठोस में, कण अपनी स्थिति में स्थिर होते हैं, इसलिए संवहन नहीं हो सकता। संवहन केवल तरल पदार्थों (द्रव और गैसों) में होता है।",
             "difficulty": "medium",
@@ -2165,7 +2238,10 @@
             "id": 10,
             "type": "true-false",
             "question": "रात में, समुद्र तट के पास हवा की दिशा दिन की तुलना में उलट जाती है।",
-            "options": ["सत्य", "असत्य"],
+            "options": [
+              "सत्य",
+              "असत्य"
+            ],
             "correctAnswer": "सत्य",
             "explanation": "सत्य! दिन के दौरान, हमारे पास समुद्री हवा (समुद्र से जमीन) होती है। रात में, हमारे पास भूमि हवा (जमीन से समुद्र) होती है। दिशा अलग-अलग गर्म और ठंडा होने की दरों के कारण उलट जाती है।",
             "difficulty": "easy",
@@ -2176,7 +2252,12 @@
             "type": "match",
             "question": "प्रक्रिया को उसकी विशेषता से मिलाएं:",
             "pairs": {
-              "left": ["चालन", "संवहन", "विकिरण", "संवहन धारा"],
+              "left": [
+                "चालन",
+                "संवहन",
+                "विकिरण",
+                "संवहन धारा"
+              ],
               "right": [
                 "कण अपनी स्थिति में रहते हैं",
                 "कण एक स्थान से दूसरे स्थान पर चलते हैं",
@@ -2588,7 +2669,12 @@
             "id": 1,
             "type": "mcq",
             "question": "What is the process of heat transfer from the hotter part to the colder part of an object called?",
-            "options": ["Convection", "Conduction", "Radiation", "Evaporation"],
+            "options": [
+              "Convection",
+              "Conduction",
+              "Radiation",
+              "Evaporation"
+            ],
             "correctAnswer": "Conduction",
             "explanation": "Conduction is the process where heat transfers from the hotter part to the colder part through direct contact. Particles pass heat to neighboring particles without moving from their positions.",
             "difficulty": "easy",
@@ -2628,7 +2714,12 @@
             "id": 4,
             "type": "mcq",
             "question": "Which of the following is a POOR conductor of heat?",
-            "options": ["Copper", "Aluminum", "Wood", "Iron"],
+            "options": [
+              "Copper",
+              "Aluminum",
+              "Wood",
+              "Iron"
+            ],
             "correctAnswer": "Wood",
             "explanation": "Wood is a poor conductor (insulator) of heat. It does not allow heat to pass through easily, which is why wooden handles are used for utensils.",
             "difficulty": "easy",
@@ -2698,7 +2789,10 @@
             "id": 9,
             "type": "true-false",
             "question": "In solids, heat transfer takes place mainly through the process of conduction.",
-            "options": ["True", "False"],
+            "options": [
+              "True",
+              "False"
+            ],
             "correctAnswer": "True",
             "explanation": "Correct! In solids, particles are closely packed and heat transfers mainly through conduction as particles pass energy to their neighbors.",
             "difficulty": "easy",
@@ -2708,7 +2802,10 @@
             "id": 10,
             "type": "true-false",
             "question": "Glass and wood are good conductors of heat.",
-            "options": ["True", "False"],
+            "options": [
+              "True",
+              "False"
+            ],
             "correctAnswer": "False",
             "explanation": "False! Glass and wood are poor conductors (insulators) of heat. They do not allow heat to pass through easily.",
             "difficulty": "easy",
@@ -2718,7 +2815,10 @@
             "id": 11,
             "type": "true-false",
             "question": "During conduction, particles move from the hot region to the cold region.",
-            "options": ["True", "False"],
+            "options": [
+              "True",
+              "False"
+            ],
             "correctAnswer": "False",
             "explanation": "False! During conduction, particles do NOT move from their positions. They vibrate and pass energy to neighboring particles while staying in place.",
             "difficulty": "medium",
@@ -2728,7 +2828,10 @@
             "id": 12,
             "type": "true-false",
             "question": "Two thin blankets provide more warmth than one thick blanket because air trapped between them acts as an insulator.",
-            "options": ["True", "False"],
+            "options": [
+              "True",
+              "False"
+            ],
             "correctAnswer": "True",
             "explanation": "True! The air layer between two blankets acts as an insulator (poor conductor), preventing heat loss and providing better warmth.",
             "difficulty": "medium",
@@ -2768,7 +2871,12 @@
             "id": 15,
             "type": "fill-blank",
             "question": "_____ is a very poor conductor of heat, which is why it is trapped in woolen clothes to keep us warm.",
-            "options": ["Water", "Metal", "Air", "Glass"],
+            "options": [
+              "Water",
+              "Metal",
+              "Air",
+              "Glass"
+            ],
             "correctAnswer": "Air",
             "explanation": "Air is a very poor conductor of heat. Woolen fabric traps air in its pores, which prevents heat loss from our body.",
             "difficulty": "medium",
@@ -2798,8 +2906,18 @@
             "id": 17,
             "type": "ordering",
             "question": "Arrange the pins in the ORDER they fall when the metal strip is heated (from FIRST to LAST):",
-            "options": ["Pin IV", "Pin I", "Pin III", "Pin II"],
-            "correctAnswer": ["Pin I", "Pin II", "Pin III", "Pin IV"],
+            "options": [
+              "Pin IV",
+              "Pin I",
+              "Pin III",
+              "Pin II"
+            ],
+            "correctAnswer": [
+              "Pin I",
+              "Pin II",
+              "Pin III",
+              "Pin IV"
+            ],
             "explanation": "Pins fall in order from closest to the heat source to farthest: Pin I (closest) → Pin II → Pin III → Pin IV (farthest).",
             "difficulty": "medium",
             "points": 20
@@ -2808,7 +2926,14 @@
             "id": 18,
             "type": "classify",
             "question": "Classify the following materials as Good Conductors or Poor Conductors (Insulators):",
-            "options": ["Iron", "Glass", "Aluminum", "Air", "Rubber", "Brass"],
+            "options": [
+              "Iron",
+              "Glass",
+              "Aluminum",
+              "Air",
+              "Rubber",
+              "Brass"
+            ],
             "correctAnswer": [
               "Iron|Good Conductor",
               "Glass|Poor Conductor",
@@ -3160,21 +3285,6 @@
             "id": 6,
             "title": "ઇન્ટરેક્ટિવ: જમીનની હવા (રાત્રિ)",
             "description": "રાત્રે, જમીન પાણી કરતાં ઝડપથી ઠંડી થાય છે. સમુદ્રની ઉપરની હવા ગરમ હોય છે અને ઉપર ઉઠે છે. જમીનથી ઠંડી હવા સમુદ્ર તરફ જાય છે. આને જમીનની હવા કહેવામાં આવે છે, અને તે દિવસની હવાઓની દિશા ઉલટાવે છે."
-          },
-          {
-            "id": 7,
-            "title": "વાસ્તવિક દુનિયા: કિનારાની આબોહવા",
-            "description": "સમુદ્ર કિનારાની નજીક રહેતા લોકો દિવસે સમુદ્રની હવા (સમુદ્રથી ઠંડી હવા) અને રાત્રે જમીનની હવા (જમીનથી ઠંડી હવા) અનુભવે છે. આથી જ કિનારાના વિસ્તારોમાં મધ્યમ તાપમાન હોય છે અને સમુદ્ર તરફની બારીઓ પસંદ કરવામાં આવે છે."
-          },
-          {
-            "id": 8,
-            "title": "વાસ્તવિક દુનિયા: અગરબત્તીમાંથી ધુમાડો",
-            "description": "જ્યારે તમે અગરબત્તી (અગરબત્તી) સળગાવો છો, ત્યારે ધુમાડો ઉપર તરફ ઉઠે છે. આ એટલા માટે થાય છે કારણ કે ધુમાડો ગરમ વાયુઓ અને નાના કણોનું મિશ્રણ છે. આસપાસની હવા કરતાં ગરમ હોવાને કારણે, તે convection દ્વારા ઉપર ઉઠે છે."
-          },
-          {
-            "id": 9,
-            "title": "વાસ્તવિક દુનિયા: તમારા રૂમને ગરમ કરવું",
-            "description": "રૂમ હીટર convection પર કામ કરે છે. હીટરમાંથી ગરમ હવા છત સુધી ઉપર ઉઠે છે, પછી ઠંડી થઈને નીચે આવે છે. આ એક convection current બનાવે છે જે સમગ્ર રૂમમાં ગરમ હવાને પ્રસારિત કરે છે, તેને સમાન રીતે ગરમ કરે છે."
           }
         ],
         "canvas": {
@@ -3261,7 +3371,10 @@
             "id": 2,
             "type": "true-false",
             "question": "In Activity 7.2, the paper cup above the candle rises because hot air is heavier than cold air.",
-            "options": ["True", "False"],
+            "options": [
+              "True",
+              "False"
+            ],
             "correctAnswer": "False",
             "explanation": "False! Hot air is LIGHTER than cold air. When air is heated, it expands and becomes less dense, making it rise. That's why the cup tilts upward.",
             "difficulty": "easy",
@@ -3331,7 +3444,10 @@
             "id": 7,
             "type": "true-false",
             "question": "Convection can occur in solids.",
-            "options": ["True", "False"],
+            "options": [
+              "True",
+              "False"
+            ],
             "correctAnswer": "False",
             "explanation": "False! Convection requires particles to move from one place to another. In solids, particles are fixed in position, so convection cannot occur. Convection only happens in fluids (liquids and gases).",
             "difficulty": "medium",
@@ -3371,7 +3487,10 @@
             "id": 10,
             "type": "true-false",
             "question": "At night, the direction of wind near the seashore reverses compared to daytime.",
-            "options": ["True", "False"],
+            "options": [
+              "True",
+              "False"
+            ],
             "correctAnswer": "True",
             "explanation": "True! During the day, we have sea breeze (sea to land). At night, we have land breeze (land to sea). The direction reverses because of different heating and cooling rates.",
             "difficulty": "easy",
@@ -3627,4 +3746,4 @@
       }
     }
   }
-}
+} as const;

@@ -1,14 +1,11 @@
-/* eslint-disable react-refresh/only-export-components */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, createContext, useContext, useEffect, ReactNode } from 'react';
+
+import React, { useState, createContext, useContext, useEffect, useMemo, ReactNode } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Zap, Battery, Lightbulb, Power, Eye, CheckCircle, ChevronLeft, ChevronRight, XCircle, Award, RotateCcw, Home } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import i18n from '@/i18n';
 
-// ============================================================================
-// TYPE DEFINITIONS (from circuitTypes.ts)
-// ============================================================================
+
 
 export type Language = 'en' | 'hi' | 'gu';
 export type Mode = 'demonstration' | 'practice' | 'assessment' | 'mixed';
@@ -406,7 +403,7 @@ export const Navbar: React.FC = () => {
 type Step = 'observe' | 'parts';
 
 export const TorchlightLearning: React.FC = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [step, setStep] = useState<Step>('observe');
   const [torchOn, setTorchOn] = useState(false);
   const baseDelay = 0.08;
@@ -584,12 +581,12 @@ export const TorchlightLearning: React.FC = () => {
 
       {/* Component Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        {[
+        {useMemo(() => [
           { icon: Lightbulb, title: t('torch.parts.lampCard'), desc: t('torch.parts.lampDesc'), color: 'yellow' },
           { icon: Power, title: t('torch.parts.switchCard'), desc: t('torch.parts.switchDesc'), color: 'green' },
           { icon: Battery, title: t('torch.parts.cellCard'), desc: t('torch.parts.cellDesc'), color: 'red' },
           { icon: Zap, title: t('torch.parts.wiresCard'), desc: t('torch.parts.wiresDesc'), color: 'blue' },
-        ].map((item, i) => (
+        ], [t, language]).map((item, i) => (
           <Animated
             key={item.title}
             index={i + 2}
@@ -637,14 +634,15 @@ interface Question {
 }
 
 export const TorchlightPractice: React.FC = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string>('');
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [showResults, setShowResults] = useState(false);
   const [score, setScore] = useState(0);
 
-  const questions: Question[] = [
+  // Use useMemo to ensure questions update when language changes
+  const questions: Question[] = useMemo(() => [
     {
       id: 1,
       question: t('practice.ex6.q1'),
@@ -700,7 +698,16 @@ export const TorchlightPractice: React.FC = () => {
       ],
       correctAnswer: t('practice.ex6.q5o3'),
     },
-  ];
+  ], [t, language]);
+
+  // Reset quiz state when language changes
+  useEffect(() => {
+    setCurrentQuestionIndex(0);
+    setSelectedAnswer('');
+    setAnswers({});
+    setShowResults(false);
+    setScore(0);
+  }, [language]);
 
   const currentQuestion = questions[currentQuestionIndex];
 
@@ -969,9 +976,10 @@ export const CircuitVisualization: React.FC = () => {
 
 // RealWorldApplications Component
 export const RealWorldApplications: React.FC = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
-  const usageCategories = [
+  // Use useMemo to ensure arrays update when language changes
+  const usageCategories = useMemo(() => [
     {
       id: 'cooking',
       icon: '🍳',
@@ -1008,9 +1016,9 @@ export const RealWorldApplications: React.FC = () => {
       title: t('realworld.communication'),
       color: 'from-teal-400 to-green-500',
     },
-  ];
+  ], [t, language]);
 
-  const applicationCards = [
+  const applicationCards = useMemo(() => [
     {
       id: 'cooking',
       icon: '🍳',
@@ -1089,7 +1097,7 @@ export const RealWorldApplications: React.FC = () => {
       ],
       color: 'from-teal-400 to-green-500',
     },
-  ];
+  ], [t, language]);
 
   return (
     <div className="min-h-screen p-4 md:p-8 bg-gradient-to-br from-teal-50 via-purple-50 to-teal-50">

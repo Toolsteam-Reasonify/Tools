@@ -3,12 +3,29 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import ICU from 'i18next-icu';
 import { initReactI18next } from 'react-i18next';
 
-import translationData from './locales/translation.json';
+import translationJson from './locales/translation.json';
+
+// Suppress Chrome extension runtime.lastError warnings
+if (typeof window !== 'undefined') {
+  // Override console.error to filter out Chrome extension errors
+  const originalError = console.error;
+  console.error = (...args: any[]) => {
+    const errorMessage = args[0]?.toString() || '';
+    // Filter out Chrome extension runtime.lastError messages
+    if (errorMessage.includes('runtime.lastError') || 
+        errorMessage.includes('message port closed') ||
+        errorMessage.includes('Unchecked runtime.lastError')) {
+      return; // Suppress these errors
+    }
+    originalError.apply(console, args);
+  };
+}
 
 // Extract language-specific translations and merge with base translations
 const getLanguageResources = (lang: 'en' | 'hi' | 'gu') => {
-  const langSpecific = (translationData as any)[lang] || {};
-  const baseTranslations = (translationData as any).translation || {};
+  const translationsData = translationJson as any;
+  const langSpecific = translationsData[lang] || {};
+  const baseTranslations = translationsData.translation || {};
   
   // Merge: language-specific translations override base translations
   return {

@@ -8,7 +8,7 @@ import {
   RealWorldApplications,
   CircuitUIConfig,
   sampleCircuitData,
-} from './components/AllComponents';
+} from './components/SimpleElectricCircuit';
 
 const App: React.FC = () => {
   const [uiConfig] = useState<CircuitUIConfig>({
