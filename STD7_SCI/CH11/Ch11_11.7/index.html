@@ -1,0 +1,647 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- CRITICAL: Error suppression must run FIRST, before any other scripts -->
+    <script>
+      // Ultra-early error suppression - runs before anything else
+      (function() {
+        'use strict';
+        // Immediately suppress Chrome runtime errors
+        if (typeof chrome !== 'undefined' && chrome && chrome.runtime) {
+          try {
+            // Completely override lastError
+            var lastErrorDescriptor = Object.getOwnPropertyDescriptor(chrome.runtime, 'lastError');
+            if (!lastErrorDescriptor || lastErrorDescriptor.configurable) {
+              Object.defineProperty(chrome.runtime, 'lastError', {
+                get: function() { return undefined; },
+                set: function() {},
+                configurable: true,
+                enumerable: false
+              });
+            }
+          } catch(e) {}
+        }
+        
+        // Comprehensive pattern matching for all error formats
+        function shouldSuppressError(msg) {
+          if (!msg) return false;
+          var lowerMsg = String(msg).toLowerCase();
+          var patterns = [
+            'runtime.lasterror',
+            'runtime.lastError',
+            'runtime.last_error',
+            'runtime.last error',
+            'unchecked runtime.lasterror',
+            'unchecked runtime.lastError',
+            'unchecked runtime.last_error',
+            'unchecked runtime.last error',
+            'message port closed',
+            'message port closed before',
+            'message port closed before a response',
+            'message port closed before a response was received',
+            'the message port closed',
+            'the message port closed before',
+            'the message port closed before a response',
+            'the message port closed before a response was received',
+            'port closed before',
+            'port closed before a response',
+            'port closed before a response was received',
+            'receiving end does not exist',
+            'extension context invalidated',
+            'chrome.runtime.lastError',
+            'chrome.runtime.lasterror',
+            'chrome.runtime.last error',
+            'chrome-extension://',
+            'moz-extension://',
+            'safari-extension://',
+            'extension://',
+            'lastError',
+            'lasterror',
+            'last error',
+            'the message port closed',
+            'port closed before',
+            'a listener indicated an asynchronous response',
+            '(index)',
+            '(index):',
+            '(index):1',
+            'unchecked runtime'
+          ];
+          // Check if any pattern matches (including partial matches)
+          return patterns.some(function(p) { 
+            return lowerMsg.indexOf(p) !== -1 || 
+                   lowerMsg.includes(p.replace(/\s/g, '')) ||
+                   lowerMsg.includes(p.replace(/\./g, ' '));
+          });
+        }
+        
+        // Suppress console errors immediately - catch all console methods
+        var originalConsole = {
+          error: console.error,
+          warn: console.warn,
+          log: console.log,
+          info: console.info,
+          debug: console.debug
+        };
+        
+        console.error = function() {
+          var msg = Array.prototype.slice.call(arguments).join(' ');
+          if (shouldSuppressError(msg)) return;
+          originalConsole.error.apply(console, arguments);
+        };
+        
+        console.warn = function() {
+          var msg = Array.prototype.slice.call(arguments).join(' ');
+          if (shouldSuppressError(msg)) return;
+          originalConsole.warn.apply(console, arguments);
+        };
+        
+        console.log = function() {
+          var msg = Array.prototype.slice.call(arguments).join(' ');
+          if (shouldSuppressError(msg)) return;
+          originalConsole.log.apply(console, arguments);
+        };
+        
+        // Global error handler - catch errors at the window level
+        window.addEventListener('error', function(e) {
+          var errorMsg = (e.message || '').toLowerCase();
+          var errorSource = (e.filename || '').toLowerCase();
+          var fullError = (e.message || '') + ' ' + (e.filename || '');
+          if (shouldSuppressError(errorMsg) || shouldSuppressError(errorSource) || shouldSuppressError(fullError) ||
+              errorSource.indexOf('extension://') !== -1 ||
+              errorSource.indexOf('chrome-extension://') !== -1 ||
+              errorSource.indexOf('moz-extension://') !== -1) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            return false;
+          }
+        }, true);
+        
+        // Catch unhandled promise rejections
+        window.addEventListener('unhandledrejection', function(e) {
+          var errorMsg = String(e.reason || '').toLowerCase();
+          if (shouldSuppressError(errorMsg)) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            return false;
+          }
+        }, true);
+        
+        // Additional: Suppress errors from extension messaging APIs
+        if (typeof chrome !== 'undefined' && chrome && chrome.runtime) {
+          // Wrap sendMessage to catch and suppress errors
+          if (chrome.runtime.sendMessage) {
+            var originalSendMessage = chrome.runtime.sendMessage;
+            chrome.runtime.sendMessage = function() {
+              try {
+                return originalSendMessage.apply(this, arguments);
+              } catch(e) {
+                // Suppress extension messaging errors
+                return;
+              }
+            };
+          }
+          
+          // Wrap connect to suppress errors
+          if (chrome.runtime.connect) {
+            var originalConnect = chrome.runtime.connect;
+            chrome.runtime.connect = function() {
+              try {
+                return originalConnect.apply(this, arguments);
+              } catch(e) {
+                // Suppress extension connection errors
+                return null;
+              }
+            };
+          }
+        }
+        
+        // Use MutationObserver to catch errors injected by extensions
+        if (typeof MutationObserver !== 'undefined') {
+          try {
+            var observer = new MutationObserver(function(mutations) {
+              // This helps catch errors that extensions might inject into the DOM
+            });
+            observer.observe(document.documentElement, {
+              childList: true,
+              subtree: true
+            });
+          } catch(e) {}
+        }
+      })();
+    </script>
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Sans+Gujarati:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Sources of Light </title>
+    <!-- Early error suppression for browser extension errors - runs FIRST -->
+    <script>
+      (function() {
+        'use strict';
+        // Comprehensive patterns - includes all variations
+        function shouldSuppress(msg) {
+          if (!msg) return false;
+          var lower = String(msg).toLowerCase();
+          var patterns = [
+            'runtime.lasterror',
+            'runtime.lastError',
+            'runtime.last_error',
+            'runtime.last error',
+            'unchecked runtime.lasterror',
+            'unchecked runtime.lastError',
+            'unchecked runtime.last_error',
+            'unchecked runtime.last error',
+            'message port closed',
+            'message port closed before',
+            'message port closed before a response',
+            'message port closed before a response was received',
+            'the message port closed',
+            'the message port closed before',
+            'the message port closed before a response',
+            'the message port closed before a response was received',
+            'port closed before',
+            'port closed before a response',
+            'port closed before a response was received',
+            'receiving end does not exist',
+            'extension context invalidated',
+            'chrome.runtime.lastError',
+            'chrome.runtime.lasterror',
+            'chrome.runtime.last error',
+            'chrome-extension://',
+            'moz-extension://',
+            'safari-extension://',
+            'extension://',
+            'lastError',
+            'lasterror',
+            'last error',
+            'the message port closed',
+            'port closed before',
+            'a listener indicated an asynchronous response',
+            '(index)',
+            '(index):',
+            '(index):1',
+            'unchecked runtime'
+          ];
+          // Check if any pattern matches (including partial matches)
+          return patterns.some(function(p) { 
+            return lower.indexOf(p) !== -1 || 
+                   lower.includes(p.replace(/\s/g, '')) ||
+                   lower.includes(p.replace(/\./g, ' '));
+          });
+        }
+        
+        // Override console methods immediately
+        var originalError = console.error;
+        var originalWarn = console.warn;
+        var originalLog = console.log;
+        
+        console.error = function() {
+          var msg = Array.prototype.slice.call(arguments).join(' ');
+          if (shouldSuppress(msg)) return;
+          originalError.apply(console, arguments);
+        };
+        
+        console.warn = function() {
+          var msg = Array.prototype.slice.call(arguments).join(' ');
+          if (shouldSuppress(msg)) return;
+          originalWarn.apply(console, arguments);
+        };
+        
+        console.log = function() {
+          var msg = Array.prototype.slice.call(arguments).join(' ');
+          if (shouldSuppress(msg)) return;
+          originalLog.apply(console, arguments);
+        };
+        
+        // Suppress Chrome runtime errors at the source
+        if (typeof chrome !== 'undefined' && chrome.runtime) {
+          try {
+            // Override lastError to always return undefined
+            Object.defineProperty(chrome.runtime, 'lastError', {
+              get: function() { return undefined; },
+              configurable: true
+            });
+            
+            // Wrap sendMessage
+            if (chrome.runtime.sendMessage) {
+              var origSend = chrome.runtime.sendMessage;
+              chrome.runtime.sendMessage = function() {
+                try {
+                  return origSend.apply(this, arguments);
+                } catch(e) {
+                  return;
+                }
+              };
+            }
+          } catch(e) {}
+        }
+        
+        // Global error handlers
+        window.addEventListener('error', function(e) {
+          var msg = (e.message || '').toLowerCase();
+          var source = (e.filename || '').toLowerCase();
+          if (shouldSuppress(msg) || shouldSuppress(source) || 
+              source.indexOf('extension://') !== -1 ||
+              source.indexOf('chrome-extension://') !== -1) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            return false;
+          }
+        }, true);
+        
+        window.addEventListener('unhandledrejection', function(e) {
+          var msg = String(e.reason || '').toLowerCase();
+          if (shouldSuppress(msg)) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            return false;
+          }
+        }, true);
+      })();
+    </script>
+  </head>
+  <body>
+    <style>
+      html, body {
+        font-family: "Poppins", "Noto Sans", "Noto Sans Devanagari", "Noto Sans Gujarati", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      }
+      /* Hide Jinno welcome banner */
+      #fixMeDetectBox {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        height: 0 !important;
+        width: 0 !important;
+        overflow: hidden !important;
+        position: absolute !important;
+        left: -9999px !important;
+      }
+      #fixMeDetectBox * {
+        display: none !important;
+      }
+    </style>
+    <div id="root"></div>
+    <script>
+      // Remove Jinno welcome banner immediately
+      (function() {
+        function removeJinnoBanner() {
+          const banner = document.getElementById('fixMeDetectBox');
+          if (banner) {
+            banner.remove();
+            return true;
+          }
+          // Also try to find by class names
+          const selectors = [
+            '#fixMeDetectBox',
+            '[id*="fixMeDetectBox"]',
+            '[class*="QGTnaluzDSScJ7wCszV2cQ"]',
+            '[class*="mpoSTLYU6AlhOHdEHp8JLA"]',
+            '[class*="AAtMqR0kaWf53vl4uWregA"]'
+          ];
+          for (const selector of selectors) {
+            try {
+              const elements = document.querySelectorAll(selector);
+              elements.forEach(el => {
+                const text = el.textContent || '';
+                if (text.includes('Welcome to Jinno') || text.includes('Start for free')) {
+                  el.remove();
+                }
+              });
+            } catch(e) {}
+          }
+          return false;
+        }
+        
+        // Try immediately
+        if (removeJinnoBanner()) {
+          return;
+        }
+        
+        // Try on DOMContentLoaded
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', removeJinnoBanner);
+        }
+        
+        // Use MutationObserver to catch dynamically added elements
+        const observer = new MutationObserver(function(mutations) {
+          if (removeJinnoBanner()) {
+            observer.disconnect();
+          }
+        });
+        
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true
+        });
+        
+        // Also try periodically as fallback
+        const interval = setInterval(function() {
+          if (removeJinnoBanner()) {
+            clearInterval(interval);
+            observer.disconnect();
+          }
+        }, 100);
+        
+        // Stop after 10 seconds
+        setTimeout(function() {
+          clearInterval(interval);
+          observer.disconnect();
+        }, 10000);
+      })();
+    </script>
+    <script>
+      // Comprehensive browser extension error suppression - runs immediately
+      (function() {
+        'use strict';
+        
+        // Helper function for case-insensitive pattern matching
+        function suppressExtensionError(message) {
+          if (!message) return false;
+          const lowerMessage = String(message).toLowerCase();
+          const patterns = [
+            'runtime.lasterror',
+            'runtime.lastError',
+            'runtime.last_error',
+            'runtime.last error',
+            'unchecked runtime.lasterror',
+            'unchecked runtime.lastError',
+            'unchecked runtime.last_error',
+            'unchecked runtime.last error',
+            'message port closed',
+            'message port closed before',
+            'message port closed before a response',
+            'message port closed before a response was received',
+            'the message port closed',
+            'the message port closed before',
+            'the message port closed before a response',
+            'the message port closed before a response was received',
+            'port closed before',
+            'port closed before a response',
+            'port closed before a response was received',
+            'receiving end does not exist',
+            'extension context invalidated',
+            'chrome.runtime.lastError',
+            'chrome.runtime.lasterror',
+            'chrome.runtime.last error',
+            'chrome-extension://',
+            'moz-extension://',
+            'safari-extension://',
+            'extension://',
+            'lastError',
+            'lasterror',
+            'last error',
+            'the message port closed',
+            'port closed before',
+            'a listener indicated an asynchronous response',
+            '(index)',
+            '(index):',
+            '(index):1',
+            'unchecked runtime'
+          ];
+          return patterns.some(function(pattern) {
+            return lowerMessage.indexOf(pattern) !== -1;
+          });
+        }
+        
+        // Store original console methods
+        var originalConsole = {
+          error: console.error,
+          warn: console.warn,
+          log: console.log,
+          info: console.info,
+          debug: console.debug
+        };
+        
+        // Override console.error
+        console.error = function() {
+          try {
+            var args = Array.from(arguments);
+            var fullMessage = args.map(function(arg) { return String(arg || ''); }).join(' ');
+            if (suppressExtensionError(fullMessage)) {
+              return; // Silently ignore
+            }
+            originalConsole.error.apply(console, args);
+          } catch (e) {
+            // Fallback if error occurs during suppression
+            originalConsole.error.apply(console, arguments);
+          }
+        };
+        
+        // Override console.warn (extensions sometimes use warn)
+        console.warn = function() {
+          var args = Array.from(arguments);
+          var fullMessage = args.map(function(arg) { return String(arg || ''); }).join(' ');
+          if (suppressExtensionError(fullMessage)) {
+            return; // Silently ignore
+          }
+          originalConsole.warn.apply(console, args);
+        };
+        
+        // Also intercept console.log for safety
+        var originalLog = console.log;
+        console.log = function() {
+          var args = Array.from(arguments);
+          var fullMessage = args.map(function(arg) { return String(arg || ''); }).join(' ');
+          if (suppressExtensionError(fullMessage)) {
+            return; // Silently ignore
+          }
+          originalLog.apply(console, args);
+        };
+        
+        // Handle unhandled errors from browser extensions (capture phase)
+        window.addEventListener('error', function(event) {
+          try {
+            var errorMessage = (event.message || '').toLowerCase();
+            var errorSource = (event.filename || '').toLowerCase();
+            var errorTarget = (event.target && event.target.src) ? event.target.src.toLowerCase() : '';
+            var errorStack = (event.error && event.error.stack) ? String(event.error.stack).toLowerCase() : '';
+            var fullError = (event.message || '') + ' ' + (event.filename || '');
+            
+            if (
+              suppressExtensionError(errorMessage) ||
+              suppressExtensionError(errorSource) ||
+              suppressExtensionError(errorTarget) ||
+              suppressExtensionError(errorStack) ||
+              suppressExtensionError(fullError) ||
+              errorSource.indexOf('extension://') !== -1 ||
+              errorSource.indexOf('chrome-extension://') !== -1 ||
+              errorSource.indexOf('moz-extension://') !== -1 ||
+              errorSource.indexOf('safari-extension://') !== -1 ||
+              errorSource.indexOf('(index)') !== -1
+            ) {
+              event.preventDefault();
+              event.stopPropagation();
+              event.stopImmediatePropagation();
+              return false;
+            }
+          } catch (e) {
+            // Ignore errors in error handler
+          }
+        }, true); // Use capture phase to catch early
+        
+        // Catch unhandled promise rejections from extensions
+        window.addEventListener('unhandledrejection', function(event) {
+          try {
+            var errorMessage = String(event.reason || '').toLowerCase();
+            var reason = event.reason || {};
+            var errorStack = String(reason.stack || '').toLowerCase();
+            var reasonMessage = String(reason.message || '').toLowerCase();
+            
+            if (
+              suppressExtensionError(errorMessage) ||
+              suppressExtensionError(errorStack) ||
+              suppressExtensionError(reasonMessage) ||
+              errorStack.indexOf('extension://') !== -1 ||
+              errorStack.indexOf('chrome-extension://') !== -1 ||
+              errorStack.indexOf('moz-extension://') !== -1 ||
+              errorStack.indexOf('safari-extension://') !== -1
+            ) {
+              event.preventDefault();
+              event.stopPropagation();
+              event.stopImmediatePropagation();
+              return false;
+            }
+          } catch (e) {
+            // Ignore errors in error handler
+          }
+        });
+        
+        // Suppress Chrome runtime errors directly - more aggressive
+        if (typeof chrome !== 'undefined' && chrome.runtime) {
+          try {
+            // Try to override lastError getter - multiple attempts
+            try {
+              var descriptor = Object.getOwnPropertyDescriptor(chrome.runtime, 'lastError');
+              if (!descriptor || descriptor.configurable !== false) {
+                Object.defineProperty(chrome.runtime, 'lastError', {
+                  get: function() { return undefined; },
+                  set: function() {},
+                  configurable: true,
+                  enumerable: false
+                });
+              }
+            } catch(e) {
+              // If direct override fails, try wrapping
+              try {
+                var originalLastError = chrome.runtime.lastError;
+                Object.defineProperty(chrome.runtime, 'lastError', {
+                  get: function() { 
+                    try {
+                      var err = originalLastError;
+                      return undefined; // Always return undefined
+                    } catch(e) {
+                      return undefined;
+                    }
+                  },
+                  configurable: true
+                });
+              } catch(e2) {}
+            }
+            
+            // Wrap all chrome.runtime methods to prevent errors
+            var methods = ['sendMessage', 'connect', 'sendNativeMessage', 'getURL', 'getManifest'];
+            methods.forEach(function(methodName) {
+              if (chrome.runtime[methodName] && typeof chrome.runtime[methodName] === 'function') {
+                try {
+                  var original = chrome.runtime[methodName];
+                  chrome.runtime[methodName] = function() {
+                    try {
+                      var result = original.apply(this, arguments);
+                      // Immediately clear lastError if it exists
+                      try {
+                        if (chrome.runtime.lastError) {
+                          // Suppress it
+                        }
+                      } catch(e) {}
+                      return result;
+                    } catch (e) {
+                      // Suppress all errors
+                      return;
+                    }
+                  };
+                } catch(e) {}
+              }
+            });
+          } catch (e) {
+            // Ignore if chrome.runtime is not accessible
+          }
+        }
+        
+        // Also intercept console methods at the prototype level for maximum coverage
+        try {
+          var Console = window.console.constructor;
+          var originalError = Console.prototype.error;
+          var originalWarn = Console.prototype.warn;
+          var originalLog = Console.prototype.log;
+          
+          Console.prototype.error = function() {
+            var msg = Array.prototype.slice.call(arguments).join(' ');
+            if (shouldSuppress(msg)) return;
+            return originalError.apply(this, arguments);
+          };
+          
+          Console.prototype.warn = function() {
+            var msg = Array.prototype.slice.call(arguments).join(' ');
+            if (shouldSuppress(msg)) return;
+            return originalWarn.apply(this, arguments);
+          };
+          
+          Console.prototype.log = function() {
+            var msg = Array.prototype.slice.call(arguments).join(' ');
+            if (shouldSuppress(msg)) return;
+            return originalLog.apply(this, arguments);
+          };
+        } catch(e) {}
+        
+      })();
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

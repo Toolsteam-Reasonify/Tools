@@ -15,44 +15,79 @@
               {
                 "id": "cell_1",
                 "type": "cell",
-                "position": { "x": 100, "y": 200 },
-                "connections": ["wire_1"],
+                "position": {
+                  "x": 100,
+                  "y": 200
+                },
+                "connections": [
+                  "wire_1"
+                ],
                 "state": "on",
                 "polarity": "correct"
               },
               {
                 "id": "wire_1",
                 "type": "wire",
-                "position": { "x": 200, "y": 200 },
-                "connections": ["cell_1", "switch_1"],
+                "position": {
+                  "x": 200,
+                  "y": 200
+                },
+                "connections": [
+                  "cell_1",
+                  "switch_1"
+                ],
                 "state": "on"
               },
               {
                 "id": "switch_1",
                 "type": "switch",
-                "position": { "x": 300, "y": 200 },
-                "connections": ["wire_1", "wire_2"],
+                "position": {
+                  "x": 300,
+                  "y": 200
+                },
+                "connections": [
+                  "wire_1",
+                  "wire_2"
+                ],
                 "state": "closed"
               },
               {
                 "id": "wire_2",
                 "type": "wire",
-                "position": { "x": 400, "y": 200 },
-                "connections": ["switch_1", "lamp_1"],
+                "position": {
+                  "x": 400,
+                  "y": 200
+                },
+                "connections": [
+                  "switch_1",
+                  "lamp_1"
+                ],
                 "state": "on"
               },
               {
                 "id": "lamp_1",
                 "type": "lamp",
-                "position": { "x": 500, "y": 200 },
-                "connections": ["wire_2", "wire_3"],
+                "position": {
+                  "x": 500,
+                  "y": 200
+                },
+                "connections": [
+                  "wire_2",
+                  "wire_3"
+                ],
                 "state": "on"
               },
               {
                 "id": "wire_3",
                 "type": "wire",
-                "position": { "x": 600, "y": 200 },
-                "connections": ["lamp_1", "cell_1"],
+                "position": {
+                  "x": 600,
+                  "y": 200
+                },
+                "connections": [
+                  "lamp_1",
+                  "cell_1"
+                ],
                 "state": "on"
               }
             ],
@@ -87,28 +122,40 @@
               {
                 "id": "symbol_cell",
                 "type": "cell",
-                "position": { "x": 150, "y": 150 },
+                "position": {
+                  "x": 150,
+                  "y": 150
+                },
                 "connections": [],
                 "polarity": "correct"
               },
               {
                 "id": "symbol_battery",
                 "type": "battery",
-                "position": { "x": 300, "y": 150 },
+                "position": {
+                  "x": 300,
+                  "y": 150
+                },
                 "connections": [],
                 "polarity": "correct"
               },
               {
                 "id": "symbol_lamp",
                 "type": "lamp",
-                "position": { "x": 450, "y": 150 },
+                "position": {
+                  "x": 450,
+                  "y": 150
+                },
                 "connections": [],
                 "state": "on"
               },
               {
                 "id": "symbol_led",
                 "type": "led",
-                "position": { "x": 600, "y": 150 },
+                "position": {
+                  "x": 600,
+                  "y": 150
+                },
                 "connections": [],
                 "state": "on",
                 "polarity": "correct"
@@ -116,21 +163,30 @@
               {
                 "id": "symbol_switch_on",
                 "type": "switch",
-                "position": { "x": 150, "y": 300 },
+                "position": {
+                  "x": 150,
+                  "y": 300
+                },
                 "connections": [],
                 "state": "closed"
               },
               {
                 "id": "symbol_switch_off",
                 "type": "switch",
-                "position": { "x": 300, "y": 300 },
+                "position": {
+                  "x": 300,
+                  "y": 300
+                },
                 "connections": [],
                 "state": "open"
               },
               {
                 "id": "symbol_wire",
                 "type": "wire",
-                "position": { "x": 450, "y": 300 },
+                "position": {
+                  "x": 450,
+                  "y": 300
+                },
                 "connections": [],
                 "state": "on"
               }
@@ -205,42 +261,75 @@
               {
                 "id": "p1_cell",
                 "type": "cell",
-                "position": { "x": 100, "y": 200 },
-                "connections": ["p1_wire1"],
+                "position": {
+                  "x": 100,
+                  "y": 200
+                },
+                "connections": [
+                  "p1_wire1"
+                ],
                 "polarity": "correct"
               },
               {
                 "id": "p1_wire1",
                 "type": "wire",
-                "position": { "x": 200, "y": 200 },
-                "connections": ["p1_cell", "p1_lamp"],
+                "position": {
+                  "x": 200,
+                  "y": 200
+                },
+                "connections": [
+                  "p1_cell",
+                  "p1_lamp"
+                ],
                 "state": "on"
               },
               {
                 "id": "p1_lamp",
                 "type": "lamp",
-                "position": { "x": 300, "y": 200 },
-                "connections": ["p1_wire1", "p1_wire2"],
+                "position": {
+                  "x": 300,
+                  "y": 200
+                },
+                "connections": [
+                  "p1_wire1",
+                  "p1_wire2"
+                ],
                 "state": "on"
               },
               {
                 "id": "p1_wire2",
                 "type": "wire",
-                "position": { "x": 400, "y": 200 },
-                "connections": ["p1_lamp", "p1_cell"],
+                "position": {
+                  "x": 400,
+                  "y": 200
+                },
+                "connections": [
+                  "p1_lamp",
+                  "p1_cell"
+                ],
                 "state": "on"
               }
             ],
             "question_type": "build_circuit",
             "correct_solution": {
-              "components": ["p1_cell", "p1_wire1", "p1_lamp", "p1_wire2"],
+              "components": [
+                "p1_cell",
+                "p1_wire1",
+                "p1_lamp",
+                "p1_wire2"
+              ],
               "circuit_complete": true,
               "current_flowing": true
             }
           },
           "solution": {
             "correct_answer": {
-              "components": ["p1_cell", "p1_wire1", "p1_lamp", "p1_wire2"],
+              "components": [
+                "p1_cell",
+                "p1_wire1",
+                "p1_lamp",
+                "p1_wire2"
+              ],
               "circuit_complete": true,
               "current_flowing": true
             },
@@ -253,7 +342,11 @@
             "multiple_solutions": false
           },
           "interaction_config": {
-            "input_methods": ["drag", "click", "select"],
+            "input_methods": [
+              "drag",
+              "click",
+              "select"
+            ],
             "max_attempts": 3,
             "hint_system": true,
             "progressive_hints": [
@@ -278,30 +371,53 @@
               {
                 "id": "p2_battery",
                 "type": "battery",
-                "position": { "x": 100, "y": 200 },
-                "connections": ["p2_wire1"],
+                "position": {
+                  "x": 100,
+                  "y": 200
+                },
+                "connections": [
+                  "p2_wire1"
+                ],
                 "polarity": "correct"
               },
               {
                 "id": "p2_wire1",
                 "type": "wire",
-                "position": { "x": 200, "y": 200 },
-                "connections": ["p2_battery", "p2_led"],
+                "position": {
+                  "x": 200,
+                  "y": 200
+                },
+                "connections": [
+                  "p2_battery",
+                  "p2_led"
+                ],
                 "state": "on"
               },
               {
                 "id": "p2_led",
                 "type": "led",
-                "position": { "x": 300, "y": 200 },
-                "connections": ["p2_wire1", "p2_wire2"],
+                "position": {
+                  "x": 300,
+                  "y": 200
+                },
+                "connections": [
+                  "p2_wire1",
+                  "p2_wire2"
+                ],
                 "state": "on",
                 "polarity": "correct"
               },
               {
                 "id": "p2_wire2",
                 "type": "wire",
-                "position": { "x": 400, "y": 200 },
-                "connections": ["p2_led", "p2_battery"],
+                "position": {
+                  "x": 400,
+                  "y": 200
+                },
+                "connections": [
+                  "p2_led",
+                  "p2_battery"
+                ],
                 "state": "on"
               }
             ],
@@ -327,7 +443,11 @@
             "multiple_solutions": false
           },
           "interaction_config": {
-            "input_methods": ["drag", "rotate", "click"],
+            "input_methods": [
+              "drag",
+              "rotate",
+              "click"
+            ],
             "max_attempts": 5,
             "hint_system": true,
             "progressive_hints": [
@@ -353,22 +473,38 @@
               {
                 "id": "p3_cell",
                 "type": "cell",
-                "position": { "x": 100, "y": 200 },
-                "connections": ["p3_wire1"],
+                "position": {
+                  "x": 100,
+                  "y": 200
+                },
+                "connections": [
+                  "p3_wire1"
+                ],
                 "polarity": "correct"
               },
               {
                 "id": "p3_wire1",
                 "type": "wire",
-                "position": { "x": 200, "y": 200 },
-                "connections": ["p3_cell", "p3_switch"],
+                "position": {
+                  "x": 200,
+                  "y": 200
+                },
+                "connections": [
+                  "p3_cell",
+                  "p3_switch"
+                ],
                 "state": "on"
               },
               {
                 "id": "p3_switch",
                 "type": "switch",
-                "position": { "x": 300, "y": 200 },
-                "connections": ["p3_wire1"],
+                "position": {
+                  "x": 300,
+                  "y": 200
+                },
+                "connections": [
+                  "p3_wire1"
+                ],
                 "state": "open"
               }
             ],
@@ -393,7 +529,11 @@
             "multiple_solutions": false
           },
           "interaction_config": {
-            "input_methods": ["click", "select", "input"],
+            "input_methods": [
+              "click",
+              "select",
+              "input"
+            ],
             "max_attempts": 4,
             "hint_system": true,
             "progressive_hints": [
@@ -419,43 +559,78 @@
               {
                 "id": "p4_cell",
                 "type": "cell",
-                "position": { "x": 100, "y": 200 },
-                "connections": ["p4_wire1"],
+                "position": {
+                  "x": 100,
+                  "y": 200
+                },
+                "connections": [
+                  "p4_wire1"
+                ],
                 "polarity": "correct"
               },
               {
                 "id": "p4_wire1",
                 "type": "wire",
-                "position": { "x": 200, "y": 200 },
-                "connections": ["p4_cell", "p4_test_material"],
+                "position": {
+                  "x": 200,
+                  "y": 200
+                },
+                "connections": [
+                  "p4_cell",
+                  "p4_test_material"
+                ],
                 "state": "on"
               },
               {
                 "id": "p4_test_material",
                 "type": "conductor",
-                "position": { "x": 300, "y": 200 },
-                "connections": ["p4_wire1", "p4_wire2"],
+                "position": {
+                  "x": 300,
+                  "y": 200
+                },
+                "connections": [
+                  "p4_wire1",
+                  "p4_wire2"
+                ],
                 "state": "on"
               },
               {
                 "id": "p4_wire2",
                 "type": "wire",
-                "position": { "x": 400, "y": 200 },
-                "connections": ["p4_test_material", "p4_lamp"],
+                "position": {
+                  "x": 400,
+                  "y": 200
+                },
+                "connections": [
+                  "p4_test_material",
+                  "p4_lamp"
+                ],
                 "state": "on"
               },
               {
                 "id": "p4_lamp",
                 "type": "lamp",
-                "position": { "x": 500, "y": 200 },
-                "connections": ["p4_wire2", "p4_wire3"],
+                "position": {
+                  "x": 500,
+                  "y": 200
+                },
+                "connections": [
+                  "p4_wire2",
+                  "p4_wire3"
+                ],
                 "state": "on"
               },
               {
                 "id": "p4_wire3",
                 "type": "wire",
-                "position": { "x": 600, "y": 200 },
-                "connections": ["p4_lamp", "p4_cell"],
+                "position": {
+                  "x": 600,
+                  "y": 200
+                },
+                "connections": [
+                  "p4_lamp",
+                  "p4_cell"
+                ],
                 "state": "on"
               }
             ],
@@ -481,7 +656,10 @@
             "multiple_solutions": false
           },
           "interaction_config": {
-            "input_methods": ["select", "click"],
+            "input_methods": [
+              "select",
+              "click"
+            ],
             "max_attempts": 3,
             "hint_system": true,
             "progressive_hints": [
@@ -506,43 +684,78 @@
               {
                 "id": "p5_battery",
                 "type": "battery",
-                "position": { "x": 100, "y": 200 },
-                "connections": ["p5_wire1"],
+                "position": {
+                  "x": 100,
+                  "y": 200
+                },
+                "connections": [
+                  "p5_wire1"
+                ],
                 "polarity": "correct"
               },
               {
                 "id": "p5_wire1",
                 "type": "wire",
-                "position": { "x": 200, "y": 200 },
-                "connections": ["p5_battery", "p5_lamp1"],
+                "position": {
+                  "x": 200,
+                  "y": 200
+                },
+                "connections": [
+                  "p5_battery",
+                  "p5_lamp1"
+                ],
                 "state": "on"
               },
               {
                 "id": "p5_lamp1",
                 "type": "lamp",
-                "position": { "x": 300, "y": 200 },
-                "connections": ["p5_wire1", "p5_wire2"],
+                "position": {
+                  "x": 300,
+                  "y": 200
+                },
+                "connections": [
+                  "p5_wire1",
+                  "p5_wire2"
+                ],
                 "state": "on"
               },
               {
                 "id": "p5_wire2",
                 "type": "wire",
-                "position": { "x": 400, "y": 200 },
-                "connections": ["p5_lamp1", "p5_lamp2"],
+                "position": {
+                  "x": 400,
+                  "y": 200
+                },
+                "connections": [
+                  "p5_lamp1",
+                  "p5_lamp2"
+                ],
                 "state": "on"
               },
               {
                 "id": "p5_lamp2",
                 "type": "lamp",
-                "position": { "x": 500, "y": 200 },
-                "connections": ["p5_wire2", "p5_wire3"],
+                "position": {
+                  "x": 500,
+                  "y": 200
+                },
+                "connections": [
+                  "p5_wire2",
+                  "p5_wire3"
+                ],
                 "state": "on"
               },
               {
                 "id": "p5_wire3",
                 "type": "wire",
-                "position": { "x": 600, "y": 200 },
-                "connections": ["p5_lamp2", "p5_battery"],
+                "position": {
+                  "x": 600,
+                  "y": 200
+                },
+                "connections": [
+                  "p5_lamp2",
+                  "p5_battery"
+                ],
                 "state": "on"
               }
             ],
@@ -569,7 +782,11 @@
             "multiple_solutions": false
           },
           "interaction_config": {
-            "input_methods": ["drag", "click", "connect"],
+            "input_methods": [
+              "drag",
+              "click",
+              "connect"
+            ],
             "max_attempts": 5,
             "hint_system": true,
             "progressive_hints": [
@@ -594,7 +811,11 @@
     },
     "student_context": {
       "current_level": "beginner",
-      "learning_preferences": ["visual", "interactive", "hands-on"],
+      "learning_preferences": [
+        "visual",
+        "interactive",
+        "hands-on"
+      ],
       "previous_performance": {
         "accuracy": 0.75,
         "avg_time": 120,
@@ -681,7 +902,10 @@
       "description": "A device that opens or closes a circuit to control current flow.",
       "symbol": "switch",
       "properties": {
-        "states": ["open", "closed"],
+        "states": [
+          "open",
+          "closed"
+        ],
         "open": "no current flows",
         "closed": "current flows"
       }
@@ -700,7 +924,11 @@
       "description": "A material that allows electricity to flow through it.",
       "symbol": "conductor",
       "properties": {
-        "examples": ["copper", "aluminum", "iron"],
+        "examples": [
+          "copper",
+          "aluminum",
+          "iron"
+        ],
         "allows_current": true
       }
     },
@@ -709,7 +937,11 @@
       "description": "A material that does not allow electricity to flow through it.",
       "symbol": "insulator",
       "properties": {
-        "examples": ["rubber", "plastic", "wood"],
+        "examples": [
+          "rubber",
+          "plastic",
+          "wood"
+        ],
         "allows_current": false
       }
     }
@@ -763,38 +995,53 @@
       "symbols": {
         "cell": {
           "name": "Electric Cell",
-          "description": "A single cell that provides electrical energy"
+          "description": "A portable source of electrical energy"
         },
         "battery": {
           "name": "Battery",
-          "description": "Multiple cells connected together"
+          "description": "Multiple cells connected in series"
         },
         "lamp": {
           "name": "Electric Lamp",
-          "description": "Converts electrical energy into light"
+          "description": "Incandescent lamp with filament"
         },
         "led": {
           "name": "LED",
-          "description": "Light Emitting Diode - emits light with correct polarity"
+          "description": "Light Emitting Diode"
         },
         "switchOn": {
-          "name": "Switch (On)",
-          "description": "Switch in closed position - current flows"
+          "name": "Switch (ON)",
+          "description": "Completes the circuit"
         },
         "switchOff": {
-          "name": "Switch (Off)",
-          "description": "Switch in open position - no current flows"
+          "name": "Switch (OFF)",
+          "description": "Breaks the circuit"
         },
         "wire": {
           "name": "Wire",
-          "description": "Conductor that connects circuit components"
+          "description": "Conductor that connects components"
         }
       },
       "examples": {
+        "title": "Example Circuit Diagrams",
         "labels": {
           "positive": "+",
-          "negative": "-"
+          "negative": "−"
+        },
+        "lamp": {
+          "title": "Simple Lamp Circuit",
+          "desc": "A simple circuit with a battery, lamp, and switch."
+        },
+        "led": {
+          "title": "LED Circuit",
+          "desc": "LED circuit with two cells."
         }
+      },
+      "footer": "Keep learning and exploring! 🚀",
+      "why": {
+        "title": "Why Circuit Diagrams?",
+        "body1": "Circuit diagrams use standardized symbols to represent electrical components.",
+        "body2": "Organizations like IEC, ANSI, and IEEE create these standard symbols."
       }
     },
     "practice": {
@@ -827,39 +1074,43 @@
       },
       "svg": {
         "positive": "+",
-        "negative": "-",
-        "switchOn": "ON",
-        "switchOff": "OFF",
+        "negative": "−",
+        "switchOn": "Switch ON",
+        "switchOff": "Switch OFF",
         "longLine": "Long line",
         "shortLine": "Short line",
-        "currentFlow": "Current Flow"
+        "currentFlow": "Current flow →"
       },
       "ui": {
-        "selectInstruction": "Select the correct answer from the options below.",
+        "selectInstruction": "Select the correct circuit diagram",
         "showHint": "Show Hint",
         "hideHint": "Hide Hint",
         "checkAnswer": "Check Answer",
-        "selectPrompt": "Please select an answer first",
+        "selectPrompt": "Select a circuit to continue",
         "correct": "Correct",
         "wrong": "Wrong",
-        "correctTitle": "Correct!",
-        "incorrectTitle": "Not quite right",
+        "correctTitle": "🎉 Excellent Work!",
+        "incorrectTitle": "📚 Learning Opportunity",
         "previous": "Previous",
-        "next": "Next",
-        "footer": "Take your time to understand each concept before moving to the next question."
+        "next": "Next Question",
+        "footer": "💡 Practice makes perfect!"
+      },
+      "header": {
+        "title": "⚡ Practice: Torchlight Circuit",
+        "subtitle": "Apply what you learned!"
       }
     },
     "nav": {
-      "logo": "Electric Circuits",
+      "logo": "Circuit Diagrams",
       "learn": "Learn",
       "practice": "Practice",
-      "applications": "Applications"
+      "applications": "Real World Applications"
     },
     "language": {
       "en": "English",
-      "hi": "Hindi",
-      "gu": "Gujarati",
-      "selectorLabel": "Select Language"
+      "hi": "हिंदी",
+      "gu": "ગુજરાતી",
+      "selectorLabel": "Choose language"
     },
     "component": {
       "on": "ON",
@@ -867,15 +1118,15 @@
     },
     "learnSymbols": {
       "header": {
-        "title": "Circuit Component Symbols",
-        "subtitle": "Learn the standard symbols used in circuit diagrams"
+        "title": "Electrical Component Symbols",
+        "subtitle": "Standard circuit diagram symbols"
       },
       "example": {
-        "title": "Complete Circuit Example",
+        "title": "Example: Simple Circuit",
         "batteryLabel": "Battery",
-        "currentFlow": "Current Flow",
-        "circuitHeading": "Complete Circuit:",
-        "circuitExplanation": "This diagram shows a complete circuit with a battery (power source), switch (control), and lamp (load). When the switch is closed, current flows from the positive terminal, through the switch and lamp, and back to the negative terminal, causing the lamp to light up."
+        "currentFlow": "→ Current Flow",
+        "circuitHeading": "Circuit Explanation:",
+        "circuitExplanation": "When switch is closed, current flows."
       },
       "categories": {
         "power": "Power Source",
@@ -884,67 +1135,194 @@
         "conductor": "Conductor"
       },
       "aria": {
-        "page": "Circuit component symbols learning page",
-        "symbolsGrid": "Grid of circuit component symbols",
-        "symbolPreview": "Preview of {component} symbol"
+        "page": "Symbols page",
+        "symbolsGrid": "Symbols grid",
+        "symbolPreview": "{component} preview"
       }
     },
     "realworld": {
-      "cooking": "Cooking & Heating",
-      "desc": {
-        "cooking": "Electric stoves, ovens, and appliances use electrical circuits to generate heat for cooking.",
-        "lighting": "Light bulbs and LED lights convert electrical energy into light through circuit connections.",
-        "transportation": "Electric vehicles use complex circuits to power motors and control systems.",
-        "heating": "Heaters and air conditioners use circuits to regulate temperature.",
-        "entertainment": "Televisions, computers, and gaming consoles rely on circuits for power and signal processing.",
-        "communication": "Phones, routers, and communication devices use circuits to transmit and receive signals."
-      },
+      "title": "Real World Applications",
+      "tagline": "Discover electricity in daily life",
+      "usageCategories": "Electricity Usage",
+      "keyFacts": "Key Facts",
+      "cooking": "Cooking",
       "lighting": "Lighting",
       "transportation": "Transportation",
       "heating": "Heating & Cooling",
       "entertainment": "Entertainment",
       "communication": "Communication",
+      "desc": {
+        "cooking": "Powers cooking appliances",
+        "lighting": "Illuminating homes",
+        "transportation": "Electric vehicles",
+        "heating": "Climate control",
+        "entertainment": "Powering devices",
+        "communication": "Connecting people"
+      },
       "example": {
         "cooking": {
-          "stove": "Electric Stove",
-          "microwave": "Microwave Oven",
-          "kettle": "Electric Kettle",
+          "stove": "Electric stove",
+          "microwave": "Microwave",
+          "kettle": "Kettle",
           "toaster": "Toaster"
         },
         "lighting": {
-          "bulbs": "Light Bulbs",
-          "street": "Street Lights",
-          "flashlight": "Flashlight",
-          "lamp": "Table Lamp"
+          "bulbs": "LED bulbs",
+          "street": "Street lights",
+          "flashlight": "Flashlights",
+          "lamp": "Lamps"
         },
         "transportation": {
-          "cars": "Electric Cars",
-          "trains": "Electric Trains",
+          "cars": "Electric cars",
+          "trains": "Trains",
           "trams": "Trams",
-          "ebikes": "E-Bikes"
+          "ebikes": "E-bikes"
         },
         "heating": {
-          "ac": "Air Conditioner",
-          "heater": "Electric Heater",
-          "blanket": "Electric Blanket",
-          "fan": "Electric Fan"
+          "ac": "AC",
+          "heater": "Heater",
+          "blanket": "Electric blanket",
+          "fan": "Fan"
         },
         "entertainment": {
-          "tv": "Television",
+          "tv": "TV",
           "computer": "Computer",
-          "console": "Gaming Console",
+          "console": "Gaming console",
           "speakers": "Speakers"
         },
         "communication": {
-          "phones": "Mobile Phones",
-          "router": "Wi-Fi Router",
+          "phones": "Mobile phones",
+          "router": "Router",
           "radio": "Radio",
           "satellite": "Satellite"
         }
+      },
+      "dc": {
+        "title": "Direct Current (DC)",
+        "desc": "Batteries provide DC."
+      },
+      "ac": {
+        "title": "Alternating Current (AC)",
+        "desc": "Wall sockets provide AC."
+      },
+      "storage": {
+        "title": "Energy Storage",
+        "desc": "Batteries store energy."
+      },
+      "impact": {
+        "title": "Global Impact",
+        "desc": "Renewable sources help environment."
+      },
+      "safety": {
+        "title": "Safety First!",
+        "1": "Never experiment with household electricity",
+        "2": "Use only batteries",
+        "3": "Never touch with wet hands",
+        "4": "Don't use damaged equipment",
+        "5": "Ask an adult for help"
+      },
+      "stats": {
+        "title": "Stats",
+        "households": "Households with electricity",
+        "savings": "Avg savings",
+        "updated": "Updated {date}"
       }
     },
     "common": {
-      "examples": "Examples"
+      "next": "Next",
+      "previous": "Previous",
+      "submit": "Submit",
+      "reset": "Reset",
+      "gotIt": "Got it!",
+      "correct": "Correct",
+      "incorrect": "Incorrect",
+      "examples": "Examples",
+      "yourAnswer": "Your Answer:",
+      "answerPlaceholder": "Type your answer...",
+      "ariaBack": "Go back",
+      "ariaNext": "Go forward"
+    },
+    "torch": {
+      "intro": {
+        "title": "Topic 3.1: A Torchlight",
+        "subtitle": "Let's explore how a torchlight works! 🔦",
+        "learnHeading": "What We'll Learn:",
+        "start": "Let's Start!"
+      },
+      "learn": {
+        "obsTitle": "Observation Skills",
+        "obsDesc": "Identify parts",
+        "partsTitle": "Understanding Parts",
+        "partsDesc": "Learn about components",
+        "glowTitle": "How It Glows",
+        "glowDesc": "Discover why lamp lights",
+        "demoTitle": "Interactive Demo",
+        "demoDesc": "Try animations"
+      },
+      "safety": {
+        "title": "Safety First!",
+        "line1": "Use only small batteries.",
+        "warning": "Never experiment with wall sockets!"
+      },
+      "observe": {
+        "title": "Activity 3.1: Observe",
+        "clickTorch": "Click the Torch!",
+        "lampGlowing": "✨ Lamp is GLOWING!",
+        "lampNotGlowing": "⭕ Lamp is NOT glowing",
+        "whatNotice": "🔦 What is a Torchlight?",
+        "definition": "A torchlight is a portable light source.",
+        "nextQuestion": "🧐 Next:",
+        "questionText": "What's inside?",
+        "exploreNext": "Explore parts! →",
+        "back": "Back",
+        "nextParts": "Next: Torch Parts"
+      },
+      "parts": {
+        "title": "🔍 What's Inside?",
+        "lamp": "1. Lamp",
+        "switch": "2. Switch",
+        "cells": "3. Cells",
+        "wires": "4. Wires",
+        "lampCard": "Lamp",
+        "lampDesc": "Produces light",
+        "switchCard": "Switch",
+        "switchDesc": "Controls ON/OFF",
+        "cellCard": "Cell",
+        "cellDesc": "Power source",
+        "wiresCard": "Wires",
+        "wiresDesc": "Carry electricity",
+        "clickToLearn": "Click to learn →",
+        "back": "Back",
+        "nextCell": "Next: Learn About Cells"
+      },
+      "cell": {
+        "title": "🔋 Electric Cell",
+        "content": "An electric cell stores chemical energy."
+      },
+      "battery": {
+        "title": "🔋🔋 Battery",
+        "content": "Battery info..."
+      },
+      "lamp": {
+        "title": "💡 Electric Lamp",
+        "content": "Lamp info..."
+      },
+      "switch": {
+        "title": "🔘 Switch",
+        "content": "Switch info..."
+      },
+      "complete": {
+        "title": "⚡ Complete Circuit",
+        "content": "Overview..."
+      },
+      "quiz": {
+        "title": "📝 Quiz Time!",
+        "content": "Test knowledge..."
+      },
+      "nav": {
+        "back": "Back",
+        "continue": "Continue Learning"
+      }
     }
   }
 }
