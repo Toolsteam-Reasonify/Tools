@@ -6161,7 +6161,7 @@ const PracticeMode: React.FC = () => {
 const RealWorldMode: React.FC = () => {
   const { language } = useLanguage();
   const [selectedScenario, setSelectedScenario] = useState<number | null>(null);
-  const [activeTab, setActiveTab] = useState<'all' | 'safety' | 'technology' | 'daily'>('all');
+  // State for tracking category filtering removed as filters were removed
   
   // Periscope simulation states
   const [periscopeAngle, setPeriscopeAngle] = useState(0);
@@ -6351,9 +6351,7 @@ const RealWorldMode: React.FC = () => {
     }
   ];
 
-  const filteredScenarios = scenarios.filter(scenario => 
-    activeTab === 'all' || scenario.category === activeTab
-  );
+  const filteredScenarios = scenarios;
 
   const renderScenarioDetail = () => {
     if (selectedScenario === null) return null;
@@ -6901,44 +6899,7 @@ const RealWorldMode: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="bg-white rounded-2xl shadow-2xl p-6 md:p-8 mb-8">
-          <div className="flex items-center gap-4 mb-4">
-            <div className="text-5xl">🌍</div>
-            <div>
-              <h1 className="text-3xl md:text-4xl font-bold text-gray-800">
-                {t.title}
-              </h1>
-              <p className="text-gray-600 mt-2">
-                {t.subtitle}
-              </p>
-            </div>
-          </div>
-
-          {/* Category Filter */}
-          <div className="flex flex-wrap gap-2 mt-6">
-            {[
-              { id: 'all', label: t.categories.all, icon: '🌟' },
-              { id: 'safety', label: t.categories.safety, icon: '🚦' },
-              { id: 'technology', label: t.categories.technology, icon: '⚙️' },
-              { id: 'daily', label: t.categories.daily, icon: '🏠' }
-            ].map((category) => (
-              <button
-                key={category.id}
-                onClick={() => {
-                  setActiveTab(category.id as any);
-                  setSelectedScenario(null);
-                }}
-                className={`px-4 py-2 rounded-lg font-semibold transition-all ${
-                  activeTab === category.id
-                    ? 'bg-gradient-to-r from-teal-500 to-blue-500 text-white shadow-lg'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
-              >
-                {category.icon} {category.label}
-              </button>
-            ))}
-          </div>
-        </div>
+        {/* Header removed as requested */}
 
         {selectedScenario === null ? (
           // Scenario Grid

@@ -3,6 +3,11 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 import './index.css'
 
+declare global {
+  const chrome: any;
+  const browser: any;
+}
+
 // Comprehensive browser extension error suppression
 const suppressExtensionError = (message: string): boolean => {
   if (!message) return false;
@@ -19,6 +24,7 @@ const suppressExtensionError = (message: string): boolean => {
     'message port closed',
     'message port closed before a response',
     'message port closed before a response was received',
+    'the message port closed before a response was received',
     'extension context invalidated',
     'chrome.runtime.lastError',
     'chrome.runtime.lasterror',
@@ -36,7 +42,9 @@ const suppressExtensionError = (message: string): boolean => {
     '(index)',
     '(index):',
     '(index):1',
-    'unchecked runtime'
+    'unchecked runtime',
+    'could not establish connection',
+    'receiving end does not exist'
   ];
   // Check if any pattern matches (including variations with spaces, dots, colons)
   return patterns.some(pattern => {
@@ -167,7 +175,7 @@ window.addEventListener('unhandledrejection', (event) => {
       } catch (e) {
         // If direct override fails, try alternative approach
         try {
-          const originalLastError = (chrome.runtime as { lastError?: unknown }).lastError;
+          (chrome.runtime as { lastError?: unknown }).lastError;
           Object.defineProperty(chrome.runtime, 'lastError', {
             get: function() { 
               try {

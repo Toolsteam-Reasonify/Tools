@@ -76,17 +76,6 @@ const RotateCcw = ({ className }: { className?: string }) => (
   </svg>
 );
 
-const Lightbulb = ({ className }: { className?: string }) => (
-  <svg
-    className={className}
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    viewBox="0 0 24 24"
-  >
-    <path d="M9 18h6M10 22h4M15 8a5 5 0 1 0-6 0c0 2 1 3 1 5h4c0-2 1-3 1-5z" />
-  </svg>
-);
 
 const CheckCircle = ({ className }: { className?: string }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 24 24">
@@ -97,6 +86,22 @@ const CheckCircle = ({ className }: { className?: string }) => (
 const XCircle = ({ className }: { className?: string }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 24 24">
     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z" />
+  </svg>
+);
+
+const Lightbulb = ({ className }: { className?: string }) => (
+  <svg
+    className={className}
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    viewBox="0 0 24 24"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M9.663 17h4.674M12 3v1m8 8h-1M4 12H3m3.343-5.657l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M12 12.5a3.5 3.5 0 110-7 3.5 3.5 0 010 7zm0 4.5v2a1 1 0 01-1 1h-2a1 1 0 01-1-1v-2h4z"
+    />
   </svg>
 );
 
@@ -171,7 +176,7 @@ type TranslationValue =
 const translations = {
   en: {
     nav: {
-      logo: "Does Light Travel in a Straight Line?",
+      logo: "Light Through Materials",
       tabs: {
         learn: "Learn",
         practice: "Practice",
@@ -195,7 +200,7 @@ const translations = {
     },
     steps: {
       intro: {
-        title: "Does Light Travel in a Straight Line?",
+        title: "Light Through Materials",
         description: "",
       },
       matchbox_setup: {
@@ -236,7 +241,7 @@ const translations = {
     },
     canvas: {
       intro: {
-        title: "Does Light Travel in a Straight Line?",
+        title: "Light Through Materials",
         questionMark: "?",
       },
       matchbox_setup: {
@@ -275,6 +280,7 @@ const translations = {
         transparentComplete: "Transparent: Light passes completely",
         translucentComplete: "Translucent: Light passes partially",
         opaqueComplete: "Opaque: Light blocked completely",
+        conclusionTitle: "Materials & Light",
       },
     },
     practice: {
@@ -553,7 +559,7 @@ const translations = {
   },
   hi: {
     nav: {
-      logo: "क्या प्रकाश सीधी रेखा में यात्रा करता है?",
+      logo: "सामग्रियों के माध्यम से प्रकाश",
       tabs: {
         learn: "सीखें",
         practice: "अभ्यास",
@@ -577,7 +583,7 @@ const translations = {
     },
     steps: {
       intro: {
-        title: "क्या प्रकाश सीधी रेखा में यात्रा करता है?",
+        title: "सामग्रियों के माध्यम से प्रकाश",
         description: "",
       },
     },
@@ -595,6 +601,7 @@ const translations = {
         transparentComplete: "पारदर्शी: प्रकाश पूरी तरह से गुजरता है",
         translucentComplete: "अर्ध-पारदर्शी: प्रकाश आंशिक रूप से गुजरता है",
         opaqueComplete: "अपारदर्शी: प्रकाश पूरी तरह से अवरुद्ध है",
+        conclusionTitle: "सामग्री और प्रकाश",
       },
     },
     practice: {
@@ -852,7 +859,7 @@ const translations = {
   },
   gu: {
     nav: {
-      logo: "શું પ્રકાશ સીધી રેખામાં મુસાફરી કરે છે?",
+      logo: "વિવિધ પદાર્થો દ્વારા પ્રકાશ",
       tabs: {
         learn: "શીખો",
         practice: "અભ્યાસ",
@@ -876,7 +883,7 @@ const translations = {
     },
     steps: {
       intro: {
-        title: "શું પ્રકાશ સીધી રેખામાં મુસાફરી કરે છે?",
+        title: "વિવિધ પદાર્થો દ્વારા પ્રકાશ",
         description: "",
       },
     },
@@ -894,6 +901,7 @@ const translations = {
         transparentComplete: "પારદર્શક: પ્રકાશ સંપૂર્ણપણે પસાર થાય છે",
         translucentComplete: "અર્ધ-પારદર્શક: પ્રકાશ આંશિક રીતે પસાર થાય છે",
         opaqueComplete: "અપારદર્શક: પ્રકાશ સંપૂર્ણપણે અવરોધાયો છે",
+        conclusionTitle: "સામગ્રી અને પ્રકાશ",
       },
     },
     practice: {
@@ -1350,7 +1358,8 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = ({
     ctx.clearRect(0, 0, width, height);
 
     const step = steps[currentStepIndex];
-    drawVisualization(ctx, width, height, step.activity, animationProgress, t);
+    const progress = (step.activity === "conclusion" || step.activity === "intro") ? 1 : animationProgress;
+    drawVisualization(ctx, width, height, step.activity, progress, t);
   }, [currentStepIndex, animationProgress, width, height, steps, t]);
 
   const nextStep = () => {
@@ -2174,7 +2183,7 @@ function drawConclusion(
   ctx.textAlign = "center";
   ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
   ctx.shadowBlur = 15;
-  ctx.fillText("Materials & Light", centerX, 80);
+  ctx.fillText(t("canvas.labels.conclusionTitle"), centerX, 80);
   ctx.shadowBlur = 0;
 }
 
@@ -2678,7 +2687,6 @@ const MainApp: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
-              <Lightbulb className="w-6 h-6 text-blue-600" />
               <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-teal-600 bg-clip-text text-transparent">
                 {t("nav.logo")}
               </span>

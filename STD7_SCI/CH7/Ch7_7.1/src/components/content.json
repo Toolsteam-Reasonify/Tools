@@ -36,6 +36,8 @@
           "heatIntensity": "Heat Intensity:"
         },
         "heatFlowDirection": "Heat Flow Direction →",
+        "stand": "Stand",
+        "metalStrip": "Metal strip",
         "pinCard": {
           "pinLabel": "Pin",
           "order": "Order: {order}",
@@ -773,6 +775,8 @@
           "heatIntensity": "હીટની તીવ્રતા:"
         },
         "heatFlowDirection": "Heat Flow ની દિશા →",
+        "stand": "સ્ટેન્ડ",
+        "metalStrip": "ધાતુની પટ્ટી",
         "pinCard": {
           "pinLabel": "પિન",
           "order": "ક્રમ: {order}",
@@ -1510,6 +1514,8 @@
           "heatIntensity": "हीट की तीव्रता:"
         },
         "heatFlowDirection": "Heat Flow की दिशा →",
+        "stand": "स्टैंड",
+        "metalStrip": "धातु की पट्टी",
         "pinCard": {
           "pinLabel": "पिन",
           "order": "क्रम: {order}",
@@ -1620,7 +1626,7 @@
           "submitButton": "उत्तर जाँचें",
           "nextButton": "अगला प्रश्न",
           "tryAgainButton": "फिर से कोशिश करें",
-          "completeTitle": "Practice समाप्त! 🎉",
+          "completeTitle": "प्रैक्टिस समाप्त! 🎉",
           "scoreSummary": "आपने {total} में से {score} अंक प्राप्त किए",
           "questionsAnswered": "दिए गए प्रश्न",
           "scorePercentage": "प्रतिशत अंक",

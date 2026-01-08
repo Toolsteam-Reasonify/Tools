@@ -2,15 +2,523 @@
 import React, { useState, createContext, useContext, useEffect, useMemo, ReactNode } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Zap, Battery, Lightbulb, Power, Eye, CheckCircle, ChevronLeft, ChevronRight, XCircle, Award, RotateCcw, Home } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
-import i18n from '@/i18n';
-
-
 
 export type Language = 'en' | 'hi' | 'gu';
 export type Mode = 'demonstration' | 'practice' | 'assessment' | 'mixed';
 export type StepType = 'explanation' | 'visualization' | 'interaction' | 'assessment';
 export type Difficulty = 'beginner' | 'intermediate' | 'advanced';
+
+// ============================================================================
+// INLINE TRANSLATIONS - English, Hindi, Gujarati
+// ============================================================================
+const translations: Record<Language, Record<string, any>> = {
+  en: {
+    // Navigation
+    nav: {
+      logo: 'Torchlight',
+      learn: 'Learn',
+      practice: 'Practice',
+      applications: 'Real World Applications',
+    },
+    // Language selector
+    language: {
+      en: 'English',
+      hi: 'हिंदी',
+      gu: 'ગુજરાતી',
+      selectorLabel: 'Select Language',
+    },
+    // Component labels
+    component: {
+      on: 'ON',
+      off: 'OFF',
+    },
+    // Torch observation section
+    torch: {
+      observe: {
+        title: 'Activity 3.1: Observe a Torchlight',
+        clickTorch: 'Click the Torch!',
+        lampGlowing: '✨ The lamp is GLOWING!',
+        lampNotGlowing: '⭕ The lamp is NOT glowing',
+        whatNotice: '🔦 What is a Torchlight?',
+        definition: 'A torchlight is a portable light source that uses electric cells (battery), a switch, wires, and a lamp or LED. When the switch is ON, the cells push electric current through the wires to the lamp/LED, making it glow so you can see in the dark.',
+        nextParts: 'Next: Torch Parts',
+      },
+      parts: {
+        title: '🔍 What\'s Inside a Torchlight?',
+        lamp: 'Lamp',
+        switch: 'Switch',
+        cells: 'Cells',
+        wires: 'Wires',
+        lampCard: 'Lamp',
+        lampDesc: 'Produces light',
+        switchCard: 'Switch',
+        switchDesc: 'Controls ON/OFF',
+        cellCard: 'Cell',
+        cellDesc: 'Power source',
+        wiresCard: 'Wires',
+        wiresDesc: 'Carry electricity',
+        back: 'Back',
+      },
+    },
+    // Practice section
+    practice: {
+      header: {
+        title: '⚡ Practice: Torchlight Circuit',
+        subtitle: 'Apply what you learned!',
+      },
+      ex1: {
+        notLabeled: 'Not labeled',
+      },
+      ex6: {
+        question: 'Question',
+        of: 'of',
+        checkQuiz: 'Submit Quiz',
+        q1: 'What is the purpose of an electric cell in a torchlight?',
+        q1o1: 'To produce light',
+        q1o2: 'To provide electrical energy',
+        q1o3: 'To control the flow of electricity',
+        q1o4: 'To connect the parts',
+        q2: 'How many cells make a battery?',
+        q2o1: 'One',
+        q2o2: 'Two or more',
+        q2o3: 'Exactly three',
+        q2o4: 'None',
+        q3: 'What happens when we slide the switch to ON position?',
+        q3o1: 'Circuit breaks',
+        q3o2: 'Circuit completes and lamp glows',
+        q3o3: 'Battery drains immediately',
+        q3o4: 'Nothing happens',
+        q4: 'What component actually produces light in a torchlight?',
+        q4o1: 'Cell',
+        q4o2: 'Battery',
+        q4o3: 'Electric lamp',
+        q4o4: 'Switch',
+        q5: 'What do connecting wires do?',
+        q5o1: 'Store electricity',
+        q5o2: 'Produce light',
+        q5o3: 'Carry electricity between components',
+        q5o4: 'Turn electricity on and off',
+      },
+      summary: {
+        title: '🎉 Practice Complete!',
+        excellent: 'Excellent work!',
+        good: 'Good job!',
+        keepPracticing: 'Keep practicing!',
+        totalScore: 'Total Score:',
+        scoreLine: '{correct} / {total} correct ({percentage}%)',
+        exerciseCount: '{count} exercises completed',
+        restart: 'Restart Practice',
+        backToLearn: 'Back to Learn Mode',
+      },
+    },
+    // Common labels
+    common: {
+      examples: 'Examples',
+      next: 'Next',
+      previous: 'Previous',
+      yourAnswer: 'Your Answer:',
+      correct: 'Correct',
+    },
+    // Real world applications
+    realworld: {
+      cooking: 'Cooking & Heating',
+      lighting: 'Lighting',
+      transportation: 'Transportation',
+      heating: 'Heating & Cooling',
+      entertainment: 'Entertainment',
+      communication: 'Communication',
+      usageCategories: 'Usage Categories',
+      desc: {
+        cooking: 'Electric stoves, ovens, and appliances use electrical circuits to generate heat for cooking.',
+        lighting: 'Light bulbs and LED lights convert electrical energy into light through circuit connections.',
+        transportation: 'Electric vehicles use complex circuits to power motors and control systems.',
+        heating: 'Heaters and air conditioners use circuits to regulate temperature.',
+        entertainment: 'Televisions, computers, and gaming consoles rely on circuits for power and signal processing.',
+        communication: 'Phones, routers, and communication devices use circuits to transmit and receive signals.',
+      },
+      example: {
+        cooking: {
+          stove: 'Electric Stove',
+          microwave: 'Microwave Oven',
+          kettle: 'Electric Kettle',
+          toaster: 'Toaster',
+        },
+        lighting: {
+          bulbs: 'Light Bulbs',
+          street: 'Street Lights',
+          flashlight: 'Flashlight',
+          lamp: 'Table Lamp',
+        },
+        transportation: {
+          cars: 'Electric Cars',
+          trains: 'Electric Trains',
+          trams: 'Trams',
+          ebikes: 'E-Bikes',
+        },
+        heating: {
+          ac: 'Air Conditioner',
+          heater: 'Electric Heater',
+          blanket: 'Electric Blanket',
+          fan: 'Electric Fan',
+        },
+        entertainment: {
+          tv: 'Television',
+          computer: 'Computer',
+          console: 'Gaming Console',
+          speakers: 'Speakers',
+        },
+        communication: {
+          phones: 'Mobile Phones',
+          router: 'Wi-Fi Router',
+          radio: 'Radio',
+          satellite: 'Satellite',
+        },
+      },
+    },
+  },
+  hi: {
+    // Navigation
+    nav: {
+      logo: 'टॉर्चलाइट',
+      learn: 'सीखें',
+      practice: 'अभ्यास',
+      applications: 'वास्तविक दुनिया के उपयोग',
+    },
+    // Language selector
+    language: {
+      en: 'English',
+      hi: 'हिंदी',
+      gu: 'ગુજરાતી',
+      selectorLabel: 'भाषा चुनें',
+    },
+    // Component labels
+    component: {
+      on: 'चालू',
+      off: 'बंद',
+    },
+    // Torch observation section
+    torch: {
+      observe: {
+        title: 'गतिविधि 3.1: टॉर्चलाइट का निरीक्षण करें',
+        clickTorch: 'टॉर्च पर क्लिक करें!',
+        lampGlowing: '✨ लैंप जल रहा है!',
+        lampNotGlowing: '⭕ लैंप नहीं जल रहा है',
+        whatNotice: '🔦 टॉर्चलाइट क्या है?',
+        definition: 'टॉर्चलाइट एक पोर्टेबल प्रकाश स्रोत है जो विद्युत सेल (बैटरी), एक स्विच, तार और एक लैंप या LED का उपयोग करता है। जब स्विच चालू होता है, तो सेल तारों के माध्यम से लैंप/LED में विद्युत धारा भेजते हैं, जिससे यह चमकता है ताकि आप अंधेरे में देख सकें।',
+        nextParts: 'अगला: टॉर्च के भाग',
+      },
+      parts: {
+        title: '🔍 टॉर्चलाइट के अंदर क्या है?',
+        lamp: 'लैंप',
+        switch: 'स्विच',
+        cells: 'सेल',
+        wires: 'तार',
+        lampCard: 'लैंप',
+        lampDesc: 'प्रकाश उत्पन्न करता है',
+        switchCard: 'स्विच',
+        switchDesc: 'चालू/बंद नियंत्रित करता है',
+        cellCard: 'सेल',
+        cellDesc: 'ऊर्जा का स्रोत',
+        wiresCard: 'तार',
+        wiresDesc: 'बिजली ले जाते हैं',
+        back: 'वापस',
+      },
+    },
+    // Practice section
+    practice: {
+      header: {
+        title: '⚡ अभ्यास: टॉर्चलाइट सर्किट',
+        subtitle: 'जो आपने सीखा है उसे लागू करें!',
+      },
+      ex1: {
+        notLabeled: 'लेबल नहीं किया गया',
+      },
+      ex6: {
+        question: 'प्रश्न',
+        of: 'में से',
+        checkQuiz: 'प्रश्नोत्तरी जमा करें',
+        q1: 'टॉर्चलाइट में विद्युत सेल का उद्देश्य क्या है?',
+        q1o1: 'प्रकाश उत्पन्न करना',
+        q1o2: 'विद्युत ऊर्जा प्रदान करना',
+        q1o3: 'बिजली के प्रवाह को नियंत्रित करना',
+        q1o4: 'भागों को जोड़ना',
+        q2: 'कितने सेल मिलकर एक बैटरी बनाते हैं?',
+        q2o1: 'एक',
+        q2o2: 'दो या अधिक',
+        q2o3: 'ठीक तीन',
+        q2o4: 'कोई नहीं',
+        q3: 'जब हम स्विच को चालू स्थिति में खिसकाते हैं तो क्या होता है?',
+        q3o1: 'सर्किट टूट जाता है',
+        q3o2: 'सर्किट पूरा होता है और लैंप जलता है',
+        q3o3: 'बैटरी तुरंत खत्म हो जाती है',
+        q3o4: 'कुछ नहीं होता',
+        q4: 'टॉर्चलाइट में वास्तव में प्रकाश कौन सा घटक उत्पन्न करता है?',
+        q4o1: 'सेल',
+        q4o2: 'बैटरी',
+        q4o3: 'विद्युत लैंप',
+        q4o4: 'स्विच',
+        q5: 'कनेक्टिंग तार क्या करते हैं?',
+        q5o1: 'बिजली जमा करते हैं',
+        q5o2: 'प्रकाश उत्पन्न करते हैं',
+        q5o3: 'घटकों के बीच बिजली ले जाते हैं',
+        q5o4: 'बिजली चालू और बंद करते हैं',
+      },
+      summary: {
+        title: '🎉 अभ्यास पूर्ण!',
+        excellent: 'उत्कृष्ट कार्य!',
+        good: 'अच्छा काम!',
+        keepPracticing: 'अभ्यास जारी रखें!',
+        totalScore: 'कुल अंक:',
+        scoreLine: '{correct} / {total} सही ({percentage}%)',
+        exerciseCount: '{count} अभ्यास पूर्ण',
+        restart: 'अभ्यास पुनः आरंभ करें',
+        backToLearn: 'सीखने के मोड पर वापस जाएं',
+      },
+    },
+    // Common labels
+    common: {
+      examples: 'उदाहरण',
+      next: 'अगला',
+      previous: 'पिछला',
+      yourAnswer: 'आपका उत्तर:',
+      correct: 'सही',
+    },
+    // Real world applications
+    realworld: {
+      cooking: 'खाना पकाना और गर्म करना',
+      lighting: 'प्रकाश व्यवस्था',
+      transportation: 'परिवहन',
+      heating: 'गर्म और ठंडा करना',
+      entertainment: 'मनोरंजन',
+      communication: 'संचार',
+      usageCategories: 'उपयोग श्रेणियाँ',
+      desc: {
+        cooking: 'इलेक्ट्रिक स्टोव, ओवन और उपकरण खाना पकाने के लिए गर्मी उत्पन्न करने हेतु विद्युत सर्किट का उपयोग करते हैं।',
+        lighting: 'लाइट बल्ब और LED लाइट सर्किट कनेक्शन के माध्यम से विद्युत ऊर्जा को प्रकाश में बदलते हैं।',
+        transportation: 'इलेक्ट्रिक वाहन मोटर और नियंत्रण प्रणालियों को चलाने के लिए जटिल सर्किट का उपयोग करते हैं।',
+        heating: 'हीटर और एयर कंडीशनर तापमान नियंत्रित करने के लिए सर्किट का उपयोग करते हैं।',
+        entertainment: 'टेलीविज़न, कंप्यूटर और गेमिंग कंसोल पावर और सिग्नल प्रोसेसिंग के लिए सर्किट पर निर्भर करते हैं।',
+        communication: 'फोन, राउटर और संचार उपकरण संकेतों को प्रसारित और प्राप्त करने के लिए सर्किट का उपयोग करते हैं।',
+      },
+      example: {
+        cooking: {
+          stove: 'इलेक्ट्रिक स्टोव',
+          microwave: 'माइक्रोवेव ओवन',
+          kettle: 'इलेक्ट्रिक केतली',
+          toaster: 'टोस्टर',
+        },
+        lighting: {
+          bulbs: 'लाइट बल्ब',
+          street: 'स्ट्रीट लाइट',
+          flashlight: 'फ्लैशलाइट',
+          lamp: 'टेबल लैंप',
+        },
+        transportation: {
+          cars: 'इलेक्ट्रिक कार',
+          trains: 'इलेक्ट्रिक ट्रेन',
+          trams: 'ट्राम',
+          ebikes: 'ई-बाइक',
+        },
+        heating: {
+          ac: 'एयर कंडीशनर',
+          heater: 'इलेक्ट्रिक हीटर',
+          blanket: 'इलेक्ट्रिक कंबल',
+          fan: 'इलेक्ट्रिक पंखा',
+        },
+        entertainment: {
+          tv: 'टेलीविज़न',
+          computer: 'कंप्यूटर',
+          console: 'गेमिंग कंसोल',
+          speakers: 'स्पीकर',
+        },
+        communication: {
+          phones: 'मोबाइल फोन',
+          router: 'वाई-फाई राउटर',
+          radio: 'रेडियो',
+          satellite: 'सैटेलाइट',
+        },
+      },
+    },
+  },
+  gu: {
+    // Navigation
+    nav: {
+      logo: 'ટોર્ચલાઇટ',
+      learn: 'શીખો',
+      practice: 'અભ્યાસ',
+      applications: 'વાસ્તવિક દુનિયાના ઉપયોગો',
+    },
+    // Language selector
+    language: {
+      en: 'English',
+      hi: 'हिंदी',
+      gu: 'ગુજરાતી',
+      selectorLabel: 'ભાષા પસંદ કરો',
+    },
+    // Component labels
+    component: {
+      on: 'ચાલુ',
+      off: 'બંધ',
+    },
+    // Torch observation section
+    torch: {
+      observe: {
+        title: 'પ્રવૃત્તિ 3.1: ટોર્ચલાઇટનું નિરીક્ષણ કરો',
+        clickTorch: 'ટોર્ચ પર ક્લિક કરો!',
+        lampGlowing: '✨ લેમ્પ ચમકી રહ્યો છે!',
+        lampNotGlowing: '⭕ લેમ્પ ચમકતો નથી',
+        whatNotice: '🔦 ટોર્ચલાઇટ શું છે?',
+        definition: 'ટોર્ચલાઇટ એ પોર્ટેબલ પ્રકાશ સ્રોત છે જે ઇલેક્ટ્રિક સેલ (બેટરી), સ્વીચ, વાયર અને લેમ્પ અથવા LED નો ઉપયોગ કરે છે. જ્યારે સ્વીચ ચાલુ હોય, ત્યારે સેલ વાયર દ્વારા લેમ્પ/LED માં વિદ્યુત પ્રવાહ મોકલે છે, જેનાથી તે ચમકે છે જેથી તમે અંધારામાં જોઈ શકો.',
+        nextParts: 'આગળ: ટોર્ચના ભાગો',
+      },
+      parts: {
+        title: '🔍 ટોર્ચલાઇટની અંદર શું છે?',
+        lamp: 'લેમ્પ',
+        switch: 'સ્વીચ',
+        cells: 'સેલ',
+        wires: 'વાયર',
+        lampCard: 'લેમ્પ',
+        lampDesc: 'પ્રકાશ ઉત્પન્ન કરે છે',
+        switchCard: 'સ્વીચ',
+        switchDesc: 'ચાલુ/બંધ નિયંત્રિત કરે છે',
+        cellCard: 'સેલ',
+        cellDesc: 'ઊર્જાનો સ્ત્રોત',
+        wiresCard: 'વાયર',
+        wiresDesc: 'વીજળી વહન કરે છે',
+        back: 'પાછા',
+      },
+    },
+    // Practice section
+    practice: {
+      header: {
+        title: '⚡ અભ્યાસ: ટોર્ચલાઇટ સર્કિટ',
+        subtitle: 'તમે જે શીખ્યા તે લાગુ કરો!',
+      },
+      ex1: {
+        notLabeled: 'લેબલ નથી',
+      },
+      ex6: {
+        question: 'પ્રશ્ન',
+        of: 'માંથી',
+        checkQuiz: 'ક્વિઝ સબમિટ કરો',
+        q1: 'ટોર્ચલાઇટમાં ઇલેક્ટ્રિક સેલનો હેતુ શું છે?',
+        q1o1: 'પ્રકાશ ઉત્પન્ન કરવો',
+        q1o2: 'વિદ્યુત ઊર્જા પ્રદાન કરવી',
+        q1o3: 'વીજળીના પ્રવાહને નિયંત્રિત કરવો',
+        q1o4: 'ભાગોને જોડવા',
+        q2: 'કેટલા સેલ મળીને બેટરી બનાવે છે?',
+        q2o1: 'એક',
+        q2o2: 'બે કે વધુ',
+        q2o3: 'બરાબર ત્રણ',
+        q2o4: 'કોઈ નહીં',
+        q3: 'જ્યારે આપણે સ્વીચને ચાલુ સ્થિતિમાં સરકાવીએ ત્યારે શું થાય છે?',
+        q3o1: 'સર્કિટ તૂટે છે',
+        q3o2: 'સર્કિટ પૂર્ણ થાય છે અને લેમ્પ ચમકે છે',
+        q3o3: 'બેટરી તરત ખાલી થઈ જાય છે',
+        q3o4: 'કંઈ થતું નથી',
+        q4: 'ટોર્ચલાઇટમાં ખરેખર કયો ઘટક પ્રકાશ ઉત્પન્ન કરે છે?',
+        q4o1: 'સેલ',
+        q4o2: 'બેટરી',
+        q4o3: 'ઇલેક્ટ્રિક લેમ્પ',
+        q4o4: 'સ્વીચ',
+        q5: 'કનેક્ટિંગ વાયર શું કરે છે?',
+        q5o1: 'વીજળી સંગ્રહ કરે છે',
+        q5o2: 'પ્રકાશ ઉત્પન્ન કરે છે',
+        q5o3: 'ઘટકો વચ્ચે વીજળી વહન કરે છે',
+        q5o4: 'વીજળી ચાલુ અને બંધ કરે છે',
+      },
+      summary: {
+        title: '🎉 અભ્યાસ પૂર્ણ!',
+        excellent: 'ઉત્તમ કાર્ય!',
+        good: 'સારું કામ!',
+        keepPracticing: 'અભ્યાસ ચાલુ રાખો!',
+        totalScore: 'કુલ સ્કોર:',
+        scoreLine: '{correct} / {total} સાચા ({percentage}%)',
+        exerciseCount: '{count} અભ્યાસ પૂર્ણ',
+        restart: 'અભ્યાસ ફરીથી શરૂ કરો',
+        backToLearn: 'શીખવાના મોડ પર પાછા જાઓ',
+      },
+    },
+    // Common labels
+    common: {
+      examples: 'ઉદાહરણો',
+      next: 'આગળ',
+      previous: 'પાછળ',
+      yourAnswer: 'તમારો જવાબ:',
+      correct: 'સાચું',
+    },
+    // Real world applications
+    realworld: {
+      cooking: 'રસોઈ અને ગરમ કરવું',
+      lighting: 'પ્રકાશ વ્યવસ્થા',
+      transportation: 'પરિવહન',
+      heating: 'ગરમ અને ઠંડું કરવું',
+      entertainment: 'મનોરંજન',
+      communication: 'સંદેશાવ્યવહાર',
+      usageCategories: 'ઉપયોગ શ્રેણીઓ',
+      desc: {
+        cooking: 'ઇલેક્ટ્રિક સ્ટોવ, ઓવન અને ઉપકરણો રસોઈ માટે ગરમી ઉત્પન્ન કરવા વિદ્યુત સર્કિટનો ઉપયોગ કરે છે.',
+        lighting: 'લાઇટ બલ્બ અને LED લાઇટ સર્કિટ કનેક્શન દ્વારા વિદ્યુત ઊર્જાને પ્રકાશમાં રૂપાંતરિત કરે છે.',
+        transportation: 'ઇલેક્ટ્રિક વાહનો મોટર અને નિયંત્રણ પ્રણાલીઓને પાવર આપવા જટિલ સર્કિટનો ઉપયોગ કરે છે.',
+        heating: 'હીટર અને એર કન્ડિશનર તાપમાન નિયંત્રિત કરવા સર્કિટનો ઉપયોગ કરે છે.',
+        entertainment: 'ટેલિવિઝન, કમ્પ્યુટર અને ગેમિંગ કન્સોલ પાવર અને સિગ્નલ પ્રોસેસિંગ માટે સર્કિટ પર આધાર રાખે છે.',
+        communication: 'ફોન, રાઉટર અને સંદેશાવ્યવહાર ઉપકરણો સિગ્નલ મોકલવા અને પ્રાપ્ત કરવા સર્કિટનો ઉપયોગ કરે છે.',
+      },
+      example: {
+        cooking: {
+          stove: 'ઇલેક્ટ્રિક સ્ટોવ',
+          microwave: 'માઇક્રોવેવ ઓવન',
+          kettle: 'ઇલેક્ટ્રિક કેટલ',
+          toaster: 'ટોસ્ટર',
+        },
+        lighting: {
+          bulbs: 'લાઇટ બલ્બ',
+          street: 'સ્ટ્રીટ લાઇટ',
+          flashlight: 'ફ્લેશલાઇટ',
+          lamp: 'ટેબલ લેમ્પ',
+        },
+        transportation: {
+          cars: 'ઇલેક્ટ્રિક કાર',
+          trains: 'ઇલેક્ટ્રિક ટ્રેન',
+          trams: 'ટ્રામ',
+          ebikes: 'ઇ-બાઇક',
+        },
+        heating: {
+          ac: 'એર કન્ડિશનર',
+          heater: 'ઇલેક્ટ્રિક હીટર',
+          blanket: 'ઇલેક્ટ્રિક ધાબળો',
+          fan: 'ઇલેક્ટ્રિક પંખો',
+        },
+        entertainment: {
+          tv: 'ટેલિવિઝન',
+          computer: 'કમ્પ્યુટર',
+          console: 'ગેમિંગ કન્સોલ',
+          speakers: 'સ્પીકર',
+        },
+        communication: {
+          phones: 'મોબાઇલ ફોન',
+          router: 'વાઇ-ફાઇ રાઉટર',
+          radio: 'રેડિયો',
+          satellite: 'સેટેલાઇટ',
+        },
+      },
+    },
+  },
+};
+
+// Helper function to get nested value from object using dot notation
+const getNestedValue = (obj: any, path: string): string => {
+  const keys = path.split('.');
+  let result = obj;
+  for (const key of keys) {
+    if (result && typeof result === 'object' && key in result) {
+      result = result[key];
+    } else {
+      return path; // Return the key if not found
+    }
+  }
+  return typeof result === 'string' ? result : path;
+};
 
 // Circuit component types
 export interface CircuitComponent {
@@ -185,7 +693,7 @@ export interface ProgressData {
 }
 
 // ============================================================================
-// CONTEXT PROVIDERS (from LanguageContext.tsx and ModeContext.tsx)
+// CONTEXT PROVIDERS
 // ============================================================================
 
 // LanguageContext
@@ -198,23 +706,33 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const { t } = useTranslation();
-  const initialLanguage = (i18n.language?.split('-')[0] as Language) || 'en';
-  const [language, setLanguageState] = useState<Language>(initialLanguage);
+  // Get initial language from localStorage or default to 'en'
+  const getInitialLanguage = (): Language => {
+    const stored = localStorage.getItem('i18nextLng');
+    if (stored && ['en', 'hi', 'gu'].includes(stored)) {
+      return stored as Language;
+    }
+    return 'en';
+  };
 
-  useEffect(() => {
-    const handleLanguageChanged = (lng: string) => {
-      const base = (lng?.split('-')[0] as Language) || 'en';
-      setLanguageState(base);
-    };
-    i18n.on('languageChanged', handleLanguageChanged);
-    return () => {
-      i18n.off('languageChanged', handleLanguageChanged);
-    };
-  }, []);
+  const [language, setLanguageState] = useState<Language>(getInitialLanguage);
+
+  // Translation function using inline translations
+  const t = (key: string, options?: Record<string, unknown>): string => {
+    let value = getNestedValue(translations[language], key);
+    
+    // Handle interpolation (e.g., {correct}, {total}, {percentage})
+    if (options && typeof value === 'string') {
+      Object.entries(options).forEach(([optKey, optValue]) => {
+        value = value.replace(new RegExp(`\\{${optKey}\\}`, 'g'), String(optValue));
+      });
+    }
+    
+    return value;
+  };
 
   const handleSetLanguage = (lang: Language) => {
-    i18n.changeLanguage(lang);
+    setLanguageState(lang);
     localStorage.setItem('i18nextLng', lang);
   };
 

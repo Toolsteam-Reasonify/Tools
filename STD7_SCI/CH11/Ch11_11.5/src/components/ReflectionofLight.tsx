@@ -6,7 +6,7 @@ import React, {
   useContext,
   ReactNode,
 } from "react";
-import { Lightbulb, ArrowRight, ArrowLeft, CheckCircle, XCircle, RefreshCw, Award, Camera, Car, Eye, Home, Smartphone, Sun, Telescope, ChevronDown, ChevronUp, Sparkles } from 'lucide-react';
+import { Lightbulb, ArrowRight, ArrowLeft, CheckCircle, XCircle, RefreshCw, Award, Eye, Home, Smartphone, Telescope, ChevronDown, ChevronUp, Sparkles } from 'lucide-react';
 
 // Type declarations for browser extension APIs to prevent TypeScript errors
 declare global {
@@ -154,8 +154,8 @@ if (typeof window !== 'undefined' && typeof console !== 'undefined') {
       } catch (e) {
         // Try alternative approach
         try {
-          (window.chrome.runtime as any).lastError = null;
-          Object.defineProperty(window.chrome.runtime, 'lastError', {
+          (chrome.runtime as { lastError?: unknown }).lastError;
+          Object.defineProperty(chrome.runtime, 'lastError', {
             get: () => null,
             set: () => {},
             configurable: true,
@@ -367,6 +367,30 @@ const Globe = ({ className }: { className?: string }) => {
   );
 };
 
+const Shield = ({ className }: { className?: string }) => {
+  const svgProps: React.SVGProps<SVGSVGElement> = {
+    className,
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2",
+    viewBox: "0 0 24 24"
+  };
+  
+  const filteredSvgProps: Record<string, unknown> = {};
+  const invalidKeys = ['error', 'warn', 'log'];
+  for (const key in svgProps) {
+    if (!invalidKeys.includes(key)) {
+      filteredSvgProps[key] = svgProps[key as keyof typeof svgProps];
+    }
+  }
+  
+  return (
+    <svg {...(filteredSvgProps as React.SVGProps<SVGSVGElement>)}>
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+    </svg>
+  );
+};
+
 type Language = "en" | "hi" | "gu";
 type TabType = "learn" | "practice" | "realWorld";
 
@@ -502,7 +526,22 @@ export interface Translation {
     submitAnswer?: string;
     nextExercise?: string;
     completedAll?: string;
-    overview?: string;
+    overview?: {
+      title: string;
+      subtitle: string;
+      backToPractice: string;
+      correct: string;
+      incorrect: string;
+      accuracy: string;
+      exerciseList: string;
+      yourAnswer: string;
+      correctAnswer: string;
+      explanation: string;
+      notAnswered: string;
+      drawn: string;
+      notDrawn: string;
+      drawingRequired: string;
+    };
     congratulations?: string;
     completedAllText?: string;
     accuracyLabel?: string;
@@ -816,6 +855,89 @@ export const translations: Record<string, Translation> = {
         accuracy: "Accuracy",
         progress: "Progress",
       },
+      exercise: "Exercise {{num}}",
+      difficulty: {
+        easy: "Easy",
+        medium: "Medium",
+        hard: "Hard",
+      },
+      completed: "Completed!",
+      submitAnswer: "Submit Answer",
+      nextExercise: "Next Exercise",
+      excellent: "Excellent!",
+      notQuiteRight: "Not quite right",
+      interactive: {
+        mirrorAngle: "Mirror Angle:",
+        tip: "Drag the slider to adjust the mirror's angle.",
+        lightSource: "Light Source",
+        mirror: "Mirror ({{angle}}°)",
+        target: "Target",
+        perfect: "Perfect Reflection!",
+      },
+      drawing: {
+        instruction: "Draw the reflected ray!",
+        clearDrawing: "Clear Drawing",
+        tip: "Draw where you think the light will bounce!",
+      },
+      trueFalse: {
+        true: "True",
+        false: "False",
+      },
+      exercises: {
+        "1": {
+          question: "Which of the following always happens when light hits a smooth surface like a mirror?",
+          options: ["It is absorbed", "It is reflected", "It passes through", "It disappears"],
+          explanation: "Light reflects off smooth surfaces in a predictable way, which is what allows us to see images in mirrors.",
+        },
+        "2": {
+          question: "The Law of Reflection states that the Angle of Incidence is always ________ to the Angle of Reflection.",
+          options: ["Greater than", "Less than", "Equal to", "Double of"],
+          explanation: "According to the Law of Reflection, the angle at which light hits a surface is equal to the angle at which it reflects.",
+        },
+        "3": {
+          question: "What kind of reflection occurs when light hits a rough surface like a brick wall?",
+          options: ["Regular reflection", "Perfect reflection", "Diffuse reflection", "Mirror reflection"],
+          explanation: "Diffuse reflection occurs when light hits a rough surface, causing the rays to scatter in many different directions.",
+        },
+        "4": {
+          question: "If you stand in front of a mirror and raise your right hand, the image appears to raise its right hand.",
+          explanation: "This is False. Due to lateral inversion, your right hand appears as the left hand of the image in a plane mirror.",
+        },
+        "5": {
+          question: "Adjust the mirror to make the light hit the target! Can you find the correct angle?",
+          explanation: "Great job! You used the law of reflection to hit the target.",
+        },
+        "6": {
+          question: "An incident ray hits a mirror at an angle of 30° from the normal. What will be the angle of reflection?",
+          options: ["15°", "30°", "60°", "90°"],
+          explanation: "Since angle of incidence = angle of reflection, the reflected angle will also be 30°.",
+        },
+        "7": {
+          question: "Draw the reflected ray for the given incident ray on the mirror.",
+          explanation: "Excellent drawing! The reflected ray follows the path dictated by the Law of Reflection.",
+        },
+        "8": {
+          question: "In this diagram, which line represents the 'Normal'?",
+          options: ["The incident ray", "The perpendicular line", "The reflected ray", "The mirror surface"],
+          explanation: "The Normal is an imaginary line perpendicular to the surface at the point of incidence.",
+        },
+      },
+      overview: {
+        title: "Practice Completed!",
+        subtitle: "Here's how you performed in this session",
+        backToPractice: "Back to Practice",
+        correct: "Correct Answers",
+        incorrect: "Incorrect Answers",
+        accuracy: "Overall Accuracy",
+        exerciseList: "Exercise Breakdown",
+        yourAnswer: "Your Answer:",
+        correctAnswer: "Correct Answer:",
+        explanation: "Explanation:",
+        notAnswered: "Not Answered",
+        drawn: "Drawn",
+        notDrawn: "Not Drawn",
+        drawingRequired: "Drawing Exercise",
+      }
     },
     learn: {
       title: "✨ Reflection of Light ✨",
@@ -896,22 +1018,122 @@ export const translations: Record<string, Translation> = {
           id: 1,
           title: "Mirrors in Daily Life",
           category: "Everyday Use",
-          description:
-            "We use mirrors every day for grooming, dressing, and checking our appearance.",
+          description: "We use mirrors every day for grooming, dressing, and checking our appearance.",
           example: "Bathroom mirrors, dressing table mirrors, wardrobe mirrors",
           howItWorks: [
             "Light from your body and surroundings hits the mirror surface",
             "The smooth glass surface reflects light in a predictable way",
             "Reflected light enters your eyes, creating a virtual image",
-            "The image appears to be behind the mirror at the same distance",
+            "The image appears to be behind the mirror at the same distance"
           ],
           funFacts: [
             "Ancient mirrors were made of polished bronze or copper",
-            "The first glass mirrors were made in Venice around 1317",
-            "Modern mirrors use a thin layer of aluminum or silver coating",
+            "Modern mirrors use a thin layer of aluminum or silver coating"
           ],
-          canvasLabel: "You see your reflection!",
+          canvasLabel: "You see your reflection!"
         },
+        {
+          id: 2,
+          title: "Periscope",
+          category: "Military & Optics",
+          description: "A device that allows you to see things from around a corner or from a hidden position.",
+          example: "Submarines, armored vehicles, trench warfare",
+          howItWorks: [
+            "Two mirrors are placed at 45 degree angles inside a tube",
+            "Light hits the top mirror and reflects down the tube",
+            "The bottom mirror reflects the light into the viewer's eye"
+          ],
+          funFacts: [
+            "Periscopes were crucial for submarine captains to see above water",
+            "Fiber optics are now used for more advanced digital periscopes"
+          ],
+          canvasLabel: "Seeing around corners!"
+        },
+        {
+          id: 3,
+          title: "Kaleidoscope",
+          category: "Art & Toys",
+          description: "An optical instrument with two or more reflecting surfaces tilted to each other in an angle.",
+          example: "Children's toys, design inspiration",
+          howItWorks: [
+            "Multiple mirrors create repeated reflections of colorful objects",
+            "Rotation creates ever-changing, symmetrical patterns",
+            "Multiple reflections multiply the image of a few objects"
+          ],
+          funFacts: [
+            "Invented by David Brewster in 1816",
+            "The name comes from Greek words meaning 'beautiful form to see'"
+          ],
+          canvasLabel: "Infinite patterns!"
+        },
+        {
+          id: 4,
+          title: "Telescope",
+          category: "Astronomy",
+          description: "Reflecting telescopes use mirrors to gather and focus light from distant stars.",
+          example: "Hubble Space Telescope, James Webb Telescope",
+          howItWorks: [
+            "A large curved mirror collects light from distant objects",
+            "The light is focused onto a smaller secondary mirror",
+            "The secondary mirror reflects light to the eyepiece or camera"
+          ],
+          funFacts: [
+            "Isaac Newton built the first reflecting telescope in 1668",
+            "Large mirrors allow telescopes to see millions of light-years away"
+          ],
+          canvasLabel: "Eyes on the universe!"
+        },
+        {
+          id: 5,
+          title: "Dental Mirror",
+          category: "Medical",
+          description: "A small mirror used by dentists to see difficult-to-reach areas of the mouth.",
+          example: "Dentist checkups",
+          howItWorks: [
+            "A small circular mirror is placed in the mouth",
+            "It reflects light onto the teeth and reflects the image back",
+            "Concave dental mirrors can magnify the image for better detail"
+          ],
+          funFacts: [
+            "Some modern dental mirrors have built-in LED lights",
+            "They are usually made of stainless steel for easy sterilization"
+          ],
+          canvasLabel: "Clear view of teeth!"
+        },
+        {
+          id: 6,
+          title: "Security Mirror",
+          category: "Public Safety",
+          description: "Convex mirrors used in stores and intersections to provide a wide view.",
+          example: "Store aisles, blind corners in parking lots",
+          howItWorks: [
+            "The convex (bulging) surface reflects a wide area",
+            "It compresses multiple angles into a single small mirror",
+            "Though images are smaller, the field of view is much larger"
+          ],
+          funFacts: [
+            "Convex mirrors always form virtual, upright, and diminished images",
+            "They help prevent accidents at 'blind' road intersections"
+          ],
+          canvasLabel: "Wide angle security!"
+        },
+        {
+          id: 7,
+          title: "Smartphone Camera",
+          category: "Modern Tech",
+          description: "Smartphones use tiny mirrors and sensors to capture photos and selfies.",
+          example: "Selfies, photography",
+          howItWorks: [
+            "Light reflects off your face into the camera lens",
+            "For selfies, the screen acts as a mirror during preview",
+            "Internal mirror systems help focus light onto small sensors"
+          ],
+          funFacts: [
+            "Selfie cameras often mirror the image to feel more natural",
+            "Modern cameras use multiple lens and mirror elements for zoom"
+          ],
+          canvasLabel: "Smile for the selfie!"
+        }
       ],
     },
   },
@@ -1035,6 +1257,88 @@ export const translations: Record<string, Translation> = {
         accuracy: "सटीकता",
         progress: "प्रगति",
       },
+      exercise: "अभ्यास {{num}}",
+      difficulty: {
+        easy: "आसान",
+        medium: "मध्यम",
+        hard: "कठिन",
+      },
+      completed: "पूरा हुआ!",
+      submitAnswer: "उत्तर जमा करें",
+      excellent: "बहुत बढ़िया!",
+      notQuiteRight: "काफी सही नहीं",
+      interactive: {
+        mirrorAngle: "दर्पण कोण:",
+        tip: "दर्पण के कोण को समायोजित करने के लिए स्लाइडर को खींचें।",
+        lightSource: "प्रकाश स्रोत",
+        mirror: "दर्पण ({{angle}}°)",
+        target: "लक्ष्य",
+        perfect: "सही परावर्तन!",
+      },
+      drawing: {
+        instruction: "परावर्तित किरण खींचिए!",
+        clearDrawing: "ड्राइंग साफ़ करें",
+        tip: "खिंचें कि आपको क्या लगता है कि प्रकाश कहाँ से टकराएगा!",
+      },
+      trueFalse: {
+        true: "सही",
+        false: "गलत",
+      },
+      exercises: {
+        "1": {
+          question: "जब प्रकाश दर्पण जैसी चिकनी सतह पर गिरता है, तो निम्न में से क्या हमेशा होता है?",
+          options: ["यह अवशोषित हो जाता है", "यह परावर्तित हो जाता है", "यह आर-पार निकल जाता है", "यह गायब हो जाता है"],
+          explanation: "प्रकाश चिकनी सतहों से एक अनुमानित तरीके से परावर्तित होता है, जो हमें दर्पणों में चित्र देखने की अनुमति देता है।",
+        },
+        "2": {
+          question: "परावर्तन का नियम कहता है कि आपतन कोण हमेशा परावर्तन कोण के ________ होता है।",
+          options: ["से बड़ा", "से छोटा", "बराबर", "दोगुना"],
+          explanation: "परावर्तन के नियम के अनुसार, जिस कोण पर प्रकाश सतह से टकराता है वह उस कोण के बराबर होता है जिस पर वह परावर्तित होता है।",
+        },
+        "3": {
+          question: "ईंट की दीवार जैसी खुरदरी सतह पर प्रकाश पड़ने पर किस प्रकार का परावर्तन होता है?",
+          options: ["नियमित परावर्तन", "पूर्ण परावर्तन", "विसरित परावर्तन", "दर्पण परावर्तन"],
+          explanation: "विसरित परावर्तन तब होता है जब प्रकाश एक खुरदरी सतह से टकराता है, जिससे किरणें कई अलग-अलग दिशाओं में बिखर जाती हैं।",
+        },
+        "4": {
+          question: "यदि आप दर्पण के सामने खड़े होकर अपना दाहिना हाथ उठाते हैं, तो प्रतिबिंब अपना दाहिना हाथ उठाता हुआ प्रतीत होता है।",
+          explanation: "यह गलत है। पार्श्व व्युत्क्रमण (lateral inversion) के कारण, समतल दर्पण में आपका दाहिना हाथ छवि के बाएं हाथ के रूप में दिखाई देता है।",
+        },
+        "5": {
+          question: "प्रकाश को टार्गेट से टकराने के लिए दर्पण को समायोजित करें! क्या आप सही कोण ढूंढ सकते हैं?",
+          explanation: "बहुत अच्छा! आपने टार्गेट को हिट करने के लिए परावर्तन के नियम का उपयोग किया।",
+        },
+        "6": {
+          question: "एक आपतित किरण अभिलंब से 30° के कोण पर दर्पण से टकराती है। परावर्तन कोण क्या होगा?",
+          options: ["15°", "30°", "60°", "90°"],
+          explanation: "चूंकि आपतन कोण = परावर्तन कोण, परावर्तित कोण भी 30° होगा।",
+        },
+        "7": {
+          question: "दर्पण पर दी गई आपतित किरण के लिए परावर्तित किरण खींचिए।",
+          explanation: "बेहतरीन ड्राइंग! परावर्तित किरण परावर्तन के नियम द्वारा निर्धारित पथ का अनुसरण करती है।",
+        },
+        "8": {
+          question: "इस चित्र में, कौन सी रेखा 'अभिलंब' (Normal) का प्रतिनिधित्व करती है?",
+          options: ["आपतित किरण", "लंबवत रेखा", "परावर्तित किरण", "दर्पण की सतह"],
+          explanation: "अभिलंब (Normal) आपतन बिंदु पर सतह के लंबवत एक काल्पनिक रेखा है।",
+        },
+      },
+      overview: {
+        title: "अभ्यास पूरा हुआ!",
+        subtitle: "यहाँ बताया गया है कि आपने इस सत्र में कैसा प्रदर्शन किया",
+        backToPractice: "अभ्यास पर वापस जाएं",
+        correct: "सही उत्तर",
+        incorrect: "गलत उत्तर",
+        accuracy: "कुल सटीकता",
+        exerciseList: "अभ्यास विवरण",
+        yourAnswer: "आपका उत्तर:",
+        correctAnswer: "सही उत्तर:",
+        explanation: "स्पष्टीकरण:",
+        notAnswered: "उत्तर नहीं दिया",
+        drawn: "खींचा गया",
+        notDrawn: "नहीं खींचा गया",
+        drawingRequired: "ड्राइंग अभ्यास",
+      }
     },
     learn: {
       title: "✨ प्रकाश का परावर्तन ✨",
@@ -1112,15 +1416,122 @@ export const translations: Record<string, Translation> = {
           id: 1,
           title: "दैनिक जीवन में दर्पण",
           category: "रोजमर्रा का उपयोग",
-          description: "हम हर दिन दर्पण का उपयोग करते हैं।",
-          example: "बाथरूम के दर्पण, ड्रेसिंग टेबल के दर्पण",
+          description: "हम संवारने, तैयार होने और अपनी उपस्थिति की जांच करने के लिए हर दिन दर्पणों का उपयोग करते हैं।",
+          example: "बाथरूम के दर्पण, ड्रेसिंग टेबल के दर्पण, अलमारी के दर्पण",
           howItWorks: [
-            "प्रकाश दर्पण की सतह से टकराता है",
-            "चिकनी सतह प्रकाश को परावर्तित करती है",
+            "आपके शरीर और परिवेश से प्रकाश दर्पण की सतह से टकराता है",
+            "चिकनी कांच की सतह प्रकाश को अनुमानित तरीके से परावर्तित करती है",
+            "परावर्तित प्रकाश आपकी आंखों में प्रवेश करता है, एक आभासी छवि बनाता है",
+            "छवि दर्पण के पीछे उतनी ही दूरी पर दिखाई देती है"
           ],
-          funFacts: ["प्राचीन दर्पण कांसे से बने होते थे"],
-          canvasLabel: "आप अपना प्रतिबिंब देखते हैं!",
+          funFacts: [
+            "प्राचीन दर्पण पॉलिश किए हुए कांसे या तांबे से बने होते थे",
+            "आधुनिक दर्पण एल्यूमीनियम या चांदी की कोटिंग की एक पतली परत का उपयोग करते हैं"
+          ],
+          canvasLabel: "आप अपना प्रतिबिंब देख रहे हैं!"
         },
+        {
+          id: 2,
+          title: "पेरिस्कोप",
+          category: "सैन्य और प्रकाशिकी",
+          description: "एक उपकरण जो आपको कोने के आसपास या छिपी हुई स्थिति से चीजें देखने की अनुमति देता है।",
+          example: "पनडुब्बियां, बख्तरबंद वाहन, खाई युद्ध",
+          howItWorks: [
+            "एक ट्यूब के अंदर दो दर्पण 45 डिग्री के कोण पर रखे जाते हैं",
+            "प्रकाश ऊपर के दर्पण से टकराता है और नीचे ट्यूब में परावर्तित होता है",
+            "नीचे का दर्पण प्रकाश को देखने वाले की आंख में परावर्तित करता है"
+          ],
+          funFacts: [
+            "पंडुब्बी कप्तानों के लिए पानी के ऊपर देखने के लिए पेरिस्कोप महत्वपूर्ण थे",
+            "अब उन्नत डिजिटल पेरिस्कोप के लिए फाइबर ऑप्टिक्स का उपयोग किया जाता है"
+          ],
+          canvasLabel: "कोनों के आसपास देखना!"
+        },
+        {
+          id: 3,
+          title: "कैलीडोस्कोप",
+          category: "कला और खिलौने",
+          description: "एक ऑप्टिकल उपकरण जिसमें दो या दो से अधिक परावर्तक सतहें एक कोण पर एक दूसरे की ओर झुकी होती हैं।",
+          example: "बच्चों के खिलौने, डिजाइन प्रेरणा",
+          howItWorks: [
+            "कई दर्पण रंगीन वस्तुओं के बार-बार परावर्तन बनाते हैं",
+            "घुमाने से हमेशा बदलते हुए, सममित पैटर्न बनते हैं",
+            "एकाधिक परावर्तन कुछ वस्तुओं की छवि को कई गुना बढ़ा देते हैं"
+          ],
+          funFacts: [
+            "1816 में डेविड ब्रूस्टर द्वारा आविष्कार किया गया",
+            "नाम ग्रीक शब्दों से आया है जिसका अर्थ है 'देखने के लिए सुंदर रूप'"
+          ],
+          canvasLabel: "अनंत पैटर्न!"
+        },
+        {
+          id: 4,
+          title: "टेलीस्कोप",
+          category: "खगोल विज्ञान",
+          description: "परावर्तक दूरबीनें दूर के तारों से प्रकाश इकट्ठा करने और केंद्रित करने के लिए दर्पणों का उपयोग करती हैं।",
+          example: "हबल स्पेस टेलीस्कोप, जेम्स वेब टेलीस्कोप",
+          howItWorks: [
+            "एक बड़ा घुमावदार दर्पण दूर की वस्तुओं से प्रकाश एकत्र करता है",
+            "प्रकाश एक छोटे माध्यमिक दर्पण पर केंद्रित होता है",
+            "माध्यमिक दर्पण प्रकाश को ऐपिस या कैमरे तक परावर्तित करता है"
+          ],
+          funFacts: [
+            "आइजैक न्यूटन ने 1668 में पहली परावर्तक दूरबीन बनाई थी",
+            "बड़े दर्पण दूरबीन को लाखों प्रकाश-वर्ष दूर देखने की अनुमति देते हैं"
+          ],
+          canvasLabel: "ब्रह्मांड पर नजर!"
+        },
+        {
+          id: 5,
+          title: "दंत दर्पण (Dental Mirror)",
+          category: "चिकित्सा",
+          description: "दंत चिकित्सकों द्वारा मुंह के उन क्षेत्रों को देखने के लिए उपयोग किया जाने वाला एक छोटा दर्पण जहां पहुंचना कठिन है।",
+          example: "दंत चिकित्सक जांच",
+          howItWorks: [
+            "मुंह में एक छोटा गोलाकार दर्पण रखा जाता है",
+            "यह दांतों पर प्रकाश परावर्तित करता है और छवि को वापस परावर्तित करता है",
+            "अवतल दंत दर्पण बेहतर विवरण के लिए छवि को बड़ा कर सकते हैं"
+          ],
+          funFacts: [
+            "कुछ आधुनिक दंत दर्पणों में अंतर्निहित एलईडी लाइटें होती हैं",
+            "वे आमतौर पर आसान नसबंदी के लिए स्टेनलेस स्टील से बने होते हैं"
+          ],
+          canvasLabel: "दांतों का साफ दृश्य!"
+        },
+        {
+          id: 6,
+          title: "सुरक्षा दर्पण",
+          category: "सार्वजनिक सुरक्षा",
+          description: "दुकानों और चौराहों में व्यापक दृश्य प्रदान करने के लिए उपयोग किए जाने वाले उत्तल दर्पण।",
+          example: "स्टोर गलियारे, पार्किंग स्थल में अंधे मोड़",
+          howItWorks: [
+            "उत्तल (उभरा हुआ) सतह एक विस्तृत क्षेत्र को परावर्तित करती है",
+            "यह कई कोणों को एक छोटे दर्पण में संपीड़ित करती है",
+            "यद्यपि चित्र छोटे होते हैं, देखने का क्षेत्र बहुत बड़ा होता है"
+          ],
+          funFacts: [
+            "उत्तલ दर्पण हमेशा आभासी, सीधे और छोटे चित्र बनाते हैं",
+            "वे 'अंधे' सड़क चौराहों पर दुर्घटनाओं को रोकने में मदद करते हैं"
+          ],
+          canvasLabel: "वाइड एंगल सुरक्षा!"
+        },
+        {
+          id: 7,
+          title: "स्मार्टफोन कैमरा",
+          category: "आधुनिक तकनीक",
+          description: "स्मार्टफोन फोटो और सेल्फी लेने के लिए छोटे दर्पणों और सेंसर का उपयोग करते हैं।",
+          example: "सेल्फी, फोटोग्राफी",
+          howItWorks: [
+            "आपके चेहरे से प्रकाश कैमरा लेंस में परावर्तित होता है",
+            "सेल्फी के लिए, पूर्वावलोकन के दौरान स्क्रीन दर्पण के रूप में कार्य करती है",
+            "आंतरिक दर्पण प्रणालियाँ प्रकाश को छोटे सेंसर पर केंद्रित करने में मदद करती हैं"
+          ],
+          funFacts: [
+            "सेल्फी कैमरे अक्सर छवि को अधिक प्राकृतिक महसूस कराने के लिए मिरर करते हैं",
+            "आधुनिक कैमरे ज़ूम के लिए कई लेंस और दर्पण तत्वों का उपयोग करते हैं"
+          ],
+          canvasLabel: "सेल्फी के लिए मुस्कुराएं!"
+        }
       ],
     },
   },
@@ -1242,6 +1653,88 @@ export const translations: Record<string, Translation> = {
         accuracy: "ચોકસાઈ",
         progress: "પ્રગતિ",
       },
+      exercise: "અભ્યાસ {{num}}",
+      difficulty: {
+        easy: "સરળ",
+        medium: "મધ્યમ",
+        hard: "કઠિન",
+      },
+      completed: "પૂર્ણ થયું!",
+      submitAnswer: "જવાબ સબમિટ કરો",
+      excellent: "ખૂબ સરસ!",
+      notQuiteRight: "તદ્દન સાચું નથી",
+      interactive: {
+        mirrorAngle: "અરીસાનો ખૂણો:",
+        tip: "અરીસાના ખૂણાને વ્યવસ્થિત કરવા માટે સ્લાઇડર ખેંચો.",
+        lightSource: "પ્રકાશ સ્ત્રોત",
+        mirror: "અરીસો ({{angle}}°)",
+        target: "લક્ષ્ય",
+        perfect: "સંપૂર્ણ પરાવર્તન!",
+      },
+      drawing: {
+        instruction: "પરાવર્તિત કિરણ દોરો!",
+        clearDrawing: "ડ્રોઇંગ સાફ કરો",
+        tip: "દોરો કે તમને શું લાગે છે કે પ્રકાશ ક્યાંથી અથડાશે!",
+      },
+      trueFalse: {
+        true: "સાચું",
+        false: "ખોટું",
+      },
+      exercises: {
+        "1": {
+          question: "જ્યારે પ્રકાશ અરીસા જેવી લીસી સપાટી પર પડે છે ત્યારે નીચેનામાંથી શું હંમેશા થાય છે?",
+          options: ["તે શોષાઈ જાય છે", "તે પરાવર્તિત થાય છે", "તે આરપાર નીકળી જાય છે", "તે અદ્રશ્ય થઈ જાય છે"],
+          explanation: "પ્રકાશ લીસી સપાટીઓથી અનુમાનિત રીતે પરાવર્તિત થાય છે, જે આપણને અરીસામાં પ્રતિબિંબ જોવાની મંજૂરી આપે છે.",
+        },
+        "2": {
+          question: "પરાવર્તનનો નિયમ જણાવે છે કે આપતન કોણ હંમેશા પરાવર્તન કોણના ________ હોય છે.",
+          options: ["થી મોટો", "થી નાનો", "બરાબર", "બમણો"],
+          explanation: "પરાવર્તનના નિયમ મુજબ, જે ખૂણે પ્રકાશ સપાટી પર અથડાય છે તે પરાવર્તન પામતા ખૂણાની બરાબર હોય છે.",
+        },
+        "3": {
+          question: "ઈંટની દીવાલ જેવી ખરબચડી સપાટી પર પ્રકાશ પડવાથી કેવું પરાવર્તન થાય છે?",
+          options: ["નિયમિત પરાવર્તન", "સંપૂર્ણ પરાવર્તન", "વિખરાયેલું પરાવર્તન", "અરીસાનું પરાવર્તન"],
+          explanation: "વિખરાયેલું પરાવર્તન ત્યારે થાય છે જ્યારે પ્રકાશ ખરબચડી સપાટી પર અથડાય છે, જેના કારણે કિરણો ઘણી જુદી જુદી દિશાઓમાં ફેલાય છે.",
+        },
+        "4": {
+          question: "જો તમે અરીસાની સામે ઊભા રહીને તમારો જમણો હાથ ઊંચો કરો છો, તો પ્રતિબિંબ તેનો જમણો હાથ ઊંચો કરતું જણાય છે.",
+          explanation: "આ ખોટું છે. પાર્શ્વ વ્યુત્ક્રમ (lateral inversion) ને કારણે, સમતલ અરીસામાં તમારો જમણો હાથ છબીના ડાબા હાથ તરીકે દેખાય છે.",
+        },
+        "5": {
+          question: "પ્રકાશ ટાર્ગેટ પર અથડાય તે માટે અરીસાને વ્યવસ્થિત કરો! શું તમે સાચો કોણ શોધી શકો છો?",
+          explanation: "ખૂબ સરસ! તમે ટાર્ગેટ સુધી પહોંચવા માટે પરાવર્તનના નિયમનો ઉપયોગ કર્યો.",
+        },
+        "6": {
+          question: "એક આપતિત કિરણ લંબથી 30° ના ખૂણે અરીસા સાથે અથડાય છે. પરાવર્તન કોણ કેટલો હશે?",
+          options: ["15°", "30°", "60°", "90°"],
+          explanation: "આપતન કોણ = પરાવર્તન કોણ હોવાથી, પરાવર્તિત ખૂણો પણ 30° હશે.",
+        },
+        "7": {
+          question: "અરીસા પર આપેલ આપતિત કિરણ માટે પરાવર્તિત કિરણ દોરો.",
+          explanation: "ઉત્કૃષ્ટ ડ્રોઇંગ! પરાવર્તિત કિરણ પરાવર્તનના નિયમ દ્વારા નિર્ધારિત માર્ગને અનુસરે છે.",
+        },
+        "8": {
+          question: "આ આકૃતિમાં, કઈ રેખા 'લંબ' (Normal) ને દર્શાવે છે?",
+          options: ["આપતિત કિરણ", "લંબ રેખા", "પરાવર્તિત કિરણ", "અરીસાની સપાટી"],
+          explanation: "લંબ (Normal) એ આપતન બિંદુએ સપાટીને લંબરૂપ એક કાલ્પનિક રેખા છે.",
+        },
+      },
+      overview: {
+        title: "અભ્યાસ પૂર્ણ થયો!",
+        subtitle: "અહીં તમે આ સત્રમાં કેવું પ્રદર્શન કર્યું તે છે",
+        backToPractice: "અભ્યાસ પર પાછા જાઓ",
+        correct: "સાચા જવાબો",
+        incorrect: "ખોટા જવાબો",
+        accuracy: "કુલ ચોકસાઈ",
+        exerciseList: "અભ્યાસ વિગતો",
+        yourAnswer: "તમારો જવાબ:",
+        correctAnswer: "સાચો જવાબ:",
+        explanation: "સ્પષ્ટીકરણ:",
+        notAnswered: "જવાબ આપ્યો નથી",
+        drawn: "દોરેલું",
+        notDrawn: "દોરેલું નથી",
+        drawingRequired: "ડ્રોઇંગ અભ્યાસ",
+      }
     },
     learn: {
       title: "✨ પ્રકાશનું પરાવર્તન ✨",
@@ -1317,17 +1810,124 @@ export const translations: Record<string, Translation> = {
       applications: [
         {
           id: 1,
-          title: "દૈનિક જીવનમાં અરીસા",
-          category: "રોજિંદો ઉપયોગ",
-          description: "આપણે દરરોજ અરીસાનો ઉપયોગ કરીએ છીએ.",
-          example: "બાથરૂમ અરીસા, ડ્રેસિંગ ટેબલ અરીસા",
+          title: "દૈનિક જીવનમાં અરીસાઓ",
+          category: "રોજિંદા ઉપયોગ",
+          description: "આપણે માવજત, પોશાક પહેરવા અને આપણા દેખાવને તપાસવા માટે દરરોજ અરીસાઓનો ઉપયોગ કરીએ છીએ.",
+          example: "બાથરૂમના અરીસાઓ, ડ્રેસિંગ ટેબલના અરીસાઓ, કપડાના અરીસાઓ",
           howItWorks: [
-            "પ્રકાશ અરીસાની સપાટી પર પડે છે",
-            "સરળ સપાટી પ્રકાશને પરાવર્તિત કરે છે",
+            "તમારા શરીર અને આસપાસનો પ્રકાશ અરીસાની સપાટી પર અથડાય છે",
+            "લીસી કાચની સપાટી પ્રકાશને અનુમાનિત રીતે પરાવર્તિત કરે છે",
+            "પરાવર્તિત પ્રકાશ તમારી આંખમાં પ્રવેશે છે, એક આભાસી છબી બનાવે છે",
+            "છબી અરીસાની પાછળ તેટલા જ અંતરે દેખાય છે"
           ],
-          funFacts: ["પ્રાચીન અરીસા કાંસ્યમાંથી બનાવવામાં આવતા હતા"],
-          canvasLabel: "તમે તમારું પ્રતિબિંબ જુઓ છો!",
+          funFacts: [
+            "પ્રાચીન અરીસાઓ પોલિશ કરેલા કાંસા અથવા તાંબાના બનેલા હતા",
+            "આધુનિક અરીસાઓ એલ્યુમિનિયમ અથવા સિલ્વર કોટિંગના પાતળા સ્તરનો ઉપયોગ કરે છે"
+          ],
+          canvasLabel: "તમે તમારું પરાવર્તન જુઓ છો!"
         },
+        {
+          id: 2,
+          title: "પેરિસ્કોપ",
+          category: "લશ્કરી અને પ્રકાશશાસ્ત્ર",
+          description: "એક ઉપકરણ જે તમને ખૂણાની આસપાસથી અથવા છુપાયેલી સ્થિતિમાંથી વસ્તુઓ જોવાની મંજૂરી આપે છે.",
+          example: "સબમરીન, સશસ્ત્ર વાહનો, ખાઈ યુદ્ધ",
+          howItWorks: [
+            "ટ્યુબની અંદર બે અરીસાઓ 45 ડિગ્રીના ખૂણે મૂકવામાં આવે છે",
+            "પ્રકાશ ઉપરના અરીસા પર અથડાય છે અને ટ્યુબમાં નીચે પરાવર્તિત થાય છે",
+            "નીચેનો અરીસો પ્રકાશને જોનારની આંખમાં પરાવર્તિત કરે છે"
+          ],
+          funFacts: [
+            "સબમરીન કેપ્ટનો માટે પાણીની ઉપર જોવા માટે પેરિસ્કોપ મહત્વપૂર્ણ હતા",
+            "હવે વધુ અદ્યતન ડિજિટલ પેરિસ્કોપ માટે ફાયબર ઓપ્ટિક્સનો ઉપયોગ થાય છે"
+          ],
+          canvasLabel: "ખૂણાઓની આસપાસ જોવું!"
+        },
+        {
+          id: 3,
+          title: "કલીડોસ્કોપ",
+          category: "કલા અને રમકડાં",
+          description: "એક પ્રકાશીય સાધન જેમાં બે કે તેથી વધુ પરાવર્તિત સપાટીઓ એક ખૂણા પર એકબીજા તરફ ઝૂકેલી હોય છે.",
+          example: "બાળકોના રમકડાં, ડિઝાઇન પ્રેરણા",
+          howItWorks: [
+            "બહુવિધ અરીસાઓ રંગબેરંગી વસ્તુઓના પુનરાવર્તિત પરાવર્તન બનાવે છે",
+            "ભ્રમણ હંમેશા બદલાતી, સપ્રમાણ પેટર્ન બનાવે છે",
+            "બહુવિધ પરાવર્તન થોડી વસ્તુઓની છબીને અનેકગણી વધારે છે"
+          ],
+          funFacts: [
+            "1816 માં ડેવિડ બ્રૂસ્ટર દ્વારા શોધાયેલ",
+            "નામ ગ્રીક શબ્દો પરથી આવ્યું છે જેનો અર્થ છે 'જોવા માટે સુંદર સ્વરૂપ'"
+          ],
+          canvasLabel: "અનંત પેટર્ન!"
+        },
+        {
+          id: 4,
+          title: "ટેલિસ્કોપ",
+          category: "ખગોળશાસ્ત્ર",
+          description: "પરાવર્તિત ટેલિસ્કોપ દૂરના તારાઓમાંથી પ્રકાશ એકત્રિત કરવા અને કેન્દ્રિત કરવા માટે અરીસાઓનો ઉપયોગ કરે છે.",
+          example: "હબલ સ્પેસ ટેલિસ્કોપ, જેમ્સ વેબ ટેલિસ્કોપ",
+          howItWorks: [
+            "એક મોટો વળાંકવાળો અરીસો દૂરની વસ્તુઓમાંથી પ્રકાશ એકત્રિત કરે છે",
+            "પ્રકાશ નાના ગૌણ અરીસા પર કેન્દ્રિત થાય છે",
+            "ગૌણ અરીસો પ્રકાશને આઈપીસ અથવા કેમેરા સુધી પરાવર્તિત કરે છે"
+          ],
+          funFacts: [
+            "આઇઝેક ન્યૂટને 1668 માં પ્રથમ પરાવર્તિત ટેલિસ્કોપ બનાવ્યું હતું",
+            "મોટા અરીસાઓ ટેલિસ્કોપને લાખો પ્રકાશ-વર્ષ દૂર જોવાની મંજૂરી આપે છે"
+          ],
+          canvasLabel: "બ્રહ્માંડ પર નજર!"
+        },
+        {
+          id: 5,
+          title: "ડેન્ટલ મિરર",
+          category: "તબીબી",
+          description: "ડેન્ટિસ્ટ દ્વારા મોઢાના એવા વિસ્તારો જોવા માટે વપરાતો નાનો અરીસો જ્યાં પહોંચવું મુશ્કેલ છે.",
+          example: "ડેન્ટિસ્ટ તપાસ",
+          howItWorks: [
+            "મોઢામાં એક નાનો ગોળ અરીસો મૂકવામાં આવે છે",
+            "તે દાંત પર પ્રકાશ પરાવર્તિત કરે છે અને છબીને પાછી પરાવર્તિત કરે છે",
+            "અંતર્મુખ ડેન્ટલ મિરર્સ સારી વિગત માટે છબીને મોટી કરી શકે છે"
+          ],
+          funFacts: [
+            "કેટલાક આધુનિક ડેન્ટલ મિરર્સમાં બિલ્ટ-ઇન LED લાઇટ્સ હોય છે",
+            "તેઓ સામાન્ય રીતે સરળ વંધ્યીકરણ માટે સ્ટેનલેસ સ્ટીલના બનેલા હોય છે"
+          ],
+          canvasLabel: "દાંતનું સ્પષ્ટ પ્રદર્શન!"
+        },
+        {
+          id: 6,
+          title: "સુરક્ષા અરીસો",
+          category: "જાહેર સુરક્ષા",
+          description: "સ્ટોર્સ અને આંતરછેદોમાં વિશાળ દૃશ્ય પ્રદાન કરવા માટે વપરાતા બહિર્મુખ અરીસાઓ.",
+          example: "સ્ટોરની ગલીઓ, પાર્કિંગ લોટમાં અંધ ખૂણા",
+          howItWorks: [
+            "બહિર્મુખ (ઉપસેલી) સપાટી વિશાળ વિસ્તારને પરાવર્તિત કરે છે",
+            "તે અનેક ખૂણાઓને એક નાના અરીસામાં સંકુચિત કરે છે",
+            "જોકે છબીઓ નાની છે, જોવાનું ક્ષેત્ર ઘણું મોટું છે"
+          ],
+          funFacts: [
+            "બહિર્મુખ અરીસાઓ હંમેશા આભાસી, સીધી અને નાની છબીઓ બનાવે છે",
+            "તેઓ 'અંધ' રસ્તાના આંતરછેદો પર અકસ્માતો અટકાવવામાં મદદ કરે છે"
+          ],
+          canvasLabel: "વાઈડ એંગલ સુરક્ષા!"
+        },
+        {
+          id: 7,
+          title: "સ્માર્ટફોન કેમેરા",
+          category: "આધુનિક ટેક",
+          description: "સ્માર્ટફોન ફોટા અને સેલ્ફી લેવા માટે નાના અરીસાઓ અને સેન્સરનો ઉપયોગ કરે છે.",
+          example: "સેલ્ફી, ફોટોગ્રાફી",
+          howItWorks: [
+            "તમારા ચહેરા પરનો પ્રકાશ કેમેરા લેન્સમાં પરાવર્તિત થાય છે",
+            "સેલ્ફી માટે, પૂર્વાવલોકન દરમિયાન સ્ક્રીન અરીસા તરીકે કામ કરે છે",
+            "આંતરિક અરીસા પ્રણાલીઓ નાના સેન્સર પર પ્રકાશ કેન્દ્રિત કરવામાં મદદ કરે છે"
+          ],
+          funFacts: [
+            "સેલ્ફી કેમેરા ઘણીવાર છબીને વધુ કુદરતી અનુભવવા માટે મિરર કરે છે",
+            "આધુનિક કેમેરા ઝૂમ માટે બહુવિધ લેન્સ અને અરીસાના તત્વોનો ઉપયોગ કરે છે"
+          ],
+          canvasLabel: "સેલ્ફી માટે સ્મિત કરો!"
+        }
       ],
     },
   },
@@ -1366,15 +1966,17 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({
     const keys = key.split(".");
     let value: TranslationValue = translations[language] as unknown as TranslationValue;
     for (const k of keys) {
-      if (
-        typeof value === "object" &&
-        value !== null &&
-        !Array.isArray(value)
-      ) {
-        value = (value as Record<string, TranslationValue>)[k];
-        if (value === undefined) {
+      if (value === undefined || value === null) return key;
+      
+      if (Array.isArray(value)) {
+        const index = parseInt(k);
+        if (!isNaN(index) && index >= 0 && index < value.length) {
+          value = value[index];
+        } else {
           return key;
         }
+      } else if (typeof value === "object") {
+        value = (value as Record<string, TranslationValue>)[k];
       } else {
         return key;
       }
@@ -1386,15 +1988,17 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({
     const keys = key.split(".");
     let value: TranslationValue = translations[language] as unknown as TranslationValue;
     for (const k of keys) {
-      if (
-        typeof value === "object" &&
-        value !== null &&
-        !Array.isArray(value)
-      ) {
-        value = (value as Record<string, TranslationValue>)[k];
-        if (value === undefined) {
+      if (value === undefined || value === null) return key;
+
+      if (Array.isArray(value)) {
+        const index = parseInt(k);
+        if (!isNaN(index) && index >= 0 && index < value.length) {
+          value = value[index];
+        } else {
           return key;
         }
+      } else if (typeof value === "object") {
+        value = (value as Record<string, TranslationValue>)[k];
       } else {
         return key;
       }
@@ -2216,7 +2820,7 @@ const PracticeMode: React.FC = () => {
       id: 1,
       type: 'mcq',
       question: t('practice.exercises.1.question'),
-      options: tValue('practice.exercises.1.options') as string[],
+      options: (tValue('practice.exercises.1.options') as string[]) || [],
       correctAnswer: t('practice.exercises.1.options.1'),
       explanation: t('practice.exercises.1.explanation'),
       difficulty: 'Easy'
@@ -2225,7 +2829,7 @@ const PracticeMode: React.FC = () => {
       id: 2,
       type: 'mcq',
       question: t('practice.exercises.2.question'),
-      options: tValue('practice.exercises.2.options') as string[],
+      options: (tValue('practice.exercises.2.options') as string[]) || [],
       correctAnswer: t('practice.exercises.2.options.2'),
       explanation: t('practice.exercises.2.explanation'),
       difficulty: 'Easy'
@@ -2234,7 +2838,7 @@ const PracticeMode: React.FC = () => {
       id: 3,
       type: 'mcq',
       question: t('practice.exercises.3.question'),
-      options: tValue('practice.exercises.3.options') as string[],
+      options: (tValue('practice.exercises.3.options') as string[]) || [],
       correctAnswer: t('practice.exercises.3.options.2'),
       explanation: t('practice.exercises.3.explanation'),
       difficulty: 'Easy'
@@ -2260,7 +2864,7 @@ const PracticeMode: React.FC = () => {
       id: 6,
       type: 'mcq',
       question: t('practice.exercises.6.question'),
-      options: tValue('practice.exercises.6.options') as string[],
+      options: (tValue('practice.exercises.6.options') as string[]) || [],
       correctAnswer: t('practice.exercises.6.options.1'),
       explanation: t('practice.exercises.6.explanation'),
       difficulty: 'Medium'
@@ -2279,7 +2883,7 @@ const PracticeMode: React.FC = () => {
       options: tValue('practice.exercises.8.options') as string[],
       correctAnswer: t('practice.exercises.8.options.1'),
       explanation: t('practice.exercises.8.explanation'),
-      difficulty: 'Medium'
+      difficulty: 'Hard'
     }
   ];
 
@@ -2605,7 +3209,7 @@ const PracticeMode: React.FC = () => {
         return (
           <div className="space-y-4">
             <div className="grid grid-cols-1 gap-3">
-              {currentEx.options?.map((option, idx) => (
+              {Array.isArray(currentEx.options) && currentEx.options.map((option, idx) => (
                 <button
                   key={idx}
                   onClick={() => handleAnswerSelect(option)}
@@ -3082,8 +3686,8 @@ const RealWorldMode: React.FC = () => {
       category: t('realWorld.applications.1.category'),
       description: t('realWorld.applications.1.description'),
       realWorldExample: t('realWorld.applications.1.example'),
-      howItWorks: tValue('realWorld.applications.1.howItWorks') as string[],
-      funFacts: tValue('realWorld.applications.1.funFacts') as string[],
+      howItWorks: (tValue('realWorld.applications.1.howItWorks') as string[]) || [],
+      funFacts: (tValue('realWorld.applications.1.funFacts') as string[]) || [],
       visualization: 'mirror-daily',
       color: 'from-blue-400 to-cyan-500',
       canvasLabel: t('realWorld.applications.1.canvasLabel')
@@ -3091,93 +3695,80 @@ const RealWorldMode: React.FC = () => {
     {
       id: 2,
       title: t('realWorld.applications.2.title'),
-      icon: Car,
+      icon: Eye,
       category: t('realWorld.applications.2.category'),
       description: t('realWorld.applications.2.description'),
       realWorldExample: t('realWorld.applications.2.example'),
-      howItWorks: tValue('realWorld.applications.2.howItWorks') as string[],
-      funFacts: tValue('realWorld.applications.2.funFacts') as string[],
-      visualization: 'rearview',
-      color: 'from-orange-400 to-red-500',
+      howItWorks: (tValue('realWorld.applications.2.howItWorks') as string[]) || [],
+      funFacts: (tValue('realWorld.applications.2.funFacts') as string[]) || [],
+      visualization: 'periscope',
+      color: 'from-green-400 to-emerald-500',
       canvasLabel: t('realWorld.applications.2.canvasLabel')
     },
     {
       id: 3,
       title: t('realWorld.applications.3.title'),
-      icon: Telescope,
+      icon: Sparkles,
       category: t('realWorld.applications.3.category'),
       description: t('realWorld.applications.3.description'),
       realWorldExample: t('realWorld.applications.3.example'),
-      howItWorks: tValue('realWorld.applications.3.howItWorks') as string[],
-      funFacts: tValue('realWorld.applications.3.funFacts') as string[],
-      visualization: 'periscope',
-      color: 'from-purple-400 to-indigo-500',
+      howItWorks: (tValue('realWorld.applications.3.howItWorks') as string[]) || [],
+      funFacts: (tValue('realWorld.applications.3.funFacts') as string[]) || [],
+      visualization: 'kaleidoscope',
+      color: 'from-purple-400 to-pink-500',
       canvasLabel: t('realWorld.applications.3.canvasLabel')
     },
     {
       id: 4,
       title: t('realWorld.applications.4.title'),
-      icon: Sun,
+      icon: Telescope,
       category: t('realWorld.applications.4.category'),
       description: t('realWorld.applications.4.description'),
       realWorldExample: t('realWorld.applications.4.example'),
-      howItWorks: tValue('realWorld.applications.4.howItWorks') as string[],
-      funFacts: tValue('realWorld.applications.4.funFacts') as string[],
-      visualization: 'solar',
-      color: 'from-yellow-400 to-orange-500',
+      howItWorks: (tValue('realWorld.applications.4.howItWorks') as string[]) || [],
+      funFacts: (tValue('realWorld.applications.4.funFacts') as string[]) || [],
+      visualization: 'telescope',
+      color: 'from-indigo-400 to-purple-600',
       canvasLabel: t('realWorld.applications.4.canvasLabel')
     },
     {
       id: 5,
       title: t('realWorld.applications.5.title'),
-      icon: Telescope,
+      icon: Eye,
       category: t('realWorld.applications.5.category'),
       description: t('realWorld.applications.5.description'),
       realWorldExample: t('realWorld.applications.5.example'),
-      howItWorks: tValue('realWorld.applications.5.howItWorks') as string[],
-      funFacts: tValue('realWorld.applications.5.funFacts') as string[],
-      visualization: 'telescope',
-      color: 'from-indigo-400 to-purple-600',
+      howItWorks: (tValue('realWorld.applications.5.howItWorks') as string[]) || [],
+      funFacts: (tValue('realWorld.applications.5.funFacts') as string[]) || [],
+      visualization: 'dental',
+      color: 'from-teal-400 to-teal-600',
       canvasLabel: t('realWorld.applications.5.canvasLabel')
     },
     {
       id: 6,
       title: t('realWorld.applications.6.title'),
-      icon: Eye,
+      icon: Shield,
       category: t('realWorld.applications.6.category'),
       description: t('realWorld.applications.6.description'),
       realWorldExample: t('realWorld.applications.6.example'),
-      howItWorks: tValue('realWorld.applications.6.howItWorks') as string[],
-      funFacts: tValue('realWorld.applications.6.funFacts') as string[],
-      visualization: 'dental',
-      color: 'from-green-400 to-teal-500',
+      howItWorks: (tValue('realWorld.applications.6.howItWorks') as string[]) || [],
+      funFacts: (tValue('realWorld.applications.6.funFacts') as string[]) || [],
+      visualization: 'security',
+      color: 'from-blue-500 to-indigo-600',
       canvasLabel: t('realWorld.applications.6.canvasLabel')
     },
     {
       id: 7,
       title: t('realWorld.applications.7.title'),
-      icon: Camera,
+      icon: Smartphone,
       category: t('realWorld.applications.7.category'),
       description: t('realWorld.applications.7.description'),
       realWorldExample: t('realWorld.applications.7.example'),
-      howItWorks: tValue('realWorld.applications.7.howItWorks') as string[],
-      funFacts: tValue('realWorld.applications.7.funFacts') as string[],
-      visualization: 'security',
-      color: 'from-red-400 to-pink-500',
-      canvasLabel: t('realWorld.applications.7.canvasLabel')
-    },
-    {
-      id: 8,
-      title: t('realWorld.applications.8.title'),
-      icon: Smartphone,
-      category: t('realWorld.applications.8.category'),
-      description: t('realWorld.applications.8.description'),
-      realWorldExample: t('realWorld.applications.8.example'),
-      howItWorks: tValue('realWorld.applications.8.howItWorks') as string[],
-      funFacts: tValue('realWorld.applications.8.funFacts') as string[],
+      howItWorks: (tValue('realWorld.applications.7.howItWorks') as string[]) || [],
+      funFacts: (tValue('realWorld.applications.7.funFacts') as string[]) || [],
       visualization: 'smartphone',
       color: 'from-pink-400 to-purple-500',
-      canvasLabel: t('realWorld.applications.8.canvasLabel')
+      canvasLabel: t('realWorld.applications.7.canvasLabel')
     }
   ];
 
@@ -3207,14 +3798,11 @@ const RealWorldMode: React.FC = () => {
         case 'mirror-daily':
           drawDailyMirror(ctx, frame);
           break;
-        case 'rearview':
-          drawRearView(ctx, frame);
-          break;
         case 'periscope':
           drawPeriscope(ctx, frame);
           break;
-        case 'solar':
-          drawSolarCooker(ctx, frame);
+        case 'kaleidoscope':
+          drawKaleidoscope(ctx, frame);
           break;
         case 'telescope':
           drawTelescope(ctx, frame);
@@ -3242,100 +3830,6 @@ const RealWorldMode: React.FC = () => {
       }
     };
   }, [currentApplication, language, t]);
-
-  const drawDailyMirror = (ctx: CanvasRenderingContext2D, frame: number) => {
-    // Person
-    ctx.beginPath();
-    ctx.arc(150, 150, 30, 0, Math.PI * 2);
-    ctx.fillStyle = '#fbbf24';
-    ctx.fill();
-    ctx.fillStyle = '#1e293b';
-    ctx.font = '40px Arial';
-    ctx.textAlign = 'center';
-    ctx.fillText('👤', 150, 165);
-
-    // Mirror frame
-    ctx.fillStyle = '#64748b';
-    ctx.fillRect(280, 70, 15, 160);
-    
-    // Mirror surface
-    const mirrorGrad = ctx.createLinearGradient(295, 70, 320, 70);
-    mirrorGrad.addColorStop(0, '#e0f2f7');
-    mirrorGrad.addColorStop(0.5, '#ffffff');
-    mirrorGrad.addColorStop(1, '#e0f2f7');
-    ctx.fillStyle = mirrorGrad;
-    ctx.fillRect(295, 70, 25, 160);
-
-    // Reflection
-    ctx.save();
-    ctx.scale(-1, 1);
-    ctx.translate(-640, 0);
-    ctx.globalAlpha = 0.7;
-    ctx.fillStyle = '#1e293b';
-    ctx.font = '40px Arial';
-    ctx.textAlign = 'center';
-    ctx.fillText('👤', 470, 165);
-    ctx.restore();
-
-    // Light rays
-    for (let i = 0; i < 5; i++) {
-      const y = 100 + i * 20;
-      ctx.strokeStyle = `rgba(251, 191, 36, ${0.3 + Math.sin(frame * 0.05 + i) * 0.2})`;
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(150, 150);
-      ctx.lineTo(295, y);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.moveTo(295, y);
-      ctx.lineTo(150, 150);
-      ctx.stroke();
-    }
-
-    // Label
-    ctx.fillStyle = '#334155';
-    ctx.font = 'bold 14px Lexend';
-    ctx.textAlign = 'center';
-    ctx.fillText(t('realWorld.applications.1.canvasLabel'), 250, 260);
-  };
-
-  const drawRearView = (ctx: CanvasRenderingContext2D, frame: number) => {
-    // Car (front view)
-    ctx.fillStyle = '#3b82f6';
-    ctx.fillRect(150, 150, 120, 80);
-    ctx.fillStyle = '#1e40af';
-    ctx.fillRect(160, 160, 100, 40);
-
-    // Mirror
-    ctx.fillStyle = '#64748b';
-    ctx.fillRect(235, 100, 50, 40);
-    const mirrorGrad = ctx.createLinearGradient(235, 100, 285, 100);
-    mirrorGrad.addColorStop(0, '#bae6fd');
-    mirrorGrad.addColorStop(1, '#e0f2fe');
-    ctx.fillStyle = mirrorGrad;
-    ctx.fillRect(237, 102, 46, 36);
-
-    // Behind vehicle
-    const carBehindX = 250 - Math.sin(frame * 0.03) * 20;
-    ctx.fillStyle = '#ef4444';
-    ctx.fillRect(carBehindX, 50, 40, 30);
-    
-    // Reflection rays
-    ctx.strokeStyle = 'rgba(239, 68, 68, 0.5)';
-    ctx.lineWidth = 2;
-    ctx.setLineDash([5, 5]);
-    ctx.beginPath();
-    ctx.moveTo(carBehindX + 20, 50);
-    ctx.lineTo(260, 120);
-    ctx.stroke();
-    ctx.setLineDash([]);
-
-    // Label
-    ctx.fillStyle = '#334155';
-    ctx.font = 'bold 14px Lexend';
-    ctx.textAlign = 'center';
-    ctx.fillText(t('realWorld.applications.2.canvasLabel'), 250, 260);
-  };
 
   const drawPeriscope = (ctx: CanvasRenderingContext2D, frame: number) => {
     // Submarine
@@ -3400,78 +3894,126 @@ const RealWorldMode: React.FC = () => {
     ctx.fillStyle = '#334155';
     ctx.font = 'bold 14px Lexend';
     ctx.textAlign = 'center';
-    ctx.fillText(t('realWorld.applications.3.canvasLabel'), 250, 280);
+    ctx.fillText(t('realWorld.applications.2.canvasLabel'), 250, 280);
   };
 
-  const drawSolarCooker = (ctx: CanvasRenderingContext2D, frame: number) => {
-    // Sun
+  const drawDailyMirror = (ctx: CanvasRenderingContext2D, frame: number) => {
+    // Person
     ctx.beginPath();
-    ctx.arc(100, 80, 30, 0, Math.PI * 2);
+    ctx.arc(150, 150, 30, 0, Math.PI * 2);
     ctx.fillStyle = '#fbbf24';
     ctx.fill();
+    ctx.fillStyle = '#1e293b';
+    ctx.font = '40px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText('👤', 150, 165);
+
+    // Mirror frame
+    ctx.fillStyle = '#64748b';
+    ctx.fillRect(280, 70, 15, 160);
     
-    const glow = ctx.createRadialGradient(100, 80, 20, 100, 80, 50);
-    glow.addColorStop(0, 'rgba(251, 191, 36, 0.6)');
-    glow.addColorStop(1, 'rgba(251, 191, 36, 0)');
-    ctx.fillStyle = glow;
-    ctx.beginPath();
-    ctx.arc(100, 80, 50, 0, Math.PI * 2);
-    ctx.fill();
+    // Mirror surface
+    const mirrorGrad = ctx.createLinearGradient(295, 70, 320, 70);
+    mirrorGrad.addColorStop(0, '#e0f2f7');
+    mirrorGrad.addColorStop(0.5, '#ffffff');
+    mirrorGrad.addColorStop(1, '#e0f2f7');
+    ctx.fillStyle = mirrorGrad;
+    ctx.fillRect(295, 70, 25, 160);
 
-    // Parabolic mirror (curved)
-    ctx.fillStyle = '#e0f2f7';
-    ctx.beginPath();
-    ctx.moveTo(200, 240);
-    ctx.quadraticCurveTo(250, 200, 300, 240);
-    ctx.lineTo(300, 250);
-    ctx.quadraticCurveTo(250, 210, 200, 250);
-    ctx.closePath();
-    ctx.fill();
-    
-    ctx.strokeStyle = '#60a5fa';
-    ctx.lineWidth = 3;
-    ctx.stroke();
+    // Reflection
+    ctx.save();
+    ctx.scale(-1, 1);
+    ctx.translate(-640, 0);
+    ctx.globalAlpha = 0.7;
+    ctx.fillStyle = '#1e293b';
+    ctx.font = '40px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText('👤', 470, 165);
+    ctx.restore();
 
-    // Reflected rays converging
-    const rays = [
-      {start: {x: 100, y: 80}, mid: {x: 210, y: 235}},
-      {start: {x: 100, y: 80}, mid: {x: 230, y: 220}},
-      {start: {x: 100, y: 80}, mid: {x: 250, y: 215}},
-      {start: {x: 100, y: 80}, mid: {x: 270, y: 220}},
-      {start: {x: 100, y: 80}, mid: {x: 290, y: 235}}
-    ];
-
-    rays.forEach(ray => {
-      ctx.strokeStyle = 'rgba(251, 191, 36, 0.5)';
+    // Light rays
+    for (let i = 0; i < 5; i++) {
+      const y = 100 + i * 20;
+      ctx.strokeStyle = `rgba(251, 191, 36, ${0.3 + Math.sin(frame * 0.05 + i) * 0.2})`;
       ctx.lineWidth = 2;
       ctx.beginPath();
-      ctx.moveTo(ray.start.x, ray.start.y);
-      ctx.lineTo(ray.mid.x, ray.mid.y);
-      ctx.lineTo(250, 210); // Focal point
+      ctx.moveTo(150, 150);
+      ctx.lineTo(295, y);
       ctx.stroke();
-    });
-
-    // Focal point (hot spot)
-    const intensity = 0.5 + Math.sin(frame * 0.1) * 0.3;
-    const hotspot = ctx.createRadialGradient(250, 210, 0, 250, 210, 20);
-    hotspot.addColorStop(0, `rgba(255, 100, 0, ${intensity})`);
-    hotspot.addColorStop(1, 'rgba(255, 100, 0, 0)');
-    ctx.fillStyle = hotspot;
-    ctx.beginPath();
-    ctx.arc(250, 210, 20, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Pot
-    ctx.fillStyle = '#1e293b';
-    ctx.fillRect(235, 205, 30, 15);
-    ctx.fillStyle = '#475569';
-    ctx.fillRect(237, 207, 26, 11);
+      ctx.beginPath();
+      ctx.moveTo(295, y);
+      ctx.lineTo(150, 150);
+      ctx.stroke();
+    }
 
     // Label
     ctx.fillStyle = '#334155';
     ctx.font = 'bold 14px Lexend';
     ctx.textAlign = 'center';
-    ctx.fillText(t('realWorld.applications.4.canvasLabel'), 250, 280);
+    ctx.fillText(t('realWorld.applications.1.canvasLabel'), 250, 260);
+  };
+
+
+  const drawKaleidoscope = (ctx: CanvasRenderingContext2D, frame: number) => {
+    const centerX = 250;
+    const centerY = 150;
+    const radius = 100;
+
+    // Draw kaleidoscope hexagonal frame
+    ctx.strokeStyle = '#475569';
+    ctx.lineWidth = 5;
+    ctx.beginPath();
+    for (let i = 0; i < 6; i++) {
+        const angle = (i * Math.PI) / 3;
+        const x = centerX + Math.cos(angle) * radius;
+        const y = centerY + Math.sin(angle) * radius;
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+    ctx.stroke();
+
+    // Draw reflected patterns
+    const segments = 6;
+    const colors = ['#f472b6', '#60a5fa', '#34d399', '#fbbf24', '#a78bfa'];
+    
+    for (let i = 0; i < segments; i++) {
+        ctx.save();
+        ctx.translate(centerX, centerY);
+        ctx.rotate((i * Math.PI * 2) / segments + frame * 0.01);
+        
+        // Pattern inside segments
+        colors.forEach((color, idx) => {
+            ctx.fillStyle = color;
+            ctx.globalAlpha = 0.6;
+            const size = 10 + Math.sin(frame * 0.05 + idx) * 5;
+            const x = 20 + idx * 12;
+            const y = Math.sin(frame * 0.02 + idx) * 10;
+            
+            ctx.beginPath();
+            ctx.arc(x, y, size, 0, Math.PI * 2);
+            ctx.fill();
+        });
+        
+        ctx.restore();
+    }
+
+    // Mirror lines
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+    ctx.lineWidth = 2;
+    for (let i = 0; i < segments; i++) {
+        const angle = (i * Math.PI) / 3;
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.lineTo(centerX + Math.cos(angle) * radius, centerY + Math.sin(angle) * radius);
+        ctx.stroke();
+    }
+
+    // Label
+    ctx.fillStyle = '#334155';
+    ctx.font = 'bold 14px Lexend';
+    ctx.textAlign = 'center';
+    ctx.fillText(t('realWorld.applications.3.canvasLabel'), 250, 280);
   };
 
   const drawTelescope = (ctx: CanvasRenderingContext2D, frame: number) => {
@@ -3541,7 +4083,7 @@ const RealWorldMode: React.FC = () => {
     ctx.fillStyle = '#334155';
     ctx.font = 'bold 14px Lexend';
     ctx.textAlign = 'center';
-    ctx.fillText(t('realWorld.applications.5.canvasLabel'), 250, 280);
+    ctx.fillText(t('realWorld.applications.4.canvasLabel'), 250, 280);
   };
 
   const drawDentalMirror = (ctx: CanvasRenderingContext2D, _frame: number) => {
@@ -3608,7 +4150,7 @@ const RealWorldMode: React.FC = () => {
     ctx.fillStyle = '#334155';
     ctx.font = 'bold 14px Lexend';
     ctx.textAlign = 'center';
-    ctx.fillText(t('realWorld.applications.6.canvasLabel'), 250, 280);
+    ctx.fillText(t('realWorld.applications.5.canvasLabel'), 250, 280);
   };
 
   const drawSecurityMirror = (ctx: CanvasRenderingContext2D, frame: number) => {
@@ -3668,7 +4210,7 @@ const RealWorldMode: React.FC = () => {
     ctx.fillStyle = '#334155';
     ctx.font = 'bold 14px Lexend';
     ctx.textAlign = 'center';
-    ctx.fillText(t('realWorld.applications.7.canvasLabel'), 250, 290);
+    ctx.fillText(t('realWorld.applications.6.canvasLabel'), 250, 290);
   };
 
   const drawSmartphone = (ctx: CanvasRenderingContext2D, frame: number) => {
@@ -3721,7 +4263,7 @@ const RealWorldMode: React.FC = () => {
     ctx.fillStyle = '#334155';
     ctx.font = 'bold 14px Lexend';
     ctx.textAlign = 'center';
-    ctx.fillText(t('realWorld.applications.8.canvasLabel'), 250, 290);
+    ctx.fillText(t('realWorld.applications.7.canvasLabel'), 250, 290);
   };
 
   const toggleSection = (section: string) => {

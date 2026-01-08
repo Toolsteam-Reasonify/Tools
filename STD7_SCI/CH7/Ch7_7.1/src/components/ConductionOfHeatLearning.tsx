@@ -137,7 +137,7 @@ const Navbar: React.FC<NavbarProps> = ({ mode, setMode }) => {
                   : 'text-teal-700 hover:bg-teal-100/50'
               }`}
             >
-              📚 {t('Learn')}
+              📚 {t('nav.tabs.learn')}
             </button>
 
             <button
@@ -149,7 +149,7 @@ const Navbar: React.FC<NavbarProps> = ({ mode, setMode }) => {
                   : 'text-purple-700 hover:bg-purple-100/50'
               }`}
             >
-              🎯 {t('Practice')}
+              🎯 {t('nav.tabs.practice')}
             </button>
 
             <button
@@ -548,7 +548,7 @@ const ConductionLearnModeInteractive: React.FC = () => {
                               transformOrigin: 'center',
                             }}
                           >
-                            ✓ Fallen
+                            {t('conduction.activity.pinCard.fallen')}
                           </text>
                         )}
                       </g>
@@ -572,10 +572,10 @@ const ConductionLearnModeInteractive: React.FC = () => {
                   </g>
 
                   <text x="56" y="75" textAnchor="middle" className="text-xs font-semibold" fill="#2C3E50">
-                    Stand
+                    {t('conduction.activity.stand')}
                   </text>
                   <text x="248" y="90" textAnchor="middle" className="text-xs font-semibold" fill="#475569">
-                    Metal strip
+                    {t('conduction.activity.metalStrip')}
                   </text>
                   <text x="415" y="220" textAnchor="middle" className="text-xs font-semibold" fill="#F59E0B">
                     {t('conduction.testing.heatSource')}
