@@ -930,7 +930,7 @@
       }
     },
     "nav": {
-      "logo": "Circuits",
+      "logo": "Heat Transfer",
       "learn": "Learn",
       "practice": "Practice",
       "assess": "Assess",
@@ -945,7 +945,7 @@
       "en": "English",
       "hi": "Hindi",
       "gu": "Gujarati",
-      "selectorLabel": "Select Language"
+      "selectorLabel": "Choose language"
     },
     "component": {
       "cell": "Electric Cell",
@@ -1210,6 +1210,16 @@
       "4": "Distinguish conductors and insulators"
     },
     "conduction": {
+      "header": {
+        "badge": "Topic 7.1 - Interactive",
+        "title": "Conduction of Heat",
+        "subtitle": "Drag, Drop & Discover How Heat Travels!"
+      },
+      "intro": {
+        "title": "Why Are Cooking Utensils Made of Metal?",
+        "para1": "Pema observed her grandmother cooking thukpa in a large metal pan. She wondered: \"Why are cooking utensils made of metals?\"",
+        "para2": "Let's discover the answer through interactive experiments!"
+      },
       "materials": {
         "steel": "Steel",
         "copper": "Copper",
@@ -1219,66 +1229,66 @@
         "glass": "Glass"
       },
       "activity": {
-        "sectionTitle": "Heat Conduction Activity",
-        "safetyTitle": "Safety Reminder",
-        "safetyText": "This is a simulation. In real experiments, always handle heat sources with care and adult supervision.",
-        "simulationTitle": "Heat Conduction Simulation",
+        "sectionTitle": "Interactive: Heat Transfer Experiment",
+        "safetyTitle": "⚠️ SAFETY CAUTION",
+        "safetyText": "This activity should be carried out under the supervision of a teacher or an adult.",
+        "simulationTitle": "Interactive Simulation",
         "controls": {
           "start": "Start Heating",
           "reset": "Reset",
-          "heatIntensity": "Heat Intensity"
+          "heatIntensity": "Heat Intensity:"
         },
-        "heatFlowDirection": "Heat Flow Direction",
+        "heatFlowDirection": "Heat Flow Direction →",
         "pinCard": {
           "pinLabel": "Pin",
-          "order": "Order: {{order}}",
-          "fallen": "Fallen",
-          "falling": "Falling...",
+          "order": "Order: {order}",
+          "fallen": "✓ Fallen",
+          "falling": "⏳ Falling...",
           "waiting": "Waiting"
         },
         "observations": {
-          "title": "Observations",
-          "item1Title": "Heat travels through the metal strip",
-          "item1Body": "As heat is applied, it moves from the heat source along the metal strip, causing the wax to melt.",
-          "item2Title": "Pins fall in order of distance",
-          "item2Body": "The pin closest to the heat source falls first, followed by pins further away, showing heat conduction.",
-          "item3Title": "Metal is a good conductor",
-          "item3Body": "This demonstrates that metals conduct heat well, allowing thermal energy to flow through them."
+          "title": "What Did We Observe?",
+          "item1Title": "Pin I falls FIRST",
+          "item1Body": "It's closest to the heat source, so wax melts first",
+          "item2Title": "Pins fall in ORDER (I → II → III → IV)",
+          "item2Body": "Heat travels along the metal strip progressively",
+          "item3Title": "This proves CONDUCTION!",
+          "item3Body": "Heat transfers from hot end to cold end through the metal"
         },
         "table": {
-          "title": "Pin Fall Analysis",
+          "title": "Table 7.1: Observation Record",
           "pin": "Pin",
           "order": "Order",
           "status": "Status",
           "reason": "Reason",
-          "fallen": "Fallen",
-          "notFallen": "Not Fallen",
+          "fallen": "✓ Fallen",
+          "notFallen": "Not fallen",
           "reasonClosest": "Closest to heat source",
-          "reasonFarthest": "Farthest from heat source",
-          "reasonProgress": "Heat reaches progressively"
+          "reasonProgress": "Heat reaches here progressively",
+          "reasonFarthest": "Farthest from heat source"
         }
       },
       "testing": {
-        "sectionTitle": "Material Testing",
-        "callout": "Drag materials to the test zone to see if they conduct heat",
-        "zoneTitle": "Test Zone",
-        "dropHere": "Drop Material Here",
+        "sectionTitle": "Test Materials: Conductor or Insulator?",
+        "callout": "Click on materials below to test them, or drag them to the test zone!",
+        "zoneTitle": "Heat Transfer Testing Zone",
+        "dropHere": "Drop Here to Test",
         "heatSource": "Heat Source",
-        "heatPasses": "Heat Passes Through",
-        "heatBlocked": "Heat Blocked",
+        "heatPasses": "Heat Passes!",
+        "heatBlocked": "Heat Blocked!",
         "testResult": {
           "title": "Test Result",
-          "material": "Material",
-          "type": "Type",
-          "good": "Good Conductor",
-          "poor": "Poor Conductor (Insulator)",
-          "heatPasses": "Heat passes through this material",
-          "heatStops": "Heat does not pass through this material",
-          "goodDesc": "This material allows heat to flow through it easily.",
-          "poorDesc": "This material prevents heat from flowing through it."
+          "material": "Material:",
+          "type": "Type:",
+          "good": "⚡ Good Conductor",
+          "poor": "🛡️ Poor Conductor",
+          "heatPasses": "✓ Heat Passes Through",
+          "heatStops": "✗ Heat is Blocked",
+          "goodDesc": "This material allows heat to flow easily, making it useful for cooking utensils.",
+          "poorDesc": "This material blocks heat flow, making it good for handles and insulation."
         },
-        "quickTest": "Quick Test",
-        "tested": "Tested {{count}} of {{total}} materials"
+        "quickTest": "Quick Test:",
+        "tested": "Tested ({count}/{total}):"
       },
       "realWorld": {
         "filterTitle": "Filter by Category",
@@ -1446,43 +1456,76 @@
           }
         ]
       },
+      "takeaways": {
+        "title": "Key Takeaways",
+        "conductionTitle": "Conduction",
+        "conductionPoints": [
+          "Heat transfer from hot to cold",
+          "Particles pass heat to neighbors",
+          "Particles stay in positions",
+          "Main process in solids"
+        ],
+        "goodTitle": "Good Conductors",
+        "goodPoints": [
+          "Metals: Steel, Copper, Aluminum",
+          "Allow heat to pass easily",
+          "Used for cooking utensils",
+          "Transfer heat quickly"
+        ],
+        "poorTitle": "Poor Conductors",
+        "poorPoints": [
+          "Wood, Glass, Plastic",
+          "Block heat flow",
+          "Used for handles, cups",
+          "Keep heat inside/outside"
+        ],
+        "footer": "In conduction, heat travels but particles don't move from their positions!"
+      },
       "practice": {
         "ui": {
-          "noQuestionsTitle": "No Questions Available",
-          "noQuestionsBody": "Questions are being prepared. Please check back later.",
-          "questionLabel": "Question {{current}} of {{total}}",
-          "pointsLabel": "{{points}} Points",
+          "questionLabel": "Question {current} of {total}",
           "difficulty": {
-            "easy": "Easy",
-            "medium": "Medium",
-            "hard": "Hard"
+            "easy": "EASY",
+            "medium": "MEDIUM",
+            "hard": "HARD"
           },
+          "pointsLabel": "{points} pts",
           "fillBlankHint": "Select the correct option to fill in the blank",
-          "matchHint": "Match each material with its category",
-          "orderingHint": "Arrange the items in the correct order",
-          "classifyHint": "Classify each material as a good or poor conductor",
-          "materials": "Materials",
-          "categories": "Categories",
-          "selectCategory": "Select Category",
-          "noItemsMatched": "No items matched yet",
-          "noItemsClassified": "No items classified yet",
+          "matchHint": "Drag or click to match each item with its category:",
+          "materials": "Materials:",
+          "categories": "Categories:",
+          "selectCategory": "Select category...",
+          "orderingHint": "Use the arrows to arrange items in the correct order:",
+          "classifyHint": "Classify each material:",
           "goodConductor": "Good Conductor",
           "poorConductor": "Poor Conductor",
-          "goodConductorLabel": "Good Conductor",
-          "poorConductorLabel": "Poor Conductor",
-          "correctTitle": "Correct!",
-          "incorrectTitle": "Not Quite Right",
-          "correctAnswerLabel": "Correct Answer:",
-          "previousButton": "Previous",
-          "nextButton": "Next",
+          "goodConductorLabel": "⚡ Good Conductor",
+          "poorConductorLabel": "🛡️ Poor Conductor",
+          "noItemsClassified": "No items classified yet",
+          "noItemsMatched": "No items matched yet",
+          "previousButton": "← Previous",
+          "previousButtonShort": "← Prev",
           "submitButton": "Submit Answer",
+          "submitButtonShort": "Submit",
+          "nextButton": "Next Question",
+          "nextButtonShort": "Next",
           "tryAgainButton": "Try Again",
-          "startOverButton": "Start Over",
-          "completeTitle": "Practice Complete!",
-          "scoreSummary": "Your Score: {{score}} / {{total}} points",
+          "tryAgainButtonShort": "Retry",
+          "completeTitle": "Practice Complete! 🎉",
+          "scoreSummary": "You scored {score} out of {total} points",
           "questionsAnswered": "Questions Answered",
           "scorePercentage": "Score Percentage",
-          "gradeLabel": "Grade"
+          "gradeLabel": "Grade",
+          "startOverButton": "Start Over",
+          "correctTitle": "🎉 Correct!",
+          "incorrectTitle": "❌ Incorrect",
+          "correctAnswerLabel": "Correct Answer:",
+          "progressLabel": "Progress",
+          "progressQuestions": "questions",
+          "headerTitle": "Practice Mode",
+          "headerSubtitle": "Topic 7.1: Conduction of Heat",
+          "noQuestionsTitle": "Practice questions coming soon",
+          "noQuestionsBody": "Practice questions are not yet configured for this language. Please switch to English or try again later."
         },
         "questions": [
           {
