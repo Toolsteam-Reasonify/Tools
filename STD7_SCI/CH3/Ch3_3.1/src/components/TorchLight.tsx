@@ -803,7 +803,7 @@ export const LanguageSelector: React.FC = () => {
         aria-label={t('language.selectorLabel')}
         value={language}
         onChange={(e) => setLanguage(e.target.value as Language)}
-        className="appearance-none bg-white border-2 border-teal-500 rounded-lg px-4 py-2 pr-8 text-teal-700 font-medium cursor-pointer hover:border-purple-500 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-300"
+        className="appearance-none bg-white border-2 border-teal-500 rounded-lg px-2 sm:px-4 py-2 pr-6 sm:pr-8 text-xs sm:text-sm text-teal-700 font-medium cursor-pointer hover:border-purple-500 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-300 w-32 sm:w-auto"
       >
         {languages.map((lang) => (
           <option key={lang.code} value={lang.code}>
@@ -851,25 +851,25 @@ export const Navbar: React.FC = () => {
           </div>
 
           {/* Navigation Links */}
-          <div className="flex items-center space-x-1 md:space-x-2">
+          <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
             {/* Learn Button */}
             {isHomePage ? (
               <button
                 onClick={() => handleModeClick('demonstration')}
-                className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                className={`px-2 sm:px-4 py-2 rounded-lg font-medium transition-all duration-200 text-sm sm:text-base ${
                   currentMode === 'demonstration'
                     ? 'bg-teal-500 text-white shadow-md'
                     : 'text-teal-700 hover:bg-teal-100/50'
                 }`}
               >
-                📚 {t('nav.learn')}
+                <span className="hidden sm:inline">📚 </span>{t('nav.learn')}
               </button>
             ) : (
               <Link
                 to="/"
-                className="px-4 py-2 rounded-lg font-medium text-teal-700 hover:bg-teal-100/50 transition-all duration-200"
+                className="px-2 sm:px-4 py-2 rounded-lg font-medium text-teal-700 hover:bg-teal-100/50 transition-all duration-200 text-sm sm:text-base"
               >
-                📚 {t('nav.learn')}
+                <span className="hidden sm:inline">📚 </span>{t('nav.learn')}
               </Link>
             )}
 
@@ -877,33 +877,33 @@ export const Navbar: React.FC = () => {
             {isHomePage ? (
               <button
                 onClick={() => handleModeClick('practice')}
-                className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                className={`px-2 sm:px-4 py-2 rounded-lg font-medium transition-all duration-200 text-sm sm:text-base ${
                   currentMode === 'practice'
                     ? 'bg-purple-500 text-white shadow-md'
                     : 'text-purple-700 hover:bg-purple-100/50'
                 }`}
               >
-                🎯 {t('nav.practice')}
+                <span className="hidden sm:inline">🎯 </span>{t('nav.practice')}
               </button>
             ) : (
               <Link
                 to="/"
-                className="px-4 py-2 rounded-lg font-medium text-purple-700 hover:bg-purple-100/50 transition-all duration-200"
+                className="px-2 sm:px-4 py-2 rounded-lg font-medium text-purple-700 hover:bg-purple-100/50 transition-all duration-200 text-sm sm:text-base"
               >
-                🎯 {t('nav.practice')}
+                <span className="hidden sm:inline">🎯 </span>{t('nav.practice')}
               </Link>
             )}
 
             {/* Real World Applications Link */}
             <Link
               to="/applications"
-              className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+              className={`px-2 sm:px-4 py-2 rounded-lg font-medium transition-all duration-200 text-sm sm:text-base ${
                 isApplicationsPage
                   ? 'bg-gradient-to-r from-teal-500 to-purple-500 text-white shadow-md'
                   : 'text-gray-700 hover:bg-gray-100/50'
               }`}
             >
-              🌍 {t('nav.applications')}
+              <span className="hidden sm:inline">🌍 </span>{t('nav.applications')}
             </Link>
 
             {/* Language Selector */}
@@ -1033,7 +1033,7 @@ export const TorchlightLearning: React.FC = () => {
       </Animated>
 
       <Animated index={1} className="bg-gradient-to-br from-blue-50 to-purple-50 p-4 md:p-8 rounded-xl mb-8 overflow-x-auto">
-        <svg width="100%" height="400" viewBox="0 0 600 400" className="min-w-[560px]">
+        <svg width="100%" height="400" viewBox="0 0 600 400" className="min-w-[300px] sm:min-w-[400px] md:min-w-[560px]">
           {/* Lamp */}
           <g transform="translate(100, 50)">
             <ellipse cx="40" cy="30" rx="35" ry="30" fill="#FEF3C7" stroke="#F59E0B" strokeWidth="2" />

@@ -84,7 +84,7 @@ const LanguageSelector: React.FC = () => {
         aria-label={t('language.selectorLabel')}
         value={language}
         onChange={(e) => setLanguage(e.target.value as Language)}
-        className="appearance-none bg-white border-2 border-teal-500 rounded-lg px-4 py-2 pr-8 w-48 text-teal-700 font-medium cursor-pointer hover:border-purple-500 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-300"
+        className="appearance-none bg-white border-2 border-teal-500 rounded-lg px-2 sm:px-4 py-2 pr-6 sm:pr-8 text-xs sm:text-sm text-teal-700 font-medium cursor-pointer hover:border-purple-500 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-300 w-28 sm:w-40 md:w-48"
       >
         {languages.map((lang) => (
           <option key={lang.code} value={lang.code}>
@@ -120,50 +120,48 @@ const Navbar: React.FC<NavbarProps> = ({ mode, setMode }) => {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-teal-50 via-purple-50 to-teal-50 border-b border-teal-200/50 shadow-sm backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <div className="flex-shrink-0 flex items-center gap-2">
-            <Flame className="w-6 h-6 text-teal-600" aria-hidden="true" />
-            <span className="text-2xl font-bold bg-gradient-to-r from-teal-600 to-purple-600 bg-clip-text text-transparent">
+          <div className="flex-shrink-0 flex items-center gap-1 sm:gap-2">
+            <Flame className="w-5 h-5 sm:w-6 sm:h-6 text-teal-600" aria-hidden="true" />
+            <span className="text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r from-teal-600 to-purple-600 bg-clip-text text-transparent">
               {t('nav.logo')}
             </span>
           </div>
 
-          <div className="flex items-center space-x-1 md:space-x-2">
+          <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
             <button
               type="button"
               onClick={() => setMode('learn')}
-              className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+              className={`px-2 sm:px-4 py-2 rounded-lg font-medium transition-all duration-200 text-sm sm:text-base ${
                 isLearn
                   ? 'bg-teal-500 text-white shadow-md'
                   : 'text-teal-700 hover:bg-teal-100/50'
               }`}
             >
-              📚 {t('nav.tabs.learn')}
+              <span className="hidden sm:inline">📚 </span>{t('nav.tabs.learn')}
             </button>
 
             <button
               type="button"
               onClick={() => setMode('practice')}
-              className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+              className={`px-2 sm:px-4 py-2 rounded-lg font-medium transition-all duration-200 text-sm sm:text-base ${
                 isPractice
                   ? 'bg-purple-500 text-white shadow-md'
                   : 'text-purple-700 hover:bg-purple-100/50'
               }`}
             >
-              🎯 {t('nav.tabs.practice')}
+              <span className="hidden sm:inline">🎯 </span>{t('nav.tabs.practice')}
             </button>
 
             <button
               type="button"
               onClick={() => setMode('applications')}
-              className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+              className={`px-2 sm:px-4 py-2 rounded-lg font-medium transition-all duration-200 text-sm sm:text-base ${
                 isApplications
                   ? 'bg-gradient-to-r from-teal-500 to-purple-500 text-white shadow-md'
                   : 'text-gray-700 hover:bg-gray-100/50'
               }`}
             >
-              <span className="hidden sm:inline">🌍 </span>
-              <span className="sm:hidden">🌍</span>
-              <span className="hidden lg:inline ml-1">{t('nav.tabs.applications')}</span>
+              <span className="hidden sm:inline">🌍 </span>{t('nav.tabs.applications')}
             </button>
 
             <div className="ml-2 md:ml-4">
@@ -430,7 +428,7 @@ const ConductionLearnModeInteractive: React.FC = () => {
                   <svg
                     ref={svgRef}
                     viewBox="0 0 500 280"
-                    className="min-w-[360px] sm:min-w-[420px] w-full bg-white rounded-xl shadow-md"
+                    className="min-w-[280px] sm:min-w-[360px] md:min-w-[420px] w-full bg-white rounded-xl shadow-md"
                     preserveAspectRatio="xMidYMid meet"
                   >
                   <defs>
@@ -722,7 +720,7 @@ const ConductionLearnModeInteractive: React.FC = () => {
                     <svg
                       ref={svgRef}
                       viewBox="0 0 500 400"
-                      className="min-w-[360px] sm:min-w-[420px] w-full bg-white rounded-xl shadow-md"
+                      className="min-w-[280px] sm:min-w-[360px] md:min-w-[420px] w-full bg-white rounded-xl shadow-md"
                       onMouseMove={handleMaterialMouseMove}
                       onMouseUp={handleMaterialMouseUp}
                       onMouseLeave={handleMaterialMouseUp}

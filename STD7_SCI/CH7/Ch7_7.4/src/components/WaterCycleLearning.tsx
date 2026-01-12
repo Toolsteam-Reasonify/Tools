@@ -1353,9 +1353,10 @@ const WaterCycleLearnMode: React.FC<WaterCycleLearnModeProps> = ({ props }) => {
       flex: 1,
       overflow: 'hidden' as const,
       minHeight: 0,
+      flexDirection: 'column' as const,
     },
     leftPanel: {
-      width: '62%',
+      width: '100%',
       padding: '12px',
       display: 'flex',
       flexDirection: 'column' as const,
@@ -1378,7 +1379,7 @@ const WaterCycleLearnMode: React.FC<WaterCycleLearnModeProps> = ({ props }) => {
       display: 'block' as const,
     },
     rightPanel: {
-      width: '38%',
+      width: '100%',
       display: 'flex',
       flexDirection: 'column' as const,
       padding: '12px',
@@ -1493,7 +1494,7 @@ const WaterCycleLearnMode: React.FC<WaterCycleLearnModeProps> = ({ props }) => {
   return (
     <div
       className="w-full max-w-6xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden"
-      style={{ fontFamily: getFontFamilyForLanguage(language), height: 'calc(100vh - 80px)', minHeight: '600px' }}
+      style={{ fontFamily: getFontFamilyForLanguage(language), height: 'calc(100vh - 80px)', minHeight: '500px' }}
     >
       <style>{keyframesCSS}</style>
       <div style={styles.mainFrame}>
@@ -1504,11 +1505,11 @@ const WaterCycleLearnMode: React.FC<WaterCycleLearnModeProps> = ({ props }) => {
             </div>
 
         {/* Main Content */}
-        <div style={styles.contentArea}>
+        <div className="flex flex-col lg:flex-row flex-1 overflow-hidden min-h-0">
           {/* LEFT: Animation Only - No Title */}
-          <div style={styles.leftPanel}>
-            <div style={styles.svgContainer}>
-              <svg style={styles.svg} viewBox="0 0 800 460" xmlns="http://www.w3.org/2000/svg">
+          <div className="w-full lg:w-[62%] p-3 flex flex-col items-stretch justify-stretch min-h-0">
+            <div className="flex-1 flex items-center justify-center bg-white rounded-2xl p-3 shadow-lg overflow-hidden min-h-0">
+              <svg className="w-full h-full max-w-full max-h-full block" viewBox="0 0 800 460" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                   <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
                     <stop offset="0%" stopColor="#87ceeb" />
@@ -1645,7 +1646,7 @@ const WaterCycleLearnMode: React.FC<WaterCycleLearnModeProps> = ({ props }) => {
         </div>
 
           {/* RIGHT: Topic Title + Details */}
-          <div style={styles.rightPanel}>
+          <div className="w-full lg:w-[38%] flex flex-col p-3 overflow-hidden">
             {/* Topic Header */}
             <div style={styles.topicHeader}>
               <h2 style={styles.topicTitle}>{currentInfo.title}</h2>

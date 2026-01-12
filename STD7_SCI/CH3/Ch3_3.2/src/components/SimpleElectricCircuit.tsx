@@ -1710,58 +1710,58 @@ export const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0">
-            <Link to="/" className="text-2xl font-bold bg-gradient-to-r from-teal-600 to-purple-600 bg-clip-text text-transparent">
-              ⚡ {t('nav.logo')}
+            <Link to="/" className="text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r from-teal-600 to-purple-600 bg-clip-text text-transparent">
+              ⚡ <span className="hidden sm:inline">{t('nav.logo')}</span>
             </Link>
           </div>
-          <div className="flex items-center space-x-1 md:space-x-2">
+          <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
             {isHomePage ? (
               <button
                 onClick={() => handleModeClick('demonstration')}
-                className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                className={`px-2 sm:px-4 py-2 rounded-lg font-medium transition-all duration-200 text-sm sm:text-base ${
                   currentMode === 'demonstration'
                     ? 'bg-teal-500 text-white shadow-md'
                     : 'text-teal-700 hover:bg-teal-100/50'
                 }`}
               >
-                📚 {t('nav.learn')}
+                <span className="hidden sm:inline">📚 </span>{t('nav.learn')}
               </button>
             ) : (
               <Link
                 to="/"
-                className="px-4 py-2 rounded-lg font-medium text-teal-700 hover:bg-teal-100/50 transition-all duration-200"
+                className="px-2 sm:px-4 py-2 rounded-lg font-medium text-teal-700 hover:bg-teal-100/50 transition-all duration-200 text-sm sm:text-base"
               >
-                📚 {t('nav.learn')}
+                <span className="hidden sm:inline">📚 </span>{t('nav.learn')}
               </Link>
             )}
             {isHomePage ? (
               <button
                 onClick={() => handleModeClick('practice')}
-                className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                className={`px-2 sm:px-4 py-2 rounded-lg font-medium transition-all duration-200 text-sm sm:text-base ${
                   currentMode === 'practice'
                     ? 'bg-purple-500 text-white shadow-md'
                     : 'text-purple-700 hover:bg-purple-100/50'
                 }`}
               >
-                🎯 {t('nav.practice')}
+                <span className="hidden sm:inline">🎯 </span>{t('nav.practice')}
               </button>
             ) : (
               <Link
                 to="/"
-                className="px-4 py-2 rounded-lg font-medium text-purple-700 hover:bg-purple-100/50 transition-all duration-200"
+                className="px-2 sm:px-4 py-2 rounded-lg font-medium text-purple-700 hover:bg-purple-100/50 transition-all duration-200 text-sm sm:text-base"
               >
-                🎯 {t('nav.practice')}
+                <span className="hidden sm:inline">🎯 </span>{t('nav.practice')}
               </Link>
             )}
             <Link
               to="/applications"
-              className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+              className={`px-2 sm:px-4 py-2 rounded-lg font-medium transition-all duration-200 text-sm sm:text-base ${
                 isApplicationsPage
                   ? 'bg-gradient-to-r from-teal-500 to-purple-500 text-white shadow-md'
                   : 'text-gray-700 hover:bg-gray-100/50'
               }`}
             >
-              🌍 {t('nav.applications')}
+              <span className="hidden sm:inline">🌍 </span>{t('nav.applications')}
             </Link>
             <div className="ml-2 md:ml-4">
               <LanguageSelector />

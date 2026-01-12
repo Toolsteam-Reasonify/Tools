@@ -92,7 +92,7 @@ const App: React.FC = () => {
         >
           <div className="min-h-screen bg-gradient-to-br from-teal-50 via-purple-50 to-teal-50">
             <Navbar />
-            <div className="pt-16">
+            <div className="pt-16 px-3 sm:px-4 md:px-6">
               <Routes>
                 <Route 
                   path="/" 
