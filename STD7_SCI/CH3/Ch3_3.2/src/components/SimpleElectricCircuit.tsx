@@ -187,7 +187,7 @@ export const translations: Record<Language, Record<string, string>> = {
     'nav.learn': 'Learn',
     'nav.practice': 'Practice',
     'nav.assess': 'Assess',
-    'nav.applications': 'Real World Applications',
+    'nav.applications': 'Real World',
     'common.next': 'Next',
     'common.previous': 'Previous',
     'common.submit': 'Submit',

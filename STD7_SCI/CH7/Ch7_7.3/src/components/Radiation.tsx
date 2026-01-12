@@ -649,7 +649,7 @@ export const translationsData: Translations = {    en: {
       tabs: {
         learn: "Learn",
         practice: "Practice",
-        applications: "Real World Applications",
+        applications: "Real World",
       },
     },
   },

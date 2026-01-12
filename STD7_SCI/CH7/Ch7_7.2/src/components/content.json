@@ -934,11 +934,11 @@
       "learn": "Learn",
       "practice": "Practice",
       "assess": "Assess",
-      "applications": "Real World Applications",
+      "applications": "Real World",
       "tabs": {
         "learn": "Learn",
         "practice": "Practice",
-        "applications": "Real World Applications"
+        "applications": "Real World"
       }
     },
     "language": {

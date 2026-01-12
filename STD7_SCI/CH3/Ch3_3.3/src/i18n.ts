@@ -7,7 +7,7 @@ import { initReactI18next } from 'react-i18next';
 const translations = {
   en: {
     language: { en: "English", hi: "हिंदी", gu: "ગુજરાતી", selectorLabel: "Choose language" },
-    nav: { logo: "Circuit Diagrams", learn: "Learn", practice: "Practice", applications: "Real World Applications" },
+    nav: { logo: "Circuit Diagrams", learn: "Learn", practice: "Practice", applications: "Real World" },
     learn: {
       footer: "Keep learning and exploring! 🚀",
       why: { title: "Why Circuit Diagrams?", body1: "Circuit diagrams use standardized symbols to represent electrical components.", body2: "Organizations like IEC, ANSI, and IEEE create these standard symbols." },

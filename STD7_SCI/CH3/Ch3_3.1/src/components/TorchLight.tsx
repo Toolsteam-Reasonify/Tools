@@ -18,7 +18,7 @@ const translations: Record<Language, Record<string, any>> = {
       logo: 'Torchlight',
       learn: 'Learn',
       practice: 'Practice',
-      applications: 'Real World Applications',
+      applications: 'Real World',
     },
     // Language selector
     language: {

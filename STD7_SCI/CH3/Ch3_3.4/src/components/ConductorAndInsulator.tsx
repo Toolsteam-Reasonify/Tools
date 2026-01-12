@@ -39,7 +39,7 @@ export const translations: AllTranslations = {
       logo: "Conductors & Insulators",
       learn: "Learn",
       practice: "Practice",
-      applications: "Real World Applications",
+      applications: "Real World",
     },
     common: {
       next: "Next",
