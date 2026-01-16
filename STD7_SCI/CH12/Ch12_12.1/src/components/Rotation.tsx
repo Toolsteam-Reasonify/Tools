@@ -530,7 +530,21 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const { t: i18nT } = useTranslation();
-  const initialLanguage = (i18n.language?.split("-")[0] as Language) || "en";
+  // Get initial language from localStorage or default to "en"
+  const getInitialLanguage = (): Language => {
+    if (typeof window !== "undefined") {
+      try {
+        const saved = localStorage.getItem("i18nextLng");
+        if (saved && (saved === "en" || saved === "hi" || saved === "gu")) {
+          return saved as Language;
+        }
+      } catch (error) {
+        // Ignore localStorage errors
+      }
+    }
+    return (i18n.language?.split("-")[0] as Language) || "en";
+  };
+  const initialLanguage = getInitialLanguage();
   const [language, setLanguageState] = useState<Language>(initialLanguage);
 
   // Custom translation function that accesses translationsData directly
@@ -587,6 +601,9 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({
   );
 
   useEffect(() => {
+    // Sync i18n.language with current state on mount
+    i18n.language = language;
+
     // Suppress Chrome extension runtime.lastError warnings
     if (typeof window !== "undefined" && window.chrome?.runtime?.lastError) {
       // Silently handle extension errors
@@ -619,6 +636,9 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({
   }, []);
 
   const handleSetLanguage = (lang: Language) => {
+    // Update state directly since i18n is a stub
+    setLanguageState(lang);
+    i18n.language = lang;
     i18n.changeLanguage(lang);
     if (typeof window !== "undefined") {
       try {
@@ -634,6 +654,9 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   useEffect(() => {
+    // Sync i18n.language with current state
+    i18n.language = language;
+    
     // Ensure we're in the browser and DOM is ready before accessing documentElement
     if (typeof window !== "undefined" && document && document.documentElement) {
       try {
@@ -680,7 +703,7 @@ const LanguageSelector: React.FC = () => {
         aria-label={t("language.selectorLabel")}
         value={language}
         onChange={(e) => setLanguage(e.target.value as Language)}
-        className="appearance-none bg-white border-2 border-teal-500 rounded-lg px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 pr-6 sm:pr-8 w-40 sm:w-48 md:w-56 text-xs sm:text-sm md:text-base text-teal-700 font-medium cursor-pointer hover:border-purple-500 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-300"
+        className="appearance-none bg-white border-2 border-teal-500 rounded-lg px-1.5 sm:px-2 md:px-3 lg:px-4 py-1.5 sm:py-2 pr-5 sm:pr-6 md:pr-8 w-28 xs:w-32 sm:w-36 md:w-44 lg:w-48 xl:w-56 text-[10px] xs:text-xs sm:text-sm md:text-base text-teal-700 font-medium cursor-pointer hover:border-purple-500 active:border-purple-600 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-300 touch-manipulation min-h-[36px] sm:min-h-[40px]"
       >
         {languages.map((lang) => (
           <option key={lang.code} value={lang.code}>
@@ -688,9 +711,9 @@ const LanguageSelector: React.FC = () => {
           </option>
         ))}
       </select>
-      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-1 sm:px-2">
+      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-1 sm:px-1.5 md:px-2">
         <svg
-          className="fill-current h-3 w-3 sm:h-4 sm:w-4 text-teal-500"
+          className="fill-current h-2.5 w-2.5 xs:h-3 xs:w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 text-teal-500"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
         >
@@ -718,30 +741,30 @@ const Navbar: React.FC<NavbarProps> = ({ mode, setMode }) => {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-teal-50 via-purple-50 to-teal-50 border-b border-teal-200/50 shadow-sm backdrop-blur-sm">
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-14 sm:h-16">
-          <div className="flex-shrink-0 flex items-center gap-1 sm:gap-2">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-14 sm:h-16 md:h-18">
+          <div className="flex-shrink-0 flex items-center gap-1 sm:gap-2 min-w-0">
             <Globe
-              className="w-5 h-5 sm:w-6 sm:h-6 text-teal-600"
+              className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-teal-600 flex-shrink-0"
               aria-hidden="true"
             />
-            <span className="text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r from-teal-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-bold bg-gradient-to-r from-teal-600 to-purple-600 bg-clip-text text-transparent truncate">
               {t("nav.logo")}
             </span>
           </div>
 
-          <div className="flex items-center space-x-1 sm:space-x-2">
+          <div className="flex items-center space-x-0.5 sm:space-x-1 md:space-x-2 flex-shrink-0">
             <button
               type="button"
               onClick={() => setMode("learn")}
-              className={`px-2 py-1.5 sm:px-3 sm:py-2 md:px-4 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200 ${isLearn
+              className={`px-1.5 py-1.5 sm:px-2.5 sm:py-2 md:px-3 md:py-2 lg:px-4 rounded-lg text-[10px] xs:text-xs sm:text-sm font-medium transition-all duration-200 touch-manipulation min-h-[36px] sm:min-h-[40px] ${isLearn
                 ? "bg-teal-500 text-white shadow-md"
-                : "text-teal-700 hover:bg-teal-100/50"
+                : "text-teal-700 hover:bg-teal-100/50 active:bg-teal-200/50"
                 }`}
             >
-              <span className="hidden sm:inline">📚 </span>
-              <span className="sm:hidden">📚</span>
-              <span className="hidden md:inline ml-1">
+              <span className="hidden xs:inline">📚 </span>
+              <span className="xs:hidden">📚</span>
+              <span className="hidden sm:inline md:hidden lg:inline ml-0.5 sm:ml-1">
                 {t("nav.tabs.learn")}
               </span>
             </button>
@@ -749,14 +772,14 @@ const Navbar: React.FC<NavbarProps> = ({ mode, setMode }) => {
             <button
               type="button"
               onClick={() => setMode("practice")}
-              className={`px-2 py-1.5 sm:px-3 sm:py-2 md:px-4 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200 ${isPractice
+              className={`px-1.5 py-1.5 sm:px-2.5 sm:py-2 md:px-3 md:py-2 lg:px-4 rounded-lg text-[10px] xs:text-xs sm:text-sm font-medium transition-all duration-200 touch-manipulation min-h-[36px] sm:min-h-[40px] ${isPractice
                 ? "bg-purple-500 text-white shadow-md"
-                : "text-purple-700 hover:bg-purple-100/50"
+                : "text-purple-700 hover:bg-purple-100/50 active:bg-purple-200/50"
                 }`}
             >
-              <span className="hidden sm:inline">🎯 </span>
-              <span className="sm:hidden">🎯</span>
-              <span className="hidden md:inline ml-1">
+              <span className="hidden xs:inline">🎯 </span>
+              <span className="xs:hidden">🎯</span>
+              <span className="hidden sm:inline md:hidden lg:inline ml-0.5 sm:ml-1">
                 {t("nav.tabs.practice")}
               </span>
             </button>
@@ -764,19 +787,19 @@ const Navbar: React.FC<NavbarProps> = ({ mode, setMode }) => {
             <button
               type="button"
               onClick={() => setMode("applications")}
-              className={`px-2 py-1.5 sm:px-3 sm:py-2 md:px-4 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200 ${isApplications
+              className={`px-1.5 py-1.5 sm:px-2.5 sm:py-2 md:px-3 md:py-2 lg:px-4 rounded-lg text-[10px] xs:text-xs sm:text-sm font-medium transition-all duration-200 touch-manipulation min-h-[36px] sm:min-h-[40px] ${isApplications
                 ? "bg-gradient-to-r from-teal-500 to-purple-500 text-white shadow-md"
-                : "text-gray-700 hover:bg-gray-100/50"
+                : "text-gray-700 hover:bg-gray-100/50 active:bg-gray-200/50"
                 }`}
             >
-              <span className="hidden sm:inline">🌍 </span>
-              <span className="sm:hidden">🌍</span>
-              <span className="hidden lg:inline ml-1">
+              <span className="hidden xs:inline">🌍 </span>
+              <span className="xs:hidden">🌍</span>
+              <span className="hidden lg:inline ml-0.5 sm:ml-1">
                 {t("nav.tabs.applications")}
               </span>
             </button>
 
-            <div className="ml-1 sm:ml-2 md:ml-4">
+            <div className="ml-0.5 sm:ml-1 md:ml-2 lg:ml-4">
               <LanguageSelector />
             </div>
           </div>
@@ -932,17 +955,17 @@ const RotationLearnMode: React.FC<RotationLearnModeProps> = ({ props: _props }) 
       <nav style={{
         display: 'flex',
         justifyContent: 'center',
-        gap: 'clamp(6px, 2vw, 10px)',
+        gap: 'clamp(4px, 1.5vw, 8px)',
         marginBottom: 'clamp(16px, 4vw, 30px)',
         flexWrap: 'wrap',
-        padding: '0 10px'
+        padding: '0 clamp(4px, 2vw, 12px)'
       }}>
         {(Object.keys(modeInfo) as LearningMode[]).map(mode => (
           <button
             key={mode}
             onClick={() => setActiveMode(mode)}
             style={{
-              padding: 'clamp(8px, 2vw, 12px) clamp(12px, 3vw, 22px)',
+              padding: 'clamp(10px, 2.5vw, 14px) clamp(12px, 3vw, 22px)',
               background: activeMode === mode
                 ? 'linear-gradient(135deg, #1976d2, #7b1fa2)'
                 : '#ffffff',
@@ -952,7 +975,7 @@ const RotationLearnMode: React.FC<RotationLearnModeProps> = ({ props: _props }) 
               borderRadius: 30,
               color: activeMode === mode ? '#fff' : '#546e7a',
               cursor: 'pointer',
-              fontSize: 'clamp(0.75rem, 2vw, 0.95rem)',
+              fontSize: 'clamp(0.7rem, 2vw, 0.95rem)',
               fontWeight: activeMode === mode ? 600 : 500,
               transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
               boxShadow: activeMode === mode
@@ -961,11 +984,14 @@ const RotationLearnMode: React.FC<RotationLearnModeProps> = ({ props: _props }) 
               display: 'flex',
               alignItems: 'center',
               gap: 'clamp(4px, 1vw, 8px)',
-              whiteSpace: 'nowrap'
+              whiteSpace: 'nowrap',
+              minHeight: '44px',
+              touchAction: 'manipulation',
+              WebkitTapHighlightColor: 'transparent'
             }}
           >
-            <span style={{ fontSize: 'clamp(0.9rem, 2.5vw, 1.1rem)' }}>{modeInfo[mode].icon}</span>
-            <span className="mode-title">{modeInfo[mode].title.split(' ').slice(0, 2).join(' ')}</span>
+            <span style={{ fontSize: 'clamp(0.9rem, 2.5vw, 1.1rem)', flexShrink: 0 }}>{modeInfo[mode].icon}</span>
+            <span className="mode-title hidden sm:inline">{modeInfo[mode].title.split(' ').slice(0, 2).join(' ')}</span>
           </button>
         ))}
       </nav>
@@ -977,7 +1003,8 @@ const RotationLearnMode: React.FC<RotationLearnModeProps> = ({ props: _props }) 
         gap: 'clamp(16px, 3vw, 30px)',
         maxWidth: 1400,
         margin: '0 auto',
-        padding: '0 10px'
+        padding: '0 clamp(8px, 2vw, 16px)',
+        width: '100%'
       }}>
         {/* Earth Visualization Area */}
         <div style={{
@@ -1446,13 +1473,14 @@ const RotationLearnMode: React.FC<RotationLearnModeProps> = ({ props: _props }) 
               <span>🎮</span> {t('learn.controls.title')}
             </h3>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-              <div style={{ display: 'flex', gap: 10 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(12px, 2vw, 16px)' }}>
+              <div style={{ display: 'flex', gap: 'clamp(8px, 2vw, 12px)', flexWrap: 'wrap' }}>
                 <button
                   onClick={() => setIsRotating(!isRotating)}
                   style={{
                     flex: 1,
-                    padding: '14px 20px',
+                    minWidth: '120px',
+                    padding: 'clamp(12px, 2.5vw, 16px) clamp(16px, 3vw, 24px)',
                     background: isRotating
                       ? 'linear-gradient(135deg, #ef5350, #e53935)'
                       : 'linear-gradient(135deg, #66bb6a, #43a047)',
@@ -1460,7 +1488,7 @@ const RotationLearnMode: React.FC<RotationLearnModeProps> = ({ props: _props }) 
                     borderRadius: 14,
                     color: '#fff',
                     cursor: 'pointer',
-                    fontSize: '0.95rem',
+                    fontSize: 'clamp(0.85rem, 2vw, 0.95rem)',
                     fontWeight: 600,
                     display: 'flex',
                     alignItems: 'center',
@@ -1469,7 +1497,10 @@ const RotationLearnMode: React.FC<RotationLearnModeProps> = ({ props: _props }) 
                     transition: 'all 0.3s ease',
                     boxShadow: isRotating
                       ? '0 6px 20px rgba(229, 57, 53, 0.3)'
-                      : '0 6px 20px rgba(67, 160, 71, 0.3)'
+                      : '0 6px 20px rgba(67, 160, 71, 0.3)',
+                    minHeight: '44px',
+                    touchAction: 'manipulation',
+                    WebkitTapHighlightColor: 'transparent'
                   }}
                 >
                   {isRotating ? '⏸️ ' + t('learn.controls.pause') : '▶️ ' + t('learn.controls.play')}
@@ -1477,7 +1508,7 @@ const RotationLearnMode: React.FC<RotationLearnModeProps> = ({ props: _props }) 
                 <button
                   onClick={() => setShowLabels(!showLabels)}
                   style={{
-                    padding: '14px 18px',
+                    padding: 'clamp(12px, 2.5vw, 16px) clamp(14px, 3vw, 20px)',
                     background: showLabels
                       ? 'linear-gradient(135deg, #42a5f5, #1e88e5)'
                       : '#f5f5f5',
@@ -1485,9 +1516,13 @@ const RotationLearnMode: React.FC<RotationLearnModeProps> = ({ props: _props }) 
                     borderRadius: 14,
                     color: showLabels ? '#fff' : '#757575',
                     cursor: 'pointer',
-                    fontSize: '0.95rem',
+                    fontSize: 'clamp(0.85rem, 2vw, 0.95rem)',
                     fontWeight: 600,
-                    transition: 'all 0.3s ease'
+                    transition: 'all 0.3s ease',
+                    minHeight: '44px',
+                    minWidth: '44px',
+                    touchAction: 'manipulation',
+                    WebkitTapHighlightColor: 'transparent'
                   }}
                 >
                   🏷️
@@ -1523,12 +1558,14 @@ const RotationLearnMode: React.FC<RotationLearnModeProps> = ({ props: _props }) 
                   onChange={(e) => setRotationSpeed(parseFloat(e.target.value))}
                   style={{
                     width: '100%',
-                    height: 8,
+                    height: 'clamp(6px, 1.5vw, 10px)',
                     borderRadius: 4,
                     background: 'linear-gradient(90deg, #1976d2, #7b1fa2)',
                     cursor: 'pointer',
                     appearance: 'none',
-                    outline: 'none'
+                    outline: 'none',
+                    touchAction: 'manipulation',
+                    WebkitTapHighlightColor: 'transparent'
                   }}
                 />
               </div>
@@ -2441,10 +2478,14 @@ const RotationPracticeMode: React.FC<RotationPracticeModeProps> = ({
           </div>
 
           <button onClick={restartQuiz} style={{
-            width: '100%', padding: '16px 32px',
+            width: '100%', padding: 'clamp(14px, 3vw, 18px) clamp(24px, 4vw, 32px)',
             background: 'linear-gradient(135deg, #1976d2, #7b1fa2)',
-            border: 'none', borderRadius: 14, color: '#fff', fontSize: '1.1rem',
-            fontWeight: 600, cursor: 'pointer', boxShadow: '0 6px 20px rgba(25, 118, 210, 0.3)'
+            border: 'none', borderRadius: 14, color: '#fff', fontSize: 'clamp(0.95rem, 2.5vw, 1.1rem)',
+            fontWeight: 600, cursor: 'pointer', boxShadow: '0 6px 20px rgba(25, 118, 210, 0.3)',
+            minHeight: '48px',
+            touchAction: 'manipulation',
+            WebkitTapHighlightColor: 'transparent',
+            transition: 'all 0.2s ease'
           }}>
             🔄 {t('practice.tryAgain')}
           </button>
@@ -2460,17 +2501,17 @@ const RotationPracticeMode: React.FC<RotationPracticeModeProps> = ({
       fontFamily: getFontFamilyForLanguage(language),
       padding: 'clamp(10px, 3vw, 20px)'
     }}>
-      <main style={{ maxWidth: 900, margin: '0 auto', padding: '0 10px' }}>
+      <main style={{ maxWidth: 900, margin: '0 auto', padding: '0 clamp(8px, 2vw, 16px)', width: '100%' }}>
         {/* Question Card */}
-        <div style={{ background: '#fff', borderRadius: 'clamp(16px, 3vw, 24px)', padding: 'clamp(20px, 4vw, 32px)', boxShadow: '0 10px 40px rgba(0,0,0,0.08)' }}>
+        <div style={{ background: '#fff', borderRadius: 'clamp(16px, 3vw, 24px)', padding: 'clamp(16px, 4vw, 32px)', boxShadow: '0 10px 40px rgba(0,0,0,0.08)' }}>
           {/* Progress */}
-          <div style={{ marginBottom: 24 }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
-              <span style={{ color: '#546e7a', fontWeight: 500 }}>
+          <div style={{ marginBottom: 'clamp(16px, 3vw, 24px)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10, flexWrap: 'wrap', gap: 8 }}>
+              <span style={{ color: '#546e7a', fontWeight: 500, fontSize: 'clamp(0.85rem, 2vw, 1rem)' }}>
                 {t('practice.question')} {currentQuestionIndex + 1} {t('practice.of')} {filteredQuestions.length}
               </span>
             </div>
-            <div style={{ height: 8, background: '#e0e0e0', borderRadius: 4, overflow: 'hidden' }}>
+            <div style={{ height: 'clamp(6px, 1.5vw, 10px)', background: '#e0e0e0', borderRadius: 4, overflow: 'hidden' }}>
               <div style={{
                 height: '100%', width: `${((currentQuestionIndex + 1) / filteredQuestions.length) * 100}%`,
                 background: 'linear-gradient(90deg, #1976d2, #7b1fa2)', borderRadius: 4, transition: 'width 0.5s ease'
@@ -2479,20 +2520,20 @@ const RotationPracticeMode: React.FC<RotationPracticeModeProps> = ({
           </div>
 
           {/* Question */}
-          <div style={{ marginBottom: 28 }}>
-            <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
-              <span style={{ fontSize: '1.5rem', background: 'linear-gradient(135deg, #e3f2fd, #f3e5f5)', padding: '8px 12px', borderRadius: 12, flexShrink: 0 }}>
+          <div style={{ marginBottom: 'clamp(20px, 4vw, 28px)' }}>
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: 'clamp(8px, 2vw, 12px)' }}>
+              <span style={{ fontSize: 'clamp(1.2rem, 3vw, 1.5rem)', background: 'linear-gradient(135deg, #e3f2fd, #f3e5f5)', padding: 'clamp(6px, 1.5vw, 10px) clamp(10px, 2vw, 14px)', borderRadius: 12, flexShrink: 0 }}>
                 ❓
               </span>
-              <h2 style={{ fontSize: '1.3rem', fontWeight: 600, color: '#1a237e', margin: 0, lineHeight: 1.5 }}>
+              <h2 style={{ fontSize: 'clamp(1rem, 3vw, 1.3rem)', fontWeight: 600, color: '#1a237e', margin: 0, lineHeight: 1.5 }}>
                 {currentQuestion?.question}
               </h2>
             </div>
           </div>
 
           {/* Answer Options */}
-          <div style={{ marginBottom: 24 }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          <div style={{ marginBottom: 'clamp(16px, 3vw, 24px)' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(10px, 2vw, 14px)' }}>
               {currentQuestion?.options?.map((option, index) => {
                 const isSelected = selectedAnswer === index;
                 const isCorrect = showResult && index === currentQuestion.correctAnswer;
@@ -2501,23 +2542,28 @@ const RotationPracticeMode: React.FC<RotationPracticeModeProps> = ({
                 return (
                   <button key={index} onClick={() => !showResult && setSelectedAnswer(index)} disabled={showResult}
                     style={{
-                      padding: '16px 20px',
+                      padding: 'clamp(14px, 3vw, 18px) clamp(16px, 3vw, 22px)',
                       background: isCorrect ? 'linear-gradient(135deg, #e8f5e9, #c8e6c9)'
                         : isWrong ? 'linear-gradient(135deg, #ffebee, #ffcdd2)'
                           : isSelected ? 'linear-gradient(135deg, #e3f2fd, #bbdefb)' : '#f5f5f5',
                       border: `2px solid ${isCorrect ? '#4caf50' : isWrong ? '#f44336' : isSelected ? '#1976d2' : 'transparent'}`,
                       borderRadius: 14, cursor: showResult ? 'default' : 'pointer', textAlign: 'left',
-                      fontSize: '1rem', fontWeight: 500, color: '#37474f', display: 'flex', alignItems: 'center', gap: 12
+                      fontSize: 'clamp(0.9rem, 2.5vw, 1rem)', fontWeight: 500, color: '#37474f', display: 'flex', alignItems: 'center', gap: 'clamp(10px, 2vw, 14px)',
+                      minHeight: '56px',
+                      touchAction: 'manipulation',
+                      WebkitTapHighlightColor: 'transparent',
+                      transition: 'all 0.2s ease'
                     }}>
                     <span style={{
-                      width: 32, height: 32, borderRadius: '50%',
+                      width: 'clamp(28px, 4vw, 36px)', height: 'clamp(28px, 4vw, 36px)', borderRadius: '50%',
                       background: isCorrect ? '#4caf50' : isWrong ? '#f44336' : isSelected ? '#1976d2' : '#e0e0e0',
                       color: (isSelected || isCorrect || isWrong) ? '#fff' : '#757575',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600, flexShrink: 0
+                      display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600, flexShrink: 0,
+                      fontSize: 'clamp(0.85rem, 2vw, 1rem)'
                     }}>
                       {isCorrect ? '✓' : isWrong ? '✗' : String.fromCharCode(65 + index)}
                     </span>
-                    {option}
+                    <span style={{ flex: 1, wordBreak: 'break-word' }}>{option}</span>
                   </button>
                 );
               })}
@@ -2545,23 +2591,31 @@ const RotationPracticeMode: React.FC<RotationPracticeModeProps> = ({
           )}
 
           {/* Action Buttons */}
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: 'clamp(10px, 2vw, 14px)', flexWrap: 'wrap' }}>
             {!showResult ? (
               <button onClick={handleSubmit}
                 disabled={selectedAnswer === null}
                 style={{
-                  flex: 1, padding: '16px 32px', background: 'linear-gradient(135deg, #1976d2, #7b1fa2)',
-                  border: 'none', borderRadius: 14, color: '#fff', fontSize: '1.05rem', fontWeight: 600, cursor: 'pointer',
+                  flex: 1, padding: 'clamp(14px, 3vw, 18px) clamp(24px, 4vw, 32px)', background: 'linear-gradient(135deg, #1976d2, #7b1fa2)',
+                  border: 'none', borderRadius: 14, color: '#fff', fontSize: 'clamp(0.95rem, 2.5vw, 1.05rem)', fontWeight: 600, cursor: 'pointer',
                   boxShadow: '0 6px 20px rgba(25, 118, 210, 0.3)',
                   opacity: selectedAnswer === null ? 0.5 : 1,
-                  minWidth: '200px'
+                  minWidth: 'clamp(150px, 30vw, 200px)',
+                  minHeight: '48px',
+                  touchAction: 'manipulation',
+                  WebkitTapHighlightColor: 'transparent',
+                  transition: 'all 0.2s ease'
                 }}>✓ {t('practice.submitAnswer')}</button>
             ) : (
               <button onClick={handleNext} style={{
-                flex: 1, padding: '16px 32px', background: 'linear-gradient(135deg, #43a047, #2e7d32)',
-                border: 'none', borderRadius: 14, color: '#fff', fontSize: '1.05rem', fontWeight: 600, cursor: 'pointer',
+                flex: 1, padding: 'clamp(14px, 3vw, 18px) clamp(24px, 4vw, 32px)', background: 'linear-gradient(135deg, #43a047, #2e7d32)',
+                border: 'none', borderRadius: 14, color: '#fff', fontSize: 'clamp(0.95rem, 2.5vw, 1.05rem)', fontWeight: 600, cursor: 'pointer',
                 boxShadow: '0 6px 20px rgba(46, 125, 50, 0.3)',
-                minWidth: '200px'
+                minWidth: 'clamp(150px, 30vw, 200px)',
+                minHeight: '48px',
+                touchAction: 'manipulation',
+                WebkitTapHighlightColor: 'transparent',
+                transition: 'all 0.2s ease'
               }}>
                 {currentQuestionIndex < filteredQuestions.length - 1 ? `→ ${t('practice.nextQuestion')}` : `🏁 ${t('practice.viewResults')}`}
               </button>
@@ -3063,26 +3117,29 @@ const RotationRealWorld: React.FC<RotationRealWorldProps> = ({ props: _props }) 
       </header>
 
       {/* Topic Navigation */}
-      <nav style={{ display: 'flex', justifyContent: 'center', gap: 'clamp(6px, 2vw, 10px)', marginBottom: 'clamp(20px, 4vw, 30px)', flexWrap: 'wrap', padding: '0 10px' }}>
+      <nav style={{ display: 'flex', justifyContent: 'center', gap: 'clamp(4px, 1.5vw, 8px)', marginBottom: 'clamp(20px, 4vw, 30px)', flexWrap: 'wrap', padding: '0 clamp(4px, 2vw, 12px)' }}>
         {(Object.keys(topics) as RealWorldTopic[]).map(topic => (
           <button key={topic} onClick={() => setActiveTopic(topic)}
             style={{
-              padding: '12px 20px',
+              padding: 'clamp(10px, 2.5vw, 14px) clamp(14px, 3vw, 22px)',
               background: activeTopic === topic ? 'linear-gradient(135deg, #1976d2, #7b1fa2)' : '#ffffff',
               border: activeTopic === topic ? 'none' : '2px solid #e0e0e0',
               borderRadius: 25, color: activeTopic === topic ? '#fff' : '#546e7a',
-              cursor: 'pointer', fontSize: '0.95rem', fontWeight: activeTopic === topic ? 600 : 500,
+              cursor: 'pointer', fontSize: 'clamp(0.75rem, 2vw, 0.95rem)', fontWeight: activeTopic === topic ? 600 : 500,
               transition: 'all 0.3s ease',
               boxShadow: activeTopic === topic ? '0 6px 20px rgba(25, 118, 210, 0.35)' : '0 2px 8px rgba(0,0,0,0.08)',
-              display: 'flex', alignItems: 'center', gap: 8
+              display: 'flex', alignItems: 'center', gap: 'clamp(6px, 1.5vw, 10px)',
+              minHeight: '44px',
+              touchAction: 'manipulation',
+              WebkitTapHighlightColor: 'transparent'
             }}>
-            <span style={{ fontSize: '1.2rem' }}>{topics[topic].icon}</span>
-            {topics[topic].title.split(' ')[0]}
+            <span style={{ fontSize: 'clamp(1rem, 2.5vw, 1.2rem)', flexShrink: 0 }}>{topics[topic].icon}</span>
+            <span className="hidden sm:inline">{topics[topic].title.split(' ')[0]}</span>
           </button>
         ))}
       </nav>
 
-      <main className="realworld-main-grid" style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr', gap: 'clamp(16px, 3vw, 24px)', padding: '0 10px' }}>
+      <main className="realworld-main-grid" style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr', gap: 'clamp(16px, 3vw, 24px)', padding: '0 clamp(8px, 2vw, 16px)', width: '100%' }}>
         {/* Interactive Demo Section */}
         <div style={{ background: '#ffffff', borderRadius: 'clamp(16px, 3vw, 24px)', padding: 'clamp(20px, 4vw, 28px)', boxShadow: '0 10px 40px rgba(0,0,0,0.08)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
@@ -3099,21 +3156,29 @@ const RotationRealWorld: React.FC<RotationRealWorldProps> = ({ props: _props }) 
               <h3 style={{ color: '#1565c0', margin: '0 0 16px 0', fontSize: '1.1rem' }}>✈️ {ut.flightSim}</h3>
 
               <div style={{ marginBottom: 16 }}>
-                <label style={{ color: '#37474f', fontWeight: 500, display: 'block', marginBottom: 8 }}>{ut.selectDirection}</label>
-                <div style={{ display: 'flex', gap: 10 }}>
+                <label style={{ color: '#37474f', fontWeight: 500, display: 'block', marginBottom: 8, fontSize: 'clamp(0.85rem, 2vw, 0.95rem)' }}>{ut.selectDirection}</label>
+                <div style={{ display: 'flex', gap: 'clamp(8px, 2vw, 12px)', flexWrap: 'wrap' }}>
                   <button onClick={() => setFlightDirection('east')}
                     style={{
-                      flex: 1, padding: '12px', background: flightDirection === 'east' ? '#1976d2' : '#fff',
+                      flex: 1, minWidth: '120px', padding: 'clamp(12px, 2.5vw, 16px)', background: flightDirection === 'east' ? '#1976d2' : '#fff',
                       border: `2px solid ${flightDirection === 'east' ? '#1976d2' : '#e0e0e0'}`, borderRadius: 10,
-                      color: flightDirection === 'east' ? '#fff' : '#546e7a', fontWeight: 600, cursor: 'pointer'
+                      color: flightDirection === 'east' ? '#fff' : '#546e7a', fontWeight: 600, cursor: 'pointer',
+                      fontSize: 'clamp(0.8rem, 2vw, 0.9rem)', minHeight: '44px',
+                      touchAction: 'manipulation',
+                      WebkitTapHighlightColor: 'transparent',
+                      transition: 'all 0.2s ease'
                     }}>
                     {ut.eastbound}
                   </button>
                   <button onClick={() => setFlightDirection('west')}
                     style={{
-                      flex: 1, padding: '12px', background: flightDirection === 'west' ? '#1976d2' : '#fff',
+                      flex: 1, minWidth: '120px', padding: 'clamp(12px, 2.5vw, 16px)', background: flightDirection === 'west' ? '#1976d2' : '#fff',
                       border: `2px solid ${flightDirection === 'west' ? '#1976d2' : '#e0e0e0'}`, borderRadius: 10,
-                      color: flightDirection === 'west' ? '#fff' : '#546e7a', fontWeight: 600, cursor: 'pointer'
+                      color: flightDirection === 'west' ? '#fff' : '#546e7a', fontWeight: 600, cursor: 'pointer',
+                      fontSize: 'clamp(0.8rem, 2vw, 0.9rem)', minHeight: '44px',
+                      touchAction: 'manipulation',
+                      WebkitTapHighlightColor: 'transparent',
+                      transition: 'all 0.2s ease'
                     }}>
                     {ut.westbound}
                   </button>
@@ -3140,9 +3205,13 @@ const RotationRealWorld: React.FC<RotationRealWorldProps> = ({ props: _props }) 
 
               <button onClick={simulateFlight} disabled={isAnimating}
                 style={{
-                  width: '100%', padding: '14px', background: isAnimating ? '#bdbdbd' : 'linear-gradient(135deg, #43a047, #2e7d32)',
-                  border: 'none', borderRadius: 12, color: '#fff', fontWeight: 600, fontSize: '1rem', cursor: isAnimating ? 'default' : 'pointer',
-                  boxShadow: isAnimating ? 'none' : '0 4px 15px rgba(46, 125, 50, 0.3)'
+                  width: '100%', padding: 'clamp(12px, 2.5vw, 16px)', background: isAnimating ? '#bdbdbd' : 'linear-gradient(135deg, #43a047, #2e7d32)',
+                  border: 'none', borderRadius: 12, color: '#fff', fontWeight: 600, fontSize: 'clamp(0.9rem, 2.5vw, 1rem)', cursor: isAnimating ? 'default' : 'pointer',
+                  boxShadow: isAnimating ? 'none' : '0 4px 15px rgba(46, 125, 50, 0.3)',
+                  minHeight: '48px',
+                  touchAction: 'manipulation',
+                  WebkitTapHighlightColor: 'transparent',
+                  transition: 'all 0.2s ease'
                 }}>
                 {isAnimating ? ut.flying : ut.startFlight}
               </button>
@@ -3166,19 +3235,27 @@ const RotationRealWorld: React.FC<RotationRealWorldProps> = ({ props: _props }) 
               <h3 style={{ color: '#2e7d32', margin: '0 0 16px 0', fontSize: '1.1rem' }}>🌀 {ut.hurricaneSpin}</h3>
 
               <div style={{ marginBottom: 16 }}>
-                <label style={{ color: '#37474f', fontWeight: 500, display: 'block', marginBottom: 8 }}>{ut.selectHemisphere}</label>
-                <div style={{ display: 'flex', gap: 10 }}>
+                <label style={{ color: '#37474f', fontWeight: 500, display: 'block', marginBottom: 8, fontSize: 'clamp(0.85rem, 2vw, 0.95rem)' }}>{ut.selectHemisphere}</label>
+                <div style={{ display: 'flex', gap: 'clamp(8px, 2vw, 12px)', flexWrap: 'wrap' }}>
                   <button onClick={() => setWeatherHemisphere('north')}
                     style={{
-                      flex: 1, padding: '12px', background: weatherHemisphere === 'north' ? '#2e7d32' : '#fff',
+                      flex: 1, minWidth: '120px', padding: 'clamp(12px, 2.5vw, 16px)', background: weatherHemisphere === 'north' ? '#2e7d32' : '#fff',
                       border: `2px solid ${weatherHemisphere === 'north' ? '#2e7d32' : '#e0e0e0'}`, borderRadius: 10,
-                      color: weatherHemisphere === 'north' ? '#fff' : '#546e7a', fontWeight: 600, cursor: 'pointer'
+                      color: weatherHemisphere === 'north' ? '#fff' : '#546e7a', fontWeight: 600, cursor: 'pointer',
+                      fontSize: 'clamp(0.8rem, 2vw, 0.9rem)', minHeight: '44px',
+                      touchAction: 'manipulation',
+                      WebkitTapHighlightColor: 'transparent',
+                      transition: 'all 0.2s ease'
                     }}>🌍 {ut.northern}</button>
                   <button onClick={() => setWeatherHemisphere('south')}
                     style={{
-                      flex: 1, padding: '12px', background: weatherHemisphere === 'south' ? '#2e7d32' : '#fff',
+                      flex: 1, minWidth: '120px', padding: 'clamp(12px, 2.5vw, 16px)', background: weatherHemisphere === 'south' ? '#2e7d32' : '#fff',
                       border: `2px solid ${weatherHemisphere === 'south' ? '#2e7d32' : '#e0e0e0'}`, borderRadius: 10,
-                      color: weatherHemisphere === 'south' ? '#fff' : '#546e7a', fontWeight: 600, cursor: 'pointer'
+                      color: weatherHemisphere === 'south' ? '#fff' : '#546e7a', fontWeight: 600, cursor: 'pointer',
+                      fontSize: 'clamp(0.8rem, 2vw, 0.9rem)', minHeight: '44px',
+                      touchAction: 'manipulation',
+                      WebkitTapHighlightColor: 'transparent',
+                      transition: 'all 0.2s ease'
                     }}>🌏 {ut.southern}</button>
                 </div>
               </div>
@@ -3229,16 +3306,16 @@ const RotationRealWorld: React.FC<RotationRealWorldProps> = ({ props: _props }) 
                 </div>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginTop: 16 }}>
-                <div style={{ background: '#fff', padding: '12px 16px', borderRadius: 10, textAlign: 'center' }}>
-                  <div style={{ color: '#9e9e9e', fontSize: '0.8rem' }}>🛰️ {ut.geostationary}</div>
-                  <div style={{ color: '#7b1fa2', fontWeight: 700 }}>35,786 km</div>
-                  <div style={{ color: '#546e7a', fontSize: '0.75rem' }}>{ut.orbit24hr}</div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 'clamp(10px, 2vw, 14px)', marginTop: 16 }}>
+                <div style={{ background: '#fff', padding: 'clamp(10px, 2vw, 14px) clamp(12px, 2.5vw, 18px)', borderRadius: 10, textAlign: 'center' }}>
+                  <div style={{ color: '#9e9e9e', fontSize: 'clamp(0.7rem, 1.5vw, 0.8rem)' }}>🛰️ {ut.geostationary}</div>
+                  <div style={{ color: '#7b1fa2', fontWeight: 700, fontSize: 'clamp(0.9rem, 2vw, 1rem)' }}>35,786 km</div>
+                  <div style={{ color: '#546e7a', fontSize: 'clamp(0.7rem, 1.5vw, 0.75rem)' }}>{ut.orbit24hr}</div>
                 </div>
-                <div style={{ background: '#fff', padding: '12px 16px', borderRadius: 10, textAlign: 'center' }}>
-                  <div style={{ color: '#ffc107', fontSize: '0.8rem' }}>🛸 {ut.iss}</div>
-                  <div style={{ color: '#7b1fa2', fontWeight: 700 }}>408 km</div>
-                  <div style={{ color: '#546e7a', fontSize: '0.75rem' }}>{ut.orbit90min}</div>
+                <div style={{ background: '#fff', padding: 'clamp(10px, 2vw, 14px) clamp(12px, 2.5vw, 18px)', borderRadius: 10, textAlign: 'center' }}>
+                  <div style={{ color: '#ffc107', fontSize: 'clamp(0.7rem, 1.5vw, 0.8rem)' }}>🛸 {ut.iss}</div>
+                  <div style={{ color: '#7b1fa2', fontWeight: 700, fontSize: 'clamp(0.9rem, 2vw, 1rem)' }}>408 km</div>
+                  <div style={{ color: '#546e7a', fontSize: 'clamp(0.7rem, 1.5vw, 0.75rem)' }}>{ut.orbit90min}</div>
                 </div>
               </div>
             </div>
@@ -3250,19 +3327,22 @@ const RotationRealWorld: React.FC<RotationRealWorldProps> = ({ props: _props }) 
               <h3 style={{ color: '#e65100', margin: '0 0 16px 0', fontSize: '1.1rem' }}>🕐 {ut.worldTimeZones}</h3>
 
               <div style={{ background: '#fff', borderRadius: 12, padding: 20 }}>
-                <div className="city-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: 12 }}>
+                <div className="city-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(clamp(100px, 20vw, 140px), 1fr))', gap: 'clamp(8px, 2vw, 14px)' }}>
                   {cities.map((city, index) => (
                     <div key={city.name} onClick={() => setSelectedCity(index)}
                       style={{
-                        padding: '14px', background: selectedCity === index ? 'linear-gradient(135deg, #fff3e0, #ffe0b2)' : '#f5f5f5',
-                        borderRadius: 12, cursor: 'pointer', textAlign: 'center', border: selectedCity === index ? '2px solid #ff9800' : '2px solid transparent', transition: 'all 0.3s ease'
+                        padding: 'clamp(12px, 2.5vw, 16px)', background: selectedCity === index ? 'linear-gradient(135deg, #fff3e0, #ffe0b2)' : '#f5f5f5',
+                        borderRadius: 12, cursor: 'pointer', textAlign: 'center', border: selectedCity === index ? '2px solid #ff9800' : '2px solid transparent', transition: 'all 0.3s ease',
+                        minHeight: '120px',
+                        touchAction: 'manipulation',
+                        WebkitTapHighlightColor: 'transparent'
                       }}>
-                      <div style={{ fontSize: '1.5rem', marginBottom: 4 }}>
+                      <div style={{ fontSize: 'clamp(1.2rem, 3vw, 1.5rem)', marginBottom: 4 }}>
                         {index === 0 ? '🗽' : index === 1 ? '🏰' : index === 2 ? '🏜️' : index === 3 ? '🕌' : index === 4 ? '🗼' : '🦘'}
                       </div>
-                      <div style={{ fontWeight: 700, color: '#1a237e', fontSize: '0.9rem' }}>{city.name}</div>
-                      <div style={{ fontFamily: 'monospace', fontSize: '1.1rem', fontWeight: 700, color: '#e65100', marginTop: 4 }}>{getTimeInCity(city.timezone)}</div>
-                      <div style={{ fontSize: '0.7rem', color: '#9e9e9e' }}>UTC{city.timezone >= 0 ? '+' : ''}{city.timezone}</div>
+                      <div style={{ fontWeight: 700, color: '#1a237e', fontSize: 'clamp(0.8rem, 2vw, 0.9rem)' }}>{city.name}</div>
+                      <div style={{ fontFamily: 'monospace', fontSize: 'clamp(0.95rem, 2.5vw, 1.1rem)', fontWeight: 700, color: '#e65100', marginTop: 4 }}>{getTimeInCity(city.timezone)}</div>
+                      <div style={{ fontSize: 'clamp(0.65rem, 1.5vw, 0.7rem)', color: '#9e9e9e' }}>UTC{city.timezone >= 0 ? '+' : ''}{city.timezone}</div>
                     </div>
                   ))}
                 </div>
@@ -3537,7 +3617,7 @@ const RotationLearning: React.FC<RotationLearningProps> = ({
   return (
     <>
       <Navbar mode={mode} setMode={setMode} />
-      <div className="pt-14 sm:pt-16 px-2 sm:px-3 md:px-4 lg:px-6 pb-4 sm:pb-6">
+      <div className="pt-14 sm:pt-16 md:pt-18 px-2 xs:px-3 sm:px-4 md:px-5 lg:px-6 xl:px-8 pb-4 sm:pb-6 md:pb-8 overflow-x-hidden">
         {mode === "learn" && <RotationLearnMode />}
         {mode === "practice" && <RotationPracticeMode />}
         {mode === "applications" && <RotationRealWorld />}
