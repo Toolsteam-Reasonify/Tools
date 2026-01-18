@@ -1183,6 +1183,7 @@ const RevolutionLearnMode: React.FC = () => {
   const animationRef = useRef<number | null>(null);
   const speedRef = useRef(speed);
   const isPlayingRef = useRef(isPlaying);
+  const previousQuadrantRef = useRef<number>(Math.floor(orbitAngle / 90));
   
   // Keep refs in sync with state
   useEffect(() => {
@@ -1259,17 +1260,18 @@ const RevolutionLearnMode: React.FC = () => {
     };
   }, [isPlaying, speed]);
 
-  // Update current season
+  // Update current season - only check when angle crosses quadrant boundaries
   useEffect(() => {
-    const pos = getOrbitPosition(orbitAngle);
-    setCurrentSeason(prevSeason => {
-      // Only update if season actually changed
-      if (prevSeason !== pos.season) {
-        return pos.season;
-      }
-      return prevSeason;
-    });
-  }, [orbitAngle, getOrbitPosition]);
+    const currentQuadrant = Math.floor(orbitAngle / 90);
+    
+    // Only update season when quadrant changes
+    if (currentQuadrant !== previousQuadrantRef.current) {
+      previousQuadrantRef.current = currentQuadrant;
+      const pos = getOrbitPosition(orbitAngle);
+      setCurrentSeason(pos.season);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [orbitAngle]);
 
   const position = getOrbitPosition(orbitAngle);
   const seasonInfo = getSeasonData(currentSeason, safeTranslations);
@@ -1410,7 +1412,14 @@ const RevolutionLearnMode: React.FC = () => {
                   { angle: 180, labelKey: 'autumnEquinox', date: 'Sept 23', color: '#f97316' },
                   { angle: 270, labelKey: 'winterSolstice', date: 'Dec 22', color: '#60a5fa' }
                 ].map(({ angle, labelKey, date, color }) => {
-                  const label = safeTranslations?.learnContent?.seasonMarkers?.[labelKey] || labelKey;
+                  // Convert camelCase to Title Case with spaces for fallback
+                  const formatLabel = (key: string) => {
+                    return key
+                      .replace(/([A-Z])/g, ' $1') // Add space before capital letters
+                      .replace(/^./, str => str.toUpperCase()) // Capitalize first letter
+                      .trim(); // Remove any leading/trailing spaces
+                  };
+                  const label = safeTranslations?.learnContent?.seasonMarkers?.[labelKey] || formatLabel(labelKey);
                   const pos = getOrbitPosition(angle);
                   const isActive = Math.abs(orbitAngle - angle) < 20 || Math.abs(orbitAngle - angle) > 340;
                   return (
