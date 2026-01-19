@@ -1,7 +1,6 @@
 import React, {
     useState,
     useEffect,
-    useRef,
     createContext,
     useContext,
     useCallback,
@@ -31,7 +30,7 @@ export type Language = "en" | "hi" | "gu";
 export const translationsData: { [key: string]: any } = {
     en: {
         nav: {
-            logo: "Revolution of the Earth",
+            logo: "Eclipses",
             tabs: {
                 learn: "Learn",
                 practice: "Practice",
@@ -39,14 +38,14 @@ export const translationsData: { [key: string]: any } = {
             },
         },
         learn: {
-            header: 'Revolution of the Earth',
-            subtitle: 'Earth\'s Journey Around the Sun',
-            placeholder: 'Revolution Learn Content Coming Soon...'
+            header: 'Eclipses',
+            subtitle: 'Solar and Lunar Eclipses',
+            placeholder: 'Eclipses Learn Content Coming Soon...'
         },
         practice: {
-            header: 'Practice Revolution',
+            header: 'Practice Eclipses',
             subtitle: 'Test your knowledge',
-            placeholder: 'Revolution Practice Quiz Coming Soon...'
+            placeholder: 'Eclipses Practice Quiz Coming Soon...'
         },
         common: {
             comingSoon: "Coming Soon",
@@ -88,7 +87,7 @@ export const translationsData: { [key: string]: any } = {
         realWorld: {
             header: "Real World Applications",
             subtitle: "Apply your knowledge to solve real-life scenarios!",
-            description: "See how Earth's rotation and revolution affect our daily lives",
+            description: "See how eclipses affect our daily lives",
             howItWorks: "How It Works",
             howItWorks1: "Read each real-world scenario carefully",
             howItWorks2: "Think about how Earth's motion creates these situations",
@@ -103,7 +102,7 @@ export const translationsData: { [key: string]: any } = {
             question: "Question:",
             realWorldConnection: "Real-World Connection",
             yourAnswer: "Your Answer:",
-            answerPlaceholder: "Type your answer here... Explain your reasoning using what you learned about Earth's rotation and revolution.",
+            answerPlaceholder: "Type your answer here... Explain your reasoning using what you learned about eclipses.",
             checkSolution: "Check Solution",
             quickAnswer: "Quick Answer",
             detailedExplanation: "Detailed Explanation:",
@@ -1319,7 +1318,7 @@ const Navbar: React.FC<NavbarProps> = ({ mode, setMode }) => {
                             aria-hidden="true"
                         />
                         <span className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-bold text-teal-700 break-words overflow-wrap-anywhere">
-                            {safeTranslations?.nav?.logo || 'Revolution of the Earth'}
+                            {safeTranslations?.nav?.logo || 'Eclipses'}
                         </span>
                     </div>
 
@@ -1371,213 +1370,12 @@ const Navbar: React.FC<NavbarProps> = ({ mode, setMode }) => {
 // Mode Components
 // ============================================================================
 
-// Types
-type Season = 'spring' | 'summer' | 'autumn' | 'winter';
+// Removed unused types and functions
 
-interface OrbitPosition {
-  angle: number;
-  x: number;
-  y: number;
-  season: Season;
-  month: string;
-  tilt: number;
-}
-
-// Helper function to get translated season data
-const getSeasonData = (season: Season, translations: any) => {
-  const baseData = {
-    spring: { 
-      color: '#86efac',
-      bgGradient: 'linear-gradient(135deg, #fef9c3 0%, #bbf7d0 50%, #a7f3d0 100%)',
-      icon: '🌸'
-    },
-    summer: { 
-      color: '#fbbf24',
-      bgGradient: 'linear-gradient(135deg, #fef08a 0%, #fdba74 50%, #fb923c 100%)',
-      icon: '☀️'
-    },
-    autumn: { 
-      color: '#f97316',
-      bgGradient: 'linear-gradient(135deg, #fed7aa 0%, #fdba74 50%, #fb923c 100%)',
-      icon: '🍂'
-    },
-    winter: { 
-      color: '#60a5fa',
-      bgGradient: 'linear-gradient(135deg, #e0f2fe 0%, #bae6fd 50%, #7dd3fc 100%)',
-      icon: '❄️'
-    }
-  };
-  
-  // Fallback to English if translations are not available
-  const safeTranslations = translations?.learnContent?.seasons 
-    ? translations 
-    : translationsData["en"];
-  
-  const seasonData = safeTranslations?.learnContent?.seasons?.[season];
-  
-  // English season names fallback
-  const englishSeasonNames: { [key: string]: string } = {
-    spring: 'Spring',
-    summer: 'Summer',
-    autumn: 'Autumn',
-    winter: 'Winter'
-  };
-  
-  return {
-    ...baseData[season],
-    name: seasonData?.name || englishSeasonNames[season] || baseData[season].icon + ' Season',
-    months: seasonData?.months || '',
-    description: seasonData?.description || '',
-    hemisphere: seasonData?.hemisphere || '',
-    event: seasonData?.event || ''
-  };
-};
-
-const RevolutionLearnMode: React.FC = () => {
+const EclipsesLearnMode: React.FC = () => {
   const { translations } = useLanguage();
   // Fallback to English if translations not available
   const safeTranslations = translations || translationsData["en"];
-  
-  const [orbitAngle, setOrbitAngle] = useState(90); // Start at summer
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [speed, setSpeed] = useState(1);
-  const [currentSeason, setCurrentSeason] = useState<Season>('summer');
-  const [earthRotation, setEarthRotation] = useState(0);
-  const [hoveredFact, setHoveredFact] = useState<number | null>(null);
-  const animationRef = useRef<number | null>(null);
-  const speedRef = useRef(speed);
-  const isPlayingRef = useRef(isPlaying);
-  const previousQuadrantRef = useRef<number>(Math.floor(orbitAngle / 90));
-  
-  // Keep refs in sync with state
-  useEffect(() => {
-    speedRef.current = speed;
-  }, [speed]);
-  
-  useEffect(() => {
-    isPlayingRef.current = isPlaying;
-  }, [isPlaying]);
-
-  // Calculate Earth position on elliptical orbit
-  const getOrbitPosition = useCallback((angle: number): OrbitPosition => {
-    const a = 180; // semi-major axis
-    const b = 120; // semi-minor axis
-    const rad = (angle * Math.PI) / 180;
-    const x = a * Math.cos(rad);
-    const y = b * Math.sin(rad);
-    
-    let season: Season;
-    let month: string;
-    let tilt: number;
-    
-    if (angle >= 0 && angle < 90) {
-      season = 'spring';
-      month = 'March - May';
-      tilt = 23.5 * (angle / 90);
-    } else if (angle >= 90 && angle < 180) {
-      season = 'summer';
-      month = 'June - August';
-      tilt = 23.5;
-    } else if (angle >= 180 && angle < 270) {
-      season = 'autumn';
-      month = 'September - November';
-      tilt = 23.5 * (1 - (angle - 180) / 90);
-    } else {
-      season = 'winter';
-      month = 'December - February';
-      tilt = -23.5;
-    }
-    
-    return { angle, x, y, season, month, tilt };
-  }, []);
-
-  // Animation loop
-  useEffect(() => {
-    if (!isPlaying) {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-        animationRef.current = null;
-      }
-      return;
-    }
-    
-    const animate = () => {
-      if (!isPlayingRef.current) {
-        if (animationRef.current) {
-          cancelAnimationFrame(animationRef.current);
-          animationRef.current = null;
-        }
-        return;
-      }
-      
-      setOrbitAngle(prev => ((prev - 0.3 * speedRef.current) + 360) % 360);
-      setEarthRotation(prev => (prev + 2 * speedRef.current) % 360);
-      animationRef.current = requestAnimationFrame(animate);
-    };
-    
-    animationRef.current = requestAnimationFrame(animate);
-    return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-        animationRef.current = null;
-      }
-    };
-  }, [isPlaying, speed]);
-
-  // Update current season - only check when angle crosses quadrant boundaries
-  useEffect(() => {
-    const currentQuadrant = Math.floor(orbitAngle / 90);
-    
-    // Only update season when quadrant changes
-    if (currentQuadrant !== previousQuadrantRef.current) {
-      previousQuadrantRef.current = currentQuadrant;
-      const pos = getOrbitPosition(orbitAngle);
-      setCurrentSeason(pos.season);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [orbitAngle]);
-
-  const position = getOrbitPosition(orbitAngle);
-  const seasonInfo = getSeasonData(currentSeason, safeTranslations);
-
-  // Key facts data
-  const keyFacts = [
-    { 
-      icon: '⏱️', 
-      key: 'revolutionPeriod',
-      title: safeTranslations?.learnContent?.keyFacts?.revolutionPeriod?.title || 'Revolution Period',
-      fact: safeTranslations?.learnContent?.keyFacts?.revolutionPeriod?.fact || '365¼ days (1 year)',
-      detail: safeTranslations?.learnContent?.keyFacts?.revolutionPeriod?.detail || 'This extra ¼ day is why we have a leap year every 4 years!'
-    },
-    { 
-      icon: '🛤️', 
-      key: 'orbitalShape',
-      title: safeTranslations?.learnContent?.keyFacts?.orbitalShape?.title || 'Orbital Shape',
-      fact: safeTranslations?.learnContent?.keyFacts?.orbitalShape?.fact || 'Elliptical (oval-shaped)',
-      detail: safeTranslations?.learnContent?.keyFacts?.orbitalShape?.detail || 'Earth is sometimes closer to the Sun (perihelion) and sometimes farther (aphelion).'
-    },
-    { 
-      icon: '📐', 
-      key: 'axialTilt',
-      title: safeTranslations?.learnContent?.keyFacts?.axialTilt?.title || 'Axial Tilt',
-      fact: safeTranslations?.learnContent?.keyFacts?.axialTilt?.fact || '23.5 degrees',
-      detail: safeTranslations?.learnContent?.keyFacts?.axialTilt?.detail || 'This tilt is the main reason we have different seasons!'
-    },
-    { 
-      icon: '🚀', 
-      key: 'orbitalSpeed',
-      title: safeTranslations?.learnContent?.keyFacts?.orbitalSpeed?.title || 'Orbital Speed',
-      fact: safeTranslations?.learnContent?.keyFacts?.orbitalSpeed?.fact || '~30 km/s (108,000 km/h)',
-      detail: safeTranslations?.learnContent?.keyFacts?.orbitalSpeed?.detail || 'That\'s about 30 times faster than a bullet!'
-    },
-    { 
-      icon: '📏', 
-      key: 'distanceFromSun',
-      title: safeTranslations?.learnContent?.keyFacts?.distanceFromSun?.title || 'Distance from Sun',
-      fact: safeTranslations?.learnContent?.keyFacts?.distanceFromSun?.fact || '~150 million km (average)',
-      detail: safeTranslations?.learnContent?.keyFacts?.distanceFromSun?.detail || 'Light from the Sun takes about 8 minutes to reach Earth.'
-    }
-  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-indigo-950 to-slate-900 text-white break-words overflow-wrap-anywhere relative overflow-hidden">
@@ -1603,314 +1401,21 @@ const RevolutionLearnMode: React.FC = () => {
       <header className="p-4 sm:p-6 md:p-10 bg-black/40 backdrop-blur-xl border-b border-white/10 relative z-10">
         <div className="max-w-7xl mx-auto">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 flex items-center gap-2 sm:gap-3 break-words overflow-wrap-anywhere">
-            <span className="text-3xl sm:text-4xl md:text-5xl">🌍</span>
-            {safeTranslations?.learn?.header || 'Revolution of the Earth'}
+            <span className="text-3xl sm:text-4xl md:text-5xl">🌑</span>
+            {safeTranslations?.learn?.header || 'Eclipses'}
           </h1>
           <p className="mt-2 opacity-70 text-sm sm:text-base md:text-lg">
-            {safeTranslations?.learn?.subtitle || 'Earth\'s Journey Around the Sun'}
+            {safeTranslations?.learn?.subtitle || 'Solar and Lunar Eclipses'}
           </p>
         </div>
       </header>
 
       {/* Main Content */}
       <main className="p-4 sm:p-6 md:p-10 max-w-7xl mx-auto relative z-5">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-4 sm:gap-6 lg:gap-8 items-start">
-          
-          {/* Solar System Visualization */}
-          <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 border border-purple-500/30 relative overflow-hidden">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
-              <h2 className="text-lg sm:text-xl md:text-2xl font-bold flex items-center gap-2 sm:gap-3 break-words overflow-wrap-anywhere">
-                <span className="text-2xl sm:text-3xl">{seasonInfo.icon}</span>
-                {safeTranslations?.learnContent?.earthInSolarSystem || 'Earth in the Solar System'}
-              </h2>
-              <div 
-                className="text-gray-800 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-semibold whitespace-nowrap"
-                style={{ background: seasonInfo.bgGradient }}
-              >
-                {safeTranslations?.learnContent?.current || 'Current'}: {seasonInfo.name}
-              </div>
-            </div>
-            
-            {/* SVG Solar System */}
-            <div className="w-full" style={{ height: 'clamp(280px, 50vw, 420px)' }}>
-              <svg viewBox="-250 -180 500 360" className="w-full h-full">
-                {/* Glow filters */}
-                <defs>
-                  <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stopColor="#fef08a" />
-                    <stop offset="40%" stopColor="#fbbf24" />
-                    <stop offset="70%" stopColor="#f97316" />
-                    <stop offset="100%" stopColor="#dc2626" />
-                  </radialGradient>
-                  <radialGradient id="earthGradient" cx="30%" cy="30%" r="70%">
-                    <stop offset="0%" stopColor="#60a5fa" />
-                    <stop offset="50%" stopColor="#3b82f6" />
-                    <stop offset="100%" stopColor="#1e40af" />
-                  </radialGradient>
-                  <filter id="sunBlur">
-                    <feGaussianBlur stdDeviation="10" />
-                  </filter>
-                  <filter id="earthShadow">
-                    <feDropShadow dx="3" dy="3" stdDeviation="4" floodColor="#000" floodOpacity="0.6"/>
-                  </filter>
-                  <linearGradient id="orbitGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="rgba(255,255,255,0.1)" />
-                    <stop offset="50%" stopColor="rgba(255,255,255,0.3)" />
-                    <stop offset="100%" stopColor="rgba(255,255,255,0.1)" />
-                  </linearGradient>
-                </defs>
-                
-                {/* Orbit Path - Elliptical */}
-                <ellipse 
-                  cx="0" cy="0" rx="180" ry="120" 
-                  fill="none" 
-                  stroke="url(#orbitGradient)" 
-                  strokeWidth="2"
-                  strokeDasharray="8 4"
-                />
-                
-                {/* Season markers on orbit */}
-                {[
-                  { angle: 0, labelKey: 'springEquinox', date: 'March 21', color: '#86efac' },
-                  { angle: 90, labelKey: 'summerSolstice', date: 'June 21', color: '#fbbf24' },
-                  { angle: 180, labelKey: 'autumnEquinox', date: 'Sept 23', color: '#f97316' },
-                  { angle: 270, labelKey: 'winterSolstice', date: 'Dec 22', color: '#60a5fa' }
-                ].map(({ angle, labelKey, date, color }) => {
-                  // Convert camelCase to Title Case with spaces for fallback
-                  const formatLabel = (key: string) => {
-                    return key
-                      .replace(/([A-Z])/g, ' $1') // Add space before capital letters
-                      .replace(/^./, str => str.toUpperCase()) // Capitalize first letter
-                      .trim(); // Remove any leading/trailing spaces
-                  };
-                  const label = safeTranslations?.learnContent?.seasonMarkers?.[labelKey] || formatLabel(labelKey);
-                  const pos = getOrbitPosition(angle);
-                  const isActive = Math.abs(orbitAngle - angle) < 20 || Math.abs(orbitAngle - angle) > 340;
-                  return (
-                    <g key={angle}>
-                      <circle 
-                        cx={pos.x} 
-                        cy={pos.y} 
-                        r={isActive ? 6 : 4} 
-                        fill={color}
-                        className="transition-all duration-300"
-                      />
-                      <text 
-                        x={pos.x + (angle === 90 || angle === 270 ? 0 : (pos.x > 0 ? 18 : -18))} 
-                        y={pos.y + (angle === 90 ? -25 : angle === 270 ? 35 : 5)}
-                        fill="white"
-                        fontSize="11"
-                        fontWeight={isActive ? '700' : '400'}
-                        textAnchor={angle === 90 || angle === 270 ? 'middle' : (pos.x > 0 ? 'start' : 'end')}
-                        opacity={isActive ? 1 : 0.7}
-                        className="break-words"
-                      >
-                        {label}
-                      </text>
-                      <text 
-                        x={pos.x + (angle === 90 || angle === 270 ? 0 : (pos.x > 0 ? 18 : -18))} 
-                        y={pos.y + (angle === 90 ? -12 : angle === 270 ? 48 : 18)}
-                        fill={color}
-                        fontSize="10"
-                        textAnchor={angle === 90 || angle === 270 ? 'middle' : (pos.x > 0 ? 'start' : 'end')}
-                        className="break-words"
-                      >
-                        {date}
-                      </text>
-                    </g>
-                  );
-                })}
-                
-                {/* Sun with corona effect */}
-                <circle cx="0" cy="0" r="60" fill="url(#sunGlow)" filter="url(#sunBlur)" opacity="0.5" />
-                <circle cx="0" cy="0" r="45" fill="url(#sunGlow)" filter="url(#sunBlur)" opacity="0.7" />
-                <circle cx="0" cy="0" r="35" fill="url(#sunGlow)" />
-                <text x="0" y="58" textAnchor="middle" fill="white" fontSize="13" fontWeight="600">{safeTranslations?.learnContent?.sun || 'Sun'} ☀️</text>
-                
-                {/* Earth Group */}
-                <g transform={`translate(${position.x}, ${position.y})`}>
-                  {/* Axial tilt indicator line */}
-                  <line 
-                    x1="0" y1="-40" x2="0" y2="40"
-                    stroke="rgba(255,255,255,0.4)"
-                    strokeWidth="1.5"
-                    strokeDasharray="4 3"
-                    transform={`rotate(${position.tilt})`}
-                  />
-                  
-                  {/* Tilt angle arc */}
-                  {position.tilt !== 0 && (
-                    <path
-                      d={`M 0,-30 A 30,30 0 0,${position.tilt > 0 ? 1 : 0} ${30 * Math.sin(position.tilt * Math.PI / 180)},${-30 * Math.cos(position.tilt * Math.PI / 180)}`}
-                      fill="none"
-                      stroke="#fbbf24"
-                      strokeWidth="1.5"
-                    />
-                  )}
-                  
-                  {/* Earth */}
-                  <g transform={`rotate(${position.tilt})`}>
-                    <circle r="24" fill="url(#earthGradient)" filter="url(#earthShadow)" />
-                    {/* Continents suggestion */}
-                    <g transform={`rotate(${earthRotation})`}>
-                      <ellipse cx="-6" cy="-6" rx="9" ry="7" fill="#22c55e" opacity="0.75" />
-                      <ellipse cx="9" cy="4" rx="7" ry="9" fill="#22c55e" opacity="0.75" />
-                      <ellipse cx="-8" cy="10" rx="5" ry="4" fill="#22c55e" opacity="0.6" />
-                    </g>
-                    {/* Equator line */}
-                    <ellipse cx="0" cy="0" rx="24" ry="7" fill="none" stroke="rgba(255,255,255,0.35)" strokeWidth="0.8" />
-                    {/* Ice caps */}
-                    <ellipse cx="0" cy="-22" rx="8" ry="3" fill="rgba(255,255,255,0.8)" />
-                    <ellipse cx="0" cy="22" rx="6" ry="2" fill="rgba(255,255,255,0.8)" />
-                  </g>
-                  
-                  {/* Earth label */}
-                  <text y="45" textAnchor="middle" fill="white" fontSize="12" fontWeight="600">{safeTranslations?.learnContent?.earth || 'Earth'} 🌍</text>
-                  
-                  {/* Tilt degree indicator */}
-                  {Math.abs(position.tilt) > 5 && (
-                    <text 
-                      x={position.tilt > 0 ? 20 : -20} 
-                      y="-20" 
-                      textAnchor="middle" 
-                      fill="#fbbf24" 
-                      fontSize="10"
-                      fontWeight="600"
-                    >
-                      {Math.abs(position.tilt).toFixed(1)}°
-                    </text>
-                  )}
-                </g>
-                
-                {/* Direction arrow */}
-                <g transform="translate(0, -155)">
-                  <path d="M -30,0 L 30,0" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="2" />
-                  <path d="M 20,-6 L 30,0 L 20,6" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="2" />
-                  <text x="0" y="-12" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">{safeTranslations?.learnContent?.directionOfRevolution || 'Direction of Revolution'}</text>
-                  <text x="0" y="18" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">{safeTranslations?.learnContent?.counterClockwise || '(Counter-clockwise)'}</text>
-                </g>
-              </svg>
-            </div>
-            
-            {/* Controls */}
-            <div className="flex flex-wrap gap-4 justify-center mt-6 items-center">
-              <button
-                onClick={() => setIsPlaying(!isPlaying)}
-                className={`px-7 py-3.5 rounded-2xl border-none cursor-pointer font-semibold text-base transition-all flex items-center gap-2 shadow-lg hover:-translate-y-0.5 active:translate-y-0 ${
-                  isPlaying 
-                    ? 'bg-gradient-to-r from-red-600 to-red-700 text-white' 
-                    : 'bg-gradient-to-r from-green-500 to-green-600 text-white'
-                }`}
-              >
-                {isPlaying ? (safeTranslations?.learnContent?.pause || '⏸️ Pause') : (safeTranslations?.learnContent?.play || '▶️ Play')}
-              </button>
-              
-              <div className="flex items-center gap-2.5 bg-white/10 px-4 py-2.5 rounded-2xl">
-                <span className="text-sm font-medium text-black">{safeTranslations?.learnContent?.speed || 'Speed'}:</span>
-                {[0.5, 1, 2, 3].map(s => (
-                  <button
-                    key={s}
-                    onClick={() => setSpeed(s)}
-                    className={`px-3.5 py-2 rounded-lg border-none cursor-pointer text-sm font-semibold transition-all ${
-                      speed === s 
-                        ? 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-md' 
-                        : 'bg-white/15 text-black hover:bg-white/20'
-                    }`}
-                  >
-                    {s}x
-                  </button>
-                ))}
-              </div>
-              
-              {/* Jump to season */}
-              <div className="flex items-center gap-2 bg-white/10 px-4 py-2.5 rounded-2xl">
-                <span className="text-sm font-medium text-black">{safeTranslations?.learnContent?.jumpTo || 'Jump to'}:</span>
-                {[
-                  { season: 'spring', angle: 45, icon: '🌸' },
-                  { season: 'summer', angle: 135, icon: '☀️' },
-                  { season: 'autumn', angle: 225, icon: '🍂' },
-                  { season: 'winter', angle: 315, icon: '❄️' }
-                ].map(({ season, angle, icon }) => (
-                  <button
-                    key={season}
-                    onClick={() => {
-                      setOrbitAngle(angle);
-                      setIsPlaying(false);
-                    }}
-                    title={season.charAt(0).toUpperCase() + season.slice(1)}
-                    className={`px-2.5 py-1.5 rounded-lg border-none cursor-pointer text-lg transition-all ${
-                      currentSeason === season 
-                        ? 'bg-white/30' 
-                        : 'bg-white/10 hover:bg-white/20'
-                    }`}
-                  >
-                    {icon}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-          
-          {/* Info Panel */}
-          <div className="flex flex-col gap-4 sm:gap-5">
-            
-            {/* Current Season Card */}
-            <div 
-              className="rounded-2xl sm:rounded-3xl p-5 sm:p-7 text-gray-800 shadow-2xl transition-all duration-500 break-words overflow-wrap-anywhere"
-              style={{ background: seasonInfo.bgGradient }}
-            >
-              <div className="text-3xl sm:text-4xl md:text-5xl mb-2 sm:mb-3">{seasonInfo.icon}</div>
-              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2">{seasonInfo.name}</h3>
-              <p className="mb-3 sm:mb-4 text-sm sm:text-base opacity-80">{seasonInfo.months}</p>
-              <p className="mb-3 sm:mb-4 text-xs sm:text-sm leading-relaxed">{seasonInfo.description}</p>
-              
-              <div className="p-3 sm:p-4 bg-white/55 rounded-xl sm:rounded-2xl text-xs sm:text-sm leading-relaxed">
-                <div className="mb-2">
-                  <strong>{safeTranslations?.learnContent?.keyEvent || '🎯 Key Event'}:</strong> {seasonInfo.event}
-                </div>
-                <div className="mb-2">
-                  <strong>{safeTranslations?.learnContent?.hemisphere || '🌐 Hemisphere'}:</strong> {seasonInfo.hemisphere}
-                </div>
-                <div>
-                  <strong>{safeTranslations?.learnContent?.orbitPosition || '📍 Orbit Position'}:</strong> {Math.round(orbitAngle)}°
-                </div>
-              </div>
-            </div>
-            
-            {/* Key Facts */}
-            <div className="bg-white/8 rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-white/10">
-              <h3 className="text-lg sm:text-xl font-bold mb-4 sm:mb-5 flex items-center gap-2">
-                {safeTranslations?.learnContent?.keyFactsAboutRevolution || '📚 Key Facts About Revolution'}
-              </h3>
-              <div className="flex flex-col gap-2 sm:gap-2.5">
-                {keyFacts.map(({ icon, title, fact, detail }, i) => (
-                  <div 
-                    key={i} 
-                    className={`p-3 sm:p-4 rounded-lg sm:rounded-xl text-xs sm:text-sm cursor-pointer transition-all border ${
-                      hoveredFact === i 
-                        ? 'bg-indigo-500/20 border-indigo-500/40' 
-                        : 'bg-white/5 border-transparent'
-                    }`}
-                    onMouseEnter={() => setHoveredFact(i)}
-                    onMouseLeave={() => setHoveredFact(null)}
-                  >
-                    <div className="flex items-center gap-2 sm:gap-3">
-                      <span className="text-xl sm:text-2xl flex-shrink-0">{icon}</span>
-                      <div className="break-words overflow-wrap-anywhere">
-                        <div className="font-semibold mb-1">{title}</div>
-                        <div className="opacity-85">{fact}</div>
-                      </div>
-                    </div>
-                    {hoveredFact === i && (
-                      <div className="mt-2.5 pt-2.5 border-t border-white/10 text-xs opacity-80 leading-relaxed break-words overflow-wrap-anywhere animate-fadeIn">
-                        💡 {detail}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+        <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-8 border border-purple-500/30 text-center">
+          <p className="text-lg text-slate-300">
+            {safeTranslations?.learn?.placeholder || 'Eclipses Learn Content Coming Soon...'}
+          </p>
         </div>
       </main>
       
@@ -1938,7 +1443,7 @@ interface Question {
   correctAnswer: number;
   explanation: string;
   difficulty: 'easy' | 'medium' | 'hard';
-  topic: 'rotation' | 'revolution' | 'seasons' | 'eclipses';
+  topic: 'eclipses';
 }
 
 interface RealWorldExample {
@@ -1954,8 +1459,8 @@ interface RealWorldExample {
   tips: string[];
 }
 
-const RevolutionPracticeMode: React.FC = () => {
-  const { language, translations } = useLanguage();
+const EclipsesPracticeMode: React.FC = () => {
+  const { translations } = useLanguage();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showExplanation, setShowExplanation] = useState(false);
@@ -1967,116 +1472,7 @@ const RevolutionPracticeMode: React.FC = () => {
 
   // Get translated questions based on current language
   const getQuestions = (): Question[] => {
-    const practiceQuestions = translations?.practiceContent?.practiceQuestions;
-    if (!practiceQuestions || language === 'en') {
-      // Return English questions as fallback
-      return [
-        {
-          id: 1,
-          question: "In which direction does the Earth rotate on its axis?",
-          options: ["East to West", "West to East", "North to South", "South to North"],
-          correctAnswer: 1,
-          explanation: "Earth rotates from West to East. This is why the Sun appears to rise in the East and set in the West. When viewed from above the North Pole, Earth rotates in an anti-clockwise direction.",
-          difficulty: 'easy',
-          topic: 'rotation'
-        },
-        {
-          id: 2,
-          question: "How long does it take for Earth to complete one rotation on its axis?",
-          options: ["12 hours", "24 hours", "365 days", "30 days"],
-          correctAnswer: 1,
-          explanation: "Earth completes one full rotation on its axis in approximately 24 hours. This rotation causes the day-night cycle we experience.",
-          difficulty: 'easy',
-          topic: 'rotation'
-        },
-        {
-          id: 3,
-          question: "What causes day and night on Earth?",
-          options: [
-            "Earth's revolution around the Sun",
-            "Earth's rotation on its axis",
-            "The Moon blocking sunlight",
-            "Clouds covering the Sun"
-          ],
-          correctAnswer: 1,
-          explanation: "Day and night are caused by Earth's rotation on its axis. As Earth spins, the side facing the Sun experiences daytime, while the side facing away experiences nighttime.",
-          difficulty: 'easy',
-          topic: 'rotation'
-        },
-        {
-          id: 4,
-          question: "How long does it take for Earth to complete one revolution around the Sun?",
-          options: ["24 hours", "30 days", "365 days and 6 hours", "12 months exactly"],
-          correctAnswer: 2,
-          explanation: "Earth takes approximately 365 days and 6 hours to complete one revolution around the Sun. The extra 6 hours accumulate over four years to create a leap year with 366 days.",
-          difficulty: 'easy',
-          topic: 'revolution'
-        },
-        {
-          id: 5,
-          question: "What is the main reason for seasons on Earth?",
-          options: [
-            "Distance from the Sun changes",
-            "Earth's tilted axis and spherical shape",
-            "The Moon's gravitational pull",
-            "Solar flares from the Sun"
-          ],
-          correctAnswer: 1,
-          explanation: "Seasons occur primarily due to Earth's axis being tilted at 23.5° relative to its orbit, combined with Earth's spherical shape. This causes different hemispheres to receive varying amounts of sunlight throughout the year.",
-          difficulty: 'medium',
-          topic: 'seasons'
-        }
-      ];
-    }
-
-    // Return translated questions
-    return [
-      {
-        id: 1,
-        question: practiceQuestions.q1?.question || "",
-        options: practiceQuestions.q1?.options || [],
-        correctAnswer: 1,
-        explanation: practiceQuestions.q1?.explanation || "",
-        difficulty: 'easy',
-        topic: 'rotation'
-      },
-      {
-        id: 2,
-        question: practiceQuestions.q2?.question || "",
-        options: practiceQuestions.q2?.options || [],
-        correctAnswer: 1,
-        explanation: practiceQuestions.q2?.explanation || "",
-        difficulty: 'easy',
-        topic: 'rotation'
-      },
-      {
-        id: 3,
-        question: practiceQuestions.q3?.question || "",
-        options: practiceQuestions.q3?.options || [],
-        correctAnswer: 1,
-        explanation: practiceQuestions.q3?.explanation || "",
-        difficulty: 'easy',
-        topic: 'rotation'
-      },
-      {
-        id: 4,
-        question: practiceQuestions.q4?.question || "",
-        options: practiceQuestions.q4?.options || [],
-        correctAnswer: 2,
-        explanation: practiceQuestions.q4?.explanation || "",
-        difficulty: 'easy',
-        topic: 'revolution'
-      },
-      {
-        id: 5,
-        question: practiceQuestions.q5?.question || "",
-        options: practiceQuestions.q5?.options || [],
-        correctAnswer: 1,
-        explanation: practiceQuestions.q5?.explanation || "",
-        difficulty: 'medium',
-        topic: 'seasons'
-      }
-    ];
+    return [];
   };
 
   const questions = getQuestions();
@@ -2399,196 +1795,15 @@ const RevolutionPracticeMode: React.FC = () => {
   );
 };
 
-const RevolutionRealWorld: React.FC = () => {
-  const { language, translations } = useLanguage();
+const EclipsesRealWorld: React.FC = () => {
+  const { translations } = useLanguage();
   const [selectedScenario, setSelectedScenario] = useState<number | null>(null);
   const [userAnswer, setUserAnswer] = useState('');
   const [showSolution, setShowSolution] = useState(false);
 
   // Get translated scenarios based on current language
   const getScenarios = (): RealWorldExample[] => {
-    const scenariosData = translations?.realWorldContent?.scenarios;
-    if (!scenariosData || language === 'en') {
-      // Return English scenarios as fallback
-      return [
-    {
-      id: 1,
-      title: "Planning an International Cricket Match",
-      icon: "🏏",
-      difficulty: "Easy",
-      context: "India is playing a cricket match against Australia. The match in Sydney starts at 10:00 AM local time.",
-      question: "If Sydney is 4.5 hours ahead of India (IST), what time should Indian fans wake up to watch the live match?",
-      realWorldConnection: "Time zones exist because Earth rotates from West to East. Countries in the east experience sunrise earlier than those in the west.",
-      solution: "Indian fans should wake up at 5:30 AM IST to watch the match live.",
-      explanation: "Since Sydney is 4.5 hours ahead of India:\n• When it's 10:00 AM in Sydney\n• It's 10:00 AM - 4.5 hours = 5:30 AM in India\n\nThis time difference exists because Earth rotates from West to East. Sydney, being further east, experiences sunrise earlier and is ahead in time.",
-      tips: [
-        "Countries east of India have later times",
-        "Countries west of India have earlier times",
-        "Time zones are created by Earth's rotation"
-      ]
-    },
-    {
-      id: 2,
-      title: "Farmer's Planting Season",
-      icon: "🌾",
-      difficulty: "Medium",
-      context: "Ravi is a farmer in Punjab. He knows that wheat grows best when planted after the monsoon rains, during the cooler months with shorter days.",
-      question: "Should Ravi plant wheat in June (summer) or November (after monsoon)? Explain using your knowledge of seasons.",
-      realWorldConnection: "Seasons occur due to Earth's tilted axis. Different crops grow better in different seasons based on temperature and daylight hours.",
-      solution: "Ravi should plant wheat in November (after monsoon).",
-      explanation: "Wheat should be planted in November because:\n\n1. **Temperature**: November marks the beginning of winter in Northern India. Wheat is a rabi crop that grows best in cooler temperatures (15-20°C).\n\n2. **Day Length**: In November, days are getting shorter (less than 12 hours). Wheat requires this shorter day length for optimal growth.\n\n3. **Season Cycle**: Due to Earth's tilted axis:\n   • In June (summer solstice), Northern Hemisphere experiences longer, hotter days\n   • In November, temperatures cool down and days shorten\n   • This cooling period is ideal for wheat germination\n\n4. **Monsoon Benefits**: The soil retains moisture from monsoon rains, providing good conditions for planting.",
-      tips: [
-        "Summer (June): Hot, long days - not suitable for wheat",
-        "Winter (November): Cool, shorter days - perfect for wheat",
-        "Seasons affect crop growth patterns"
-      ]
-    },
-    {
-      id: 3,
-      title: "Solar Panel Installation",
-      icon: "☀️",
-      difficulty: "Medium",
-      context: "A family in Delhi wants to install solar panels on their roof. They want to know which direction to face the panels and whether panels will generate the same energy in summer and winter.",
-      question: "In which direction should they install the panels, and will energy generation be different in summer vs winter?",
-      realWorldConnection: "The Sun's apparent path changes with seasons due to Earth's tilt. This affects solar energy potential throughout the year.",
-      solution: "Panels should face South. Summer will generate more energy than winter.",
-      explanation: "**Direction**: Solar panels should face **South** in the Northern Hemisphere (like Delhi).\n\n**Why South?**\n• As Earth rotates West to East, the Sun appears to move from East to West\n• In Northern Hemisphere, the Sun's path is through the southern part of the sky\n• South-facing panels receive maximum sunlight throughout the day\n\n**Seasonal Variation**:\n\n**Summer (June)**:\n• Northern Hemisphere tilts towards the Sun\n• Sun is higher in the sky\n• Longer days (14-15 hours of daylight)\n• More intense sunlight\n• **Higher energy generation**\n\n**Winter (December)**:\n• Northern Hemisphere tilts away from the Sun\n• Sun is lower in the sky\n• Shorter days (10-11 hours of daylight)\n• Less intense sunlight\n• **Lower energy generation**\n\nThe difference can be 40-60% less energy in winter compared to summer due to Earth's axial tilt and revolution around the Sun.",
-      tips: [
-        "North faces panels away from Sun's path",
-        "Summer has ~4 hours more sunlight than winter in Delhi",
-        "Earth's tilt causes this seasonal variation"
-      ]
-    },
-    {
-      id: 4,
-      title: "Planning a Solar Eclipse Trip",
-      icon: "🌑",
-      difficulty: "Hard",
-      context: "A total solar eclipse will be visible from a narrow path across India on April 20th. Your family wants to travel from Mumbai to witness it. The path of totality passes through Varanasi.",
-      question: "Your flight lands in Varanasi at 11:00 AM, and the eclipse totality lasts from 11:45 AM to 11:48 AM (3 minutes). Is this enough time? What precautions should you take?",
-      realWorldConnection: "Solar eclipses occur when the Moon passes between Earth and the Sun. The shadow moves across Earth due to both Earth's rotation and the Moon's motion.",
-      solution: "Yes, there's enough time, but it's tight. Proper planning and safety equipment are essential.",
-      explanation: "**Timing Analysis**:\n• Flight lands: 11:00 AM\n• Totality begins: 11:45 AM\n• Time available: 45 minutes\n• This is theoretically enough time, BUT consider:\n  - Airport exit time: 15-20 minutes\n  - Travel to viewing location: 20-30 minutes\n  - This leaves only 5-10 minutes buffer - RISKY!\n\n**Recommendation**: Arrive the night before to ensure you don't miss this rare event.\n\n**Why Totality is So Short (3 minutes)**:\n1. **Moon's Shadow Speed**: The Moon's shadow moves across Earth at ~2,000 km/h due to:\n   - Earth's rotation (1,670 km/h at equator)\n   - Moon's orbital motion around Earth\n\n2. **Narrow Path**: The Moon's shadow on Earth is only ~100-200 km wide\n\n3. **Relative Motion**: The shadow sweeps across the surface quickly\n\n**Essential Safety Precautions**:\n\n**Before Totality (Partial Phase)**:\n✗ NEVER look directly at the Sun\n✗ Regular sunglasses are NOT safe\n✓ Use certified solar eclipse glasses (ISO 12312-2)\n✓ Use pinhole projection method\n\n**During Totality (2-3 minutes)**:\n✓ Safe to look directly (Sun is completely covered)\n✓ Remove eclipse glasses to see corona\n✓ Amazing sight - the sky darkens, stars appear\n\n**After Totality**:\n✗ Immediately put eclipse glasses back on\n✗ The Sun is dangerous again\n\n**Why So Dangerous?**\nEven 1% of the Sun visible can permanently damage your eyes. The Sun is intense enough to cause blindness even during an eclipse.",
-      tips: [
-        "Plan to arrive a day early",
-        "Eclipse glasses are MANDATORY",
-        "Never look at partial phases without protection",
-        "Totality is the only safe time to look directly",
-        "Moon's shadow moves at ~2,000 km/h across Earth"
-      ]
-    },
-    {
-      id: 5,
-      title: "Stargazing Adventure Planning",
-      icon: "⭐",
-      difficulty: "Medium",
-      context: "You want to see the Orion constellation, which is prominent in the northern winter sky. You're planning a stargazing trip from Bangalore.",
-      question: "In which months (March, June, September, or December) will Orion be best visible in the evening sky? Why does this change?",
-      realWorldConnection: "Different constellations are visible in different months because Earth revolves around the Sun, changing our nighttime view of space.",
-      solution: "Orion is best visible in December and January evenings.",
-      explanation: "**Best Viewing**: Orion is most prominently visible in the evening sky during **December and January**.\n\n**Why Visibility Changes Through the Year**:\n\nAs Earth revolves around the Sun (365 days), our nighttime view points toward different parts of space:\n\n**December-January** (BEST):\n• Earth's nightside faces the direction of Orion\n• Orion rises in the East around sunset\n• Visible throughout the night\n• Highest in the sky around midnight\n• Perfect viewing conditions\n\n**March**:\n• Orion visible in evening but setting earlier\n• Best viewing in early evening\n• By late night, it's too low on horizon\n\n**June** (WORST):\n• Earth has revolved to opposite side of Sun\n• Orion is in the daytime sky\n• Completely invisible at night\n• Sun is in the same direction as Orion\n\n**September**:\n• Orion starts becoming visible again\n• Rises just before dawn\n• Not good for evening stargazing\n\n**The Science Behind It**:\n\n1. **Earth's Revolution**: As we orbit the Sun, we complete 360° in 365 days (~1° per day)\n\n2. **Changing View**: Each month, our nighttime view shifts by about 30°\n\n3. **Constellation Cycle**: Each constellation has a ~6-month \"visibility season\"\n   - 3 months before peak: Rising before dawn\n   - Peak months: Visible all night\n   - 3 months after peak: Setting after sunset\n   - Opposite 6 months: In daytime sky\n\n**Practical Tips for Bangalore**:\n• Best months: November - February\n• Look towards the East in early evening\n• Orion will be high in the southern sky by 9-10 PM\n• Easily identifiable by three stars in a row (Orion's belt)\n• Best after moonset for darker skies",
-      tips: [
-        "Orion is a winter constellation in Northern Hemisphere",
-        "Each constellation is best visible for ~3-4 months",
-        "Use a stargazing app to find exact rising times",
-        "Moon phases affect visibility - new moon is best"
-      ]
-    },
-    {
-      id: 6,
-      title: "Choosing Holiday Destination",
-      icon: "✈️",
-      difficulty: "Easy",
-      context: "Your family wants to take a winter vacation in December to escape the cold weather in Delhi and enjoy warm, sunny beaches.",
-      question: "Should you go to Australia or Sri Lanka? Explain using your knowledge of seasons in different hemispheres.",
-      realWorldConnection: "Seasons are opposite in Northern and Southern Hemispheres due to Earth's axial tilt as it revolves around the Sun.",
-      solution: "Go to Australia! It will be summer there in December.",
-      explanation: "**Best Choice**: **Australia** will be perfect for a warm beach vacation in December!\n\n**Reasoning**:\n\n**Australia (Southern Hemisphere)**:\n• December = **SUMMER** ☀️\n• Temperature: 25-35°C (warm and sunny)\n• Perfect beach weather\n• Long days, short nights\n• Why? Southern Hemisphere tilts TOWARDS the Sun in December\n\n**Sri Lanka (Near Equator)**:\n• December = Pleasant weather (26-30°C)\n• However, it's monsoon season on east coast\n• West coast is better in December\n• Not as dramatic temperature difference since it's near equator\n\n**The Science - Why Seasons are Opposite**:\n\n**In December**:\n• Earth's North Pole tilts AWAY from Sun → Winter in Northern Hemisphere\n• Earth's South Pole tilts TOWARDS Sun → Summer in Southern Hemisphere\n\n**In June** (opposite situation):\n• Earth's North Pole tilts TOWARDS Sun → Summer in Northern Hemisphere  \n• Earth's South Pole tilts AWAY from Sun → Winter in Southern Hemisphere\n\n**Understanding the Tilt**:\n1. Earth's axis is tilted at 23.5°\n2. This tilt remains constant as Earth revolves around Sun\n3. For 6 months, Northern Hemisphere tilts toward Sun (March-September)\n4. For 6 months, Southern Hemisphere tilts toward Sun (September-March)\n\n**Practical Application**:\n• Escaping Northern winter? → Go South (Australia, New Zealand, Argentina)\n• Escaping Northern summer heat? → Go South for cooler weather\n• Want consistent weather year-round? → Go near Equator (Sri Lanka, Singapore)",
-      tips: [
-        "December = Summer in Australia, Winter in India",
-        "Countries near equator have less seasonal variation",
-        "This happens due to Earth's 23.5° tilt",
-        "Seasons are reversed across the equator"
-      ]
-    }
-  ];
-    }
-
-    // Return translated scenarios
-    return [
-      {
-        id: 1,
-        title: scenariosData.scenario1?.title || "",
-        icon: "🏏",
-        difficulty: "Easy",
-        context: scenariosData.scenario1?.context || "",
-        question: scenariosData.scenario1?.question || "",
-        realWorldConnection: scenariosData.scenario1?.realWorldConnection || "",
-        solution: scenariosData.scenario1?.solution || "",
-        explanation: scenariosData.scenario1?.explanation || "",
-        tips: scenariosData.scenario1?.tips || []
-      },
-      {
-        id: 2,
-        title: scenariosData.scenario2?.title || "",
-        icon: "🌾",
-        difficulty: "Medium",
-        context: scenariosData.scenario2?.context || "",
-        question: scenariosData.scenario2?.question || "",
-        realWorldConnection: scenariosData.scenario2?.realWorldConnection || "",
-        solution: scenariosData.scenario2?.solution || "",
-        explanation: scenariosData.scenario2?.explanation || "",
-        tips: scenariosData.scenario2?.tips || []
-      },
-      {
-        id: 3,
-        title: scenariosData.scenario3?.title || "",
-        icon: "☀️",
-        difficulty: "Medium",
-        context: scenariosData.scenario3?.context || "",
-        question: scenariosData.scenario3?.question || "",
-        realWorldConnection: scenariosData.scenario3?.realWorldConnection || "",
-        solution: scenariosData.scenario3?.solution || "",
-        explanation: scenariosData.scenario3?.explanation || "",
-        tips: scenariosData.scenario3?.tips || []
-      },
-      {
-        id: 4,
-        title: scenariosData.scenario4?.title || "",
-        icon: "🌑",
-        difficulty: "Hard",
-        context: scenariosData.scenario4?.context || "",
-        question: scenariosData.scenario4?.question || "",
-        realWorldConnection: scenariosData.scenario4?.realWorldConnection || "",
-        solution: scenariosData.scenario4?.solution || "",
-        explanation: scenariosData.scenario4?.explanation || "",
-        tips: scenariosData.scenario4?.tips || []
-      },
-      {
-        id: 5,
-        title: scenariosData.scenario5?.title || "",
-        icon: "⭐",
-        difficulty: "Medium",
-        context: scenariosData.scenario5?.context || "",
-        question: scenariosData.scenario5?.question || "",
-        realWorldConnection: scenariosData.scenario5?.realWorldConnection || "",
-        solution: scenariosData.scenario5?.solution || "",
-        explanation: scenariosData.scenario5?.explanation || "",
-        tips: scenariosData.scenario5?.tips || []
-      },
-      {
-        id: 6,
-        title: scenariosData.scenario6?.title || "",
-        icon: "✈️",
-        difficulty: "Easy",
-        context: scenariosData.scenario6?.context || "",
-        question: scenariosData.scenario6?.question || "",
-        realWorldConnection: scenariosData.scenario6?.realWorldConnection || "",
-        solution: scenariosData.scenario6?.solution || "",
-        explanation: scenariosData.scenario6?.explanation || "",
-        tips: scenariosData.scenario6?.tips || []
-      }
-    ];
+    return [];
   };
 
   const scenarios = getScenarios();
@@ -2638,7 +1853,7 @@ const RevolutionRealWorld: React.FC = () => {
               {translations?.realWorld?.subtitle || "Apply your knowledge to solve real-life scenarios!"}
             </p>
             <p className="text-sm text-slate-400">
-              {translations?.realWorld?.description || "See how Earth's rotation and revolution affect our daily lives"}
+              {translations?.realWorld?.description || "See how eclipses affect our daily lives"}
             </p>
           </div>
 
@@ -2754,7 +1969,7 @@ const RevolutionRealWorld: React.FC = () => {
               <textarea
                 value={userAnswer}
                 onChange={(e) => setUserAnswer(e.target.value)}
-                placeholder="Type your answer here... Explain your reasoning using what you learned about Earth's rotation and revolution."
+                placeholder="Type your answer here... Explain your reasoning using what you learned about eclipses."
                 className="w-full p-4 rounded-xl bg-slate-700/50 border border-slate-600 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent min-h-[150px]"
               />
               <button
@@ -2866,24 +2081,24 @@ const RevolutionRealWorld: React.FC = () => {
 // ============================================================================
 // Main Component
 // ============================================================================
-interface RevolutionLearningProps {
+interface EclipsesLearningProps {
     mode: "learn" | "practice" | "applications";
     setMode: (mode: "learn" | "practice" | "applications") => void;
 }
 
-const RevolutionLearning: React.FC<RevolutionLearningProps> = ({ mode, setMode }) => {
+const EclipsesLearning: React.FC<EclipsesLearningProps> = ({ mode, setMode }) => {
     return (
         <LanguageProvider>
             <Navbar mode={mode} setMode={setMode} />
             <div className="pt-14 sm:pt-16 md:pt-18 px-2 xs:px-3 sm:px-4 md:px-5 lg:px-6 xl:px-8 pb-4 sm:pb-6 md:pb-8 overflow-x-hidden break-words overflow-wrap-anywhere">
-                {mode === "learn" && <RevolutionLearnMode />}
-                {mode === "practice" && <RevolutionPracticeMode />}
-                {mode === "applications" && <RevolutionRealWorld />}
+                {mode === "learn" && <EclipsesLearnMode />}
+                {mode === "practice" && <EclipsesPracticeMode />}
+                {mode === "applications" && <EclipsesRealWorld />}
             </div>
         </LanguageProvider>
     );
 };
 
-export { RevolutionLearnMode, RevolutionPracticeMode, RevolutionRealWorld };
+export { EclipsesLearnMode, EclipsesPracticeMode, EclipsesRealWorld };
 
-export default RevolutionLearning;
+export default EclipsesLearning;

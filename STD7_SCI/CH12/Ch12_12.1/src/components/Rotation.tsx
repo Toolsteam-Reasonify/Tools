@@ -1065,8 +1065,8 @@ const RotationLearnMode: React.FC<RotationLearnModeProps> = ({ props: _props }) 
               right: 0,
               top: '50%',
               transform: 'translateY(-50%)',
-              width: 300,
-              height: 300,
+              width: 'clamp(150px, 30vw, 300px)',
+              height: 'clamp(150px, 30vw, 300px)',
               background: 'radial-gradient(ellipse at right, rgba(255, 235, 59, 0.15) 0%, transparent 70%)',
               pointerEvents: 'none'
             }} />
@@ -1082,9 +1082,9 @@ const RotationLearnMode: React.FC<RotationLearnModeProps> = ({ props: _props }) 
               <div style={{
                 position: 'absolute',
                 left: '50%',
-                top: -50,
-                width: 4,
-                height: 420,
+                top: 'clamp(-40px, -8vw, -50px)',
+                width: 'clamp(3px, 0.5vw, 4px)',
+                height: 'clamp(300px, 60vw, 420px)',
                 background: 'linear-gradient(to bottom, #9c27b0, rgba(156, 39, 176, 0.2) 20%, rgba(156, 39, 176, 0.2) 80%, #9c27b0)',
                 transform: `translateX(-50%) rotate(${activeMode === 'seasons' ? 23.5 : 0}deg)`,
                 transformOrigin: 'center center',
@@ -1097,16 +1097,16 @@ const RotationLearnMode: React.FC<RotationLearnModeProps> = ({ props: _props }) 
               {showLabels && (
                 <div style={{
                   position: 'absolute',
-                  top: -70,
+                  top: 'clamp(-60px, -12vw, -70px)',
                   left: '50%',
                   transform: `translateX(-50%) rotate(${activeMode === 'seasons' ? 23.5 : 0}deg)`,
                   transformOrigin: 'center 230px',
                   transition: 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
-                  fontSize: '0.85rem',
+                  fontSize: 'clamp(0.7rem, 1.5vw, 0.85rem)',
                   fontWeight: 600,
                   color: '#7b1fa2',
                   background: '#f3e5f5',
-                  padding: '4px 10px',
+                  padding: 'clamp(3px, 0.8vw, 4px) clamp(8px, 2vw, 10px)',
                   borderRadius: 8,
                   whiteSpace: 'nowrap'
                 }}>
@@ -1118,16 +1118,16 @@ const RotationLearnMode: React.FC<RotationLearnModeProps> = ({ props: _props }) 
               {showLabels && (
                 <div style={{
                   position: 'absolute',
-                  bottom: -70,
+                  bottom: 'clamp(-60px, -12vw, -70px)',
                   left: '50%',
                   transform: `translateX(-50%) rotate(${activeMode === 'seasons' ? 23.5 : 0}deg)`,
                   transformOrigin: 'center -110px',
                   transition: 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
-                  fontSize: '0.85rem',
+                  fontSize: 'clamp(0.7rem, 1.5vw, 0.85rem)',
                   fontWeight: 600,
                   color: '#7b1fa2',
                   background: '#f3e5f5',
-                  padding: '4px 10px',
+                  padding: 'clamp(3px, 0.8vw, 4px) clamp(8px, 2vw, 10px)',
                   borderRadius: 8,
                   whiteSpace: 'nowrap'
                 }}>
@@ -1374,35 +1374,37 @@ const RotationLearnMode: React.FC<RotationLearnModeProps> = ({ props: _props }) 
               <>
                 <div style={{
                   position: 'absolute',
-                  right: 150,
+                  right: 'clamp(10px, 5vw, 150px)',
                   top: '50%',
                   transform: 'translateY(-50%)',
                   textAlign: 'center',
                   animation: 'fadeIn 0.5s ease',
                   background: 'linear-gradient(135deg, #fff8e1, #ffecb3)',
-                  padding: '16px 20px',
-                  borderRadius: 16,
-                  boxShadow: '0 4px 20px rgba(255, 152, 0, 0.2)'
+                  padding: 'clamp(10px, 2vw, 16px) clamp(12px, 3vw, 20px)',
+                  borderRadius: 'clamp(12px, 2vw, 16px)',
+                  boxShadow: '0 4px 20px rgba(255, 152, 0, 0.2)',
+                  maxWidth: 'clamp(100px, 25vw, 180px)'
                 }}>
-                  <div style={{ fontSize: '2.5rem', marginBottom: 4 }}>☀️</div>
-                  <div style={{ fontSize: '1.2rem', fontWeight: 700, color: '#e65100' }}>{t('learn.labels.day')}</div>
-                  <div style={{ fontSize: '0.85rem', color: '#f57c00', marginTop: 2 }}>{t('learn.labels.facingSun')}</div>
+                  <div style={{ fontSize: 'clamp(1.5rem, 4vw, 2.5rem)', marginBottom: 4 }}>☀️</div>
+                  <div style={{ fontSize: 'clamp(0.9rem, 2.5vw, 1.2rem)', fontWeight: 700, color: '#e65100' }}>{t('learn.labels.day')}</div>
+                  <div style={{ fontSize: 'clamp(0.7rem, 1.8vw, 0.85rem)', color: '#f57c00', marginTop: 2 }}>{t('learn.labels.facingSun')}</div>
                 </div>
                 <div style={{
                   position: 'absolute',
-                  left: 30,
+                  left: 'clamp(10px, 3vw, 30px)',
                   top: '50%',
                   transform: 'translateY(-50%)',
                   textAlign: 'center',
                   animation: 'fadeIn 0.5s ease 0.2s both',
                   background: 'linear-gradient(135deg, #e8eaf6, #c5cae9)',
-                  padding: '16px 20px',
-                  borderRadius: 16,
-                  boxShadow: '0 4px 20px rgba(63, 81, 181, 0.2)'
+                  padding: 'clamp(10px, 2vw, 16px) clamp(12px, 3vw, 20px)',
+                  borderRadius: 'clamp(12px, 2vw, 16px)',
+                  boxShadow: '0 4px 20px rgba(63, 81, 181, 0.2)',
+                  maxWidth: 'clamp(100px, 25vw, 180px)'
                 }}>
-                  <div style={{ fontSize: '2.5rem', marginBottom: 4 }}>🌙</div>
-                  <div style={{ fontSize: '1.2rem', fontWeight: 700, color: '#283593' }}>{t('learn.labels.night')}</div>
-                  <div style={{ fontSize: '0.85rem', color: '#3949ab', marginTop: 2 }}>{t('learn.labels.awayFromSun')}</div>
+                  <div style={{ fontSize: 'clamp(1.5rem, 4vw, 2.5rem)', marginBottom: 4 }}>🌙</div>
+                  <div style={{ fontSize: 'clamp(0.9rem, 2.5vw, 1.2rem)', fontWeight: 700, color: '#283593' }}>{t('learn.labels.night')}</div>
+                  <div style={{ fontSize: 'clamp(0.7rem, 1.8vw, 0.85rem)', color: '#3949ab', marginTop: 2 }}>{t('learn.labels.awayFromSun')}</div>
                 </div>
               </>
             )}
@@ -1413,29 +1415,31 @@ const RotationLearnMode: React.FC<RotationLearnModeProps> = ({ props: _props }) 
         <aside style={{
           display: 'flex',
           flexDirection: 'column',
-          gap: 20
+          gap: 'clamp(16px, 3vw, 20px)'
         }}>
           {/* Mode Info Card */}
           <div style={{
             background: '#ffffff',
-            borderRadius: 20,
-            padding: 24,
+            borderRadius: 'clamp(16px, 3vw, 20px)',
+            padding: 'clamp(16px, 3vw, 24px)',
             boxShadow: '0 8px 30px rgba(0,0,0,0.08)'
           }}>
             <div style={{
               display: 'flex',
               alignItems: 'center',
-              gap: 12,
-              marginBottom: 16
+              gap: 'clamp(8px, 2vw, 12px)',
+              marginBottom: 'clamp(12px, 2vw, 16px)',
+              flexWrap: 'wrap'
             }}>
               <span style={{
-                fontSize: '2.5rem',
+                fontSize: 'clamp(1.5rem, 4vw, 2.5rem)',
                 background: 'linear-gradient(135deg, #e3f2fd, #f3e5f5)',
-                padding: 12,
-                borderRadius: 16
+                padding: 'clamp(8px, 2vw, 12px)',
+                borderRadius: 'clamp(12px, 2vw, 16px)',
+                flexShrink: 0
               }}>{modeInfo[activeMode].icon}</span>
               <h2 style={{
-                fontSize: '1.35rem',
+                fontSize: 'clamp(1rem, 2.5vw, 1.35rem)',
                 fontWeight: 700,
                 color: '#1a237e',
                 margin: 0,
@@ -1447,7 +1451,7 @@ const RotationLearnMode: React.FC<RotationLearnModeProps> = ({ props: _props }) 
             <p style={{
               color: '#546e7a',
               lineHeight: 1.75,
-              fontSize: '1rem',
+              fontSize: 'clamp(0.875rem, 2vw, 1rem)',
               margin: 0
             }}>
               {modeInfo[activeMode].description}
@@ -1457,18 +1461,18 @@ const RotationLearnMode: React.FC<RotationLearnModeProps> = ({ props: _props }) 
           {/* Controls Card */}
           <div style={{
             background: '#ffffff',
-            borderRadius: 20,
-            padding: 24,
+            borderRadius: 'clamp(16px, 3vw, 20px)',
+            padding: 'clamp(16px, 3vw, 24px)',
             boxShadow: '0 8px 30px rgba(0,0,0,0.08)'
           }}>
             <h3 style={{
-              fontSize: '1.1rem',
+              fontSize: 'clamp(0.95rem, 2.2vw, 1.1rem)',
               fontWeight: 700,
-              marginBottom: 18,
+              marginBottom: 'clamp(14px, 2.5vw, 18px)',
               color: '#1a237e',
               display: 'flex',
               alignItems: 'center',
-              gap: 8
+              gap: 'clamp(6px, 1.5vw, 8px)'
             }}>
               <span>🎮</span> {t('learn.controls.title')}
             </h3>
@@ -1535,15 +1539,15 @@ const RotationLearnMode: React.FC<RotationLearnModeProps> = ({ props: _props }) 
                   justifyContent: 'space-between',
                   marginBottom: 10
                 }}>
-                  <span style={{ fontSize: '0.9rem', color: '#546e7a', fontWeight: 500 }}>
+                  <span style={{ fontSize: 'clamp(0.8rem, 2vw, 0.9rem)', color: '#546e7a', fontWeight: 500 }}>
                     {t('learn.controls.rotationSpeed')}
                   </span>
                   <span style={{
-                    fontSize: '0.9rem',
+                    fontSize: 'clamp(0.8rem, 2vw, 0.9rem)',
                     fontWeight: 700,
                     color: '#1976d2',
                     background: '#e3f2fd',
-                    padding: '2px 10px',
+                    padding: 'clamp(2px, 0.5vw, 2px) clamp(8px, 2vw, 10px)',
                     borderRadius: 8
                   }}>
                     {rotationSpeed}x
@@ -3142,11 +3146,11 @@ const RotationRealWorld: React.FC<RotationRealWorldProps> = ({ props: _props }) 
       <main className="realworld-main-grid" style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr', gap: 'clamp(16px, 3vw, 24px)', padding: '0 clamp(8px, 2vw, 16px)', width: '100%' }}>
         {/* Interactive Demo Section */}
         <div style={{ background: '#ffffff', borderRadius: 'clamp(16px, 3vw, 24px)', padding: 'clamp(20px, 4vw, 28px)', boxShadow: '0 10px 40px rgba(0,0,0,0.08)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
-            <span style={{ fontSize: '2.5rem', background: 'linear-gradient(135deg, #e3f2fd, #f3e5f5)', padding: 12, borderRadius: 16 }}>{currentTopic.icon}</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(8px, 2vw, 12px)', marginBottom: 'clamp(16px, 3vw, 20px)', flexWrap: 'wrap' }}>
+            <span style={{ fontSize: 'clamp(1.5rem, 4vw, 2.5rem)', background: 'linear-gradient(135deg, #e3f2fd, #f3e5f5)', padding: 'clamp(8px, 2vw, 12px)', borderRadius: 'clamp(12px, 2vw, 16px)', flexShrink: 0 }}>{currentTopic.icon}</span>
             <div>
-              <h2 style={{ fontSize: '1.4rem', fontWeight: 700, color: '#1a237e', margin: 0 }}>{currentTopic.title}</h2>
-              <p style={{ color: '#546e7a', margin: '4px 0 0 0', fontSize: '0.9rem' }}>{ut.interactive}</p>
+              <h2 style={{ fontSize: 'clamp(1.1rem, 3vw, 1.4rem)', fontWeight: 700, color: '#1a237e', margin: 0 }}>{currentTopic.title}</h2>
+              <p style={{ color: '#546e7a', margin: 'clamp(4px, 1vw, 4px) 0 0 0', fontSize: 'clamp(0.8rem, 2vw, 0.9rem)' }}>{ut.interactive}</p>
             </div>
           </div>
 
@@ -3185,20 +3189,20 @@ const RotationRealWorld: React.FC<RotationRealWorldProps> = ({ props: _props }) 
                 </div>
               </div>
 
-              <div style={{ background: '#fff', borderRadius: 12, padding: 20, position: 'relative', overflow: 'hidden', marginBottom: 16 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 20 }}>
-                  <div style={{ textAlign: 'center' }}><div style={{ fontSize: '2rem' }}>🗽</div><div style={{ fontWeight: 600, color: '#1a237e' }}>{ut.newYork}</div></div>
-                  <div style={{ textAlign: 'center' }}><div style={{ fontSize: '2rem' }}>🏰</div><div style={{ fontWeight: 600, color: '#1a237e' }}>{ut.london}</div></div>
+              <div style={{ background: '#fff', borderRadius: 'clamp(10px, 2vw, 12px)', padding: 'clamp(16px, 3vw, 20px)', position: 'relative', overflow: 'hidden', marginBottom: 'clamp(12px, 2vw, 16px)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 'clamp(16px, 3vw, 20px)', gap: 'clamp(8px, 2vw, 12px)' }}>
+                  <div style={{ textAlign: 'center', flex: 1 }}><div style={{ fontSize: 'clamp(1.5rem, 3vw, 2rem)' }}>🗽</div><div style={{ fontWeight: 600, color: '#1a237e', fontSize: 'clamp(0.85rem, 2vw, 1rem)' }}>{ut.newYork}</div></div>
+                  <div style={{ textAlign: 'center', flex: 1 }}><div style={{ fontSize: 'clamp(1.5rem, 3vw, 2rem)' }}>🏰</div><div style={{ fontWeight: 600, color: '#1a237e', fontSize: 'clamp(0.85rem, 2vw, 1rem)' }}>{ut.london}</div></div>
                 </div>
 
-                <div style={{ height: 60, background: 'linear-gradient(90deg, #e3f2fd, #bbdefb)', borderRadius: 30, position: 'relative', display: 'flex', alignItems: 'center' }}>
-                  <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 30, opacity: 0.3, color: '#1565c0' }}>
-                    {[...Array(5)].map((_, i) => <span key={i} style={{ fontSize: '1.5rem' }}>→</span>)}
+                <div style={{ height: 'clamp(50px, 8vw, 60px)', background: 'linear-gradient(90deg, #e3f2fd, #bbdefb)', borderRadius: 'clamp(25px, 5vw, 30px)', position: 'relative', display: 'flex', alignItems: 'center' }}>
+                  <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'clamp(20px, 4vw, 30px)', opacity: 0.3, color: '#1565c0' }}>
+                    {[...Array(5)].map((_, i) => <span key={i} style={{ fontSize: 'clamp(1rem, 2.5vw, 1.5rem)' }}>→</span>)}
                   </div>
-                  <div style={{ position: 'absolute', top: -20, left: '50%', transform: 'translateX(-50%)', fontSize: '0.75rem', color: '#1565c0', fontWeight: 500 }}>{ut.jetStream} →</div>
+                  <div style={{ position: 'absolute', top: 'clamp(-18px, -3vw, -20px)', left: '50%', transform: 'translateX(-50%)', fontSize: 'clamp(0.65rem, 1.5vw, 0.75rem)', color: '#1565c0', fontWeight: 500 }}>{ut.jetStream} →</div>
                   <div style={{
                     position: 'absolute', left: flightDirection === 'east' ? `${planePosition}%` : `${100 - planePosition}%`,
-                    transform: `translateX(-50%) scaleX(${flightDirection === 'east' ? 1 : -1})`, fontSize: '2rem', transition: 'left 0.05s linear'
+                    transform: `translateX(-50%) scaleX(${flightDirection === 'east' ? 1 : -1})`, fontSize: 'clamp(1.5rem, 3vw, 2rem)', transition: 'left 0.05s linear'
                   }}>✈️</div>
                 </div>
               </div>
@@ -3260,20 +3264,20 @@ const RotationRealWorld: React.FC<RotationRealWorldProps> = ({ props: _props }) 
                 </div>
               </div>
 
-              <div style={{ background: '#fff', borderRadius: 16, padding: 30, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <div style={{ background: '#fff', borderRadius: 'clamp(12px, 2vw, 16px)', padding: 'clamp(20px, 4vw, 30px)', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <div style={{
-                  width: 150, height: 150, borderRadius: '50%', background: 'radial-gradient(circle, #e3f2fd 0%, #1976d2 50%, #0d47a1 100%)',
+                  width: 'clamp(120px, 25vw, 150px)', height: 'clamp(120px, 25vw, 150px)', borderRadius: '50%', background: 'radial-gradient(circle, #e3f2fd 0%, #1976d2 50%, #0d47a1 100%)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', boxShadow: '0 8px 30px rgba(25, 118, 210, 0.3)'
                 }}>
-                  <div style={{ fontSize: '3rem', animation: `spin${weatherHemisphere === 'north' ? 'CCW' : 'CW'} 3s linear infinite` }}>🌀</div>
-                  <div style={{ position: 'absolute', width: 20, height: 20, background: '#fff', borderRadius: '50%' }} />
+                  <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', animation: `spin${weatherHemisphere === 'north' ? 'CCW' : 'CW'} 3s linear infinite` }}>🌀</div>
+                  <div style={{ position: 'absolute', width: 'clamp(16px, 3vw, 20px)', height: 'clamp(16px, 3vw, 20px)', background: '#fff', borderRadius: '50%' }} />
                 </div>
 
-                <div style={{ marginTop: 20, textAlign: 'center' }}>
-                  <div style={{ fontSize: '1.3rem', fontWeight: 700, color: '#1565c0', marginBottom: 8 }}>
+                <div style={{ marginTop: 'clamp(16px, 3vw, 20px)', textAlign: 'center' }}>
+                  <div style={{ fontSize: 'clamp(1rem, 2.5vw, 1.3rem)', fontWeight: 700, color: '#1565c0', marginBottom: 'clamp(6px, 1.5vw, 8px)' }}>
                     {weatherHemisphere === 'north' ? ut.counterClockwise : ut.clockwise}
                   </div>
-                  <div style={{ color: '#546e7a', lineHeight: 1.6 }}>
+                  <div style={{ color: '#546e7a', lineHeight: 1.6, fontSize: 'clamp(0.85rem, 2vw, 1rem)' }}>
                     {ut.inThe} {weatherHemisphere === 'north' ? ut.northern : ut.southern} {ut.hemisphereSpins} {weatherHemisphere === 'north' ? ut.counterClockwise : ut.clockwise} {ut.dueToCoriolis}
                   </div>
                 </div>
@@ -3286,23 +3290,23 @@ const RotationRealWorld: React.FC<RotationRealWorldProps> = ({ props: _props }) 
             <div style={{ background: 'linear-gradient(135deg, #f3e5f5, #e1bee7)', borderRadius: 16, padding: 20 }}>
               <h3 style={{ color: '#7b1fa2', margin: '0 0 16px 0', fontSize: '1.1rem' }}>🛰️ {ut.satelliteOrbits}</h3>
 
-              <div style={{ background: '#1a1a2e', borderRadius: 16, padding: 30, display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden', minHeight: 250 }}>
+              <div style={{ background: '#1a1a2e', borderRadius: 'clamp(12px, 2vw, 16px)', padding: 'clamp(20px, 4vw, 30px)', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden', minHeight: 'clamp(200px, 40vw, 250px)' }}>
                 {[...Array(30)].map((_, i) => (
                   <div key={i} style={{ position: 'absolute', width: 2, height: 2, background: '#fff', borderRadius: '50%', left: `${Math.random() * 100}%`, top: `${Math.random() * 100}%`, opacity: Math.random() * 0.8 + 0.2 }} />
                 ))}
 
-                <div style={{ width: 80, height: 80, borderRadius: '50%', background: 'linear-gradient(135deg, #4fc3f7 0%, #0288d1 50%, #01579b 100%)', boxShadow: '0 0 30px rgba(79, 195, 247, 0.4)', position: 'relative', zIndex: 2 }}>
+                <div style={{ width: 'clamp(60px, 12vw, 80px)', height: 'clamp(60px, 12vw, 80px)', borderRadius: '50%', background: 'linear-gradient(135deg, #4fc3f7 0%, #0288d1 50%, #01579b 100%)', boxShadow: '0 0 30px rgba(79, 195, 247, 0.4)', position: 'relative', zIndex: 2 }}>
                   <div style={{ position: 'absolute', inset: 0, borderRadius: '50%', background: 'linear-gradient(to left, transparent 50%, rgba(0,0,0,0.5) 100%)' }} />
                 </div>
 
-                <div style={{ position: 'absolute', width: 200, height: 200, border: '2px dashed rgba(255,255,255,0.3)', borderRadius: '50%' }} />
-                <div style={{ position: 'absolute', width: 200, height: 200, transform: `rotate(${satelliteOrbit}deg)` }}>
-                  <div style={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', fontSize: '1.5rem' }}>🛰️</div>
+                <div style={{ position: 'absolute', width: 'clamp(150px, 30vw, 200px)', height: 'clamp(150px, 30vw, 200px)', border: '2px dashed rgba(255,255,255,0.3)', borderRadius: '50%' }} />
+                <div style={{ position: 'absolute', width: 'clamp(150px, 30vw, 200px)', height: 'clamp(150px, 30vw, 200px)', transform: `rotate(${satelliteOrbit}deg)` }}>
+                  <div style={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', fontSize: 'clamp(1.2rem, 2.5vw, 1.5rem)' }}>🛰️</div>
                 </div>
 
-                <div style={{ position: 'absolute', width: 130, height: 130, border: '2px dashed rgba(255,200,0,0.4)', borderRadius: '50%', transform: 'rotate(30deg)' }} />
-                <div style={{ position: 'absolute', width: 130, height: 130, transform: `rotate(${30 + satelliteOrbit * 3}deg)` }}>
-                  <div style={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', fontSize: '1.2rem' }}>🛸</div>
+                <div style={{ position: 'absolute', width: 'clamp(100px, 20vw, 130px)', height: 'clamp(100px, 20vw, 130px)', border: '2px dashed rgba(255,200,0,0.4)', borderRadius: '50%', transform: 'rotate(30deg)' }} />
+                <div style={{ position: 'absolute', width: 'clamp(100px, 20vw, 130px)', height: 'clamp(100px, 20vw, 130px)', transform: `rotate(${30 + satelliteOrbit * 3}deg)` }}>
+                  <div style={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', fontSize: 'clamp(1rem, 2vw, 1.2rem)' }}>🛸</div>
                 </div>
               </div>
 
