@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import Chapter5Tool from './Chapter5Tool'
+import Chapter5Tool from './components/Chapter5Tool'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

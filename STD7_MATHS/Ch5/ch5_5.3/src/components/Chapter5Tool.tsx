@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Lightbulb, CheckCircle, XCircle, RotateCcw, SkipForward, Trophy, ArrowLeft } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface PracticeExercise {
   id: string;
@@ -31,8 +32,8 @@ const translations = {
     learning: 'Learn',
     practice: 'Practice',
     selectLanguage: 'Select Language',
-    chapterTitle: 'Related Angles',
-    topicTitle: 'Understanding Nets',
+    chapterTitle: 'Pair of Lines',
+    topicTitle: 'Pairs of Lines',
     whatIsTopic: 'What is a Net?',
     keyProperty: 'Key Concept',
     practiceExercises: 'Practice Exercises',
@@ -51,7 +52,7 @@ const translations = {
     importantRule: 'The Process',
     importantRuleText: 'Start with a 3-D object (like a cardboard box), cut along the edges to flatten it completely. The resulting flat pattern is the net.',
     sumProperty: 'Examples',
-    sumPropertyText: 'Cuboid/Box, Cone, Cube, Cylinder  c, Pyramid - each has its own distinct net pattern. The Great Pyramid in Giza has a square base and four triangular sides.',
+    sumPropertyText: 'Cuboid/Box, Cone, Cube, Cylinder  , Pyramid - each has its own distinct net pattern. The Great Pyramid in Giza has a square base and four triangular sides.',
     visualization: 'Shape Visualization',
     interiorElements: '2-D Shapes',
     exteriorElements: '3-D Shapes',
@@ -157,18 +158,18 @@ const translations = {
     restartPractice: 'Restart Practice',
     question: 'Question',
     // Real World Applications for Angles
-    clockWatch: 'Clock & Watch',
-    clockWatchDesc: 'The hour and minute hands of a clock form complementary angles (90°) at 3:00, 9:00, etc. Understanding these angles helps read time accurately.',
-    construction: 'Construction & Carpentry',
-    constructionDesc: 'Builders use complementary angles to ensure walls meet at perfect right angles (90°). Corner joints, door frames, and window installations rely on complementary angle measurements.',
-    doorWindow: 'Doors & Windows',
-    doorWindowDesc: 'Door openings and window frames utilize complementary angles. When a door is open at 45°, the remaining angle is also 45°, together forming a 90° right angle.',
-    angleNavigation: 'Navigation & Compass',
-    angleNavigationDesc: 'Navigation uses complementary angles for direction. North-East, North-West, South-East, and South-West are all 45° from cardinal directions, forming 90° angles.',
-    roadsBridges: 'Roads & Bridges',
-    roadsBridgesDesc: 'Straight roads and bridge designs use supplementary angles (180°). When roads turn, the angles on opposite sides are supplementary, ensuring smooth traffic flow.',
-    angleArchitecture: 'Architecture',
-    angleArchitectureDesc: 'Architects use supplementary angles in building designs. Straight lines, flat surfaces, and parallel structures all incorporate 180° angles for stability and aesthetics.',
+    clockWatch: 'Railroad Tracks',
+    clockWatchDesc: 'Railway tracks are parallel lines that never meet. When a crossing (transversal) cuts across the tracks, it creates corresponding angles that are equal, ensuring safe track design.',
+    construction: 'Street Grid',
+    constructionDesc: 'City streets form a grid where roads act as transversals cutting through parallel avenues. This creates alternate interior angles that help in urban planning and navigation.',
+    doorWindow: 'Railway Crossing',
+    doorWindowDesc: 'Railway crossings show a transversal (crossing road) cutting across parallel railroad tracks. The angles formed help engineers design safe and efficient crossing points.',
+    angleNavigation: 'Bridge Support Beams',
+    angleNavigationDesc: 'Bridge structures use parallel beams with transversal support members. The angles formed (corresponding, alternate interior) ensure structural stability and load distribution.',
+    roadsBridges: 'Window Panes',
+    roadsBridgesDesc: 'Window panes have horizontal and vertical bars (parallel lines) with diagonal support (transversal). This creates various angle pairs that strengthen the window structure.',
+    angleArchitecture: 'Ladder Design',
+    angleArchitectureDesc: 'Ladders have parallel rungs connected by transversal side rails. The angles formed between rungs and rails follow geometric principles ensuring stability and safety.',
     furniture: 'Furniture Design',
     furnitureDesc: 'Furniture makers use supplementary angles for flat surfaces. Tables, shelves, and cabinets have straight edges (180°) to ensure stability and proper alignment.',
     geometry: 'Geometry & Surveying',
@@ -184,8 +185,8 @@ const translations = {
     learning: 'सीखें',
     practice: 'अभ्यास',
     selectLanguage: 'भाषा चुनें',
-    chapterTitle: 'Related Angles',
-    topicTitle: 'नेट की समझ',
+    chapterTitle: 'रेखाओं के युग्म',
+    topicTitle: 'रेखाओं के युग्म',
     whatIsTopic: 'नेट क्या है?',
     keyProperty: 'मुख्य अवधारणा',
     practiceExercises: 'अभ्यास अभ्यास',
@@ -310,18 +311,18 @@ const translations = {
     restartPractice: 'अभ्यास पुनः प्रारंभ करें',
     question: 'प्रश्न',
     // Real World Applications for Angles
-    clockWatch: 'घड़ी और वॉच',
-    clockWatchDesc: 'घड़ी की घंटे और मिनट की सुई 3:00, 9:00 आदि पर पूरक कोण (90°) बनाती हैं। इन कोणों को समझने से समय सटीक रूप से पढ़ने में मदद मिलती है।',
-    construction: 'निर्माण और बढ़ईगीरी',
-    constructionDesc: 'निर्माता दीवारों को सही समकोण (90°) पर मिलाने के लिए पूरक कोणों का उपयोग करते हैं। कोने के जोड़, दरवाजे के फ्रेम और खिड़की की स्थापना पूरक कोण माप पर निर्भर करती है।',
-    doorWindow: 'दरवाजे और खिड़कियां',
-    doorWindowDesc: 'दरवाजे के खुलेपन और खिड़की के फ्रेम पूरक कोणों का उपयोग करते हैं। जब दरवाजा 45° पर खुला होता है, तो शेष कोण भी 45° होता है, साथ मिलकर 90° का समकोण बनाते हैं।',
-    angleNavigation: 'नेविगेशन और कम्पास',
-    angleNavigationDesc: 'नेविगेशन दिशा के लिए पूरक कोणों का उपयोग करता है। उत्तर-पूर्व, उत्तर-पश्चिम, दक्षिण-पूर्व और दक्षिण-पश्चिम सभी मुख्य दिशाओं से 45° हैं, 90° का कोण बनाते हैं।',
-    roadsBridges: 'सड़कें और पुल',
-    roadsBridgesDesc: 'सीधी सड़कें और पुल डिजाइन संपूरक कोणों (180°) का उपयोग करते हैं। जब सड़कें मुड़ती हैं, तो विपरीत पक्षों के कोण संपूरक होते हैं, सुचारू यातायात प्रवाह सुनिश्चित करते हैं।',
-    angleArchitecture: 'वास्तुकला',
-    angleArchitectureDesc: 'वास्तुकार भवन डिजाइन में संपूरक कोणों का उपयोग करते हैं। सीधी रेखाएं, सपाट सतहें और समानांतर संरचनाएं सभी स्थिरता और सौंदर्य के लिए 180° कोणों को शामिल करती हैं।',
+    clockWatch: 'रेलवे पटरियां',
+    clockWatchDesc: 'रेलवे पटरियां समानांतर रेखाएं हैं जो कभी नहीं मिलतीं। जब कोई क्रॉसिंग (ट्रांसवर्सल) पटरियों को काटती है, तो यह समतुल्य कोण बनाती है जो समान होते हैं, सुरक्षित ट्रैक डिजाइन सुनिश्चित करते हैं।',
+    construction: 'सड़क ग्रिड',
+    constructionDesc: 'शहर की सड़कें एक ग्रिड बनाती हैं जहां सड़कें समानांतर मार्गों को काटती हुई ट्रांसवर्सल के रूप में कार्य करती हैं। यह पर्यायी आंतरिक कोण बनाता है जो शहरी योजना और नेविगेशन में मदद करते हैं।',
+    doorWindow: 'रेलवे क्रॉसिंग',
+    doorWindowDesc: 'रेलवे क्रॉसिंग एक ट्रांसवर्सल (क्रॉसिंग रोड) को समानांतर रेलवे पटरियों को काटते हुए दिखाता है। बने कोण इंजीनियरों को सुरक्षित और कुशल क्रॉसिंग पॉइंट डिजाइन करने में मदद करते हैं।',
+    angleNavigation: 'पुल समर्थन बीम',
+    angleNavigationDesc: 'पुल संरचनाएं ट्रांसवर्सल समर्थन सदस्यों के साथ समानांतर बीम का उपयोग करती हैं। बने कोण (समतुल्य, पर्यायी आंतरिक) संरचनात्मक स्थिरता और भार वितरण सुनिश्चित करते हैं।',
+    roadsBridges: 'खिड़की के पैन',
+    roadsBridgesDesc: 'खिड़की के पैन में क्षैतिज और ऊर्ध्वाधर बार (समानांतर रेखाएं) विकर्ण समर्थन (ट्रांसवर्सल) के साथ होते हैं। यह विभिन्न कोण जोड़े बनाता है जो खिड़की की संरचना को मजबूत करते हैं।',
+    angleArchitecture: 'सीढ़ी डिजाइन',
+    angleArchitectureDesc: 'सीढ़ियों में समानांतर डंडे होते हैं जो ट्रांसवर्सल साइड रेल से जुड़े होते हैं। डंडों और रेल के बीच बने कोण ज्यामितीय सिद्धांतों का पालन करते हैं जो स्थिरता और सुरक्षा सुनिश्चित करते हैं।',
     furniture: 'फर्नीचर डिजाइन',
     furnitureDesc: 'फर्नीचर निर्माता सपाट सतहों के लिए संपूरक कोणों का उपयोग करते हैं। मेजें, शेल्फ और कैबिनेट में स्थिरता और उचित संरेखण सुनिश्चित करने के लिए सीधे किनारे (180°) होते हैं।',
     geometry: 'ज्यामिति और सर्वेक्षण',
@@ -337,8 +338,8 @@ const translations = {
     learning: 'શીખો',
     practice: 'અભ્યાસ',
     selectLanguage: 'ભાષા પસંદ કરો',
-    chapterTitle: 'Related Angles',
-    topicTitle: 'નેટની સમજ',
+    chapterTitle: 'રેખાઓના જોડી',
+    topicTitle: 'રેખાઓના જોડી',
     whatIsTopic: 'નેટ શું છે?',
     keyProperty: 'મુખ્ય ખ્યાલ',
     practiceExercises: 'અભ્યાસ કસરતો',
@@ -463,18 +464,18 @@ const translations = {
     restartPractice: 'અભ્યાસ ફરી શરૂ કરો',
     question: 'પ્રશ્ન',
     // Real World Applications for Angles
-    clockWatch: 'ઘડિયાળ અને વોચ',
-    clockWatchDesc: 'ઘડિયાળની કલાક અને મિનિટની સોય 3:00, 9:00 વગેરે પર પૂરક કોણ (90°) બનાવે છે। આ કોણોને સમજવાથી સમય સચોટ રીતે વાંચવામાં મદદ મળે છે।',
-    construction: 'બાંધકામ અને સુથારી',
-    constructionDesc: 'બાંધકામ કરનાર દિવાલોને સંપૂર્ણ કાટકોણ (90°) પર મળે તેની ખાતરી કરવા માટે પૂરક કોણોનો ઉપયોગ કરે છે। ખૂણા જોડાણ, દરવાજાના ફ્રેમ અને વિન્ડો ઇન્સ્ટોલેશન પૂરક કોણ માપ પર આધાર રાખે છે।',
-    doorWindow: 'દરવાજા અને વિન્ડો',
-    doorWindowDesc: 'દરવાજાના ખુલ્લા સ્થાન અને વિન્ડો ફ્રેમ પૂરક કોણોનો ઉપયોગ કરે છે। જ્યારે દરવાજો 45° પર ખુલ્લો હોય છે, ત્યારે બાકીનો કોણ પણ 45° હોય છે, સાથે મળીને 90° નો કાટકોણ બનાવે છે।',
-    angleNavigation: 'નેવિગેશન અને કમ્પાસ',
-    angleNavigationDesc: 'નેવિગેશન દિશા માટે પૂરક કોણોનો ઉપયોગ કરે છે। ઉત્તર-પૂર્વ, ઉત્તર-પશ્ચિમ, દક્ષિણ-પૂર્વ અને દક્ષિણ-પશ્ચિમ બધા મુખ્ય દિશાઓથી 45° છે, 90° નો કોણ બનાવે છે।',
-    roadsBridges: 'રસ્તા અને પુલ',
-    roadsBridgesDesc: 'સીધા રસ્તા અને પુલ ડિઝાઇન સંપૂરક કોણો (180°) નો ઉપયોગ કરે છે। જ્યારે રસ્તા વળે છે, ત્યારે વિરોધી બાજુના કોણ સંપૂરક હોય છે, સરળ ટ્રાફિક પ્રવાહની ખાતરી કરે છે।',
-    angleArchitecture: 'આર્કિટેક્ચર',
-    angleArchitectureDesc: 'આર્કિટેક્ટ બિલ્ડિંગ ડિઝાઇનમાં સંપૂરક કોણોનો ઉપયોગ કરે છે। સીધી રેખાઓ, સપાટ સપાટીઓ અને સમાંતર માળખાં બધા સ્થિરતા અને સૌંદર્ય માટે 180° કોણોને શામેલ કરે છે।',
+    clockWatch: 'રેલ્વે પાટા',
+    clockWatchDesc: 'રેલ્વે પાટા સમાંતર રેખાઓ છે જે ક્યારેય મળતી નથી. જ્યારે કોઈ ક્રોસિંગ (ટ્રાન્સવર્સલ) પાટાને કાપે છે, ત્યારે તે સંગત કોણ બનાવે છે જે સમાન હોય છે, સુરક્ષિત ટ્રેક ડિઝાઇનની ખાતરી કરે છે.',
+    construction: 'રસ્તા ગ્રિડ',
+    constructionDesc: 'શહેરના રસ્તાઓ ગ્રિડ બનાવે છે જ્યાં રસ્તાઓ સમાંતર માર્ગોને કાપતા ટ્રાન્સવર્સલ તરીકે કાર્ય કરે છે. આ પર્યાયી આંતરિક કોણ બનાવે છે જે શહેરી આયોજન અને નેવિગેશનમાં મદદ કરે છે.',
+    doorWindow: 'રેલ્વે ક્રોસિંગ',
+    doorWindowDesc: 'રેલ્વે ક્રોસિંગ એક ટ્રાન્સવર્સલ (ક્રોસિંગ રોડ)ને સમાંતર રેલ્વે પાટાને કાપતા બતાવે છે. બનેલા કોણ એન્જિનિયરોને સુરક્ષિત અને કાર્યક્ષમ ક્રોસિંગ પોઇન્ટ ડિઝાઇન કરવામાં મદદ કરે છે.',
+    angleNavigation: 'પુલ સપોર્ટ બીમ',
+    angleNavigationDesc: 'પુલની રચનાઓ ટ્રાન્સવર્સલ સપોર્ટ સભ્યો સાથે સમાંતર બીમનો ઉપયોગ કરે છે. બનેલા કોણ (સંગત, પર્યાયી આંતરિક) માળખાકીય સ્થિરતા અને ભાર વિતરણની ખાતરી કરે છે.',
+    roadsBridges: 'વિન્ડો પેન',
+    roadsBridgesDesc: 'વિન્ડો પેનમાં આડી અને ઊભી બાર (સમાંતર રેખાઓ) વિકર્ણ સપોર્ટ (ટ્રાન્સવર્સલ) સાથે હોય છે. આ વિવિધ કોણ જોડી બનાવે છે જે વિન્ડોની રચનાને મજબૂત કરે છે.',
+    angleArchitecture: 'સીડી ડિઝાઇન',
+    angleArchitectureDesc: 'સીડીમાં સમાંતર પગથિયાં હોય છે જે ટ્રાન્સવર્સલ સાઇડ રેલથી જોડાયેલા હોય છે. પગથિયાં અને રેલ વચ્ચે બનેલા કોણ ભૌમિતિક સિદ્ધાંતોનું પાલન કરે છે જે સ્થિરતા અને સુરક્ષાની ખાતરી કરે છે.',
     furniture: 'ફર્નિચર ડિઝાઇન',
     furnitureDesc: 'ફર્નિચર બનાવનાર સપાટ સપાટીઓ માટે સંપૂરક કોણોનો ઉપયોગ કરે છે। ટેબલ, શેલ્ફ અને કેબિનેટમાં સ્થિરતા અને યોગ્ય સંરેખણની ખાતરી કરવા માટે સીધા કિનારાઓ (180°) હોય છે।',
     geometry: 'જ્યામિતિ અને સર્વેક્ષણ',
@@ -482,136 +483,803 @@ const translations = {
   }
 };
 
+// LinesAndAnglesTutorial component types and constants
+type AnglePair =
+  | 'corresponding'
+  | 'alternateInterior'
+  | 'consecutiveInterior'
+  | 'alternateExterior'
+  | 'interior'
+  | 'exterior';
+type ViewState = 'intersecting' | AnglePair;
+
+// LinesAndAnglesTutorial translations
+const linesAndAnglesTranslations: Record<'en' | 'hi' | 'gu', any> = {
+  en: {
+    title: '5.3: Pairs of Lines & Transversals',
+    subtitle: 'A **transversal** is a line that intersects two or more lines at distinct points.',
+    makeParallel: 'Make Lines Parallel',
+    makeNonParallel: 'Make Lines Non-Parallel',
+    interior: 'Interior',
+    exterior: 'Exterior',
+    corresponding: 'Corresponding',
+    alternateInterior: 'Alternate Interior',
+    consecutiveInterior: 'Same Side Interior',
+    alternateExterior: 'Alternate Exterior',
+    explanations: {
+      intersecting: {
+        title: 'Intersecting Lines',
+        description: 'Two lines are intersecting if they have one point in common. This common point is their point of intersection.',
+      },
+      interior: {
+        title: 'Interior Angles',
+        description: 'These are the angles that lie "between" the two main lines. (Angles 3, 4, 5, 6)',
+      },
+      exterior: {
+        title: 'Exterior Angles',
+        description: 'These are the angles that lie "outside" the two main lines. (Angles 1, 2, 7, 8)',
+      },
+      corresponding: {
+        title: 'Corresponding Angles',
+        description: 'Pairs: (1, 5), (2, 6), (3, 7), (4, 8). When lines are parallel, these angles are EQUAL.',
+      },
+      alternateInterior: {
+        title: 'Alternate Interior Angles',
+        description: 'Pairs: (3, 6), (4, 5). They are on opposite sides of the transversal and between the lines. When lines are parallel, these angles are EQUAL.',
+      },
+      consecutiveInterior: {
+        title: 'Interior Angles on the Same Side',
+        description: 'Pairs: (3, 5), (4, 6). When lines are parallel, these angles are SUPPLEMENTARY (add up to 180°).',
+      },
+      alternateExterior: {
+        title: 'Alternate Exterior Angles',
+        description: 'Pairs: (1, 8), (2, 7). They are on opposite sides of the transversal and outside the lines. When lines are parallel, these angles are EQUAL.',
+      },
+    },
+  },
+  hi: {
+    title: '5.3: रेखाओं के युग्म और ट्रांसवर्सल',
+    subtitle: 'एक **ट्रांसवर्सल** वह रेखा है जो दो या अधिक रेखाओं को अलग-अलग बिंदुओं पर काटती है।',
+    makeParallel: 'रेखाओं को समांतर बनाएं',
+    makeNonParallel: 'रेखाओं को गैर-समांतर बनाएं',
+    interior: 'आंतरिक',
+    exterior: 'बाह्य',
+    corresponding: 'समतुल्य',
+    alternateInterior: 'पर्यायी आंतरिक',
+    consecutiveInterior: 'समान पक्ष आंतरिक',
+    alternateExterior: 'पर्यायी बाह्य',
+    explanations: {
+      intersecting: {
+        title: 'प्रतिच्छेदित रेखाएं',
+        description: 'दो रेखाएं प्रतिच्छेदित होती हैं यदि उनका एक बिंदु समान हो। यह समान बिंदु उनका प्रतिच्छेदन बिंदु है।',
+      },
+      interior: {
+        title: 'आंतरिक कोण',
+        description: 'ये वे कोण हैं जो दो मुख्य रेखाओं के "बीच" स्थित हैं। (कोण 3, 4, 5, 6)',
+      },
+      exterior: {
+        title: 'बाह्य कोण',
+        description: 'ये वे कोण हैं जो दो मुख्य रेखाओं के "बाहर" स्थित हैं। (कोण 1, 2, 7, 8)',
+      },
+      corresponding: {
+        title: 'समतुल्य कोण',
+        description: 'जोड़े: (1, 5), (2, 6), (3, 7), (4, 8)। जब रेखाएं समांतर होती हैं, तो ये कोण समान होते हैं।',
+      },
+      alternateInterior: {
+        title: 'पर्यायी आंतरिक कोण',
+        description: 'जोड़े: (3, 6), (4, 5)। वे ट्रांसवर्सल के विपरीत पक्षों पर और रेखाओं के बीच स्थित हैं। जब रेखाएं समांतर होती हैं, तो ये कोण समान होते हैं।',
+      },
+      consecutiveInterior: {
+        title: 'समान पक्ष के आंतरिक कोण',
+        description: 'जोड़े: (3, 5), (4, 6)। जब रेखाएं समांतर होती हैं, तो ये कोण संपूरक होते हैं (180° तक जुड़ते हैं)।',
+      },
+      alternateExterior: {
+        title: 'पर्यायी बाह्य कोण',
+        description: 'जोड़े: (1, 8), (2, 7)। वे ट्रांसवर्सल के विपरीत पक्षों पर और रेखाओं के बाहर स्थित हैं। जब रेखाएं समांतर होती हैं, तो ये कोण समान होते हैं।',
+      },
+    },
+  },
+  gu: {
+    title: '5.3: રેખાઓના જોડી અને ટ્રાન્સવર્સલ',
+    subtitle: 'એક **ટ્રાન્સવર્સલ** રેખા છે જે બે અથવા વધુ રેખાઓને અલગ બિંદુઓ પર છેદે છે.',
+    makeParallel: 'રેખાઓને સમાંતર બનાવો',
+    makeNonParallel: 'રેખાઓને અસમાંતર બનાવો',
+    interior: 'આંતરિક',
+    exterior: 'બાહ્ય',
+    corresponding: 'સંગત',
+    alternateInterior: 'પર્યાયી આંતરિક',
+    consecutiveInterior: 'સમાન બાજુ આંતરિક',
+    alternateExterior: 'પર્યાયી બાહ્ય',
+    explanations: {
+      intersecting: {
+        title: 'છેદક રેખાઓ',
+        description: 'બે રેખાઓ છેદક હોય છે જો તેમનો એક બિંદુ સામાન્ય હોય. આ સામાન્ય બિંદુ તેમનો છેદ બિંદુ છે.',
+      },
+      interior: {
+        title: 'આંતરિક કોણ',
+        description: 'આ કોણ છે જે બે મુખ્ય રેખાઓના "બીच" આવેલા છે. (કોણ 3, 4, 5, 6)',
+      },
+      exterior: {
+        title: 'બાહ્ય કોણ',
+        description: 'આ કોણ છે જે બે મુખ્ય રેખાઓના "બહાર" આવેલા છે. (કોણ 1, 2, 7, 8)',
+      },
+      corresponding: {
+        title: 'સંગત કોણ',
+        description: 'જોડી: (1, 5), (2, 6), (3, 7), (4, 8). જ્યારે રેખાઓ સમાંતર હોય છે, ત્યારે આ કોણ સમાન હોય છે.',
+      },
+      alternateInterior: {
+        title: 'પર્યાયી આંતરિક કોણ',
+        description: 'જોડી: (3, 6), (4, 5). તે ટ્રાન્સવર્સલની વિપરીત બાજુઓ પર અને રેખાઓ વચ્ચે આવેલા છે. જ્યારે રેખાઓ સમાંતર હોય છે, ત્યારે આ કોણ સમાન હોય છે.',
+      },
+      consecutiveInterior: {
+        title: 'સમાન બાજુના આંતરિક કોણ',
+        description: 'જોડી: (3, 5), (4, 6). જ્યારે રેખાઓ સમાંતર હોય છે, ત્યારે આ કોણ સંપૂરક હોય છે (180° સુધી ઉમેરે છે).',
+      },
+      alternateExterior: {
+        title: 'પર્યાયી બાહ્ય કોણ',
+        description: 'જોડી: (1, 8), (2, 7). તે ટ્રાન્સવર્સલની વિપરીત બાજુઓ પર અને રેખાઓની બહાર આવેલા છે. જ્યારે રેખાઓ સમાંતર હોય છે, ત્યારે આ કોણ સમાન હોય છે.',
+      },
+    },
+  },
+};
+
+// Embedded CSS for LinesAndAnglesTutorial
+const linesAndAnglesCssStyles = `
+  .geo-container {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    background: #ffffff;
+    overflow: hidden;
+  }
+  .geo-header {
+    padding: 1.5rem;
+    background: #f9f9f9;
+    border-bottom: 1px solid #ddd;
+  }
+  .geo-header h2 {
+    margin: 0 0 0.5rem 0;
+    color: #333;
+  }
+  .geo-header p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #555;
+  }
+  .geo-svg {
+    width: 100%;
+    height: auto;
+    background: #fafcff;
+  }
+  .line {
+    stroke: #555;
+    stroke-width: 2;
+  }
+  .transversal {
+    stroke: #007bff;
+    stroke-width: 2.5;
+  }
+  .line-label {
+    font-family: 'Times New Roman', serif;
+    font-style: italic;
+    font-size: 1.25rem;
+    fill: #333;
+  }
+  .angle-label {
+    font-size: 1rem;
+    font-weight: bold;
+    fill: #111;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  .geo-controls {
+    padding: 1.5rem;
+    border-top: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background: #fdfdfd;
+  }
+  .toggle-parallel {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    background-color: #28a745;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .toggle-parallel:hover {
+    background-color: #218838;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  .button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .button-group button {
+    flex-grow: 1;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+    border: 1px solid #007bff;
+    background: #fff;
+    color: #007bff;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  .button-group button:hover {
+    background: #e6f2ff;
+  }
+  .geo-explanation {
+    padding: 1.5rem;
+    background: #fdfdfd;
+    border-top: 1px dashed #ddd;
+    min-height: 100px;
+  }
+  .geo-explanation h3 {
+    margin-top: 0;
+    color: #007bff;
+  }
+  .geo-explanation p {
+    margin-bottom: 0;
+    line-height: 1.6;
+  }
+`;
+
+// Helper to define which angles to highlight for each pair
+const angleGroups: Record<AnglePair, number[]> = {
+  interior: [3, 4, 5, 6],
+  exterior: [1, 2, 7, 8],
+  corresponding: [1, 5, 2, 6, 3, 7, 4, 8],
+  alternateInterior: [3, 6, 4, 5],
+  consecutiveInterior: [3, 5, 4, 6],
+  alternateExterior: [1, 8, 2, 7],
+};
+
+// Helper to assign colors to paired angles
+const getAngleColor = (angle: number, view: AnglePair): string => {
+  const groups = angleGroups[view];
+  if (!groups.includes(angle)) return 'transparent';
+
+  switch (view) {
+    case 'interior':
+      return 'rgba(255, 165, 0, 0.7)'; // Orange
+    case 'exterior':
+      return 'rgba(0, 191, 255, 0.7)'; // Deep Sky Blue
+    case 'corresponding':
+      if ([1, 5].includes(angle)) return 'rgba(255, 99, 71, 0.7)'; // Tomato
+      if ([2, 6].includes(angle)) return 'rgba(60, 179, 113, 0.7)'; // Medium Sea Green
+      if ([3, 7].includes(angle)) return 'rgba(238, 130, 238, 0.7)'; // Violet
+      if ([4, 8].includes(angle)) return 'rgba(106, 90, 205, 0.7)'; // Slate Blue
+      break;
+    case 'alternateInterior':
+      if ([3, 6].includes(angle)) return 'rgba(255, 99, 71, 0.7)'; // Tomato
+      if ([4, 5].includes(angle)) return 'rgba(60, 179, 113, 0.7)'; // Medium Sea Green
+      break;
+    case 'consecutiveInterior':
+      if ([3, 5].includes(angle)) return 'rgba(255, 99, 71, 0.7)'; // Tomato
+      if ([4, 6].includes(angle)) return 'rgba(60, 179, 113, 0.7)'; // Medium Sea Green
+      break;
+    case 'alternateExterior':
+      if ([1, 8].includes(angle)) return 'rgba(255, 99, 71, 0.7)'; // Tomato
+      if ([2, 7].includes(angle)) return 'rgba(60, 179, 113, 0.7)'; // Medium Sea Green
+      break;
+  }
+  return 'transparent';
+};
+
+// Angle Label Component
+const AngleLabel: React.FC<{
+  n: number;
+  x: number;
+  y: number;
+  view: ViewState;
+  animate?: 'parallel' | 'nonParallel';
+}> = ({ n, x, y, view, animate }) => {
+  // Calculate positions for parallel vs non-parallel
+  const getYPosition = (parallel: boolean) => {
+    if (!parallel) return y;
+    
+    // For angles 5-8 (bottom intersection), adjust for parallel position
+    // Line m is at y=250 when parallel, so angles need to be positioned accordingly
+    if (n === 5) return 230; // Above line m when parallel (y=250)
+    if (n === 6) return 230;
+    if (n === 7) return 270; // Below line m when parallel
+    if (n === 8) return 270;
+    return y;
+  };
+
+  const getXPosition = (parallel: boolean) => {
+    if (!parallel) return x;
+    
+    // Adjust x position for better positioning when parallel
+    if (n === 5 || n === 7) return 200;
+    if (n === 6 || n === 8) return 245;
+    return x;
+  };
+
+  const parallelY = getYPosition(true);
+  const parallelX = getXPosition(true);
+
+  const variants = {
+    nonParallel: { y, x },
+    parallel: { y: parallelY, x: parallelX },
+  };
+
+  const isHighlighted =
+    view !== 'intersecting' && angleGroups[view as AnglePair].includes(n);
+  const color = view !== 'intersecting' ? getAngleColor(n, view as AnglePair) : 'transparent';
+
+  return (
+    <motion.g
+      variants={animate ? variants : undefined}
+      animate={animate}
+      transition={{ type: 'spring', stiffness: 100, damping: 15 }}
+    >
+      <motion.circle
+        cx={animate === 'parallel' ? parallelX + 7 : x + 7}
+        cy={animate === 'parallel' ? parallelY - 5 : y - 5}
+        r={12}
+        fill={color}
+        initial={{ scale: 0 }}
+        animate={{ scale: isHighlighted ? 1 : 0 }}
+        transition={{ type: 'spring', stiffness: 100, damping: 15 }}
+      />
+      <motion.text
+        x={animate === 'parallel' ? parallelX : x}
+        y={animate === 'parallel' ? parallelY : y}
+        className="angle-label"
+      >
+        {n}
+      </motion.text>
+    </motion.g>
+  );
+};
+
+// LinesAndAnglesTutorial Component
+const LinesAndAnglesTutorial: React.FC<{ language: 'en' | 'hi' | 'gu' }> = ({ language }) => {
+  const t = linesAndAnglesTranslations[language];
+  const [isParallel, setIsParallel] = useState(false);
+  const [view, setView] = useState<ViewState>('intersecting');
+  
+  // Sequential animation states
+  const [showDiagram, setShowDiagram] = useState(false);
+  const [showControls, setShowControls] = useState(false);
+  const [showExplanation, setShowExplanation] = useState(false);
+
+  // Animate line coordinates for proper parallel lines
+  const line2Y1 = isParallel ? 250 : 200;
+  const line2Y2 = isParallel ? 250 : 150;
+  const textY = isParallel ? 245 : 195;
+
+  const textVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: { opacity: 1, y: 0 },
+  };
+
+  // Sequential animation on mount
+  useEffect(() => {
+    const timer1 = setTimeout(() => setShowDiagram(true), 100);
+    const timer2 = setTimeout(() => setShowControls(true), 800);
+    const timer3 = setTimeout(() => setShowExplanation(true), 1500);
+
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+      clearTimeout(timer3);
+    };
+  }, []);
+
+  return (
+    <>
+      <style>{linesAndAnglesCssStyles}</style>
+      
+      <div className="geo-container">
+
+        {/* SVG Canvas for visualization */}
+        <motion.svg
+          viewBox="0 0 400 300"
+          className="geo-svg"
+          aria-label="Geometric lines and angles"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ 
+            opacity: showDiagram ? 1 : 0, 
+            scale: showDiagram ? 1 : 0.9 
+          }}
+          transition={{ duration: 0.7, ease: 'easeOut' }}
+        >
+          {/* Line 1 (l) */}
+          <line x1="0" y1="100" x2="400" y2="100" className="line" />
+          <text x="10" y="95" className="line-label">
+            l
+          </text>
+
+          {/* Line 2 (m) - Animated */}
+          <motion.line
+            x1="0"
+            x2="400"
+            y1={line2Y1}
+            y2={line2Y2}
+            className="line"
+            animate={{
+              y1: line2Y1,
+              y2: line2Y2,
+            }}
+            transition={{ type: 'spring', stiffness: 100, damping: 15 }}
+          />
+          <motion.text
+            x="10"
+            y={textY}
+            className="line-label"
+            transition={{ type: 'spring', stiffness: 100, damping: 15 }}
+          >
+            m
+          </motion.text>
+
+          {/* Transversal (p) */}
+          <line x1="100" y1="0" x2="300" y2="300" className="line transversal" />
+          <text x="85" y="20" className="line-label">
+            p
+          </text>
+
+          {/* Intersection 1 (Top) */}
+          <AngleLabel
+            n={1}
+            x={125}
+            y={80}
+            view={view}
+          />
+          <AngleLabel
+            n={2}
+            x={190}
+            y={80}
+            view={view}
+          />
+          <AngleLabel
+            n={3}
+            x={145}
+            y={120}
+            view={view}
+          />
+          <AngleLabel
+            n={4}
+            x={190}
+            y={120}
+            view={view}
+          />
+
+          {/* Intersection 2 (Bottom) - Animated */}
+          {/* When non-parallel, intersection is around (220, 167) on line m */}
+          <AngleLabel
+            n={5}
+            x={205}
+            y={147}
+            view={view}
+            animate={isParallel ? 'parallel' : 'nonParallel'}
+          />
+          <AngleLabel
+            n={6}
+            x={250}
+            y={147}
+            view={view}
+            animate={isParallel ? 'parallel' : 'nonParallel'}
+          />
+          <AngleLabel
+            n={7}
+            x={205}
+            y={187}
+            view={view}
+            animate={isParallel ? 'parallel' : 'nonParallel'}
+          />
+          <AngleLabel
+            n={8}
+            x={250}
+            y={187}
+            view={view}
+            animate={isParallel ? 'parallel' : 'nonParallel'}
+          />
+        </motion.svg>
+
+        {/* Controls */}
+        <motion.div 
+          className="geo-controls"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ 
+            opacity: showControls ? 1 : 0, 
+            y: showControls ? 0 : 20 
+          }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+        >
+          <button
+            onClick={() => setIsParallel(!isParallel)}
+            className="toggle-parallel"
+          >
+            {isParallel ? t.makeNonParallel : t.makeParallel}
+          </button>
+          <div className="button-group">
+            <button onClick={() => setView('interior')}>{t.interior}</button>
+            <button onClick={() => setView('exterior')}>{t.exterior}</button>
+            <button onClick={() => setView('corresponding')}>{t.corresponding}</button>
+            <button onClick={() => setView('alternateInterior')}>
+              {t.alternateInterior}
+            </button>
+            <button onClick={() => setView('consecutiveInterior')}>
+              {t.consecutiveInterior}
+            </button>
+            <button onClick={() => setView('alternateExterior')}>
+              {t.alternateExterior}
+            </button>
+          </div>
+        </motion.div>
+
+        {/* Explanation Box */}
+        <motion.div 
+          className="geo-explanation"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ 
+            opacity: showExplanation ? 1 : 0, 
+            y: showExplanation ? 0 : 20 
+          }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+        >
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={view}
+              variants={textVariants}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              transition={{ duration: 0.3 }}
+            >
+              <h3>{t.explanations[view].title}</h3>
+              <p>{t.explanations[view].description}</p>
+            </motion.div>
+          </AnimatePresence>
+        </motion.div>
+      </div>
+    </>
+  );
+};
+
 // Practice exercises with visual shapes data
-// 3 Complementary Angle Questions + 3 Supplementary Angle Questions
+// All questions based on Topic 5.3: Pairs of Lines (matching Learn mode)
 const practiceExercises: PracticeExercise[] = [
-  // Complementary Angle Questions
+  // Intersecting Lines Questions
   {
     id: 'ex1',
-    type: 'calculation',
+    type: 'identification',
     difficulty: 'beginner',
-    question: 'If angle A = 30°, what is the measure of its complementary angle?',
+    question: 'What do we call the point where two intersecting lines meet?',
     data: { 
-      visualShapes: ['Circle']
+        shapes: ['Transversal point', 'Intersection point', 'Parallel point', 'Angle point'],
+      visualShapes: ['Circle', 'Circle', 'Circle', 'Circle']
     },
-    correctAnswer: 60,
-    hint: 'Complementary angles add up to 90°. So if angle A = 30°, the complementary angle = 90° - 30° = 60°.',
+    correctAnswer: 'Intersection point',
+    hint: 'When two lines intersect, they meet at a common point called the intersection point.',
     translations: {
       gu: {
-        question: 'જો કોણ A = 30° હોય, તો તેના પૂરક કોણનું માપ શું છે?',
-        hint: 'પૂરક કોણો 90° સુધી ઉમેરે છે. તેથી જો કોણ A = 30° હોય, તો પૂરક કોણ = 90° - 30° = 60°.'
+        question: 'બે છેદક રેખાઓ જ્યાં મળે છે તે બિંદુને શું કહેવાય છે?',
+        hint: 'બે રેખાઓ જ્યારે છેદે છે, ત્યારે તે એક સામાન્ય બિંદુ પર મળે છે જેને છેદક બિંદુ કહેવાય છે.'
       },
       hi: {
-        question: 'यदि कोण A = 30° है, तो उसके पूरक कोण का माप क्या है?',
-        hint: 'पूरक कोण 90° तक जुड़ते हैं। इसलिए यदि कोण A = 30° है, तो पूरक कोण = 90° - 30° = 60°।'
+        question: 'दो प्रतिच्छेदित रेखाएं जहां मिलती हैं, उस बिंदु को क्या कहते हैं?',
+        hint: 'जब दो रेखाएं प्रतिच्छेदित होती हैं, तो वे एक समान बिंदु पर मिलती हैं जिसे प्रतिच्छेदन बिंदु कहते हैं।'
       }
     }
   },
+  // Transversal Questions
   {
     id: 'ex2',
-    type: 'calculation',
+    type: 'identification',
     difficulty: 'beginner',
-    question: 'If angle B = 75°, what is the measure of its complementary angle?',
+    question: 'A line that intersects two or more lines at distinct points is called?',
     data: { 
-      visualShapes: ['Circle']
+      shapes: ['Parallel line', 'Perpendicular line', 'Transversal', 'Intersecting line'],
+      visualShapes: ['Circle', 'Circle', 'Circle', 'Circle']
     },
-    correctAnswer: 15,
-    hint: 'Complementary angles add up to 90°. So if angle B = 75°, the complementary angle = 90° - 75° = 15°.',
+    correctAnswer: 'Transversal',
+    hint: 'A transversal is a line that intersects two or more lines at distinct points.',
     translations: {
       gu: {
-        question: 'જો કોણ B = 75° હોય, તો તેના પૂરક કોણનું માપ શું છે?',
-        hint: 'પૂરક કોણો 90° સુધી ઉમેરે છે. તેથી જો કોણ B = 75° હોય, તો પૂરક કોણ = 90° - 75° = 15°.'
+        question: 'એક રેખા જે બે અથવા વધુ રેખાઓને અલગ બિંદુઓ પર છેદે છે તેને શું કહેવાય છે?',
+        hint: 'ટ્રાન્સવર્સલ એ રેખા છે જે બે અથવા વધુ રેખાઓને અલગ બિંદુઓ પર છેદે છે.'
       },
       hi: {
-        question: 'यदि कोण B = 75° है, तो उसके पूरक कोण का माप क्या है?',
-        hint: 'पूरक कोण 90° तक जुड़ते हैं। इसलिए यदि कोण B = 75° है, तो पूरक कोण = 90° - 75° = 15°।'
+        question: 'एक रेखा जो दो या अधिक रेखाओं को अलग-अलग बिंदुओं पर काटती है, उसे क्या कहते हैं?',
+        hint: 'एक ट्रांसवर्सल वह रेखा है जो दो या अधिक रेखाओं को अलग-अलग बिंदुओं पर काटती है।'
       }
     }
   },
+  // Angle Type Questions
   {
     id: 'ex3',
     type: 'identification',
     difficulty: 'beginner',
-    question: 'Which of the following are complementary angles?',
+    question: 'Which angles are on the same side of the transversal, one interior and one exterior?',
     data: { 
-      shapes: ['30° and 60°', '45° and 135°', '20° and 70°', '100° and 80°'],
+      shapes: ['Alternate interior angles', 'Alternate exterior angles', 'Interior same side angles', 'Corresponding angles'],
       visualShapes: ['Circle', 'Circle', 'Circle', 'Circle']
     },
-    correctAnswer: '30° and 60°, 20° and 70°',
-    hint: 'Complementary angles add up to 90°. Check: 30° + 60° = 90° ✓, 20° + 70° = 90° ✓, but 45° + 135° = 180° (supplementary) and 100° + 80° = 180° (supplementary).',
+    correctAnswer: 'Corresponding angles',
+    hint: 'Corresponding angles are on the same side of the transversal, one interior and one exterior. Examples: ∠1 and ∠5, ∠2 and ∠6.',
     translations: {
       gu: {
-        question: 'નીચેનામાંથી કયા પૂરક કોણો છે?',
-        hint: 'પૂરક કોણો 90° સુધી ઉમેરે છે. તપાસો: 30° + 60° = 90° ✓, 20° + 70° = 90° ✓, પરંતુ 45° + 135° = 180° (સંપૂરક) અને 100° + 80° = 180° (સંપૂરક).'
+        question: 'કયા કોણો ટ્રાન્સવર્સલની એક જ બાજુએ હોય છે, એક આંતરિક અને એક બાહ્ય?',
+        hint: 'સંગત કોણો ટ્રાન્સવર્સલની એક જ બાજુએ હોય છે, એક આંતરિક અને એક બાહ્ય. ઉદાહરણ: ∠1 અને ∠5, ∠2 અને ∠6.'
       },
       hi: {
-        question: 'निम्नलिखित में से कौन से पूरक कोण हैं?',
-        hint: 'पूरक कोण 90° तक जुड़ते हैं। जांचें: 30° + 60° = 90° ✓, 20° + 70° = 90° ✓, लेकिन 45° + 135° = 180° (संपूरक) और 100° + 80° = 180° (संपूरक)।'
+        question: 'कौन से कोण ट्रांसवर्सल के एक ही पक्ष पर होते हैं, एक आंतरिक और एक बाहरी?',
+        hint: 'समतुल्य कोण ट्रांसवर्सल के एक ही पक्ष पर होते हैं, एक आंतरिक और एक बाहरी। उदाहरण: ∠1 और ∠5, ∠2 और ∠6।'
       }
     }
   },
-  // Supplementary Angle Questions
   {
     id: 'ex4',
-    type: 'calculation',
-    difficulty: 'intermediate',
-    question: 'If angle X = 120°, what is the measure of its supplementary angle?',
+    type: 'identification',
+    difficulty: 'beginner',
+    question: 'Which angles are on opposite sides of the transversal, both interior?',
     data: { 
-      visualShapes: ['Circle']
+      shapes: ['Corresponding angles', 'Alternate interior angles', 'Alternate exterior angles', 'Exterior same side angles'],
+      visualShapes: ['Circle', 'Circle', 'Circle', 'Circle']
     },
-    correctAnswer: 60,
-    hint: 'Supplementary angles add up to 180°. So if angle X = 120°, the supplementary angle = 180° - 120° = 60°.',
+    correctAnswer: 'Alternate interior angles',
+    hint: 'Alternate interior angles are on opposite sides of the transversal, both interior. Examples: ∠3 and ∠6, ∠4 and ∠5.',
     translations: {
       gu: {
-        question: 'જો કોણ X = 120° હોય, તો તેના સંપૂરક કોણનું માપ શું છે?',
-        hint: 'સંપૂરક કોણો 180° સુધી ઉમેરે છે. તેથી જો કોણ X = 120° હોય, તો સંપૂરક કોણ = 180° - 120° = 60°.'
+        question: 'કયા કોણો ટ્રાન્સવર્સલની વિપરીત બાજુઓ પર હોય છે, બંને આંતરિક?',
+        hint: 'પર્યાયી આંતરિક કોણો ટ્રાન્સવર્સલની વિપરીત બાજુઓ પર હોય છે, બંને આંતરિક. ઉદાહરણ: ∠3 અને ∠6, ∠4 અને ∠5.'
       },
       hi: {
-        question: 'यदि कोण X = 120° है, तो उसके संपूरक कोण का माप क्या है?',
-        hint: 'संपूरक कोण 180° तक जुड़ते हैं। इसलिए यदि कोण X = 120° है, तो संपूरक कोण = 180° - 120° = 60°।'
+        question: 'कौन से कोण ट्रांसवर्सल के विपरीत पक्षों पर होते हैं, दोनों आंतरिक?',
+        hint: 'पर्यायी अंतःकोण ट्रांसवर्सल के विपरीत पक्षों पर होते हैं, दोनों आंतरिक। उदाहरण: ∠3 और ∠6, ∠4 और ∠5।'
       }
     }
   },
   {
     id: 'ex5',
     type: 'identification',
-    difficulty: 'intermediate',
-    question: 'Which of the following are supplementary angles?',
+    difficulty: 'beginner',
+    question: 'Which angles are on opposite sides of the transversal, both exterior?',
     data: { 
-      shapes: ['50° and 130°', '90° and 90°', '45° and 45°', '70° and 110°'],
+      shapes: ['Corresponding angles', 'Alternate interior angles', 'Exterior same side angles', 'Alternate exterior angles'],
       visualShapes: ['Circle', 'Circle', 'Circle', 'Circle']
     },
-    correctAnswer: '50° and 130°, 70° and 110°',
-    hint: 'Supplementary angles add up to 180°. Check: 50° + 130° = 180° ✓, 70° + 110° = 180° ✓, but 90° + 90° = 180° (also supplementary, but both are right angles), 45° + 45° = 90° (complementary).',
+    correctAnswer: 'Alternate exterior angles',
+    hint: 'Alternate exterior angles are on opposite sides of the transversal, both exterior. Examples: ∠1 and ∠8, ∠2 and ∠7.',
     translations: {
       gu: {
-        question: 'નીચેનામાંથી કયા સંપૂરક કોણો છે?',
-        hint: 'સંપૂરક કોણો 180° સુધી ઉમેરે છે. તપાસો: 50° + 130° = 180° ✓, 70° + 110° = 180° ✓, પરંતુ 90° + 90° = 180° (પણ સંપૂરક, પરંતુ બંને કાટકોણ છે), 45° + 45° = 90° (પૂરક).'
+        question: 'કયા કોણો ટ્રાન્સવર્સલની વિપરીત બાજુઓ પર હોય છે, બંને બાહ્ય?',
+        hint: 'પર્યાયી બાહ્ય કોણો ટ્રાન્સવર્સલની વિપરીત બાજુઓ પર હોય છે, બંને બાહ્ય. ઉદાહરણ: ∠1 અને ∠8, ∠2 અને ∠7.'
       },
       hi: {
-        question: 'निम्नलिखित में से कौन से संपूरक कोण हैं?',
-        hint: 'संपूरक कोण 180° तक जुड़ते हैं। जांचें: 50° + 130° = 180° ✓, 70° + 110° = 180° ✓, लेकिन 90° + 90° = 180° (भी संपूरक, लेकिन दोनों समकोण हैं), 45° + 45° = 90° (पूरक)।'
+        question: 'कौन से कोण ट्रांसवर्सल के विपरीत पक्षों पर होते हैं, दोनों बाह्य?',
+        hint: 'पर्यायी बाह्य कोण ट्रांसवर्सल के विपरीत पक्षों पर होते हैं, दोनों बाह्य। उदाहरण: ∠1 और ∠8, ∠2 और ∠7।'
       }
     }
   },
   {
     id: 'ex6',
-    type: 'calculation',
-    difficulty: 'intermediate',
-    question: 'Two angles are supplementary. If one angle is 85°, what is the measure of the other angle?',
+    type: 'identification',
+    difficulty: 'beginner',
+    question: 'Which angles are on the same side of the transversal, both interior, and their sum is 180°?',
     data: { 
-      visualShapes: ['Circle']
+      shapes: ['Corresponding angles', 'Alternate interior angles', 'Interior same side angles', 'Alternate exterior angles'],
+      visualShapes: ['Circle', 'Circle', 'Circle', 'Circle']
     },
-    correctAnswer: 95,
-    hint: 'Supplementary angles add up to 180°. So if one angle is 85°, the other angle = 180° - 85° = 95°.',
+    correctAnswer: 'Interior same side angles',
+    hint: 'Interior angles on the same side of the transversal are supplementary (sum = 180°). Examples: ∠3 and ∠5, ∠4 and ∠6.',
     translations: {
       gu: {
-        question: 'બે કોણ સંપૂરક છે. જો એક કોણ 85° હોય, તો બીજા કોણનું માપ શું છે?',
-        hint: 'સંપૂરક કોણો 180° સુધી ઉમેરે છે. તેથી જો એક કોણ 85° હોય, તો બીજો કોણ = 180° - 85° = 95°.'
+        question: 'કયા કોણો ટ્રાન્સવર્સલની એક જ બાજુએ હોય છે, બંને આંતરિક, અને તેમનો સરવાળો 180° છે?',
+        hint: 'ટ્રાન્સવર્સલની એક જ બાજુના આંતરિક કોણો સંપૂરક છે (સરવાળો = 180°). ઉદાહરણ: ∠3 અને ∠5, ∠4 અને ∠6.'
       },
       hi: {
-        question: 'दो कोण संपूरक हैं। यदि एक कोण 85° है, तो दूसरे कोण का माप क्या है?',
-        hint: 'संपूरक कोण 180° तक जुड़ते हैं। इसलिए यदि एक कोण 85° है, तो दूसरा कोण = 180° - 85° = 95°।'
+        question: 'कौन से कोण ट्रांसवर्सल के एक ही पक्ष पर होते हैं, दोनों आंतरिक, और उनका योग 180° है?',
+        hint: 'ट्रांसवर्सल के एक ही पक्ष के आंतरिक कोण संपूरक होते हैं (योग = 180°)। उदाहरण: ∠3 और ∠5, ∠4 और ∠6।'
+      }
+    }
+  },
+  // Parallel Lines Questions
+  {
+    id: 'ex7',
+    type: 'calculation',
+    difficulty: 'beginner',
+    question: 'If corresponding angle ∠1 = 65°, what is ∠5?',
+    data: { visualShapes: ['ParallelLines'] },
+    correctAnswer: 65,
+    hint: 'In parallel lines cut by a transversal, corresponding angles are equal. So ∠1 = ∠5.',
+    translations: {
+      gu: {
+        question: 'જો સમતુલ્ય કોણ ∠1 = 65° હોય, તો ∠5 કેટલો?',
+        hint: 'સમાંતર રેખાઓમાં ટ્રાન્સવર્સલથી બનેલા સમતુલ્ય કોણો સમાન હોય છે. તેથી ∠1 = ∠5.'
+      },
+      hi: {
+        question: 'यदि समतुल्य कोण ∠1 = 65° है, तो ∠5 कितना होगा?',
+        hint: 'समांतर रेखाओं को ट्रांसवर्सल काटे तो समतुल्य कोण समान होते हैं। अतः ∠1 = ∠5.'
+      }
+    }
+  },
+  {
+    id: 'ex8',
+    type: 'calculation',
+    difficulty: 'beginner',
+    question: 'If alternate interior angle ∠3 = 72°, what is ∠6?',
+    data: { visualShapes: ['ParallelLines'] },
+    correctAnswer: 72,
+    hint: 'Alternate interior angles are equal when the lines are parallel (cut by a transversal). So ∠3 = ∠6.',
+    translations: {
+      gu: {
+        question: 'જો પર્યાયી આંતરિક કોણ ∠3 = 72° હોય, તો ∠6 કેટલો?',
+        hint: 'સમાંતર રેખાઓમાં પર્યાયી આંતરિક કોણો સમાન હોય છે. તેથી ∠3 = ∠6.'
+      },
+      hi: {
+        question: 'यदि पर्यायी अंतःकोण ∠3 = 72° है, तो ∠6 कितना होगा?',
+        hint: 'समांतर रेखाओं के लिए पर्यायी अंतःकोण समान होते हैं। अतः ∠3 = ∠6.'
+      }
+    }
+  },
+  {
+    id: 'ex9',
+    type: 'calculation',
+    difficulty: 'intermediate',
+    question: 'If interior angles on the same side are ∠4 and ∠6 and ∠4 = 110°, find ∠6.',
+    data: { visualShapes: ['ParallelLines'] },
+    correctAnswer: 70,
+    hint: 'Interior angles on the same side of a transversal are supplementary: ∠4 + ∠6 = 180°. So ∠6 = 180° - 110° = 70°.',
+    translations: {
+      gu: {
+        question: 'એક જ બાજુના આંતરિક કોણો ∠4 અને ∠6 છે અને ∠4 = 110° હોય તો ∠6 શોધો.',
+        hint: 'એક જ બાજુના આંતરિક કોણો સંપૂરક હોય છે: ∠4 + ∠6 = 180°. એટલે ∠6 = 180° - 110° = 70°.'
+      },
+      hi: {
+        question: 'यदि समान पक्ष के अंतःकोण ∠4 और ∠6 हैं और ∠4 = 110° है, तो ∠6 ज्ञात करें।',
+        hint: 'समान पक्ष के अंतःकोण संपूरक होते हैं: ∠4 + ∠6 = 180°. अतः ∠6 = 180° - 110° = 70°.'
+      }
+    }
+  },
+  {
+    id: 'ex10',
+    type: 'verification',
+    difficulty: 'intermediate',
+    question: 'Given ∠1 = ∠5, are lines l and m parallel? (Yes/No)',
+    data: { visualShapes: ['ParallelLines'] },
+    correctAnswer: 'Yes',
+    hint: 'If a pair of corresponding angles are equal, the lines are parallel.',
+    translations: {
+      gu: {
+        question: 'આપેલ છે ∠1 = ∠5, શું રેખાઓ l અને m સમાંતર છે? (Yes/No)',
+        hint: 'સમતુલ્ય કોણો સમાન હોય તો રેખાઓ સમાંતર હોય છે.'
+      },
+      hi: {
+        question: 'यदि ∠1 = ∠5 दिया है, तो क्या रेखाएं l और m समांतर हैं? (Yes/No)',
+        hint: 'यदि समतुल्य कोण समान हों, तो रेखाएं समांतर होती हैं।'
+      }
+    }
+  },
+  {
+    id: 'ex11',
+    type: 'identification',
+    difficulty: 'beginner',
+    question: 'If ∠3 and ∠6 are equal, what is their relation? (Choose: corresponding/alternate interior/interior same side)',
+    data: { visualShapes: ['ParallelLines'] },
+    correctAnswer: 'alternate interior',
+    hint: 'When a transversal cuts parallel lines, ∠3 and ∠6 form an alternate interior pair.',
+    translations: {
+      gu: {
+        question: 'જો ∠3 અને ∠6 સમાન હોય, તો તેમનો સંબંધ શું? (પસંદ કરો: corresponding/alternate interior/interior same side)',
+        hint: 'ટ્રાન્સવર્સલ સમાંતર રેખાઓને છેદે ત્યારે ∠3 અને ∠6 પર્યાયી આંતરિક બને છે.'
+      },
+      hi: {
+        question: 'यदि ∠3 और ∠6 समान हों, तो उनका संबंध क्या है? (चुनें: corresponding/alternate interior/interior same side)',
+        hint: 'ट्रांसवर्सल जब समांतर रेखाओं को काटता है तो ∠3 और ∠6 पर्यायी अंतःकोण होते हैं।'
       }
     }
   }
@@ -630,15 +1298,7 @@ const Chapter5Tool: React.FC = () => {
   const [attempts, setAttempts] = useState(0);
   const [showOverview, setShowOverview] = useState(false);
   const [exerciseStatus, setExerciseStatus] = useState<Record<string, 'correct' | 'incorrect' | 'skipped' | 'notAttempted'>>({});
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
-  
-  // Angles learning state
-  const [activeTab, setActiveTab] = useState<'complementary' | 'supplementary' | null>(null);
-  const [angle1, setAngle1] = useState(30);
-  const [angle2Comp, setAngle2Comp] = useState(60);
-  const [angle1Supp, setAngle1Supp] = useState(110);
-  const [angle2Supp, setAngle2Supp] = useState(70);
-  const [isAnimating, setIsAnimating] = useState(false);
+  const [selectedOption, setSelectedOption] = useState<string>('');
 
   const t = translations[language];
 
@@ -648,104 +1308,14 @@ const Chapter5Tool: React.FC = () => {
     localStorage.setItem('ch5-language', newLanguage);
   };
 
-  // Auto-calculate complementary and supplementary angles
+
+  // Reset selected option when exercise changes
   useEffect(() => {
-    setAngle2Comp(90 - angle1);
-  }, [angle1]);
-
-  useEffect(() => {
-    setAngle2Supp(180 - angle1Supp);
-  }, [angle1Supp]);
-
-  const animateAngles = () => {
-    if (isAnimating) return;
-    setIsAnimating(true);
-    
-    const duration = 4000; // Slower animation (4 seconds)
-    const startTime = Date.now();
-
-    const animate = () => {
-      const elapsed = Date.now() - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      
-      if (activeTab === 'complementary') {
-        // Use oscillation between 15° and 75° (keeping both angles positive and within 10-80 range)
-        // This ensures angle1 ranges from 15° to 75°, so angle2 ranges from 75° to 15°
-        const minAngle = 15;
-        const maxAngle = 75;
-        const range = maxAngle - minAngle;
-        // Use sine wave oscillating between 0 and 1, then scale to range
-        const normalizedProgress = (Math.sin(progress * Math.PI * 2) + 1) / 2; // 0 to 1
-        const newAngle = minAngle + normalizedProgress * range;
-        const clampedAngle = Math.max(10, Math.min(80, Math.round(newAngle)));
-        setAngle1(clampedAngle);
-      } else if (activeTab === 'supplementary') {
-        // Use oscillation between 30° and 150° (keeping both angles positive and within 20-160 range)
-        // This ensures angle1 ranges from 30° to 150°, so angle2 ranges from 150° to 30°
-        const minAngle = 30;
-        const maxAngle = 150;
-        const range = maxAngle - minAngle;
-        // Use sine wave oscillating between 0 and 1, then scale to range
-        const normalizedProgress = (Math.sin(progress * Math.PI * 2) + 1) / 2; // 0 to 1
-        const newAngle = minAngle + normalizedProgress * range;
-        const clampedAngle = Math.max(20, Math.min(160, Math.round(newAngle)));
-        setAngle1Supp(clampedAngle);
-      }
-
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      } else {
-        setIsAnimating(false);
-      }
-    };
-
-    animate();
-  };
-
-  // Helper function to split text into sentences and animate them
-  const AnimatedText = ({ text, baseDelay = 0.8, className = "" }: { text: string, baseDelay?: number, className?: string }) => {
-    // Split text by periods, exclamation marks, or question marks followed by space or end of string
-    const sentences = text.split(/(?<=[.!?।।])\s+/).filter(s => s.trim());
-    
-    return (
-      <div className={className}>
-        {sentences.map((sentence, index) => (
-          <span
-            key={index}
-            className="inline animate-fadeIn"
-            style={{
-              animationDelay: `${baseDelay + (index * 0.4)}s`,
-              animationFillMode: 'both'
-            }}
-          >
-            {sentence}{index < sentences.length - 1 ? ' ' : ''}
-          </span>
-        ))}
-      </div>
-    );
-  };
-
-  const drawAngleArc = (cx: number, cy: number, radius: number, startAngle: number, endAngle: number, color: string) => {
-    const start = (startAngle * Math.PI) / 180;
-    const end = (endAngle * Math.PI) / 180;
-    
-    const x1 = cx + radius * Math.cos(start);
-    const y1 = cy - radius * Math.sin(start);
-    const x2 = cx + radius * Math.cos(end);
-    const y2 = cy - radius * Math.sin(end);
-    
-    const largeArc = endAngle - startAngle > 180 ? 1 : 0;
-    
-    return (
-      <path
-        d={`M ${x1} ${y1} A ${radius} ${radius} 0 ${largeArc} 0 ${x2} ${y2}`}
-        fill="none"
-        stroke={color}
-        strokeWidth="3"
-        opacity="0.8"
-      />
-    );
-  };
+    setSelectedOption('');
+    setStudentAnswer('');
+    setFeedback('');
+    setShowHint(false);
+  }, [currentExerciseIndex]);
 
   const getTranslatedText = (item: any, field: string, lang: string) => {
     if (item.translations && item.translations[lang] && item.translations[lang][field]) {
@@ -762,18 +1332,8 @@ const Chapter5Tool: React.FC = () => {
     let isCorrect = false;
 
     if (currentExercise.type === 'identification') {
-      const correctSet = new Set(
-        String(currentExercise.correctAnswer)
-          .split(',')
-          .map(s => s.trim().toLowerCase())
-          .filter(Boolean)
-      );
-      const selectedSet = new Set(selectedOptions.map(s => s.trim().toLowerCase()));
-      if (correctSet.size === selectedSet.size) {
-        isCorrect = [...correctSet].every(opt => selectedSet.has(opt));
-      } else {
-        isCorrect = false;
-      }
+      // Single selection - compare directly
+      isCorrect = selectedOption.toLowerCase().trim() === String(currentExercise.correctAnswer).toLowerCase().trim();
     } else if (Array.isArray(currentExercise.correctAnswer)) {
       const studentAnswers = studentAnswer.split(',').map(a => parseInt(a.trim()));
       isCorrect = studentAnswers.length === currentExercise.correctAnswer.length &&
@@ -802,7 +1362,7 @@ const Chapter5Tool: React.FC = () => {
         setFeedback('');
         setShowHint(false);
         setAttempts(0);
-        setSelectedOptions([]);
+        setSelectedOption('');
       }, 1500);
     } else {
       setFeedback(t.incorrect);
@@ -832,162 +1392,13 @@ const Chapter5Tool: React.FC = () => {
     setFeedback('');
     setShowHint(false);
     setAttempts(0);
-    setSelectedOptions([]);
+    setSelectedOption('');
   };
-
-  const ComplementaryDiagram = () => (
-    <svg width="100%" height="300" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet" className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg max-h-[400px] w-full">
-      <line x1="50" y1="200" x2="350" y2="200" stroke="#1e293b" strokeWidth="2" />
-      <line x1="200" y1="200" x2={200 + 150 * Math.cos((angle1 * Math.PI) / 180)} y2={200 - 150 * Math.sin((angle1 * Math.PI) / 180)} stroke="#3b82f6" strokeWidth="3" />
-      <line x1="200" y1="200" x2="200" y2="50" stroke="#8b5cf6" strokeWidth="3" />
-      {drawAngleArc(200, 200, 60, 0, angle1, '#3b82f6')}
-      {drawAngleArc(200, 200, 80, angle1, 90, '#8b5cf6')}
-      <text x={200 + 90 * Math.cos((angle1 / 2 * Math.PI) / 180)} y={200 - 90 * Math.sin((angle1 / 2 * Math.PI) / 180)} fill="#3b82f6" fontSize="20" fontWeight="bold">{angle1}°</text>
-      <text x={200 + 100 * Math.cos(((angle1 + (90 - angle1) / 2) * Math.PI) / 180)} y={200 - 100 * Math.sin(((angle1 + (90 - angle1) / 2) * Math.PI) / 180)} fill="#8b5cf6" fontSize="20" fontWeight="bold">{angle2Comp}°</text>
-      <text x="150" y="250" fill="#059669" fontSize="18" fontWeight="bold">{angle1}° + {angle2Comp}° = 90°</text>
-      <rect x="190" y="190" width="10" height="10" fill="none" stroke="#1e293b" strokeWidth="1.5" />
-    </svg>
-  );
-
-  const SupplementaryDiagram = () => (
-    <svg width="100%" height="300" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet" className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg max-h-[400px] w-full">
-      <line x1="50" y1="200" x2="350" y2="200" stroke="#1e293b" strokeWidth="2" />
-      <line x1="200" y1="200" x2={200 + 150 * Math.cos((angle1Supp * Math.PI) / 180)} y2={200 - 150 * Math.sin((angle1Supp * Math.PI) / 180)} stroke="#ec4899" strokeWidth="3" />
-      {drawAngleArc(200, 200, 60, 0, angle1Supp, '#ec4899')}
-      {drawAngleArc(200, 200, 80, angle1Supp, 180, '#a855f7')}
-      <text x={200 + 90 * Math.cos((angle1Supp / 2 * Math.PI) / 180)} y={200 - 90 * Math.sin((angle1Supp / 2 * Math.PI) / 180)} fill="#ec4899" fontSize="20" fontWeight="bold">{angle1Supp}°</text>
-      <text x={200 + 100 * Math.cos(((angle1Supp + (180 - angle1Supp) / 2) * Math.PI) / 180)} y={200 - 100 * Math.sin(((angle1Supp + (180 - angle1Supp) / 2) * Math.PI) / 180)} fill="#a855f7" fontSize="20" fontWeight="bold">{angle2Supp}°</text>
-      <text x="120" y="250" fill="#059669" fontSize="18" fontWeight="bold">{angle1Supp}° + {angle2Supp}° = 180°</text>
-    </svg>
-  );
 
 
   const renderDemonstrationMode = () => (
-    <div className="space-y-4 sm:space-y-6 w-full">
-      {/* Angle Definition Block - First */}
-      <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 md:p-8 border-t-4 border-blue-500 w-full animate-slideIn">
-        <div className="flex items-start gap-3 sm:gap-4 p-4 sm:p-6 bg-blue-50 rounded-xl border-l-4 border-blue-500">
-          <span className="text-2xl sm:text-3xl animate-fadeIn" style={{ animationDelay: '0.3s', animationFillMode: 'both' }}>📖</span>
-          <div className="flex-1">
-            <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2 sm:mb-3 animate-fadeIn" style={{ animationDelay: '0.5s', animationFillMode: 'both' }}>{t.angleDefinition}</h3>
-            <AnimatedText 
-              text={t.angleDefinitionText} 
-              baseDelay={0.8} 
-              className="text-gray-700 text-base sm:text-lg leading-relaxed break-words"
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Topic Selection Buttons - Side by Side */}
-      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-4 sm:mb-6 w-full">
-        <button
-          onClick={() => setActiveTab('complementary')}
-          className={`flex-1 py-3 sm:py-4 px-4 sm:px-6 rounded-lg sm:rounded-xl font-semibold text-sm sm:text-base shadow-lg hover:shadow-xl transition-all transform hover:scale-105 ${
-            activeTab === 'complementary' 
-              ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white ring-2 sm:ring-4 ring-blue-200' 
-              : 'bg-gradient-to-r from-blue-500 to-blue-600 text-white'
-          }`}
-        >
-          {t.complementaryAngles}
-        </button>
-        <button
-          onClick={() => setActiveTab('supplementary')}
-          className={`flex-1 py-3 sm:py-4 px-4 sm:px-6 rounded-lg sm:rounded-xl font-semibold text-sm sm:text-base shadow-lg hover:shadow-xl transition-all transform hover:scale-105 ${
-            activeTab === 'supplementary' 
-              ? 'bg-gradient-to-r from-purple-600 to-purple-700 text-white ring-2 sm:ring-4 ring-purple-200' 
-              : 'bg-gradient-to-r from-purple-500 to-purple-600 text-white'
-          }`}
-        >
-          {t.supplementaryAngles}
-        </button>
-      </div>
-
-      {/* Content Display */}
-      {activeTab === 'complementary' && (
-        <div className="bg-white rounded-2xl shadow-xl p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 w-full overflow-x-hidden animate-slideIn">
-          {/* Definition */}
-          <div className="flex items-start gap-3 sm:gap-4 p-4 sm:p-6 bg-blue-50 rounded-xl border-l-4 border-blue-500 animate-fadeIn" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
-            <span className="text-2xl sm:text-3xl animate-fadeIn" style={{ animationDelay: '0.4s', animationFillMode: 'both' }}>📖</span>
-            <div className="flex-1">
-              <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2 sm:mb-3 animate-fadeIn" style={{ animationDelay: '0.6s', animationFillMode: 'both' }}>{t.complementaryAngles}</h3>
-              <AnimatedText 
-                text={
-                  language === 'en' ? 'When the sum of the measures of two angles is 90°, the angles are called complementary angles.' :
-                  language === 'hi' ? 'जब दो कोणों के मापों का योग 90° हो, तो कोणों को पूरक कोण कहा जाता है।' :
-                  'જ્યારે બે કોણના માપનો સરવાળો 90° હોય, તો કોણને પૂરક કોણ કહેવામાં આવે છે।'
-                }
-                baseDelay={0.9}
-                className="text-gray-700 text-base sm:text-lg leading-relaxed break-words"
-              />
-            </div>
-          </div>
-          
-          {/* Interactive Diagram */}
-          <div className="animate-fadeIn" style={{ animationDelay: '1.5s', animationFillMode: 'both' }}>
-            <h4 className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-4 animate-fadeIn" style={{ animationDelay: '1.7s', animationFillMode: 'both' }}>{t.interactiveDiagram}:</h4>
-            <div className="animate-fadeIn" style={{ animationDelay: '2s', animationFillMode: 'both' }}>
-              <ComplementaryDiagram />
-            </div>
-          </div>
-          
-          {/* Controls */}
-          <div className="mt-4 sm:mt-6 space-y-3 sm:space-y-4 animate-fadeIn" style={{ animationDelay: '2.3s', animationFillMode: 'both' }}>
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
-              <label className="text-gray-700 font-semibold text-sm sm:text-base min-w-[100px] sm:min-w-[120px]">{t.adjustAngle}:</label>
-              <input type="range" min="10" max="80" value={angle1} onChange={(e) => setAngle1(Number(e.target.value))} className="flex-1 w-full sm:w-auto h-2 bg-blue-200 rounded-lg appearance-none cursor-pointer" />
-              <span className="text-blue-600 font-bold text-base sm:text-lg min-w-[50px] sm:min-w-[60px]">{angle1}°</span>
-            </div>
-            <button onClick={animateAngles} disabled={isAnimating} className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-400 text-sm sm:text-base">
-              <RotateCcw className={`w-4 h-4 sm:w-5 sm:h-5 ${isAnimating ? 'animate-spin' : ''}`} />
-              {t.animateAngles}
-            </button>
-          </div>
-
-        </div>
-      )}
-
-      {activeTab === 'supplementary' && (
-        <div className="bg-white rounded-2xl shadow-xl p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 w-full overflow-x-hidden animate-slideIn">
-          {/* Definition */}
-          <div className="flex items-start gap-3 sm:gap-4 p-4 sm:p-6 bg-purple-50 rounded-xl border-l-4 border-purple-500 animate-fadeIn" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
-            <span className="text-2xl sm:text-3xl animate-fadeIn" style={{ animationDelay: '0.4s', animationFillMode: 'both' }}>📖</span>
-            <div className="flex-1">
-              <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2 sm:mb-3 animate-fadeIn" style={{ animationDelay: '0.6s', animationFillMode: 'both' }}>{t.supplementaryAngles}</h3>
-              <AnimatedText 
-                text={
-                  language === 'en' ? 'When the sum of the measures of two angles is 180°, the angles are called supplementary angles.' :
-                  language === 'hi' ? 'जब दो कोणों के मापों का योग 180° हो, तो कोणों को संपूरक कोण कहा जाता है।' :
-                  'જ્યારે બે કોણના માપનો સરવાળો 180° હોય, તો કોણને સંપૂરક કોણ કહેવામાં આવે છે।'
-                }
-                baseDelay={0.9}
-                className="text-gray-700 text-base sm:text-lg leading-relaxed break-words"
-              />
-            </div>
-          </div>
-          
-          {/* Interactive Diagram */}
-          <div className="animate-fadeIn" style={{ animationDelay: '1.5s', animationFillMode: 'both' }}>
-            <h4 className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-4 animate-fadeIn" style={{ animationDelay: '1.7s', animationFillMode: 'both' }}>{t.interactiveDiagram}:</h4>
-            <div className="animate-fadeIn" style={{ animationDelay: '2s', animationFillMode: 'both' }}>
-              <SupplementaryDiagram />
-            </div>
-          </div>
-          
-          {/* Controls */}
-          <div className="mt-4 sm:mt-6 space-y-3 sm:space-y-4 animate-fadeIn" style={{ animationDelay: '2.3s', animationFillMode: 'both' }}>
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
-              <label className="text-gray-700 font-semibold text-sm sm:text-base min-w-[100px] sm:min-w-[120px]">{t.adjustAngle}:</label>
-              <input type="range" min="20" max="160" value={angle1Supp} onChange={(e) => setAngle1Supp(Number(e.target.value))} className="flex-1 w-full sm:w-auto h-2 bg-purple-200 rounded-lg appearance-none cursor-pointer" />
-              <span className="text-purple-600 font-bold text-base sm:text-lg min-w-[50px] sm:min-w-[60px]">{angle1Supp}°</span>
-            </div>
-            <button onClick={animateAngles} disabled={isAnimating} className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors disabled:bg-gray-400 text-sm sm:text-base">
-              <RotateCcw className={`w-4 h-4 sm:w-5 sm:h-5 ${isAnimating ? 'animate-spin' : ''}`} />
-              {t.animateAngles}
-            </button>
-          </div>
-        </div>
-      )}
+    <div className="w-full">
+      <LinesAndAnglesTutorial language={language} />
     </div>
   );
 
@@ -1087,6 +1498,7 @@ const Chapter5Tool: React.FC = () => {
                 setFeedback('');
                 setShowHint(false);
                 setAttempts(0);
+                setSelectedOption('');
               }}
               className="flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-teal-500 to-purple-500 text-white rounded-xl hover:from-teal-600 hover:to-purple-600 transition-all font-medium shadow-lg hover:scale-105 text-lg"
             >
@@ -1160,23 +1572,19 @@ const Chapter5Tool: React.FC = () => {
                         {(currentExercise.data as any).shapes.map((opt: string, idx: number) => (
                           <label key={idx} className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer">
                             <input
-                              type="checkbox"
+                              type="radio"
+                              name={`exercise-${currentExercise.id}`}
                               className="w-4 h-4"
-                              checked={selectedOptions.includes(opt)}
+                              checked={selectedOption === opt}
                               onChange={(e) => {
-                                setSelectedOptions(prev => {
-                                  if (e.target.checked) {
-                                    return [...prev, opt];
-                                  } else {
-                                    return prev.filter(o => o !== opt);
-                                  }
-                                });
+                                if (e.target.checked) {
+                                  setSelectedOption(opt);
+                                }
                               }}
                             />
                             <span className="text-sm sm:text-base text-gray-800">{opt}</span>
                           </label>
                         ))}
-                        <div className="text-xs text-gray-500 mt-1">Select all that apply.</div>
                       </div>
                     ) : (
                       <input
@@ -1295,140 +1703,156 @@ const Chapter5Tool: React.FC = () => {
           
           {/* Applications Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {/* Clock & Watch - Complementary */}
+            {/* Railroad Tracks - Parallel Lines with Transversal */}
             <div className="application-card bg-white rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 hover:shadow-xl transition-all duration-300 transform hover:scale-105 border-2 border-blue-200">
                             <div className="text-center">
-                <div className="text-4xl sm:text-6xl mb-3 sm:mb-4">🕐</div>
+                <div className="text-4xl sm:text-6xl mb-3 sm:mb-4">🚂</div>
                 <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">{t.clockWatch}</h3>
                 <p className="text-gray-600 mb-3 sm:mb-4 text-xs sm:text-sm break-words">
                   {t.clockWatchDesc}
                 </p>
                 <div className="bg-blue-50 p-3 sm:p-4 rounded-lg sm:rounded-xl">
                   <svg width="100%" height="120" viewBox="0 0 120 120" preserveAspectRatio="xMidYMid meet" className="mx-auto max-w-[120px] max-h-[120px]">
-                    <circle cx="60" cy="60" r="50" fill="#EFF6FF" stroke="#3b82f6" strokeWidth="2"/>
-                    <circle cx="60" cy="60" r="3" fill="#3b82f6"/>
-                    {/* Hour hand at 3 */}
-                    <line x1="60" y1="60" x2="100" y2="60" stroke="#3b82f6" strokeWidth="3" strokeLinecap="round"/>
-                    {/* Minute hand at 12 */}
-                    <line x1="60" y1="60" x2="60" y2="20" stroke="#8b5cf6" strokeWidth="2" strokeLinecap="round"/>
-                    {drawAngleArc(60, 60, 25, 0, 90, '#10b981')}
-                    <text x="75" y="45" fill="#10b981" fontSize="12" fontWeight="bold">90°</text>
+                    {/* Parallel railroad tracks */}
+                    <line x1="10" y1="30" x2="110" y2="30" stroke="#555" strokeWidth="3"/>
+                    <line x1="10" y1="50" x2="110" y2="50" stroke="#555" strokeWidth="3"/>
+                    {/* Transversal crossing */}
+                    <line x1="40" y1="10" x2="80" y2="70" stroke="#3b82f6" strokeWidth="3"/>
+                    {/* Angle indicators */}
+                    <circle cx="50" cy="30" r="2" fill="#10b981"/>
+                    <circle cx="65" cy="50" r="2" fill="#10b981"/>
+                    <text x="52" y="28" fill="#10b981" fontSize="10" fontWeight="bold">∠1</text>
+                    <text x="67" y="48" fill="#10b981" fontSize="10" fontWeight="bold">∠2</text>
                   </svg>
                               </div>
                             </div>
                           </div>
 
-            {/* Construction & Carpentry - Complementary */}
+            {/* Street Grid - Intersecting Lines */}
             <div className="application-card bg-white rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 hover:shadow-xl transition-all duration-300 transform hover:scale-105 border-2 border-teal-200">
               <div className="text-center">
-                <div className="text-4xl sm:text-6xl mb-3 sm:mb-4">🔨</div>
+                <div className="text-4xl sm:text-6xl mb-3 sm:mb-4">🏙️</div>
                 <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">{t.construction}</h3>
                 <p className="text-gray-600 mb-3 sm:mb-4 text-xs sm:text-sm break-words">
                   {t.constructionDesc}
                 </p>
                 <div className="bg-teal-50 p-3 sm:p-4 rounded-lg sm:rounded-xl">
                   <svg width="100%" height="120" viewBox="0 0 120 120" preserveAspectRatio="xMidYMid meet" className="mx-auto max-w-[120px] max-h-[120px]">
-                    {/* Wall corner */}
-                    <line x1="20" y1="60" x2="60" y2="60" stroke="#14b8a6" strokeWidth="4"/>
-                    <line x1="60" y1="60" x2="60" y2="20" stroke="#14b8a6" strokeWidth="4"/>
-                    {drawAngleArc(60, 60, 20, 0, 90, '#10b981')}
-                    <text x="70" y="50" fill="#10b981" fontSize="12" fontWeight="bold">90°</text>
-                    <rect x="58" y="58" width="4" height="4" fill="#0d9488"/>
+                    {/* Parallel streets (horizontal) */}
+                    <line x1="10" y1="35" x2="110" y2="35" stroke="#555" strokeWidth="2.5"/>
+                    <line x1="10" y1="60" x2="110" y2="60" stroke="#555" strokeWidth="2.5"/>
+                    <line x1="10" y1="85" x2="110" y2="85" stroke="#555" strokeWidth="2.5"/>
+                    {/* Transversal roads (diagonal) */}
+                    <line x1="40" y1="10" x2="80" y2="110" stroke="#14b8a6" strokeWidth="3"/>
+                    {/* Angle indicators */}
+                    <circle cx="50" cy="35" r="2" fill="#10b981"/>
+                    <circle cx="60" cy="60" r="2" fill="#10b981"/>
+                    <text x="52" y="33" fill="#10b981" fontSize="9" fontWeight="bold">∠</text>
                   </svg>
                       </div>
                     </div>
                 </div>
 
-            {/* Doors & Windows - Complementary */}
+            {/* Railway Crossing - Transversal */}
             <div className="application-card bg-white rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 hover:shadow-xl transition-all duration-300 transform hover:scale-105 border-2 border-purple-200">
             <div className="text-center">
-                <div className="text-4xl sm:text-6xl mb-3 sm:mb-4">🚪</div>
+                <div className="text-4xl sm:text-6xl mb-3 sm:mb-4">🚧</div>
                 <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">{t.doorWindow}</h3>
                 <p className="text-gray-600 mb-3 sm:mb-4 text-xs sm:text-sm break-words">
                   {t.doorWindowDesc}
                 </p>
                 <div className="bg-purple-50 p-3 sm:p-4 rounded-lg sm:rounded-xl">
                   <svg width="100%" height="120" viewBox="0 0 120 120" preserveAspectRatio="xMidYMid meet" className="mx-auto max-w-[120px] max-h-[120px]">
-                    {/* Door frame */}
-                    <line x1="30" y1="30" x2="30" y2="90" stroke="#a855f7" strokeWidth="3"/>
-                    <line x1="30" y1="30" x2="90" y2="30" stroke="#a855f7" strokeWidth="2"/>
-                    {/* Door at 45° */}
-                    <line x1="30" y1="30" x2={30 + 50 * Math.cos(Math.PI / 4)} y2={30 + 50 * Math.sin(Math.PI / 4)} stroke="#ec4899" strokeWidth="3"/>
-                    {drawAngleArc(30, 30, 25, 0, 45, '#ec4899')}
-                    {drawAngleArc(30, 30, 30, 45, 90, '#8b5cf6')}
-                    <text x="45" y="50" fill="#ec4899" fontSize="10" fontWeight="bold">45°</text>
-                    <text x="20" y="50" fill="#8b5cf6" fontSize="10" fontWeight="bold">45°</text>
+                    {/* Parallel tracks */}
+                    <line x1="10" y1="35" x2="110" y2="35" stroke="#555" strokeWidth="3"/>
+                    <line x1="10" y1="55" x2="110" y2="55" stroke="#555" strokeWidth="3"/>
+                    {/* Crossing road (transversal) */}
+                    <line x1="60" y1="10" x2="60" y2="80" stroke="#a855f7" strokeWidth="4" strokeDasharray="5,3"/>
+                    {/* Angle markers */}
+                    <circle cx="60" cy="35" r="2.5" fill="#ec4899"/>
+                    <circle cx="60" cy="55" r="2.5" fill="#ec4899"/>
+                    {/* Labels */}
+                    <text x="65" y="33" fill="#ec4899" fontSize="10" fontWeight="bold">∠</text>
+                    <text x="65" y="53" fill="#ec4899" fontSize="10" fontWeight="bold">∠</text>
                 </svg>
               </div>
             </div>
           </div>
 
-            {/* Navigation & Compass - Complementary */}
+            {/* Bridge Support Beams - Parallel with Transversal */}
             <div className="application-card bg-white rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 hover:shadow-xl transition-all duration-300 transform hover:scale-105 border-2 border-indigo-200">
             <div className="text-center">
-                <div className="text-4xl sm:text-6xl mb-3 sm:mb-4">🧭</div>
+                <div className="text-4xl sm:text-6xl mb-3 sm:mb-4">🌉</div>
                 <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">{t.angleNavigation}</h3>
                 <p className="text-gray-600 mb-3 sm:mb-4 text-xs sm:text-sm break-words">
                   {t.angleNavigationDesc}
                 </p>
                 <div className="bg-indigo-50 p-3 sm:p-4 rounded-lg sm:rounded-xl">
                   <svg width="100%" height="120" viewBox="0 0 120 120" preserveAspectRatio="xMidYMid meet" className="mx-auto max-w-[120px] max-h-[120px]">
-                    {/* Compass rose */}
-                    <circle cx="60" cy="60" r="45" fill="#E0E7FF" stroke="#6366F1" strokeWidth="2"/>
-                    <line x1="60" y1="15" x2="60" y2="30" stroke="#6366F1" strokeWidth="2"/>
-                    <text x="55" y="12" fill="#6366F1" fontSize="10" fontWeight="bold">N</text>
-                    {/* NE direction at 45° */}
-                    <line x1="60" y1="60" x2={60 + 35 * Math.cos(Math.PI / 4)} y2={60 - 35 * Math.sin(Math.PI / 4)} stroke="#10b981" strokeWidth="2"/>
-                    {/* N direction */}
-                    <line x1="60" y1="60" x2="60" y2="25" stroke="#6366F1" strokeWidth="2"/>
-                    {drawAngleArc(60, 60, 28, 0, 45, '#10b981')}
-                    <text x="75" y="50" fill="#10b981" fontSize="10" fontWeight="bold">45°</text>
+                    {/* Parallel beams */}
+                    <line x1="15" y1="30" x2="105" y2="30" stroke="#6366F1" strokeWidth="4"/>
+                    <line x1="15" y1="70" x2="105" y2="70" stroke="#6366F1" strokeWidth="4"/>
+                    {/* Transversal support */}
+                    <line x1="40" y1="30" x2="40" y2="70" stroke="#10b981" strokeWidth="3"/>
+                    <line x1="60" y1="30" x2="60" y2="70" stroke="#10b981" strokeWidth="3"/>
+                    <line x1="80" y1="30" x2="80" y2="70" stroke="#10b981" strokeWidth="3"/>
+                    {/* Angle markers */}
+                    <circle cx="40" cy="30" r="2" fill="#ec4899"/>
+                    <circle cx="40" cy="70" r="2" fill="#ec4899"/>
                 </svg>
               </div>
             </div>
           </div>
 
-            {/* Roads & Bridges - Supplementary */}
+            {/* Window Panes - Grid with Diagonal */}
             <div className="application-card bg-white rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 hover:shadow-xl transition-all duration-300 transform hover:scale-105 border-2 border-orange-200">
             <div className="text-center">
-                <div className="text-4xl sm:text-6xl mb-3 sm:mb-4">🛣️</div>
+                <div className="text-4xl sm:text-6xl mb-3 sm:mb-4">🪟</div>
                 <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">{t.roadsBridges}</h3>
                 <p className="text-gray-600 mb-3 sm:mb-4 text-xs sm:text-sm break-words">
                   {t.roadsBridgesDesc}
                 </p>
                 <div className="bg-orange-50 p-3 sm:p-4 rounded-lg sm:rounded-xl">
                   <svg width="100%" height="120" viewBox="0 0 120 120" preserveAspectRatio="xMidYMid meet" className="mx-auto max-w-[120px] max-h-[120px]">
-                    {/* Straight road */}
-                    <line x1="10" y1="60" x2="110" y2="60" stroke="#f97316" strokeWidth="6" strokeLinecap="round"/>
-                    {/* Road markings */}
-                    <line x1="30" y1="60" x2="50" y2="60" stroke="#fff" strokeWidth="2" strokeDasharray="3,3"/>
-                    <line x1="70" y1="60" x2="90" y2="60" stroke="#fff" strokeWidth="2" strokeDasharray="3,3"/>
-                    {/* Angle indicator */}
-                    <line x1="60" y1="60" x2="60" y2="30" stroke="#f97316" strokeWidth="2" opacity="0.3"/>
-                    <path d="M 60 60 L 60 60" stroke="#10b981" strokeWidth="3" opacity="0.8"/>
-                    <text x="65" y="45" fill="#10b981" fontSize="10" fontWeight="bold">180°</text>
+                    {/* Window frame */}
+                    <rect x="20" y="20" width="80" height="80" fill="none" stroke="#555" strokeWidth="3"/>
+                    {/* Horizontal bars */}
+                    <line x1="20" y1="45" x2="100" y2="45" stroke="#555" strokeWidth="2"/>
+                    <line x1="20" y1="70" x2="100" y2="70" stroke="#555" strokeWidth="2"/>
+                    {/* Vertical bars */}
+                    <line x1="45" y1="20" x2="45" y2="100" stroke="#555" strokeWidth="2"/>
+                    <line x1="70" y1="20" x2="70" y2="100" stroke="#555" strokeWidth="2"/>
+                    {/* Diagonal transversal */}
+                    <line x1="20" y1="20" x2="100" y2="100" stroke="#f97316" strokeWidth="2.5" strokeDasharray="4,2"/>
+                    {/* Angle markers */}
+                    <circle cx="45" cy="45" r="2" fill="#10b981"/>
                 </svg>
               </div>
             </div>
           </div>
 
-            {/* Architecture - Supplementary */}
+            {/* Ladder Design - Parallel Rungs */}
             <div className="application-card bg-white rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 hover:shadow-xl transition-all duration-300 transform hover:scale-105 border-2 border-pink-200">
             <div className="text-center">
-                <div className="text-4xl sm:text-6xl mb-3 sm:mb-4">🏛️</div>
+                <div className="text-4xl sm:text-6xl mb-3 sm:mb-4">🪜</div>
                 <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">{t.angleArchitecture}</h3>
                 <p className="text-gray-600 mb-3 sm:mb-4 text-xs sm:text-sm break-words">
                   {t.angleArchitectureDesc}
                 </p>
                 <div className="bg-pink-50 p-3 sm:p-4 rounded-lg sm:rounded-xl">
                   <svg width="100%" height="120" viewBox="0 0 120 120" preserveAspectRatio="xMidYMid meet" className="mx-auto max-w-[120px] max-h-[120px]">
-                    {/* Building structure with straight lines */}
-                    <rect x="40" y="40" width="40" height="30" fill="#FCE7F3" stroke="#EC4899" strokeWidth="2"/>
-                    <line x1="30" y1="70" x2="90" y2="70" stroke="#EC4899" strokeWidth="3"/>
-                    {/* Flat roof - 180° line */}
-                    <line x1="35" y1="40" x2="85" y2="40" stroke="#a855f7" strokeWidth="3"/>
-                    <circle cx="60" cy="40" r="2" fill="#a855f7"/>
-                    <text x="45" y="35" fill="#10b981" fontSize="10" fontWeight="bold">180°</text>
+                    {/* Ladder side rails (transversals) */}
+                    <line x1="35" y1="20" x2="35" y2="100" stroke="#a855f7" strokeWidth="4"/>
+                    <line x1="85" y1="20" x2="85" y2="100" stroke="#a855f7" strokeWidth="4"/>
+                    {/* Parallel rungs */}
+                    <line x1="35" y1="30" x2="85" y2="30" stroke="#ec4899" strokeWidth="3"/>
+                    <line x1="35" y1="50" x2="85" y2="50" stroke="#ec4899" strokeWidth="3"/>
+                    <line x1="35" y1="70" x2="85" y2="70" stroke="#ec4899" strokeWidth="3"/>
+                    <line x1="35" y1="90" x2="85" y2="90" stroke="#ec4899" strokeWidth="3"/>
+                    {/* Angle markers */}
+                    <circle cx="35" cy="30" r="2" fill="#10b981"/>
+                    <circle cx="35" cy="50" r="2" fill="#10b981"/>
+                    <text x="55" y="25" fill="#10b981" fontSize="10" fontWeight="bold">∠</text>
                 </svg>
               </div>
             </div>
