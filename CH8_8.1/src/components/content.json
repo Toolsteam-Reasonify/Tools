@@ -1,0 +1,458 @@
+{
+  "translations": {
+    "en": {
+      "nav.logo": "Time Measurement",
+      "nav.learn": "Learn",
+      "nav.practice": "Practice",
+      "nav.realworld": "Real World",
+      "header.title": "Measurement of Time",
+      "header.subtitle": "Explore how humans have measured time through the ages",
+      "early.title": "Early Methods of Measuring Time",
+      "early.subtitle": "Before clocks and watches were invented, people observed natural events that repeat regularly",
+      "early.sun.title": "Rising and Setting of the Sun",
+      "early.sun.desc": "Daily cycle of sunrise and sunset",
+      "early.moon.title": "Phases of the Moon",
+      "early.moon.desc": "Monthly lunar cycle",
+      "early.seasons.title": "Change of Seasons",
+      "early.seasons.desc": "Yearly seasonal patterns",
+      "ancient.title": "Ancient Time-Measuring Devices",
+      "device.sundial": "Sundial",
+      "device.sundial.desc": "Measures time using the shadow of an object formed by sunlight",
+      "device.waterclock": "Water Clock",
+      "device.waterclock.desc": "Measures time by the flow of water",
+      "device.hourglass": "Hourglass",
+      "device.hourglass.desc": "Measures time using flowing sand",
+      "device.candle": "Candle Clock",
+      "device.candle.desc": "Shows time by the amount of candle burned",
+      "sundial.demo": "Sundial Demonstration",
+      "sundial.timeofday": "Time of Day",
+      "waterclock.level": "Water Level",
+      "hourglass.sand": "Sand Level",
+      "pendulum.title": "Pendulum Clock",
+      "pendulum.subtitle": "A major improvement in time measurement. It works on the regular swinging motion of a pendulum.",
+      "pendulum.simple": "Simple Pendulum",
+      "pendulum.start": "Start Pendulum",
+      "pendulum.stop": "Stop Pendulum",
+      "pendulum.components": "Components:",
+      "pendulum.bob": "Bob: A small heavy object",
+      "pendulum.string": "String: Fixed to a support",
+      "pendulum.keyterms": "Key Terms:",
+      "pendulum.oscillation": "Oscillation: One complete to-and-fro movement",
+      "pendulum.timeperiod": "Time Period: Time taken for one oscillation",
+      "pendulum.facts": "Important Facts:",
+      "pendulum.fact1": "Time period depends on the length of the string",
+      "pendulum.fact2": "Time period does NOT depend on the mass of the bob",
+      "si.title": "SI Unit of Time",
+      "si.second": "Second (s)",
+      "si.second.desc": "Base unit of time",
+      "si.minute": "Minute (min)",
+      "si.minute.desc": "60 seconds = 1 minute",
+      "si.hour": "Hour (h)",
+      "si.hour.desc": "60 minutes = 1 hour",
+      "importance.title": "Importance of Measuring Time",
+      "importance.sports": "Sports competitions",
+      "importance.medicine": "Medicine",
+      "importance.science": "Science experiments",
+      "importance.daily": "Daily life activities",
+      "realworld.title": "Real World Applications",
+      "realworld.subtitle": "How accurate time measurement impacts our modern world",
+      "realworld.gps": "GPS Navigation",
+      "realworld.gps.desc": "GPS satellites use atomic clocks. Even 1 microsecond error can cause 300-meter location mistakes!",
+      "realworld.internet": "Internet & Computers",
+      "realworld.internet.desc": "Computer processors sync billions of operations per second using precise clock signals",
+      "realworld.finance": "Stock Trading",
+      "realworld.finance.desc": "High-frequency trading executes millions of trades in milliseconds - timing is everything",
+      "realworld.aviation": "Air Traffic Control",
+      "realworld.aviation.desc": "Planes are separated by precise time intervals to prevent collisions in busy airspace",
+      "realworld.telecom": "Mobile Networks",
+      "realworld.telecom.desc": "Cell towers synchronize to nanosecond precision to handle millions of simultaneous calls",
+      "realworld.space": "Space Missions",
+      "realworld.space.desc": "Commands to Mars rovers must account for the 20-minute signal delay with perfect timing",
+      "practice.progress": "Question",
+      "practice.of": "of",
+      "practice.score": "Score:",
+      "practice.check": "Check Answer",
+      "practice.select": "Select an option",
+      "practice.correct": "Correct! 🎉",
+      "practice.incorrect": "Not quite right",
+      "practice.previous": "Previous",
+      "practice.next": "Next",
+      "practice.complete": "Congratulations!",
+      "practice.complete.sub": "You've completed all questions!",
+      "practice.finalscore": "Final Score:",
+      "practice.perfect": "Perfect score! You're a time measurement expert! 🏆",
+      "practice.great": "Great job! Keep practicing! 👏",
+      "practice.good": "Good effort! Review the concepts and try again! 💪"
+    },
+    "hi": {
+      "nav.logo": "समय माप",
+      "nav.learn": "सीखें",
+      "nav.practice": "अभ्यास करें",
+      "nav.realworld": "वास्तविक दुनिया",
+      "header.title": "समय का मापन",
+      "header.subtitle": "जानें कि मनुष्यों ने युगों से समय कैसे मापा है",
+      "early.title": "समय मापने की प्रारंभिक विधियाँ",
+      "early.subtitle": "घड़ियों के आविष्कार से पहले, लोग नियमित रूप से दोहराई जाने वाली प्राकृतिक घटनाओं का अवलोकन करते थे",
+      "early.sun.title": "सूर्योदय और सूर्यास्त",
+      "early.sun.desc": "सूर्योदय और सूर्यास्त का दैनिक चक्र",
+      "early.moon.title": "चंद्रमा की कलाएं",
+      "early.moon.desc": "मासिक चंद्र चक्र",
+      "early.seasons.title": "मौसम का परिवर्तन",
+      "early.seasons.desc": "वार्षिक मौसमी पैटर्न",
+      "ancient.title": "प्राचीन समय-मापन उपकरण",
+      "device.sundial": "धूपघड़ी",
+      "device.sundial.desc": "सूर्य के प्रकाश से बनी छाया द्वारा समय मापता है",
+      "device.waterclock": "जलघड़ी",
+      "device.waterclock.desc": "पानी के प्रवाह से समय मापता है",
+      "device.hourglass": "रेतघड़ी",
+      "device.hourglass.desc": "बहती रेत से समय मापता है",
+      "device.candle": "मोमबत्ती घड़ी",
+      "device.candle.desc": "मोमबत्ती जलने की मात्रा से समय दिखाता है",
+      "sundial.demo": "धूपघड़ी प्रदर्शन",
+      "sundial.timeofday": "दिन का समय",
+      "waterclock.level": "पानी का स्तर",
+      "hourglass.sand": "रेत का स्तर",
+      "pendulum.title": "पेंडुलम घड़ी",
+      "pendulum.subtitle": "समय माप में एक बड़ा सुधार। यह पेंडुलम की नियमित दोलन गति पर काम करता है।",
+      "pendulum.simple": "साधारण पेंडुलम",
+      "pendulum.start": "पेंडुलम शुरू करें",
+      "pendulum.stop": "पेंडुलम रोकें",
+      "pendulum.components": "घटक:",
+      "pendulum.bob": "बोब: एक छोटी भारी वस्तु",
+      "pendulum.string": "धागा: एक सहारे से जुड़ा हुआ",
+      "pendulum.keyterms": "मुख्य शब्द:",
+      "pendulum.oscillation": "दोलन: एक पूर्ण आगे-पीछे की गति",
+      "pendulum.timeperiod": "आवर्तकाल: एक दोलन में लगने वाला समय",
+      "pendulum.facts": "महत्वपूर्ण तथ्य:",
+      "pendulum.fact1": "आवर्तकाल धागे की लंबाई पर निर्भर करता है",
+      "pendulum.fact2": "आवर्तकाल बोब के द्रव्यमान पर निर्भर नहीं करता",
+      "si.title": "समय की SI इकाई",
+      "si.second": "सेकंड (s)",
+      "si.second.desc": "समय की आधार इकाई",
+      "si.minute": "मिनट (min)",
+      "si.minute.desc": "60 सेकंड = 1 मिनट",
+      "si.hour": "घंटा (h)",
+      "si.hour.desc": "60 मिनट = 1 घंटा",
+      "importance.title": "समय मापने का महत्व",
+      "importance.sports": "खेल प्रतियोगिताएं",
+      "importance.medicine": "चिकित्सा",
+      "importance.science": "विज्ञान प्रयोग",
+      "importance.daily": "दैनिक जीवन गतिविधियां",
+      "realworld.title": "वास्तविक दुनिया के अनुप्रयोग",
+      "realworld.subtitle": "सटीक समय माप आधुनिक दुनिया को कैसे प्रभावित करता है",
+      "realworld.gps": "जीपीएस नेविगेशन",
+      "realworld.gps.desc": "जीपीएस उपग्रह परमाणु घड़ियों का उपयोग करते हैं। 1 माइक्रोसेकंड की त्रुटि 300 मीटर की गलती का कारण बन सकती है!",
+      "realworld.internet": "इंटरनेट और कंप्यूटर",
+      "realworld.internet.desc": "कंप्यूटर प्रोसेसर सटीक घड़ी संकेतों से प्रति सेकंड अरबों ऑपरेशन सिंक करते हैं",
+      "realworld.finance": "स्टॉक ट्रेडिंग",
+      "realworld.finance.desc": "उच्च-आवृत्ति ट्रेडिंग मिलीसेकंड में लाखों ट्रेड करती है - समय सब कुछ है",
+      "realworld.aviation": "एयर ट्रैफिक कंट्रोल",
+      "realworld.aviation.desc": "विमानों को सटीक समय अंतराल से अलग किया जाता है ताकि टकराव न हो",
+      "realworld.telecom": "मोबाइल नेटवर्क",
+      "realworld.telecom.desc": "सेल टावर नैनोसेकंड सटीकता से लाखों कॉल संभालते हैं",
+      "realworld.space": "अंतरिक्ष मिशन",
+      "realworld.space.desc": "मंगल रोवर्स को कमांड 20-मिनट विलंब के साथ पूर्ण समय पर भेजे जाते हैं",
+      "practice.progress": "प्रश्न",
+      "practice.of": "में से",
+      "practice.score": "स्कोर:",
+      "practice.check": "उत्तर जांचें",
+      "practice.select": "एक विकल्प चुनें",
+      "practice.correct": "सही! 🎉",
+      "practice.incorrect": "बिल्कुल सही नहीं",
+      "practice.previous": "पिछला",
+      "practice.next": "अगला",
+      "practice.complete": "बधाई हो!",
+      "practice.complete.sub": "आपने सभी प्रश्न पूरे कर लिए हैं!",
+      "practice.finalscore": "अंतिम स्कोर:",
+      "practice.perfect": "पूर्ण स्कोर! आप समय माप विशेषज्ञ हैं! 🏆",
+      "practice.great": "बहुत बढ़िया! अभ्यास जारी रखें! 👏",
+      "practice.good": "अच्छा प्रयास! अवधारणाओं की समीक्षा करें और फिर से प्रयास करें! 💪"
+    },
+    "gu": {
+      "nav.logo": "સમય માપ",
+      "nav.learn": "શીખો",
+      "nav.practice": "અભ્યાસ કરો",
+      "nav.realworld": "વાસ્તવિક દુનિયા",
+      "header.title": "સમયનું માપન",
+      "header.subtitle": "જાણો કે યુગોથી માનવોએ સમય કેવી રીતે માપ્યો છે",
+      "early.title": "સમય માપવાની પ્રારંભિક પદ્ધતિઓ",
+      "early.subtitle": "ઘડિયાળોની શોધ પહેલાં, લોકો નિયમિત પુનરાવર્તિત પ્રાકૃતિક ઘટનાઓનું નિરીક્ષણ કરતા હતા",
+      "early.sun.title": "સૂર્યોદય અને સૂર્યાસ્ત",
+      "early.sun.desc": "સૂર્યોદય અને સૂર્યાસ્તનું દૈનિક ચક્ર",
+      "early.moon.title": "ચંદ્રની કળાઓ",
+      "early.moon.desc": "માસિક ચંદ્ર ચક્ર",
+      "early.seasons.title": "ઋતુઓનો પરિવર્તન",
+      "early.seasons.desc": "વાર્ષિક મૌસમી પેટર્ન",
+      "ancient.title": "પ્રાચીન સમય-માપન ઉપકરણો",
+      "device.sundial": "સૂર્યઘડિયાળ",
+      "device.sundial.desc": "સૂર્યપ્રકાશથી બનેલ પડછાયા દ્વારા સમય માપે છે",
+      "device.waterclock": "પાણીઘડિયાળ",
+      "device.waterclock.desc": "પાણીના પ્રવાહથી સમય માપે છે",
+      "device.hourglass": "રેતીઘડિયાળ",
+      "device.hourglass.desc": "વહેતી રેતીથી સમય માપે છે",
+      "device.candle": "મીણબત્તી ઘડિયાળ",
+      "device.candle.desc": "મીણબત્તી સળગવાની માત્રા દ્વારા સમય દર્શાવે છે",
+      "sundial.demo": "સૂર્યઘડિયાળ પ્રદર્શન",
+      "sundial.timeofday": "દિવસનો સમય",
+      "waterclock.level": "પાણીનું સ્તર",
+      "hourglass.sand": "રેતીનું સ્તર",
+      "pendulum.title": "લોલક ઘડિયાળ",
+      "pendulum.subtitle": "સમય માપણમાં એક મોટો સુધારો. તે લોલકની નિયમિત ઝૂલતી ગતિ પર કામ કરે છે.",
+      "pendulum.simple": "સરળ લોલક",
+      "pendulum.start": "લોલક શરૂ કરો",
+      "pendulum.stop": "લોલક રોકો",
+      "pendulum.components": "ઘટકો:",
+      "pendulum.bob": "બોબ: એક નાની ભારે વસ્તુ",
+      "pendulum.string": "દોરી: આધાર સાથે જોડાયેલ",
+      "pendulum.keyterms": "મુખ્ય શબ્દો:",
+      "pendulum.oscillation": "દોલન: એક સંપૂર્ણ આગળ-પાછળની ગતિ",
+      "pendulum.timeperiod": "સમયગાળો: એક દોલનમાં લાગતો સમય",
+      "pendulum.facts": "મહત્વપૂર્ણ તથ્યો:",
+      "pendulum.fact1": "સમયગાળો દોરીની લંબાઈ પર આધારિત છે",
+      "pendulum.fact2": "સમયગાળો બોબના દળ પર આધારિત નથી",
+      "si.title": "સમયનો SI એકમ",
+      "si.second": "સેકંડ (s)",
+      "si.second.desc": "સમયનો આધાર એકમ",
+      "si.minute": "મિનિટ (min)",
+      "si.minute.desc": "60 સેકંડ = 1 મિનિટ",
+      "si.hour": "કલાક (h)",
+      "si.hour.desc": "60 મિનિટ = 1 કલાક",
+      "importance.title": "સમય માપવાનું મહત્વ",
+      "importance.sports": "રમતગમતની સ્પર્ધાઓ",
+      "importance.medicine": "દવા",
+      "importance.science": "વિજ્ઞાન પ્રયોગો",
+      "importance.daily": "દૈનિક જીવન પ્રવૃત્તિઓ",
+      "realworld.title": "વાસ્તવિક દુનિયાના ઉપયોગો",
+      "realworld.subtitle": "ચોક્કસ સમય માપ આધુનિક દુનિયાને કેવી રીતે અસર કરે છે",
+      "realworld.gps": "જીપીએસ નેવિગેશન",
+      "realworld.gps.desc": "જીપીએસ ઉપગ્રહો પરમાણુ ઘડિયાળોનો ઉપયોગ કરે છે. 1 માઈક્રોસેકન્ડની ભૂલ 300 મીટરની સ્થાનિક ભૂલનું કારણ બની શકે છે!",
+      "realworld.internet": "ઇન્ટરનેટ અને કમ્પ્યુટર્સ",
+      "realworld.internet.desc": "કમ્પ્યુટર પ્રોસેસર ચોક્કસ ઘડિયાળ સંકેતોનો ઉપયોગ કરીને પ્રતિ સેકન્ડ અબજો કામગીરી સમન્વયિત કરે છે",
+      "realworld.finance": "સ્ટોક ટ્રેડિંગ",
+      "realworld.finance.desc": "ઉચ્ચ-આવૃત્તિ ટ્રેડિંગ મિલિસેકન્ડમાં લાખો વેપાર કરે છે - સમય બધું છે",
+      "realworld.aviation": "એર ટ્રાફિક કંટ્રોલ",
+      "realworld.aviation.desc": "ભીડવાળા હવાઈ ક્ષેત્રમાં અથડામણ અટકાવવા માટે વિમાનોને ચોક્કસ સમય અંતરાલ દ્વારા અલગ કરવામાં આવે છે",
+      "realworld.telecom": "મોબાઇલ નેટવર્ક્સ",
+      "realworld.telecom.desc": "સેલ ટાવર લાખો એકસાથે કોલ્સ સંભાળવા માટે નેનોસેકન્ડ ચોકસાઈથી સમન્વયિત થાય છે",
+      "realworld.space": "અવકાશ મિશન",
+      "realworld.space.desc": "મંગળ રોવર્સને કમાન્ડ 20-મિનિટના સિગ્નલ વિલંબ સાથે સંપૂર્ણ સમય માટે જવાબદાર હોવી જોઈએ",
+      "practice.progress": "પ્રશ્ન",
+      "practice.of": "નો",
+      "practice.score": "સ્કોર:",
+      "practice.check": "જવાબ તપાસો",
+      "practice.select": "એક વિકલ્પ પસંદ કરો",
+      "practice.correct": "સાચું! 🎉",
+      "practice.incorrect": "તદ્દન સાચું નથી",
+      "practice.previous": "પહેલાંનું",
+      "practice.next": "આગળ",
+      "practice.complete": "અભિનંદન!",
+      "practice.complete.sub": "તમે બધા પ્રશ્નો પૂર્ણ કર્યા છે!",
+      "practice.finalscore": "અંતિમ સ્કોર:",
+      "practice.perfect": "સંપૂર્ણ સ્કોર! તમે સમય માપણ નિષ્ણાત છો! 🏆",
+      "practice.great": "ખૂબ સારું! અભ્યાસ ચાલુ રાખો! 👏",
+      "practice.good": "સારો પ્રયાસ! ખ્યાલોની સમીક્ષા કરો અને ફરીથી પ્રયાસ કરો! 💪"
+    }
+  },
+  "practiceQuestions": [
+    {
+      "id": "q1",
+      "question": {
+        "en": "What is the SI unit of time?",
+        "hi": "समय की SI इकाई क्या है?",
+        "gu": "સમયનો SI એકમ શું છે?"
+      },
+      "type": "mcq",
+      "options": {
+        "en": ["Minute", "Hour", "Second", "Day"],
+        "hi": ["मिनट", "घंटा", "सेकंड", "दिन"],
+        "gu": ["મિનિટ", "કલાક", "સેકંડ", "દિવસ"]
+      },
+      "correctAnswer": "Second",
+      "explanation": {
+        "en": "The SI (International System) unit of time is the second (s).",
+        "hi": "समय की SI (अंतर्राष्ट्रीय प्रणाली) इकाई सेकंड (s) है।",
+        "gu": "સમયનો SI (આંતરરાષ્ટ્રીય પ્રણાલી) એકમ સેકંડ (s) છે."
+      }
+    },
+    {
+      "id": "q2",
+      "question": {
+        "en": "Which device measures time using the shadow formed by sunlight?",
+        "hi": "कौन सा उपकरण सूर्य के प्रकाश से बनी छाया का उपयोग करके समय मापता है?",
+        "gu": "કયું ઉપકરણ સૂર્યપ્રકાશથી બનેલ પડછાયાનો ઉપયોગ કરીને સમય માપે છે?"
+      },
+      "type": "mcq",
+      "options": {
+        "en": ["Water clock", "Sundial", "Hourglass", "Pendulum clock"],
+        "hi": ["जलघड़ी", "धूपघड़ी", "रेतघड़ी", "पेंडुलम घड़ी"],
+        "gu": ["પાણીઘડિયાળ", "સૂર્યઘડિયાળ", "રેતીઘડિયાળ", "લોલક ઘડિયાળ"]
+      },
+      "correctAnswer": "Sundial",
+      "explanation": {
+        "en": "A sundial measures time using the shadow of an object (gnomon) formed by sunlight.",
+        "hi": "धूपघड़ी सूर्य के प्रकाश से बनी किसी वस्तु (गोमन) की छाया का उपयोग करके समय मापती है।",
+        "gu": "સૂર્યઘડિયાળ સૂર્યપ્રકાશથી બનેલ વસ્તુ (ગ્નોમોન)ના પડછાયાનો ઉપયોગ કરીને સમય માપે છે."
+      }
+    },
+    {
+      "id": "q3",
+      "question": {
+        "en": "What is one complete to-and-fro movement of a pendulum called?",
+        "hi": "पेंडुलम की एक पूर्ण आगे-पीछे की गति को क्या कहते हैं?",
+        "gu": "લોલકની એક સંપૂર્ણ આગળ-પાછળની ગતિને શું કહેવાય છે?"
+      },
+      "type": "mcq",
+      "options": {
+        "en": ["Vibration", "Revolution", "Rotation", "Oscillation"],
+        "hi": ["कंपन", "परिक्रमण", "घूर्णन", "दोलन"],
+        "gu": ["કંપન", "પરિક્રમા", "પરિભ્રમણ", "દોલન"]
+      },
+      "correctAnswer": "Oscillation",
+      "explanation": {
+        "en": "One complete to-and-fro movement of a pendulum is called one oscillation.",
+        "hi": "पेंडुलम की एक पूर्ण आगे-पीछे की गति को एक दोलन कहते हैं।",
+        "gu": "લોલકની એક સંપૂર્ણ આગળ-પાછળની ગતિને એક દોલન કહે છે."
+      }
+    },
+    {
+      "id": "q4",
+      "question": {
+        "en": "The time period of a pendulum depends on the mass of the bob.",
+        "hi": "पेंडुलम का आवर्तकाल बोब के द्रव्यमान पर निर्भर करता है।",
+        "gu": "લોલકનો સમયગાળો બોબના દળ પર આધારિત છે."
+      },
+      "type": "true-false",
+      "options": {
+        "en": ["True", "False"],
+        "hi": ["सत्य", "असत्य"],
+        "gu": ["સાચું", "ખોટું"]
+      },
+      "correctAnswer": "False",
+      "explanation": {
+        "en": "False. The time period of a pendulum depends on the length of the string, NOT on the mass of the bob.",
+        "hi": "असत्य। पेंडुलम का आवर्तकाल धागे की लंबाई पर निर्भर करता है, बोब के द्रव्यमान पर नहीं।",
+        "gu": "ખોટું. લોલકનો સમયગાળો દોરીની લંબાઈ પર આધારિત છે, બોબના દળ પર નહીં."
+      }
+    },
+    {
+      "id": "q5",
+      "question": {
+        "en": "How many seconds are there in one minute?",
+        "hi": "एक मिनट में कितने सेकंड होते हैं?",
+        "gu": "એક મિનિટમાં કેટલા સેકંડ હોય છે?"
+      },
+      "type": "mcq",
+      "options": {
+        "en": ["60", "30", "100", "120"],
+        "hi": ["60", "30", "100", "120"],
+        "gu": ["60", "30", "100", "120"]
+      },
+      "correctAnswer": "60",
+      "explanation": {
+        "en": "There are 60 seconds in one minute.",
+        "hi": "एक मिनट में 60 सेकंड होते हैं।",
+        "gu": "એક મિનિટમાં 60 સેકંડ હોય છે."
+      }
+    },
+    {
+      "id": "q6",
+      "question": {
+        "en": "Which ancient device measures time using flowing water?",
+        "hi": "कौन सा प्राचीन उपकरण बहते पानी का उपयोग करके समय मापता है?",
+        "gu": "કયું પ્રાચીન ઉપકરણ વહેતા પાણીનો ઉપયોગ કરીને સમય માપે છે?"
+      },
+      "type": "mcq",
+      "options": {
+        "en": ["Sundial", "Pendulum", "Hourglass", "Water clock"],
+        "hi": ["धूपघड़ी", "पेंडुलम", "रेतघड़ी", "जलघड़ी"],
+        "gu": ["સૂર્યઘડિયાળ", "લોલક", "રેતઘડિયાળ", "પાણીઘડિયાળ"]
+      },
+      "correctAnswer": "Water clock",
+      "explanation": {
+        "en": "A water clock measures time by the flow of water from one container to another.",
+        "hi": "जलघड़ी एक पात्र से दूसरे में पानी के प्रवाह से समय मापती है।",
+        "gu": "પાણીઘડિયાળ એક પાત્રમાંથી બીજામાં પાણીના પ્રવાહ દ્વારા સમય માપે છે."
+      }
+    },
+    {
+      "id": "q7",
+      "question": {
+        "en": "What does the time period of a pendulum primarily depend on?",
+        "hi": "पेंडुलम का आवर्तकाल मुख्य रूप से किस पर निर्भर करता है?",
+        "gu": "લોલકનો સમયગાળો મુખ્યત્વે શેના પર આધાર રાખે છે?"
+      },
+      "type": "mcq",
+      "options": {
+        "en": ["Length of the string", "Mass of the bob", "Color of the bob", "Temperature"],
+        "hi": ["धागे की लंबाई", "बोब का द्रव्यमान", "बोब का रंग", "तापमान"],
+        "gu": ["તારની લંબાઈ", "બોબનો દળ", "બોબનો રંગ", "તાપમાન"]
+      },
+      "correctAnswer": "Length of the string",
+      "explanation": {
+        "en": "The time period of a pendulum depends on the length of the string, not on the mass of the bob.",
+        "hi": "पेंडुलम का आवर्तकाल धागे की लंबाई पर निर्भर करता है, बोब के द्रव्यमान पर नहीं।",
+        "gu": "લોલકનો સમયગાળો તારની લંબાઈ પર આધાર રાખે છે, બોબના દળ પર નહીં."
+      }
+    },
+    {
+      "id": "q8",
+      "question": {
+        "en": "How many minutes are there in one hour?",
+        "hi": "एक घंटे में कितने मिनट होते हैं?",
+        "gu": "એક કલાકમાં કેટલી મિનિટ હોય છે?"
+      },
+      "type": "mcq",
+      "options": {
+        "en": ["30", "24", "60", "100"],
+        "hi": ["30", "24", "60", "100"],
+        "gu": ["30", "24", "60", "100"]
+      },
+      "correctAnswer": "60",
+      "explanation": {
+        "en": "There are 60 minutes in one hour.",
+        "hi": "एक घंटे में 60 मिनट होते हैं।",
+        "gu": "એક કલાકમાં 60 મિનિટ હોય છે."
+      }
+    },
+    {
+      "id": "q9",
+      "question": {
+        "en": "Which device uses sand to measure time?",
+        "hi": "कौन सा उपकरण समय मापने के लिए रेत का उपयोग करता है?",
+        "gu": "કયું ઉપકરણ સમય માપવા માટે રેતનો ઉપયોગ કરે છે?"
+      },
+      "type": "mcq",
+      "options": {
+        "en": ["Hourglass", "Sundial", "Water clock", "Pendulum"],
+        "hi": ["रेतघड़ी", "धूपघड़ी", "जलघड़ी", "पेंडुलम"],
+        "gu": ["રેતઘડિયાળ", "સૂર્યઘડિયાળ", "પાણીઘડિયાળ", "લોલક"]
+      },
+      "correctAnswer": "Hourglass",
+      "explanation": {
+        "en": "An hourglass measures time using flowing sand from one chamber to another.",
+        "hi": "रेतघड़ी एक कक्ष से दूसरे में बहती रेत का उपयोग करके समय मापती है।",
+        "gu": "રેતઘડિયાળ એક ખંડમાંથી બીજામાં વહેતી રેત દ્વારા સમય માપે છે."
+      }
+    },
+    {
+      "id": "q10",
+      "question": {
+        "en": "What did ancient people observe to measure time before clocks were invented?",
+        "hi": "घड़ियों के आविष्कार से पहले प्राचीन लोग समय मापने के लिए क्या देखते थे?",
+        "gu": "ઘડિયાળોની શોધ પહેલાં પ્રાચીન લોકો સમય માપવા માટે શું નિરીક્ષણ કરતા હતા?"
+      },
+      "type": "mcq",
+      "options": {
+        "en": ["Mobile phones", "Digital watches", "Computers", "Natural events like sunrise and seasons"],
+        "hi": ["मोबाइल फोन", "डिजिटल घड़ियां", "कंप्यूटर", "सूर्योदय और मौसम जैसी प्राकृतिक घटनाएं"],
+        "gu": ["મોબાઇલ ફોન", "ડિજિટલ ઘડિયાળો", "કમ્પ્યુટર", "સૂર્યોદય અને ઋતુઓ જેવી પ્રાકૃતિક ઘટનાઓ"]
+      },
+      "correctAnswer": "Natural events like sunrise and seasons",
+      "explanation": {
+        "en": "Ancient people observed natural events that repeat regularly, such as sunrise, sunset, phases of the moon, and change of seasons.",
+        "hi": "प्राचीन लोग नियमित रूप से दोहराई जाने वाली प्राकृतिक घटनाओं का अवलोकन करते थे, जैसे सूर्योदय, सूर्यास्त, चंद्रमा की कलाएं और मौसम का परिवर्तन।",
+        "gu": "પ્રાચીન લોકો નિયમિત પુનરાવર્તિત પ્રાકૃતિક ઘટનાઓનું નિરીક્ષણ કરતા હતા, જેમ કે સૂર્યોદય, સૂર્યાસ્ત, ચંદ્રની કળાઓ અને ઋતુઓનો પરિવર્તન."
+      }
+    }
+  ]
+}
