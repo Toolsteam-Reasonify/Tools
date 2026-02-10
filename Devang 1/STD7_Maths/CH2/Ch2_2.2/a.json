@@ -1,0 +1,519 @@
+{
+    "topic": "2.2 Multiplication of Integers",
+    "chapter": "2. Operations with Integers",
+    "grade": 7,
+    "subject": "Mathematics",
+    "modes": {
+        "learn": {
+            "title": "Learn Mode",
+            "description": "Understanding integer multiplication through token models and patterns",
+            "steps": 3,
+            "estimatedTime": "45 minutes"
+        },
+        "practice": {
+            "title": "Practice Mode",
+            "description": "Test your understanding with 10 multiple-choice questions",
+            "questions": 10,
+            "estimatedTime": "30 minutes"
+        },
+        "realworld": {
+            "title": "Real World Mode",
+            "description": "Explore practical applications of integer multiplication",
+            "examples": 6,
+            "estimatedTime": "45 minutes"
+        }
+    },
+    "learningObjectives": [
+        "Use the token model to understand and visualize integer multiplication",
+        "Apply multiplication rules for all combinations of positive and negative integers",
+        "Recognize and extend patterns in integer multiplication sequences",
+        "Apply the commutative property: a × b = b × a",
+        "Apply the associative property: a × (b × c) = (a × b) × c",
+        "Apply the distributive property: a × (b + c) = (a × b) + (a × c)",
+        "Solve real-world problems using integer multiplication",
+        "Understand the relationship between multiplication and division of integers"
+    ],
+    "keyTerms": [
+        {
+            "term": "Multiplier",
+            "definition": "The number that indicates how many times to multiply another number"
+        },
+        {
+            "term": "Multiplicand",
+            "definition": "The number being multiplied"
+        },
+        {
+            "term": "Product",
+            "definition": "The result obtained from multiplying two or more numbers"
+        },
+        {
+            "term": "Token Model",
+            "definition": "A visual representation using colored tokens (green for positive, red for negative)"
+        },
+        {
+            "term": "Zero Pairs",
+            "definition": "One positive and one negative token that together equal zero"
+        },
+        {
+            "term": "Commutative Property",
+            "definition": "The order of numbers doesn't change the product: a × b = b × a"
+        },
+        {
+            "term": "Associative Property",
+            "definition": "The grouping of numbers doesn't change the product: a × (b × c) = (a × b) × c"
+        },
+        {
+            "term": "Distributive Property",
+            "definition": "Multiplication distributes over addition: a × (b + c) = (a × b) + (a × c)"
+        },
+        {
+            "term": "Additive Inverse",
+            "definition": "The opposite of a number; for any integer a, its additive inverse is −a"
+        }
+    ],
+    "learnModeActivities": [
+        {
+            "step": 1,
+            "title": "Token Model for Multiplication",
+            "description": "Understanding multiplication through placing and removing tokens",
+            "concepts": [
+                "Positive × Positive: Place positive tokens multiple times",
+                "Positive × Negative: Place negative tokens multiple times",
+                "Negative × Positive: Remove positive tokens multiple times using zero pairs",
+                "Negative × Negative: Remove negative tokens multiple times using zero pairs"
+            ],
+            "interactiveElements": [
+                "Token visualization",
+                "Bag model",
+                "Zero pairs demonstration"
+            ],
+            "examples": [
+                "4 × 2 = 8 (place 2 green tokens 4 times)",
+                "4 × (−2) = −8 (place 2 red tokens 4 times)",
+                "(−4) × 2 = −8 (remove 2 green tokens 4 times)",
+                "(−4) × (−2) = 8 (remove 2 red tokens 4 times)"
+            ]
+        },
+        {
+            "step": 2,
+            "title": "Patterns in Integer Multiplication",
+            "description": "Discovering patterns when the multiplier changes",
+            "concepts": [
+                "Pattern with positive multiplicand",
+                "Pattern with negative multiplicand",
+                "Extending patterns below zero",
+                "Understanding sign changes"
+            ],
+            "interactiveElements": [
+                "Pattern sequence builder",
+                "Visual pattern display",
+                "Interactive exploration"
+            ],
+            "examples": [
+                "4×3=12, 3×3=9, 2×3=6, 1×3=3, 0×3=0, −1×3=−3",
+                "4×(−3)=−12, 3×(−3)=−9, 2×(−3)=−6, ..., (−2)×(−3)=6"
+            ]
+        },
+        {
+            "step": 3,
+            "title": "Multiplication Properties",
+            "description": "Understanding commutative, associative, and distributive properties",
+            "concepts": [
+                "Commutative: a × b = b × a",
+                "Associative: a × (b × c) = (a × b) × c",
+                "Distributive: a × (b + c) = (a × b) + (a × c)",
+                "Visual proof with tokens"
+            ],
+            "interactiveElements": [
+                "Property demonstrations",
+                "Token arrangement for distributive property",
+                "Interactive examples"
+            ],
+            "examples": [
+                "3 × (−4) = (−4) × 3 = −12 (commutative)",
+                "5 × (−3 × 4) = (5 × −3) × 4 = −60 (associative)",
+                "4 × (2 + (−3)) = 4×2 + 4×(−3) (distributive)"
+            ]
+        }
+    ],
+    "practiceModeQuestions": [
+        {
+            "id": 1,
+            "question": "If two numbers have a product of 24 and one is −6, what is the other number?",
+            "options": [
+                "4",
+                "−4",
+                "18",
+                "−18"
+            ],
+            "correct": "−4",
+            "explanation": "−6 × ? = 24, so ? = 24 ÷ (−6) = −4. Negative × Negative = Positive.",
+            "difficulty": "medium",
+            "topic": "sign-rules"
+        },
+        {
+            "id": 2,
+            "question": "What is 3 × (−2)?",
+            "options": [
+                "6",
+                "−6",
+                "5",
+                "−5"
+            ],
+            "correct": "−6",
+            "explanation": "Positive × Negative = Negative. 3 × 2 = 6, so 3 × (−2) = −6.",
+            "difficulty": "easy",
+            "topic": "basic-multiplication"
+        },
+        {
+            "id": 3,
+            "question": "What is (−5) × (−2)?",
+            "options": [
+                "−10",
+                "10",
+                "−7",
+                "7"
+            ],
+            "correct": "10",
+            "explanation": "Negative × Negative = Positive. 5 × 2 = 10, so (−5) × (−2) = 10.",
+            "difficulty": "easy",
+            "topic": "sign-rules"
+        },
+        {
+            "id": 4,
+            "question": "Calculate (−4) × (−1):",
+            "options": [
+                "−4",
+                "4",
+                "−5",
+                "5"
+            ],
+            "correct": "4",
+            "explanation": "Negative × Negative = Positive. (−4) × (−1) = 4.",
+            "difficulty": "easy",
+            "topic": "basic-multiplication"
+        },
+        {
+            "id": 5,
+            "question": "What is (−7) × 3?",
+            "options": [
+                "21",
+                "−21",
+                "−10",
+                "10"
+            ],
+            "correct": "−21",
+            "explanation": "Negative × Positive = Negative. 7 × 3 = 21, so (−7) × 3 = −21.",
+            "difficulty": "easy",
+            "topic": "sign-rules"
+        },
+        {
+            "id": 6,
+            "question": "Which property states that a × b = b × a?",
+            "options": [
+                "Associative",
+                "Distributive",
+                "Commutative",
+                "Identity"
+            ],
+            "correct": "Commutative",
+            "explanation": "The commutative property allows swapping the order of numbers in multiplication.",
+            "difficulty": "medium",
+            "topic": "properties"
+        },
+        {
+            "id": 7,
+            "question": "If 123 × 456 = 56088, what is (−123) × 456?",
+            "options": [
+                "56088",
+                "−56088",
+                "56000",
+                "−56000"
+            ],
+            "correct": "−56088",
+            "explanation": "Negative × Positive = Negative. The magnitude stays the same, but the sign changes.",
+            "difficulty": "medium",
+            "topic": "sign-rules"
+        },
+        {
+            "id": 8,
+            "question": "What is (−1) × a equal to?",
+            "options": [
+                "a",
+                "−a",
+                "1",
+                "0"
+            ],
+            "correct": "−a",
+            "explanation": "Multiplying by −1 gives the additive inverse of the number: (−1) × a = −a.",
+            "difficulty": "medium",
+            "topic": "properties"
+        },
+        {
+            "id": 9,
+            "question": "Calculate: (−2) × (−1) × (−5) × (−3)",
+            "options": [
+                "30",
+                "−30",
+                "60",
+                "−60"
+            ],
+            "correct": "30",
+            "explanation": "(−2)×(−1)=2, 2×(−5)=−10, (−10)×(−3)=30. Even number of negatives gives positive.",
+            "difficulty": "medium",
+            "topic": "multiple-operations"
+        },
+        {
+            "id": 10,
+            "question": "What is the sign of the product of 5 negative integers?",
+            "options": [
+                "Positive",
+                "Negative",
+                "Zero",
+                "Cannot be determined"
+            ],
+            "correct": "Negative",
+            "explanation": "Odd number of negative integers gives a negative product.",
+            "difficulty": "medium",
+            "topic": "sign-rules"
+        }
+    ],
+    "realWorldApplications": [
+        {
+            "id": 1,
+            "category": "Education",
+            "title": "Exam Scoring System",
+            "description": "Calculating test scores with positive marks for correct answers and negative marks for wrong answers",
+            "example": "30 correct (×5) and 20 wrong (×−2): 30×5 + 20×(−2) = 150−40 = 110 marks",
+            "formula": "Total Score = (Correct × Points per Correct) + (Wrong × Points per Wrong)",
+            "realWorldUses": [
+                "Competitive exams",
+                "Quiz competitions",
+                "Assessment design",
+                "Performance evaluation"
+            ],
+            "interactive": true
+        },
+        {
+            "id": 2,
+            "category": "Engineering",
+            "title": "Mining Elevator",
+            "description": "Tracking elevator position in a mining shaft with positive (above ground) and negative (below ground) positions",
+            "example": "Descending at 3 m/min for 60 min: 60 × (−3) = −180 meters (180m below ground)",
+            "formula": "Final Position = Starting Position + (Time × Speed)",
+            "realWorldUses": [
+                "Mining operations",
+                "Construction safety",
+                "Vertical transportation",
+                "Depth calculations"
+            ],
+            "interactive": true
+        },
+        {
+            "id": 3,
+            "category": "Science",
+            "title": "Temperature Patterns",
+            "description": "Calculating temperature after hours of consistent change",
+            "example": "Starting at 8°C, dropping 5°C per hour for 4 hours: 8 + (4×(−5)) = 8−20 = −12°C",
+            "formula": "Final Temp = Starting Temp + (Hours × Rate of Change)",
+            "realWorldUses": [
+                "Weather forecasting",
+                "Climate studies",
+                "Industrial processes",
+                "HVAC systems"
+            ],
+            "interactive": true
+        },
+        {
+            "id": 4,
+            "category": "Finance",
+            "title": "Stock Market Changes",
+            "description": "Tracking cumulative stock price changes over multiple days",
+            "example": "Stock drops ₹3 per day for 5 days: 5 × (−3) = −₹15 total loss",
+            "formula": "Total Change = Days × Change per Day",
+            "realWorldUses": [
+                "Investment tracking",
+                "Portfolio management",
+                "Trend analysis",
+                "Financial planning"
+            ],
+            "interactive": false
+        },
+        {
+            "id": 5,
+            "category": "Maritime",
+            "title": "Submarine Depth",
+            "description": "Calculating depth below sea level during descent",
+            "example": "Descending 50 meters per minute for 6 minutes: 6 × (−50) = −300 meters",
+            "formula": "Depth = Time × Descent Rate",
+            "realWorldUses": [
+                "Naval operations",
+                "Deep-sea exploration",
+                "Pressure calculations",
+                "Safety protocols"
+            ],
+            "interactive": false
+        },
+        {
+            "id": 6,
+            "category": "Finance",
+            "title": "Debt Accumulation",
+            "description": "Calculating accumulated penalties or debt over time",
+            "example": "₹500 penalty per month for 3 months: 3 × (−500) = −₹1500 debt",
+            "formula": "Total Debt = Months × Penalty per Month",
+            "realWorldUses": [
+                "Credit management",
+                "Budget planning",
+                "Loan tracking",
+                "Financial literacy"
+            ],
+            "interactive": false
+        }
+    ],
+    "assessmentCriteria": {
+        "learnMode": {
+            "criteria": [
+                "Can explain multiplication using token model",
+                "Can identify and extend patterns",
+                "Can apply all three properties correctly",
+                "Understands sign rules for all combinations"
+            ]
+        },
+        "practiceMode": {
+            "excellent": "7-10 correct answers",
+            "good": "5-6 correct answers",
+            "needsReview": "0-4 correct answers"
+        },
+        "realWorldMode": {
+            "criteria": [
+                "Can set up multiplication expressions for word problems",
+                "Can interpret negative results in context",
+                "Can choose appropriate operations",
+                "Understands when to use multiplication vs. other operations"
+            ]
+        }
+    },
+    "commonMistakes": [
+        {
+            "mistake": "Thinking (−4) × (−2) = −8",
+            "correction": "Remember: Negative × Negative = Positive, so (−4) × (−2) = 8",
+            "mode": "learn"
+        },
+        {
+            "mistake": "Not adding enough zero pairs when removing tokens",
+            "correction": "Always add the exact number of zero pairs needed to perform the removal",
+            "mode": "learn"
+        },
+        {
+            "mistake": "Distributive property: 5 × (4 + (−2)) = 5 × 4 + (−2)",
+            "correction": "Must multiply 5 by BOTH terms: 5 × (4 + (−2)) = 5×4 + 5×(−2) = 20−10 = 10",
+            "mode": "learn"
+        },
+        {
+            "mistake": "Confusing when (−4) × 2 means removing vs. adding",
+            "correction": "Negative multiplier means remove; use token model to visualize",
+            "mode": "learn"
+        },
+        {
+            "mistake": "Not seeing the constant pattern in sequences",
+            "correction": "Look for what changes consistently (increases or decreases by same amount)",
+            "mode": "learn"
+        },
+        {
+            "mistake": "Confusing positive and negative in real-world contexts",
+            "correction": "Establish clear conventions first (e.g., up=positive, down=negative, gain=positive, loss=negative)",
+            "mode": "realworld"
+        },
+        {
+            "mistake": "Losing track of signs with multiple negative factors",
+            "correction": "Count negative signs: even number = positive, odd number = negative",
+            "mode": "practice"
+        },
+        {
+            "mistake": "Forgetting that any number × 0 = 0",
+            "correction": "Zero property: multiplication by zero always gives zero",
+            "mode": "practice"
+        }
+    ],
+    "extensionActivities": {
+        "learn": [
+            "Create your own multiplication patterns starting from different numbers",
+            "Use token model to prove the distributive property visually",
+            "Explore multiplication by special numbers: −1, 0, 1",
+            "Investigate and create your own Magic Grid puzzle"
+        ],
+        "practice": [
+            "Create word problems for each multiplication rule",
+            "Solve multi-step problems combining addition and multiplication",
+            "Work backwards from products to find original factors",
+            "Explore the modified Collatz Conjecture with negative integers"
+        ],
+        "realworld": [
+            "Design a complete scoring system for a custom game",
+            "Calculate compound elevation changes in a multi-level building",
+            "Model temperature changes for different scenarios",
+            "Create investment scenarios with realistic gains and losses"
+        ]
+    },
+    "interactiveFeatures": {
+        "learn": [
+            "Token bag visualization",
+            "Zero pairs interactive demonstration",
+            "Pattern builder tool",
+            "Property demonstration animations"
+        ],
+        "practice": [
+            "Instant answer checking",
+            "Detailed explanations for each question",
+            "Progress tracking",
+            "Score summary with performance feedback"
+        ],
+        "realworld": [
+            "Exam score calculator",
+            "Elevator position tracker",
+            "Temperature change calculator",
+            "Real-time formula visualization"
+        ]
+    },
+    "estimatedTime": {
+        "total": "120 minutes",
+        "learn": "45 minutes",
+        "practice": "30 minutes",
+        "realworld": "45 minutes"
+    },
+    "difficulty": "Medium",
+    "prerequisites": [
+        "Understanding of integers and number line",
+        "Addition and subtraction of integers",
+        "Concept of positive and negative numbers",
+        "Basic multiplication of whole numbers"
+    ],
+    "standards": [
+        "CCSS.MATH.CONTENT.7.NS.A.2: Apply and extend previous understandings of multiplication and division",
+        "CCSS.MATH.CONTENT.7.NS.A.2.A: Understand that multiplication is extended from fractions to rational numbers",
+        "CCSS.MATH.CONTENT.7.NS.A.2.C: Apply properties of operations as strategies to multiply and divide rational numbers"
+    ],
+    "resources": {
+        "materials": [
+            "Colored tokens (green and red)",
+            "Paper bags or containers",
+            "Number line (−10 to +10)",
+            "Whiteboard for patterns"
+        ],
+        "digitalTools": [
+            "Interactive token simulator",
+            "Pattern visualization tool",
+            "Calculator for verification",
+            "Practice question generator"
+        ]
+    },
+    "teachingNotes": {
+        "learn": "Emphasize the token model heavily in the beginning. Students often struggle with negative × negative = positive, so spend extra time on the zero pairs concept. Use physical tokens if possible.",
+        "practice": "Watch for sign errors. Many students will get the magnitude correct but the sign wrong. Encourage them to write out the rule they're using (e.g., 'neg × neg = pos') before calculating.",
+        "realworld": "Connect to students' experiences. The exam scoring resonates well with students. For elevator and temperature, emphasize the convention that down/decrease = negative."
+    },
+    "accessibilityNotes": "Token models can use different shapes instead of colors for color-blind students (circles for positive, squares for negative). All interactive elements have keyboard navigation. Text descriptions provided for all visual elements.",
+    "historicalContext": "Brahmagupta (628 CE) was the first to articulate explicit rules for multiplication and division of positive and negative numbers in his work Brāhmasphuṭasiddhānta, using concepts of 'fortune' (dhana) for positive and 'debt' (ṛṇa) for negative values.",
+    "version": "2.0",
+    "lastUpdated": "2024"
+}

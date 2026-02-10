@@ -1,0 +1,290 @@
+{
+  "toolName": "pinhole_camera_tool",
+  "version": "1.0.0",
+  "description": "Interactive pinhole camera tool for learning light properties, image formation, and optical principles",
+  
+  "parameters": {
+    "width": {
+      "type": "number",
+      "default": 800,
+      "description": "Component width in pixels"
+    },
+    "height": {
+      "type": "number",
+      "default": 600,
+      "description": "Component height in pixels"
+    },
+    "initialMode": {
+      "type": "string",
+      "enum": ["learn", "practice", "realWorld"],
+      "default": "learn",
+      "description": "Starting mode"
+    },
+    "showModeSelector": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide mode selector tabs"
+    },
+    "showNavigation": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide prev/next buttons"
+    },
+    "showPlayPause": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide play/pause button"
+    },
+    "showStepIndicator": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide step counter"
+    },
+    "initialStep": {
+      "type": "number",
+      "default": 1,
+      "description": "Starting step ID"
+    },
+    "filterSteps": {
+      "type": "array",
+      "items": { "type": "number" },
+      "default": null,
+      "description": "Array of step IDs to show"
+    },
+    "autoPlayDuration": {
+      "type": "number",
+      "default": 8000,
+      "description": "Auto-advance delay in ms (0 = disabled)"
+    },
+    "animationSpeed": {
+      "type": "number",
+      "default": 1,
+      "description": "Animation speed multiplier"
+    },
+    "themeColor": {
+      "type": "string",
+      "default": "#3b82f6",
+      "description": "Primary theme color (hex)"
+    },
+    "darkMode": {
+      "type": "boolean",
+      "default": false,
+      "description": "Enable dark mode"
+    }
+  },
+  
+  "additionalProps": {
+    "description": "Tool-specific dynamic content for customizing pinhole camera visualization",
+    "schema": {
+      "objectColor": {
+        "type": "string",
+        "default": "#FFD700",
+        "description": "Color of the object (candle/arrow) in the diagram"
+      },
+      "objectType": {
+        "type": "string",
+        "enum": ["candle", "arrow", "circle", "square"],
+        "default": "candle",
+        "description": "Type of object to display"
+      },
+      "showRays": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show light rays in the diagram"
+      },
+      "rayColor": {
+        "type": "string",
+        "default": "#FFD700",
+        "description": "Color of the light rays"
+      },
+      "pinholeSize": {
+        "type": "number",
+        "default": 3,
+        "description": "Size of the pinhole in pixels"
+      },
+      "pinholeColor": {
+        "type": "string",
+        "default": "#000",
+        "description": "Color of the pinhole"
+      },
+      "screenColor": {
+        "type": "string",
+        "default": "#E8E8E8",
+        "description": "Color of the screen where image is formed"
+      },
+      "showInvertedImage": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the inverted image on the screen"
+      },
+      "animationSpeed": {
+        "type": "number",
+        "default": 1,
+        "description": "Animation speed for ray animations"
+      },
+      "showRayAnimation": {
+        "type": "boolean",
+        "default": true,
+        "description": "Enable animated light rays"
+      },
+      "customLabels": {
+        "type": "object",
+        "properties": {
+          "object": { "type": "string" },
+          "pinhole": { "type": "string" },
+          "screen": { "type": "string" },
+          "top": { "type": "string" },
+          "bottom": { "type": "string" }
+        },
+        "default": {},
+        "description": "Custom labels for diagram elements"
+      },
+      "interactive": {
+        "type": "boolean",
+        "default": false,
+        "description": "Enable interactive features"
+      },
+      "allowRayControl": {
+        "type": "boolean",
+        "default": false,
+        "description": "Allow user to control light rays"
+      }
+    },
+    "examples": {
+      "basic": {
+        "objectColor": "#FFD700",
+        "objectType": "candle",
+        "showRays": true,
+        "rayColor": "#FFD700"
+      },
+      "custom_colors": {
+        "objectColor": "#FF6B6B",
+        "rayColor": "#4ECDC4",
+        "screenColor": "#F7F7F7",
+        "pinholeColor": "#2C3E50"
+      },
+      "arrow_object": {
+        "objectType": "arrow",
+        "objectColor": "#3498DB",
+        "rayColor": "#3498DB",
+        "showRayAnimation": true
+      },
+      "no_rays": {
+        "showRays": false,
+        "showInvertedImage": true,
+        "objectType": "candle"
+      },
+      "custom_labels": {
+        "objectColor": "#FFD700",
+        "customLabels": {
+          "object": "Light Source",
+          "pinhole": "Tiny Hole",
+          "screen": "Image Screen",
+          "top": "TOP",
+          "bottom": "BOTTOM"
+        }
+      },
+      "large_pinhole": {
+        "pinholeSize": 5,
+        "pinholeColor": "#000",
+        "objectColor": "#FFD700",
+        "showRays": true
+      },
+      "animated_rays": {
+        "showRayAnimation": true,
+        "animationSpeed": 1.5,
+        "rayColor": "#FFD700",
+        "objectColor": "#FFA500"
+      },
+      "interactive_mode": {
+        "interactive": true,
+        "allowRayControl": true,
+        "showRays": true,
+        "objectType": "candle"
+      }
+    }
+  },
+  
+  "modes": {
+    "learn": {
+      "description": "Step-by-step explanation of pinhole camera concepts",
+      "sections": [
+        "What is a Pinhole Camera?",
+        "How Does it Work?",
+        "Key Observations",
+        "Pinhole Camera vs Plane Mirror Comparison"
+      ]
+    },
+    "practice": {
+      "description": "Interactive quiz with 10 questions about pinhole cameras",
+      "questionCount": 10,
+      "topics": [
+        "Basic pinhole camera concepts",
+        "Image formation and inversion",
+        "Light ray behavior",
+        "Comparison with mirrors",
+        "Real-world applications"
+      ]
+    },
+    "realWorld": {
+      "description": "Real-world applications and examples",
+      "applications": [
+        "Solar Eclipse Viewing",
+        "Photography History",
+        "Human Eye",
+        "Architectural Design",
+        "Art and Creativity",
+        "Science Education"
+      ]
+    }
+  },
+  
+  "stepSummary": {
+    "learn": {
+      "sections": [
+        {
+          "title": "What is a Pinhole Camera?",
+          "description": "Introduction to pinhole camera concept"
+        },
+        {
+          "title": "How Does it Work?",
+          "description": "Explanation of light ray crossing and image formation"
+        },
+        {
+          "title": "Key Observations",
+          "description": "Important points about inverted images and light properties"
+        },
+        {
+          "title": "Pinhole Camera vs Plane Mirror",
+          "description": "Comparison of image types"
+        }
+      ]
+    },
+    "practice": {
+      "questionCount": 10,
+      "topics": [
+        "Pinhole camera definition",
+        "Image inversion",
+        "Light ray behavior",
+        "Pinhole size effects",
+        "Light properties",
+        "Shadow formation",
+        "Comparison with mirrors",
+        "Color representation",
+        "Optimal conditions",
+        "Screen importance"
+      ]
+    },
+    "realWorld": {
+      "applicationCount": 6,
+      "categories": [
+        "Astronomy",
+        "Photography",
+        "Biology",
+        "Architecture",
+        "Art",
+        "Education"
+      ]
+    }
+  }
+}

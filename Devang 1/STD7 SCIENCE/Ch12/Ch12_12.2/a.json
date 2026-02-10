@@ -1,0 +1,722 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Revolution of Earth Interactive Learning Tool",
+    "description": "A comprehensive educational tool teaching Earth's revolution, rotation, seasons, and real-world applications through three interactive modes",
+    "type": "object",
+    "properties": {
+        "frontend_action": {
+            "type": "string",
+            "const": "show_interactive_tool",
+            "description": "Action type for displaying the tool"
+        },
+        "title": {
+            "type": "string",
+            "description": "Title to display above the tool",
+            "default": "Revolution of the Earth"
+        },
+        "data": {
+            "type": "object",
+            "required": [
+                "toolName"
+            ],
+            "properties": {
+                "toolName": {
+                    "type": "string",
+                    "const": "revolution_of_earth_tool",
+                    "description": "Identifier for this specific tool"
+                },
+                "parameters": {
+                    "type": "object",
+                    "description": "Configuration parameters for the tool",
+                    "properties": {
+                        "width": {
+                            "type": "number",
+                            "description": "Tool width in pixels",
+                            "default": 800,
+                            "minimum": 300,
+                            "maximum": 2000
+                        },
+                        "height": {
+                            "type": "number",
+                            "description": "Tool height in pixels",
+                            "default": 600,
+                            "minimum": 200,
+                            "maximum": 1500
+                        },
+                        "initialMode": {
+                            "type": "string",
+                            "enum": [
+                                "learn",
+                                "practice",
+                                "applications"
+                            ],
+                            "description": "Starting mode of the tool",
+                            "default": "learn"
+                        },
+                        "showModeSelector": {
+                            "type": "boolean",
+                            "description": "Show/hide the mode selection tabs at the top",
+                            "default": true
+                        },
+                        "enabledModes": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "learn",
+                                    "practice",
+                                    "applications"
+                                ]
+                            },
+                            "description": "Which modes are available to the user",
+                            "default": [
+                                "learn",
+                                "practice",
+                                "applications"
+                            ],
+                            "minItems": 1
+                        },
+                        "language": {
+                            "type": "string",
+                            "enum": [
+                                "en",
+                                "hi",
+                                "es",
+                                "fr"
+                            ],
+                            "description": "Interface language",
+                            "default": "en"
+                        },
+                        "themeColor": {
+                            "type": "string",
+                            "description": "Primary theme color (hex code)",
+                            "default": "#3b82f6",
+                            "pattern": "^#[0-9A-Fa-f]{6}$"
+                        },
+                        "darkMode": {
+                            "type": "boolean",
+                            "description": "Enable dark mode theme",
+                            "default": false
+                        },
+                        "animationSpeed": {
+                            "type": "number",
+                            "description": "Animation speed multiplier",
+                            "default": 1,
+                            "minimum": 0.1,
+                            "maximum": 5
+                        },
+                        "autoPlayDuration": {
+                            "type": "number",
+                            "description": "Duration before auto-advancing in milliseconds (0 = disabled)",
+                            "default": 8000,
+                            "minimum": 0
+                        },
+                        "additionalProps": {
+                            "type": "object",
+                            "description": "Tool-specific dynamic content and configuration",
+                            "properties": {
+                                "customSeasonData": {
+                                    "type": "object",
+                                    "description": "Override default season information",
+                                    "properties": {
+                                        "spring": {
+                                            "$ref": "#/definitions/seasonData"
+                                        },
+                                        "summer": {
+                                            "$ref": "#/definitions/seasonData"
+                                        },
+                                        "autumn": {
+                                            "$ref": "#/definitions/seasonData"
+                                        },
+                                        "winter": {
+                                            "$ref": "#/definitions/seasonData"
+                                        }
+                                    }
+                                },
+                                "customQuestions": {
+                                    "type": "array",
+                                    "description": "Custom quiz questions for practice mode",
+                                    "items": {
+                                        "$ref": "#/definitions/question"
+                                    }
+                                },
+                                "customScenarios": {
+                                    "type": "array",
+                                    "description": "Custom real-world scenarios",
+                                    "items": {
+                                        "$ref": "#/definitions/scenario"
+                                    }
+                                },
+                                "orbitStartAngle": {
+                                    "type": "number",
+                                    "description": "Starting angle of Earth's orbit (0-360 degrees). 0=Spring, 90=Summer, 180=Autumn, 270=Winter",
+                                    "default": 90,
+                                    "minimum": 0,
+                                    "maximum": 360
+                                },
+                                "enableAutoPlay": {
+                                    "type": "boolean",
+                                    "description": "Start orbit animation automatically",
+                                    "default": true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "instructions_for_student": {
+            "type": "string",
+            "description": "Instructions or context for the student",
+            "default": "Explore how Earth revolves around the Sun!"
+        }
+    },
+    "required": [
+        "frontend_action",
+        "data"
+    ],
+    "definitions": {
+        "seasonData": {
+            "type": "object",
+            "description": "Information about a specific season",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Season name"
+                },
+                "months": {
+                    "type": "string",
+                    "description": "Months this season occurs"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Brief description of the season"
+                },
+                "hemisphere": {
+                    "type": "string",
+                    "description": "Hemisphere tilt information"
+                },
+                "event": {
+                    "type": "string",
+                    "description": "Key astronomical event (solstice/equinox)"
+                }
+            },
+            "required": [
+                "name",
+                "description"
+            ]
+        },
+        "question": {
+            "type": "object",
+            "description": "A practice quiz question",
+            "properties": {
+                "id": {
+                    "type": "number",
+                    "description": "Unique question identifier"
+                },
+                "question": {
+                    "type": "string",
+                    "description": "The question text"
+                },
+                "options": {
+                    "type": "array",
+                    "description": "Answer options",
+                    "items": {
+                        "type": "string"
+                    },
+                    "minItems": 2,
+                    "maxItems": 6
+                },
+                "correctAnswer": {
+                    "type": "number",
+                    "description": "Index of the correct answer (0-based)",
+                    "minimum": 0
+                },
+                "explanation": {
+                    "type": "string",
+                    "description": "Detailed explanation of the correct answer"
+                },
+                "difficulty": {
+                    "type": "string",
+                    "enum": [
+                        "easy",
+                        "medium",
+                        "hard"
+                    ],
+                    "description": "Question difficulty level"
+                },
+                "topic": {
+                    "type": "string",
+                    "enum": [
+                        "rotation",
+                        "revolution",
+                        "seasons",
+                        "eclipses"
+                    ],
+                    "description": "Topic category"
+                }
+            },
+            "required": [
+                "id",
+                "question",
+                "options",
+                "correctAnswer",
+                "explanation",
+                "difficulty",
+                "topic"
+            ]
+        },
+        "scenario": {
+            "type": "object",
+            "description": "A real-world application scenario",
+            "properties": {
+                "id": {
+                    "type": "number",
+                    "description": "Unique scenario identifier"
+                },
+                "title": {
+                    "type": "string",
+                    "description": "Scenario title"
+                },
+                "icon": {
+                    "type": "string",
+                    "description": "Emoji icon representing the scenario"
+                },
+                "difficulty": {
+                    "type": "string",
+                    "enum": [
+                        "Easy",
+                        "Medium",
+                        "Hard"
+                    ],
+                    "description": "Scenario difficulty"
+                },
+                "context": {
+                    "type": "string",
+                    "description": "Background information and setup"
+                },
+                "question": {
+                    "type": "string",
+                    "description": "The question to be answered"
+                },
+                "realWorldConnection": {
+                    "type": "string",
+                    "description": "How this relates to Earth's motion"
+                },
+                "solution": {
+                    "type": "string",
+                    "description": "Brief answer summary"
+                },
+                "explanation": {
+                    "type": "string",
+                    "description": "Detailed explanation with reasoning"
+                },
+                "tips": {
+                    "type": "array",
+                    "description": "Key takeaway points",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "id",
+                "title",
+                "icon",
+                "difficulty",
+                "context",
+                "question",
+                "solution",
+                "explanation"
+            ]
+        }
+    },
+    "examples": [
+        {
+            "name": "Basic Learn Mode",
+            "description": "Default configuration showing the solar system visualization",
+            "value": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Revolution of the Earth",
+                "data": {
+                    "toolName": "revolution_of_earth_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "language": "en"
+                    }
+                },
+                "instructions_for_student": "Watch how Earth travels around the Sun and creates seasons!"
+            }
+        },
+        {
+            "name": "Show Specific Season - Summer",
+            "description": "Start with Earth at summer position",
+            "value": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Summer Season",
+                "data": {
+                    "toolName": "revolution_of_earth_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "showModeSelector": false,
+                        "additionalProps": {
+                            "orbitStartAngle": 135,
+                            "enableAutoPlay": false
+                        }
+                    }
+                },
+                "instructions_for_student": "Notice how the Northern Hemisphere tilts toward the Sun in summer!"
+            }
+        },
+        {
+            "name": "Show Specific Season - Winter",
+            "description": "Start with Earth at winter position",
+            "value": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Winter Season",
+                "data": {
+                    "toolName": "revolution_of_earth_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "showModeSelector": false,
+                        "additionalProps": {
+                            "orbitStartAngle": 270,
+                            "enableAutoPlay": false
+                        }
+                    }
+                },
+                "instructions_for_student": "See how the Northern Hemisphere tilts away from the Sun in winter!"
+            }
+        },
+        {
+            "name": "Practice Quiz Mode",
+            "description": "Interactive quiz with 15 comprehensive questions to test knowledge",
+            "value": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Test Your Knowledge",
+                "data": {
+                    "toolName": "revolution_of_earth_tool",
+                    "parameters": {
+                        "initialMode": "practice",
+                        "showModeSelector": true
+                    }
+                },
+                "instructions_for_student": "Answer these 15 questions to test what you've learned about Earth's motion!"
+            }
+        },
+        {
+            "name": "Custom Quiz Questions",
+            "description": "Practice mode with custom questions",
+            "value": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Custom Quiz",
+                "data": {
+                    "toolName": "revolution_of_earth_tool",
+                    "parameters": {
+                        "initialMode": "practice",
+                        "additionalProps": {
+                            "customQuestions": [
+                                {
+                                    "id": 1,
+                                    "question": "Why do we have leap years?",
+                                    "options": [
+                                        "To adjust for Moon's orbit",
+                                        "To account for Earth's extra ¼ day in orbit",
+                                        "To match the Gregorian calendar",
+                                        "Because of Earth's rotation speed"
+                                    ],
+                                    "correctAnswer": 1,
+                                    "explanation": "Earth takes 365¼ days to orbit the Sun. We add an extra day every 4 years to keep our calendar aligned.",
+                                    "difficulty": "medium",
+                                    "topic": "revolution"
+                                },
+                                {
+                                    "id": 2,
+                                    "question": "What causes day and night?",
+                                    "options": [
+                                        "Earth's revolution around the Sun",
+                                        "Earth's rotation on its axis",
+                                        "The Moon blocking sunlight",
+                                        "Earth moving closer and farther from Sun"
+                                    ],
+                                    "correctAnswer": 1,
+                                    "explanation": "Earth rotates on its axis every 24 hours. The side facing the Sun experiences day, while the opposite side has night.",
+                                    "difficulty": "easy",
+                                    "topic": "rotation"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "instructions_for_student": "Let's see how well you understand Earth's motions!"
+            }
+        },
+        {
+            "name": "Real World Applications",
+            "description": "Scenario-based problem solving with 10 diverse real-world scenarios",
+            "value": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Real-Life Applications",
+                "data": {
+                    "toolName": "revolution_of_earth_tool",
+                    "parameters": {
+                        "initialMode": "applications",
+                        "showModeSelector": true
+                    }
+                },
+                "instructions_for_student": "Apply your knowledge to solve 10 real-world problems about Earth's motion!"
+            }
+        },
+        {
+            "name": "Time Zone Scenario",
+            "description": "Custom scenario about time zones",
+            "value": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Understanding Time Zones",
+                "data": {
+                    "toolName": "revolution_of_earth_tool",
+                    "parameters": {
+                        "initialMode": "applications",
+                        "showModeSelector": false,
+                        "additionalProps": {
+                            "customScenarios": [
+                                {
+                                    "id": 1,
+                                    "title": "International Video Call",
+                                    "icon": "📞",
+                                    "difficulty": "Easy",
+                                    "context": "You want to call your friend in London. It's 3:00 PM in New York.",
+                                    "question": "What time is it in London? (London is 5 hours ahead of New York)",
+                                    "realWorldConnection": "Time zones exist because Earth rotates. As Earth spins, different parts face the Sun at different times.",
+                                    "solution": "It's 8:00 PM in London",
+                                    "explanation": "When it's 3:00 PM in New York, we add 5 hours because London is ahead: 3:00 PM + 5 hours = 8:00 PM. This happens because Earth rotates from West to East, so eastern locations experience sunrise and sunset earlier.",
+                                    "tips": [
+                                        "Time zones are created by Earth's rotation",
+                                        "Eastern locations are ahead in time",
+                                        "Each time zone is roughly 1 hour apart"
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                },
+                "instructions_for_student": "Use your knowledge of Earth's rotation to solve this time zone problem!"
+            }
+        },
+        {
+            "name": "Season Agriculture Scenario",
+            "description": "Custom scenario about farming and seasons",
+            "value": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Farming and Seasons",
+                "data": {
+                    "toolName": "revolution_of_earth_tool",
+                    "parameters": {
+                        "initialMode": "applications",
+                        "additionalProps": {
+                            "customScenarios": [
+                                {
+                                    "id": 1,
+                                    "title": "Crop Planting Decision",
+                                    "icon": "🌾",
+                                    "difficulty": "Medium",
+                                    "context": "A farmer needs to decide when to plant wheat. Wheat grows best in cooler temperatures with shorter days.",
+                                    "question": "Should the farmer plant in June (summer) or November (after monsoon)?",
+                                    "realWorldConnection": "Seasons occur due to Earth's tilted axis. Different crops grow better in different seasons based on temperature and daylight hours.",
+                                    "solution": "The farmer should plant wheat in November",
+                                    "explanation": "Wheat is a winter crop that grows best in cooler temperatures (15-20°C). In November, the Northern Hemisphere begins to tilt away from the Sun, creating cooler weather and shorter days - perfect conditions for wheat. In June, the tilt toward the Sun creates hot, long days that aren't suitable for wheat.",
+                                    "tips": [
+                                        "Earth's tilt creates seasons",
+                                        "Summer has longer, hotter days",
+                                        "Winter has shorter, cooler days",
+                                        "Different crops need different seasons"
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                },
+                "instructions_for_student": "Help the farmer make the right decision using your knowledge of seasons!"
+            }
+        },
+        {
+            "name": "Multi-Language (Spanish)",
+            "description": "Tool in Spanish language",
+            "value": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Revolución de la Tierra",
+                "data": {
+                    "toolName": "revolution_of_earth_tool",
+                    "parameters": {
+                        "language": "es",
+                        "initialMode": "learn"
+                    }
+                },
+                "instructions_for_student": "¡Explora cómo la Tierra gira alrededor del Sol!"
+            }
+        },
+        {
+            "name": "Minimal UI - Focus View",
+            "description": "Clean interface with no distractions",
+            "value": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Earth's Revolution",
+                "data": {
+                    "toolName": "revolution_of_earth_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "showModeSelector": false,
+                        "enabledModes": [
+                            "learn"
+                        ],
+                        "additionalProps": {
+                            "orbitStartAngle": 90,
+                            "enableAutoPlay": true
+                        }
+                    }
+                },
+                "instructions_for_student": "Watch Earth's journey around the Sun!"
+            }
+        },
+        {
+            "name": "Fast Animation Demo",
+            "description": "Speed up the animation for quick demonstration",
+            "value": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Quick Demo - Earth's Orbit",
+                "data": {
+                    "toolName": "revolution_of_earth_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "animationSpeed": 3,
+                        "additionalProps": {
+                            "enableAutoPlay": true
+                        }
+                    }
+                },
+                "instructions_for_student": "Watch a sped-up version of Earth's yearly journey!"
+            }
+        }
+    ],
+    "agentGuide": {
+        "description": "Guide for AI agents on when and how to use this tool",
+        "useCases": {
+            "teach_seasons": {
+                "description": "When student asks about seasons, why we have seasons, or how seasons work",
+                "recommendation": {
+                    "initialMode": "learn",
+                    "additionalProps": {
+                        "orbitStartAngle": 90,
+                        "enableAutoPlay": true
+                    }
+                }
+            },
+            "show_specific_season": {
+                "description": "When student asks to see a specific season",
+                "recommendation": {
+                    "initialMode": "learn",
+                    "showModeSelector": false,
+                    "additionalProps": {
+                        "orbitStartAngle": "Use 0 for Spring, 90 for Summer, 180 for Autumn, 270 for Winter",
+                        "enableAutoPlay": false
+                    }
+                }
+            },
+            "test_knowledge": {
+                "description": "When student wants to practice or test their understanding",
+                "recommendation": {
+                    "initialMode": "practice"
+                }
+            },
+            "real_world_examples": {
+                "description": "When student asks how this relates to real life or wants practical applications",
+                "recommendation": {
+                    "initialMode": "applications"
+                }
+            },
+            "time_zones": {
+                "description": "When student asks about time zones or why different places have different times",
+                "recommendation": {
+                    "initialMode": "applications",
+                    "note": "Use custom scenario about time zones"
+                }
+            },
+            "day_night": {
+                "description": "When student asks about day/night cycle",
+                "recommendation": {
+                    "initialMode": "learn",
+                    "note": "Focus on Earth's rotation, not revolution"
+                }
+            },
+            "axial_tilt": {
+                "description": "When student asks about Earth's tilt or why Earth is tilted",
+                "recommendation": {
+                    "initialMode": "learn",
+                    "additionalProps": {
+                        "enableAutoPlay": true
+                    },
+                    "note": "The visualization shows the 23.5° tilt clearly"
+                }
+            },
+            "leap_year": {
+                "description": "When student asks why we have leap years",
+                "recommendation": {
+                    "initialMode": "learn",
+                    "note": "Key facts panel explains the extra ¼ day"
+                }
+            }
+        },
+        "decisionTree": {
+            "root": "What is the student asking about?",
+            "branches": {
+                "seasons": {
+                    "action": "Use learn mode with default settings",
+                    "config": {
+                        "initialMode": "learn"
+                    }
+                },
+                "specific_season": {
+                    "action": "Use learn mode with specific orbit angle",
+                    "config": {
+                        "initialMode": "learn",
+                        "showModeSelector": false,
+                        "additionalProps": {
+                            "orbitStartAngle": "Match season"
+                        }
+                    }
+                },
+                "quiz_practice": {
+                    "action": "Use practice mode",
+                    "config": {
+                        "initialMode": "practice"
+                    }
+                },
+                "real_world": {
+                    "action": "Use applications mode",
+                    "config": {
+                        "initialMode": "applications"
+                    }
+                },
+                "time_zones": {
+                    "action": "Use applications mode with time zone scenario",
+                    "config": {
+                        "initialMode": "applications",
+                        "additionalProps": {
+                            "customScenarios": "Time zone example"
+                        }
+                    }
+                }
+            }
+        },
+        "tips": [
+            "For general season questions, use default learn mode",
+            "For focused learning, hide mode selector and set specific orbit angle",
+            "For assessment, use practice mode",
+            "For real-world connections, use applications mode",
+            "Custom questions and scenarios can be added via additionalProps",
+            "Set enableAutoPlay to false if you want student to control the animation",
+            "Use appropriate language setting for international students",
+            "animationSpeed can be adjusted for faster demonstrations"
+        ]
+    }
+}

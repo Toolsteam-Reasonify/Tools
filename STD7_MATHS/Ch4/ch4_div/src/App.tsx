@@ -1,7 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import ModeSwitcher from './features/YourToolVisualization/SharedControls/ModeSwitcher';
-import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
-import ErrorBoundary from './components/ErrorBoundary';
+import { SharedModeSwitcher, LanguageProvider, useLanguage, ErrorBoundary } from './Components/Division';
 
 function AppShell() {
   const { isTransitioning, t } = useLanguage();
@@ -15,7 +13,7 @@ function AppShell() {
             </div>
           </div>
           <nav className="flex-none flex items-center gap-1 sm:gap-2 overflow-x-auto w-full sm:w-auto justify-center sm:justify-end">
-            <ModeSwitcher />
+            <SharedModeSwitcher />
           </nav>
         </div>
       </header>

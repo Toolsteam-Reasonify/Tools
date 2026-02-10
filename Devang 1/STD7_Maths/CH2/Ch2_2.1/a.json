@@ -1,0 +1,563 @@
+{
+    "topic": "2.1 A Quick Recap of Integers",
+    "chapter": 2,
+    "section": 1,
+    "title": "A Quick Recap of Integers",
+    "modes": {
+        "learn": {
+            "enabled": true,
+            "description": "Interactive puzzles and visual models to understand integer concepts"
+        },
+        "practice": {
+            "enabled": true,
+            "description": "Multiple-choice questions to test understanding of integers"
+        },
+        "realworld": {
+            "enabled": true,
+            "description": "Practical applications of integers in everyday scenarios"
+        }
+    },
+    "learningObjectives": [
+        "Understand and solve number puzzles involving sum and difference of integers",
+        "Model integer operations using movement on a number line",
+        "Use the token model to visualize addition and subtraction of integers",
+        "Recognize that subtracting a number is equivalent to adding its additive inverse",
+        "Apply integer concepts to real-world scenarios",
+        "Identify practical situations where integers are used in daily life",
+        "Solve problems involving temperature changes, banking, and elevation",
+        "Connect mathematical concepts to real-world applications"
+    ],
+    "keyTerms": [
+        {
+            "term": "Integer",
+            "definition": "A whole number that can be positive, negative, or zero"
+        },
+        {
+            "term": "Sum",
+            "definition": "The result of adding two or more numbers"
+        },
+        {
+            "term": "Difference",
+            "definition": "The result of subtracting one number from another (first number - second number)"
+        },
+        {
+            "term": "Number Line",
+            "definition": "A visual representation of numbers on a straight line, with negative numbers to the left of zero and positive numbers to the right"
+        },
+        {
+            "term": "Additive Inverse",
+            "definition": "The number that, when added to a given number, results in zero. For integer a, the additive inverse is -a"
+        },
+        {
+            "term": "Zero Pair",
+            "definition": "A pair of one positive and one negative token that cancel each other out to equal zero"
+        },
+        {
+            "term": "Token Model",
+            "definition": "A visual model using colored tokens to represent positive and negative integers"
+        },
+        {
+            "term": "Magnitude",
+            "definition": "The absolute value or size of a number, without regard to its sign"
+        },
+        {
+            "term": "Direction",
+            "definition": "In the context of integers, whether a number is positive (right/up) or negative (left/down)"
+        }
+    ],
+    "learnModeActivities": [
+        {
+            "name": "Rakesh's Puzzle",
+            "type": "interactive",
+            "description": "Find two numbers given their sum and difference",
+            "difficulty": "medium",
+            "examples": [
+                {
+                    "sum": 25,
+                    "difference": 11,
+                    "solution": [
+                        18,
+                        7
+                    ]
+                },
+                {
+                    "sum": 25,
+                    "difference": -11,
+                    "solution": [
+                        7,
+                        18
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Carrom Coin Integers",
+            "type": "visual_simulation",
+            "description": "Model integer addition using movement on a number line",
+            "formula": "P = a + b",
+            "variables": {
+                "P": "Final position",
+                "a": "First movement (positive right, negative left)",
+                "b": "Second movement (positive right, negative left)"
+            }
+        },
+        {
+            "name": "Token Model",
+            "type": "demonstration",
+            "description": "Visualize subtraction using colored tokens and zero pairs",
+            "tokens": {
+                "positive": "green",
+                "negative": "red"
+            }
+        }
+    ],
+    "practiceModeQuestions": [
+        {
+            "id": 1,
+            "question": "If two numbers have a sum of 15 and a difference of 5, what are the two numbers?",
+            "options": [
+                "8 and 7",
+                "10 and 5",
+                "12 and 3",
+                "9 and 6"
+            ],
+            "correct": "10 and 5",
+            "explanation": "Using algebra: a + b = 15 and a - b = 5. Adding these equations: 2a = 20, so a = 10. Then b = 5.",
+            "difficulty": "easy",
+            "topic": "sum-difference"
+        },
+        {
+            "id": 2,
+            "question": "A carrom coin starts at position 0. It moves 7 units right, then 3 units left. What is its final position?",
+            "options": [
+                "10",
+                "4",
+                "-4",
+                "3"
+            ],
+            "correct": "4",
+            "explanation": "7 units right is +7, 3 units left is -3. Final position: 7 + (-3) = 4",
+            "difficulty": "easy",
+            "topic": "number-line"
+        },
+        {
+            "id": 3,
+            "question": "What is the additive inverse of -15?",
+            "options": [
+                "-15",
+                "0",
+                "15",
+                "30"
+            ],
+            "correct": "15",
+            "explanation": "The additive inverse of a number is the number that, when added to it, gives 0. -15 + 15 = 0",
+            "difficulty": "easy",
+            "topic": "additive-inverse"
+        },
+        {
+            "id": 4,
+            "question": "Calculate: 8 - 12 = ?",
+            "options": [
+                "20",
+                "-4",
+                "4",
+                "-20"
+            ],
+            "correct": "-4",
+            "explanation": "8 - 12 = 8 + (-12) = -4. Starting at 8 and moving 12 units left lands at -4.",
+            "difficulty": "easy",
+            "topic": "subtraction"
+        },
+        {
+            "id": 5,
+            "question": "Which statement is TRUE about subtracting integers?",
+            "options": [
+                "Subtracting a number is the same as adding its opposite",
+                "Subtracting always makes numbers smaller",
+                "You cannot subtract a larger number from a smaller number",
+                "Subtraction and addition are the same operation"
+            ],
+            "correct": "Subtracting a number is the same as adding its opposite",
+            "explanation": "a - b = a + (-b). This is a fundamental property of integer subtraction.",
+            "difficulty": "medium",
+            "topic": "properties"
+        },
+        {
+            "id": 6,
+            "question": "If the first movement on a number line is -5 and the final position is 3, what is the second movement?",
+            "options": [
+                "-8",
+                "8",
+                "-2",
+                "2"
+            ],
+            "correct": "8",
+            "explanation": "Using P = a + b: 3 = -5 + b, so b = 8",
+            "difficulty": "medium",
+            "topic": "number-line"
+        },
+        {
+            "id": 7,
+            "question": "In the token model, one green token and one red token together equal:",
+            "options": [
+                "2",
+                "1",
+                "0",
+                "-1"
+            ],
+            "correct": "0",
+            "explanation": "A green token (+1) and red token (-1) form a zero pair: +1 + (-1) = 0",
+            "difficulty": "easy",
+            "topic": "token-model"
+        },
+        {
+            "id": 8,
+            "question": "Calculate: (-3) + (-7) = ?",
+            "options": [
+                "10",
+                "-10",
+                "4",
+                "-4"
+            ],
+            "correct": "-10",
+            "explanation": "When adding two negative numbers, add their magnitudes and keep the negative sign: -3 + (-7) = -10",
+            "difficulty": "easy",
+            "topic": "addition"
+        },
+        {
+            "id": 9,
+            "question": "Two numbers have a sum of 0 and a difference of 14. What are the numbers?",
+            "options": [
+                "7 and -7",
+                "14 and 0",
+                "7 and 7",
+                "14 and -14"
+            ],
+            "correct": "7 and -7",
+            "explanation": "If sum = 0, the numbers are opposites. If difference = 14, then 7 - (-7) = 14",
+            "difficulty": "medium",
+            "topic": "sum-difference"
+        },
+        {
+            "id": 10,
+            "question": "What is 5 - (-3)?",
+            "options": [
+                "2",
+                "8",
+                "-8",
+                "-2"
+            ],
+            "correct": "8",
+            "explanation": "Subtracting a negative is the same as adding: 5 - (-3) = 5 + 3 = 8",
+            "difficulty": "medium",
+            "topic": "subtraction"
+        }
+    ],
+    "realWorldApplications": [
+        {
+            "category": "Temperature",
+            "title": "Temperature Changes",
+            "description": "Recording temperature changes in freezing processes, weather forecasting, and climate control",
+            "example": "A freezing process lowers temperature by 5°C per hour. Starting at 8°C, after 4 hours: 8 + (4 × -5) = -12°C",
+            "formula": "Final Temperature = Starting Temperature + (Hours × Change per Hour)",
+            "realWorldUses": [
+                "Industrial freezing processes",
+                "Weather forecasting",
+                "Climate control systems",
+                "Food preservation"
+            ],
+            "interactive": true
+        },
+        {
+            "category": "Banking",
+            "title": "Bank Transactions",
+            "description": "Tracking deposits (positive) and withdrawals (negative) in account balance",
+            "example": "Balance: ₹1000, Deposit: ₹500, Withdrawal: ₹300. Final: 1000 + 500 - 300 = ₹1200",
+            "formula": "Final Balance = Starting Balance + Deposits - Withdrawals",
+            "realWorldUses": [
+                "Personal finance management",
+                "Business accounting",
+                "Credit card statements",
+                "Investment tracking"
+            ],
+            "interactive": true
+        },
+        {
+            "category": "Elevation",
+            "title": "Elevation and Sea Level",
+            "description": "Measuring heights above sea level (positive) and depths below sea level (negative)",
+            "example": "Mt. Everest: +8,849m, Dead Sea: -430m, Mariana Trench: -11,034m",
+            "formula": "Final Position = Starting Position + Change in Elevation",
+            "realWorldUses": [
+                "Aviation and flight planning",
+                "Submarine navigation",
+                "Geological surveys",
+                "Topographic mapping"
+            ],
+            "interactive": true
+        },
+        {
+            "category": "Sports",
+            "title": "Sports Scoring",
+            "description": "Golf scores relative to par, basketball score differences, football yards gained/lost",
+            "example": "Golf: -3 (3 under par), +2 (2 over par)",
+            "realWorldUses": [
+                "Golf scoring",
+                "Basketball point differentials",
+                "Football yardage",
+                "Hockey plus-minus ratings"
+            ],
+            "interactive": false
+        },
+        {
+            "category": "Time",
+            "title": "Time Zones",
+            "description": "Time zones expressed relative to UTC (0)",
+            "example": "India: UTC+5:30, New York: UTC-5, Tokyo: UTC+9",
+            "realWorldUses": [
+                "International travel",
+                "Global business meetings",
+                "Satellite communications",
+                "Aviation scheduling"
+            ],
+            "interactive": false
+        },
+        {
+            "category": "Finance",
+            "title": "Stock Market",
+            "description": "Stock price changes shown as positive gains or negative losses",
+            "example": "Stock gained ₹15 (+15), lost ₹8 (-8)",
+            "realWorldUses": [
+                "Stock trading",
+                "Investment analysis",
+                "Portfolio management",
+                "Market reports"
+            ],
+            "interactive": false
+        },
+        {
+            "category": "Architecture",
+            "title": "Building Floors",
+            "description": "Floor numbering with ground as 0, above positive, basement negative",
+            "example": "5th floor (+5), Ground (0), Basement 2 (-2)",
+            "realWorldUses": [
+                "Building navigation",
+                "Elevator systems",
+                "Parking structures",
+                "Underground facilities"
+            ],
+            "interactive": false
+        },
+        {
+            "category": "Gaming",
+            "title": "Video Games",
+            "description": "Health points, damage, bonuses tracked with positive and negative integers",
+            "example": "+50 health gained, -20 damage taken, +100 bonus points",
+            "realWorldUses": [
+                "Game mechanics",
+                "Score tracking",
+                "Character statistics",
+                "Reward systems"
+            ],
+            "interactive": false
+        },
+        {
+            "category": "History",
+            "title": "Historical Dates",
+            "description": "Years before Christ (BC) are negative, years after (AD) are positive",
+            "example": "500 BC = -500, 2025 AD = +2025",
+            "realWorldUses": [
+                "Historical timelines",
+                "Archaeological dating",
+                "Historical research",
+                "Educational materials"
+            ],
+            "interactive": false
+        }
+    ],
+    "assessmentCriteria": {
+        "learnMode": {
+            "knowledge": [
+                "Can identify integers and their properties",
+                "Understands the relationship between sum and difference",
+                "Recognizes additive inverse concept"
+            ],
+            "skills": [
+                "Can solve sum-difference puzzles",
+                "Able to use number line for integer operations",
+                "Can apply token model to subtraction problems"
+            ],
+            "application": [
+                "Explains reasoning clearly",
+                "Creates own problems for peers",
+                "Identifies patterns in operations"
+            ]
+        },
+        "practiceMode": {
+            "scoring": {
+                "excellent": "7-10 correct",
+                "good": "5-6 correct",
+                "needsImprovement": "0-4 correct"
+            },
+            "feedback": {
+                "excellent": "🎉 Excellent work! You have mastered integer concepts.",
+                "good": "👍 Good job! Keep practicing to improve further.",
+                "needsImprovement": "💪 Keep learning and try again!"
+            }
+        },
+        "realWorldMode": {
+            "understanding": [
+                "Connects mathematical concepts to real situations",
+                "Can solve practical problems using integers",
+                "Recognizes integer applications in daily life"
+            ],
+            "application": [
+                "Uses calculators correctly",
+                "Interprets results appropriately",
+                "Applies to personal experiences"
+            ]
+        }
+    },
+    "commonMistakes": [
+        {
+            "mistake": "Confusing which number is first in calculating difference",
+            "correction": "Remember: difference means first number - second number",
+            "mode": "learn"
+        },
+        {
+            "mistake": "Not recognizing equivalent expressions",
+            "correction": "Understand that a - b = a + (-b)",
+            "mode": "learn"
+        },
+        {
+            "mistake": "Ignoring negative signs",
+            "correction": "Pay careful attention to positive and negative indicators",
+            "mode": "all"
+        },
+        {
+            "mistake": "Forgetting that zero pairs have no net value",
+            "correction": "One positive and one negative token cancel to zero",
+            "mode": "learn"
+        },
+        {
+            "mistake": "Rushing through practice questions",
+            "correction": "Read each question carefully and check your answer",
+            "mode": "practice"
+        },
+        {
+            "mistake": "Not understanding the real-world context",
+            "correction": "Take time to read the scenario and understand what's being asked",
+            "mode": "realworld"
+        },
+        {
+            "mistake": "Mixing up deposits and withdrawals",
+            "correction": "Deposits add (+), withdrawals subtract (-)",
+            "mode": "realworld"
+        },
+        {
+            "mistake": "Confusing above and below in elevation",
+            "correction": "Above sea level is positive, below is negative",
+            "mode": "realworld"
+        }
+    ],
+    "extensionActivities": {
+        "learnMode": [
+            "Create your own sum-difference puzzles for classmates",
+            "Design a board game using the carrom coin number line concept",
+            "Make physical tokens (different colored coins) to practice subtraction",
+            "Challenge yourself with three-number sum-difference puzzles"
+        ],
+        "practiceMode": [
+            "Create your own MCQ questions for peers",
+            "Time yourself and track improvement over multiple attempts",
+            "Explain wrong answers to help others understand",
+            "Form study groups for collaborative quiz practice"
+        ],
+        "realWorldMode": [
+            "Keep a temperature log for a week and analyze patterns",
+            "Track your own bank transactions for a month",
+            "Research elevations of famous landmarks around the world",
+            "Create a presentation on integers in your favorite sport",
+            "Design a simple video game using integer mechanics"
+        ]
+    },
+    "interactiveFeatures": {
+        "learnMode": [
+            "Rakesh's Puzzle Solver with instant feedback",
+            "Animated Carrom Coin Number Line",
+            "Token Model with show/hide zero pairs",
+            "Step-by-step solution revealer"
+        ],
+        "practiceMode": [
+            "10 Multiple Choice Questions",
+            "Radio button selection interface",
+            "Submit and score calculation",
+            "Detailed results with correct answers",
+            "Retry functionality"
+        ],
+        "realWorldMode": [
+            "Temperature change calculator",
+            "Bank transaction calculator",
+            "Elevation position calculator",
+            "Multiple scenario examples",
+            "Interactive input fields with live calculations"
+        ]
+    },
+    "navigationLinks": {
+        "previous": {
+            "title": "Chapter 1 Review",
+            "section": "1.5"
+        },
+        "next": {
+            "title": "Multiplication of Integers",
+            "section": "2.2"
+        }
+    },
+    "estimatedTime": {
+        "learnMode": "45 minutes",
+        "practiceMode": "30 minutes",
+        "realWorldMode": "45 minutes",
+        "total": "120 minutes"
+    },
+    "difficulty": "Medium",
+    "prerequisites": [
+        "Understanding of positive and negative numbers",
+        "Basic addition and subtraction of whole numbers",
+        "Familiarity with number lines",
+        "Concept of zero and its properties"
+    ],
+    "standards": [
+        "CCSS.MATH.CONTENT.7.NS.A.1",
+        "CCSS.MATH.CONTENT.7.NS.A.2",
+        "CCSS.MATH.CONTENT.7.NS.A.3"
+    ],
+    "resources": {
+        "materials": [
+            "Colored tokens or coins (green and red)",
+            "Number line (drawn or printed)",
+            "Graph paper",
+            "Calculator (optional)",
+            "Scratch paper for calculations"
+        ],
+        "digitalTools": [
+            "Interactive number line simulator",
+            "Token model visualization",
+            "Practice question generator",
+            "Real-world scenario calculators"
+        ]
+    },
+    "teachingNotes": {
+        "learnMode": "Encourage students to experiment with different numbers in the puzzles. Use physical tokens if possible to make the abstract concepts more concrete.",
+        "practiceMode": "Allow students to work at their own pace. Encourage them to try again after reviewing incorrect answers.",
+        "realWorldMode": "Connect examples to students' own experiences. Ask them to share their own examples of integers in daily life."
+    },
+    "accessibilityNotes": "Tokens of different shapes may be used for positive and negative numbers for visually challenged students. All interactive elements have keyboard navigation support.",
+    "culturalContext": "This chapter introduces concepts that were historically developed by mathematicians like Brahmagupta, whose work on multiplication and division will be explored in section 2.2.",
+    "version": "2.0",
+    "lastUpdated": "2025-02-02",
+    "contributors": [
+        "NCERT Curriculum Team",
+        "Mathematics Education Specialists",
+        "Interactive Learning Developers"
+    ]
+}

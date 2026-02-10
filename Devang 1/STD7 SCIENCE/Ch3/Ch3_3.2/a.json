@@ -1,0 +1,723 @@
+{
+    "toolName": "circuit_diagrams_tool",
+    "version": "3.0.0",
+    "description": "Interactive learning tool for understanding electrical circuit diagrams and symbols based on NCERT Grade 7 Chapter 3 Section 3.3. Redesigned with Singularity Design System and fully responsive layout.",
+    "curriculum": {
+        "board": "NCERT",
+        "grade": 7,
+        "subject": "Science",
+        "chapter": 3,
+        "chapterTitle": "Electricity: Circuits and their Components",
+        "section": "3.3",
+        "sectionTitle": "Circuit Diagrams",
+        "topics": [
+            "Circuit diagram symbols",
+            "Component representation",
+            "Drawing conventions",
+            "Reading circuit diagrams",
+            "Symbol standardization"
+        ]
+    },
+    "designSystem": {
+        "name": "Singularity Design System",
+        "version": "1.0.0",
+        "colors": {
+            "primary": "#4A4DC9",
+            "primaryLight": "#C1C1EA",
+            "primaryBg": "#EEEEF8",
+            "secondary": "#FF7212",
+            "secondaryLight": "#FFF3E4",
+            "secondaryAccent": "#FC9145",
+            "gradientStart": "#533086",
+            "gradientEnd": "#FC9145",
+            "neutral900": "#1a1a2e",
+            "neutral700": "#4E4E4E",
+            "neutral400": "#CACACA",
+            "neutral200": "#EBEBEB",
+            "neutral100": "#F5F5F5",
+            "white": "#FFFFFF",
+            "success": "#22c55e",
+            "error": "#ef4444"
+        },
+        "typography": {
+            "fontFamily": "'Poppins', sans-serif",
+            "weights": {
+                "regular": 400,
+                "medium": 500,
+                "semiBold": 600,
+                "bold": 700
+            }
+        },
+        "borderRadius": {
+            "sm": "8px",
+            "md": "12px",
+            "lg": "16px",
+            "xl": "24px",
+            "full": "999px"
+        },
+        "shadows": {
+            "sm": "0 2px 8px rgba(74,77,201,0.08)",
+            "md": "0 4px 20px rgba(74,77,201,0.12)",
+            "lg": "0 8px 40px rgba(74,77,201,0.16)",
+            "glow": "0 0 24px rgba(74,77,201,0.25)"
+        },
+        "buttons": {
+            "style": "pill",
+            "borderRadius": "999px",
+            "padding": {
+                "desktop": "12px 28px",
+                "mobile": "10px 18px"
+            },
+            "variants": ["contained", "outlined", "text"],
+            "states": ["enabled", "disabled", "hover", "pressed"]
+        }
+    },
+    "responsive": {
+        "breakpoints": {
+            "mobile": "< 640px",
+            "tablet": "640px – 1023px",
+            "desktop": ">= 1024px"
+        },
+        "adaptations": {
+            "mobile": {
+                "layout": "full-height viewport",
+                "headerPadding": "20px 16px",
+                "bodyPadding": "20px 16px",
+                "titleFontSize": "20px",
+                "stepTitleFontSize": "20px",
+                "descriptionFontSize": "15px",
+                "canvasHeight": "200px",
+                "modeBarScrollable": true,
+                "navButtonPadding": "10px 18px"
+            },
+            "tablet": {
+                "layout": "contained card",
+                "headerPadding": "24px 24px",
+                "bodyPadding": "28px",
+                "titleFontSize": "24px",
+                "canvasHeight": "240px"
+            },
+            "desktop": {
+                "layout": "contained card, max-width 960px",
+                "headerPadding": "28px 32px",
+                "bodyPadding": "32px",
+                "titleFontSize": "26px",
+                "stepTitleFontSize": "24px",
+                "descriptionFontSize": "16px",
+                "canvasHeight": "280px",
+                "navButtonPadding": "12px 28px"
+            }
+        },
+        "canvas": {
+            "dprAware": true,
+            "scalingMethod": "proportional based on container width",
+            "maxWidth": "600px"
+        }
+    },
+    "learningObjectives": [
+        "Understand the purpose of circuit diagrams",
+        "Learn standard symbols for electrical components",
+        "Identify positive and negative terminals",
+        "Draw accurate circuit diagrams",
+        "Read and interpret circuit diagrams",
+        "Distinguish between open and closed circuits"
+    ],
+    "modes": {
+        "learn": {
+            "description": "Step-by-step introduction to circuit diagram symbols",
+            "icon": "📚",
+            "steps": 7,
+            "content": [
+                "Introduction to circuit diagrams",
+                "Electric cell symbol and terminals",
+                "Battery symbol (multiple cells)",
+                "Electric lamp symbol",
+                "LED symbol with arrows",
+                "Switch symbols (ON/OFF)",
+                "Complete circuit diagram with all components"
+            ]
+        },
+        "practice": {
+            "description": "Interactive questions to test understanding",
+            "icon": "✏️",
+            "questions": 6,
+            "types": [
+                "multiple_choice",
+                "symbol_identification",
+                "circuit_analysis"
+            ],
+            "scoring": {
+                "display": "score/attempts badge",
+                "feedbackStyle": "inline with color-coded border",
+                "correctColor": "#22c55e",
+                "incorrectColor": "#ef4444"
+            },
+            "autoPlayDisabled": true
+        },
+        "real_world": {
+            "description": "Real-world applications of circuit diagrams",
+            "icon": "🌍",
+            "examples": 4,
+            "applications": [
+                {
+                    "title": "Torchlight",
+                    "icon": "🔦"
+                },
+                {
+                    "title": "Room light",
+                    "icon": "💡"
+                },
+                {
+                    "title": "Doorbell",
+                    "icon": "🔔"
+                },
+                {
+                    "title": "Solar light",
+                    "icon": "☀️"
+                }
+            ],
+            "cardStyle": {
+                "background": "#FFF3E4",
+                "borderColor": "rgba(252,145,69,0.19)",
+                "titleColor": "#533086"
+            }
+        },
+        "hands_on": {
+            "description": "Practical activities for building and drawing circuits",
+            "icon": "🔬",
+            "activities": 4,
+            "projects": [
+                {
+                    "title": "Build a simple circuit",
+                    "icon": "🔧"
+                },
+                {
+                    "title": "Make your own switch",
+                    "icon": "🔌"
+                },
+                {
+                    "title": "Test for conductors",
+                    "icon": "🧪"
+                },
+                {
+                    "title": "Draw circuit diagrams",
+                    "icon": "✏️"
+                }
+            ],
+            "cardStyle": {
+                "background": "#EEEEF8",
+                "borderColor": "#C1C1EA",
+                "titleColor": "#4A4DC9"
+            }
+        }
+    },
+    "uiComponents": {
+        "header": {
+            "background": "linear-gradient(135deg, #533086, #4A4DC9 50%, #FC9145)",
+            "stepBadge": {
+                "background": "rgba(255,255,255,0.2)",
+                "borderRadius": "999px",
+                "backdropFilter": "blur(8px)"
+            }
+        },
+        "progressBar": {
+            "height": "4px",
+            "trackColor": "#EBEBEB",
+            "fillGradient": "linear-gradient(90deg, #4A4DC9, #FF7212)",
+            "transition": "width 0.4s ease"
+        },
+        "modeTabs": {
+            "style": "pill buttons in horizontal scroll container",
+            "activeBackground": "#4A4DC9",
+            "activeColor": "#FFFFFF",
+            "inactiveBackground": "transparent",
+            "inactiveColor": "#4E4E4E",
+            "borderRadius": "999px"
+        },
+        "navigation": {
+            "previousButton": {
+                "style": "contained pill",
+                "disabledBackground": "#EBEBEB",
+                "disabledColor": "#CACACA"
+            },
+            "nextButton": {
+                "style": "contained pill",
+                "disabledBackground": "#EBEBEB",
+                "disabledColor": "#CACACA"
+            },
+            "playPauseButton": {
+                "style": "outlined pill",
+                "borderColor": "#4A4DC9",
+                "textColor": "#4A4DC9",
+                "hiddenInPracticeMode": true
+            }
+        },
+        "canvasArea": {
+            "background": "#F5F5F5",
+            "border": "2px solid #EBEBEB",
+            "borderRadius": "12px",
+            "rendering": "DPR-aware for sharp display on retina screens"
+        },
+        "explanationBox": {
+            "background": "#EEEEF8",
+            "borderLeft": "4px solid #4A4DC9",
+            "borderRadius": "0 12px 12px 0"
+        }
+    },
+    "props": {
+        "width": {
+            "type": "number",
+            "default": 960,
+            "description": "Maximum component width in pixels (responsive within this bound)"
+        },
+        "height": {
+            "type": "string",
+            "default": "auto",
+            "description": "Component height — auto-sizes based on content, full-viewport on mobile"
+        },
+        "initialMode": {
+            "type": "string",
+            "enum": [
+                "learn",
+                "practice",
+                "real_world",
+                "hands_on"
+            ],
+            "default": "learn",
+            "description": "Starting mode"
+        },
+        "showModeSelector": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide mode tabs"
+        },
+        "enabledModes": {
+            "type": "array",
+            "items": [
+                "learn",
+                "practice",
+                "real_world",
+                "hands_on"
+            ],
+            "default": [
+                "learn",
+                "practice",
+                "real_world",
+                "hands_on"
+            ],
+            "description": "Which modes to enable"
+        },
+        "showNavigation": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide navigation buttons"
+        },
+        "showPlayPause": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide play/pause button (always hidden in practice mode)"
+        },
+        "showStepIndicator": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide step counter badge in header"
+        },
+        "initialStep": {
+            "type": "number",
+            "default": 0,
+            "description": "Starting step (0-indexed)"
+        },
+        "filterSteps": {
+            "type": "array",
+            "items": "number",
+            "description": "Array of step IDs to display"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier"
+        },
+        "autoPlayDuration": {
+            "type": "number",
+            "default": 6000,
+            "description": "Auto-advance delay in milliseconds"
+        },
+        "additionalProps": {
+            "type": "object",
+            "properties": {
+                "customCircuits": {
+                    "type": "array",
+                    "description": "Custom circuit configurations"
+                },
+                "highlightComponents": {
+                    "type": "array",
+                    "description": "Component IDs to highlight"
+                },
+                "showSymbolsOnly": {
+                    "type": "boolean",
+                    "description": "Show only symbols without labels"
+                },
+                "interactiveMode": {
+                    "type": "boolean",
+                    "description": "Allow interactive modifications"
+                }
+            }
+        }
+    },
+    "removedProps": {
+        "themeColor": "Replaced by Singularity Design System fixed color tokens (#4A4DC9 primary, #FF7212 secondary)",
+        "darkMode": "Removed in v3.0.0 — component uses light theme from Singularity Design System"
+    },
+    "symbols": {
+        "cell": {
+            "description": "Electric cell with two parallel lines",
+            "positive": "Long line",
+            "negative": "Short thick line",
+            "canvasColor": "#4A4DC9",
+            "labelColor": "#FF7212"
+        },
+        "battery": {
+            "description": "Multiple cells (3) connected in series",
+            "representation": "Three pairs of long/short lines with connecting wires",
+            "canvasColor": "#4A4DC9",
+            "labelColor": "#FF7212"
+        },
+        "lamp": {
+            "description": "Electric lamp/bulb",
+            "symbol": "Circle with X inside",
+            "glowColor": "#FC9145"
+        },
+        "led": {
+            "description": "Light Emitting Diode",
+            "symbol": "Triangle with two arrows showing light emission",
+            "arrowColor": "#FF7212",
+            "bodyColor": "#4A4DC9"
+        },
+        "switch": {
+            "description": "Circuit control device",
+            "on": "Connected line between two filled dots (closed circuit)",
+            "off": "Angled lever between two filled dots (open circuit)",
+            "dotColor": "#4A4DC9"
+        },
+        "complete_circuit": {
+            "description": "Full circuit with battery, switch, and light bulb in rectangular loop",
+            "components": ["battery (left)", "switch (top-right, OFF position)", "light bulb (bottom-right)"],
+            "wireColor": "#4A4DC9",
+            "labelFont": "13px Poppins"
+        }
+    },
+    "examples": {
+        "example1_introduction": {
+            "title": "Start Learning Circuit Diagrams",
+            "useCase": "Student wants to learn about circuit diagrams",
+            "toolCall": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Learn Circuit Diagram Symbols",
+                "data": {
+                    "toolName": "circuit_diagrams_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "showModeSelector": true
+                    }
+                },
+                "instructions_for_student": "Let's learn how to read and draw circuit diagrams using standard symbols!"
+            }
+        },
+        "example2_specific_symbol": {
+            "title": "Focus on Battery Symbol",
+            "useCase": "Student asks about battery symbol",
+            "toolCall": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Battery Symbol",
+                "data": {
+                    "toolName": "circuit_diagrams_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "filterSteps": [3],
+                        "showModeSelector": false,
+                        "showNavigation": false
+                    }
+                },
+                "instructions_for_student": "A battery is shown with multiple pairs of lines — long (positive) and short (negative)!"
+            }
+        },
+        "example3_practice": {
+            "title": "Test Your Knowledge",
+            "useCase": "Student wants to practice",
+            "toolCall": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Circuit Diagram Quiz",
+                "data": {
+                    "toolName": "circuit_diagrams_tool",
+                    "parameters": {
+                        "initialMode": "practice",
+                        "showModeSelector": false
+                    }
+                },
+                "instructions_for_student": "Test your understanding with these practice questions!"
+            }
+        },
+        "example4_real_world": {
+            "title": "See Real Applications",
+            "useCase": "Student asks about real-world uses",
+            "toolCall": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Circuits in Real Life",
+                "data": {
+                    "toolName": "circuit_diagrams_tool",
+                    "parameters": {
+                        "initialMode": "real_world",
+                        "showModeSelector": false
+                    }
+                },
+                "instructions_for_student": "See how circuit diagrams represent real devices like torches and doorbells!"
+            }
+        },
+        "example5_hands_on": {
+            "title": "Build Your Own Circuit",
+            "useCase": "Student wants practical activity",
+            "toolCall": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Build a Circuit",
+                "data": {
+                    "toolName": "circuit_diagrams_tool",
+                    "parameters": {
+                        "initialMode": "hands_on",
+                        "filterSteps": [1]
+                    }
+                },
+                "instructions_for_student": "Follow these steps to build a real circuit with a cell, switch, and lamp!"
+            }
+        },
+        "example6_symbol_comparison": {
+            "title": "Cell vs Battery",
+            "useCase": "Student confused about difference",
+            "toolCall": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Cell vs Battery Symbols",
+                "data": {
+                    "toolName": "circuit_diagrams_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "filterSteps": [2, 3],
+                        "autoPlayDuration": 6000
+                    }
+                },
+                "instructions_for_student": "A cell has ONE pair of lines, a battery has TWO OR MORE pairs!"
+            }
+        },
+        "example7_led_understanding": {
+            "title": "Understanding LED Symbol",
+            "useCase": "Student asks about LED arrows",
+            "toolCall": {
+                "frontend_action": "show_interactive_tool",
+                "title": "LED Symbol Explained",
+                "data": {
+                    "toolName": "circuit_diagrams_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "filterSteps": [5],
+                        "showNavigation": false
+                    }
+                },
+                "instructions_for_student": "The arrows show light emission! LEDs only work in one direction."
+            }
+        },
+        "example8_drawing_rules": {
+            "title": "How to Draw Circuits",
+            "useCase": "Student needs drawing guidelines",
+            "toolCall": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Circuit Drawing Rules",
+                "data": {
+                    "toolName": "circuit_diagrams_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "filterSteps": [7],
+                        "showModeSelector": false
+                    }
+                },
+                "instructions_for_student": "Follow these rules: use standard symbols, draw straight lines, show complete paths!"
+            }
+        },
+        "example9_complete_circuit": {
+            "title": "Understanding Complete Circuits",
+            "useCase": "Student confused about when lamp glows",
+            "toolCall": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Complete vs Open Circuits",
+                "data": {
+                    "toolName": "circuit_diagrams_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "filterSteps": [6, 7],
+                        "autoPlayDuration": 7000
+                    }
+                },
+                "instructions_for_student": "The lamp only glows when the circuit is COMPLETE with a closed switch!"
+            }
+        },
+        "example10_full_exploration": {
+            "title": "Explore All Modes",
+            "useCase": "Student wants comprehensive learning experience",
+            "toolCall": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Circuit Diagrams — Full Explorer",
+                "data": {
+                    "toolName": "circuit_diagrams_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "showModeSelector": true,
+                        "enabledModes": ["learn", "practice", "real_world", "hands_on"]
+                    }
+                },
+                "instructions_for_student": "Start with Learn, then test yourself in Practice, explore Real World uses, and try Hands-On activities!"
+            }
+        }
+    },
+    "agentDecisionTree": {
+        "patterns": {
+            "introduction": {
+                "queries": [
+                    "what is circuit diagram",
+                    "explain circuit diagrams"
+                ],
+                "response": "Use initialMode: 'learn', start from step 1"
+            },
+            "symbol_lookup": {
+                "queries": [
+                    "symbol for [component]",
+                    "how to draw [component]"
+                ],
+                "response": "Use initialMode: 'learn', filter to specific symbol step"
+            },
+            "practice": {
+                "queries": [
+                    "practice",
+                    "quiz",
+                    "test me"
+                ],
+                "response": "Use initialMode: 'practice'"
+            },
+            "real_world": {
+                "queries": [
+                    "real examples",
+                    "how does [device] work"
+                ],
+                "response": "Use initialMode: 'real_world'"
+            },
+            "hands_on": {
+                "queries": [
+                    "build",
+                    "make",
+                    "create circuit"
+                ],
+                "response": "Use initialMode: 'hands_on'"
+            }
+        }
+    },
+    "teachingTips": {
+        "teachers": [
+            "Start with Learn mode to build foundation",
+            "Use Real World examples to connect theory to practice",
+            "Practice mode provides immediate feedback with score tracking",
+            "Hands-on activities reinforce through doing",
+            "Emphasize that symbols are universal",
+            "The progress bar helps students track their position in each mode"
+        ],
+        "commonMisconceptions": [
+            "Confusing positive and negative terminals",
+            "Not understanding why circuit must be complete",
+            "Thinking LED and lamp symbols are interchangeable"
+        ]
+    },
+    "technicalNotes": {
+        "framework": "React (JSX) with hooks",
+        "rendering": {
+            "canvas": "HTML5 Canvas with DPR-aware scaling for retina displays",
+            "scalingMethod": "Proportional scaling based on container width using Math.min(w/400, h/280)",
+            "symbolDrawing": "Extracted to standalone function drawSymbolOnCanvas() for cleaner architecture"
+        },
+        "responsive": {
+            "method": "window.innerWidth listener with state-driven breakpoints",
+            "breakpoints": {
+                "mobile": "< 640px",
+                "tablet": "640px – 1023px",
+                "desktop": ">= 1024px"
+            },
+            "mobileOptimizations": [
+                "Full viewport height layout",
+                "Horizontally scrollable mode tabs",
+                "Reduced padding and font sizes",
+                "Smaller canvas height (200px vs 280px)",
+                "Touch-friendly button sizing"
+            ]
+        },
+        "designSystem": {
+            "colorTokens": "Centralized TOKENS object for all design values",
+            "typography": "Poppins font via Google Fonts CDN",
+            "buttonStyle": "Pill-shaped (border-radius: 999px) matching Singularity Design System",
+            "gradientHeader": "Three-stop gradient: #533086 → #4A4DC9 → #FC9145"
+        },
+        "animations": {
+            "transitions": "CSS transitions on buttons, options, and navigation (0.25s ease)",
+            "progressBar": "Smooth width transition (0.4s ease) with gradient fill",
+            "modeSwitch": "Scale transform on active tab (1.04x)"
+        },
+        "accessibility": [
+            "High contrast color tokens from Singularity Design System",
+            "Poppins font for readability across sizes",
+            "Clear disabled states with reduced opacity",
+            "Color-coded feedback (green/red) for practice answers",
+            "Touch-friendly target sizes on mobile (minimum 44px)"
+        ],
+        "autoPlay": {
+            "duration": 6000,
+            "disabledInPracticeMode": true,
+            "stopsAtLastStep": true
+        }
+    },
+    "changelog": {
+        "v3.0.0": {
+            "date": "2026-02-09",
+            "changes": [
+                "Redesigned with Singularity Design System (colors, typography, buttons, spacing)",
+                "Made fully responsive with mobile/tablet/desktop breakpoints",
+                "Replaced fixed width/height with fluid max-width layout",
+                "Added gradient progress bar below header",
+                "Updated header to three-stop purple-blue-orange gradient",
+                "Changed buttons to pill-shaped style per design system",
+                "Added DPR-aware canvas rendering for retina displays",
+                "Proportional canvas scaling based on container dimensions",
+                "Added themed cards for Real World (orange) and Hands-On (purple) modes",
+                "Added icons to Real World and Hands-On step items",
+                "Horizontally scrollable mode tabs on mobile",
+                "Removed darkMode and themeColor props (fixed to design system tokens)",
+                "Removed example9_dark_mode example (dark mode no longer supported)",
+                "Replaced example10 with full exploration example",
+                "Extracted canvas drawing to standalone function",
+                "Reduced autoPlayDuration default from 8000ms to 6000ms",
+                "Play/Pause button hidden in practice mode",
+                "Updated score display to inline badge style"
+            ]
+        },
+        "v2.0.0": {
+            "description": "Original implementation with configurable theme, dark mode, and fixed dimensions"
+        }
+    },
+    "tags": [
+        "electricity",
+        "circuits",
+        "symbols",
+        "diagrams",
+        "NCERT",
+        "Grade7",
+        "Science",
+        "interactive",
+        "visual-learning",
+        "responsive",
+        "singularity-design-system",
+        "poppins",
+        "mobile-friendly"
+    ]
+}

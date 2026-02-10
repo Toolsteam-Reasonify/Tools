@@ -1,7 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import ModeSwitcher from './features/YourToolVisualization/SharedControls/ModeSwitcher';
-import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
-import ErrorBoundary from './components/ErrorBoundary';
+import { ModeSwitcher, LanguageProvider, useLanguage, ErrorBoundary } from './components/Subtraction';
 
 function AppShell() {
   const { isTransitioning, t } = useLanguage();

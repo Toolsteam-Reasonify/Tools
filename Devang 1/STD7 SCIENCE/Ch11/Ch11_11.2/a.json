@@ -1,0 +1,268 @@
+{
+  "toolName": "does_light_travel_in_straight_line",
+  "parameters": {
+    "width": {
+      "type": "number",
+      "default": 800,
+      "description": "Overall component width in pixels",
+      "min": 400,
+      "max": 2000
+    },
+    "height": {
+      "type": "number",
+      "default": 600,
+      "description": "Overall component height in pixels",
+      "min": 300,
+      "max": 1500
+    },
+    "initialMode": {
+      "type": "string",
+      "enum": [
+        "learn",
+        "practice",
+        "realWorld"
+      ],
+      "default": "learn",
+      "description": "Starting mode when tool loads"
+    },
+    "showModeSelector": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide the mode selection tabs at the top"
+    },
+    "enabledModes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "learn",
+          "practice",
+          "realWorld"
+        ]
+      },
+      "default": [
+        "learn",
+        "practice",
+        "realWorld"
+      ],
+      "description": "Which modes are available to the user"
+    },
+    "showNavigation": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide previous and next navigation buttons"
+    },
+    "showPlayPause": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide play/pause button for auto-advance"
+    },
+    "showStepIndicator": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide step counter (e.g., 'Step 2 of 7')"
+    },
+    "initialStep": {
+      "type": "number",
+      "default": 0,
+      "description": "Starting step index (0-based) for learn mode",
+      "min": 0,
+      "max": 6
+    },
+    "filterSteps": {
+      "type": "array",
+      "items": {
+        "type": "number",
+        "min": 1,
+        "max": 7
+      },
+      "default": null,
+      "description": "Array of step IDs to display (filters out others)"
+    },
+    "animationSpeed": {
+      "type": "number",
+      "default": 1,
+      "description": "Animation speed multiplier (1 = normal, 2 = double speed)",
+      "min": 0.5,
+      "max": 3
+    },
+    "autoPlayDuration": {
+      "type": "number",
+      "default": 12000,
+      "description": "Milliseconds to wait before auto-advancing to next step (0 = disabled)",
+      "min": 0,
+      "max": 60000
+    },
+    "themeColor": {
+      "type": "string",
+      "default": "#3b82f6",
+      "description": "Primary theme color in hex format",
+      "pattern": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+    },
+    "darkMode": {
+      "type": "boolean",
+      "default": false,
+      "description": "Enable dark mode theme"
+    },
+    "additionalProps": {
+      "type": "object",
+      "description": "Dynamic custom content and visual settings",
+      "properties": {
+        "customSteps": {
+          "type": "array",
+          "description": "Replace default steps with custom step data",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "activity": {
+                "type": "string",
+                "enum": [
+                  "matchbox",
+                  "pipe",
+                  "conclusion"
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "title",
+              "description",
+              "activity"
+            ]
+          }
+        },
+        "customQuestions": {
+          "type": "array",
+          "description": "Replace default practice questions",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "question": {
+                "type": "string"
+              },
+              "options": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 2,
+                "maxItems": 6
+              },
+              "correctAnswer": {
+                "type": "number",
+                "description": "Index of correct answer (0-based)"
+              },
+              "explanation": {
+                "type": "string"
+              },
+              "visualType": {
+                "type": "string",
+                "enum": [
+                  "matchbox",
+                  "pipe",
+                  "concept"
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "question",
+              "options",
+              "correctAnswer",
+              "explanation"
+            ]
+          }
+        },
+        "customApplications": {
+          "type": "array",
+          "description": "Replace default real-world applications",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "icon": {
+                "type": "string",
+                "description": "Emoji or icon character"
+              },
+              "category": {
+                "type": "string"
+              },
+              "example": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "title",
+              "description",
+              "icon",
+              "category",
+              "example"
+            ]
+          }
+        },
+        "canvasWidth": {
+          "type": "number",
+          "description": "Canvas element width for visualizations",
+          "default": 800
+        },
+        "canvasHeight": {
+          "type": "number",
+          "description": "Canvas element height for visualizations",
+          "default": 600
+        },
+        "lightSpeed": {
+          "type": "number",
+          "description": "Speed of light beam animation (experimental)",
+          "default": 1
+        },
+        "particleCount": {
+          "type": "number",
+          "description": "Number of light particles (experimental)",
+          "default": 100
+        },
+        "torchColor": {
+          "type": "string",
+          "description": "Hex color for torch/light source",
+          "default": "#FFD700"
+        },
+        "lightBeamColor": {
+          "type": "string",
+          "description": "Hex color for light beams",
+          "default": "#FFD700"
+        },
+        "matchboxColor": {
+          "type": "string",
+          "description": "Hex color for matchboxes",
+          "default": "#8B4513"
+        },
+        "pipeColor": {
+          "type": "string",
+          "description": "Hex color for pipes",
+          "default": "#64748B"
+        }
+      }
+    }
+  },
+  "usage_example": {}
+}

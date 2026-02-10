@@ -1,0 +1,758 @@
+{
+    "name": "Rotation of Earth - Educational App",
+    "version": "2.0.0",
+    "description": "A fully responsive, interactive educational application teaching students about Earth's rotation through 3D visualizations, comprehensive quizzes, and real-world application demos",
+    "agent_type": "react_educational_app",
+    "primary_language": "en",
+    "supported_languages": [
+        "en"
+    ],
+    "target_audience": "students_10_to_18",
+    "educational_level": "middle_high_school",
+    "last_updated": "2026-01-28",
+    "status": "fully_implemented",
+    "subjects": [
+        "Earth Science",
+        "Astronomy",
+        "Physics",
+        "Geography",
+        "Environmental Science"
+    ],
+    "learning_objectives": [
+        "Understand Earth's 24-hour rotation period",
+        "Recognize the relationship between rotation and day/night cycles",
+        "Explain how rotation creates 24 time zones",
+        "Describe the Coriolis effect and its real-world impacts",
+        "Connect Earth's rotation to aviation, weather, and navigation",
+        "Calculate time differences across time zones",
+        "Understand Earth's axial tilt (23.5°) and its effects"
+    ],
+    "features": {
+        "modes": {
+            "learn": {
+                "name": "Learn Mode",
+                "description": "Interactive 3D Earth visualization with five educational sub-modes",
+                "status": "fully_implemented",
+                "sub_modes": [
+                    {
+                        "id": "explore",
+                        "name": "Explore Rotation",
+                        "description": "Basic Earth rotation with continents, oceans, and location markers"
+                    },
+                    {
+                        "id": "daynight",
+                        "name": "Day & Night",
+                        "description": "Visualization of day/night cycle with shadow effects"
+                    },
+                    {
+                        "id": "timezones",
+                        "name": "Time Zones",
+                        "description": "24 time zones with live time display for major cities"
+                    },
+                    {
+                        "id": "seasons",
+                        "name": "Seasons",
+                        "description": "How Earth's tilt affects seasons throughout the year"
+                    },
+                    {
+                        "id": "effects",
+                        "name": "Effects",
+                        "description": "Various effects of rotation: Coriolis, bulging, etc."
+                    }
+                ],
+                "features": [
+                    "3D SVG Earth with continents and oceans",
+                    "Real-time rotation animation (60fps)",
+                    "6 major city markers (New York, London, Dubai, Mumbai, Tokyo, Sydney)",
+                    "Sun position with pulsing glow effect",
+                    "Day/night shadow visualization",
+                    "Axis tilt indicator (23.5°)",
+                    "Rotation speed control (0.25x to 5x)",
+                    "Play/pause controls",
+                    "Location label toggle",
+                    "Directional indicators (East/West)",
+                    "Live time calculations for all cities"
+                ],
+                "cities_displayed": 6,
+                "control_options": {
+                    "play_pause": true,
+                    "speed_control": true,
+                    "label_toggle": true,
+                    "mode_switching": true
+                }
+            },
+            "practice": {
+                "name": "Practice Mode",
+                "description": "Comprehensive quiz system with 15 questions covering all rotation concepts",
+                "status": "fully_implemented",
+                "total_questions": 15,
+                "question_types": [
+                    "multiple_choice",
+                    "true_false"
+                ],
+                "difficulty_distribution": {
+                    "easy": 6,
+                    "medium": 6,
+                    "hard": 3
+                },
+                "features": [
+                    "15 carefully crafted questions",
+                    "Progress bar showing current question",
+                    "Timer for each question",
+                    "Immediate feedback after submission",
+                    "Detailed explanations for all answers",
+                    "Hints for challenging questions",
+                    "Correct/incorrect answer highlighting",
+                    "Score calculation and percentage",
+                    "Results summary with performance metrics",
+                    "Time tracking per question",
+                    "Streak tracking for consecutive correct answers",
+                    "Quiz restart functionality",
+                    "Question-by-question review"
+                ],
+                "topics_covered": [
+                    "Rotation period (24 hours)",
+                    "Direction of rotation (counter-clockwise from North Pole)",
+                    "Axis tilt (23.5 degrees)",
+                    "Rotation speed at equator (1,670 km/h)",
+                    "Day and night cycle",
+                    "Time zones (24 total)",
+                    "Degrees per hour (15°)",
+                    "Coriolis effect",
+                    "Sidereal day (23h 56m 4s)",
+                    "Effects on weight and Earth's shape",
+                    "Polar day length variations",
+                    "Hurricane spin directions",
+                    "Jet streams",
+                    "Equatorial bulge"
+                ]
+            },
+            "applications": {
+                "name": "Real World Applications",
+                "description": "Six interactive categories demonstrating how Earth's rotation affects daily life",
+                "status": "fully_implemented",
+                "total_categories": 6,
+                "categories": [
+                    {
+                        "id": "aviation",
+                        "name": "Aviation & Flight Times",
+                        "icon": "✈️",
+                        "interactive_demo": {
+                            "type": "flight_simulator",
+                            "description": "Compare eastbound vs westbound flight times between New York and London",
+                            "features": [
+                                "Direction selector",
+                                "Animated plane",
+                                "Jet stream visualization",
+                                "Time comparison"
+                            ]
+                        },
+                        "facts_count": 4,
+                        "key_concepts": [
+                            "Jet streams",
+                            "Flight time differences",
+                            "Fuel savings",
+                            "Great circle routes"
+                        ]
+                    },
+                    {
+                        "id": "navigation",
+                        "name": "Navigation & GPS",
+                        "icon": "🧭",
+                        "interactive_demo": {
+                            "type": "gps_correction",
+                            "description": "Visualize how GPS must correct for Coriolis effect",
+                            "features": [
+                                "Trajectory comparison",
+                                "Correction visualization"
+                            ]
+                        },
+                        "facts_count": 4,
+                        "key_concepts": [
+                            "GPS corrections",
+                            "Ship navigation",
+                            "Military applications",
+                            "Surveying"
+                        ]
+                    },
+                    {
+                        "id": "weather",
+                        "name": "Weather Patterns",
+                        "icon": "🌪️",
+                        "interactive_demo": {
+                            "type": "hurricane_spinner",
+                            "description": "See how hurricanes spin differently in each hemisphere",
+                            "features": [
+                                "Hemisphere selector",
+                                "Animated hurricane",
+                                "Spin direction indicator"
+                            ]
+                        },
+                        "facts_count": 4,
+                        "key_concepts": [
+                            "Hurricane spin",
+                            "Trade winds",
+                            "Ocean currents",
+                            "Weather forecasting"
+                        ]
+                    },
+                    {
+                        "id": "satellites",
+                        "name": "Satellites & Space",
+                        "icon": "🛰️",
+                        "interactive_demo": {
+                            "type": "orbit_visualization",
+                            "description": "Animated geostationary and ISS orbits around Earth",
+                            "features": [
+                                "Rotating satellites",
+                                "Multiple orbit paths",
+                                "Speed comparison"
+                            ]
+                        },
+                        "facts_count": 4,
+                        "key_concepts": [
+                            "Launch advantages",
+                            "Geostationary orbit",
+                            "ISS orbit",
+                            "Launch site locations"
+                        ]
+                    },
+                    {
+                        "id": "daily-life",
+                        "name": "Daily Life",
+                        "icon": "🌅",
+                        "interactive_demo": {
+                            "type": "world_clock",
+                            "description": "Live time display for 6 cities across different time zones",
+                            "features": [
+                                "6 city clocks",
+                                "Time zone offsets",
+                                "Live updates",
+                                "City selector"
+                            ]
+                        },
+                        "facts_count": 4,
+                        "key_concepts": [
+                            "Time zones",
+                            "Jet lag",
+                            "Global business",
+                            "Day length variation"
+                        ]
+                    },
+                    {
+                        "id": "sports",
+                        "name": "Sports & Games",
+                        "icon": "⚽",
+                        "interactive_demo": {
+                            "type": "sports_comparison",
+                            "description": "How rotation affects different sports at professional level",
+                            "features": [
+                                "4 sport comparisons",
+                                "Effect magnitude display"
+                            ]
+                        },
+                        "facts_count": 4,
+                        "key_concepts": [
+                            "Golf deflection",
+                            "Baseball effects",
+                            "Olympic shooting",
+                            "Wind patterns"
+                        ]
+                    }
+                ],
+                "total_interactive_demos": 6,
+                "total_facts": 24
+            }
+        },
+        "navigation": {
+            "type": "fixed_navbar",
+            "logo": "Custom SVG Globe icon",
+            "mode_buttons": 3,
+            "responsive": true,
+            "features": [
+                "Mode switching",
+                "Gradient background",
+                "Active state indication",
+                "Touch-optimized"
+            ]
+        },
+        "interactive_elements": [
+            "3D SVG Earth visualization",
+            "Real-time rotation animation",
+            "Interactive quiz system",
+            "Flight time simulator",
+            "Hurricane spin demonstration",
+            "Satellite orbit animation",
+            "World clock with 6 cities",
+            "Sports impact comparison",
+            "GPS correction visualization",
+            "Rotation speed slider",
+            "Play/pause controls",
+            "Mode sub-navigation"
+        ],
+        "accessibility": {
+            "keyboard_navigation": true,
+            "screen_reader_support": true,
+            "touch_friendly": true,
+            "minimum_tap_target": "44x44px (WCAG AAA compliant)",
+            "responsive_text": "Uses clamp() for fluid typography",
+            "reduced_motion_support": true,
+            "aria_labels": "Present on interactive elements",
+            "semantic_html": true,
+            "focus_indicators": true
+        }
+    },
+    "technical_specs": {
+        "framework": "React 18+",
+        "language": "TypeScript 5.0+",
+        "styling_approach": "Inline styles + CSS-in-JS",
+        "icon_solution": "Custom inline SVG (no external icon libraries)",
+        "state_management": {
+            "primary": "React Hooks",
+            "hooks_used": [
+                "useState",
+                "useEffect",
+                "useCallback",
+                "useRef",
+                "useContext",
+                "createContext"
+            ]
+        },
+        "animations": {
+            "method": "CSS Keyframes + requestAnimationFrame",
+            "target_fps": 60,
+            "keyframe_animations": [
+                "sunPulse",
+                "fadeIn",
+                "slideUp",
+                "popIn",
+                "spinCCW",
+                "spinCW"
+            ]
+        },
+        "dependencies": {
+            "required": {
+                "react": "^18.0.0",
+                "react-dom": "^18.0.0",
+                "typescript": "^5.0.0"
+            },
+            "none_external": "No external icon libraries (lucide-react removed)"
+        },
+        "browser_support": {
+            "chrome": "90+",
+            "firefox": "88+",
+            "safari": "14+",
+            "edge": "90+",
+            "mobile_safari": "14+",
+            "mobile_chrome": "90+"
+        },
+        "file_structure": {
+            "type": "single_file_component",
+            "total_lines": "~2995",
+            "components": [
+                "GlobeIcon (SVG)",
+                "LanguageProvider",
+                "Navbar",
+                "RotationLearning",
+                "RotationLearnMode",
+                "RotationPracticeMode",
+                "RotationRealWorld",
+                "App"
+            ]
+        }
+    },
+    "responsive_design": {
+        "approach": "Mobile-first with fluid scaling",
+        "viewport_meta_required": "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes\" />",
+        "supported_devices": [
+            {
+                "type": "Mobile phones",
+                "range": "320px - 480px",
+                "optimizations": [
+                    "Icon-only buttons (<375px)",
+                    "Single column layouts",
+                    "Larger tap targets",
+                    "Simplified controls"
+                ]
+            },
+            {
+                "type": "Tablets portrait",
+                "range": "481px - 768px",
+                "optimizations": [
+                    "2-column grids where appropriate",
+                    "Larger text",
+                    "Touch-optimized spacing"
+                ]
+            },
+            {
+                "type": "Tablets landscape",
+                "range": "769px - 1024px",
+                "optimizations": [
+                    "Multi-column layouts",
+                    "Side-by-side content",
+                    "Enhanced interactions"
+                ]
+            },
+            {
+                "type": "Laptops",
+                "range": "1025px - 1440px",
+                "optimizations": [
+                    "Full feature set",
+                    "Hover effects",
+                    "Optimal layout spacing"
+                ]
+            },
+            {
+                "type": "Desktop",
+                "range": "1441px+",
+                "optimizations": [
+                    "Maximum content width",
+                    "Enhanced visuals",
+                    "All features enabled"
+                ]
+            }
+        ],
+        "responsive_techniques": [
+            "Fluid typography with clamp()",
+            "CSS Grid with auto-fit columns",
+            "Flexbox for alignment",
+            "Media queries for breakpoints",
+            "Viewport-based sizing (vw, vh)",
+            "Safe area insets for notched devices",
+            "Touch-action optimization",
+            "Webkit tap highlight removal",
+            "Prevents iOS zoom on input focus"
+        ],
+        "breakpoints": {
+            "xs": "375px",
+            "sm": "640px",
+            "md": "768px",
+            "lg": "1024px",
+            "xl": "1440px",
+            "2xl": "1920px"
+        }
+    },
+    "design_system": {
+        "colors": {
+            "primary": {
+                "teal": "#14b8a6",
+                "teal_dark": "#0d9488",
+                "teal_darker": "#0f766e",
+                "purple": "#a855f7",
+                "purple_dark": "#9333ea",
+                "purple_darker": "#7e22ce"
+            },
+            "secondary": {
+                "green": "#10b981",
+                "emerald": "#059669",
+                "orange": "#f97316",
+                "blue": "#3b82f6"
+            },
+            "text": {
+                "primary": "#1a237e",
+                "secondary": "#37474f",
+                "tertiary": "#546e7a",
+                "light": "#9e9e9e"
+            },
+            "background": {
+                "white": "#ffffff",
+                "light_gray": "#f5f5f5",
+                "gradient": "linear-gradient(135deg, #e8f5e9 0%, #e3f2fd 50%, #f3e5f5 100%)",
+                "navbar": "linear-gradient(to right, #f0fdfa, #faf5ff, #f0fdfa)"
+            },
+            "feedback": {
+                "success": "#4caf50",
+                "success_light": "#e8f5e9",
+                "error": "#f44336",
+                "error_light": "#ffebee",
+                "info": "#1976d2",
+                "info_light": "#e3f2fd",
+                "warning": "#ff9800",
+                "warning_light": "#fff3e0"
+            }
+        },
+        "typography": {
+            "font_family": "\"Poppins\", \"Segoe UI\", -apple-system, BlinkMacSystemFont, sans-serif",
+            "font_fallbacks": [
+                "Segoe UI",
+                "Roboto",
+                "Helvetica",
+                "Arial",
+                "sans-serif"
+            ],
+            "sizes": {
+                "heading1": "clamp(1.5rem, 5vw, 2.4rem)",
+                "heading2": "clamp(1.1rem, 3vw, 1.4rem)",
+                "heading3": "clamp(1rem, 2.5vw, 1.2rem)",
+                "body_large": "clamp(0.9rem, 2.2vw, 1.05rem)",
+                "body": "clamp(0.85rem, 2vw, 1rem)",
+                "body_small": "clamp(0.8rem, 1.8vw, 0.9rem)",
+                "caption": "clamp(0.75rem, 1.5vw, 0.85rem)",
+                "tiny": "clamp(0.65rem, 1.2vw, 0.75rem)"
+            },
+            "weights": {
+                "regular": 400,
+                "medium": 500,
+                "semibold": 600,
+                "bold": 700
+            },
+            "line_heights": {
+                "tight": 1.2,
+                "normal": 1.5,
+                "relaxed": 1.7,
+                "loose": 2
+            }
+        },
+        "spacing": {
+            "system": "clamp() based fluid spacing",
+            "scales": {
+                "xs": "clamp(4px, 1vw, 8px)",
+                "sm": "clamp(8px, 2vw, 12px)",
+                "md": "clamp(12px, 3vw, 20px)",
+                "lg": "clamp(20px, 4vw, 32px)",
+                "xl": "clamp(32px, 6vw, 48px)",
+                "2xl": "clamp(48px, 8vw, 64px)"
+            }
+        },
+        "border_radius": {
+            "sm": "8px",
+            "md": "10px",
+            "lg": "12px",
+            "xl": "16px",
+            "2xl": "20px",
+            "3xl": "24px",
+            "full": "9999px"
+        },
+        "shadows": {
+            "sm": "0 1px 3px rgba(0, 0, 0, 0.1)",
+            "md": "0 4px 12px rgba(0, 0, 0, 0.1)",
+            "lg": "0 10px 40px rgba(0, 0, 0, 0.1)",
+            "colored_teal": "0 4px 12px rgba(20, 184, 166, 0.3)",
+            "colored_purple": "0 4px 12px rgba(168, 85, 247, 0.3)"
+        }
+    },
+    "performance": {
+        "targets": {
+            "initial_load": "< 3 seconds",
+            "time_to_interactive": "< 2 seconds",
+            "animation_fps": 60,
+            "first_contentful_paint": "< 1.5 seconds"
+        },
+        "optimizations": [
+            "Single file component (reduces HTTP requests)",
+            "Inline styles (no CSS file loading)",
+            "No external icon library dependencies",
+            "RequestAnimationFrame for smooth animations",
+            "Efficient state management with React Hooks",
+            "Memoized translation function",
+            "Conditional rendering for modes",
+            "Optimized SVG rendering"
+        ],
+        "lighthouse_targets": {
+            "performance": ">90",
+            "accessibility": ">95",
+            "best_practices": ">90",
+            "seo": ">85"
+        }
+    },
+    "implementation_checklist": {
+        "completed": [
+            "✅ Core component structure",
+            "✅ TypeScript type definitions",
+            "✅ Custom GlobeIcon SVG component",
+            "✅ Language context system (English only)",
+            "✅ Responsive navbar with mode switching",
+            "✅ Learn Mode with full 3D Earth visualization",
+            "✅ All 5 Learn Mode sub-modes",
+            "✅ Rotation controls (play/pause, speed)",
+            "✅ 6 city markers with live times",
+            "✅ Practice Mode with 15 questions",
+            "✅ Quiz system with progress tracking",
+            "✅ Immediate feedback and explanations",
+            "✅ Score calculation and results screen",
+            "✅ Real World Mode with 6 categories",
+            "✅ All 6 interactive demos",
+            "✅ 24 educational facts (4 per category)",
+            "✅ Comprehensive responsive design",
+            "✅ Mobile optimization (320px+)",
+            "✅ Tablet optimization (768px+)",
+            "✅ Desktop optimization (1440px+)",
+            "✅ Touch-friendly controls",
+            "✅ Keyboard accessibility",
+            "✅ CSS animations and transitions",
+            "✅ Error handling",
+            "✅ Cross-browser compatibility"
+        ]
+    },
+    "testing_checklist": [
+        "Mode switching between Learn, Practice, and Real World",
+        "Learn Mode: All 5 sub-modes load and function",
+        "Learn Mode: Earth rotation animation is smooth (60fps)",
+        "Learn Mode: Play/pause controls work",
+        "Learn Mode: Speed slider updates rotation speed",
+        "Learn Mode: City markers show correct times",
+        "Learn Mode: Labels toggle on/off",
+        "Practice Mode: All 15 questions display correctly",
+        "Practice Mode: Answer selection works",
+        "Practice Mode: Feedback and explanations appear",
+        "Practice Mode: Score calculation is accurate",
+        "Practice Mode: Quiz restart works",
+        "Real World: All 6 categories accessible",
+        "Real World: Aviation flight simulator works",
+        "Real World: Hurricane spin demo animates",
+        "Real World: Satellite orbits animate",
+        "Real World: World clock shows live times",
+        "Real World: All facts display correctly",
+        "Responsive: Mobile view (320px width)",
+        "Responsive: Tablet view (768px width)",
+        "Responsive: Desktop view (1440px width)",
+        "Responsive: Landscape mode on tablets",
+        "Touch: All buttons have 44x44px minimum",
+        "Touch: No accidental zoom on input focus",
+        "Keyboard: Tab navigation works",
+        "Keyboard: Enter key activates buttons",
+        "Performance: No console errors",
+        "Performance: Animations run smoothly",
+        "Performance: Page loads in < 3 seconds"
+    ],
+    "known_limitations": [
+        "No data persistence (quiz scores not saved between sessions)",
+        "English language only (multi-language support removed for simplification)",
+        "2D SVG visualization (not true 3D WebGL)",
+        "No user authentication or accounts",
+        "No server-side features or API",
+        "No offline support or PWA capabilities",
+        "No social sharing features",
+        "No print-optimized views",
+        "Limited to 15 quiz questions",
+        "Animations may be reduced on low-power devices"
+    ],
+    "future_enhancements": [
+        "Add localStorage for quiz progress persistence",
+        "Restore multi-language support (Hindi, Gujarati, Spanish, French)",
+        "Expand quiz to 30+ questions with more question types",
+        "Implement 3D WebGL Earth visualization",
+        "Add user accounts and authentication",
+        "Create teacher dashboard for classroom management",
+        "Add progress tracking and analytics",
+        "Implement gamification (badges, achievements, leaderboards)",
+        "Add more real-world application categories",
+        "Include video demonstrations",
+        "Add audio explanations",
+        "Create printable worksheets",
+        "Implement social sharing",
+        "Develop iOS and Android mobile apps",
+        "Add AR (Augmented Reality) mode",
+        "Include night mode / dark theme",
+        "Add accessibility options panel",
+        "Implement save/export quiz results",
+        "Create API for integration with LMS platforms"
+    ],
+    "educational_standards": {
+        "ngss_alignment": [
+            "MS-ESS1-1: Develop and use a model of the Earth-sun-moon system to describe cyclic patterns",
+            "MS-ESS1-2: Develop and use a model to describe the role of gravity in the motions within galaxies and solar system",
+            "MS-PS2-4: Construct and present arguments using evidence to support the claim that gravitational interactions are attractive"
+        ],
+        "common_core_alignment": [
+            "CCSS.ELA-LITERACY.RST.6-8.3: Follow precisely a multistep procedure",
+            "CCSS.ELA-LITERACY.RST.6-8.7: Integrate quantitative or technical information in different formats",
+            "CCSS.MATH.CONTENT.6.RP.A.3: Use ratio and rate reasoning to solve real-world problems",
+            "CCSS.MATH.CONTENT.7.RP.A.2: Recognize and represent proportional relationships"
+        ],
+        "iste_standards": [
+            "Empowered Learner: Students leverage technology to take an active role in learning",
+            "Digital Citizen: Students recognize rights and responsibilities in digital world",
+            "Knowledge Constructor: Students critically curate information from digital resources"
+        ]
+    },
+    "deployment": {
+        "recommended_platforms": [
+            "Vercel (automatic deployment from Git)",
+            "Netlify (continuous deployment)",
+            "GitHub Pages (static hosting)",
+            "AWS Amplify (full-stack hosting)",
+            "Cloudflare Pages (edge deployment)"
+        ],
+        "build_command": "npm run build",
+        "output_directory": "build",
+        "environment_variables": [],
+        "required_node_version": ">=16.0.0",
+        "required_npm_version": ">=8.0.0",
+        "seo_considerations": {
+            "meta_tags_recommended": [
+                "title",
+                "description",
+                "keywords",
+                "og:title",
+                "og:description",
+                "og:image",
+                "twitter:card"
+            ],
+            "structured_data": "Educational schema.org markup recommended"
+        }
+    },
+    "documentation": {
+        "files": [
+            {
+                "name": "rotation-of-earth.tsx",
+                "description": "Main TypeScript React component with all functionality",
+                "lines": "~2995"
+            },
+            {
+                "name": "AGENT_PROMPT.md",
+                "description": "Comprehensive documentation and implementation guide",
+                "sections": [
+                    "Overview",
+                    "Features",
+                    "Design Requirements",
+                    "Technical Implementation",
+                    "Testing"
+                ]
+            },
+            {
+                "name": "agent.json",
+                "description": "Complete configuration and metadata file"
+            }
+        ],
+        "inline_documentation": {
+            "component_comments": true,
+            "function_descriptions": true,
+            "type_definitions": true,
+            "usage_examples": "In AGENT_PROMPT.md"
+        }
+    },
+    "metadata": {
+        "created_date": "2026-01-28",
+        "last_updated": "2026-01-28",
+        "version_history": [
+            {
+                "version": "1.0.0",
+                "date": "2026-01-28",
+                "changes": [
+                    "Initial implementation with Learn Mode only",
+                    "Practice and Real World as stubs"
+                ]
+            },
+            {
+                "version": "2.0.0",
+                "date": "2026-01-28",
+                "changes": [
+                    "Complete Practice Mode with 15 questions",
+                    "Complete Real World Mode with 6 interactive demos",
+                    "Full responsive design for all devices",
+                    "Custom SVG icon (removed lucide-react dependency)",
+                    "Fixed navbar positioning and alignment",
+                    "Comprehensive TypeScript type annotations",
+                    "Enhanced accessibility features"
+                ]
+            }
+        ],
+        "author": "Claude AI Assistant",
+        "license": "MIT",
+        "repository": "https://github.com/your-username/rotation-of-earth-app",
+        "demo_url": "https://rotation-of-earth.vercel.app",
+        "documentation_url": "See AGENT_PROMPT.md",
+        "support_email": "support@your-domain.com"
+    }
+}
