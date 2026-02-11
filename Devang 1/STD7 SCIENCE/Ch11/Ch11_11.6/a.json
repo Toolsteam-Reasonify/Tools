@@ -1,428 +1,432 @@
 {
+  "toolName": "image_formation_in_a_plane_mirror",
+  "parameters": {
     "basic_introduction": {
-        "frontend_action": "show_interactive_tool",
-        "title": "Introduction to Plane Mirrors",
-        "data": {
-            "toolName": "plane_mirror_tool",
-            "parameters": {
-                "initialMode": "learn",
-                "additionalProps": {
-                    "objectType": "person",
-                    "showRays": true,
-                    "showImageFormation": true,
-                    "showMeasurements": true
-                }
-            }
-        },
-        "instructions_for_student": "Watch how your reflection forms in a mirror!"
+      "frontend_action": "show_interactive_tool",
+      "title": "Introduction to Plane Mirrors",
+      "data": {
+        "toolName": "plane_mirror_tool",
+        "parameters": {
+          "initialMode": "learn",
+          "additionalProps": {
+            "objectType": "person",
+            "showRays": true,
+            "showImageFormation": true,
+            "showMeasurements": true
+          }
+        }
+      },
+      "instructions_for_student": "Watch how your reflection forms in a mirror!"
     },
     "properties_focus": {
-        "frontend_action": "show_interactive_tool",
-        "title": "Properties of Mirror Images",
-        "data": {
-            "toolName": "plane_mirror_tool",
-            "parameters": {
-                "initialMode": "learn",
-                "filterSteps": [
-                    3
-                ],
-                "additionalProps": {
-                    "objectType": "arrow",
-                    "showMeasurements": true,
-                    "highlightProperties": [
-                        "same_size",
-                        "same_distance",
-                        "laterally_inverted",
-                        "virtual",
-                        "erect"
-                    ]
-                }
-            }
-        },
-        "instructions_for_student": "Notice these important properties of plane mirror images!"
+      "frontend_action": "show_interactive_tool",
+      "title": "Properties of Mirror Images",
+      "data": {
+        "toolName": "plane_mirror_tool",
+        "parameters": {
+          "initialMode": "learn",
+          "filterSteps": [
+            3
+          ],
+          "additionalProps": {
+            "objectType": "arrow",
+            "showMeasurements": true,
+            "highlightProperties": [
+              "same_size",
+              "same_distance",
+              "laterally_inverted",
+              "virtual",
+              "erect"
+            ]
+          }
+        }
+      },
+      "instructions_for_student": "Notice these important properties of plane mirror images!"
     },
     "lateral_inversion": {
-        "frontend_action": "show_interactive_tool",
-        "title": "Understanding Lateral Inversion",
-        "data": {
-            "toolName": "plane_mirror_tool",
-            "parameters": {
-                "initialMode": "learn",
-                "filterSteps": [
-                    4
-                ],
-                "additionalProps": {
-                    "objectType": "person",
-                    "highlightProperties": [
-                        "laterally_inverted"
-                    ],
-                    "animationStyle": "slow"
-                }
-            }
-        },
-        "instructions_for_student": "See how left and right get reversed in a mirror!"
+      "frontend_action": "show_interactive_tool",
+      "title": "Understanding Lateral Inversion",
+      "data": {
+        "toolName": "plane_mirror_tool",
+        "parameters": {
+          "initialMode": "learn",
+          "filterSteps": [
+            4
+          ],
+          "additionalProps": {
+            "objectType": "person",
+            "highlightProperties": [
+              "laterally_inverted"
+            ],
+            "animationStyle": "slow"
+          }
+        }
+      },
+      "instructions_for_student": "See how left and right get reversed in a mirror!"
     },
     "practice_quiz": {
-        "frontend_action": "show_interactive_tool",
-        "title": "Test Your Knowledge on Mirrors",
-        "data": {
-            "toolName": "plane_mirror_tool",
-            "parameters": {
-                "initialMode": "practice",
-                "additionalProps": {
-                    "objectType": "arrow",
-                    "objectDistance": 50,
-                    "showMeasurements": true
-                }
-            }
-        },
-        "instructions_for_student": "Answer questions about mirror images to test your understanding!"
+      "frontend_action": "show_interactive_tool",
+      "title": "Test Your Knowledge on Mirrors",
+      "data": {
+        "toolName": "plane_mirror_tool",
+        "parameters": {
+          "initialMode": "practice",
+          "additionalProps": {
+            "objectType": "arrow",
+            "objectDistance": 50,
+            "showMeasurements": true
+          }
+        }
+      },
+      "instructions_for_student": "Answer questions about mirror images to test your understanding!"
     },
     "ambulance_example": {
-        "frontend_action": "show_interactive_tool",
-        "title": "Why is AMBULANCE Written Backwards?",
-        "data": {
-            "toolName": "plane_mirror_tool",
-            "parameters": {
-                "initialMode": "real_world",
-                "filterSteps": [
-                    8
-                ],
-                "showModeSelector": false
-            }
-        },
-        "instructions_for_student": "Discover why emergency vehicles have reversed writing on the front!"
+      "frontend_action": "show_interactive_tool",
+      "title": "Why is AMBULANCE Written Backwards?",
+      "data": {
+        "toolName": "plane_mirror_tool",
+        "parameters": {
+          "initialMode": "real_world",
+          "filterSteps": [
+            8
+          ],
+          "showModeSelector": false
+        }
+      },
+      "instructions_for_student": "Discover why emergency vehicles have reversed writing on the front!"
     },
     "interactive_lab": {
-        "frontend_action": "show_interactive_tool",
-        "title": "Mirror Lab - Drag the Object",
-        "data": {
-            "toolName": "plane_mirror_tool",
-            "parameters": {
-                "initialMode": "hands_on",
-                "filterSteps": [
-                    11
-                ],
-                "additionalProps": {
-                    "objectType": "candle",
-                    "showRays": true,
-                    "showMeasurements": true,
-                    "mirrorPosition": "center"
-                }
-            }
-        },
-        "instructions_for_student": "Move the candle around and watch how the image moves with it!"
+      "frontend_action": "show_interactive_tool",
+      "title": "Mirror Lab - Drag the Object",
+      "data": {
+        "toolName": "plane_mirror_tool",
+        "parameters": {
+          "initialMode": "hands_on",
+          "filterSteps": [
+            11
+          ],
+          "additionalProps": {
+            "objectType": "candle",
+            "showRays": true,
+            "showMeasurements": true,
+            "mirrorPosition": "center"
+          }
+        }
+      },
+      "instructions_for_student": "Move the candle around and watch how the image moves with it!"
     },
     "candle_reflection": {
-        "frontend_action": "show_interactive_tool",
-        "title": "Candle in a Mirror",
-        "data": {
-            "toolName": "plane_mirror_tool",
-            "parameters": {
-                "initialMode": "learn",
-                "filterSteps": [
-                    2
-                ],
-                "additionalProps": {
-                    "objectType": "candle",
-                    "objectDistance": 40,
-                    "objectHeight": 60,
-                    "showRays": true,
-                    "showImageFormation": true,
-                    "animationStyle": "slow"
-                }
-            }
-        },
-        "instructions_for_student": "Watch how the candle's image forms behind the mirror!"
+      "frontend_action": "show_interactive_tool",
+      "title": "Candle in a Mirror",
+      "data": {
+        "toolName": "plane_mirror_tool",
+        "parameters": {
+          "initialMode": "learn",
+          "filterSteps": [
+            2
+          ],
+          "additionalProps": {
+            "objectType": "candle",
+            "objectDistance": 40,
+            "objectHeight": 60,
+            "showRays": true,
+            "showImageFormation": true,
+            "animationStyle": "slow"
+          }
+        }
+      },
+      "instructions_for_student": "Watch how the candle's image forms behind the mirror!"
     },
     "periscope_demo": {
-        "frontend_action": "show_interactive_tool",
-        "title": "How Periscopes Work",
-        "data": {
-            "toolName": "plane_mirror_tool",
-            "parameters": {
-                "initialMode": "real_world",
-                "filterSteps": [
-                    10
-                ],
-                "showModeSelector": false,
-                "additionalProps": {
-                    "showRays": true,
-                    "animationStyle": "normal"
-                }
-            }
-        },
-        "instructions_for_student": "See how submarines use two plane mirrors to see above water!"
+      "frontend_action": "show_interactive_tool",
+      "title": "How Periscopes Work",
+      "data": {
+        "toolName": "plane_mirror_tool",
+        "parameters": {
+          "initialMode": "real_world",
+          "filterSteps": [
+            10
+          ],
+          "showModeSelector": false,
+          "additionalProps": {
+            "showRays": true,
+            "animationStyle": "normal"
+          }
+        }
+      },
+      "instructions_for_student": "See how submarines use two plane mirrors to see above water!"
     },
     "ray_tracing": {
-        "frontend_action": "show_interactive_tool",
-        "title": "Draw Light Rays Activity",
-        "data": {
-            "toolName": "plane_mirror_tool",
-            "parameters": {
-                "initialMode": "hands_on",
-                "filterSteps": [
-                    12
-                ],
-                "additionalProps": {
-                    "objectType": "arrow",
-                    "showRays": false,
-                    "showImageFormation": false
-                }
-            }
-        },
-        "instructions_for_student": "Draw the path of light rays from the object to the mirror!"
+      "frontend_action": "show_interactive_tool",
+      "title": "Draw Light Rays Activity",
+      "data": {
+        "toolName": "plane_mirror_tool",
+        "parameters": {
+          "initialMode": "hands_on",
+          "filterSteps": [
+            12
+          ],
+          "additionalProps": {
+            "objectType": "arrow",
+            "showRays": false,
+            "showImageFormation": false
+          }
+        }
+      },
+      "instructions_for_student": "Draw the path of light rays from the object to the mirror!"
     },
     "distance_comparison": {
-        "frontend_action": "show_interactive_tool",
-        "title": "Object and Image Distances",
-        "data": {
-            "toolName": "plane_mirror_tool",
-            "parameters": {
-                "initialMode": "learn",
-                "filterSteps": [
-                    2,
-                    3
-                ],
-                "additionalProps": {
-                    "objectType": "arrow",
-                    "objectDistance": 60,
-                    "showMeasurements": true,
-                    "highlightProperties": [
-                        "same_distance"
-                    ],
-                    "showRays": true
-                }
-            }
-        },
-        "instructions_for_student": "Notice how the image is always the same distance behind the mirror as the object is in front!"
+      "frontend_action": "show_interactive_tool",
+      "title": "Object and Image Distances",
+      "data": {
+        "toolName": "plane_mirror_tool",
+        "parameters": {
+          "initialMode": "learn",
+          "filterSteps": [
+            2,
+            3
+          ],
+          "additionalProps": {
+            "objectType": "arrow",
+            "objectDistance": 60,
+            "showMeasurements": true,
+            "highlightProperties": [
+              "same_distance"
+            ],
+            "showRays": true
+          }
+        }
+      },
+      "instructions_for_student": "Notice how the image is always the same distance behind the mirror as the object is in front!"
     },
     "minimal_ui_demo": {
-        "frontend_action": "show_interactive_tool",
-        "title": "Mirror Reflection",
-        "data": {
-            "toolName": "plane_mirror_tool",
-            "parameters": {
-                "showModeSelector": false,
-                "showNavigation": false,
-                "showPlayPause": false,
-                "showStepIndicator": false,
-                "initialMode": "learn",
-                "filterSteps": [
-                    2
-                ],
-                "autoPlayDuration": 0,
-                "additionalProps": {
-                    "objectType": "person",
-                    "showRays": true,
-                    "showImageFormation": true
-                }
-            }
-        },
-        "instructions_for_student": "Here's how your reflection appears in a mirror!"
+      "frontend_action": "show_interactive_tool",
+      "title": "Mirror Reflection",
+      "data": {
+        "toolName": "plane_mirror_tool",
+        "parameters": {
+          "showModeSelector": false,
+          "showNavigation": false,
+          "showPlayPause": false,
+          "showStepIndicator": false,
+          "initialMode": "learn",
+          "filterSteps": [
+            2
+          ],
+          "autoPlayDuration": 0,
+          "additionalProps": {
+            "objectType": "person",
+            "showRays": true,
+            "showImageFormation": true
+          }
+        }
+      },
+      "instructions_for_student": "Here's how your reflection appears in a mirror!"
     },
     "barber_mirror": {
-        "frontend_action": "show_interactive_tool",
-        "title": "Barber's Mirror Setup",
-        "data": {
-            "toolName": "plane_mirror_tool",
-            "parameters": {
-                "initialMode": "real_world",
-                "filterSteps": [
-                    9
-                ],
-                "showModeSelector": false,
-                "additionalProps": {
-                    "showRays": true
-                }
-            }
-        },
-        "instructions_for_student": "See how barbers use two mirrors to show you the back of your head!"
+      "frontend_action": "show_interactive_tool",
+      "title": "Barber's Mirror Setup",
+      "data": {
+        "toolName": "plane_mirror_tool",
+        "parameters": {
+          "initialMode": "real_world",
+          "filterSteps": [
+            9
+          ],
+          "showModeSelector": false,
+          "additionalProps": {
+            "showRays": true
+          }
+        }
+      },
+      "instructions_for_student": "See how barbers use two mirrors to show you the back of your head!"
     },
     "dark_mode_custom": {
-        "frontend_action": "show_interactive_tool",
-        "title": "Mirror Physics Explorer",
-        "data": {
-            "toolName": "plane_mirror_tool",
-            "parameters": {
-                "darkMode": true,
-                "themeColor": "#10b981",
-                "initialMode": "learn",
-                "additionalProps": {
-                    "objectType": "arrow",
-                    "showRays": true,
-                    "showMeasurements": true,
-                    "showImageFormation": true
-                }
-            }
-        },
-        "instructions_for_student": "Explore mirror properties in an eye-friendly dark interface!"
+      "frontend_action": "show_interactive_tool",
+      "title": "Mirror Physics Explorer",
+      "data": {
+        "toolName": "plane_mirror_tool",
+        "parameters": {
+          "darkMode": true,
+          "themeColor": "#10b981",
+          "initialMode": "learn",
+          "additionalProps": {
+            "objectType": "arrow",
+            "showRays": true,
+            "showMeasurements": true,
+            "showImageFormation": true
+          }
+        }
+      },
+      "instructions_for_student": "Explore mirror properties in an eye-friendly dark interface!"
     },
     "complete_lesson": {
-        "frontend_action": "show_interactive_tool",
-        "title": "Complete Lesson: Plane Mirrors",
-        "data": {
-            "toolName": "plane_mirror_tool",
-            "parameters": {
-                "initialMode": "learn",
-                "showModeSelector": true,
-                "enabledModes": [
-                    "learn",
-                    "practice",
-                    "real_world",
-                    "hands_on"
-                ],
-                "autoPlayDuration": 10000,
-                "additionalProps": {
-                    "objectType": "arrow",
-                    "showRays": true,
-                    "showMeasurements": true,
-                    "showImageFormation": true
-                }
-            }
-        },
-        "instructions_for_student": "Go through all 4 modes to master plane mirrors: Learn → Practice → Real World → Hands-On!"
+      "frontend_action": "show_interactive_tool",
+      "title": "Complete Lesson: Plane Mirrors",
+      "data": {
+        "toolName": "plane_mirror_tool",
+        "parameters": {
+          "initialMode": "learn",
+          "showModeSelector": true,
+          "enabledModes": [
+            "learn",
+            "practice",
+            "real_world",
+            "hands_on"
+          ],
+          "autoPlayDuration": 10000,
+          "additionalProps": {
+            "objectType": "arrow",
+            "showRays": true,
+            "showMeasurements": true,
+            "showImageFormation": true
+          }
+        }
+      },
+      "instructions_for_student": "Go through all 4 modes to master plane mirrors: Learn → Practice → Real World → Hands-On!"
     },
     "quick_demo": {
-        "frontend_action": "show_interactive_tool",
-        "title": "Quick Mirror Demo",
-        "data": {
-            "toolName": "plane_mirror_tool",
-            "parameters": {
-                "width": 600,
-                "height": 400,
-                "showModeSelector": false,
-                "showNavigation": false,
-                "showStepIndicator": false,
-                "initialMode": "learn",
-                "filterSteps": [
-                    2
-                ],
-                "additionalProps": {
-                    "objectType": "candle",
-                    "showRays": true,
-                    "animationStyle": "fast"
-                }
-            }
-        },
-        "instructions_for_student": "Quick demonstration of mirror reflection!"
+      "frontend_action": "show_interactive_tool",
+      "title": "Quick Mirror Demo",
+      "data": {
+        "toolName": "plane_mirror_tool",
+        "parameters": {
+          "width": 600,
+          "height": 400,
+          "showModeSelector": false,
+          "showNavigation": false,
+          "showStepIndicator": false,
+          "initialMode": "learn",
+          "filterSteps": [
+            2
+          ],
+          "additionalProps": {
+            "objectType": "candle",
+            "showRays": true,
+            "animationStyle": "fast"
+          }
+        }
+      },
+      "instructions_for_student": "Quick demonstration of mirror reflection!"
     },
     "image_size_demo": {
-        "frontend_action": "show_interactive_tool",
-        "title": "Image Size is Same as Object",
-        "data": {
-            "toolName": "plane_mirror_tool",
-            "parameters": {
-                "initialMode": "learn",
-                "filterSteps": [
-                    3
-                ],
-                "additionalProps": {
-                    "objectType": "person",
-                    "objectHeight": 50,
-                    "showMeasurements": true,
-                    "highlightProperties": [
-                        "same_size"
-                    ]
-                }
-            }
-        },
-        "instructions_for_student": "No matter how far you stand from a mirror, your image is always your actual size!"
+      "frontend_action": "show_interactive_tool",
+      "title": "Image Size is Same as Object",
+      "data": {
+        "toolName": "plane_mirror_tool",
+        "parameters": {
+          "initialMode": "learn",
+          "filterSteps": [
+            3
+          ],
+          "additionalProps": {
+            "objectType": "person",
+            "objectHeight": 50,
+            "showMeasurements": true,
+            "highlightProperties": [
+              "same_size"
+            ]
+          }
+        }
+      },
+      "instructions_for_student": "No matter how far you stand from a mirror, your image is always your actual size!"
     },
     "virtual_image_concept": {
-        "frontend_action": "show_interactive_tool",
-        "title": "Understanding Virtual Images",
-        "data": {
-            "toolName": "plane_mirror_tool",
-            "parameters": {
-                "initialMode": "learn",
-                "filterSteps": [
-                    2,
-                    3
-                ],
-                "additionalProps": {
-                    "objectType": "arrow",
-                    "showRays": true,
-                    "showImageFormation": true,
-                    "highlightProperties": [
-                        "virtual"
-                    ]
-                }
-            }
-        },
-        "instructions_for_student": "The image appears to be behind the mirror, but no light actually goes there - it's virtual!"
+      "frontend_action": "show_interactive_tool",
+      "title": "Understanding Virtual Images",
+      "data": {
+        "toolName": "plane_mirror_tool",
+        "parameters": {
+          "initialMode": "learn",
+          "filterSteps": [
+            2,
+            3
+          ],
+          "additionalProps": {
+            "objectType": "arrow",
+            "showRays": true,
+            "showImageFormation": true,
+            "highlightProperties": [
+              "virtual"
+            ]
+          }
+        }
+      },
+      "instructions_for_student": "The image appears to be behind the mirror, but no light actually goes there - it's virtual!"
     },
     "multiple_objects": {
-        "frontend_action": "show_interactive_tool",
-        "title": "Different Objects in Mirror",
-        "data": {
-            "toolName": "plane_mirror_tool",
-            "parameters": {
-                "initialMode": "learn",
-                "filterSteps": [
-                    1,
-                    2
-                ],
-                "additionalProps": {
-                    "objectType": "candle",
-                    "showRays": true,
-                    "showImageFormation": true,
-                    "animationStyle": "normal"
-                }
-            }
-        },
-        "instructions_for_student": "Try different objects - they all follow the same reflection rules!"
+      "frontend_action": "show_interactive_tool",
+      "title": "Different Objects in Mirror",
+      "data": {
+        "toolName": "plane_mirror_tool",
+        "parameters": {
+          "initialMode": "learn",
+          "filterSteps": [
+            1,
+            2
+          ],
+          "additionalProps": {
+            "objectType": "candle",
+            "showRays": true,
+            "showImageFormation": true,
+            "animationStyle": "normal"
+          }
+        }
+      },
+      "instructions_for_student": "Try different objects - they all follow the same reflection rules!"
     },
     "all_real_world": {
-        "frontend_action": "show_interactive_tool",
-        "title": "Real-World Mirror Applications",
-        "data": {
-            "toolName": "plane_mirror_tool",
-            "parameters": {
-                "initialMode": "real_world",
-                "showModeSelector": false,
-                "autoPlayDuration": 12000
-            }
-        },
-        "instructions_for_student": "Explore how plane mirrors are used in everyday life!"
+      "frontend_action": "show_interactive_tool",
+      "title": "Real-World Mirror Applications",
+      "data": {
+        "toolName": "plane_mirror_tool",
+        "parameters": {
+          "initialMode": "real_world",
+          "showModeSelector": false,
+          "autoPlayDuration": 12000
+        }
+      },
+      "instructions_for_student": "Explore how plane mirrors are used in everyday life!"
     },
     "practice_only": {
-        "frontend_action": "show_interactive_tool",
-        "title": "Mirror Quiz Challenge",
-        "data": {
-            "toolName": "plane_mirror_tool",
-            "parameters": {
-                "initialMode": "practice",
-                "showModeSelector": false,
-                "enabledModes": [
-                    "practice"
-                ],
-                "additionalProps": {
-                    "objectType": "arrow",
-                    "showMeasurements": true
-                }
-            }
-        },
-        "instructions_for_student": "Test your knowledge with these mirror reflection questions!"
+      "frontend_action": "show_interactive_tool",
+      "title": "Mirror Quiz Challenge",
+      "data": {
+        "toolName": "plane_mirror_tool",
+        "parameters": {
+          "initialMode": "practice",
+          "showModeSelector": false,
+          "enabledModes": [
+            "practice"
+          ],
+          "additionalProps": {
+            "objectType": "arrow",
+            "showMeasurements": true
+          }
+        }
+      },
+      "instructions_for_student": "Test your knowledge with these mirror reflection questions!"
     },
     "hands_on_only": {
-        "frontend_action": "show_interactive_tool",
-        "title": "Interactive Mirror Experiment",
-        "data": {
-            "toolName": "plane_mirror_tool",
-            "parameters": {
-                "initialMode": "hands_on",
-                "showModeSelector": false,
-                "enabledModes": [
-                    "hands_on"
-                ],
-                "additionalProps": {
-                    "objectType": "person",
-                    "showRays": true,
-                    "showMeasurements": true
-                }
-            }
-        },
-        "instructions_for_student": "Drag the object around to see how reflection changes!"
+      "frontend_action": "show_interactive_tool",
+      "title": "Interactive Mirror Experiment",
+      "data": {
+        "toolName": "plane_mirror_tool",
+        "parameters": {
+          "initialMode": "hands_on",
+          "showModeSelector": false,
+          "enabledModes": [
+            "hands_on"
+          ],
+          "additionalProps": {
+            "objectType": "person",
+            "showRays": true,
+            "showMeasurements": true
+          }
+        }
+      },
+      "instructions_for_student": "Drag the object around to see how reflection changes!"
     }
+  },
+  "usage_example": {}
 }

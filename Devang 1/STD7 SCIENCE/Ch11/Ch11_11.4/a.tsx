@@ -1,75 +1,11 @@
-// @ts-ignore - React module type declarations
-declare module 'react' {
-  export interface ReactElement<P = any, T = any> {
-    type: T;
-    props: P;
-    key: string | number | null;
-  }
-
-  export interface FunctionComponent<P = {}> {
-    (props: P, context?: any): ReactElement<any, any> | null;
-    displayName?: string;
-  }
-
-  export type FC<P = {}> = FunctionComponent<P> & { displayName?: string };
-  export type ReactNode = ReactElement | string | number | boolean | null | undefined | ReactNode[];
-
-  export function useState<S>(initialState: S | (() => S)): [S, (value: S | ((prev: S) => S)) => void];
-  export function useEffect(effect: () => void | (() => void), deps?: any[]): void;
-  export function createContext<T>(defaultValue: T): Context<T>;
-  export function useContext<T>(context: Context<T>): T;
-  export function useRef<T>(initialValue: T | null): { current: T | null };
-
-  export interface Context<T> {
-    Provider: FC<{ value: T; children?: ReactNode }>;
-    Consumer: FC<{ children: (value: T) => ReactNode }>;
-  }
-
-  export interface CSSProperties {
-    [key: string]: any;
-  }
-
-  export namespace React {
-    export interface CSSProperties {
-      [key: string]: any;
-    }
-    export interface MouseEvent<T = Element> extends globalThis.MouseEvent {
-      currentTarget: EventTarget & T;
-      target: EventTarget & T;
-      preventDefault(): void;
-      stopPropagation(): void;
-    }
-    export interface TouchEvent<T = Element> extends globalThis.TouchEvent {
-      currentTarget: EventTarget & T;
-      target: EventTarget & T;
-      touches: TouchList;
-      preventDefault(): void;
-      stopPropagation(): void;
-    }
-  }
-
-  const React: {
-    createElement: (type: any, props: any, ...children: any[]) => ReactElement;
-  };
-  
-  export default React;
-}
-
-// @ts-ignore
 import React, {
-  // @ts-ignore
   useState,
-  // @ts-ignore
   useEffect,
-  // @ts-ignore
   createContext,
-  // @ts-ignore
   useContext,
-  // @ts-ignore
   ReactNode,
-  // @ts-ignore
   useRef,
-  // @ts-ignore
+  // @ts-ignore - React types resolved by host/bundler
 } from "react";
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -78,102 +14,52 @@ import React, {
 
 type ModeType = "learn" | "practice" | "real_world";
 
-// Step details for external control
 interface StepDetails {
   currentStep: number;
   totalSteps: number;
   mode: ModeType;
 }
 
-// Shadow-specific additional props
 interface ShadowAdditionalProps {
-  // Simulator customization
-  initialObject?: "cat" | "superhero" | "bottle" | "glass" | "paper" | "football" | "tree";
+  initialObject?:
+    | "cat"
+    | "superhero"
+    | "bottle"
+    | "glass"
+    | "paper"
+    | "football"
+    | "tree";
   lightSize?: "small" | "large";
   showRays?: boolean;
-  
-  // Practice mode customization
-  practiceScenarios?: number[];  // Which scenarios to show
+  practiceScenarios?: number[];
   randomizeScenarios?: boolean;
-  
-  // Real world customization
-  filterApplications?: string[];  // Filter by category
+  filterApplications?: string[];
   highlightMaterialType?: "transparent" | "translucent" | "opaque" | "mixed";
-  
-  // Theme customization
   customTheme?: {
     primaryColor?: string;
     secondaryColor?: string;
   };
 }
 
-// Main props interface following the standard
 interface ShadowFormationProps {
   props?: {
-    // ─────────────────────────────────────────────────────────────────
-    // DIMENSIONS
-    // ─────────────────────────────────────────────────────────────────
-    width?: number;                    // Default: 800
-    height?: number;                   // Default: 600
-    
-    // ─────────────────────────────────────────────────────────────────
-    // MODE CONFIGURATION
-    // ─────────────────────────────────────────────────────────────────
-    initialMode?: ModeType;            // Starting mode (default: "learn")
-    showModeSelector?: boolean;        // Show/hide mode tabs (default: true)
-    enabledModes?: ModeType[];         // Which modes to enable (default: all)
-    
-    // ─────────────────────────────────────────────────────────────────
-    // NAVIGATION CONFIGURATION
-    // ─────────────────────────────────────────────────────────────────
-    showNavigation?: boolean;          // Show/hide prev/next buttons (default: true)
-    showPlayPause?: boolean;           // Show/hide play/pause button (default: true)
-    showStepIndicator?: boolean;       // Show/hide step counter (default: true)
-    
-    // ─────────────────────────────────────────────────────────────────
-    // ANIMATION CONFIGURATION
-    // ─────────────────────────────────────────────────────────────────
-    animationSpeed?: number;           // Animation speed multiplier (default: 1)
-    autoPlayDuration?: number;         // Auto-advance delay in ms (default: 8000)
-    
-    // ─────────────────────────────────────────────────────────────────
-    // THEME
-    // ─────────────────────────────────────────────────────────────────
-    themeColor?: string;               // Primary color (default: "#3b82f6")
-    darkMode?: boolean;                // Dark mode toggle (default: false)
-    
-    // ─────────────────────────────────────────────────────────────────
-    // ADDITIONAL PROPS - TOOL-SPECIFIC DYNAMIC CONTENT
-    // ─────────────────────────────────────────────────────────────────
+    width?: number;
+    height?: number;
+    initialMode?: ModeType;
+    showModeSelector?: boolean;
+    enabledModes?: ModeType[];
+    showNavigation?: boolean;
+    showPlayPause?: boolean;
+    showStepIndicator?: boolean;
+    animationSpeed?: number;
+    autoPlayDuration?: number;
+    themeColor?: string;
+    darkMode?: boolean;
     additionalProps?: ShadowAdditionalProps;
   };
-  
-  // ─────────────────────────────────────────────────────────────────
-  // EXTERNAL CONTROLS (for parent component integration)
-  // ─────────────────────────────────────────────────────────────────
   setStepDetails?: (stepDetails: StepDetails) => void;
   stopAutoNext?: boolean;
   setStopAutoNext?: (stopAutoNext: boolean) => void;
-}
-
-// Type declarations for browser extension APIs
-declare global {
-  interface Window {
-    chrome?: {
-      runtime?: {
-        lastError?: { message?: string };
-        sendMessage?: (...args: unknown[]) => unknown;
-        connect?: (...args: unknown[]) => unknown;
-        sendNativeMessage?: (...args: unknown[]) => unknown;
-      };
-    };
-    browser?: {
-      runtime?: {
-        sendMessage?: (...args: unknown[]) => unknown;
-        connect?: (...args: unknown[]) => unknown;
-      };
-    };
-  }
 }
 
 interface RealWorldApp {
@@ -194,10 +80,35 @@ type TranslationValue =
   | Array<{ [key: string]: TranslationValue }>;
 
 // ═══════════════════════════════════════════════════════════════════════════
+// DESIGN SYSTEM - Colors from PDF
+// ═══════════════════════════════════════════════════════════════════════════
+
+const COLORS = {
+  primary: "#4A4DC9",
+  secondary: "#FF7212",
+  primaryDark: "#533086",
+  secondaryLight: "#FC9145",
+  primaryLight: "#C1C1EA",
+  secondaryLightBg: "#FFF3E4",
+  darkGray: "#4E4E4E",
+  mediumGray: "#CACACA",
+  lightGray: "#EBEBEB",
+  ultraLightGray: "#F5F5F5",
+  gradient: {
+    purple: "linear-gradient(135deg, #533086 0%, #FC9145 100%)",
+    primarySecondary: "linear-gradient(135deg, #4A4DC9 0%, #FF7212 100%)",
+    lightPurple: "linear-gradient(135deg, #C1C1EA 0%, #FFF3E4 100%)",
+  },
+};
+
+// ═══════════════════════════════════════════════════════════════════════════
 // ICON COMPONENTS
 // ═══════════════════════════════════════════════════════════════════════════
 
-const ShadowIcon: React.FC<{ className?: string; style?: React.CSSProperties }> = ({ className, style }) => {
+const ShadowIcon: React.FC<{
+  className?: string;
+  style?: React.CSSProperties;
+}> = ({ className, style }) => {
   return (
     <svg
       className={className}
@@ -209,28 +120,69 @@ const ShadowIcon: React.FC<{ className?: string; style?: React.CSSProperties }> 
       xmlns="http://www.w3.org/2000/svg"
     >
       <circle cx="12" cy="8" r="4" fill="currentColor" opacity="0.8" />
-      <ellipse cx="12" cy="16" rx="5" ry="2" fill="currentColor" opacity="0.4" />
-      <line x1="12" y1="4" x2="8" y2="12" stroke="currentColor" strokeWidth="1" opacity="0.3" />
-      <line x1="12" y1="4" x2="16" y2="12" stroke="currentColor" strokeWidth="1" opacity="0.3" />
+      <ellipse
+        cx="12"
+        cy="16"
+        rx="5"
+        ry="2"
+        fill="currentColor"
+        opacity="0.4"
+      />
+      <line
+        x1="12"
+        y1="4"
+        x2="8"
+        y2="12"
+        stroke="currentColor"
+        strokeWidth="1"
+        opacity="0.3"
+      />
+      <line
+        x1="12"
+        y1="4"
+        x2="16"
+        y2="12"
+        stroke="currentColor"
+        strokeWidth="1"
+        opacity="0.3"
+      />
     </svg>
   );
 };
-ShadowIcon.displayName = 'ShadowIcon';
+ShadowIcon.displayName = "ShadowIcon";
 
 const BookOpen = ({ style }: { style?: React.CSSProperties }) => (
-  <svg style={style} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+  <svg
+    style={style}
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    viewBox="0 0 24 24"
+  >
     <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
   </svg>
 );
 
 const ClipboardCheck = ({ style }: { style?: React.CSSProperties }) => (
-  <svg style={style} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+  <svg
+    style={style}
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    viewBox="0 0 24 24"
+  >
     <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-6 9l2 2 4-4" />
   </svg>
 );
 
 const Globe = ({ style }: { style?: React.CSSProperties }) => (
-  <svg style={style} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+  <svg
+    style={style}
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    viewBox="0 0 24 24"
+  >
     <circle cx="12" cy="12" r="10" />
     <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
   </svg>
@@ -312,7 +264,8 @@ const translations = {
         normalShadow: "Normal shadow size! Try moving things around!",
         softEdges: "Soft edges because the light is BIG!",
         sharpEdges: "Sharp edges because the light is SMALL!",
-        positionObject: "Position the object between the light source and the screen to see its shadow!",
+        positionObject:
+          "Position the object between the light source and the screen to see its shadow!",
       },
     },
     practice: {
@@ -497,7 +450,8 @@ const translations = {
           description: "Ancient clocks that use shadow position to tell time",
           icon: "⏰",
           category: "Time Telling",
-          example: "Garden sundials track the sun's movement throughout the day",
+          example:
+            "Garden sundials track the sun's movement throughout the day",
           materialType: "opaque",
         },
         {
@@ -539,7 +493,8 @@ const translations = {
         {
           id: 6,
           title: "Shadow Art",
-          description: "Sculptures that create different shadows from different angles",
+          description:
+            "Sculptures that create different shadows from different angles",
           icon: "🎨",
           category: "Art",
           example: "3D sculptures revealing hidden images in their shadows",
@@ -550,9 +505,8 @@ const translations = {
   },
 };
 
-
 // ═══════════════════════════════════════════════════════════════════════════
-// TRANSLATION CONTEXT (Simplified - English Only)
+// TRANSLATION CONTEXT
 // ═══════════════════════════════════════════════════════════════════════════
 
 interface LanguageContextType {
@@ -560,10 +514,12 @@ interface LanguageContextType {
   tValue: (key: string) => TranslationValue;
 }
 
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+const LanguageContext = createContext<LanguageContextType | undefined>(
+  undefined,
+);
 
-const LanguageProvider: React.FC<{ 
-  children?: ReactNode; 
+const LanguageProvider: React.FC<{
+  children: ReactNode;
 }> = ({ children }) => {
   const t = (key: string): string => {
     const keys = key.split(".");
@@ -596,7 +552,8 @@ const LanguageProvider: React.FC<{
   };
 
   return (
-    <LanguageContext.Provider value={{ t, tValue }} children={children}>
+    <LanguageContext.Provider value={{ t, tValue }}>
+      {children}
     </LanguageContext.Provider>
   );
 };
@@ -612,19 +569,24 @@ const useLanguage = () => {
 interface LightTravelProps {}
 
 // ═══════════════════════════════════════════════════════════════════════════
-// LEARN MODE - Light Travel Straight Line Component (FIXED & RESPONSIVE)
+// LEARN MODE - Light Travel Straight Line Component (REDESIGNED & RESPONSIVE)
 // ═══════════════════════════════════════════════════════════════════════════
 
 export const LightTravelStraightLine: React.FC<LightTravelProps> = () => {
   const { t } = useLanguage();
-  const svgRef = useRef<SVGSVGElement | null>(null);
-  const [svgDimensions, setSvgDimensions] = useState({ width: 800, height: 500 });
-  
-  // Responsive scaling factor
+  const svgRef = useRef<SVGSVGElement>(null);
+  const [svgDimensions, setSvgDimensions] = useState({
+    width: 800,
+    height: 500,
+  });
+
   const scale = svgDimensions.width / 800;
-  
+
   const [lightPos, setLightPos] = useState({ x: 150 * scale, y: 150 * scale });
-  const [objectPos, setObjectPos] = useState({ x: 400 * scale, y: 250 * scale });
+  const [objectPos, setObjectPos] = useState({
+    x: 400 * scale,
+    y: 250 * scale,
+  });
   const [screenPos, setScreenPos] = useState(650 * scale);
   const [selectedObject, setSelectedObject] = useState("cat");
   const [lightSize, setLightSize] = useState<"small" | "large">("small");
@@ -632,7 +594,6 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = () => {
   const [feedback, setFeedback] = useState("");
   const [showRays, setShowRays] = useState(true);
 
-  // Handle responsive SVG dimensions
   useEffect(() => {
     const handleResize = () => {
       if (svgRef.current) {
@@ -641,19 +602,24 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = () => {
           const width = Math.min(container.clientWidth - 32, 800);
           const height = Math.max(400, Math.min(width * 0.625, 500));
           setSvgDimensions({ width, height });
-          
-          // Update positions proportionally
+
           const newScale = width / 800;
-          setLightPos(prev => ({ x: (prev.x / scale) * newScale, y: (prev.y / scale) * newScale }));
-          setObjectPos(prev => ({ x: (prev.x / scale) * newScale, y: (prev.y / scale) * newScale }));
-          setScreenPos(prev => (prev / scale) * newScale);
+          setLightPos((prev) => ({
+            x: (prev.x / scale) * newScale,
+            y: (prev.y / scale) * newScale,
+          }));
+          setObjectPos((prev) => ({
+            x: (prev.x / scale) * newScale,
+            y: (prev.y / scale) * newScale,
+          }));
+          setScreenPos((prev) => (prev / scale) * newScale);
         }
       }
     };
 
     handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const objects: Record<
@@ -664,50 +630,49 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = () => {
       emoji: "🐱",
       name: t("shadowSimulator.objects.cat"),
       opacity: 1,
-      color: "#FF6B9D",
+      color: COLORS.primary,
     },
     superhero: {
       emoji: "🦸",
       name: t("shadowSimulator.objects.superhero"),
       opacity: 1,
-      color: "#4A90E2",
+      color: COLORS.primaryDark,
     },
     bottle: {
       emoji: "🍼",
       name: t("shadowSimulator.objects.bottle"),
       opacity: 0.3,
-      color: "#66D9EF",
+      color: COLORS.secondary,
     },
     glass: {
       emoji: "🧊",
       name: t("shadowSimulator.objects.glass"),
       opacity: 0.5,
-      color: "#A8E6CF",
+      color: COLORS.primaryLight,
     },
     paper: {
       emoji: "📄",
       name: t("shadowSimulator.objects.paper"),
       opacity: 1,
-      color: "#FFE66D",
+      color: COLORS.secondaryLight,
     },
     football: {
       emoji: "⚽",
       name: t("shadowSimulator.objects.football"),
       opacity: 1,
-      color: "#FF6B35",
+      color: COLORS.secondary,
     },
     tree: {
       emoji: "🌲",
       name: t("shadowSimulator.objects.tree"),
       opacity: 1,
-      color: "#2ECC71",
+      color: COLORS.primaryDark,
     },
   };
 
   const currentObject = objects[selectedObject];
 
   const calculateShadow = () => {
-    // Only calculate shadow if object is between light and screen
     if (objectPos.x <= lightPos.x || objectPos.x >= screenPos) {
       return null;
     }
@@ -715,18 +680,16 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = () => {
     const shadowX = screenPos;
     const distanceToLight = Math.sqrt(
       Math.pow(objectPos.x - lightPos.x, 2) +
-        Math.pow(objectPos.y - lightPos.y, 2)
+        Math.pow(objectPos.y - lightPos.y, 2),
     );
     const distanceToScreen = Math.abs(screenPos - objectPos.x);
 
-    // Improved shadow calculation for better visibility
     const scale = 1 + (distanceToScreen / distanceToLight) * 1.5;
     const shadowY =
       lightPos.y +
       (objectPos.y - lightPos.y) *
         ((screenPos - lightPos.x) / (objectPos.x - lightPos.x));
 
-    // Calculate shadow opacity based on object opacity
     const shadowOpacity = Math.max(0.3, 0.5 + currentObject.opacity * 0.3);
 
     return {
@@ -745,18 +708,23 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = () => {
     setTimeout(() => setFeedback(""), 2500);
   };
 
-  const handleMouseDown = (type: string, e: React.MouseEvent | React.TouchEvent) => {
+  const handleMouseDown = (
+    type: string,
+    e: React.MouseEvent | React.TouchEvent,
+  ) => {
     e.preventDefault();
     e.stopPropagation();
     setDragging(type);
   };
 
-  const handleMouseMove = (e: React.MouseEvent<SVGSVGElement> | React.TouchEvent<SVGSVGElement>) => {
+  const handleMouseMove = (
+    e: React.MouseEvent<SVGSVGElement> | React.TouchEvent<SVGSVGElement>,
+  ) => {
     if (!dragging) return;
 
     const rect = e.currentTarget.getBoundingClientRect();
-    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
-    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
+    const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
     const x = clientX - rect.left;
     const y = clientY - rect.top;
 
@@ -769,7 +737,10 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = () => {
       const minX = lightPos.x + 20 * scale;
       const maxX = screenPos - 50 * scale;
       const newX = Math.max(minX, Math.min(maxX, x));
-      const newY = Math.max(50 * scale, Math.min(svgDimensions.height - 50 * scale, y));
+      const newY = Math.max(
+        50 * scale,
+        Math.min(svgDimensions.height - 50 * scale, y),
+      );
       const oldX = objectPos.x;
 
       setObjectPos({ x: newX, y: newY });
@@ -783,11 +754,14 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = () => {
       } else if (newX >= screenPos) {
         giveFeedback(
           t("shadowSimulator.feedback.objectBeyondScreen") ||
-            "Object is beyond the screen! No shadow."
+            "Object is beyond the screen! No shadow.",
         );
       }
     } else if (dragging === "screen") {
-      const newScreen = Math.max(500 * scale, Math.min(svgDimensions.width - 50 * scale, x));
+      const newScreen = Math.max(
+        500 * scale,
+        Math.min(svgDimensions.width - 50 * scale, x),
+      );
       setScreenPos(newScreen);
       if (newScreen < screenPos) {
         giveFeedback(t("shadowSimulator.feedback.shadowShrinking"));
@@ -825,11 +799,13 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = () => {
             y1={lightPos.y}
             x2={rayX > objectPos.x ? screenPos : rayX}
             y2={rayX > objectPos.x ? screenY : rayY}
-            stroke={rayX > objectPos.x ? "#FFF176" : "#FFEB3B"}
+            stroke={
+              rayX > objectPos.x ? COLORS.secondaryLight : COLORS.secondary
+            }
             strokeWidth={2 * scale}
             opacity={rayX > objectPos.x ? "0.4" : "0.7"}
             style={{ pointerEvents: "none" }}
-          />
+          />,
         );
       }
     }
@@ -837,337 +813,565 @@ export const LightTravelStraightLine: React.FC<LightTravelProps> = () => {
   };
 
   return (
-    <div className="w-full min-h-screen bg-gradient-to-br from-blue-50 via-teal-50 to-blue-50 p-2 sm:p-4 md:p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Feedback Banner */}
+    <div
+      style={{
+        width: "100%",
+        minHeight: "100vh",
+        background: COLORS.gradient.lightPurple,
+        padding: "clamp(0.5rem, 2vw, 1.5rem)",
+      }}
+    >
+      <div style={{ maxWidth: "1600px", margin: "0 auto" }}>
         {feedback && (
-          <div 
+          <div
             style={{
-              position: 'fixed',
-              top: '5rem',
-              left: '50%',
-              transform: 'translateX(-50%)',
+              position: "fixed",
+              top: "5rem",
+              left: "50%",
+              transform: "translateX(-50%)",
               zIndex: 50,
-              background: 'linear-gradient(to right, #3b82f6, #14b8a6)',
-              color: 'white',
-              padding: '0.75rem 1.5rem',
-              borderRadius: '9999px',
-              fontSize: 'clamp(0.875rem, 2vw, 1.125rem)',
-              fontWeight: 'bold',
-              boxShadow: '0 10px 25px rgba(0,0,0,0.2)',
-              animation: 'bounce 1s infinite',
-              maxWidth: '90vw',
-              textAlign: 'center',
+              background: COLORS.gradient.primarySecondary,
+              color: "white",
+              padding: "0.75rem 1.5rem",
+              borderRadius: "9999px",
+              fontSize: "clamp(0.875rem, 2vw, 1.125rem)",
+              fontWeight: "bold",
+              boxShadow: "0 10px 25px rgba(0,0,0,0.2)",
+              animation: "bounce 1s infinite",
+              maxWidth: "90vw",
+              textAlign: "center",
             }}
           >
             {feedback}
           </div>
         )}
 
-        {/* Main Content */}
-        <div className="flex flex-col lg:flex-row gap-4 md:gap-6">
-          {/* Control Panel */}
-          <div className="w-full lg:w-80 bg-white/90 backdrop-blur-md rounded-2xl p-3 sm:p-4 md:p-6 space-y-4 md:space-y-6 border-2 border-blue-200 shadow-xl">
-            <div>
-              <h3 className="text-blue-600 font-bold text-base sm:text-lg md:text-xl mb-2 md:mb-3 flex items-center gap-2">
-                🎨 {t("shadowSimulator.objects.title")}
-              </h3>
-              <div className="grid grid-cols-2 gap-2">
-                {Object.entries(objects).map(([key, obj]) => (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "clamp(1rem, 2vw, 1.5rem)",
+          }}
+        >
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns:
+                "repeat(auto-fit, minmax(min(100%, 320px), 1fr))",
+              gap: "clamp(1rem, 2vw, 1.5rem)",
+            }}
+          >
+            {/* Control Panel */}
+            <div
+              style={{
+                backgroundColor: "white",
+                borderRadius: "16px",
+                padding: "clamp(1rem, 2.5vw, 1.5rem)",
+                display: "flex",
+                flexDirection: "column",
+                gap: "clamp(1rem, 2vw, 1.5rem)",
+                border: `2px solid ${COLORS.primaryLight}`,
+                boxShadow: "0 4px 12px rgba(74, 77, 201, 0.1)",
+              }}
+            >
+              <div>
+                <h3
+                  style={{
+                    color: COLORS.primary,
+                    fontWeight: "bold",
+                    fontSize: "clamp(1rem, 2.5vw, 1.25rem)",
+                    marginBottom: "0.75rem",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    fontFamily: "Poppins, sans-serif",
+                  }}
+                >
+                  🎨 {t("shadowSimulator.objects.title")}
+                </h3>
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(70px, 1fr))",
+                    gap: "clamp(0.5rem, 1.5vw, 0.75rem)",
+                  }}
+                >
+                  {Object.entries(objects).map(([key, obj]) => (
+                    <button
+                      key={key}
+                      onClick={() => {
+                        setSelectedObject(key);
+                        giveFeedback(
+                          `${obj.name} ${t("shadowSimulator.objects.selected")}`,
+                        );
+                      }}
+                      style={{
+                        padding: "clamp(0.75rem, 2vw, 1rem)",
+                        borderRadius: "12px",
+                        fontSize: "clamp(1.5rem, 4vw, 2rem)",
+                        transition: "all 0.3s ease",
+                        transform:
+                          selectedObject === key ? "scale(1.05)" : "scale(1)",
+                        backgroundColor:
+                          selectedObject === key
+                            ? COLORS.primaryLight
+                            : COLORS.ultraLightGray,
+                        border:
+                          selectedObject === key
+                            ? `3px solid ${COLORS.primary}`
+                            : "3px solid transparent",
+                        cursor: "pointer",
+                        boxShadow:
+                          selectedObject === key
+                            ? `0 4px 12px ${COLORS.primaryLight}`
+                            : "none",
+                      }}
+                      onMouseEnter={(e) => {
+                        if (selectedObject !== key) {
+                          e.currentTarget.style.backgroundColor =
+                            COLORS.lightGray;
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (selectedObject !== key) {
+                          e.currentTarget.style.backgroundColor =
+                            COLORS.ultraLightGray;
+                        }
+                      }}
+                    >
+                      {obj.emoji}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h3
+                  style={{
+                    color: COLORS.primary,
+                    fontWeight: "bold",
+                    fontSize: "clamp(1rem, 2.5vw, 1.25rem)",
+                    marginBottom: "0.75rem",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    fontFamily: "Poppins, sans-serif",
+                  }}
+                >
+                  💡 {t("shadowSimulator.lightSize.title")}
+                </h3>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "0.75rem",
+                  }}
+                >
                   <button
-                    key={key}
                     onClick={() => {
-                      setSelectedObject(key);
+                      setLightSize("small");
                       giveFeedback(
-                        `${obj.name} ${t("shadowSimulator.objects.selected")}`
+                        t("shadowSimulator.lightSize.smallFeedback"),
                       );
                     }}
-                    className={`p-2 sm:p-3 md:p-4 rounded-xl text-2xl sm:text-3xl md:text-4xl transition-all transform hover:scale-110 ${
-                      selectedObject === key
-                        ? "bg-gradient-to-br from-blue-500 to-teal-500 shadow-lg scale-105"
-                        : "bg-blue-50 hover:bg-blue-100"
-                    }`}
                     style={{
-                      borderColor: obj.color,
-                      borderWidth: selectedObject === key ? "3px" : "0",
+                      width: "100%",
+                      padding: "clamp(0.75rem, 2vw, 1rem)",
+                      borderRadius: "12px",
+                      transition: "all 0.3s ease",
+                      fontWeight: "600",
+                      fontSize: "clamp(0.875rem, 2vw, 1rem)",
+                      cursor: "pointer",
+                      border: "none",
+                      fontFamily: "Poppins, sans-serif",
+                      backgroundColor:
+                        lightSize === "small"
+                          ? COLORS.primary
+                          : COLORS.ultraLightGray,
+                      color: lightSize === "small" ? "white" : COLORS.darkGray,
+                      boxShadow:
+                        lightSize === "small"
+                          ? `0 4px 12px ${COLORS.primaryLight}`
+                          : "none",
                     }}
                   >
-                    {obj.emoji}
+                    {t("shadowSimulator.lightSize.small")} 🔦
                   </button>
-                ))}
+                  <button
+                    onClick={() => {
+                      setLightSize("large");
+                      giveFeedback(
+                        t("shadowSimulator.lightSize.largeFeedback"),
+                      );
+                    }}
+                    style={{
+                      width: "100%",
+                      padding: "clamp(0.75rem, 2vw, 1rem)",
+                      borderRadius: "12px",
+                      transition: "all 0.3s ease",
+                      fontWeight: "600",
+                      fontSize: "clamp(0.875rem, 2vw, 1rem)",
+                      cursor: "pointer",
+                      border: "none",
+                      fontFamily: "Poppins, sans-serif",
+                      backgroundColor:
+                        lightSize === "large"
+                          ? COLORS.primary
+                          : COLORS.ultraLightGray,
+                      color: lightSize === "large" ? "white" : COLORS.darkGray,
+                      boxShadow:
+                        lightSize === "large"
+                          ? `0 4px 12px ${COLORS.primaryLight}`
+                          : "none",
+                    }}
+                  >
+                    {t("shadowSimulator.lightSize.large")} 💡
+                  </button>
+                </div>
               </div>
-            </div>
 
-            <div>
-              <h3 className="text-blue-600 font-bold text-base sm:text-lg md:text-xl mb-2 md:mb-3 flex items-center gap-2">
-                💡 {t("shadowSimulator.lightSize.title")}
-              </h3>
-              <div className="space-y-2 md:space-y-3">
-                <button
-                  onClick={() => {
-                    setLightSize("small");
-                    giveFeedback(t("shadowSimulator.lightSize.smallFeedback"));
+              <div>
+                <h3
+                  style={{
+                    color: COLORS.primary,
+                    fontWeight: "bold",
+                    fontSize: "clamp(1rem, 2.5vw, 1.25rem)",
+                    marginBottom: "0.75rem",
+                    fontFamily: "Poppins, sans-serif",
                   }}
-                  className={`w-full p-2 md:p-3 rounded-xl transition-all font-semibold text-sm md:text-base ${
-                    lightSize === "small"
-                      ? "bg-gradient-to-r from-blue-600 to-teal-600 text-white shadow-lg"
-                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                  }`}
                 >
-                  {t("shadowSimulator.lightSize.small")} 🔦
-                </button>
-                <button
-                  onClick={() => {
-                    setLightSize("large");
-                    giveFeedback(t("shadowSimulator.lightSize.largeFeedback"));
+                  📚 {t("shadowSimulator.shadowFacts.title")}
+                </h3>
+                <div
+                  style={{
+                    background: COLORS.gradient.lightPurple,
+                    borderRadius: "12px",
+                    padding: "clamp(0.75rem, 2vw, 1rem)",
+                    fontSize: "clamp(0.75rem, 1.75vw, 0.875rem)",
+                    lineHeight: "1.6",
+                    borderLeft: `4px solid ${COLORS.primary}`,
+                    color: COLORS.darkGray,
                   }}
-                  className={`w-full p-2 md:p-3 rounded-xl transition-all font-semibold text-sm md:text-base ${
-                    lightSize === "large"
-                      ? "bg-gradient-to-r from-blue-600 to-teal-600 text-white shadow-lg"
-                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                  }`}
                 >
-                  {t("shadowSimulator.lightSize.large")} 💡
-                </button>
+                  <p style={{ marginBottom: "0.5rem" }}>
+                    🔸 {t("shadowSimulator.shadowFacts.opaque")}
+                  </p>
+                  <p style={{ marginBottom: "0.5rem" }}>
+                    🔹 {t("shadowSimulator.shadowFacts.translucent")}
+                  </p>
+                  <p style={{ marginBottom: "0.75rem" }}>
+                    🔷 {t("shadowSimulator.shadowFacts.transparent")}
+                  </p>
+                  <p
+                    style={{
+                      marginTop: "0.75rem",
+                      paddingTop: "0.75rem",
+                      borderTop: `1px solid ${COLORS.primaryLight}`,
+                    }}
+                  >
+                    Current object:{" "}
+                    <strong style={{ color: COLORS.primary }}>
+                      {currentObject.opacity === 1
+                        ? t("shadowSimulator.shadowFacts.currentObject.opaque")
+                        : currentObject.opacity > 0.5
+                          ? t(
+                              "shadowSimulator.shadowFacts.currentObject.translucent",
+                            )
+                          : t(
+                              "shadowSimulator.shadowFacts.currentObject.semiTransparent",
+                            )}
+                    </strong>
+                  </p>
+                </div>
               </div>
-            </div>
 
-            <div>
-              <h3 className="text-blue-600 font-bold text-base sm:text-lg md:text-xl mb-2 md:mb-3">
-                📚 {t("shadowSimulator.shadowFacts.title")}
-              </h3>
-              <div className="bg-gradient-to-r from-blue-50 to-teal-50 rounded-xl p-3 md:p-4 text-gray-700 text-xs sm:text-sm space-y-2 border-l-4 border-blue-500">
-                <p>🔸 {t("shadowSimulator.shadowFacts.opaque")}</p>
-                <p>🔹 {t("shadowSimulator.shadowFacts.translucent")}</p>
-                <p>🔷 {t("shadowSimulator.shadowFacts.transparent")}</p>
-                <p className="mt-3 pt-3 border-t border-blue-200">
-                  Current object:{" "}
-                  <strong className="text-blue-600">
-                    {currentObject.opacity === 1
-                      ? t("shadowSimulator.shadowFacts.currentObject.opaque")
-                      : currentObject.opacity > 0.5
-                      ? t(
-                          "shadowSimulator.shadowFacts.currentObject.translucent"
-                        )
-                      : t(
-                          "shadowSimulator.shadowFacts.currentObject.semiTransparent"
-                        )}
-                  </strong>
-                </p>
-              </div>
-            </div>
-
-            <div>
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={showRays}
-                  onChange={(e) => setShowRays(e.target.checked)}
-                  className="w-4 h-4 md:w-5 md:h-5 text-blue-600 rounded"
-                />
-                <span className="text-gray-700 font-semibold text-sm md:text-base">
-                  {t("shadowSimulator.controls.showRays")}
-                </span>
-              </label>
-            </div>
-          </div>
-
-          {/* Canvas Area */}
-          <div className="flex-1 bg-gradient-to-br from-blue-900 via-teal-900 to-blue-800 rounded-2xl p-3 sm:p-4 md:p-6 lg:p-8 border-4 border-blue-400/30 shadow-2xl">
-            <svg
-              ref={svgRef}
-              width="100%"
-              height={svgDimensions.height}
-              viewBox={`0 0 ${svgDimensions.width} ${svgDimensions.height}`}
-              className="cursor-default touch-none"
-              onMouseMove={handleMouseMove}
-              onMouseUp={handleMouseUp}
-              onMouseLeave={handleMouseUp}
-              onTouchMove={handleMouseMove}
-              onTouchEnd={handleMouseUp}
-              style={{ userSelect: "none", maxWidth: '100%' }}
-            >
-              {/* Light Rays */}
-              {showRays && getLightRays()}
-
-              {/* Screen */}
-              <g
-                onMouseDown={(e) => handleMouseDown("screen", e)}
-                onTouchStart={(e) => handleMouseDown("screen", e)}
-                className="cursor-ew-resize"
-                style={{ cursor: "ew-resize" }}
-              >
-                <rect
-                  x={screenPos}
-                  y="0"
-                  width={10 * scale}
-                  height={svgDimensions.height}
-                  fill="#F5F5F5"
-                  stroke="#FFD700"
-                  strokeWidth={4 * scale}
-                  className="transition-all"
-                  rx={2 * scale}
-                />
-                <text
-                  x={screenPos + 15 * scale}
-                  y={30 * scale}
-                  fill="#FFD700"
-                  fontSize={14 * scale}
-                  fontWeight="bold"
-                  style={{ pointerEvents: "none", userSelect: "none" }}
+              <div>
+                <label
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    cursor: "pointer",
+                    fontFamily: "Poppins, sans-serif",
+                  }}
                 >
-                  {t("shadowSimulator.controls.screenLabel")}
-                </text>
-              </g>
-
-              {/* Shadow - Enhanced visibility with proper filter and multiple layers */}
-              {shadow && (
-                <g style={{ pointerEvents: "none" }}>
-                  {/* Shadow background blur layer */}
-                  <ellipse
-                    cx={shadow.x - 5 * scale}
-                    cy={shadow.y}
-                    rx={35 * shadow.scale * scale}
-                    ry={25 * shadow.scale * scale}
-                    fill="rgba(0, 0, 0, 0.4)"
-                    filter={`blur(${shadow.blur * scale}px)`}
+                  <input
+                    type="checkbox"
+                    checked={showRays}
+                    onChange={(e) => setShowRays(e.target.checked)}
+                    style={{
+                      width: "clamp(1rem, 2vw, 1.25rem)",
+                      height: "clamp(1rem, 2vw, 1.25rem)",
+                      accentColor: COLORS.primary,
+                      cursor: "pointer",
+                    }}
                   />
-                  {/* Main shadow with emoji */}
+                  <span
+                    style={{
+                      color: COLORS.darkGray,
+                      fontWeight: "600",
+                      fontSize: "clamp(0.875rem, 2vw, 1rem)",
+                    }}
+                  >
+                    {t("shadowSimulator.controls.showRays")}
+                  </span>
+                </label>
+              </div>
+            </div>
+
+            {/* Canvas Area */}
+            <div
+              style={{
+                background: COLORS.gradient.purple,
+                borderRadius: "16px",
+                padding: "clamp(1rem, 2.5vw, 1.5rem)",
+                border: `3px solid ${COLORS.primaryLight}`,
+                boxShadow: "0 8px 24px rgba(83, 48, 134, 0.15)",
+                gridColumn: "1 / -1",
+              }}
+            >
+              <svg
+                ref={svgRef}
+                width="100%"
+                height={svgDimensions.height}
+                viewBox={`0 0 ${svgDimensions.width} ${svgDimensions.height}`}
+                style={{
+                  cursor: "default",
+                  touchAction: "none",
+                  userSelect: "none",
+                  maxWidth: "100%",
+                }}
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleMouseUp}
+                onMouseLeave={handleMouseUp}
+                onTouchMove={handleMouseMove}
+                onTouchEnd={handleMouseUp}
+              >
+                {showRays && getLightRays()}
+
+                <g
+                  onMouseDown={(e) => handleMouseDown("screen", e)}
+                  onTouchStart={(e) => handleMouseDown("screen", e)}
+                  style={{ cursor: "ew-resize" }}
+                >
+                  <rect
+                    x={screenPos}
+                    y="0"
+                    width={10 * scale}
+                    height={svgDimensions.height}
+                    fill={COLORS.ultraLightGray}
+                    stroke={COLORS.secondary}
+                    strokeWidth={4 * scale}
+                    rx={2 * scale}
+                  />
                   <text
-                    x={shadow.x - 5 * scale}
-                    y={shadow.y}
+                    x={screenPos + 15 * scale}
+                    y={30 * scale}
+                    fill={COLORS.secondary}
+                    fontSize={14 * scale}
+                    fontWeight="bold"
+                    fontFamily="Poppins, sans-serif"
+                    style={{ pointerEvents: "none", userSelect: "none" }}
+                  >
+                    {t("shadowSimulator.controls.screenLabel")}
+                  </text>
+                </g>
+
+                {shadow && (
+                  <g style={{ pointerEvents: "none" }}>
+                    <ellipse
+                      cx={shadow.x - 5 * scale}
+                      cy={shadow.y}
+                      rx={35 * shadow.scale * scale}
+                      ry={25 * shadow.scale * scale}
+                      fill="rgba(78, 78, 78, 0.4)"
+                      filter={`blur(${shadow.blur * scale}px)`}
+                    />
+                    <text
+                      x={shadow.x - 5 * scale}
+                      y={shadow.y}
+                      textAnchor="middle"
+                      dominantBaseline="middle"
+                      fontSize={60 * shadow.scale * scale}
+                      fill={COLORS.darkGray}
+                      opacity={shadow.opacity}
+                      filter={`blur(${shadow.blur * scale}px) brightness(0.2)`}
+                      style={{
+                        textShadow: "0 0 10px rgba(78, 78, 78, 0.5)",
+                      }}
+                    >
+                      {currentObject.emoji}
+                    </text>
+                  </g>
+                )}
+
+                <g
+                  onMouseDown={(e) => handleMouseDown("object", e)}
+                  onTouchStart={(e) => handleMouseDown("object", e)}
+                  style={{ cursor: "move" }}
+                >
+                  <circle
+                    cx={objectPos.x}
+                    cy={objectPos.y}
+                    r={50 * scale}
+                    fill="transparent"
+                    style={{ cursor: "move" }}
+                  />
+
+                  <text
+                    x={objectPos.x}
+                    y={objectPos.y}
                     textAnchor="middle"
                     dominantBaseline="middle"
-                    fontSize={60 * shadow.scale * scale}
-                    fill="#000000"
-                    opacity={shadow.opacity}
-                    filter={`blur(${shadow.blur * scale}px) brightness(0.2)`}
+                    fontSize={60 * scale}
                     style={{
-                      textShadow: '0 0 10px rgba(0,0,0,0.5)',
+                      filter: `drop-shadow(0 0 ${8 * scale}px ${currentObject.color})`,
+                      opacity: currentObject.opacity,
+                      pointerEvents: "none",
+                      userSelect: "none",
                     }}
                   >
                     {currentObject.emoji}
                   </text>
+                  <text
+                    x={objectPos.x}
+                    y={objectPos.y - 50 * scale}
+                    fill="white"
+                    fontSize={12 * scale}
+                    fontWeight="bold"
+                    fontFamily="Poppins, sans-serif"
+                    textAnchor="middle"
+                    style={{ pointerEvents: "none", userSelect: "none" }}
+                  >
+                    {t("shadowSimulator.controls.dragObject")}
+                  </text>
                 </g>
-              )}
 
-              {/* Object */}
-              <g
-                onMouseDown={(e) => handleMouseDown("object", e)}
-                onTouchStart={(e) => handleMouseDown("object", e)}
-                style={{ cursor: "move" }}
-              >
-                <circle
-                  cx={objectPos.x}
-                  cy={objectPos.y}
-                  r={50 * scale}
-                  fill="transparent"
+                <g
+                  onMouseDown={(e) => handleMouseDown("light", e)}
+                  onTouchStart={(e) => handleMouseDown("light", e)}
                   style={{ cursor: "move" }}
-                />
+                >
+                  <circle
+                    cx={lightPos.x}
+                    cy={lightPos.y}
+                    r={(lightSize === "small" ? 20 : 35) * scale}
+                    fill={COLORS.secondary}
+                    style={{ cursor: "move" }}
+                  />
+                  <circle
+                    cx={lightPos.x}
+                    cy={lightPos.y}
+                    r={(lightSize === "small" ? 30 : 50) * scale}
+                    fill={COLORS.secondary}
+                    opacity="0.3"
+                    style={{
+                      pointerEvents: "none",
+                      animation:
+                        "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+                    }}
+                  />
+                  <text
+                    x={lightPos.x}
+                    y={lightPos.y}
+                    textAnchor="middle"
+                    dominantBaseline="middle"
+                    fontSize={20 * scale}
+                    style={{ pointerEvents: "none", userSelect: "none" }}
+                  >
+                    💡
+                  </text>
+                  <text
+                    x={lightPos.x - 30 * scale}
+                    y={lightPos.y - 50 * scale}
+                    fill="white"
+                    fontSize={12 * scale}
+                    fontWeight="bold"
+                    fontFamily="Poppins, sans-serif"
+                    style={{ pointerEvents: "none", userSelect: "none" }}
+                  >
+                    {t("shadowSimulator.controls.lightLabel")}
+                  </text>
+                </g>
+              </svg>
 
-                <text
-                  x={objectPos.x}
-                  y={objectPos.y}
-                  textAnchor="middle"
-                  dominantBaseline="middle"
-                  fontSize={60 * scale}
+              <div
+                style={{
+                  marginTop: "clamp(0.75rem, 2vw, 1rem)",
+                  backgroundColor: "rgba(255, 255, 255, 0.15)",
+                  backdropFilter: "blur(10px)",
+                  borderRadius: "12px",
+                  padding: "clamp(0.75rem, 2vw, 1rem)",
+                  color: "white",
+                  borderLeft: `4px solid ${COLORS.secondaryLight}`,
+                }}
+              >
+                <h4
                   style={{
-                    filter: `drop-shadow(0 0 ${8 * scale}px ${currentObject.color})`,
-                    opacity: currentObject.opacity,
-                    pointerEvents: "none",
-                    userSelect: "none",
+                    fontWeight: "bold",
+                    fontSize: "clamp(1rem, 2.5vw, 1.125rem)",
+                    marginBottom: "0.5rem",
+                    color: COLORS.secondaryLightBg,
+                    fontFamily: "Poppins, sans-serif",
                   }}
                 >
-                  {currentObject.emoji}
-                </text>
-                <text
-                  x={objectPos.x}
-                  y={objectPos.y - 50 * scale}
-                  fill="white"
-                  fontSize={12 * scale}
-                  fontWeight="bold"
-                  textAnchor="middle"
-                  style={{ pointerEvents: "none", userSelect: "none" }}
-                >
-                  {t("shadowSimulator.controls.dragObject")}
-                </text>
-              </g>
-
-              {/* Light Source */}
-              <g
-                onMouseDown={(e) => handleMouseDown("light", e)}
-                onTouchStart={(e) => handleMouseDown("light", e)}
-                style={{ cursor: "move" }}
-              >
-                <circle
-                  cx={lightPos.x}
-                  cy={lightPos.y}
-                  r={(lightSize === "small" ? 20 : 35) * scale}
-                  fill="#FFD700"
-                  className="transition-all"
-                  style={{ cursor: "move" }}
-                />
-                <circle
-                  cx={lightPos.x}
-                  cy={lightPos.y}
-                  r={(lightSize === "small" ? 30 : 50) * scale}
-                  fill="#FFD700"
-                  opacity="0.3"
-                  className="animate-pulse transition-all"
-                  style={{ pointerEvents: "none" }}
-                />
-                <text
-                  x={lightPos.x}
-                  y={lightPos.y}
-                  textAnchor="middle"
-                  dominantBaseline="middle"
-                  fontSize={20 * scale}
-                  style={{ pointerEvents: "none", userSelect: "none" }}
-                >
-                  💡
-                </text>
-                <text
-                  x={lightPos.x - 30 * scale}
-                  y={lightPos.y - 50 * scale}
-                  fill="white"
-                  fontSize={12 * scale}
-                  fontWeight="bold"
-                  style={{ pointerEvents: "none", userSelect: "none" }}
-                >
-                  {t("shadowSimulator.controls.lightLabel")}
-                </text>
-              </g>
-            </svg>
-
-            {/* Info Box */}
-            <div className="mt-3 md:mt-4 bg-white/10 backdrop-blur-sm rounded-xl p-3 md:p-4 text-white border-l-4 border-blue-400">
-              <h4 className="font-bold text-base md:text-lg mb-2 text-yellow-300">
-                🔬 {t("shadowSimulator.infoBox.title")}
-              </h4>
-              {shadow ? (
-                <>
-                  <p className="text-xs md:text-sm leading-relaxed">
-                    {shadow.scale > 2.5
-                      ? t("shadowSimulator.infoBox.hugeShadow")
-                      : shadow.scale < 1.3
-                      ? t("shadowSimulator.infoBox.tinyShadow")
-                      : t("shadowSimulator.infoBox.normalShadow")}
+                  🔬 {t("shadowSimulator.infoBox.title")}
+                </h4>
+                {shadow ? (
+                  <>
+                    <p
+                      style={{
+                        fontSize: "clamp(0.8125rem, 2vw, 0.9375rem)",
+                        lineHeight: "1.6",
+                        marginBottom: "0.5rem",
+                      }}
+                    >
+                      {shadow.scale > 2.5
+                        ? t("shadowSimulator.infoBox.hugeShadow")
+                        : shadow.scale < 1.3
+                          ? t("shadowSimulator.infoBox.tinyShadow")
+                          : t("shadowSimulator.infoBox.normalShadow")}
+                    </p>
+                    <p
+                      style={{
+                        fontSize: "clamp(0.8125rem, 2vw, 0.9375rem)",
+                        lineHeight: "1.6",
+                      }}
+                    >
+                      {lightSize === "large"
+                        ? t("shadowSimulator.infoBox.softEdges")
+                        : t("shadowSimulator.infoBox.sharpEdges")}
+                    </p>
+                  </>
+                ) : (
+                  <p
+                    style={{
+                      fontSize: "clamp(0.8125rem, 2vw, 0.9375rem)",
+                      lineHeight: "1.6",
+                    }}
+                  >
+                    {t("shadowSimulator.infoBox.positionObject")}
                   </p>
-                  <p className="text-xs md:text-sm mt-2 leading-relaxed">
-                    {lightSize === "large"
-                      ? t("shadowSimulator.infoBox.softEdges")
-                      : t("shadowSimulator.infoBox.sharpEdges")}
-                  </p>
-                </>
-              ) : (
-                <p className="text-xs md:text-sm leading-relaxed">
-                  {t("shadowSimulator.infoBox.positionObject")}
-                </p>
-              )}
+                )}
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+      <style>
+        {`
+          @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(-5px); }
+            50% { transform: translateX(-50%) translateY(0); }
+          }
+          
+          @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.5; }
+          }
+        `}
+      </style>
     </div>
   );
 };
@@ -1185,7 +1389,7 @@ interface Scenario {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// PRACTICE MODE Component (RESPONSIVE)
+// PRACTICE MODE Component (REDESIGNED & RESPONSIVE)
 // ═══════════════════════════════════════════════════════════════════════════
 
 const PracticeMode: React.FC = () => {
@@ -1230,7 +1434,9 @@ const PracticeMode: React.FC = () => {
   const currentScenarioData = scenarios[currentScenario];
 
   if (!currentScenarioData) {
-    return <div className="p-8 text-center">Loading...</div>;
+    return (
+      <div style={{ padding: "2rem", textAlign: "center" }}>Loading...</div>
+    );
   }
 
   return (
@@ -1238,53 +1444,70 @@ const PracticeMode: React.FC = () => {
       style={{
         maxWidth: "1000px",
         margin: "0 auto",
-        padding: "clamp(12px, 3vw, 20px)",
-        fontFamily: "Arial, sans-serif",
-        backgroundColor: "#F8F9FA",
+        padding: "clamp(1rem, 3vw, 1.5rem)",
+        fontFamily: "Poppins, sans-serif",
+        background: COLORS.gradient.lightPurple,
+        minHeight: "100vh",
       }}
     >
-      {/* Scenario Navigation */}
       <div
         style={{
           display: "flex",
           justifyContent: "center",
-          gap: "clamp(6px, 1.5vw, 10px)",
-          marginBottom: "clamp(20px, 4vw, 30px)",
+          gap: "clamp(0.5rem, 1.5vw, 0.75rem)",
+          marginBottom: "clamp(1.25rem, 4vw, 2rem)",
           flexWrap: "wrap",
-          padding: "10px",
+          padding: "0.75rem",
         }}
       >
         {scenarios.map((_, index) => (
           <div
             key={index}
             style={{
-              width: "clamp(28px, 5vw, 35px)",
-              height: "clamp(28px, 5vw, 35px)",
+              width: "clamp(2rem, 5vw, 2.5rem)",
+              height: "clamp(2rem, 5vw, 2.5rem)",
               borderRadius: "50%",
               backgroundColor: completedScenarios.includes(index)
-                ? "#27AE60"
+                ? COLORS.primaryDark
                 : index === currentScenario
-                ? "#2563EB"
-                : "#ECF0F1",
+                  ? COLORS.primary
+                  : COLORS.lightGray,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               fontWeight: "bold",
-              fontSize: "clamp(12px, 2.5vw, 16px)",
+              fontSize: "clamp(0.875rem, 2.5vw, 1rem)",
               color:
                 index === currentScenario || completedScenarios.includes(index)
                   ? "white"
-                  : "#7F8C8D",
+                  : COLORS.darkGray,
               cursor: "pointer",
               transition: "all 0.3s ease",
               border: completedScenarios.includes(index)
-                ? "2px solid #27AE60"
-                : "2px solid transparent",
+                ? `2px solid ${COLORS.primaryDark}`
+                : index === currentScenario
+                  ? `2px solid ${COLORS.primary}`
+                  : "2px solid transparent",
+              boxShadow:
+                index === currentScenario
+                  ? `0 4px 12px ${COLORS.primaryLight}`
+                  : "none",
             }}
             onClick={() => {
               setCurrentScenario(index);
               setSelectedAnswer(null);
               setShowExplanation(false);
+            }}
+            onMouseEnter={(e) => {
+              if (
+                index !== currentScenario &&
+                !completedScenarios.includes(index)
+              ) {
+                e.currentTarget.style.transform = "scale(1.1)";
+              }
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "scale(1)";
             }}
           >
             {completedScenarios.includes(index) ? "✓" : index + 1}
@@ -1292,49 +1515,53 @@ const PracticeMode: React.FC = () => {
         ))}
       </div>
 
-      {/* Question Card */}
       <div
         style={{
           backgroundColor: "white",
-          padding: "clamp(16px, 4vw, 30px)",
-          borderRadius: "15px",
-          marginBottom: "20px",
-          boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+          padding: "clamp(1.25rem, 4vw, 2rem)",
+          borderRadius: "16px",
+          marginBottom: "1.25rem",
+          boxShadow: "0 4px 12px rgba(74, 77, 201, 0.1)",
+          border: `2px solid ${COLORS.primaryLight}`,
         }}
       >
-        {/* Scenario Title */}
-        <div style={{
-          fontSize: "clamp(1.25rem, 3vw, 1.5rem)",
-          fontWeight: "bold",
-          color: "#2C3E50",
-          marginBottom: "1rem",
-          display: "flex",
-          alignItems: "center",
-          gap: "0.5rem",
-        }}>
-          <span style={{ fontSize: "clamp(1.5rem, 4vw, 2rem)" }}>{currentScenarioData.imageEmoji}</span>
+        <div
+          style={{
+            fontSize: "clamp(1.25rem, 3vw, 1.5rem)",
+            fontWeight: "bold",
+            color: COLORS.primary,
+            marginBottom: "1rem",
+            display: "flex",
+            alignItems: "center",
+            gap: "0.75rem",
+          }}
+        >
+          <span style={{ fontSize: "clamp(1.75rem, 4vw, 2rem)" }}>
+            {currentScenarioData.imageEmoji}
+          </span>
           {currentScenarioData.title}
         </div>
 
-        {/* Situation */}
-        <div style={{
-          backgroundColor: "#F8F9FA",
-          padding: "clamp(12px, 3vw, 16px)",
-          borderRadius: "10px",
-          marginBottom: "clamp(16px, 3vw, 20px)",
-          borderLeft: "4px solid #3498DB",
-          fontSize: "clamp(0.875rem, 2vw, 1rem)",
-          lineHeight: "1.6",
-        }}>
+        <div
+          style={{
+            background: COLORS.gradient.lightPurple,
+            padding: "clamp(1rem, 3vw, 1.25rem)",
+            borderRadius: "12px",
+            marginBottom: "clamp(1.25rem, 3vw, 1.5rem)",
+            borderLeft: `4px solid ${COLORS.primary}`,
+            fontSize: "clamp(0.9375rem, 2vw, 1rem)",
+            lineHeight: "1.6",
+            color: COLORS.darkGray,
+          }}
+        >
           {currentScenarioData.situation}
         </div>
 
-        {/* Question */}
         <h3
           style={{
-            color: "#2C3E50",
-            marginBottom: "clamp(16px, 3vw, 25px)",
-            fontSize: "clamp(1rem, 2.5vw, 1.25rem)",
+            color: COLORS.primaryDark,
+            marginBottom: "clamp(1.25rem, 3vw, 1.5rem)",
+            fontSize: "clamp(1.0625rem, 2.5vw, 1.25rem)",
             lineHeight: "1.6",
             fontWeight: "600",
           }}
@@ -1342,30 +1569,30 @@ const PracticeMode: React.FC = () => {
           {currentScenarioData.question}
         </h3>
 
-        {/* Options */}
-        <div style={{ marginBottom: "clamp(20px, 4vw, 30px)" }}>
+        <div style={{ marginBottom: "clamp(1.25rem, 4vw, 1.75rem)" }}>
           {currentScenarioData.options.map((option, index) => {
             const isSelected = selectedAnswer === index;
             const isCorrect = index === currentScenarioData.correctAnswer;
             const showResult = showExplanation;
 
             let backgroundColor = "white";
-            let borderColor = "#BDC3C7";
-            let textColor = "#2C3E50";
+            let borderColor = COLORS.mediumGray;
+            let textColor = COLORS.darkGray;
 
             if (showResult) {
               if (isCorrect) {
-                backgroundColor = "#D5F4E6";
-                borderColor = "#27AE60";
-                textColor = "#27AE60";
+                backgroundColor = COLORS.secondaryLightBg;
+                borderColor = COLORS.secondaryLight;
+                textColor = COLORS.primaryDark;
               } else if (isSelected && !isCorrect) {
-                backgroundColor = "#FADBD8";
+                backgroundColor = "#FFE5E5";
                 borderColor = "#E74C3C";
                 textColor = "#E74C3C";
               }
             } else if (isSelected) {
-              backgroundColor = "#EFF6FF";
-              borderColor = "#2563EB";
+              backgroundColor = COLORS.primaryLight;
+              borderColor = COLORS.primary;
+              textColor = COLORS.primary;
             }
 
             return (
@@ -1373,103 +1600,148 @@ const PracticeMode: React.FC = () => {
                 key={index}
                 onClick={() => handleAnswerSelect(index)}
                 style={{
-                  padding: "clamp(12px, 2.5vw, 16px) clamp(16px, 3vw, 20px)",
-                  marginBottom: "clamp(8px, 2vw, 12px)",
+                  padding:
+                    "clamp(0.875rem, 2.5vw, 1.125rem) clamp(1rem, 3vw, 1.25rem)",
+                  marginBottom: "clamp(0.75rem, 2vw, 1rem)",
                   border: `2px solid ${borderColor}`,
-                  borderRadius: "10px",
+                  borderRadius: "12px",
                   cursor: showExplanation ? "default" : "pointer",
                   backgroundColor,
                   transition: "all 0.3s ease",
                   display: "flex",
                   alignItems: "center",
-                  gap: "clamp(8px, 2vw, 12px)",
+                  gap: "clamp(0.75rem, 2vw, 1rem)",
                   color: textColor,
                   fontWeight:
-                    isSelected || (showResult && isCorrect) ? "bold" : "normal",
+                    isSelected || (showResult && isCorrect) ? "600" : "normal",
                   transform:
                     isSelected && !showResult ? "scale(1.02)" : "scale(1)",
                   boxShadow:
                     isSelected && !showResult
-                      ? "0 4px 8px rgba(37,99,235,0.2)"
+                      ? `0 4px 12px ${COLORS.primaryLight}`
                       : "none",
-                  fontSize: "clamp(0.875rem, 2vw, 1rem)",
+                  fontSize: "clamp(0.9375rem, 2vw, 1rem)",
+                }}
+                onMouseEnter={(e) => {
+                  if (!showExplanation && !isSelected) {
+                    e.currentTarget.style.backgroundColor =
+                      COLORS.ultraLightGray;
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!showExplanation && !isSelected) {
+                    e.currentTarget.style.backgroundColor = "white";
+                  }
                 }}
               >
                 <div
                   style={{
-                    width: "clamp(22px, 4vw, 26px)",
-                    height: "clamp(22px, 4vw, 26px)",
+                    width: "clamp(1.5rem, 4vw, 1.75rem)",
+                    height: "clamp(1.5rem, 4vw, 1.75rem)",
                     borderRadius: "50%",
                     border: `2px solid ${borderColor}`,
-                    backgroundColor: isSelected ? borderColor : "white",
+                    backgroundColor:
+                      isSelected || (showResult && isCorrect)
+                        ? borderColor
+                        : "white",
                     flexShrink: 0,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     color: "white",
-                    fontSize: "clamp(12px, 2vw, 14px)",
+                    fontSize: "clamp(0.8125rem, 2vw, 0.9375rem)",
                     fontWeight: "bold",
                   }}
                 >
                   {showResult && isCorrect
                     ? "✓"
                     : showResult && isSelected
-                    ? "✗"
-                    : String.fromCharCode(65 + index)}
+                      ? "✗"
+                      : String.fromCharCode(65 + index)}
                 </div>
                 <span style={{ flex: 1, lineHeight: "1.6" }}>{option}</span>
                 {showResult && isCorrect && (
-                  <span style={{ fontSize: "clamp(18px, 3vw, 22px)" }}>✓</span>
+                  <span style={{ fontSize: "clamp(1.25rem, 3vw, 1.5rem)" }}>
+                    ✓
+                  </span>
                 )}
               </div>
             );
           })}
         </div>
 
-        {/* Explanation (shown after answer) */}
         {showExplanation && (
-          <div style={{
-            backgroundColor: selectedAnswer === currentScenarioData.correctAnswer ? "#D5F4E6" : "#FADBD8",
-            padding: "clamp(16px, 3vw, 20px)",
-            borderRadius: "10px",
-            marginBottom: "clamp(16px, 3vw, 20px)",
-            borderLeft: `4px solid ${selectedAnswer === currentScenarioData.correctAnswer ? "#27AE60" : "#E74C3C"}`,
-          }}>
-            <h4 style={{
-              fontSize: "clamp(1rem, 2.5vw, 1.125rem)",
-              fontWeight: "bold",
-              marginBottom: "0.75rem",
-              color: selectedAnswer === currentScenarioData.correctAnswer ? "#27AE60" : "#E74C3C",
-            }}>
-              {selectedAnswer === currentScenarioData.correctAnswer ? "✓ Correct!" : "✗ Incorrect"}
+          <div
+            style={{
+              backgroundColor:
+                selectedAnswer === currentScenarioData.correctAnswer
+                  ? COLORS.secondaryLightBg
+                  : "#FFE5E5",
+              padding: "clamp(1.25rem, 3vw, 1.5rem)",
+              borderRadius: "12px",
+              marginBottom: "clamp(1.25rem, 3vw, 1.5rem)",
+              borderLeft: `4px solid ${selectedAnswer === currentScenarioData.correctAnswer ? COLORS.secondaryLight : "#E74C3C"}`,
+            }}
+          >
+            <h4
+              style={{
+                fontSize: "clamp(1.0625rem, 2.5vw, 1.1875rem)",
+                fontWeight: "bold",
+                marginBottom: "0.75rem",
+                color:
+                  selectedAnswer === currentScenarioData.correctAnswer
+                    ? COLORS.primaryDark
+                    : "#E74C3C",
+              }}
+            >
+              {selectedAnswer === currentScenarioData.correctAnswer
+                ? "✓ Correct!"
+                : "✗ Incorrect"}
             </h4>
-            <p style={{
-              fontSize: "clamp(0.875rem, 2vw, 1rem)",
-              lineHeight: "1.6",
-              marginBottom: "1rem",
-            }}>
+            <p
+              style={{
+                fontSize: "clamp(0.9375rem, 2vw, 1rem)",
+                lineHeight: "1.6",
+                marginBottom: "1rem",
+                color: COLORS.darkGray,
+              }}
+            >
               {currentScenarioData.explanation}
             </p>
-            <div style={{
-              backgroundColor: "rgba(255,255,255,0.5)",
-              padding: "clamp(12px, 2.5vw, 16px)",
-              borderRadius: "8px",
-            }}>
-              <strong style={{ fontSize: "clamp(0.875rem, 2vw, 1rem)" }}>💡 Real World Tip: </strong>
-              <span style={{ fontSize: "clamp(0.875rem, 2vw, 1rem)", lineHeight: "1.6" }}>
+            <div
+              style={{
+                backgroundColor: "rgba(255,255,255,0.6)",
+                padding: "clamp(1rem, 2.5vw, 1.25rem)",
+                borderRadius: "10px",
+              }}
+            >
+              <strong
+                style={{
+                  fontSize: "clamp(0.9375rem, 2vw, 1rem)",
+                  color: COLORS.primaryDark,
+                }}
+              >
+                💡 Real World Tip:{" "}
+              </strong>
+              <span
+                style={{
+                  fontSize: "clamp(0.9375rem, 2vw, 1rem)",
+                  lineHeight: "1.6",
+                  color: COLORS.darkGray,
+                }}
+              >
                 {currentScenarioData.realWorldTip}
               </span>
             </div>
           </div>
         )}
 
-        {/* Buttons */}
         <div
           style={{
             display: "flex",
-            gap: "clamp(10px, 2vw, 15px)",
+            gap: "clamp(0.75rem, 2vw, 1rem)",
             justifyContent: "space-between",
-            marginTop: "clamp(16px, 3vw, 25px)",
+            marginTop: "clamp(1.25rem, 3vw, 1.75rem)",
             flexWrap: "wrap",
           }}
         >
@@ -1477,40 +1749,67 @@ const PracticeMode: React.FC = () => {
             onClick={handlePrevious}
             disabled={currentScenario === 0}
             style={{
-              padding: "clamp(10px, 2vw, 12px) clamp(20px, 3vw, 25px)",
-              fontSize: "clamp(0.875rem, 2vw, 1rem)",
-              backgroundColor: currentScenario === 0 ? "#ECF0F1" : "#95A5A6",
-              color: currentScenario === 0 ? "#BDC3C7" : "white",
+              padding:
+                "clamp(0.75rem, 2vw, 0.875rem) clamp(1.25rem, 3vw, 1.75rem)",
+              fontSize: "clamp(0.9375rem, 2vw, 1rem)",
+              backgroundColor:
+                currentScenario === 0 ? COLORS.lightGray : COLORS.mediumGray,
+              color:
+                currentScenario === 0 ? COLORS.mediumGray : COLORS.darkGray,
               border: "none",
-              borderRadius: "8px",
+              borderRadius: "12px",
               cursor: currentScenario === 0 ? "not-allowed" : "pointer",
-              fontWeight: "bold",
+              fontWeight: "600",
               transition: "all 0.3s ease",
               flex: "1 1 auto",
               minWidth: "100px",
+              fontFamily: "Poppins, sans-serif",
             }}
           >
             {t("practice.controls.previous")}
           </button>
 
-          <div style={{ display: "flex", gap: "clamp(10px, 2vw, 15px)", flex: "1 1 auto", justifyContent: "flex-end" }}>
+          <div
+            style={{
+              display: "flex",
+              gap: "clamp(0.75rem, 2vw, 1rem)",
+              flex: "1 1 auto",
+              justifyContent: "flex-end",
+            }}
+          >
             {!showExplanation ? (
               <button
                 onClick={handleSubmit}
                 disabled={selectedAnswer === null}
                 style={{
-                  padding: "clamp(10px, 2vw, 12px) clamp(25px, 4vw, 30px)",
-                  fontSize: "clamp(0.875rem, 2vw, 1rem)",
+                  padding:
+                    "clamp(0.75rem, 2vw, 0.875rem) clamp(1.5rem, 4vw, 2rem)",
+                  fontSize: "clamp(0.9375rem, 2vw, 1rem)",
                   backgroundColor:
-                    selectedAnswer === null ? "#BDC3C7" : "#2563EB",
+                    selectedAnswer === null
+                      ? COLORS.mediumGray
+                      : COLORS.primary,
                   color: "white",
                   border: "none",
-                  borderRadius: "8px",
+                  borderRadius: "12px",
                   cursor: selectedAnswer === null ? "not-allowed" : "pointer",
-                  fontWeight: "bold",
+                  fontWeight: "600",
                   transition: "all 0.3s ease",
                   flex: "1 1 auto",
                   minWidth: "120px",
+                  fontFamily: "Poppins, sans-serif",
+                  boxShadow:
+                    selectedAnswer !== null
+                      ? `0 4px 12px ${COLORS.primaryLight}`
+                      : "none",
+                }}
+                onMouseEnter={(e) => {
+                  if (selectedAnswer !== null) {
+                    e.currentTarget.style.transform = "scale(1.05)";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "scale(1)";
                 }}
               >
                 {t("practice.controls.checkAnswer")}
@@ -1520,26 +1819,40 @@ const PracticeMode: React.FC = () => {
                 onClick={handleNext}
                 disabled={currentScenario === scenarios.length - 1}
                 style={{
-                  padding: "clamp(10px, 2vw, 12px) clamp(25px, 4vw, 30px)",
-                  fontSize: "clamp(0.875rem, 2vw, 1rem)",
+                  padding:
+                    "clamp(0.75rem, 2vw, 0.875rem) clamp(1.5rem, 4vw, 2rem)",
+                  fontSize: "clamp(0.9375rem, 2vw, 1rem)",
                   backgroundColor:
                     currentScenario === scenarios.length - 1
-                      ? "#ECF0F1"
-                      : "#27AE60",
+                      ? COLORS.lightGray
+                      : COLORS.primaryDark,
                   color:
                     currentScenario === scenarios.length - 1
-                      ? "#BDC3C7"
+                      ? COLORS.mediumGray
                       : "white",
                   border: "none",
-                  borderRadius: "8px",
+                  borderRadius: "12px",
                   cursor:
                     currentScenario === scenarios.length - 1
                       ? "not-allowed"
                       : "pointer",
-                  fontWeight: "bold",
+                  fontWeight: "600",
                   transition: "all 0.3s ease",
                   flex: "1 1 auto",
                   minWidth: "120px",
+                  fontFamily: "Poppins, sans-serif",
+                  boxShadow:
+                    currentScenario !== scenarios.length - 1
+                      ? `0 4px 12px rgba(83, 48, 134, 0.3)`
+                      : "none",
+                }}
+                onMouseEnter={(e) => {
+                  if (currentScenario !== scenarios.length - 1) {
+                    e.currentTarget.style.transform = "scale(1.05)";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "scale(1)";
                 }}
               >
                 {t("practice.controls.nextScenario")}
@@ -1553,7 +1866,7 @@ const PracticeMode: React.FC = () => {
 };
 
 // ═══════════════════════════════════════════════════════════════════════════
-// REAL WORLD MODE Component (RESPONSIVE)
+// REAL WORLD MODE Component (REDESIGNED & RESPONSIVE)
 // ═══════════════════════════════════════════════════════════════════════════
 
 const RealWorldMode: React.FC = () => {
@@ -1562,51 +1875,94 @@ const RealWorldMode: React.FC = () => {
     (tValue("realWorld.applications") as unknown as RealWorldApp[]) || [];
 
   return (
-    <div style={{
-      minHeight: "100vh",
-      background: "linear-gradient(135deg, #EFF6FF 0%, #D1FAE5 50%, #EFF6FF 100%)",
-      padding: "clamp(1rem, 3vw, 2rem)"
-    }}>
+    <div
+      style={{
+        minHeight: "100vh",
+        background: COLORS.gradient.lightPurple,
+        padding: "clamp(1rem, 3vw, 2rem)",
+      }}
+    >
       <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
-          gap: "clamp(1rem, 2vw, 1.5rem)"
-        }}>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns:
+              "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
+            gap: "clamp(1rem, 2vw, 1.5rem)",
+          }}
+        >
           {applications.map((app) => (
             <div
               key={app.id}
               style={{
                 backgroundColor: "white",
-                borderRadius: "12px",
-                padding: "clamp(1rem, 2.5vw, 1.5rem)",
-                boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+                borderRadius: "16px",
+                padding: "clamp(1.25rem, 2.5vw, 1.75rem)",
+                boxShadow: "0 4px 12px rgba(74, 77, 201, 0.1)",
                 transition: "all 0.3s ease",
+                border: `2px solid ${COLORS.primaryLight}`,
+                cursor: "pointer",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "scale(1.05)";
-                e.currentTarget.style.boxShadow = "0 10px 20px rgba(0,0,0,0.15)";
+                e.currentTarget.style.transform = "translateY(-8px)";
+                e.currentTarget.style.boxShadow = `0 12px 24px ${COLORS.primaryLight}`;
+                e.currentTarget.style.borderColor = COLORS.primary;
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "scale(1)";
-                e.currentTarget.style.boxShadow = "0 4px 6px rgba(0,0,0,0.1)";
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow =
+                  "0 4px 12px rgba(74, 77, 201, 0.1)";
+                e.currentTarget.style.borderColor = COLORS.primaryLight;
               }}
             >
-              <div style={{ fontSize: "clamp(2rem, 5vw, 3rem)", marginBottom: "1rem" }}>{app.icon}</div>
-              <h3 style={{ fontSize: "clamp(1.125rem, 2.5vw, 1.5rem)", fontWeight: "bold", marginBottom: "0.5rem" }}>
+              <div
+                style={{
+                  fontSize: "clamp(2.5rem, 5vw, 3rem)",
+                  marginBottom: "1rem",
+                  textAlign: "center",
+                }}
+              >
+                {app.icon}
+              </div>
+              <h3
+                style={{
+                  fontSize: "clamp(1.25rem, 2.5vw, 1.5rem)",
+                  fontWeight: "bold",
+                  marginBottom: "0.75rem",
+                  color: COLORS.primary,
+                  fontFamily: "Poppins, sans-serif",
+                }}
+              >
                 {app.title}
               </h3>
-              <p style={{ color: "#4b5563", marginBottom: "1rem", fontSize: "clamp(0.875rem, 2vw, 1rem)", lineHeight: "1.5" }}>
+              <p
+                style={{
+                  color: COLORS.darkGray,
+                  marginBottom: "1rem",
+                  fontSize: "clamp(0.9375rem, 2vw, 1rem)",
+                  lineHeight: "1.6",
+                }}
+              >
                 {app.description}
               </p>
-              <div style={{
-                backgroundColor: "#EFF6FF",
-                padding: "clamp(0.75rem, 2vw, 1rem)",
-                borderRadius: "8px",
-                borderLeft: "4px solid #3b82f6"
-              }}>
-                <p style={{ fontSize: "clamp(0.8125rem, 1.75vw, 0.875rem)", color: "#1f2937", lineHeight: "1.5" }}>
-                  <strong>{t("realWorld.example")} </strong>
+              <div
+                style={{
+                  background: COLORS.gradient.lightPurple,
+                  padding: "clamp(0.875rem, 2vw, 1.125rem)",
+                  borderRadius: "10px",
+                  borderLeft: `4px solid ${COLORS.secondary}`,
+                }}
+              >
+                <p
+                  style={{
+                    fontSize: "clamp(0.875rem, 1.75vw, 0.9375rem)",
+                    color: COLORS.darkGray,
+                    lineHeight: "1.6",
+                  }}
+                >
+                  <strong style={{ color: COLORS.primaryDark }}>
+                    {t("realWorld.example")}{" "}
+                  </strong>
                   {app.example}
                 </p>
               </div>
@@ -1618,18 +1974,19 @@ const RealWorldMode: React.FC = () => {
   );
 };
 
-// Main App Component (internal, uses LanguageProvider)
-const MainApp: React.FC<ShadowFormationProps> = ({ props }) => {
+// Main App Component
+const MainApp: React.FC<ShadowFormationProps> = ({
+  props: propsIn,
+}: ShadowFormationProps) => {
   const { t } = useLanguage();
-  
-  const propsWithDefaults: NonNullable<ShadowFormationProps['props']> = props ?? {};
+  const props = (propsIn ?? {}) as NonNullable<ShadowFormationProps["props"]>;
+
   const {
     initialMode = "learn",
     showModeSelector = true,
     enabledModes = ["learn", "practice", "real_world"],
-    themeColor = "#3b82f6",
-    additionalProps = {},
-  } = propsWithDefaults;
+    themeColor = COLORS.primary,
+  } = props;
 
   const [activeTab, setActiveTab] = useState<ModeType>(initialMode);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -1637,51 +1994,83 @@ const MainApp: React.FC<ShadowFormationProps> = ({ props }) => {
   const isModeEnabled = (mode: ModeType) => enabledModes.includes(mode);
 
   return (
-    <div style={{ 
-      minHeight: "100vh", 
-      background: "linear-gradient(135deg, #EFF6FF 0%, #D1FAE5 50%, #EFF6FF 100%)" 
-    }}>
+    <div
+      style={{
+        minHeight: "100vh",
+        background: COLORS.gradient.lightPurple,
+      }}
+    >
       {showModeSelector && (
-        <nav style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 50,
-          backgroundColor: "white",
-          borderBottom: "1px solid #DBEAFE",
-          boxShadow: "0 1px 3px rgba(0,0,0,0.1)"
-        }}>
-          <div style={{
-            maxWidth: "1280px",
-            margin: "0 auto",
-            padding: "0 clamp(0.5rem, 2vw, 1rem)"
-          }}>
-            <div style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              height: "clamp(3.5rem, 10vw, 4rem)",
-              gap: "1rem",
-            }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flex: "0 1 auto" }}>
-                <ShadowIcon style={{ width: "clamp(1.25rem, 3vw, 1.5rem)", height: "clamp(1.25rem, 3vw, 1.5rem)", color: themeColor, flexShrink: 0 }} />
-                <span style={{
-                  fontSize: "clamp(1rem, 2.5vw, 1.25rem)",
-                  fontWeight: "bold",
-                  background: `linear-gradient(to right, ${themeColor}, #14b8a6)`,
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                }}>
+        <nav
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            zIndex: 50,
+            backgroundColor: "white",
+            borderBottom: `2px solid ${COLORS.primaryLight}`,
+            boxShadow: "0 2px 8px rgba(74, 77, 201, 0.1)",
+          }}
+        >
+          <div
+            style={{
+              maxWidth: "1280px",
+              margin: "0 auto",
+              padding: "0 clamp(0.75rem, 2vw, 1rem)",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                height: "clamp(3.75rem, 10vw, 4.5rem)",
+                gap: "1rem",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.75rem",
+                  flex: "0 1 auto",
+                }}
+              >
+                <ShadowIcon
+                  style={{
+                    width: "clamp(1.5rem, 3vw, 2rem)",
+                    height: "clamp(1.5rem, 3vw, 2rem)",
+                    color: themeColor,
+                    flexShrink: 0,
+                  }}
+                />
+                <span
+                  style={{
+                    fontSize: "clamp(1.125rem, 2.5vw, 1.5rem)",
+                    fontWeight: "bold",
+                    background: COLORS.gradient.primarySecondary,
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    fontFamily: "Poppins, sans-serif",
+                  }}
+                >
                   {t("nav.logo")}
                 </span>
               </div>
 
               {/* Desktop Menu */}
-              <div style={{ display: "flex", alignItems: "center", gap: "clamp(0.25rem, 1vw, 0.5rem)" }} className="hidden sm:flex">
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "clamp(0.5rem, 1vw, 0.75rem)",
+                }}
+                className="hidden sm:flex"
+              >
                 {isModeEnabled("learn") && (
                   <button
                     onClick={() => setActiveTab("learn")}
@@ -1689,26 +2078,49 @@ const MainApp: React.FC<ShadowFormationProps> = ({ props }) => {
                       display: "flex",
                       alignItems: "center",
                       gap: "0.5rem",
-                      padding: "clamp(0.4rem, 1.5vw, 0.5rem) clamp(0.75rem, 2vw, 1rem)",
-                      borderRadius: "8px",
+                      padding:
+                        "clamp(0.5rem, 1.5vw, 0.75rem) clamp(1rem, 2vw, 1.5rem)",
+                      borderRadius: "12px",
                       fontWeight: "600",
                       border: "none",
                       cursor: "pointer",
                       transition: "all 0.3s ease",
-                      fontSize: "clamp(0.875rem, 1.75vw, 1rem)",
+                      fontSize: "clamp(0.9375rem, 1.75vw, 1rem)",
                       whiteSpace: "nowrap",
-                      ...(activeTab === "learn" ? {
-                        background: `linear-gradient(to right, ${themeColor}, #14b8a6)`,
-                        color: "white",
-                        boxShadow: "0 4px 6px rgba(0,0,0,0.1)"
-                      } : {
-                        backgroundColor: "transparent",
-                        color: "#374151"
-                      })
+                      fontFamily: "Poppins, sans-serif",
+                      ...(activeTab === "learn"
+                        ? {
+                            background: COLORS.primary,
+                            color: "white",
+                            boxShadow: `0 4px 12px ${COLORS.primaryLight}`,
+                          }
+                        : {
+                            backgroundColor: "transparent",
+                            color: COLORS.darkGray,
+                          }),
+                    }}
+                    onMouseEnter={(e) => {
+                      if (activeTab !== "learn") {
+                        e.currentTarget.style.backgroundColor =
+                          COLORS.ultraLightGray;
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (activeTab !== "learn") {
+                        e.currentTarget.style.backgroundColor = "transparent";
+                      }
                     }}
                   >
-                    <BookOpen style={{ width: "clamp(1rem, 2vw, 1.25rem)", height: "clamp(1rem, 2vw, 1.25rem)", flexShrink: 0 }} />
-                    <span className="hidden md:inline">{t("nav.tabs.learn")}</span>
+                    <BookOpen
+                      style={{
+                        width: "clamp(1.125rem, 2vw, 1.5rem)",
+                        height: "clamp(1.125rem, 2vw, 1.5rem)",
+                        flexShrink: 0,
+                      }}
+                    />
+                    <span className="hidden md:inline">
+                      {t("nav.tabs.learn")}
+                    </span>
                   </button>
                 )}
                 {isModeEnabled("practice") && (
@@ -1718,26 +2130,49 @@ const MainApp: React.FC<ShadowFormationProps> = ({ props }) => {
                       display: "flex",
                       alignItems: "center",
                       gap: "0.5rem",
-                      padding: "clamp(0.4rem, 1.5vw, 0.5rem) clamp(0.75rem, 2vw, 1rem)",
-                      borderRadius: "8px",
+                      padding:
+                        "clamp(0.5rem, 1.5vw, 0.75rem) clamp(1rem, 2vw, 1.5rem)",
+                      borderRadius: "12px",
                       fontWeight: "600",
                       border: "none",
                       cursor: "pointer",
                       transition: "all 0.3s ease",
-                      fontSize: "clamp(0.875rem, 1.75vw, 1rem)",
+                      fontSize: "clamp(0.9375rem, 1.75vw, 1rem)",
                       whiteSpace: "nowrap",
-                      ...(activeTab === "practice" ? {
-                        background: `linear-gradient(to right, ${themeColor}, #14b8a6)`,
-                        color: "white",
-                        boxShadow: "0 4px 6px rgba(0,0,0,0.1)"
-                      } : {
-                        backgroundColor: "transparent",
-                        color: "#374151"
-                      })
+                      fontFamily: "Poppins, sans-serif",
+                      ...(activeTab === "practice"
+                        ? {
+                            background: COLORS.primary,
+                            color: "white",
+                            boxShadow: `0 4px 12px ${COLORS.primaryLight}`,
+                          }
+                        : {
+                            backgroundColor: "transparent",
+                            color: COLORS.darkGray,
+                          }),
+                    }}
+                    onMouseEnter={(e) => {
+                      if (activeTab !== "practice") {
+                        e.currentTarget.style.backgroundColor =
+                          COLORS.ultraLightGray;
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (activeTab !== "practice") {
+                        e.currentTarget.style.backgroundColor = "transparent";
+                      }
                     }}
                   >
-                    <ClipboardCheck style={{ width: "clamp(1rem, 2vw, 1.25rem)", height: "clamp(1rem, 2vw, 1.25rem)", flexShrink: 0 }} />
-                    <span className="hidden md:inline">{t("nav.tabs.practice")}</span>
+                    <ClipboardCheck
+                      style={{
+                        width: "clamp(1.125rem, 2vw, 1.5rem)",
+                        height: "clamp(1.125rem, 2vw, 1.5rem)",
+                        flexShrink: 0,
+                      }}
+                    />
+                    <span className="hidden md:inline">
+                      {t("nav.tabs.practice")}
+                    </span>
                   </button>
                 )}
                 {isModeEnabled("real_world") && (
@@ -1747,26 +2182,49 @@ const MainApp: React.FC<ShadowFormationProps> = ({ props }) => {
                       display: "flex",
                       alignItems: "center",
                       gap: "0.5rem",
-                      padding: "clamp(0.4rem, 1.5vw, 0.5rem) clamp(0.75rem, 2vw, 1rem)",
-                      borderRadius: "8px",
+                      padding:
+                        "clamp(0.5rem, 1.5vw, 0.75rem) clamp(1rem, 2vw, 1.5rem)",
+                      borderRadius: "12px",
                       fontWeight: "600",
                       border: "none",
                       cursor: "pointer",
                       transition: "all 0.3s ease",
-                      fontSize: "clamp(0.875rem, 1.75vw, 1rem)",
+                      fontSize: "clamp(0.9375rem, 1.75vw, 1rem)",
                       whiteSpace: "nowrap",
-                      ...(activeTab === "real_world" ? {
-                        background: `linear-gradient(to right, ${themeColor}, #14b8a6)`,
-                        color: "white",
-                        boxShadow: "0 4px 6px rgba(0,0,0,0.1)"
-                      } : {
-                        backgroundColor: "transparent",
-                        color: "#374151"
-                      })
+                      fontFamily: "Poppins, sans-serif",
+                      ...(activeTab === "real_world"
+                        ? {
+                            background: COLORS.primary,
+                            color: "white",
+                            boxShadow: `0 4px 12px ${COLORS.primaryLight}`,
+                          }
+                        : {
+                            backgroundColor: "transparent",
+                            color: COLORS.darkGray,
+                          }),
+                    }}
+                    onMouseEnter={(e) => {
+                      if (activeTab !== "real_world") {
+                        e.currentTarget.style.backgroundColor =
+                          COLORS.ultraLightGray;
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (activeTab !== "real_world") {
+                        e.currentTarget.style.backgroundColor = "transparent";
+                      }
                     }}
                   >
-                    <Globe style={{ width: "clamp(1rem, 2vw, 1.25rem)", height: "clamp(1rem, 2vw, 1.25rem)", flexShrink: 0 }} />
-                    <span className="hidden md:inline">{t("nav.tabs.realWorld")}</span>
+                    <Globe
+                      style={{
+                        width: "clamp(1.125rem, 2vw, 1.5rem)",
+                        height: "clamp(1.125rem, 2vw, 1.5rem)",
+                        flexShrink: 0,
+                      }}
+                    />
+                    <span className="hidden md:inline">
+                      {t("nav.tabs.realWorld")}
+                    </span>
                   </button>
                 )}
               </div>
@@ -1777,7 +2235,7 @@ const MainApp: React.FC<ShadowFormationProps> = ({ props }) => {
                 className="sm:hidden"
                 style={{
                   padding: "0.5rem",
-                  borderRadius: "8px",
+                  borderRadius: "10px",
                   border: "none",
                   backgroundColor: "transparent",
                   cursor: "pointer",
@@ -1786,22 +2244,52 @@ const MainApp: React.FC<ShadowFormationProps> = ({ props }) => {
                   justifyContent: "center",
                 }}
               >
-                <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-                  <div style={{ width: "24px", height: "2px", backgroundColor: "#374151", borderRadius: "2px" }} />
-                  <div style={{ width: "24px", height: "2px", backgroundColor: "#374151", borderRadius: "2px" }} />
-                  <div style={{ width: "24px", height: "2px", backgroundColor: "#374151", borderRadius: "2px" }} />
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "4px",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "24px",
+                      height: "2px",
+                      backgroundColor: COLORS.primary,
+                      borderRadius: "2px",
+                    }}
+                  />
+                  <div
+                    style={{
+                      width: "24px",
+                      height: "2px",
+                      backgroundColor: COLORS.primary,
+                      borderRadius: "2px",
+                    }}
+                  />
+                  <div
+                    style={{
+                      width: "24px",
+                      height: "2px",
+                      backgroundColor: COLORS.primary,
+                      borderRadius: "2px",
+                    }}
+                  />
                 </div>
               </button>
             </div>
 
             {/* Mobile Menu */}
             {isMobileMenuOpen && (
-              <div className="sm:hidden" style={{
-                paddingBottom: "1rem",
-                display: "flex",
-                flexDirection: "column",
-                gap: "0.5rem",
-              }}>
+              <div
+                className="sm:hidden"
+                style={{
+                  paddingBottom: "1rem",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.5rem",
+                }}
+              >
                 {isModeEnabled("learn") && (
                   <button
                     onClick={() => {
@@ -1811,22 +2299,25 @@ const MainApp: React.FC<ShadowFormationProps> = ({ props }) => {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      gap: "0.5rem",
-                      padding: "0.75rem 1rem",
-                      borderRadius: "8px",
+                      gap: "0.75rem",
+                      padding: "0.875rem 1rem",
+                      borderRadius: "12px",
                       fontWeight: "600",
                       border: "none",
                       cursor: "pointer",
                       transition: "all 0.3s ease",
                       fontSize: "1rem",
                       width: "100%",
-                      ...(activeTab === "learn" ? {
-                        background: `linear-gradient(to right, ${themeColor}, #14b8a6)`,
-                        color: "white",
-                      } : {
-                        backgroundColor: "#F3F4F6",
-                        color: "#374151"
-                      })
+                      fontFamily: "Poppins, sans-serif",
+                      ...(activeTab === "learn"
+                        ? {
+                            background: COLORS.primary,
+                            color: "white",
+                          }
+                        : {
+                            backgroundColor: COLORS.ultraLightGray,
+                            color: COLORS.darkGray,
+                          }),
                     }}
                   >
                     <BookOpen style={{ width: "1.25rem", height: "1.25rem" }} />
@@ -1842,25 +2333,30 @@ const MainApp: React.FC<ShadowFormationProps> = ({ props }) => {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      gap: "0.5rem",
-                      padding: "0.75rem 1rem",
-                      borderRadius: "8px",
+                      gap: "0.75rem",
+                      padding: "0.875rem 1rem",
+                      borderRadius: "12px",
                       fontWeight: "600",
                       border: "none",
                       cursor: "pointer",
                       transition: "all 0.3s ease",
                       fontSize: "1rem",
                       width: "100%",
-                      ...(activeTab === "practice" ? {
-                        background: `linear-gradient(to right, ${themeColor}, #14b8a6)`,
-                        color: "white",
-                      } : {
-                        backgroundColor: "#F3F4F6",
-                        color: "#374151"
-                      })
+                      fontFamily: "Poppins, sans-serif",
+                      ...(activeTab === "practice"
+                        ? {
+                            background: COLORS.primary,
+                            color: "white",
+                          }
+                        : {
+                            backgroundColor: COLORS.ultraLightGray,
+                            color: COLORS.darkGray,
+                          }),
                     }}
                   >
-                    <ClipboardCheck style={{ width: "1.25rem", height: "1.25rem" }} />
+                    <ClipboardCheck
+                      style={{ width: "1.25rem", height: "1.25rem" }}
+                    />
                     {t("nav.tabs.practice")}
                   </button>
                 )}
@@ -1873,22 +2369,25 @@ const MainApp: React.FC<ShadowFormationProps> = ({ props }) => {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      gap: "0.5rem",
-                      padding: "0.75rem 1rem",
-                      borderRadius: "8px",
+                      gap: "0.75rem",
+                      padding: "0.875rem 1rem",
+                      borderRadius: "12px",
                       fontWeight: "600",
                       border: "none",
                       cursor: "pointer",
                       transition: "all 0.3s ease",
                       fontSize: "1rem",
                       width: "100%",
-                      ...(activeTab === "real_world" ? {
-                        background: `linear-gradient(to right, ${themeColor}, #14b8a6)`,
-                        color: "white",
-                      } : {
-                        backgroundColor: "#F3F4F6",
-                        color: "#374151"
-                      })
+                      fontFamily: "Poppins, sans-serif",
+                      ...(activeTab === "real_world"
+                        ? {
+                            background: COLORS.primary,
+                            color: "white",
+                          }
+                        : {
+                            backgroundColor: COLORS.ultraLightGray,
+                            color: COLORS.darkGray,
+                          }),
                     }}
                   >
                     <Globe style={{ width: "1.25rem", height: "1.25rem" }} />
@@ -1901,7 +2400,11 @@ const MainApp: React.FC<ShadowFormationProps> = ({ props }) => {
         </nav>
       )}
 
-      <div style={{ paddingTop: showModeSelector ? "clamp(3.5rem, 10vw, 4rem)" : "0" }}>
+      <div
+        style={{
+          paddingTop: showModeSelector ? "clamp(3.75rem, 10vw, 4.5rem)" : "0",
+        }}
+      >
         {activeTab === "learn" ? (
           <LightTravelStraightLine />
         ) : activeTab === "practice" ? (
@@ -1913,9 +2416,16 @@ const MainApp: React.FC<ShadowFormationProps> = ({ props }) => {
 
       <style>
         {`
+          @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+          
           @keyframes bounce {
             0%, 100% { transform: translateX(-50%) translateY(-5px); }
             50% { transform: translateX(-50%) translateY(0); }
+          }
+          
+          @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.5; }
           }
           
           @media (min-width: 640px) {
@@ -1941,7 +2451,9 @@ const MainApp: React.FC<ShadowFormationProps> = ({ props }) => {
 };
 
 // Main exported component with Provider
-export const ShadowFormation: React.FC<ShadowFormationProps> = (componentProps) => {
+export const ShadowFormation: React.FC<ShadowFormationProps> = (
+  componentProps,
+) => {
   return (
     <LanguageProvider>
       <MainApp {...componentProps} />

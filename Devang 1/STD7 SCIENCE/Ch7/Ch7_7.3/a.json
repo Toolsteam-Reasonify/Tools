@@ -1,414 +1,211 @@
 {
-    "toolName": "radiation",
+    "toolName": "radiation_tool",
+    "version": "1.0.0",
+    "description": "Interactive educational tool teaching Grade 7 students about Radiation — the process of heat transfer that requires no medium. Covers Sun's heat reaching Earth, heat from fire, light vs dark clothing, and real-world examples like solar heaters and thermos flasks. Based on NCERT Chapter 7.3.",
+    "category": "science",
+    "grade": "7",
+    "subject": "Science",
+    "chapter": "7 - Heat Transfer in Nature",
+    "section": "7.3 - Radiation",
     "parameters": {
-        "hi": {
-            "language": {
-                "en": "English",
-                "hi": "हिंदी",
-                "gu": "ગુજરાતી",
-                "selectorLabel": "भाषा चुनें"
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Width of the tool container in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Height of the tool container in pixels"
+        },
+        "initialMode": {
+            "type": "string",
+            "enum": ["learn", "practice", "real_world", "hands_on"],
+            "default": "learn",
+            "description": "Starting mode for the tool"
+        },
+        "showModeSelector": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show or hide the mode tab selector"
+        },
+        "enabledModes": {
+            "type": "array",
+            "items": { "type": "string", "enum": ["learn", "practice", "real_world", "hands_on"] },
+            "default": ["learn", "practice", "real_world", "hands_on"],
+            "description": "Which modes to enable"
+        },
+        "showNavigation": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show prev/next navigation buttons"
+        },
+        "showPlayPause": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show auto-play button (learn mode only)"
+        },
+        "showStepIndicator": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show step counter (Step X of Y)"
+        },
+        "initialStep": {
+            "type": "number",
+            "description": "Starting step ID"
+        },
+        "filterSteps": {
+            "type": "array",
+            "items": { "type": "number" },
+            "description": "Only show steps with these IDs"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier"
+        },
+        "autoPlayDuration": {
+            "type": "number",
+            "default": 8000,
+            "description": "Auto-advance delay in milliseconds"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#4A4DC9",
+            "description": "Primary accent color"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable dark mode"
+        }
+    },
+    "additionalProps": {
+        "description": "Tool-specific dynamic content that an agent can pass to customize the radiation demo.",
+        "schema": {
+            "showSunDemo": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to show the Sun-Earth radiation demo"
             },
-            "nav": {
-                "logo": "ऊष्मा स्थानांतरण",
-                "tabs": {
-                    "learn": "सीखें",
-                    "practice": "अभ्यास",
-                    "applications": "वास्तविक दुनिया के अनुप्रयोग"
-                }
+            "showFireDemo": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to show the fireplace radiation demo"
             },
-            "radiation": {
-                "learn": {
-                    "headerTitle": "विषय 7.3: विकिरण",
-                    "headerSubtitle": "कोई माध्यम बिना ऊष्मा का स्थानांतरण",
-                    "stepLabel": "चरण",
-                    "ofLabel": "में से",
-                    "stepTypeLabels": {
-                        "intro": "परिचय",
-                        "explanation": "व्याख्या",
-                        "practice": "अभ्यास",
-                        "real_world": "वास्तविक जीवन"
-                    },
-                    "practiceBadge": "इंटरैक्टिव अभ्यास मोड",
-                    "realWorldBadge": "वास्तविक जीवन में उपयोग",
-                    "controls": {
-                        "previous": "पिछला",
-                        "next": "अगला",
-                        "play": "चलाएँ",
-                        "pause": "रोकें",
-                        "reset": "रीसेट करें"
-                    },
-                    "steps": [
-                        {
-                            "id": 1,
-                            "title": "विकिरण क्या है?",
-                            "description": "विकिरण ऊष्मा स्थानांतरण की वह प्रक्रिया है जिसे किसी माध्यम (ठोस, तरल या गैस) की आवश्यकता नहीं होती। ऊष्मा सीधे एक गर्म वस्तु से खाली स्थान के माध्यम से हम तक पहुँचती है। चालन और संवहन के विपरीत, विकिरण निर्वात से होकर यात्रा कर सकता है!"
-                        },
-                        {
-                            "id": 2,
-                            "title": "अंगीठी से ऊष्मा",
-                            "description": "क्या आपको याद है पेमा और पेल्डन अंगीठी के चारों ओर बैठे थे? उन्हें गर्मी महसूस हुई भले ही वे आग को छू नहीं रहे थे। ऊष्मा सीधे विकिरण के माध्यम से उन तक पहुँची - हवा से होकर यात्रा करते हुए बिना हवा को हिलाने की आवश्यकता के!"
-                        },
-                        {
-                            "id": 3,
-                            "title": "सूर्य की ऊष्मा",
-                            "description": "सूर्य अंतरिक्ष में 150 मिलियन किलोमीटर दूर है (निर्वात)। फिर भी हम पृथ्वी पर इसकी गर्मी महसूस करते हैं! यह विकिरण का काम है। सूर्य से ऊष्मा निर्वात अंतरिक्ष से होकर हम तक पहुँचती है - किसी माध्यम की आवश्यकता नहीं!"
-                        },
-                        {
-                            "id": 4,
-                            "title": "सभी वस्तुएँ ऊष्मा का विकिरण करती हैं",
-                            "description": "हर वस्तु अपने आस-पास में ऊष्मा का विकिरण करती है। आग से दूर रखा गया गर्म बर्तन धीरे-धीरे ठंडा होता है, अपने आस-पास के ठंडे वातावरण में ऊष्मा का विकिरण करके। गर्म वस्तुएँ ठंडी वस्तुओं की तुलना में अधिक ऊष्मा का विकिरण करती हैं।"
-                        },
-                        {
-                            "id": 5,
-                            "title": "इंटरैक्टिव: हल्के बनाम गहरे रंग",
-                            "description": "हल्के रंग ऊष्मा विकिरण को परावर्तित करते हैं, गर्मी में आपको ठंडा रखते हैं। गहरे रंग ऊष्मा विकिरण को अवशोषित करते हैं, सर्दी में आपको गर्म रखते हैं। इसीलिए हम गर्मी में सफेद कपड़े और सर्दी में गहरे कपड़े पहनते हैं!"
-                        },
-                        {
-                            "id": 6,
-                            "title": "ऊष्मा स्थानांतरण विधियों की तुलना",
-                            "description": "चालन को ठोस संपर्क चाहिए। संवहन को तरल पदार्थों में कणों की गति चाहिए। विकिरण को कोई माध्यम नहीं चाहिए - यह निर्वात से होकर यात्रा कर सकता है! तीनों एक साथ हो सकते हैं, जैसे कि पैन में पानी गर्म करते समय।"
-                        },
-                        {
-                            "id": 7,
-                            "title": "पानी को गर्म करना",
-                            "description": "देखें कि गर्मी लगाने पर जल के अणु तेजी से कैसे चलते हैं। जब पानी 100°C तक पहुँचता है, तो यह उबलना शुरू कर देता है और विकिरण तथा संवहन के साथ मिलकर भाप में बदल जाता है।"
-                        }
-                    ],
-                    "canvas": {
-                        "introHotObject": "🔥 गर्म वस्तु",
-                        "introPerson": "👤 व्यक्ति",
-                        "introMainLabel": "ऊष्मा विकिरण ~~~>",
-                        "introSubLabel": "(किसी माध्यम की आवश्यकता नहीं!)",
-                        "fireplacePema": "पेमा",
-                        "fireplacePalden": "पेल्डन",
-                        "fireplaceLabel": "ऊष्मा चारों दिशाओं में फैलती है",
-                        "sunSpace": "अंतरिक्ष",
-                        "sunVacuumNote": "(निर्वात - कोई वायु नहीं!)",
-                        "sunLabel": "☀️ सूर्य",
-                        "earthLabel": "🌍 पृथ्वी",
-                        "sunDistanceNote": "ऊष्मा विकिरण 150 मिलियन km की दूरी तय करता है!",
-                        "utensilTitle": "गर्म बर्तन",
-                        "utensilLabel": "आस-पास में ऊष्मा का विकिरण",
-                        "colorSunLabel": "☀️ सूर्य का विकिरण",
-                        "colorWhiteCloth": "सफेद कपड़ा",
-                        "colorReflects": "ऊष्मा परावर्तित करता है ❄️",
-                        "colorStaysCool": "ठंडा रहता है",
-                        "colorBlackCloth": "काला कपड़ा",
-                        "colorAbsorbs": "ऊष्मा अवशोषित करता है 🔥",
-                        "colorBecomesHot": "गरम हो जाता है",
-                        "comparisonConduction": "चालन",
-                        "comparisonNeedsDirect": "सीधे संपर्क",
-                        "comparisonContact": "की आवश्यकता",
-                        "comparisonSolidMedium": "(ठोस माध्यम)",
-                        "comparisonConvection": "संवहन",
-                        "comparisonNeedsParticles": "कणों की",
-                        "comparisonMovement": "गति चाहिए",
-                        "comparisonFluidMedium": "(तरल / गैस माध्यम)",
-                        "comparisonRadiation": "विकिरण",
-                        "comparisonNoMedium": "कोई माध्यम",
-                        "comparisonNeeded": "नहीं चाहिए!",
-                        "comparisonWorksVacuum": "(निर्वात में भी काम करता है)",
-                        "defaultTitle": "विकिरण एनीमेशन"
-                    },
-                    "heatingWater": {
-                        "temperatureLabel": "तापमान:",
-                        "phaseLabel": "अवस्था:",
-                        "phaseNameCold": "ठंडा",
-                        "phaseNameWarming": "गर्म हो रहा",
-                        "phaseNameHot": "गर्म",
-                        "phaseNameBoiling": "उबल रहा",
-                        "phaseNameSteam": "भाप",
-                        "phaseCold": "पानी ठंडा है - अणु धीरे-धीरे चल रहे हैं",
-                        "phaseWarming": "पानी गर्म हो रहा है - अणु तेजी से चल रहे हैं",
-                        "phaseHot": "पानी गर्म है - अणु तेजी से चल रहे हैं",
-                        "phaseBoiling": "पानी उबल रहा है - बुलबुले बन रहे हैं!",
-                        "phaseSteam": "भाप बन रही है - पानी वाष्प में बदल रहा है!",
-                        "startHeating": "🔥 गर्म करना शुरू करें",
-                        "reset": "❄️ रीसेट करें",
-                        "keyPoints": "🌡️ मुख्य बिंदु:",
-                        "keyPoint1": "समुद्र तल पर पानी 100°C (212°F) पर उबलता है",
-                        "keyPoint2": "ऊष्मा ऊर्जा अणुओं की गति को बढ़ाती है",
-                        "keyPoint3": "जब जल वाष्प दबाव वायुमंडलीय दबाव से अधिक हो जाता है तो बुलबुले बनते हैं",
-                        "keyPoint4": "भाप गैसीय अवस्था में पानी है"
+            "showClothingDemo": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to show the light vs dark clothing demo"
+            },
+            "heatSourceType": {
+                "type": "string",
+                "enum": ["sun", "fire", "heater", "all"],
+                "default": "all",
+                "description": "Which heat source to focus on"
+            },
+            "showWaveAnimation": {
+                "type": "boolean",
+                "default": true,
+                "description": "Animate heat radiation waves"
+            },
+            "radiationIntensity": {
+                "type": "number",
+                "min": 1,
+                "max": 10,
+                "default": 5,
+                "description": "Intensity of radiation visualization"
+            },
+            "showMediumComparison": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show conduction vs convection vs radiation comparison"
+            },
+            "customScenarios": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "name": { "type": "string" },
+                        "source": { "type": "string" },
+                        "receiver": { "type": "string" },
+                        "medium": { "type": "string" },
+                        "description": { "type": "string" }
                     }
                 },
-                "practice": {
-                    "headerTitle": "विकिरण अभ्यास क्विज",
-                    "headerSubtitle": "अपनी समझ की जाँच करें",
-                    "pointsLabel": "अंक",
-                    "progressLabel": "{answered} में से {total} प्रश्न हल किए गए",
-                    "questionLabel": "प्रश्न {id}",
-                    "submitAnswer": "उत्तर जमा करें",
-                    "next": "अगला",
-                    "previous": "पिछला",
-                    "restartQuiz": "क्विज़ फिर से शुरू करें",
-                    "finalTitle": "क्विज़ पूरा! 🎉",
-                    "finalSubtitle": "विकिरण पर क्विज़ पूरा करने के लिए शाबाश!",
-                    "totalPoints": "कुल अंक",
-                    "scoreLabel": "स्कोर",
-                    "correctLabel": "सही उत्तर",
-                    "gradeLabel": "ग्रेड",
-                    "keyRemindersTitle": "📚 मुख्य बातें:",
-                    "keyReminders": [
-                        "विकिरण को किसी भी माध्यम की आवश्यकता नहीं होती - निर्वात में भी काम करता है!",
-                        "सूर्य की ऊष्मा 150 मिलियन km दूर से विकिरण के द्वारा पृथ्वी तक पहुँचती है",
-                        "हल्के रंग ऊष्मा को परावर्तित करते हैं, गहरे रंग ऊष्मा को अधिक अवशोषित करते हैं",
-                        "सभी वस्तुएँ अपने आस-पास में ऊष्मा का विकिरण करती हैं",
-                        "चालन और संवहन को माध्यम चाहिए, विकिरण को नहीं"
-                    ],
-                    "correctFeedback": "✓ सही उत्तर!",
-                    "incorrectFeedback": "✗ गलत उत्तर",
-                    "arrangeSequenceHint": "कृपया तीरों का उपयोग करके इन चरणों को सही क्रम में लगाएँ",
-                    "selectAnswerPlaceholder": "उत्तर चुनें...",
-                    "gradeExcellent": "उत्कृष्ट! 🌟",
-                    "gradeGood": "अच्छा काम! 👍",
-                    "gradeKeepPracticing": "लगातार अभ्यास करते रहें! 📚",
-                    "difficultyLabels": {
-                        "easy": "आसान",
-                        "medium": "मध्यम",
-                        "hard": "कठिन"
-                    }
-                },
-                "realWorld": {
-                    "headerTitle": "वास्तविक जीवन में विकिरण",
-                    "headerSubtitle": "देखिए विकिरण हमारे दैनिक जीवन में कैसे काम करता है",
-                    "categories": {
-                        "all": "सभी उदाहरण",
-                        "nature": "प्रकृति",
-                        "home": "घर",
-                        "everyday": "दैनिक जीवन",
-                        "technology": "प्रौद्योगिकी",
-                        "clothing": "कपड़े"
-                    },
-                    "showingCount": "कुल {count} उदाहरण दिखाए जा रहे हैं",
-                    "difficultyLabels": {
-                        "everyday": "दैनिक जीवन",
-                        "nature": "प्राकृतिक प्रक्रिया",
-                        "technology": "प्रौद्योगिकी"
-                    },
-                    "sectionTitles": {
-                        "whatIsIt": "क्या है यह?",
-                        "howItWorks": "यह कैसे काम करता है",
-                        "scienceBehind": "इसके पीछे का विज्ञान",
-                        "realExample": "भारतीय उदाहरण",
-                        "benefits": "महत्त्व और लाभ"
-                    },
-                    "summaryTitle": "विकिरण से जुड़ी मुख्य बातें",
-                    "summaryCards": {
-                        "noMediumTitle": "कोई माध्यम आवश्यक नहीं",
-                        "noMediumBody": "विकिरण निर्वात में भी यात्रा कर सकता है, जबकि चालन और संवहन के लिए कणों वाला माध्यम आवश्यक होता है।",
-                        "allObjectsTitle": "हर वस्तु विकिरण करती है",
-                        "allObjectsBody": "पूर्ण शून्य से ऊपर तापमान वाली हर वस्तु ऊष्मा विकिरण करती है। जितनी अधिक गरम वस्तु होगी, उतना अधिक विकिरण करेगी।",
-                        "emWavesTitle": "विद्युत-चुंबकीय तरंगें",
-                        "emWavesBody": "ऊष्मा विकिरण अवरक्त (इन्फ्रारेड) विद्युत-चुंबकीय तरंगों के रूप में प्रकाश की चाल (300,000 km/s) से चलता है।"
-                    }
-                }
+                "description": "Custom real-world radiation scenarios"
             }
         },
-        "gu": {
-            "language": {
-                "en": "English",
-                "hi": "હિન્દી",
-                "gu": "ગુજરાતી",
-                "selectorLabel": "ભાષા પસંદ કરો"
+        "examples": {
+            "default": {},
+            "sun_focus": {
+                "heatSourceType": "sun",
+                "showWaveAnimation": true,
+                "radiationIntensity": 8
             },
-            "nav": {
-                "logo": "ઉષ્ણતા સ્થાનાંતરણ",
-                "tabs": {
-                    "learn": "શીખો",
-                    "practice": "પ્રેક્ટિસ",
-                    "applications": "વાસ્તવિક વિશ્વના ઉપયોગો"
-                }
+            "clothing_focus": {
+                "showClothingDemo": true,
+                "showSunDemo": false,
+                "showFireDemo": false
             },
-            "radiation": {
-                "learn": {
-                    "headerTitle": "વિષય 7.3: વિકિરણ",
-                    "headerSubtitle": "માધ્યમ વિના ઉષ્મા સ્થાનાંતરણ",
-                    "stepLabel": "પગલું",
-                    "ofLabel": "માંથી",
-                    "stepTypeLabels": {
-                        "intro": "પરિચય",
-                        "explanation": "સમજાણ",
-                        "practice": "અભ્યાસ",
-                        "real_world": "વાસ્તવિક જીવન"
-                    },
-                    "practiceBadge": "ઇન્ટરેક્ટિવ અભ્યાસ મોડ",
-                    "realWorldBadge": "વાસ્તવિક જીવનમાં ઉપયોગ",
-                    "controls": {
-                        "previous": "પાછલું",
-                        "next": "આગલું",
-                        "play": "ચાલુ કરો",
-                        "pause": "રોકો",
-                        "reset": "રીસેટ કરો"
-                    },
-                    "steps": [
-                        {
-                            "id": 1,
-                            "title": "વિકિરણ શું છે?",
-                            "description": "વિકિરણ એ ઉષ્મા સ્થાનાંતરણની પ્રક્રિયા છે જેને કોઈ માધ્યમ (ઘન, પ્રવાહી અથવા વાયુ) ની જરૂર પડતી નથી। ઉષ્મા સીધી ગરમ વસ્તુથી ખાલી જગ્યામાંથી આપણા સુધી પહોંચે છે। ચાલન અને સંવહનથી વિપરીત, વિકિરણ શૂન્યાવકાશમાંથી પસાર થઈ શકે છે!"
-                        },
-                        {
-                            "id": 2,
-                            "title": "ચૂલામાંથી ઉષ્મા",
-                            "description": "યાદ છે પેમા અને પેલ્ડન ચૂલાની આસપાસ બેઠા હતા? તેમને ગરમી લાગી હતી ભલે તેઓ આગને સ્પર્શ ન કરતા હોય। ઉષ્મા સીધી વિકિરણ દ્વારા તેમના સુધી પહોંચી - હવામાંથી પસાર થતી બિના હવાને ખસેડવાની જરૂર પડ્યા વગર!"
-                        },
-                        {
-                            "id": 3,
-                            "title": "સૂર્યની ઉષ્મા",
-                            "description": "સૂર્ય અવકાશમાં 150 મિલિયન કિલોમીટર દૂર છે (શૂન્યાવકાશ). છતાં આપણે પૃથ્વી પર તેની ગરમી અનુભવીએ છીએ! આ વિકિરણનું કામ છે। સૂર્યની ઉષ્મા શૂન્યાવકાશ અવકાશમાંથી પસાર થઈ આપણા સુધી પહોંચે છે - કોઈ માધ્યમની જરૂર નથી!"
-                        },
-                        {
-                            "id": 4,
-                            "title": "બધી વસ્તુઓ ઉષ્માનો વિકિરણ કરે છે",
-                            "description": "દરેક વસ્તુ પોતાની આસપાસ ઉષ્માનો વિકિરણ કરે છે। આગથી દૂર રાખેલું ગરમ વાસણ ધીમે ધીમે ઠંડું થાય છે, પોતાની આસપાસના ઠંડા વાતાવરણમાં ઉષ્માનો વિકિરણ કરીને। ગરમ વસ્તુઓ ઠંડી વસ્તુઓ કરતાં વધુ ઉષ્માનો વિકિરણ કરે છે।"
-                        },
-                        {
-                            "id": 5,
-                            "title": "ઇન્ટરેક્ટિવ: હળવા વિરુદ્ધ ગાઢ રંગો",
-                            "description": "હળવા રંગો ઉષ્મા વિકિરણને પરાવર્તિત કરે છે, ઉનાળામાં તમને ઠંડક આપે છે। ગાઢ રંગો ઉષ્મા વિકિરણને શોષે છે, શિયાળામાં તમને ગરમી આપે છે। તેથી જ આપણે ઉનાળામાં સફેદ કપડાં અને શિયાળામાં ગાઢ કપડાં પહેરીએ છીએ!"
-                        },
-                        {
-                            "id": 6,
-                            "title": "ઉષ્મા સ્થાનાંતરણ પદ્ધતિઓની તુલના",
-                            "description": "ચાલનને ઘન સંપર્ક જોઈએ। સંવહનને પ્રવાહીમાં કણોની ગતિ જોઈએ। વિકિરણને કોઈ માધ્યમ જોઈએ નથી - તે શૂન્યાવકાશમાંથી પસાર થઈ શકે છે! ત્રણેય એક સાથે થઈ શકે છે, જેમ કે પાનમાં પાણી ગરમ કરતી વખતે।"
-                        },
-                        {
-                            "id": 7,
-                            "title": "પાણી ગરમ કરવું",
-                            "description": "જુઓ કે ગરમી લાગવાથી પાણીના અણુઓ કેટલા ઝડપથી ખસે છે। જ્યારે પાણી 100°C સુધી પહોંચે છે, ત્યારે તે ઉકળવાનું શરૂ કરે છે અને વિકિરણ અને સંવહન સાથે મળીને વરાળમાં રૂપાંતરિત થાય છે।"
-                        }
-                    ],
-                    "canvas": {
-                        "introHotObject": "🔥 ગરમ વસ્તુ",
-                        "introPerson": "👤 વ્યક્તિ",
-                        "introMainLabel": "ઉષ્મા વિકિરણ ~~~>",
-                        "introSubLabel": "(કોઈ માધ્યમની જરૂર નથી!)",
-                        "fireplacePema": "પેમા",
-                        "fireplacePalden": "પેલ્ડન",
-                        "fireplaceLabel": "ઉષ્મા ચારેય દિશામાં ફેલાય છે",
-                        "sunSpace": "અવકાશ",
-                        "sunVacuumNote": "(શૂન્યાવકાશ - હવા નથી!)",
-                        "sunLabel": "☀️ સૂર્ય",
-                        "earthLabel": "🌍 પૃથ્વી",
-                        "sunDistanceNote": "ઉષ્મા વિકિરણ 150 મિલિયન km સુધી પહોંચે છે!",
-                        "utensilTitle": "ગરમ વાસણ",
-                        "utensilLabel": "આસપાસ ઉષ્મા છૂટે છે",
-                        "colorSunLabel": "☀️ સૂર્યનું વિકિરણ",
-                        "colorWhiteCloth": "સફેદ કપડું",
-                        "colorReflects": "ઉષ્મા પરાવર્તિત કરે છે ❄️",
-                        "colorStaysCool": "ઠંડુ રહે છે",
-                        "colorBlackCloth": "કાળું કપડું",
-                        "colorAbsorbs": "ઉષ્મા શોષે છે 🔥",
-                        "colorBecomesHot": "ગરમ बनी જાય છે",
-                        "comparisonConduction": "ચાલન",
-                        "comparisonNeedsDirect": "સિધો સંપર્ક",
-                        "comparisonContact": "જરૂરી છે",
-                        "comparisonSolidMedium": "(ઠોસ માધ્યમ)",
-                        "comparisonConvection": "સંવહન",
-                        "comparisonNeedsParticles": "કણોની",
-                        "comparisonMovement": "ચળવળ જોઈએ",
-                        "comparisonFluidMedium": "(દ્રવ / વાયુ માધ્યમ)",
-                        "comparisonRadiation": "વિકિરણ",
-                        "comparisonNoMedium": "કોઈ માધ્યમ",
-                        "comparisonNeeded": "જરૂર નથી!",
-                        "comparisonWorksVacuum": "(શૂન્યાવકાશમાં પણ કામ કરે છે)",
-                        "defaultTitle": "વિકિરણ એનિમેશન"
-                    },
-                    "heatingWater": {
-                        "temperatureLabel": "તાપમાન:",
-                        "phaseLabel": "અવસ્થા:",
-                        "phaseNameCold": "ઠંડું",
-                        "phaseNameWarming": "ગરમ થઈ રહ્યું",
-                        "phaseNameHot": "ગરમ",
-                        "phaseNameBoiling": "ઉકળી રહ્યું",
-                        "phaseNameSteam": "વરાળ",
-                        "phaseCold": "પાણી ઠંડું છે - અણુઓ ધીમે ધીમે ખસી રહ્યા છે",
-                        "phaseWarming": "પાણી ગરમ થઈ રહ્યું છે - અણુઓ ઝડપથી ખસી રહ્યા છે",
-                        "phaseHot": "પાણી ગરમ છે - અણુઓ ખૂબ ઝડપથી ખસી રહ્યા છે",
-                        "phaseBoiling": "પાણી ઉકળી રહ્યું છે - પરપોટા બની રહ્યા છે!",
-                        "phaseSteam": "વરાળ બની રહી છે - પાણી વરાળમાં રૂપાંતરિત થઈ રહ્યું છે!",
-                        "startHeating": "🔥 ગરમ કરવાનું શરૂ કરો",
-                        "reset": "❄️ રીસેટ કરો",
-                        "keyPoints": "🌡️ મુખ્ય મુદ્દાઓ:",
-                        "keyPoint1": "સમુદ્ર સપાટી પર પાણી 100°C (212°F) પર ઉકળે છે",
-                        "keyPoint2": "ઉષ્મા ઊર્જા આણ્વિક ગતિને વધારે છે",
-                        "keyPoint3": "જ્યારે પાણીનો વરાળ દબાણ વાયુમંડળીય દબાણ કરતાં વધી જાય છે ત્યારે પરપોટા બને છે",
-                        "keyPoint4": "વરાળ એ ગેસીય સ્થિતિમાં પાણી છે"
+            "custom_scenario": {
+                "customScenarios": [
+                    {
+                        "name": "Room Heater",
+                        "source": "Electric heater",
+                        "receiver": "Person sitting nearby",
+                        "medium": "Air (but radiation doesn't need it!)",
+                        "description": "An electric room heater warms you through infrared radiation."
                     }
-                },
-                "practice": {
-                    "headerTitle": "વિકિરણ પ્રેક્ટિસ ક્વિઝ",
-                    "headerSubtitle": "તમારી સમજ તપાસો",
-                    "pointsLabel": "અંકો",
-                    "progressLabel": "{total}માંથી {answered} પ્રશ્નોના જવાબ આપ્યા",
-                    "questionLabel": "પ્રશ્ન {id}",
-                    "submitAnswer": "જવાબ મોકલો",
-                    "next": "આગળ",
-                    "previous": "પાછળ",
-                    "restartQuiz": "ક્વિઝ ફરી શરૂ કરો",
-                    "finalTitle": "ક્વિઝ પૂર્ણ! 🎉",
-                    "finalSubtitle": "વિકિરણ વિષય પર ક્વિઝ પૂર્ણ કરવા બદલ ખૂબ સારું!",
-                    "totalPoints": "કુલ અંકો",
-                    "scoreLabel": "સ્કોર",
-                    "correctLabel": "સાચા જવાબ",
-                    "gradeLabel": "ગ્રેડ",
-                    "keyRemindersTitle": "📚 મહત્વના મુદ્દા:",
-                    "keyReminders": [
-                        "વિકિરણને કોઈ માધ્યમની જરૂર પડતી નથી - ખાલી જગ્યામાં પણ કામ કરે છે!",
-                        "સૂર્યની ઉષ્મા 150 મિલિયન km દૂરથી વિકિરણ દ્વારા પૃથ્વી સુધી પહોંચે છે",
-                        "હળવા રંગો ઉષ્મા પરાવર્તિત કરે છે, ગાઢ રંગો વધુ ઉષ્મા શોષે છે",
-                        "બધી વસ્તુઓ પોતાની આસપાસ ઉષ્માનો વિકિરણ કરે છે",
-                        "ચાલન અને સંવહનને માધ્યમ જોઈએ, વિકિરણને નહિ"
-                    ],
-                    "correctFeedback": "✓ સાચો જવાબ!",
-                    "incorrectFeedback": "✗ ખોટો જવાબ",
-                    "arrangeSequenceHint": "તીર બટનોનો ઉપયોગ કરીને પગથિયાંને યોગ્ય ક્રમમાં મૂકો",
-                    "selectAnswerPlaceholder": "જવાબ પસંદ કરો...",
-                    "gradeExcellent": "ઉત્તમ! 🌟",
-                    "gradeGood": "સારો પ્રયાસ! 👍",
-                    "gradeKeepPracticing": "અભ્યાસ ચાલુ રાખો! 📚",
-                    "difficultyLabels": {
-                        "easy": "સરળ",
-                        "medium": "મધ્યમ",
-                        "hard": "કઠિન"
-                    }
-                },
-                "realWorld": {
-                    "headerTitle": "વાસ્તવિક જીવનમાં વિકિરણ",
-                    "headerSubtitle": "જોઈએ કે વિકિરણ આપણી રોજિંદી જિંદગીમાં કેવી રીતે કામ કરે છે",
-                    "categories": {
-                        "all": "બધા ઉદાહરણો",
-                        "nature": "પ્રકૃતિ",
-                        "home": "ઘર",
-                        "everyday": "દૈનિક જીવન",
-                        "technology": "ટેક્નોલોજી",
-                        "clothing": "કપડા"
-                    },
-                    "showingCount": "કુલ {count} ઉદાહરણ દર્શાવવામાં આવ્યા છે",
-                    "difficultyLabels": {
-                        "everyday": "દૈનિક જીવન",
-                        "nature": "પ્રાકૃતિક પ્રક્રિયા",
-                        "technology": "ટેક્નોલોજી"
-                    },
-                    "sectionTitles": {
-                        "whatIsIt": "આ શું છે?",
-                        "howItWorks": "આ કેવી રીતે કાર્ય કરે છે",
-                        "scienceBehind": "પાછળનો વિજ્ઞાન",
-                        "realExample": "ભારતીય ઉદાહરણ",
-                        "benefits": "મહત્ત્વ અને ફાયદા"
-                    },
-                    "summaryTitle": "વિકિરણ વિશેની મુખ્ય વાતો",
-                    "summaryCards": {
-                        "noMediumTitle": "કોઈ માધ્યમ જરૂરી નથી",
-                        "noMediumBody": "વિકિરણ શૂન્યાવકાશમાં પણ જઈ શકે છે, જ્યારે ચાલન અને સંવહન માટે કણો ધરાવતું માધ્યમ જરૂરી છે।",
-                        "allObjectsTitle": "બધા પદાર્થો વિકિરણ કરે છે",
-                        "allObjectsBody": "સંપૂર્ણ શૂન્યથી વધુ તાપમાન ધરાવતા દરેક પદાર્થ ઉષ્મા વિકિરણ કરે છે। જેટલું વધુ તાપમાન, તેટલું વધુ વિકિરણ।",
-                        "emWavesTitle": "વિદ્યુત-ચુંબકીય તરંગો",
-                        "emWavesBody": "ઉષ્મા વિકિરણ ઇન્ફ્રારેડ વિદ્યુત-ચુંબકીય તરંગોના રૂપમાં પ્રકાશની ગતિએ (300,000 km/s) પ્રવાસ કરે છે।"
-                    }
-                }
+                ]
             }
         }
     },
-    "usage_example": {}
+    "modes": {
+        "learn": {
+            "label": "Learn",
+            "description": "Step-by-step explanation of radiation with animated visuals",
+            "stepIds": [1, 2, 3, 4, 5, 6]
+        },
+        "practice": {
+            "label": "Practice",
+            "description": "Multiple-choice quiz questions with instant feedback",
+            "stepIds": [10, 11, 12, 13]
+        },
+        "real_world": {
+            "label": "Real World",
+            "description": "Real-life examples: campfire, solar heater, thermos flask",
+            "stepIds": [20, 21, 22]
+        },
+        "hands_on": {
+            "label": "Hands On",
+            "description": "Interactive slider experiments: colour absorption and distance vs heat",
+            "stepIds": [30, 31]
+        }
+    },
+    "steps": {
+        "learn": [
+            { "id": 1, "title": "What is Radiation?" },
+            { "id": 2, "title": "Heat from the Sun" },
+            { "id": 3, "title": "Warmth from a Fire" },
+            { "id": 4, "title": "All Objects Radiate Heat" },
+            { "id": 5, "title": "No Medium Needed!" },
+            { "id": 6, "title": "Light vs Dark Colours" }
+        ],
+        "practice": [
+            { "id": 10, "title": "How does Sun's heat reach Earth?" },
+            { "id": 11, "title": "Which transfer needs no medium?" },
+            { "id": 12, "title": "Why light clothes in summer?" },
+            { "id": 13, "title": "Why does a hot utensil cool?" }
+        ],
+        "real_world": [
+            { "id": 20, "title": "Campfire" },
+            { "id": 21, "title": "Solar Water Heater" },
+            { "id": 22, "title": "Thermos Flask" }
+        ],
+        "hands_on": [
+            { "id": 30, "title": "Colour & Heat Absorption" },
+            { "id": 31, "title": "Distance & Heat" }
+        ]
+    }
 }

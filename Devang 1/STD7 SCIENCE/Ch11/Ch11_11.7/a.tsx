@@ -9,8 +9,13 @@ declare module "react" {
     propTypes?: any;
   }
   export type ReactNode = any;
-  export function useState<S>(initialState: S | (() => S)): [S, (value: S | ((prev: S) => S)) => void];
-  export function useEffect(effect: () => void | (() => void), deps?: any[]): void;
+  export function useState<S>(
+    initialState: S | (() => S),
+  ): [S, (value: S | ((prev: S) => S)) => void];
+  export function useEffect(
+    effect: () => void | (() => void),
+    deps?: any[],
+  ): void;
   export function createContext<T>(defaultValue: T): Context<T>;
   export function useContext<T>(context: Context<T>): T;
   export interface Context<T> {
@@ -183,7 +188,7 @@ if (typeof window !== "undefined" && typeof console !== "undefined") {
           // Silently fail
         }
       },
-      true
+      true,
     );
   } catch (e) {
     // Silently fail if listener can't be added
@@ -196,7 +201,7 @@ if (typeof window !== "undefined" && typeof console !== "undefined") {
       try {
         const descriptor = Object.getOwnPropertyDescriptor(
           window.chrome.runtime,
-          "lastError"
+          "lastError",
         );
         if (!descriptor || descriptor.configurable) {
           Object.defineProperty(window.chrome.runtime, "lastError", {
@@ -270,7 +275,7 @@ if (typeof window !== "undefined" && typeof console !== "undefined") {
                 const originalAddListener =
                   portWithMessage.onMessage.addListener;
                 portWithMessage.onMessage.addListener = function (
-                  callback: unknown
+                  callback: unknown,
                 ) {
                   try {
                     return originalAddListener.call(this, callback);
@@ -333,7 +338,7 @@ if (typeof window !== "undefined" && typeof console !== "undefined") {
           source,
           lineno,
           colno,
-          error
+          error,
         );
       }
       return false;
@@ -715,19 +720,19 @@ interface PinholeCameraAdditionalProps {
   objectType?: "candle" | "arrow" | "circle" | "square";
   showRays?: boolean;
   rayColor?: string;
-  
+
   // Pinhole configuration
   pinholeSize?: number;
   pinholeColor?: string;
-  
+
   // Screen configuration
   screenColor?: string;
   showInvertedImage?: boolean;
-  
+
   // Animation configuration
   animationSpeed?: number;
   showRayAnimation?: boolean;
-  
+
   // Custom labels
   customLabels?: {
     object?: string;
@@ -736,10 +741,29 @@ interface PinholeCameraAdditionalProps {
     top?: string;
     bottom?: string;
   };
-  
+
   // Interactive features
   interactive?: boolean;
   allowRayControl?: boolean;
+}
+
+// Responsive breakpoints: mobile < 640, tablet 640–1023, desktop >= 1024
+function useWindowSize() {
+  const [size, setSize] = useState({
+    width: typeof window !== "undefined" ? window.innerWidth : 1024,
+    height: typeof window !== "undefined" ? window.innerHeight : 768,
+  });
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const onResize = () =>
+      setSize({ width: window.innerWidth, height: window.innerHeight });
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+  const isMobile = size.width < 640;
+  const isTablet = size.width >= 640 && size.width < 1024;
+  const isDesktop = size.width >= 1024;
+  return { ...size, isMobile, isTablet, isDesktop };
 }
 
 interface PinholeCameraToolProps {
@@ -747,53 +771,53 @@ interface PinholeCameraToolProps {
     // ─────────────────────────────────────────────────────────────────
     // DIMENSIONS
     // ─────────────────────────────────────────────────────────────────
-    width?: number;                    // Default: 800
-    height?: number;                   // Default: 600
-    
+    width?: number; // Default: 800
+    height?: number; // Default: 600
+
     // ─────────────────────────────────────────────────────────────────
     // DATA CONFIGURATION
     // ─────────────────────────────────────────────────────────────────
     data?: BaseDataInterface;
     steps?: StepDataInterface[];
-    
+
     // ─────────────────────────────────────────────────────────────────
     // MODE CONFIGURATION
     // ─────────────────────────────────────────────────────────────────
-    initialMode?: ModeType;            // Starting mode
-    showModeSelector?: boolean;        // Show/hide mode tabs (default: true)
-    enabledModes?: ModeType[];         // Which modes to enable
-    
+    initialMode?: ModeType; // Starting mode
+    showModeSelector?: boolean; // Show/hide mode tabs (default: true)
+    enabledModes?: ModeType[]; // Which modes to enable
+
     // ─────────────────────────────────────────────────────────────────
     // NAVIGATION CONFIGURATION
     // ─────────────────────────────────────────────────────────────────
-    showNavigation?: boolean;          // Show/hide prev/next buttons (default: true)
-    showPlayPause?: boolean;           // Show/hide play/pause button (default: true)
-    showStepIndicator?: boolean;       // Show/hide step counter (default: true)
-    
+    showNavigation?: boolean; // Show/hide prev/next buttons (default: true)
+    showPlayPause?: boolean; // Show/hide play/pause button (default: true)
+    showStepIndicator?: boolean; // Show/hide step counter (default: true)
+
     // ─────────────────────────────────────────────────────────────────
     // STEP FILTERING
     // ─────────────────────────────────────────────────────────────────
-    initialStep?: number;              // Starting step ID
-    filterSteps?: number[];            // Only show these step IDs
-    
+    initialStep?: number; // Starting step ID
+    filterSteps?: number[]; // Only show these step IDs
+
     // ─────────────────────────────────────────────────────────────────
     // ANIMATION CONFIGURATION
     // ─────────────────────────────────────────────────────────────────
-    animationSpeed?: number;           // Animation speed multiplier (default: 1)
-    autoPlayDuration?: number;         // Auto-advance delay in ms (default: 8000)
-    
+    animationSpeed?: number; // Animation speed multiplier (default: 1)
+    autoPlayDuration?: number; // Auto-advance delay in ms (default: 8000)
+
     // ─────────────────────────────────────────────────────────────────
     // THEME
     // ─────────────────────────────────────────────────────────────────
-    themeColor?: string;               // Primary color (default: "#3b82f6")
-    darkMode?: boolean;                // Dark mode toggle (default: false)
-    
+    themeColor?: string; // Primary color (default: "#4A4DC9")
+    darkMode?: boolean; // Dark mode toggle (default: false)
+
     // ─────────────────────────────────────────────────────────────────
     // ADDITIONAL PROPS - TOOL-SPECIFIC DYNAMIC CONTENT
     // ─────────────────────────────────────────────────────────────────
     additionalProps?: PinholeCameraAdditionalProps;
   };
-  
+
   // ─────────────────────────────────────────────────────────────────
   // EXTERNAL CONTROLS (for parent component integration)
   // ─────────────────────────────────────────────────────────────────
@@ -835,20 +859,22 @@ const pinholeTranslations = {
     subtitle: "Understanding Image Formation Through a Tiny Hole",
     learn: {
       what: "What is a Pinhole Camera?",
-      whatDesc: "A pinhole camera is a simple optical device where light rays from an object pass through a tiny hole (pinhole) and form an image on a screen.",
+      whatDesc:
+        "A pinhole camera is a simple optical device where light rays from an object pass through a tiny hole (pinhole) and form an image on a screen.",
       how: "How Does it Work?",
-      howDesc: "Light travels in straight lines from the object. When it passes through a small pinhole, the rays cross over, creating an inverted image on the screen.",
+      howDesc:
+        "Light travels in straight lines from the object. When it passes through a small pinhole, the rays cross over, creating an inverted image on the screen.",
       key: "Key Observations",
       keyPoint1: "The image formed is INVERTED (upside down)",
       keyPoint2: "The image shows the colors of the actual object",
-      keyPoint3: "Works best with bright objects in dim surroundings"
+      keyPoint3: "Works best with bright objects in dim surroundings",
     },
     comparison: {
       title: "Pinhole Camera vs Plane Mirror",
       pinhole: "Pinhole Camera",
       mirror: "Plane Mirror",
       inverted: "Forms INVERTED image",
-      lateral: "Shows LATERAL inversion only"
+      lateral: "Shows LATERAL inversion only",
     },
     diagram: {
       object: "Object",
@@ -862,9 +888,9 @@ const pinholeTranslations = {
       bottomRay: "Bottom Ray",
       goesToBottom: "Goes to bottom",
       staysInMiddle: "Stays in middle",
-      goesToTop: "Goes to top"
-    }
-  }
+      goesToTop: "Goes to top",
+    },
+  },
 };
 
 // Pinhole Practice Translations
@@ -1130,7 +1156,7 @@ interface LanguageContextType {
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(
-  undefined
+  undefined,
 );
 
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({
@@ -1214,117 +1240,145 @@ type PinholeConfig = {
 };
 
 // Reflection of Light Learn Component (Pinhole Camera)
-const ReflectionOfLightLearn: React.FC<{ 
+const ReflectionOfLightLearn: React.FC<{
   pinholeConfig?: PinholeConfig;
   config?: PinholeCameraToolProps["props"];
 }> = ({ pinholeConfig, config }) => {
   const t = pinholeTranslations.en;
-  const themeColor = config?.themeColor || "#3b82f6";
+  const themeColor = config?.themeColor || "#4A4DC9";
   const darkMode = config?.darkMode || false;
+  const { isMobile, isTablet } = useWindowSize();
+
+  // Responsive values
+  const containerPad = isMobile ? 12 : isTablet ? 14 : 16;
+  const cardPad = isMobile ? 16 : isTablet ? 24 : 32;
+  const gap = isMobile ? 16 : isTablet ? 20 : 24;
+  const headingSize = isMobile ? 18 : isTablet ? 22 : 24;
+  const bodySize = isMobile ? 14 : isTablet ? 16 : 18;
+  const diagramPad = isMobile ? 16 : isTablet ? 24 : 32;
+  const keyPointPad = isMobile ? 12 : 16;
+  const comparisonMin = isMobile ? 260 : isTablet ? 280 : 300;
+  const comparisonCardPad = isMobile ? 16 : isTablet ? 20 : 24;
+  const comparisonTitleSize = isMobile ? 17 : isTablet ? 19 : 20;
+  const diagramLabelSize = isMobile ? 11 : isTablet ? 13 : 14;
+  const diagramLargeSize = isMobile ? 28 : isTablet ? 32 : 36;
+  const diagramSmallSize = isMobile ? 10 : 12;
+  const comparisonSvgHeight = isMobile ? 100 : isTablet ? 114 : 128;
 
   // ─────────────────────────────────────────────────────────────────
   // STYLES
   // ─────────────────────────────────────────────────────────────────
-  
+
   const learnStyles: { [key: string]: CSSProperties } = {
     container: {
       minHeight: "100vh",
-      background: darkMode 
+      background: darkMode
         ? "linear-gradient(135deg, #1e293b 0%, #0f172a 50%, #1e1b4b 100%)"
-        : "linear-gradient(135deg, #eff6ff 0%, #e0e7ff 50%, #f3e8ff 100%)",
-      padding: "16px",
-      fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+        : "linear-gradient(135deg, #FFF3E4 0%, #C1C1EA 50%, #F5F5F5 100%)",
+      padding: `${containerPad}px`,
+      fontFamily:
+        '"Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+      boxSizing: "border-box",
     },
     contentWrapper: {
       maxWidth: "1280px",
       margin: "0 auto",
+      width: "100%",
     },
     content: {
       display: "flex",
       flexDirection: "column" as const,
-      gap: "24px",
+      gap: `${gap}px`,
     },
     card: {
-      backgroundColor: darkMode ? "#1e293b" : "#ffffff",
-      borderRadius: "16px",
-      boxShadow: darkMode 
+      backgroundColor: darkMode ? "#1e293b" : "#F5F5F5",
+      borderRadius: isMobile ? 12 : 16,
+      boxShadow: darkMode
         ? "0 20px 25px -5px rgba(0, 0, 0, 0.3)"
-        : "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-      padding: "32px",
+        : "0 20px 25px -5px rgba(74, 77, 201, 0.12), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+      padding: `${cardPad}px`,
+      overflow: "hidden",
     },
     heading: {
-      fontSize: "24px",
+      fontSize: `${headingSize}px`,
       fontWeight: 700,
-      color: darkMode ? "#e2e8f0" : "#312e81",
-      marginBottom: "16px",
+      color: darkMode ? "#e2e8f0" : "#4E4E4E",
+      marginBottom: isMobile ? 12 : 16,
       display: "flex",
       alignItems: "center",
       gap: "12px",
+      flexWrap: "wrap" as const,
     },
     headingAccent: {
       width: "8px",
-      height: "32px",
-      background: `linear-gradient(to bottom, ${themeColor}, #a855f7)`,
+      height: isMobile ? 24 : 32,
+      background: `linear-gradient(to bottom, ${themeColor}, #533086)`,
       borderRadius: "9999px",
+      flexShrink: 0,
     },
     paragraph: {
-      color: darkMode ? "#cbd5e1" : "#374151",
-      fontSize: "18px",
+      color: darkMode ? "#cbd5e1" : "#4E4E4E",
+      fontSize: `${bodySize}px`,
       lineHeight: "1.75",
-      marginBottom: "24px",
+      marginBottom: isMobile ? 16 : 24,
     },
     diagramContainer: {
-      background: darkMode 
+      background: darkMode
         ? "linear-gradient(135deg, #1e293b 0%, #0f172a 100%)"
-        : "linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%)",
-      borderRadius: "12px",
-      padding: "32px",
+        : "linear-gradient(135deg, #F5F5F5 0%, #EBEBEB 100%)",
+      borderRadius: isMobile ? 8 : 12,
+      padding: `${diagramPad}px`,
+      overflow: "auto",
     },
     svg: {
       width: "100%",
       height: "auto",
+      minWidth: 0,
     },
     keyPointsContainer: {
       display: "flex",
       flexDirection: "column" as const,
-      gap: "16px",
+      gap: isMobile ? 12 : 16,
     },
     keyPoint: {
       display: "flex",
       alignItems: "flex-start",
-      gap: "16px",
+      gap: isMobile ? 12 : 16,
       background: darkMode
-        ? "linear-gradient(to right, #1e293b, #312e81)"
-        : "linear-gradient(to right, #eef2ff, #f3e8ff)",
-      padding: "16px",
-      borderRadius: "12px",
+        ? "linear-gradient(to right, #1e293b, #533086)"
+        : "linear-gradient(to right, #FFF3E4, #C1C1EA)",
+      padding: `${keyPointPad}px`,
+      borderRadius: isMobile ? 8 : 12,
     },
     keyPointNumber: {
       flexShrink: 0,
-      width: "32px",
-      height: "32px",
-      background: `linear-gradient(135deg, ${themeColor}, #a855f7)`,
+      width: isMobile ? 28 : 32,
+      height: isMobile ? 28 : 32,
+      background: `linear-gradient(135deg, ${themeColor}, #533086)`,
       color: "#ffffff",
       borderRadius: "50%",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
       fontWeight: 700,
+      fontSize: isMobile ? 13 : 14,
     },
     keyPointText: {
-      color: darkMode ? "#cbd5e1" : "#374151",
-      fontSize: "18px",
+      color: darkMode ? "#cbd5e1" : "#4E4E4E",
+      fontSize: `${bodySize}px`,
       paddingTop: "2px",
+      minWidth: 0,
     },
     comparisonGrid: {
       display: "grid",
-      gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-      gap: "24px",
+      gridTemplateColumns: `repeat(auto-fit, minmax(${comparisonMin}px, 1fr))`,
+      gap: isMobile ? 16 : 24,
     },
     comparisonCard: {
-      padding: "24px",
-      borderRadius: "12px",
+      padding: `${comparisonCardPad}px`,
+      borderRadius: isMobile ? 8 : 12,
       border: "2px solid",
+      minWidth: 0,
     },
     comparisonCardPinhole: {
       background: darkMode
@@ -1334,20 +1388,20 @@ const ReflectionOfLightLearn: React.FC<{
     },
     comparisonCardMirror: {
       background: darkMode
-        ? "linear-gradient(135deg, #1e3a8a 0%, #155e75 100%)"
-        : "linear-gradient(135deg, #eff6ff 0%, #ecfeff 100%)",
-      borderColor: darkMode ? "#1e40af" : "#bfdbfe",
+        ? "linear-gradient(135deg, #533086 0%, #1e1b4b 100%)"
+        : "linear-gradient(135deg, #FFF3E4 0%, #C1C1EA 100%)",
+      borderColor: darkMode ? "#533086" : "#C1C1EA",
     },
     comparisonTitle: {
-      fontSize: "20px",
+      fontSize: `${comparisonTitleSize}px`,
       fontWeight: 700,
-      marginBottom: "16px",
+      marginBottom: isMobile ? 12 : 16,
     },
     comparisonTitlePinhole: {
       color: darkMode ? "#fca5a5" : "#991b1b",
     },
     comparisonTitleMirror: {
-      color: darkMode ? "#93c5fd" : "#1e40af",
+      color: darkMode ? "#C1C1EA" : "#533086",
     },
     comparisonItem: {
       display: "flex",
@@ -1361,7 +1415,7 @@ const ReflectionOfLightLearn: React.FC<{
       borderRadius: "50%",
     },
     comparisonText: {
-      color: darkMode ? "#cbd5e1" : "#374151",
+      color: darkMode ? "#cbd5e1" : "#4E4E4E",
     },
   };
 
@@ -1376,53 +1430,174 @@ const ReflectionOfLightLearn: React.FC<{
               <div style={learnStyles.headingAccent}></div>
               {t.learn.what}
             </h2>
-            <p style={learnStyles.paragraph}>
-              {t.learn.whatDesc}
-            </p>
-            
+            <p style={learnStyles.paragraph}>{t.learn.whatDesc}</p>
+
             {/* Simple Diagram */}
             <div style={learnStyles.diagramContainer}>
               <svg viewBox="0 0 600 250" style={learnStyles.svg}>
                 {/* Object (Candle) */}
                 <g>
-                  <rect x="30" y="100" width="30" height="80" fill="#8B4513" rx="5"/>
-                  <ellipse cx="45" cy="95" rx="15" ry="20" fill="#FFA500"/>
-                  <ellipse cx="45" cy="90" rx="10" ry="15" fill="#FFD700"/>
-                  <text x="45" y="200" textAnchor="middle" style={{ fontSize: "14px", fontWeight: 600, fill: darkMode ? "#cbd5e1" : "#374151" }}>{t.diagram.object}</text>
+                  <rect
+                    x="30"
+                    y="100"
+                    width="30"
+                    height="80"
+                    fill="#8B4513"
+                    rx="5"
+                  />
+                  <ellipse cx="45" cy="95" rx="15" ry="20" fill="#FFA500" />
+                  <ellipse cx="45" cy="90" rx="10" ry="15" fill="#FFD700" />
+                  <text
+                    x="45"
+                    y="200"
+                    textAnchor="middle"
+                    style={{
+                      fontSize: `${diagramLabelSize}px`,
+                      fontWeight: 600,
+                      fill: darkMode ? "#cbd5e1" : "#4E4E4E",
+                    }}
+                  >
+                    {t.diagram.object}
+                  </text>
                 </g>
-                
+
                 {/* Light rays */}
-                <line x1="45" y1="90" x2="300" y2="120" stroke={pinholeConfig?.rayColor || "#FFD700"} strokeWidth="2" opacity="0.6">
-                  <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2s" repeatCount="indefinite"/>
+                <line
+                  x1="45"
+                  y1="90"
+                  x2="300"
+                  y2="120"
+                  stroke={pinholeConfig?.rayColor || "#FFD700"}
+                  strokeWidth="2"
+                  opacity="0.6"
+                >
+                  <animate
+                    attributeName="opacity"
+                    values="0.3;0.8;0.3"
+                    dur="2s"
+                    repeatCount="indefinite"
+                  />
                 </line>
-                <line x1="45" y1="180" x2="300" y2="130" stroke={pinholeConfig?.rayColor || "#FFD700"} strokeWidth="2" opacity="0.6">
-                  <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2s" repeatCount="indefinite" begin="0.5s"/>
+                <line
+                  x1="45"
+                  y1="180"
+                  x2="300"
+                  y2="130"
+                  stroke={pinholeConfig?.rayColor || "#FFD700"}
+                  strokeWidth="2"
+                  opacity="0.6"
+                >
+                  <animate
+                    attributeName="opacity"
+                    values="0.3;0.8;0.3"
+                    dur="2s"
+                    repeatCount="indefinite"
+                    begin="0.5s"
+                  />
                 </line>
-                
+
                 {/* Pinhole Box */}
-                <rect x="280" y="110" width="40" height="40" fill="#654321" stroke="#4A3319" strokeWidth="2"/>
-                <circle cx="300" cy="130" r={String(pinholeConfig?.pinholeSize || 3)} fill={pinholeConfig?.pinholeColor || "#000"}/>
-                <text x="300" y="170" textAnchor="middle" style={{ fontSize: "14px", fontWeight: 600, fill: darkMode ? "#cbd5e1" : "#374151" }}>{pinholeConfig?.customLabels?.pinhole || t.diagram.pinhole}</text>
-                
+                <rect
+                  x="280"
+                  y="110"
+                  width="40"
+                  height="40"
+                  fill="#654321"
+                  stroke="#4A3319"
+                  strokeWidth="2"
+                />
+                <circle
+                  cx="300"
+                  cy="130"
+                  r={String(pinholeConfig?.pinholeSize || 3)}
+                  fill={pinholeConfig?.pinholeColor || "#000"}
+                />
+                <text
+                  x="300"
+                  y="170"
+                  textAnchor="middle"
+                  style={{
+                    fontSize: `${diagramLabelSize}px`,
+                    fontWeight: 600,
+                    fill: darkMode ? "#cbd5e1" : "#4E4E4E",
+                  }}
+                >
+                  {pinholeConfig?.customLabels?.pinhole || t.diagram.pinhole}
+                </text>
+
                 {/* Light rays after pinhole */}
-                <line x1="300" y1="120" x2="520" y2="180" stroke={pinholeConfig?.rayColor || "#FFD700"} strokeWidth="2" opacity="0.6">
-                  <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2s" repeatCount="indefinite" begin="1s"/>
+                <line
+                  x1="300"
+                  y1="120"
+                  x2="520"
+                  y2="180"
+                  stroke={pinholeConfig?.rayColor || "#FFD700"}
+                  strokeWidth="2"
+                  opacity="0.6"
+                >
+                  <animate
+                    attributeName="opacity"
+                    values="0.3;0.8;0.3"
+                    dur="2s"
+                    repeatCount="indefinite"
+                    begin="1s"
+                  />
                 </line>
-                <line x1="300" y1="130" x2="520" y2="100" stroke={pinholeConfig?.rayColor || "#FFD700"} strokeWidth="2" opacity="0.6">
-                  <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2s" repeatCount="indefinite" begin="1.5s"/>
+                <line
+                  x1="300"
+                  y1="130"
+                  x2="520"
+                  y2="100"
+                  stroke={pinholeConfig?.rayColor || "#FFD700"}
+                  strokeWidth="2"
+                  opacity="0.6"
+                >
+                  <animate
+                    attributeName="opacity"
+                    values="0.3;0.8;0.3"
+                    dur="2s"
+                    repeatCount="indefinite"
+                    begin="1.5s"
+                  />
                 </line>
-                
+
                 {/* Screen */}
-                <rect x="520" y="80" width="10" height="120" fill={pinholeConfig?.screenColor || "#E8E8E8"} stroke="#999" strokeWidth="2"/>
-                <text x="525" y="215" textAnchor="middle" style={{ fontSize: "14px", fontWeight: 600, fill: darkMode ? "#cbd5e1" : "#374151" }}>{pinholeConfig?.customLabels?.screen || t.diagram.screen}</text>
-                
+                <rect
+                  x="520"
+                  y="80"
+                  width="10"
+                  height="120"
+                  fill={pinholeConfig?.screenColor || "#E8E8E8"}
+                  stroke="#999"
+                  strokeWidth="2"
+                />
+                <text
+                  x="525"
+                  y="215"
+                  textAnchor="middle"
+                  style={{
+                    fontSize: `${diagramLabelSize}px`,
+                    fontWeight: 600,
+                    fill: darkMode ? "#cbd5e1" : "#4E4E4E",
+                  }}
+                >
+                  {pinholeConfig?.customLabels?.screen || t.diagram.screen}
+                </text>
+
                 {/* Inverted Image on screen */}
                 <g opacity="0.7">
                   {/* Candle base (bottom of object appears at top of screen) */}
-                  <rect x="518" y="100" width="14" height="80" fill="#8B4513" rx="3"/>
+                  <rect
+                    x="518"
+                    y="100"
+                    width="14"
+                    height="80"
+                    fill="#8B4513"
+                    rx="3"
+                  />
                   {/* Flame (top of object appears at bottom of screen) */}
-                  <ellipse cx="525" cy="175" rx="8" ry="12" fill="#FFD700"/>
-                  <ellipse cx="525" cy="170" rx="6" ry="10" fill="#FFA500"/>
+                  <ellipse cx="525" cy="175" rx="8" ry="12" fill="#FFD700" />
+                  <ellipse cx="525" cy="170" rx="6" ry="10" fill="#FFA500" />
                 </g>
               </svg>
             </div>
@@ -1435,14 +1610,14 @@ const ReflectionOfLightLearn: React.FC<{
               {t.learn.key}
             </h2>
             <div style={learnStyles.keyPointsContainer}>
-              {[t.learn.keyPoint1, t.learn.keyPoint2, t.learn.keyPoint3].map((point, idx) => (
-                <div key={idx} style={learnStyles.keyPoint}>
-                  <div style={learnStyles.keyPointNumber}>
-                    {idx + 1}
+              {[t.learn.keyPoint1, t.learn.keyPoint2, t.learn.keyPoint3].map(
+                (point, idx) => (
+                  <div key={idx} style={learnStyles.keyPoint}>
+                    <div style={learnStyles.keyPointNumber}>{idx + 1}</div>
+                    <p style={learnStyles.keyPointText}>{point}</p>
                   </div>
-                  <p style={learnStyles.keyPointText}>{point}</p>
-                </div>
-              ))}
+                ),
+              )}
             </div>
           </div>
 
@@ -1454,35 +1629,170 @@ const ReflectionOfLightLearn: React.FC<{
             </h2>
             <div style={learnStyles.comparisonGrid}>
               {/* Pinhole Camera */}
-              <div style={{ ...learnStyles.comparisonCard, ...learnStyles.comparisonCardPinhole }}>
-                <h3 style={{ ...learnStyles.comparisonTitle, ...learnStyles.comparisonTitlePinhole }}>{t.comparison.pinhole}</h3>
-                <div style={{ display: "flex", flexDirection: "column" as const, gap: "12px" }}>
+              <div
+                style={{
+                  ...learnStyles.comparisonCard,
+                  ...learnStyles.comparisonCardPinhole,
+                }}
+              >
+                <h3
+                  style={{
+                    ...learnStyles.comparisonTitle,
+                    ...learnStyles.comparisonTitlePinhole,
+                  }}
+                >
+                  {t.comparison.pinhole}
+                </h3>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column" as const,
+                    gap: "12px",
+                  }}
+                >
                   <div style={learnStyles.comparisonItem}>
-                    <div style={{ ...learnStyles.comparisonDot, backgroundColor: darkMode ? "#fca5a5" : "#ef4444" }}></div>
-                    <span style={learnStyles.comparisonText}>{t.comparison.inverted}</span>
+                    <div
+                      style={{
+                        ...learnStyles.comparisonDot,
+                        backgroundColor: darkMode ? "#fca5a5" : "#ef4444",
+                      }}
+                    ></div>
+                    <span style={learnStyles.comparisonText}>
+                      {t.comparison.inverted}
+                    </span>
                   </div>
-                  <svg viewBox="0 0 200 200" style={{ width: "100%", height: "128px" }}>
-                    <text x="100" y="50" textAnchor="middle" style={{ fontSize: "36px", fontWeight: 700, fill: "#16a34a" }}>↑</text>
-                    <line x1="20" y1="100" x2="180" y2="100" stroke="#666" strokeWidth="2"/>
-                    <text x="100" y="170" textAnchor="middle" style={{ fontSize: "36px", fontWeight: 700, fill: "#16a34a" }}>↓</text>
-                    <text x="100" y="195" textAnchor="middle" style={{ fontSize: "12px", fill: darkMode ? "#9ca3af" : "#4b5563" }}>Upside Down</text>
+                  <svg
+                    viewBox="0 0 200 200"
+                    style={{ width: "100%", height: `${comparisonSvgHeight}px` }}
+                  >
+                    <text
+                      x="100"
+                      y="50"
+                      textAnchor="middle"
+                      style={{
+                        fontSize: `${diagramLargeSize}px`,
+                        fontWeight: 700,
+                        fill: "#16a34a",
+                      }}
+                    >
+                      ↑
+                    </text>
+                    <line
+                      x1="20"
+                      y1="100"
+                      x2="180"
+                      y2="100"
+                      stroke="#666"
+                      strokeWidth="2"
+                    />
+                    <text
+                      x="100"
+                      y="170"
+                      textAnchor="middle"
+                      style={{
+                        fontSize: `${diagramLargeSize}px`,
+                        fontWeight: 700,
+                        fill: "#16a34a",
+                      }}
+                    >
+                      ↓
+                    </text>
+                    <text
+                      x="100"
+                      y="195"
+                      textAnchor="middle"
+                      style={{
+                        fontSize: `${diagramSmallSize}px`,
+                        fill: darkMode ? "#9ca3af" : "#4b5563",
+                      }}
+                    >
+                      Upside Down
+                    </text>
                   </svg>
                 </div>
               </div>
-              
+
               {/* Plane Mirror */}
-              <div style={{ ...learnStyles.comparisonCard, ...learnStyles.comparisonCardMirror }}>
-                <h3 style={{ ...learnStyles.comparisonTitle, ...learnStyles.comparisonTitleMirror }}>{t.comparison.mirror}</h3>
-                <div style={{ display: "flex", flexDirection: "column" as const, gap: "12px" }}>
+              <div
+                style={{
+                  ...learnStyles.comparisonCard,
+                  ...learnStyles.comparisonCardMirror,
+                }}
+              >
+                <h3
+                  style={{
+                    ...learnStyles.comparisonTitle,
+                    ...learnStyles.comparisonTitleMirror,
+                  }}
+                >
+                  {t.comparison.mirror}
+                </h3>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column" as const,
+                    gap: "12px",
+                  }}
+                >
                   <div style={learnStyles.comparisonItem}>
-                    <div style={{ ...learnStyles.comparisonDot, backgroundColor: darkMode ? "#93c5fd" : "#3b82f6" }}></div>
-                    <span style={learnStyles.comparisonText}>{t.comparison.lateral}</span>
+                    <div
+                      style={{
+                        ...learnStyles.comparisonDot,
+                        backgroundColor: darkMode ? "#C1C1EA" : "#4A4DC9",
+                      }}
+                    ></div>
+                    <span style={learnStyles.comparisonText}>
+                      {t.comparison.lateral}
+                    </span>
                   </div>
-                  <svg viewBox="0 0 200 200" style={{ width: "100%", height: "128px" }}>
-                    <text x="70" y="110" textAnchor="middle" style={{ fontSize: "36px", fontWeight: 700, fill: "#16a34a" }}>L</text>
-                    <line x1="100" y1="20" x2="100" y2="180" stroke="#666" strokeWidth="3" strokeDasharray="5,5"/>
-                    <text x="130" y="110" textAnchor="middle" style={{ fontSize: "36px", fontWeight: 700, fill: "#16a34a" }}>R</text>
-                    <text x="100" y="195" textAnchor="middle" style={{ fontSize: "12px", fill: darkMode ? "#9ca3af" : "#4b5563" }}>Left-Right Reversed</text>
+                  <svg
+                    viewBox="0 0 200 200"
+                    style={{ width: "100%", height: `${comparisonSvgHeight}px` }}
+                  >
+                    <text
+                      x="70"
+                      y="110"
+                      textAnchor="middle"
+                      style={{
+                        fontSize: `${diagramLargeSize}px`,
+                        fontWeight: 700,
+                        fill: "#16a34a",
+                      }}
+                    >
+                      L
+                    </text>
+                    <line
+                      x1="100"
+                      y1="20"
+                      x2="100"
+                      y2="180"
+                      stroke="#666"
+                      strokeWidth="3"
+                      strokeDasharray="5,5"
+                    />
+                    <text
+                      x="130"
+                      y="110"
+                      textAnchor="middle"
+                      style={{
+                        fontSize: `${diagramLargeSize}px`,
+                        fontWeight: 700,
+                        fill: "#16a34a",
+                      }}
+                    >
+                      R
+                    </text>
+                    <text
+                      x="100"
+                      y="195"
+                      textAnchor="middle"
+                      style={{
+                        fontSize: `${diagramSmallSize}px`,
+                        fill: darkMode ? "#9ca3af" : "#4b5563",
+                      }}
+                    >
+                      Left-Right Reversed
+                    </text>
                   </svg>
                 </div>
               </div>
@@ -1495,7 +1805,7 @@ const ReflectionOfLightLearn: React.FC<{
 };
 
 // Practice Mode Component
-const PracticeMode: React.FC<{ 
+const PracticeMode: React.FC<{
   pinholeConfig?: PinholeConfig;
   config?: PinholeCameraToolProps["props"];
 }> = ({ pinholeConfig, config }) => {
@@ -1504,7 +1814,7 @@ const PracticeMode: React.FC<{
   const [isAnswered, setIsAnswered] = useState(false);
   const [score, setScore] = useState(0);
   const [answeredQuestions, setAnsweredQuestions] = useState<boolean[]>(
-    new Array(10).fill(false)
+    new Array(10).fill(false),
   );
   const [isCompleted, setIsCompleted] = useState(false);
 
@@ -1620,9 +1930,7 @@ const PracticeMode: React.FC<{
                     style={{ width: `${percentage}%` }}
                   ></div>
                 </div>
-                <p className="text-gray-600 mt-2">
-                  {percentage.toFixed(0)}%
-                </p>
+                <p className="text-gray-600 mt-2">{percentage.toFixed(0)}%</p>
               </div>
             </div>
 
@@ -1679,10 +1987,8 @@ const PracticeMode: React.FC<{
                 onClick={() => handleAnswerSelect(index)}
                 disabled={isAnswered}
                 className={`w-full p-4 rounded-xl border-2 text-left transition-all ${getOptionClass(
-                  index
-                )} ${
-                  !isAnswered ? "cursor-pointer" : "cursor-default"
-                }`}
+                  index,
+                )} ${!isAnswered ? "cursor-pointer" : "cursor-default"}`}
               >
                 <div className="flex items-center gap-3">
                   <div
@@ -1690,12 +1996,12 @@ const PracticeMode: React.FC<{
                       isAnswered && index === question.correctAnswer
                         ? "bg-green-500 text-white"
                         : isAnswered &&
-                          index === selectedAnswer &&
-                          selectedAnswer !== question.correctAnswer
-                        ? "bg-red-500 text-white"
-                        : selectedAnswer === index
-                        ? "bg-indigo-500 text-white"
-                        : "bg-gray-200 text-gray-700"
+                            index === selectedAnswer &&
+                            selectedAnswer !== question.correctAnswer
+                          ? "bg-red-500 text-white"
+                          : selectedAnswer === index
+                            ? "bg-indigo-500 text-white"
+                            : "bg-gray-200 text-gray-700"
                     }`}
                   >
                     {String.fromCharCode(65 + index)}
@@ -1792,7 +2098,7 @@ const PracticeMode: React.FC<{
 };
 
 // Real World Applications Component
-const PinholeRealWorldMode: React.FC<{ 
+const PinholeRealWorldMode: React.FC<{
   pinholeConfig?: PinholeConfig;
   config?: PinholeCameraToolProps["props"];
 }> = ({ pinholeConfig, config }) => {
@@ -1917,13 +2223,31 @@ const PinholeRealWorldMode: React.FC<{
 };
 
 // Main App Component (internal, uses LanguageProvider)
-const MainApp: React.FC<{ config?: PinholeCameraToolProps["props"] }> = ({ config = {} }) => {
+const MainApp: React.FC<{ config?: PinholeCameraToolProps["props"] }> = ({
+  config = {},
+}) => {
   const { t } = useLanguage();
-  const [activeTab, setActiveTab] = useState<TabType>(config.initialMode || "learn");
-  
+  const [activeTab, setActiveTab] = useState<TabType>(
+    config.initialMode || "learn",
+  );
+  const { isMobile, isTablet } = useWindowSize();
+
+  // Singularity design: load Poppins font
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    const id = "singularity-poppins-font";
+    if (document.getElementById(id)) return;
+    const link = document.createElement("link");
+    link.id = id;
+    link.rel = "stylesheet";
+    link.href = "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap";
+    document.head.appendChild(link);
+    return () => { const el = document.getElementById(id); if (el) el.remove(); };
+  }, []);
+
   // Extract additionalProps with defaults
   const additionalProps = config.additionalProps || {};
-  
+
   // Tool-specific defaults
   const pinholeConfig = {
     objectColor: additionalProps.objectColor || "#FFD700",
@@ -1934,17 +2258,18 @@ const MainApp: React.FC<{ config?: PinholeCameraToolProps["props"] }> = ({ confi
     pinholeColor: additionalProps.pinholeColor || "#000",
     screenColor: additionalProps.screenColor || "#E8E8E8",
     showInvertedImage: additionalProps.showInvertedImage !== false,
-    animationSpeed: additionalProps.animationSpeed || config.animationSpeed || 1,
+    animationSpeed:
+      additionalProps.animationSpeed || config.animationSpeed || 1,
     showRayAnimation: additionalProps.showRayAnimation !== false,
     customLabels: additionalProps.customLabels || {},
     interactive: additionalProps.interactive || false,
     allowRayControl: additionalProps.allowRayControl || false,
   };
-  
+
   // ─────────────────────────────────────────────────────────────────
   // INJECT KEYFRAMES
   // ─────────────────────────────────────────────────────────────────
-  
+
   useEffect(() => {
     const keyframes = `
       @keyframes fadeInUp {
@@ -1973,16 +2298,16 @@ const MainApp: React.FC<{ config?: PinholeCameraToolProps["props"] }> = ({ confi
         to { transform: translateX(0); opacity: 1; }
       }
       @keyframes glow {
-        0%, 100% { box-shadow: 0 0 5px ${config.themeColor || "#3b82f6"}40; }
-        50% { box-shadow: 0 0 25px ${config.themeColor || "#3b82f6"}80; }
+        0%, 100% { box-shadow: 0 0 5px ${config.themeColor || "#4A4DC9"}40; }
+        50% { box-shadow: 0 0 25px ${config.themeColor || "#4A4DC9"}80; }
       }
       @keyframes drawArc {
         from { stroke-dashoffset: 200; }
         to { stroke-dashoffset: 0; }
       }
       @keyframes highlight {
-        0% { background-color: ${config.themeColor || "#3b82f6"}; transform: scale(1.3); }
-        100% { background-color: ${config.themeColor || "#3b82f6"}40; transform: scale(1); }
+        0% { background-color: ${config.themeColor || "#4A4DC9"}; transform: scale(1.3); }
+        100% { background-color: ${config.themeColor || "#4A4DC9"}40; transform: scale(1); }
       }
       @keyframes shimmer {
         0% { background-position: -200% 0; }
@@ -2001,18 +2326,18 @@ const MainApp: React.FC<{ config?: PinholeCameraToolProps["props"] }> = ({ confi
         50% { transform: translateY(-20px); }
       }
     `;
-    
-    const styleSheet = document.createElement('style');
-    styleSheet.id = 'pinhole-camera-keyframes';
+
+    const styleSheet = document.createElement("style");
+    styleSheet.id = "pinhole-camera-keyframes";
     styleSheet.textContent = keyframes;
     document.head.appendChild(styleSheet);
-    
+
     return () => {
-      const existing = document.getElementById('pinhole-camera-keyframes');
+      const existing = document.getElementById("pinhole-camera-keyframes");
       if (existing) document.head.removeChild(existing);
     };
   }, [config.themeColor]);
-  
+
   // Animate when additionalProps change
   useEffect(() => {
     if (additionalProps.objectColor || additionalProps.showRays !== undefined) {
@@ -2025,7 +2350,7 @@ const MainApp: React.FC<{ config?: PinholeCameraToolProps["props"] }> = ({ confi
     const cleanupInvalidAttributes = () => {
       const invalidAttrs = ["error", "warn", "log"];
       const allSVGElements = document.querySelectorAll(
-        "svg, svg path, svg circle, svg rect, svg line"
+        "svg, svg path, svg circle, svg rect, svg line",
       );
 
       allSVGElements.forEach((element) => {
@@ -2059,24 +2384,30 @@ const MainApp: React.FC<{ config?: PinholeCameraToolProps["props"] }> = ({ confi
   // ─────────────────────────────────────────────────────────────────
   // STYLES
   // ─────────────────────────────────────────────────────────────────
-  
-  const themeColor = config.themeColor || "#3b82f6";
+
+  const themeColor = config.themeColor || "#4A4DC9";
   const darkMode = config.darkMode || false;
-  
+
   const colors = {
     primary: themeColor,
-    background: darkMode ? "#1a1a2e" : "#ffffff",
-    surface: darkMode ? "#16213e" : "#ffffff",
-    text: darkMode ? "#e2e8f0" : "#1e293b",
-    textSecondary: darkMode ? "#94a3b8" : "#64748b",
-    border: darkMode ? "#334155" : "#e0e7ff",
+    background: darkMode ? "#1a1a2e" : "#F5F5F5",
+    surface: darkMode ? "#16213e" : "#C1C1EA",
+    text: darkMode ? "#e2e8f0" : "#4E4E4E",
+    textSecondary: darkMode ? "#94a3b8" : "#4E4E4E",
+    border: darkMode ? "#334155" : "#EBEBEB",
   };
-  
+
+  const navHeight = isMobile ? 56 : isTablet ? 60 : 64;
   const styles: { [key: string]: CSSProperties } = {
     container: {
       minHeight: "100vh",
+      width: "100%",
+      maxWidth: "100vw",
+      overflowX: "hidden",
       backgroundColor: colors.background,
-      fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+      fontFamily:
+        '"Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+      boxSizing: "border-box",
     },
     nav: {
       position: "fixed" as const,
@@ -2086,68 +2417,88 @@ const MainApp: React.FC<{ config?: PinholeCameraToolProps["props"] }> = ({ confi
       zIndex: 50,
       backgroundColor: colors.surface,
       borderBottom: `1px solid ${colors.border}`,
-      boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
+      boxShadow: "0 1px 3px rgba(74, 77, 201, 0.15)",
     },
     navContainer: {
       maxWidth: "1280px",
       margin: "0 auto",
-      padding: "0 16px",
+      padding: isMobile ? "0 12px" : "0 16px",
+      width: "100%",
+      boxSizing: "border-box",
     },
     navContent: {
       display: "flex",
       alignItems: "center",
       justifyContent: "space-between",
-      height: "64px",
+      height: `${navHeight}px`,
+      gap: isMobile ? 8 : 12,
+      flexWrap: "wrap" as const,
     },
     navLeft: {
       display: "flex",
       alignItems: "center",
-      gap: "8px",
+      gap: isMobile ? 6 : 8,
+      minWidth: 0,
     },
     navRight: {
       display: "flex",
       alignItems: "center",
-      gap: "16px",
+      gap: isMobile ? 8 : 16,
+      minWidth: 0,
     },
     navButtons: {
       display: "flex",
-      gap: "8px",
+      gap: isMobile ? 4 : 8,
+      overflowX: "auto",
+      overflowY: "hidden",
+      padding: "4px 0",
+      WebkitOverflowScrolling: "touch",
+      scrollbarWidth: "none",
+      msOverflowStyle: "none",
     },
     logo: {
-      fontSize: "20px",
+      fontSize: isMobile ? 16 : isTablet ? 18 : 20,
       fontWeight: 700,
-      background: `linear-gradient(to right, ${themeColor}, #14b8a6)`,
+      background: `linear-gradient(to right, ${themeColor}, #533086)`,
       WebkitBackgroundClip: "text",
       WebkitTextFillColor: "transparent",
       backgroundClip: "text",
+      whiteSpace: "nowrap",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
     },
     tabButton: {
       display: "flex",
       alignItems: "center",
-      gap: "8px",
-      padding: "8px 16px",
-      borderRadius: "8px",
+      gap: isMobile ? 4 : 8,
+      padding: isMobile ? "6px 12px" : "8px 24px",
+      borderRadius: 8,
       border: "none",
       fontWeight: 600,
-      fontSize: "14px",
+      fontSize: isMobile ? 12 : 14,
       cursor: "pointer",
       transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
       fontFamily: "inherit",
+      flexShrink: 0,
+      minHeight: 40,
     },
     tabButtonActive: {
-      background: `linear-gradient(to right, ${themeColor}, #14b8a6)`,
+      background: `linear-gradient(to right, ${themeColor}, #533086)`,
       color: "#ffffff",
-      boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+      boxShadow: "0 4px 12px rgba(74, 77, 201, 0.25)",
     },
     tabButtonInactive: {
       color: colors.text,
       backgroundColor: "transparent",
     },
     content: {
-      paddingTop: "64px",
+      paddingTop: `${navHeight}px`,
+      width: "100%",
+      maxWidth: "100vw",
+      boxSizing: "border-box",
     },
   };
-  
+
   const getTabButtonStyle = (isActive: boolean): CSSProperties => ({
     ...styles.tabButton,
     ...(isActive ? styles.tabButtonActive : styles.tabButtonInactive),
@@ -2162,9 +2513,7 @@ const MainApp: React.FC<{ config?: PinholeCameraToolProps["props"] }> = ({ confi
               <div style={{ width: "24px", height: "24px", color: themeColor }}>
                 <Lightbulb className="w-6 h-6" />
               </div>
-              <span style={styles.logo}>
-                {t("nav.logo")}
-              </span>
+              <span style={styles.logo}>{t("nav.logo")}</span>
             </div>
 
             <div style={styles.navRight}>
@@ -2175,7 +2524,9 @@ const MainApp: React.FC<{ config?: PinholeCameraToolProps["props"] }> = ({ confi
                     style={getTabButtonStyle(activeTab === "learn")}
                     onMouseEnter={(e) => {
                       if (activeTab !== "learn") {
-                        e.currentTarget.style.backgroundColor = darkMode ? "#1e293b" : "#eff6ff";
+                        e.currentTarget.style.backgroundColor = darkMode
+                          ? "#1e293b"
+                          : "#EBEBEB";
                       }
                     }}
                     onMouseLeave={(e) => {
@@ -2192,7 +2543,9 @@ const MainApp: React.FC<{ config?: PinholeCameraToolProps["props"] }> = ({ confi
                     style={getTabButtonStyle(activeTab === "practice")}
                     onMouseEnter={(e) => {
                       if (activeTab !== "practice") {
-                        e.currentTarget.style.backgroundColor = darkMode ? "#1e293b" : "#eff6ff";
+                        e.currentTarget.style.backgroundColor = darkMode
+                          ? "#1e293b"
+                          : "#EBEBEB";
                       }
                     }}
                     onMouseLeave={(e) => {
@@ -2209,7 +2562,9 @@ const MainApp: React.FC<{ config?: PinholeCameraToolProps["props"] }> = ({ confi
                     style={getTabButtonStyle(activeTab === "realWorld")}
                     onMouseEnter={(e) => {
                       if (activeTab !== "realWorld") {
-                        e.currentTarget.style.backgroundColor = darkMode ? "#1e293b" : "#eff6ff";
+                        e.currentTarget.style.backgroundColor = darkMode
+                          ? "#1e293b"
+                          : "#EBEBEB";
                       }
                     }}
                     onMouseLeave={(e) => {
@@ -2230,7 +2585,10 @@ const MainApp: React.FC<{ config?: PinholeCameraToolProps["props"] }> = ({ confi
 
       <div style={styles.content}>
         {activeTab === "learn" ? (
-          <ReflectionOfLightLearn pinholeConfig={pinholeConfig} config={config} />
+          <ReflectionOfLightLearn
+            pinholeConfig={pinholeConfig}
+            config={config}
+          />
         ) : activeTab === "practice" ? (
           <PracticeMode pinholeConfig={pinholeConfig} config={config} />
         ) : (
@@ -2242,7 +2600,12 @@ const MainApp: React.FC<{ config?: PinholeCameraToolProps["props"] }> = ({ confi
 };
 
 // Main App Component with Provider (exported for use in main App.tsx)
-const LightTravelApp: React.FC<PinholeCameraToolProps> = ({ props = {}, setStepDetails, stopAutoNext, setStopAutoNext }) => {
+const LightTravelApp: React.FC<PinholeCameraToolProps> = ({
+  props = {},
+  setStepDetails,
+  stopAutoNext,
+  setStopAutoNext,
+}) => {
   return (
     // @ts-ignore - JSX children are passed correctly, type system limitation
     <LanguageProvider>

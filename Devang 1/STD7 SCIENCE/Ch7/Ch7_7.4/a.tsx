@@ -7,6 +7,64 @@ import React, {
 } from "react";
 
 // ═══════════════════════════════════════════════════════════════════════════
+// SINGULARITY DESIGN SYSTEM TOKENS
+// ═══════════════════════════════════════════════════════════════════════════
+
+const DS = {
+  colors: {
+    primary: "#4A4DC9",
+    primaryDark: "#533086",
+    secondary: "#FF7212",
+    secondaryDark: "#FC9145",
+    primaryLight: "#C1C1EA",
+    secondaryLight: "#FFF3E4",
+    text: "#4E4E4E",
+    textLight: "#7A7A7A",
+    gray: "#CACACA",
+    grayLight: "#EBEBEB",
+    surface: "#F5F5F5",
+    white: "#FFFFFF",
+    success: "#34C759",
+    error: "#FF3B30",
+    warning: "#FFCC00",
+    gradientPrimary: "linear-gradient(135deg, #533086 0%, #FC9145 100%)",
+    gradientPrimaryHover: "linear-gradient(135deg, #4A2878 0%, #E8823D 100%)",
+    gradientSubtle: "linear-gradient(135deg, #C1C1EA 0%, #FFF3E4 100%)",
+    gradientSky:
+      "linear-gradient(180deg, #C1C1EA 0%, #FFF3E4 60%, #FFFFFF 100%)",
+  },
+  font: "'Poppins', sans-serif",
+  radius: {
+    sm: "8px",
+    md: "12px",
+    lg: "20px",
+    pill: "999px",
+    circle: "50%",
+  },
+  shadow: {
+    sm: "0 2px 8px rgba(74, 77, 201, 0.08)",
+    md: "0 4px 16px rgba(74, 77, 201, 0.12)",
+    lg: "0 8px 32px rgba(74, 77, 201, 0.16)",
+    glow: "0 0 20px rgba(74, 77, 201, 0.25)",
+  },
+  spacing: {
+    xs: "4px",
+    sm: "8px",
+    md: "16px",
+    lg: "24px",
+    xl: "32px",
+    xxl: "48px",
+  },
+  button: {
+    height: "40px",
+    paddingX: "24px",
+    iconGap: "4px",
+    fontSize: "14px",
+    fontWeight: "600" as const,
+  },
+};
+
+// ═══════════════════════════════════════════════════════════════════════════
 // TYPE DEFINITIONS
 // ═══════════════════════════════════════════════════════════════════════════
 
@@ -51,10 +109,6 @@ interface StepData {
   icon: string;
 }
 
-// ═══════════════════════════════════════════════════════════════════════════
-// ADDITIONAL PROPS INTERFACE
-// ═══════════════════════════════════════════════════════════════════════════
-
 interface WaterCycleAdditionalProps {
   customPhases?: { [key: string]: PhaseInfo };
   customQuestions?: Question[];
@@ -67,10 +121,6 @@ interface WaterCycleAdditionalProps {
   cloudColor?: string;
   sunColor?: string;
 }
-
-// ═══════════════════════════════════════════════════════════════════════════
-// MAIN PROPS INTERFACE
-// ═══════════════════════════════════════════════════════════════════════════
 
 interface WaterCycleToolProps {
   props?: {
@@ -96,35 +146,26 @@ interface WaterCycleToolProps {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// CUSTOM HOOK FOR RESPONSIVE BREAKPOINTS
+// RESPONSIVE HOOK
 // ═══════════════════════════════════════════════════════════════════════════
 
 const useMediaQuery = (query: string): boolean => {
   const [matches, setMatches] = useState(false);
-
   useEffect(() => {
     const media = window.matchMedia(query);
     setMatches(media.matches);
-
     const listener = (e: MediaQueryListEvent) => setMatches(e.matches);
-    media.addEventListener('change', listener);
-    return () => media.removeEventListener('change', listener);
+    media.addEventListener("change", listener);
+    return () => media.removeEventListener("change", listener);
   }, [query]);
-
   return matches;
 };
 
 const useResponsive = () => {
-  const isMobile = useMediaQuery('(max-width: 640px)');
-  const isTablet = useMediaQuery('(min-width: 641px) and (max-width: 1024px)');
-  const isDesktop = useMediaQuery('(min-width: 1025px)');
-
-  return {
-    isMobile,
-    isTablet,
-    isDesktop,
-    isSmallScreen: isMobile || isTablet,
-  };
+  const isMobile = useMediaQuery("(max-width: 640px)");
+  const isTablet = useMediaQuery("(min-width: 641px) and (max-width: 1024px)");
+  const isDesktop = useMediaQuery("(min-width: 1025px)");
+  return { isMobile, isTablet, isDesktop, isSmallScreen: isMobile || isTablet };
 };
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -137,100 +178,133 @@ const DEFAULT_PHASES: { [key: string]: PhaseInfo } = {
     simple: [
       "The Sun heats up water in oceans, rivers, and lakes.",
       "It turns into invisible water vapor (like steam) that rises into the air.",
-      "Plants also release water vapor through tiny holes in their leaves called stomata."
+      "Plants also release water vapor through tiny holes in their leaves called stomata.",
     ],
     example: [
       "Think about a puddle after it rains.",
       "On a sunny day, the puddle gets smaller until it disappears.",
       "The water turned into vapor and went up into the sky!",
-      "Trees also \"breathe out\" water vapor through their leaves."
-    ]
+      'Trees also "breathe out" water vapor through their leaves.',
+    ],
   },
   condensation: {
     title: "Condensation",
     simple: [
       "Water vapor rises high into the sky where it's very cold.",
       "It cools down and turns back into tiny water droplets.",
-      "These millions of tiny droplets cluster together to form clouds."
+      "These millions of tiny droplets cluster together to form clouds.",
     ],
     example: [
       "Breathe on a cold window.",
       "You see water droplets form on the glass.",
       "That's condensation!",
-      "Your warm breath (water vapor) hits the cold surface and turns back into liquid water."
-    ]
+      "Your warm breath (water vapor) hits the cold surface and turns back into liquid water.",
+    ],
   },
   precipitation: {
     title: "Precipitation",
     simple: [
       "Clouds get too heavy with water droplets.",
       "Gravity pulls the water back down to Earth.",
-      "It falls as rain, snow, sleet, or hail depending on temperature."
+      "It falls as rain, snow, sleet, or hail depending on temperature.",
     ],
     example: [
       "Clouds are like giant sponges floating in the sky.",
       "When the sponge gets too full, the water falls down.",
-      "Warm weather = rain. Cold weather = snow!"
-    ]
+      "Warm weather = rain. Cold weather = snow!",
+    ],
   },
   collection: {
     title: "Collection & Infiltration",
     simple: [
       "Rainwater flows downhill into rivers, streams, lakes, and oceans.",
       "Some water soaks into the ground through soil and rocks.",
-      "This is called infiltration."
+      "This is called infiltration.",
     ],
     example: [
       "After rain, water flows down streets into drains.",
       "It travels to rivers, then lakes or ocean.",
-      "Some rainwater soaks into soil where plants drink it."
-    ]
-  }
+      "Some rainwater soaks into soil where plants drink it.",
+    ],
+  },
 };
 
 const DEFAULT_STEPS: StepData[] = [
-  { id: 'evaporation', phase: 'EVAPORATION', name: 'Evaporation & Transpiration', icon: '🌊' },
-  { id: 'condensation', phase: 'CONDENSATION', name: 'Condensation', icon: '☁️' },
-  { id: 'precipitation', phase: 'PRECIPITATION', name: 'Precipitation', icon: '💧' },
-  { id: 'collection', phase: 'COLLECTION', name: 'Collection & Infiltration', icon: '🏞️' }
+  {
+    id: "evaporation",
+    phase: "EVAPORATION",
+    name: "Evaporation & Transpiration",
+    icon: "🌊",
+  },
+  {
+    id: "condensation",
+    phase: "CONDENSATION",
+    name: "Condensation",
+    icon: "☁️",
+  },
+  {
+    id: "precipitation",
+    phase: "PRECIPITATION",
+    name: "Precipitation",
+    icon: "💧",
+  },
+  {
+    id: "collection",
+    phase: "COLLECTION",
+    name: "Collection & Infiltration",
+    icon: "🏞️",
+  },
 ];
 
 const DEFAULT_QUESTIONS: Question[] = [
   {
     id: 1,
     question: "In which three states does water exist in nature?",
-    options: ["Liquid, Solid, Plasma", "Liquid, Solid, Gas", "Solid, Gas, Plasma", "Liquid, Gas, Plasma"],
+    options: [
+      "Liquid, Solid, Plasma",
+      "Liquid, Solid, Gas",
+      "Solid, Gas, Plasma",
+      "Liquid, Gas, Plasma",
+    ],
     correctAnswer: 1,
-    explanation: "Water exists as liquid (oceans, rivers, lakes), solid (snow, ice, glaciers), and gas (water vapour in the atmosphere)."
+    explanation:
+      "Water exists as liquid (oceans, rivers, lakes), solid (snow, ice, glaciers), and gas (water vapour in the atmosphere).",
   },
   {
     id: 2,
-    question: "What is the process called when water vapour rises up, cools down and forms clouds?",
+    question:
+      "What is the process called when water vapour rises up, cools down and forms clouds?",
     options: ["Evaporation", "Precipitation", "Condensation", "Transpiration"],
     correctAnswer: 2,
-    explanation: "Condensation is the process where water vapour cools down and changes back into liquid water, forming clouds."
+    explanation:
+      "Condensation is the process where water vapour cools down and changes back into liquid water, forming clouds.",
   },
   {
     id: 3,
     question: "Through which material does water seep the fastest?",
     options: ["Clay", "Sand", "Gravel", "Rock"],
     correctAnswer: 2,
-    explanation: "Water seeps fastest through gravel because the spaces between gravel particles are wider compared to sand and clay."
+    explanation:
+      "Water seeps fastest through gravel because the spaces between gravel particles are wider compared to sand and clay.",
   },
   {
     id: 4,
-    question: "What are the underground layers of sediments and rocks that store water called?",
+    question:
+      "What are the underground layers of sediments and rocks that store water called?",
     options: ["Reservoirs", "Aquifers", "Water tables", "Underground lakes"],
     correctAnswer: 1,
-    explanation: "Aquifers are underground layers of sediments and rocks that store water in their pore spaces, which we access through wells."
+    explanation:
+      "Aquifers are underground layers of sediments and rocks that store water in their pore spaces, which we access through wells.",
   },
   {
     id: 5,
-    question: "What is the process of surface water seeping through soil and rocks called?",
+    question:
+      "What is the process of surface water seeping through soil and rocks called?",
     options: ["Percolation", "Evaporation", "Infiltration", "Precipitation"],
     correctAnswer: 2,
-    explanation: "Infiltration is the process where surface water seeps through soil and rocks beneath Earth's surface to form groundwater."
-  }
+    explanation:
+      "Infiltration is the process where surface water seeps through soil and rocks beneath Earth's surface to form groundwater.",
+  },
 ];
 
 const DEFAULT_EXAMPLES: RealWorldExample[] = [
@@ -238,143 +312,263 @@ const DEFAULT_EXAMPLES: RealWorldExample[] = [
     id: 1,
     title: "Ice Stupa - Ladakh",
     location: "Ladakh, India",
-    description: "An innovative water conservation technique where mountain stream water is channeled through underground pipes and sprayed into cold air during winters. The water freezes layer by layer, creating tall cone-shaped ice structures that melt slowly in spring, providing water for farming throughout summer.",
+    description:
+      "An innovative water conservation technique where mountain stream water is channeled through underground pipes and sprayed into cold air during winters. The water freezes layer by layer, creating tall cone-shaped ice structures that melt slowly in spring, providing water for farming throughout summer.",
     category: "Water Conservation",
-    impact: "Provides water supply during water-scarce spring season when snow hasn't melted enough",
+    impact:
+      "Provides water supply during water-scarce spring season when snow hasn't melted enough",
     keyFeatures: [
       "Built during extreme winters",
       "Uses natural freezing temperatures",
       "Melts slowly to provide sustained water supply",
-      "Supports agriculture in arid regions"
+      "Supports agriculture in arid regions",
     ],
-    connection: "Ice Stupa utilizes the water cycle by storing water in solid form (ice) during winter, which then melts and evaporates, completing the cycle while providing agricultural water."
+    connection:
+      "Ice Stupa utilizes the water cycle by storing water in solid form (ice) during winter, which then melts and evaporates, completing the cycle while providing agricultural water.",
   },
   {
     id: 2,
     title: "Rainwater Harvesting Systems",
     location: "Urban Areas, India",
-    description: "Systems that collect and store rainwater from rooftops and other surfaces. The collected water is filtered and directed into underground storage tanks or used to recharge groundwater through recharge pits, helping replenish depleting aquifers.",
+    description:
+      "Systems that collect and store rainwater from rooftops and other surfaces. The collected water is filtered and directed into underground storage tanks or used to recharge groundwater through recharge pits, helping replenish depleting aquifers.",
     category: "Groundwater Recharge",
-    impact: "Reduces dependency on municipal water supply and recharges groundwater levels",
+    impact:
+      "Reduces dependency on municipal water supply and recharges groundwater levels",
     keyFeatures: [
       "Collects rainwater from rooftops",
       "Filters and stores water",
       "Recharges underground aquifers",
-      "Reduces urban flooding"
+      "Reduces urban flooding",
     ],
-    connection: "Rainwater harvesting captures precipitation from the water cycle and uses infiltration to recharge aquifers, directly participating in the groundwater formation process."
+    connection:
+      "Rainwater harvesting captures precipitation from the water cycle and uses infiltration to recharge aquifers, directly participating in the groundwater formation process.",
   },
   {
     id: 3,
     title: "Traditional Houses - Uttarakhand Himalayas",
     location: "Mori Block, Uttarkashi, Uttarakhand",
-    description: "Houses built with walls made of two wooden layers filled with cow dung and mud between them. This design utilizes the poor heat conductivity of wood and mud to prevent heat loss, keeping homes warm during harsh winters with heavy snowfall.",
+    description:
+      "Houses built with walls made of two wooden layers filled with cow dung and mud between them. This design utilizes the poor heat conductivity of wood and mud to prevent heat loss, keeping homes warm during harsh winters with heavy snowfall.",
     category: "Heat Transfer Application",
-    impact: "Maintains warmth without external heating, saving energy in extreme cold climates",
+    impact:
+      "Maintains warmth without external heating, saving energy in extreme cold climates",
     keyFeatures: [
       "Double wooden layer walls",
       "Natural insulation with mud and cow dung",
       "Poor conductors prevent heat loss",
-      "Sustainable and eco-friendly"
+      "Sustainable and eco-friendly",
     ],
-    connection: "Traditional houses use poor heat conductors to minimize conduction, preventing heat loss and maintaining comfortable indoor temperatures in extreme climates."
+    connection:
+      "Traditional houses use poor heat conductors to minimize conduction, preventing heat loss and maintaining comfortable indoor temperatures in extreme climates.",
   },
   {
     id: 4,
     title: "Hollow Brick Construction",
     location: "Hot and Cold Climate Regions",
-    description: "Buildings constructed using hollow bricks that trap air in their cavities. Since air is a poor conductor of heat, these buildings stay warm in winters and cool in summers by preventing heat transfer between inside and outside environments.",
+    description:
+      "Buildings constructed using hollow bricks that trap air in their cavities. Since air is a poor conductor of heat, these buildings stay warm in winters and cool in summers by preventing heat transfer between inside and outside environments.",
     category: "Thermal Insulation",
-    impact: "Reduces energy consumption for heating and cooling, making buildings more sustainable",
+    impact:
+      "Reduces energy consumption for heating and cooling, making buildings more sustainable",
     keyFeatures: [
       "Air trapped in hollow spaces",
       "Acts as natural insulator",
       "Reduces energy bills",
-      "Effective in extreme climates"
+      "Effective in extreme climates",
     ],
-    connection: "Hollow bricks trap air (a poor conductor) to prevent heat transfer through conduction, demonstrating practical application of thermal insulation principles."
+    connection:
+      "Hollow bricks trap air (a poor conductor) to prevent heat transfer through conduction, demonstrating practical application of thermal insulation principles.",
   },
   {
     id: 5,
     title: "Traditional Bukhari Heater",
     location: "Upper Himalayan Regions",
-    description: "A traditional room heater consisting of an iron stove burning wood or charcoal, with a chimney pipe for smoke venting. It demonstrates all three heat transfer processes: conduction (from flame to stove), convection (heating air and water), and radiation (warmth felt around it). The flat top can be used for cooking.",
+    description:
+      "A traditional room heater consisting of an iron stove burning wood or charcoal, with a chimney pipe for smoke venting. It demonstrates all three heat transfer processes: conduction (from flame to stove), convection (heating air and water), and radiation (warmth felt around it). The flat top can be used for cooking.",
     category: "Heat Transfer",
-    impact: "Provides heating and cooking solution in areas with limited modern infrastructure",
+    impact:
+      "Provides heating and cooking solution in areas with limited modern infrastructure",
     keyFeatures: [
       "Demonstrates conduction, convection, and radiation",
       "Multi-purpose: heating and cooking",
       "Uses locally available fuel",
-      "Effective chimney system"
+      "Effective chimney system",
     ],
-    connection: "Bukhari demonstrates all three heat transfer methods: conduction (metal heating), convection (air circulation), and radiation (warmth felt nearby)."
-  }
+    connection:
+      "Bukhari demonstrates all three heat transfer methods: conduction (metal heating), convection (air circulation), and radiation (warmth felt nearby).",
+  },
 ];
 
 // ═══════════════════════════════════════════════════════════════════════════
-// SIMPLE ICON COMPONENTS
+// SVG ICON COMPONENTS (Singularity geometric style)
 // ═══════════════════════════════════════════════════════════════════════════
 
-const DropletIcon = ({ size = 24, color = "currentColor" }: { size?: number; color?: string }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2">
+const DropletIcon = ({
+  size = 24,
+  color = "currentColor",
+}: {
+  size?: number;
+  color?: string;
+}) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2"
+  >
     <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" />
   </svg>
 );
 
-const PlayIcon = ({ size = 24, color = "currentColor" }: { size?: number; color?: string }) => (
+const PlayIcon = ({
+  size = 24,
+  color = "currentColor",
+}: {
+  size?: number;
+  color?: string;
+}) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill={color}>
     <path d="M8 5v14l11-7z" />
   </svg>
 );
 
-const PauseIcon = ({ size = 24, color = "currentColor" }: { size?: number; color?: string }) => (
+const PauseIcon = ({
+  size = 24,
+  color = "currentColor",
+}: {
+  size?: number;
+  color?: string;
+}) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill={color}>
     <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
   </svg>
 );
 
-const ChevronLeftIcon = ({ size = 24, color = "currentColor" }: { size?: number; color?: string }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2">
+const ChevronLeftIcon = ({
+  size = 24,
+  color = "currentColor",
+}: {
+  size?: number;
+  color?: string;
+}) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2"
+  >
     <path d="M15 18l-6-6 6-6" />
   </svg>
 );
 
-const ChevronRightIcon = ({ size = 24, color = "currentColor" }: { size?: number; color?: string }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2">
+const ChevronRightIcon = ({
+  size = 24,
+  color = "currentColor",
+}: {
+  size?: number;
+  color?: string;
+}) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2"
+  >
     <path d="M9 18l6-6-6-6" />
   </svg>
 );
 
-const RotateCcwIcon = ({ size = 24, color = "currentColor" }: { size?: number; color?: string }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2">
+const RotateCcwIcon = ({
+  size = 24,
+  color = "currentColor",
+}: {
+  size?: number;
+  color?: string;
+}) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2"
+  >
     <path d="M1 4v6h6M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
   </svg>
 );
 
-const BookOpenIcon = ({ size = 24, color = "currentColor" }: { size?: number; color?: string }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2">
+const BookOpenIcon = ({
+  size = 24,
+  color = "currentColor",
+}: {
+  size?: number;
+  color?: string;
+}) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2"
+  >
     <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
   </svg>
 );
 
-const ClipboardCheckIcon = ({ size = 24, color = "currentColor" }: { size?: number; color?: string }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2">
+const ClipboardCheckIcon = ({
+  size = 24,
+  color = "currentColor",
+}: {
+  size?: number;
+  color?: string;
+}) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2"
+  >
     <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-6 9l2 2 4-4" />
   </svg>
 );
 
-const GlobeIcon = ({ size = 24, color = "currentColor" }: { size?: number; color?: string }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2">
+const GlobeIcon = ({
+  size = 24,
+  color = "currentColor",
+}: {
+  size?: number;
+  color?: string;
+}) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2"
+  >
     <circle cx="12" cy="12" r="10" />
     <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
   </svg>
 );
 
 // ═══════════════════════════════════════════════════════════════════════════
-// ANIMATION KEYFRAMES
+// ANIMATION KEYFRAMES — Singularity palette-aware
 // ═══════════════════════════════════════════════════════════════════════════
 
 const KEYFRAMES_CSS = `
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
 @keyframes sunPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.92; } }
 @keyframes rayPulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
 @keyframes waveMotion { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
@@ -409,26 +603,107 @@ const KEYFRAMES_CSS = `
   100% { opacity: 0; transform: translateY(30px); }
 }
 @keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideUp {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
-@keyframes slideInLeft {
-  from { opacity: 0; transform: translateX(-30px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-@keyframes slideInRight {
-  from { opacity: 0; transform: translateX(30px); }
-  to { opacity: 1; transform: translateX(0); }
-}
 @keyframes pulse {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.8; }
+  50% { opacity: 0.7; }
 }
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes dotBounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+@keyframes progressGlow {
+  0%, 100% { box-shadow: 0 0 8px rgba(74, 77, 201, 0.3); }
+  50% { box-shadow: 0 0 16px rgba(74, 77, 201, 0.6); }
 }
 `;
+
+// ═══════════════════════════════════════════════════════════════════════════
+// SHARED BUTTON COMPONENT — matches Singularity design spec
+// ═══════════════════════════════════════════════════════════════════════════
+
+const DSButton: React.FC<{
+  variant?: "contained" | "outlined" | "text" | "highlight";
+  onClick?: () => void;
+  disabled?: boolean;
+  children: React.ReactNode;
+  style?: CSSProperties;
+}> = ({
+  variant = "contained",
+  onClick,
+  disabled = false,
+  children,
+  style,
+}) => {
+  const [hovered, setHovered] = useState(false);
+
+  const base: CSSProperties = {
+    fontFamily: DS.font,
+    fontSize: DS.button.fontSize,
+    fontWeight: DS.button.fontWeight,
+    height: DS.button.height,
+    padding: `0 ${DS.button.paddingX}`,
+    borderRadius: DS.radius.pill,
+    cursor: disabled ? "not-allowed" : "pointer",
+    display: "inline-flex",
+    alignItems: "center",
+    gap: "6px",
+    transition: "all 0.25s cubic-bezier(.4,0,.2,1)",
+    border: "none",
+    outline: "none",
+    whiteSpace: "nowrap" as const,
+    opacity: disabled ? 0.45 : 1,
+  };
+
+  const variants: { [key: string]: CSSProperties } = {
+    contained: {
+      background:
+        hovered && !disabled ? DS.colors.primaryDark : DS.colors.primary,
+      color: DS.colors.white,
+      boxShadow: hovered && !disabled ? DS.shadow.glow : DS.shadow.sm,
+    },
+    outlined: {
+      background:
+        hovered && !disabled ? `${DS.colors.primary}0D` : "transparent",
+      color: DS.colors.primary,
+      border: `2px solid ${disabled ? DS.colors.gray : DS.colors.primary}`,
+    },
+    text: {
+      background:
+        hovered && !disabled ? `${DS.colors.primary}0D` : "transparent",
+      color: disabled ? DS.colors.gray : DS.colors.primary,
+    },
+    highlight: {
+      background:
+        hovered && !disabled ? DS.colors.secondaryDark : DS.colors.secondary,
+      color: DS.colors.white,
+      boxShadow:
+        hovered && !disabled ? "0 0 20px rgba(255,114,18,0.35)" : DS.shadow.sm,
+    },
+  };
+
+  return (
+    <button
+      onClick={disabled ? undefined : onClick}
+      disabled={disabled}
+      style={{ ...base, ...variants[variant], ...style }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {children}
+    </button>
+  );
+};
 
 // ═══════════════════════════════════════════════════════════════════════════
 // LEARN MODE COMPONENT
@@ -442,7 +717,6 @@ const LearnMode: React.FC<{
   showNavigation: boolean;
   showPlayPause: boolean;
   showStepIndicator: boolean;
-  themeColor: string;
   setStepDetails?: (details: StepDetails) => void;
 }> = ({
   steps,
@@ -452,7 +726,6 @@ const LearnMode: React.FC<{
   showNavigation,
   showPlayPause,
   showStepIndicator,
-  themeColor,
   setStepDetails,
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -484,225 +757,173 @@ const LearnMode: React.FC<{
 
   const getCloudStyles = (cloudNum: number) => {
     const positions: { [key: string]: string } = {
-      'EVAPORATION': cloudNum === 1 ? 'translate(200px, 110px)' : 'translate(340px, 115px)',
-      'CONDENSATION': cloudNum === 1 ? 'translate(530px, 110px)' : 'translate(670px, 115px)',
-      'PRECIPITATION': cloudNum === 1 ? 'translate(530px, 110px)' : 'translate(670px, 115px)',
-      'COLLECTION': cloudNum === 1 ? 'translate(530px, 110px)' : 'translate(670px, 115px)',
+      EVAPORATION:
+        cloudNum === 1 ? "translate(200px, 110px)" : "translate(340px, 115px)",
+      CONDENSATION:
+        cloudNum === 1 ? "translate(530px, 110px)" : "translate(670px, 115px)",
+      PRECIPITATION:
+        cloudNum === 1 ? "translate(530px, 110px)" : "translate(670px, 115px)",
+      COLLECTION:
+        cloudNum === 1 ? "translate(530px, 110px)" : "translate(670px, 115px)",
     };
-    const opacity = currentPhase === 'COLLECTION' ? 0 : 1;
-    const transition = currentPhase === 'CONDENSATION' ? 'transform 5s ease, opacity 1s ease' :
-      currentPhase === 'COLLECTION' ? 'opacity 1.5s ease' : 'transform 1s ease, opacity 1s ease';
+    const opacity = currentPhase === "COLLECTION" ? 0 : 1;
+    const transition =
+      currentPhase === "CONDENSATION"
+        ? "transform 5s ease, opacity 1s ease"
+        : currentPhase === "COLLECTION"
+          ? "opacity 1.5s ease"
+          : "transform 1s ease, opacity 1s ease";
     return { transform: positions[currentPhase], opacity, transition };
   };
 
-  const getCloudFill = () => currentPhase === 'CONDENSATION' || currentPhase === 'PRECIPITATION' ? '#5a7c8a' : '#ffffff';
-  const getCloudStroke = () => currentPhase === 'CONDENSATION' || currentPhase === 'PRECIPITATION' ? '#456672' : '#e8e8e8';
-
-  const styles = {
-    container: {
-      width: '100%',
-      height: '100%',
-      background: '#ffffff',
-      display: 'flex',
-      flexDirection: 'column' as const,
-      fontFamily: 'Poppins, "Noto Sans", sans-serif',
-    },
-    header: {
-      background: `linear-gradient(90deg, ${themeColor}, #1976d2)`,
-      color: 'white',
-      padding: isMobile ? '8px 12px' : '10px 20px',
-      textAlign: 'center' as const,
-      flexShrink: 0,
-    },
-    title: {
-      margin: 0,
-      fontSize: isMobile ? '18px' : isTablet ? '20px' : '24px',
-      fontWeight: 'bold' as const,
-    },
-    subtitle: {
-      margin: '3px 0 0 0',
-      fontSize: isMobile ? '10px' : '12px',
-      opacity: 0.95,
-    },
-    contentArea: {
-      display: 'flex',
-      flexDirection: isSmallScreen ? 'column' as const : 'row' as const,
-      flex: 1,
-      overflow: 'hidden' as const,
-      minHeight: 0,
-    },
-    leftPanel: {
-      width: isSmallScreen ? '100%' : '62%',
-      padding: isMobile ? '8px' : '12px',
-      display: 'flex',
-      flexDirection: 'column' as const,
-      minHeight: isSmallScreen ? '300px' : 'auto',
-    },
-    svgContainer: {
-      flex: 1,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      background: '#ffffff',
-      borderRadius: isMobile ? '8px' : '16px',
-      padding: isMobile ? '6px' : '12px',
-      boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
-      overflow: 'hidden' as const,
-    },
-    svg: {
-      width: '100%',
-      height: 'auto',
-      maxHeight: isSmallScreen ? '350px' : '100%',
-      display: 'block' as const,
-    },
-    rightPanel: {
-      width: isSmallScreen ? '100%' : '38%',
-      display: 'flex',
-      flexDirection: 'column' as const,
-      padding: isMobile ? '8px' : '12px',
-      overflow: isSmallScreen ? 'visible' as const : 'hidden' as const,
-      maxHeight: isSmallScreen ? 'none' : '100%',
-    },
-    topicHeader: {
-      background: 'linear-gradient(135deg, #e3f2fd, #bbdefb)',
-      padding: isMobile ? '10px 14px' : '12px 18px',
-      borderRadius: '10px',
-      marginBottom: isMobile ? '8px' : '12px',
-      boxShadow: '0 3px 10px rgba(0,0,0,0.1)',
-      border: `2px solid ${themeColor}`,
-      flexShrink: 0,
-    },
-    topicTitle: {
-      color: '#1565c0',
-      fontSize: isMobile ? '14px' : isTablet ? '16px' : '18px',
-      fontWeight: 'bold' as const,
-      margin: 0,
-      textAlign: 'center' as const,
-    },
-    infoSection: {
-      display: 'flex',
-      flexDirection: 'column' as const,
-      gap: isMobile ? '12px' : '16px',
-      flex: 1,
-      overflow: isSmallScreen ? 'visible' as const : 'auto' as const,
-    },
-    infoBox: {
-      background: 'white',
-      padding: isMobile ? '10px 12px' : '12px 14px',
-      borderRadius: '10px',
-      borderLeft: `4px solid ${themeColor}`,
-      boxShadow: '0 3px 10px rgba(0,0,0,0.1)',
-    },
-    infoTitle: {
-      fontSize: isMobile ? '13px' : '15px',
-      fontWeight: 'bold' as const,
-      color: '#1976d2',
-      marginBottom: '10px',
-      display: 'flex',
-      alignItems: 'center',
-      gap: '8px',
-    },
-    infoSentence: {
-      fontSize: isMobile ? '11px' : '13px',
-      color: '#444',
-      lineHeight: '1.5',
-      margin: '0 0 4px 0',
-      paddingLeft: '4px',
-      fontWeight: '500' as const,
-    },
-    footer: {
-      background: '#ffffff',
-      padding: isMobile ? '10px 12px' : '14px 20px',
-      boxShadow: '0 -6px 16px rgba(0,0,0,0.08)',
-      flexShrink: 0,
-    },
-    controls: {
-      display: 'flex',
-      justifyContent: 'center',
-      gap: isMobile ? '6px' : '8px',
-      flexWrap: 'wrap' as const,
-      marginBottom: isMobile ? '6px' : '8px',
-    },
-    btn: (variant: string, disabled: boolean = false): CSSProperties => {
-      const colors: { [key: string]: { bg: string; hover: string } } = {
-        default: { bg: themeColor, hover: '#1976d2' },
-        play: { bg: '#4caf50', hover: '#388e3c' },
-        reset: { bg: '#ff9800', hover: '#f57c00' },
-      };
-      const color = colors[variant] || colors.default;
-      return {
-        padding: isMobile ? '7px 12px' : '9px 18px',
-        fontSize: isMobile ? '11px' : '13px',
-        fontWeight: '600' as const,
-        background: color.bg,
-        color: 'white',
-        border: 'none',
-        borderRadius: '8px',
-        cursor: disabled ? 'not-allowed' : 'pointer',
-        opacity: disabled ? 0.5 : 1,
-        transition: 'all 0.3s',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
-        display: 'flex',
-        alignItems: 'center',
-        gap: isMobile ? '4px' : '6px',
-        whiteSpace: 'nowrap' as const,
-      };
-    },
-    dots: {
-      display: 'flex',
-      justifyContent: 'center',
-      gap: isMobile ? '6px' : '8px',
-      flexWrap: 'wrap' as const,
-    },
-    dot: (isActive: boolean): CSSProperties => ({
-      width: isMobile ? '32px' : '36px',
-      height: isMobile ? '32px' : '36px',
-      borderRadius: '50%',
-      border: 'none',
-      background: isActive ? themeColor : 'white',
-      color: isActive ? 'white' : themeColor,
-      fontSize: isMobile ? '12px' : '14px',
-      fontWeight: 'bold' as const,
-      cursor: 'pointer',
-      boxShadow: isActive ? `0 0 0 3px rgba(33,150,243,0.3)` : '0 3px 8px rgba(0,0,0,0.2)',
-      transition: 'all 0.3s',
-    }),
-  };
+  const getCloudFill = () =>
+    currentPhase === "CONDENSATION" || currentPhase === "PRECIPITATION"
+      ? "#8A8ABA"
+      : "#ffffff";
+  const getCloudStroke = () =>
+    currentPhase === "CONDENSATION" || currentPhase === "PRECIPITATION"
+      ? "#6A6AA0"
+      : "#E0E0E0";
 
   return (
-    <div style={styles.container}>
-      <style>{KEYFRAMES_CSS}</style>
-      
-      <div style={styles.header}>
-        <h1 style={styles.title}>🌊 The Water Cycle</h1>
-        <p style={styles.subtitle}>Learn how water moves around our planet in a continuous cycle!</p>
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        background: DS.colors.white,
+        display: "flex",
+        flexDirection: "column",
+        fontFamily: DS.font,
+      }}
+    >
+      {/* Header */}
+      <div
+        style={{
+          background: DS.colors.gradientPrimary,
+          color: DS.colors.white,
+          padding: isMobile ? "10px 16px" : "14px 24px",
+          textAlign: "center",
+          flexShrink: 0,
+        }}
+      >
+        <h1
+          style={{
+            margin: 0,
+            fontSize: isMobile ? "18px" : isTablet ? "22px" : "26px",
+            fontWeight: 700,
+            letterSpacing: "-0.02em",
+          }}
+        >
+          🌊 The Water Cycle
+        </h1>
+        <p
+          style={{
+            margin: "4px 0 0 0",
+            fontSize: isMobile ? "11px" : "13px",
+            opacity: 0.9,
+            fontWeight: 400,
+          }}
+        >
+          Learn how water moves around our planet in a continuous cycle!
+        </p>
       </div>
 
-      <div style={styles.contentArea}>
-        <div style={styles.leftPanel}>
-          <div style={styles.svgContainer}>
-            <svg style={styles.svg} viewBox="0 0 800 460" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+      {/* Content */}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: isSmallScreen ? "column" : "row",
+          flex: 1,
+          overflow: "hidden",
+          minHeight: 0,
+        }}
+      >
+        {/* SVG Panel */}
+        <div
+          style={{
+            width: isSmallScreen ? "100%" : "62%",
+            padding: isMobile ? "8px" : "14px",
+            display: "flex",
+            flexDirection: "column",
+            minHeight: isSmallScreen ? "300px" : "auto",
+          }}
+        >
+          <div
+            style={{
+              flex: 1,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              background: DS.colors.surface,
+              borderRadius: DS.radius.lg,
+              padding: isMobile ? "8px" : "14px",
+              boxShadow: DS.shadow.md,
+              border: `1px solid ${DS.colors.grayLight}`,
+              overflow: "hidden",
+            }}
+          >
+            <svg
+              style={{
+                width: "100%",
+                height: "auto",
+                maxHeight: isSmallScreen ? "350px" : "100%",
+                display: "block",
+              }}
+              viewBox="0 0 800 460"
+              preserveAspectRatio="xMidYMid meet"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <defs>
-                <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#87ceeb" />
-                  <stop offset="100%" stopColor="#b3e5fc" />
+                <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stopColor="#C1C1EA" />
+                  <stop offset="100%" stopColor="#FFF3E4" />
                 </linearGradient>
-                <radialGradient id="sunGradient">
-                  <stop offset="0%" stopColor="#fff59d" />
-                  <stop offset="100%" stopColor="#ffeb3b" />
+                <radialGradient id="sunGrad">
+                  <stop offset="0%" stopColor="#FFF3E4" />
+                  <stop offset="100%" stopColor="#FC9145" />
                 </radialGradient>
-                <filter id="cloudShadow" x="-50%" y="-50%" width="200%" height="200%">
+                <linearGradient
+                  id="waterGrad"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="0%"
+                >
+                  <stop offset="0%" stopColor="#4A4DC9" />
+                  <stop offset="100%" stopColor="#6A6DFF" />
+                </linearGradient>
+                <filter
+                  id="cloudShadow"
+                  x="-50%"
+                  y="-50%"
+                  width="200%"
+                  height="200%"
+                >
                   <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
                   <feOffset dx="0" dy="3" />
-                  <feComponentTransfer><feFuncA type="linear" slope="0.25" /></feComponentTransfer>
-                  <feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge>
+                  <feComponentTransfer>
+                    <feFuncA type="linear" slope="0.2" />
+                  </feComponentTransfer>
+                  <feMerge>
+                    <feMergeNode />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
                 </filter>
               </defs>
 
-              <rect x="0" y="0" width="800" height="280" fill="url(#skyGradient)" />
+              {/* Sky */}
+              <rect x="0" y="0" width="800" height="280" fill="url(#skyGrad)" />
 
-              <g style={{ animation: 'sunPulse 4s ease-in-out infinite' }}>
-                <circle cx="90" cy="60" r="38" fill="url(#sunGradient)" stroke="#fbc02d" strokeWidth="3" />
+              {/* Sun */}
+              <g style={{ animation: "sunPulse 4s ease-in-out infinite" }}>
+                <circle
+                  cx="90"
+                  cy="60"
+                  r="38"
+                  fill="url(#sunGrad)"
+                  stroke="#FC9145"
+                  strokeWidth="2.5"
+                />
                 {[0, 45, 90, 135, 180, 225, 270, 315].map((angle, i) => {
                   const rad = (angle * Math.PI) / 180;
                   return (
@@ -712,103 +933,282 @@ const LearnMode: React.FC<{
                       y1={60 + Math.sin(rad) * 46}
                       x2={90 + Math.cos(rad) * 56}
                       y2={60 + Math.sin(rad) * 56}
-                      stroke="#fff59d"
-                      strokeWidth="3.5"
+                      stroke="#FC9145"
+                      strokeWidth="3"
                       strokeLinecap="round"
-                      opacity="0.8"
-                      style={{ animation: 'rayPulse 2.5s ease-in-out infinite' }}
+                      opacity="0.7"
+                      style={{
+                        animation: "rayPulse 2.5s ease-in-out infinite",
+                      }}
                     />
                   );
                 })}
-                <text x="90" y="65" textAnchor="middle" fontSize="12" fill="#f57c00" fontWeight="800">Sun</text>
+                <text
+                  x="90"
+                  y="65"
+                  textAnchor="middle"
+                  fontSize="11"
+                  fill="#533086"
+                  fontWeight="700"
+                  fontFamily={DS.font}
+                >
+                  Sun
+                </text>
               </g>
 
+              {/* Mountains */}
               <g>
-                <path d="M 600 280 L 680 200 L 750 260 L 800 240 L 800 280 Z" fill="#81c784" opacity="0.6" />
-                <path d="M 500 280 L 600 180 L 700 260 L 750 220 L 800 260 L 800 280 Z" fill="#66bb6a" opacity="0.7" />
+                <path
+                  d="M 600 280 L 680 200 L 750 260 L 800 240 L 800 280 Z"
+                  fill="#C1C1EA"
+                  opacity="0.5"
+                />
+                <path
+                  d="M 500 280 L 600 180 L 700 260 L 750 220 L 800 260 L 800 280 Z"
+                  fill="#9A9AD0"
+                  opacity="0.5"
+                />
               </g>
 
-              <rect x="0" y="280" width="450" height="85" fill="#2196f3" />
+              {/* Ocean */}
+              <rect
+                x="0"
+                y="280"
+                width="450"
+                height="85"
+                fill="url(#waterGrad)"
+              />
               <path
                 d="M 0 285 Q 50 280, 100 285 T 200 285 T 300 285 T 450 285"
                 fill="none"
-                stroke="#64b5f6"
+                stroke="#7A7DFF"
                 strokeWidth="2.5"
-                opacity="0.7"
-                style={{ animation: 'waveMotion 3s ease-in-out infinite' }}
+                opacity="0.6"
+                style={{ animation: "waveMotion 3s ease-in-out infinite" }}
               />
-              <text x="225" y="325" textAnchor="middle" fill="#1a237e" fontSize="14" fontWeight="700">Ocean / Lake</text>
+              <text
+                x="225"
+                y="325"
+                textAnchor="middle"
+                fill="#FFFFFF"
+                fontSize="13"
+                fontWeight="700"
+                fontFamily={DS.font}
+              >
+                Ocean / Lake
+              </text>
 
-              <rect x="450" y="280" width="350" height="85" fill="#a5d6a7" />
-              <text x="625" y="325" textAnchor="middle" fill="#1a237e" fontSize="14" fontWeight="700">Land</text>
+              {/* Land */}
+              <rect
+                x="450"
+                y="280"
+                width="350"
+                height="85"
+                fill="#C1C1EA"
+                opacity="0.4"
+              />
+              <rect
+                x="450"
+                y="280"
+                width="350"
+                height="85"
+                fill="#8BC34A"
+                opacity="0.35"
+              />
+              <text
+                x="625"
+                y="325"
+                textAnchor="middle"
+                fill="#533086"
+                fontSize="13"
+                fontWeight="700"
+                fontFamily={DS.font}
+              >
+                Land
+              </text>
 
+              {/* River */}
               <path
                 d="M 550 280 C 570 310, 510 340, 470 360 C 410 385, 350 360, 290 360"
                 fill="none"
-                stroke="#42a5f5"
-                strokeWidth="6"
-                strokeDasharray={currentPhase === 'COLLECTION' ? '12 8' : '0'}
-                style={currentPhase === 'COLLECTION' ? { animation: 'riverFlow 1.5s linear infinite' } : {}}
+                stroke="#4A4DC9"
+                strokeWidth="5"
+                strokeDasharray={currentPhase === "COLLECTION" ? "12 8" : "0"}
+                style={
+                  currentPhase === "COLLECTION"
+                    ? { animation: "riverFlow 1.5s linear infinite" }
+                    : {}
+                }
               />
 
+              {/* Trees */}
               <g>
-                <rect x="520" y="255" width="12" height="32" fill="#6d4c41" />
-                <circle cx="526" cy="250" r="16" fill="#388e3c" />
-                <rect x="560" y="255" width="12" height="32" fill="#6d4c41" />
-                <circle cx="566" cy="250" r="16" fill="#388e3c" />
+                <rect
+                  x="520"
+                  y="255"
+                  width="10"
+                  height="30"
+                  fill="#795548"
+                  rx="2"
+                />
+                <circle cx="525" cy="248" r="15" fill="#4CAF50" />
+                <rect
+                  x="560"
+                  y="255"
+                  width="10"
+                  height="30"
+                  fill="#795548"
+                  rx="2"
+                />
+                <circle cx="565" cy="248" r="15" fill="#4CAF50" />
               </g>
 
-              <rect x="0" y="365" width="800" height="40" fill="#8d6e63" />
-              <text x="400" y="388" textAnchor="middle" fill="#3e2723" fontSize="13" fontWeight="700">Soil</text>
+              {/* Soil */}
+              <rect x="0" y="365" width="800" height="40" fill="#A1887F" />
+              <text
+                x="400"
+                y="389"
+                textAnchor="middle"
+                fill="#3E2723"
+                fontSize="12"
+                fontWeight="600"
+                fontFamily={DS.font}
+              >
+                Soil
+              </text>
 
-              <rect x="0" y="405" width="800" height="55" fill="#5d4037" />
-              <rect x="230" y="410" width="260" height="35" fill="#4fc3f7" opacity="0.75" />
-              <text x="360" y="432" textAnchor="middle" fill="#01579b" fontSize="13" fontWeight="700">Aquifer (Groundwater)</text>
+              {/* Aquifer */}
+              <rect x="0" y="405" width="800" height="55" fill="#795548" />
+              <rect
+                x="230"
+                y="412"
+                width="260"
+                height="32"
+                fill="#4A4DC9"
+                opacity="0.45"
+                rx="6"
+              />
+              <text
+                x="360"
+                y="433"
+                textAnchor="middle"
+                fill="#FFFFFF"
+                fontSize="12"
+                fontWeight="600"
+                fontFamily={DS.font}
+              >
+                Aquifer (Groundwater)
+              </text>
 
-              <g style={{ opacity: currentPhase === 'EVAPORATION' ? 1 : 0, transition: 'opacity 0.8s' }}>
-                {currentPhase === 'EVAPORATION' && (
-                  <text x="225" y="250" textAnchor="middle" fill="#0d47a1" fontSize="14" fontWeight="800">Evaporation</text>
+              {/* Evaporation arrows */}
+              <g
+                style={{
+                  opacity: currentPhase === "EVAPORATION" ? 1 : 0,
+                  transition: "opacity 0.8s",
+                }}
+              >
+                {currentPhase === "EVAPORATION" && (
+                  <text
+                    x="225"
+                    y="250"
+                    textAnchor="middle"
+                    fill="#533086"
+                    fontSize="13"
+                    fontWeight="800"
+                    fontFamily={DS.font}
+                  >
+                    Evaporation
+                  </text>
                 )}
                 {[80, 140, 200, 260, 320, 380].map((x, i) => (
                   <g
                     key={i}
                     style={{
-                      animation: currentPhase === 'EVAPORATION' ? 'vaporRise 3s ease-out infinite' : 'none',
+                      animation:
+                        currentPhase === "EVAPORATION"
+                          ? "vaporRise 3s ease-out infinite"
+                          : "none",
                       animationDelay: `${i * 0.3}s`,
-                      opacity: 0
+                      opacity: 0,
                     }}
                   >
-                    <path d={`M ${x} 275 Q ${x - 5} 260, ${x} 245 T ${x} 215 T ${x} 185`} stroke="#4fc3f7" strokeWidth="2" fill="none" strokeDasharray="3 3" />
-                    <path d={`M ${x + 8} 275 Q ${x + 3} 260, ${x + 8} 245 T ${x + 8} 215 T ${x + 8} 185`} stroke="#4fc3f7" strokeWidth="2" fill="none" strokeDasharray="3 3" />
+                    <path
+                      d={`M ${x} 275 Q ${x - 5} 260, ${x} 245 T ${x} 215 T ${x} 185`}
+                      stroke="#7A7DFF"
+                      strokeWidth="2"
+                      fill="none"
+                      strokeDasharray="3 3"
+                    />
+                    <path
+                      d={`M ${x + 8} 275 Q ${x + 3} 260, ${x + 8} 245 T ${x + 8} 215 T ${x + 8} 185`}
+                      stroke="#7A7DFF"
+                      strokeWidth="2"
+                      fill="none"
+                      strokeDasharray="3 3"
+                    />
                   </g>
                 ))}
               </g>
 
-              <g style={{ opacity: currentPhase === 'EVAPORATION' ? 1 : 0, transition: 'opacity 0.8s' }}>
-                {currentPhase === 'EVAPORATION' && (
-                  <text x="540" y="220" textAnchor="middle" fill="#1b5e20" fontSize="14" fontWeight="800">Transpiration</text>
+              {/* Transpiration */}
+              <g
+                style={{
+                  opacity: currentPhase === "EVAPORATION" ? 1 : 0,
+                  transition: "opacity 0.8s",
+                }}
+              >
+                {currentPhase === "EVAPORATION" && (
+                  <text
+                    x="540"
+                    y="220"
+                    textAnchor="middle"
+                    fill="#2E7D32"
+                    fontSize="13"
+                    fontWeight="800"
+                    fontFamily={DS.font}
+                  >
+                    Transpiration
+                  </text>
                 )}
                 {[520, 535, 550, 565].map((x, i) => (
                   <g
                     key={i}
                     style={{
-                      animation: currentPhase === 'EVAPORATION' ? 'transpirationRise 2.5s ease-out infinite' : 'none',
+                      animation:
+                        currentPhase === "EVAPORATION"
+                          ? "transpirationRise 2.5s ease-out infinite"
+                          : "none",
                       animationDelay: `${i * 0.2}s`,
-                      opacity: 0
+                      opacity: 0,
                     }}
                   >
-                    <path d={`M ${x} 245 Q ${x - 3} 235, ${x} 225 T ${x} 205`} stroke="#66bb6a" strokeWidth="1.5" fill="none" strokeDasharray="2 2" />
+                    <path
+                      d={`M ${x} 245 Q ${x - 3} 235, ${x} 225 T ${x} 205`}
+                      stroke="#66bb6a"
+                      strokeWidth="1.5"
+                      fill="none"
+                      strokeDasharray="2 2"
+                    />
                   </g>
                 ))}
               </g>
 
+              {/* Clouds */}
               <g>
-                {[1, 2].map(cloudNum => (
+                {[1, 2].map((cloudNum) => (
                   <g key={cloudNum} style={getCloudStyles(cloudNum)}>
                     {cloudNum === 1 && (
-                      <text x="0" y="-45" textAnchor="middle" fill="#0d47a1" fontSize="13" fontWeight="700">
-                        {currentPhase === 'CONDENSATION' && 'Condensation'}
-                        {currentPhase === 'PRECIPITATION' && 'Precipitation'}
+                      <text
+                        x="0"
+                        y="-45"
+                        textAnchor="middle"
+                        fill="#533086"
+                        fontSize="12"
+                        fontWeight="700"
+                        fontFamily={DS.font}
+                      >
+                        {currentPhase === "CONDENSATION" && "Condensation"}
+                        {currentPhase === "PRECIPITATION" && "Precipitation"}
                       </text>
                     )}
                     <g filter="url(#cloudShadow)">
@@ -817,7 +1217,7 @@ const LearnMode: React.FC<{
                         { cx: -25, cy: 5, r: 23 },
                         { cx: 25, cy: 5, r: 23 },
                         { cx: -10, cy: -8, r: 20 },
-                        { cx: 10, cy: -8, r: 20 }
+                        { cx: 10, cy: -8, r: 20 },
                       ].map((c, i) => (
                         <circle
                           key={i}
@@ -825,7 +1225,7 @@ const LearnMode: React.FC<{
                           fill={getCloudFill()}
                           stroke={getCloudStroke()}
                           strokeWidth="1"
-                          style={{ transition: 'fill 5s, stroke 5s' }}
+                          style={{ transition: "fill 5s, stroke 5s" }}
                         />
                       ))}
                     </g>
@@ -833,7 +1233,13 @@ const LearnMode: React.FC<{
                 ))}
               </g>
 
-              <g style={{ opacity: currentPhase === 'PRECIPITATION' ? 1 : 0, transition: 'opacity 0.8s' }}>
+              {/* Rain */}
+              <g
+                style={{
+                  opacity: currentPhase === "PRECIPITATION" ? 1 : 0,
+                  transition: "opacity 0.8s",
+                }}
+              >
                 {Array.from({ length: 72 }).map((_, i) => {
                   const cloudBase = i < 36 ? 495 : 635;
                   const col = (i % 36) % 6;
@@ -844,43 +1250,92 @@ const LearnMode: React.FC<{
                     <g
                       key={i}
                       style={{
-                        animation: currentPhase === 'PRECIPITATION' ? 'rainDropFall 1s linear infinite' : 'none',
-                        animationDelay: `${(col * 0.12) + (row * 0.05)}s`
+                        animation:
+                          currentPhase === "PRECIPITATION"
+                            ? "rainDropFall 1s linear infinite"
+                            : "none",
+                        animationDelay: `${col * 0.12 + row * 0.05}s`,
                       }}
                     >
-                      <circle cx={x} cy={y} r="3" fill="#4a90b8" opacity="0.9" />
-                      <ellipse cx={x} cy={y + 4} rx="2" ry="5" fill="#4a90b8" opacity="0.9" />
+                      <circle
+                        cx={x}
+                        cy={y}
+                        r="3"
+                        fill="#4A4DC9"
+                        opacity="0.8"
+                      />
+                      <ellipse
+                        cx={x}
+                        cy={y + 4}
+                        rx="2"
+                        ry="5"
+                        fill="#4A4DC9"
+                        opacity="0.8"
+                      />
                     </g>
                   );
                 })}
-                {[500, 520, 540, 560, 580, 640, 660, 680, 700, 720].map((x, i) => (
-                  <ellipse
-                    key={i}
-                    cx={x}
-                    cy={278}
-                    rx={6}
-                    ry={2}
-                    fill="#64b5f6"
-                    opacity="0"
-                    style={{
-                      animation: currentPhase === 'PRECIPITATION' ? 'splashEffect 1s linear infinite' : 'none',
-                      animationDelay: `${i * 0.1}s`
-                    }}
-                  />
-                ))}
+                {[500, 520, 540, 560, 580, 640, 660, 680, 700, 720].map(
+                  (x, i) => (
+                    <ellipse
+                      key={i}
+                      cx={x}
+                      cy={278}
+                      rx={6}
+                      ry={2}
+                      fill="#7A7DFF"
+                      opacity="0"
+                      style={{
+                        animation:
+                          currentPhase === "PRECIPITATION"
+                            ? "splashEffect 1s linear infinite"
+                            : "none",
+                        animationDelay: `${i * 0.1}s`,
+                      }}
+                    />
+                  ),
+                )}
               </g>
 
-              <g style={{ opacity: currentPhase === 'COLLECTION' ? 1 : 0, transition: 'opacity 0.8s' }}>
-                <text x="610" y="345" textAnchor="middle" fill="#0d47a1" fontSize="14" fontWeight="800">Infiltration</text>
+              {/* Infiltration */}
+              <g
+                style={{
+                  opacity: currentPhase === "COLLECTION" ? 1 : 0,
+                  transition: "opacity 0.8s",
+                }}
+              >
+                <text
+                  x="610"
+                  y="345"
+                  textAnchor="middle"
+                  fill="#533086"
+                  fontSize="13"
+                  fontWeight="800"
+                  fontFamily={DS.font}
+                >
+                  Infiltration
+                </text>
                 {[500, 560, 620, 680, 730].map((x, i) => (
                   <g
                     key={i}
                     style={{
-                      animation: currentPhase === 'COLLECTION' ? 'infiltrationDrop 2.5s ease-in infinite' : 'none',
-                      animationDelay: `${i * 0.25}s`
+                      animation:
+                        currentPhase === "COLLECTION"
+                          ? "infiltrationDrop 2.5s ease-in infinite"
+                          : "none",
+                      animationDelay: `${i * 0.25}s`,
                     }}
                   >
-                    <line x1={x} y1={350} x2={x} y2={380} stroke="#1976d2" strokeWidth="2.5" strokeLinecap="round" opacity="0" />
+                    <line
+                      x1={x}
+                      y1={350}
+                      x2={x}
+                      y2={380}
+                      stroke="#4A4DC9"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      opacity="0"
+                    />
                   </g>
                 ))}
               </g>
@@ -888,82 +1343,251 @@ const LearnMode: React.FC<{
           </div>
         </div>
 
-        <div style={styles.rightPanel}>
-          <div style={styles.topicHeader}>
-            <h2 style={styles.topicTitle}>{currentInfo.title}</h2>
+        {/* Info Panel */}
+        <div
+          style={{
+            width: isSmallScreen ? "100%" : "38%",
+            display: "flex",
+            flexDirection: "column",
+            padding: isMobile ? "8px" : "14px",
+            overflow: isSmallScreen ? "visible" : "hidden",
+            maxHeight: isSmallScreen ? "none" : "100%",
+          }}
+        >
+          {/* Phase title card */}
+          <div
+            style={{
+              background: DS.colors.gradientSubtle,
+              padding: isMobile ? "12px 16px" : "14px 20px",
+              borderRadius: DS.radius.md,
+              marginBottom: isMobile ? "10px" : "14px",
+              boxShadow: DS.shadow.sm,
+              border: `2px solid ${DS.colors.primaryLight}`,
+              flexShrink: 0,
+            }}
+          >
+            <h2
+              style={{
+                color: DS.colors.primaryDark,
+                fontSize: isMobile ? "15px" : isTablet ? "17px" : "19px",
+                fontWeight: 700,
+                margin: 0,
+                textAlign: "center",
+                fontFamily: DS.font,
+              }}
+            >
+              {currentInfo.title}
+            </h2>
           </div>
 
-          <div style={styles.infoSection}>
-            <div style={styles.infoBox}>
-              <div style={styles.infoTitle}>
+          {/* Info cards */}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: isMobile ? "12px" : "16px",
+              flex: 1,
+              overflow: isSmallScreen ? "visible" : "auto",
+            }}
+          >
+            {/* What is it */}
+            <div
+              style={{
+                background: DS.colors.white,
+                padding: isMobile ? "12px 14px" : "14px 18px",
+                borderRadius: DS.radius.md,
+                borderLeft: `4px solid ${DS.colors.primary}`,
+                boxShadow: DS.shadow.sm,
+              }}
+            >
+              <div
+                style={{
+                  fontSize: isMobile ? "13px" : "15px",
+                  fontWeight: 700,
+                  color: DS.colors.primary,
+                  marginBottom: "10px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  fontFamily: DS.font,
+                }}
+              >
                 <span>📖</span> What is it?
               </div>
               {currentInfo.simple.map((sentence, index) => (
-                <p key={`simple-${index}`} style={styles.infoSentence}>• {sentence}</p>
+                <p
+                  key={`s-${index}`}
+                  style={{
+                    fontSize: isMobile ? "12px" : "13px",
+                    color: DS.colors.text,
+                    lineHeight: "1.6",
+                    margin: "0 0 5px 0",
+                    paddingLeft: "4px",
+                    fontWeight: 500,
+                    fontFamily: DS.font,
+                  }}
+                >
+                  • {sentence}
+                </p>
               ))}
             </div>
 
-            <div style={styles.infoBox}>
-              <div style={styles.infoTitle}>
+            {/* Example */}
+            <div
+              style={{
+                background: DS.colors.white,
+                padding: isMobile ? "12px 14px" : "14px 18px",
+                borderRadius: DS.radius.md,
+                borderLeft: `4px solid ${DS.colors.secondary}`,
+                boxShadow: DS.shadow.sm,
+              }}
+            >
+              <div
+                style={{
+                  fontSize: isMobile ? "13px" : "15px",
+                  fontWeight: 700,
+                  color: DS.colors.secondary,
+                  marginBottom: "10px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  fontFamily: DS.font,
+                }}
+              >
                 <span>💡</span> Real-Life Example
               </div>
               {currentInfo.example.map((sentence, index) => (
-                <p key={`example-${index}`} style={styles.infoSentence}>• {sentence}</p>
+                <p
+                  key={`e-${index}`}
+                  style={{
+                    fontSize: isMobile ? "12px" : "13px",
+                    color: DS.colors.text,
+                    lineHeight: "1.6",
+                    margin: "0 0 5px 0",
+                    paddingLeft: "4px",
+                    fontWeight: 500,
+                    fontFamily: DS.font,
+                  }}
+                >
+                  • {sentence}
+                </p>
               ))}
             </div>
           </div>
         </div>
       </div>
 
-      <div style={styles.footer}>
+      {/* Footer / Controls */}
+      <div
+        style={{
+          background: DS.colors.white,
+          padding: isMobile ? "10px 12px" : "14px 24px",
+          boxShadow: "0 -4px 16px rgba(74, 77, 201, 0.06)",
+          flexShrink: 0,
+          borderTop: `1px solid ${DS.colors.grayLight}`,
+        }}
+      >
         {(showNavigation || showPlayPause) && (
-          <div style={styles.controls}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              gap: isMobile ? "8px" : "10px",
+              flexWrap: "wrap",
+              marginBottom: isMobile ? "8px" : "10px",
+            }}
+          >
             {showNavigation && (
-              <button
-                style={styles.btn('default', isAutoPlaying)}
-                onClick={() => setCurrentStep((prev) => (prev - 1 + steps.length) % steps.length)}
+              <DSButton
+                variant="outlined"
+                onClick={() =>
+                  setCurrentStep(
+                    (prev) => (prev - 1 + steps.length) % steps.length,
+                  )
+                }
                 disabled={isAutoPlaying}
               >
                 <ChevronLeftIcon size={isMobile ? 14 : 16} />
-                {!isMobile && 'Previous'}
-              </button>
+                {!isMobile && "Previous"}
+              </DSButton>
             )}
             {showPlayPause && (
-              <button
-                style={styles.btn('play')}
+              <DSButton
+                variant="contained"
                 onClick={() => setIsAutoPlaying(!isAutoPlaying)}
               >
-                {isAutoPlaying ? <PauseIcon size={isMobile ? 14 : 16} /> : <PlayIcon size={isMobile ? 14 : 16} />}
-                {isAutoPlaying ? 'Pause' : isMobile ? 'Play' : 'Auto Play'}
-              </button>
+                {isAutoPlaying ? (
+                  <PauseIcon size={isMobile ? 14 : 16} color="#fff" />
+                ) : (
+                  <PlayIcon size={isMobile ? 14 : 16} color="#fff" />
+                )}
+                {isAutoPlaying ? "Pause" : isMobile ? "Play" : "Auto Play"}
+              </DSButton>
             )}
             {showNavigation && (
-              <button
-                style={styles.btn('default', isAutoPlaying)}
-                onClick={() => setCurrentStep((prev) => (prev + 1) % steps.length)}
+              <DSButton
+                variant="outlined"
+                onClick={() =>
+                  setCurrentStep((prev) => (prev + 1) % steps.length)
+                }
                 disabled={isAutoPlaying}
               >
-                {!isMobile && 'Next'}
+                {!isMobile && "Next"}
                 <ChevronRightIcon size={isMobile ? 14 : 16} />
-              </button>
+              </DSButton>
             )}
-            <button
-              style={styles.btn('reset')}
-              onClick={() => { setCurrentStep(0); setIsAutoPlaying(false); }}
+            <DSButton
+              variant="highlight"
+              onClick={() => {
+                setCurrentStep(0);
+                setIsAutoPlaying(false);
+              }}
             >
-              <RotateCcwIcon size={isMobile ? 14 : 16} />
-              {!isMobile && 'Reset'}
-            </button>
+              <RotateCcwIcon size={isMobile ? 14 : 16} color="#fff" />
+              {!isMobile && "Reset"}
+            </DSButton>
           </div>
         )}
 
         {showStepIndicator && (
-          <div style={styles.dots}>
-            {steps.map((_, i) => (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              gap: isMobile ? "8px" : "10px",
+              flexWrap: "wrap",
+            }}
+          >
+            {steps.map((step, i) => (
               <button
                 key={i}
-                style={styles.dot(i === currentStep)}
-                onClick={() => { setCurrentStep(i); setIsAutoPlaying(false); }}
+                onClick={() => {
+                  setCurrentStep(i);
+                  setIsAutoPlaying(false);
+                }}
+                style={{
+                  width: isMobile ? "34px" : "38px",
+                  height: isMobile ? "34px" : "38px",
+                  borderRadius: DS.radius.circle,
+                  border:
+                    i === currentStep
+                      ? `2px solid ${DS.colors.primary}`
+                      : `2px solid ${DS.colors.grayLight}`,
+                  background:
+                    i === currentStep ? DS.colors.primary : DS.colors.white,
+                  color:
+                    i === currentStep ? DS.colors.white : DS.colors.primary,
+                  fontSize: isMobile ? "12px" : "14px",
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  boxShadow: i === currentStep ? DS.shadow.glow : DS.shadow.sm,
+                  transition: "all 0.3s cubic-bezier(.4,0,.2,1)",
+                  fontFamily: DS.font,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  animation: i === currentStep ? "dotBounce 0.4s ease" : "none",
+                }}
               >
                 {i + 1}
               </button>
@@ -981,8 +1605,7 @@ const LearnMode: React.FC<{
 
 const PracticeMode: React.FC<{
   questions: Question[];
-  themeColor: string;
-}> = ({ questions, themeColor }) => {
+}> = ({ questions }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showExplanation, setShowExplanation] = useState(false);
@@ -997,10 +1620,9 @@ const PracticeMode: React.FC<{
 
   const handleSubmit = () => {
     if (selectedAnswer === null) return;
-    
     setShowExplanation(true);
     if (selectedAnswer === questions[currentQuestion].correctAnswer) {
-      setScore(prev => prev + 1);
+      setScore((prev) => prev + 1);
     }
   };
 
@@ -1022,281 +1644,338 @@ const PracticeMode: React.FC<{
     setQuizCompleted(false);
   };
 
-  const styles = {
-    container: {
-      maxWidth: '800px',
-      margin: '0 auto',
-      padding: isMobile ? '12px' : isTablet ? '16px' : '20px',
-      fontFamily: 'Poppins, "Noto Sans", sans-serif',
-    },
-    header: {
-      background: `linear-gradient(135deg, ${themeColor} 0%, #764ba2 100%)`,
-      color: 'white',
-      padding: isMobile ? '20px' : '30px',
-      borderRadius: isMobile ? '10px' : '15px',
-      marginBottom: isMobile ? '20px' : '30px',
-      boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2)',
-    },
-    headerTitle: {
-      margin: '0 0 20px 0',
-      fontSize: isMobile ? '1.3em' : isTablet ? '1.6em' : '2em',
-    },
-    progressInfo: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      marginBottom: '15px',
-      fontSize: isMobile ? '0.9em' : '1.1em',
-      flexWrap: 'wrap' as const,
-      gap: '8px',
-    },
-    progressBar: {
-      background: 'rgba(255, 255, 255, 0.3)',
-      height: isMobile ? '8px' : '10px',
-      borderRadius: '5px',
-      overflow: 'hidden' as const,
-    },
-    progressFill: (width: number) => ({
-      background: 'white',
-      height: '100%',
-      width: `${width}%`,
-      transition: 'width 0.3s ease',
-    }),
-    questionCard: {
-      background: 'white',
-      padding: isMobile ? '20px' : '30px',
-      borderRadius: isMobile ? '10px' : '15px',
-      boxShadow: '0 5px 20px rgba(0, 0, 0, 0.1)',
-    },
-    questionText: {
-      fontSize: isMobile ? '1.1em' : isTablet ? '1.2em' : '1.4em',
-      color: '#333',
-      marginBottom: isMobile ? '20px' : '30px',
-      lineHeight: '1.6',
-    },
-    optionsContainer: {
-      display: 'flex',
-      flexDirection: 'column' as const,
-      gap: isMobile ? '12px' : '15px',
-      marginBottom: isMobile ? '20px' : '25px',
-    },
-    optionButton: (isSelected: boolean, isCorrect: boolean, isIncorrect: boolean, isDisabled: boolean) => ({
-      display: 'flex',
-      alignItems: 'center',
-      padding: isMobile ? '14px' : '20px',
-      border: `2px solid ${isCorrect ? '#4caf50' : isIncorrect ? '#f44336' : isSelected ? themeColor : '#e0e0e0'}`,
-      borderRadius: '10px',
-      background: isCorrect ? '#e8f5e9' : isIncorrect ? '#ffebee' : isSelected ? '#f0f4ff' : 'white',
-      cursor: isDisabled ? 'not-allowed' : 'pointer',
-      transition: 'all 0.3s ease',
-      fontSize: isMobile ? '0.9em' : '1em',
-      textAlign: 'left' as const,
-    }),
-    optionLabel: (isCorrect: boolean, isIncorrect: boolean) => ({
-      display: 'inline-flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      width: isMobile ? '28px' : '35px',
-      height: isMobile ? '28px' : '35px',
-      background: isCorrect ? '#4caf50' : isIncorrect ? '#f44336' : themeColor,
-      color: 'white',
-      borderRadius: '50%',
-      fontWeight: 'bold' as const,
-      marginRight: isMobile ? '10px' : '15px',
-      flexShrink: 0,
-      fontSize: isMobile ? '0.85em' : '1em',
-    }),
-    optionText: {
-      flex: 1,
-    },
-    icon: {
-      marginLeft: '10px',
-      fontSize: '1.5em',
-      fontWeight: 'bold' as const,
-    },
-    explanationBox: {
-      background: '#fff8e1',
-      borderLeft: '4px solid #ffc107',
-      padding: isMobile ? '15px' : '20px',
-      borderRadius: '8px',
-      marginBottom: isMobile ? '15px' : '20px',
-    },
-    explanationTitle: {
-      margin: '0 0 10px 0',
-      color: '#f57c00',
-      fontSize: isMobile ? '1em' : '1.1em',
-    },
-    explanationText: {
-      margin: 0,
-      lineHeight: '1.6',
-      color: '#333',
-      fontSize: isMobile ? '0.9em' : '1em',
-    },
-    buttonContainer: {
-      display: 'flex',
-      justifyContent: 'center',
-    },
-    submitButton: (isDisabled: boolean) => ({
-      padding: isMobile ? '12px 30px' : '15px 40px',
-      fontSize: isMobile ? '1em' : '1.1em',
-      fontWeight: 'bold' as const,
-      border: 'none',
-      borderRadius: '25px',
-      cursor: isDisabled ? 'not-allowed' : 'pointer',
-      transition: 'all 0.3s ease',
-      background: isDisabled ? '#ccc' : `linear-gradient(135deg, ${themeColor} 0%, #764ba2 100%)`,
-      color: 'white',
-    }),
-    nextButton: {
-      padding: isMobile ? '12px 30px' : '15px 40px',
-      fontSize: isMobile ? '1em' : '1.1em',
-      fontWeight: 'bold' as const,
-      border: 'none',
-      borderRadius: '25px',
-      cursor: 'pointer',
-      transition: 'all 0.3s ease',
-      background: 'linear-gradient(135deg, #4caf50 0%, #45a049 100%)',
-      color: 'white',
-    },
-    quizCompleted: {
-      textAlign: 'center' as const,
-      padding: isMobile ? '20px' : '40px',
-    },
-    completedTitle: {
-      fontSize: isMobile ? '1.8em' : isTablet ? '2.2em' : '2.5em',
-      color: themeColor,
-      marginBottom: isMobile ? '20px' : '30px',
-    },
-    scoreDisplay: {
-      background: `linear-gradient(135deg, ${themeColor} 0%, #764ba2 100%)`,
-      color: 'white',
-      padding: isMobile ? '30px' : '40px',
-      borderRadius: isMobile ? '10px' : '15px',
-      marginBottom: isMobile ? '20px' : '30px',
-    },
-    scoreNumber: {
-      fontSize: isMobile ? '2.5em' : isTablet ? '3.2em' : '4em',
-      fontWeight: 'bold' as const,
-    },
-    scoreTotal: {
-      fontSize: isMobile ? '1.5em' : '2em',
-      opacity: 0.8,
-    },
-    scorePercentage: {
-      fontSize: isMobile ? '1.2em' : '1.5em',
-      margin: '10px 0',
-    },
-    performanceMessage: {
-      fontSize: isMobile ? '1.1em' : '1.3em',
-      color: '#333',
-      margin: '20px 0',
-      padding: isMobile ? '15px' : '20px',
-      background: '#f5f5f5',
-      borderRadius: '10px',
-    },
-    restartButton: {
-      padding: isMobile ? '12px 40px' : '15px 50px',
-      fontSize: isMobile ? '1.1em' : '1.2em',
-      fontWeight: 'bold' as const,
-      background: `linear-gradient(135deg, ${themeColor} 0%, #764ba2 100%)`,
-      color: 'white',
-      border: 'none',
-      borderRadius: '25px',
-      cursor: 'pointer',
-      transition: 'all 0.3s ease',
-    },
-  };
-
   if (quizCompleted) {
     const percentage = (score / questions.length) * 100;
-    let message = '';
-    if (score === questions.length) message = '🌟 Perfect! You\'re a Water Cycle expert!';
-    else if (percentage >= 80) message = '🎯 Excellent work! You understand the water cycle well!';
-    else if (percentage >= 60) message = '👍 Good job! Keep learning about the water cycle!';
-    else message = '📚 Keep practicing! Review the water cycle concepts.';
+    let message = "";
+    if (score === questions.length)
+      message = "🌟 Perfect! You're a Water Cycle expert!";
+    else if (percentage >= 80)
+      message = "🎯 Excellent work! You understand the water cycle well!";
+    else if (percentage >= 60)
+      message = "👍 Good job! Keep learning about the water cycle!";
+    else message = "📚 Keep practicing! Review the water cycle concepts.";
 
     return (
-      <div style={styles.container}>
-        <div style={styles.quizCompleted}>
-          <h1 style={styles.completedTitle}>🎉 Quiz Completed!</h1>
-          <div style={styles.scoreDisplay}>
-            <h2>Your Score</h2>
+      <div
+        style={{
+          maxWidth: "700px",
+          margin: "0 auto",
+          padding: isMobile ? "16px" : "24px",
+          fontFamily: DS.font,
+        }}
+      >
+        <div style={{ textAlign: "center", animation: "slideUp 0.5s ease" }}>
+          <h1
+            style={{
+              fontSize: isMobile ? "1.8em" : "2.4em",
+              background: DS.colors.gradientPrimary,
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              marginBottom: "24px",
+              fontWeight: 800,
+            }}
+          >
+            🎉 Quiz Completed!
+          </h1>
+          <div
+            style={{
+              background: DS.colors.gradientPrimary,
+              color: DS.colors.white,
+              padding: isMobile ? "30px" : "40px",
+              borderRadius: DS.radius.lg,
+              marginBottom: "24px",
+              boxShadow: DS.shadow.lg,
+            }}
+          >
+            <p style={{ fontSize: "16px", margin: "0 0 8px 0", opacity: 0.9 }}>
+              Your Score
+            </p>
             <div>
-              <span style={styles.scoreNumber}>{score}</span>
-              <span style={styles.scoreTotal}>/ {questions.length}</span>
+              <span
+                style={{
+                  fontSize: isMobile ? "2.5em" : "3.5em",
+                  fontWeight: 800,
+                }}
+              >
+                {score}
+              </span>
+              <span
+                style={{ fontSize: isMobile ? "1.4em" : "1.8em", opacity: 0.7 }}
+              >
+                {" "}
+                / {questions.length}
+              </span>
             </div>
-            <p style={styles.scorePercentage}>{percentage.toFixed(0)}%</p>
+            <p
+              style={{ fontSize: "1.2em", margin: "10px 0 0 0", opacity: 0.9 }}
+            >
+              {percentage.toFixed(0)}%
+            </p>
           </div>
-          <div style={styles.performanceMessage}>
-            <p>{message}</p>
+          <div
+            style={{
+              fontSize: isMobile ? "1em" : "1.15em",
+              color: DS.colors.text,
+              margin: "0 0 24px 0",
+              padding: "18px",
+              background: DS.colors.surface,
+              borderRadius: DS.radius.md,
+              border: `1px solid ${DS.colors.grayLight}`,
+            }}
+          >
+            {message}
           </div>
-          <button style={styles.restartButton} onClick={handleRestart}>
+          <DSButton variant="contained" onClick={handleRestart}>
             Try Again
-          </button>
+          </DSButton>
         </div>
       </div>
     );
   }
 
   return (
-    <div style={styles.container}>
-      <div style={styles.header}>
-        <h1 style={styles.headerTitle}>Water Cycle Practice</h1>
-        <div style={styles.progressInfo}>
-          <span>Question {currentQuestion + 1} of {questions.length}</span>
+    <div
+      style={{
+        maxWidth: "700px",
+        margin: "0 auto",
+        padding: isMobile ? "16px" : "24px",
+        fontFamily: DS.font,
+      }}
+    >
+      {/* Header */}
+      <div
+        style={{
+          background: DS.colors.gradientPrimary,
+          color: DS.colors.white,
+          padding: isMobile ? "20px" : "28px",
+          borderRadius: DS.radius.lg,
+          marginBottom: isMobile ? "20px" : "28px",
+          boxShadow: DS.shadow.lg,
+        }}
+      >
+        <h1
+          style={{
+            margin: "0 0 16px 0",
+            fontSize: isMobile ? "1.3em" : "1.7em",
+            fontWeight: 700,
+          }}
+        >
+          Water Cycle Practice
+        </h1>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginBottom: "12px",
+            fontSize: isMobile ? "0.9em" : "1em",
+            flexWrap: "wrap",
+            gap: "8px",
+          }}
+        >
+          <span>
+            Question {currentQuestion + 1} of {questions.length}
+          </span>
           <span>Score: {score}</span>
         </div>
-        <div style={styles.progressBar}>
-          <div style={styles.progressFill(((currentQuestion + 1) / questions.length) * 100)} />
+        <div
+          style={{
+            background: "rgba(255,255,255,0.25)",
+            height: "8px",
+            borderRadius: DS.radius.pill,
+            overflow: "hidden",
+          }}
+        >
+          <div
+            style={{
+              background: DS.colors.white,
+              height: "100%",
+              width: `${((currentQuestion + 1) / questions.length) * 100}%`,
+              transition: "width 0.4s cubic-bezier(.4,0,.2,1)",
+              borderRadius: DS.radius.pill,
+            }}
+          />
         </div>
       </div>
 
-      <div style={styles.questionCard}>
-        <h2 style={styles.questionText}>{questions[currentQuestion].question}</h2>
-        
-        <div style={styles.optionsContainer}>
+      {/* Question card */}
+      <div
+        style={{
+          background: DS.colors.white,
+          padding: isMobile ? "20px" : "28px",
+          borderRadius: DS.radius.lg,
+          boxShadow: DS.shadow.md,
+          border: `1px solid ${DS.colors.grayLight}`,
+          animation: "fadeIn 0.3s ease",
+        }}
+      >
+        <h2
+          style={{
+            fontSize: isMobile ? "1.05em" : "1.25em",
+            color: DS.colors.text,
+            marginBottom: isMobile ? "20px" : "28px",
+            lineHeight: 1.6,
+            fontWeight: 600,
+          }}
+        >
+          {questions[currentQuestion].question}
+        </h2>
+
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: isMobile ? "10px" : "12px",
+            marginBottom: isMobile ? "20px" : "24px",
+          }}
+        >
           {questions[currentQuestion].options.map((option, index) => {
             const isSelected = selectedAnswer === index;
-            const isCorrect = showExplanation && index === questions[currentQuestion].correctAnswer;
-            const isIncorrect = showExplanation && selectedAnswer === index && index !== questions[currentQuestion].correctAnswer;
-            
+            const isCorrect =
+              showExplanation &&
+              index === questions[currentQuestion].correctAnswer;
+            const isIncorrect =
+              showExplanation &&
+              selectedAnswer === index &&
+              index !== questions[currentQuestion].correctAnswer;
+
+            let borderColor = DS.colors.grayLight;
+            let bgColor = DS.colors.white;
+            let labelBg = DS.colors.primary;
+
+            if (isCorrect) {
+              borderColor = DS.colors.success;
+              bgColor = "#E8F9ED";
+              labelBg = DS.colors.success;
+            } else if (isIncorrect) {
+              borderColor = DS.colors.error;
+              bgColor = "#FFEDED";
+              labelBg = DS.colors.error;
+            } else if (isSelected) {
+              borderColor = DS.colors.primary;
+              bgColor = `${DS.colors.primary}08`;
+              labelBg = DS.colors.primary;
+            }
+
             return (
               <button
                 key={index}
-                style={styles.optionButton(isSelected, isCorrect, isIncorrect, showExplanation)}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  padding: isMobile ? "14px" : "18px",
+                  border: `2px solid ${borderColor}`,
+                  borderRadius: DS.radius.md,
+                  background: bgColor,
+                  cursor: showExplanation ? "not-allowed" : "pointer",
+                  transition: "all 0.25s cubic-bezier(.4,0,.2,1)",
+                  fontSize: isMobile ? "0.9em" : "1em",
+                  textAlign: "left",
+                  fontFamily: DS.font,
+                  fontWeight: 500,
+                  color: DS.colors.text,
+                }}
                 onClick={() => handleAnswerSelect(index)}
                 disabled={showExplanation}
               >
-                <span style={styles.optionLabel(isCorrect, isIncorrect)}>
+                <span
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: isMobile ? "28px" : "34px",
+                    height: isMobile ? "28px" : "34px",
+                    background: labelBg,
+                    color: DS.colors.white,
+                    borderRadius: DS.radius.circle,
+                    fontWeight: 700,
+                    marginRight: isMobile ? "12px" : "16px",
+                    flexShrink: 0,
+                    fontSize: isMobile ? "0.85em" : "0.95em",
+                  }}
+                >
                   {String.fromCharCode(65 + index)}
                 </span>
-                <span style={styles.optionText}>{option}</span>
-                {isCorrect && <span style={styles.icon}>✓</span>}
-                {isIncorrect && <span style={styles.icon}>✗</span>}
+                <span style={{ flex: 1 }}>{option}</span>
+                {isCorrect && (
+                  <span
+                    style={{
+                      marginLeft: "8px",
+                      fontSize: "1.3em",
+                      color: DS.colors.success,
+                    }}
+                  >
+                    ✓
+                  </span>
+                )}
+                {isIncorrect && (
+                  <span
+                    style={{
+                      marginLeft: "8px",
+                      fontSize: "1.3em",
+                      color: DS.colors.error,
+                    }}
+                  >
+                    ✗
+                  </span>
+                )}
               </button>
             );
           })}
         </div>
 
         {showExplanation && (
-          <div style={styles.explanationBox}>
-            <h3 style={styles.explanationTitle}>💡 Explanation</h3>
-            <p style={styles.explanationText}>{questions[currentQuestion].explanation}</p>
+          <div
+            style={{
+              background: DS.colors.secondaryLight,
+              borderLeft: `4px solid ${DS.colors.secondary}`,
+              padding: isMobile ? "14px" : "18px",
+              borderRadius: DS.radius.sm,
+              marginBottom: isMobile ? "16px" : "20px",
+              animation: "fadeIn 0.3s ease",
+            }}
+          >
+            <h3
+              style={{
+                margin: "0 0 8px 0",
+                color: DS.colors.secondary,
+                fontSize: isMobile ? "0.95em" : "1.05em",
+                fontWeight: 700,
+              }}
+            >
+              💡 Explanation
+            </h3>
+            <p
+              style={{
+                margin: 0,
+                lineHeight: 1.65,
+                color: DS.colors.text,
+                fontSize: isMobile ? "0.9em" : "0.95em",
+              }}
+            >
+              {questions[currentQuestion].explanation}
+            </p>
           </div>
         )}
 
-        <div style={styles.buttonContainer}>
+        <div style={{ display: "flex", justifyContent: "center" }}>
           {!showExplanation ? (
-            <button 
-              style={styles.submitButton(selectedAnswer === null)} 
+            <DSButton
+              variant="contained"
               onClick={handleSubmit}
               disabled={selectedAnswer === null}
             >
               Submit Answer
-            </button>
+            </DSButton>
           ) : (
-            <button style={styles.nextButton} onClick={handleNext}>
-              {currentQuestion < questions.length - 1 ? 'Next Question →' : 'View Results'}
-            </button>
+            <DSButton
+              variant="contained"
+              onClick={handleNext}
+              style={{ background: DS.colors.success }}
+            >
+              {currentQuestion < questions.length - 1
+                ? "Next Question →"
+                : "View Results"}
+            </DSButton>
           )}
         </div>
       </div>
@@ -1310,8 +1989,7 @@ const PracticeMode: React.FC<{
 
 const RealWorldMode: React.FC<{
   examples: RealWorldExample[];
-  themeColor: string;
-}> = ({ examples, themeColor }) => {
+}> = ({ examples }) => {
   const [selectedExample, setSelectedExample] = useState(0);
   const { isMobile, isTablet } = useResponsive();
 
@@ -1320,247 +1998,328 @@ const RealWorldMode: React.FC<{
     2: "🏠",
     3: "🛖",
     4: "🧱",
-    5: "♨️"
-  };
-
-  const styles = {
-    container: {
-      maxWidth: '1200px',
-      margin: '0 auto',
-      padding: isMobile ? '12px' : isTablet ? '16px' : '20px',
-      fontFamily: 'Poppins, "Noto Sans", sans-serif',
-    },
-    header: {
-      textAlign: 'center' as const,
-      marginBottom: isMobile ? '24px' : isTablet ? '32px' : '40px',
-    },
-    title: {
-      fontSize: isMobile ? '1.6em' : isTablet ? '2em' : '2.5em',
-      background: `linear-gradient(135deg, ${themeColor} 0%, #764ba2 100%)`,
-      WebkitBackgroundClip: 'text',
-      WebkitTextFillColor: 'transparent',
-      backgroundClip: 'text',
-      marginBottom: '10px',
-    },
-    subtitle: {
-      fontSize: isMobile ? '1em' : '1.2em',
-      color: '#666',
-      padding: '0 10px',
-    },
-    examplesGrid: {
-      display: 'grid',
-      gridTemplateColumns: isMobile ? '1fr' : isTablet ? 'repeat(2, 1fr)' : 'repeat(auto-fit, minmax(200px, 1fr))',
-      gap: isMobile ? '12px' : '20px',
-      marginBottom: isMobile ? '24px' : isTablet ? '32px' : '40px',
-    },
-    exampleCard: (isActive: boolean) => ({
-      background: isActive ? 'linear-gradient(135deg, #f0f4ff 0%, #e8ebff 100%)' : 'white',
-      padding: isMobile ? '16px' : '20px',
-      borderRadius: isMobile ? '10px' : '15px',
-      boxShadow: '0 5px 15px rgba(0, 0, 0, 0.1)',
-      cursor: 'pointer',
-      transition: 'all 0.3s ease',
-      textAlign: 'center' as const,
-      border: `3px solid ${isActive ? themeColor : 'transparent'}`,
-    }),
-    exampleIcon: {
-      fontSize: isMobile ? '2.5em' : '3em',
-      marginBottom: isMobile ? '10px' : '15px',
-    },
-    exampleTitle: {
-      fontSize: isMobile ? '1em' : '1.1em',
-      color: '#333',
-      marginBottom: '10px',
-    },
-    exampleLocation: {
-      fontSize: isMobile ? '0.85em' : '0.9em',
-      color: '#666',
-      marginBottom: '10px',
-    },
-    exampleCategory: {
-      display: 'inline-block',
-      padding: isMobile ? '4px 12px' : '5px 15px',
-      background: themeColor,
-      color: 'white',
-      borderRadius: '20px',
-      fontSize: isMobile ? '0.8em' : '0.85em',
-      fontWeight: 'bold' as const,
-    },
-    detailSection: {
-      background: 'white',
-      borderRadius: isMobile ? '10px' : '15px',
-      padding: isMobile ? '20px' : isTablet ? '25px' : '30px',
-      boxShadow: '0 5px 20px rgba(0, 0, 0, 0.1)',
-    },
-    detailHeader: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      marginBottom: isMobile ? '20px' : '25px',
-      paddingBottom: isMobile ? '15px' : '20px',
-      borderBottom: '2px solid #f0f0f0',
-      flexWrap: 'wrap' as const,
-      gap: isMobile ? '10px' : '15px',
-    },
-    detailTitle: {
-      color: '#333',
-      margin: 0,
-      fontSize: isMobile ? '1.4em' : isTablet ? '1.7em' : '2em',
-    },
-    detailCategory: {
-      padding: isMobile ? '6px 16px' : '8px 20px',
-      background: `linear-gradient(135deg, ${themeColor} 0%, #764ba2 100%)`,
-      color: 'white',
-      borderRadius: '20px',
-      fontWeight: 'bold' as const,
-      fontSize: isMobile ? '0.85em' : '1em',
-    },
-    locationBadge: {
-      display: 'inline-flex',
-      alignItems: 'center',
-      gap: isMobile ? '8px' : '10px',
-      padding: isMobile ? '10px 16px' : '12px 20px',
-      background: '#f0f4ff',
-      borderRadius: '10px',
-      marginBottom: isMobile ? '16px' : '20px',
-      fontSize: isMobile ? '0.9em' : '1em',
-    },
-    description: {
-      fontSize: isMobile ? '1em' : '1.1em',
-      lineHeight: '1.8',
-      color: '#444',
-      marginBottom: isMobile ? '20px' : '30px',
-    },
-    sectionTitle: {
-      color: themeColor,
-      marginBottom: isMobile ? '16px' : '20px',
-      fontSize: isMobile ? '1.1em' : '1.3em',
-    },
-    featuresList: {
-      listStyle: 'none',
-      padding: 0,
-    },
-    featureItem: {
-      display: 'flex',
-      alignItems: 'flex-start',
-      padding: isMobile ? '12px' : '15px',
-      marginBottom: '10px',
-      background: '#f8f9fa',
-      borderRadius: '10px',
-      fontSize: isMobile ? '0.95em' : '1.05em',
-      lineHeight: '1.6',
-    },
-    featureIcon: {
-      display: 'inline-flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      width: isMobile ? '22px' : '25px',
-      height: isMobile ? '22px' : '25px',
-      background: '#4caf50',
-      color: 'white',
-      borderRadius: '50%',
-      marginRight: isMobile ? '12px' : '15px',
-      flexShrink: 0,
-      fontWeight: 'bold' as const,
-      fontSize: isMobile ? '0.8em' : '0.9em',
-    },
-    impactCard: {
-      display: 'flex',
-      alignItems: 'flex-start',
-      gap: isMobile ? '12px' : '20px',
-      padding: isMobile ? '18px' : '25px',
-      background: 'linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%)',
-      borderRadius: isMobile ? '10px' : '15px',
-      marginBottom: isMobile ? '18px' : '25px',
-      borderLeft: '5px solid #ffc107',
-      flexDirection: isMobile ? 'column' as const : 'row' as const,
-      alignItems: isMobile ? 'center' : 'flex-start',
-    },
-    impactIcon: {
-      fontSize: isMobile ? '2em' : '2.5em',
-      flexShrink: 0,
-    },
-    impactText: {
-      fontSize: isMobile ? '1em' : '1.1em',
-      lineHeight: '1.7',
-      color: '#333',
-      margin: 0,
-      flex: 1,
-    },
-    connectionBox: {
-      padding: isMobile ? '18px' : '25px',
-      background: '#e8f5e9',
-      borderRadius: isMobile ? '10px' : '15px',
-      borderLeft: '5px solid #4caf50',
-    },
-    connectionTitle: {
-      color: '#2e7d32',
-      margin: '0 0 15px 0',
-      fontSize: isMobile ? '1.1em' : '1.2em',
-    },
-    connectionText: {
-      fontSize: isMobile ? '1em' : '1.05em',
-      lineHeight: '1.7',
-      color: '#333',
-      margin: 0,
-    },
+    5: "♨️",
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.header}>
-        <h1 style={styles.title}>🌍 Real World Applications</h1>
-        <p style={styles.subtitle}>Discover how heat transfer and water cycle concepts are applied in real life</p>
+    <div
+      style={{
+        maxWidth: "1200px",
+        margin: "0 auto",
+        padding: isMobile ? "16px" : "24px",
+        fontFamily: DS.font,
+      }}
+    >
+      {/* Header */}
+      <div
+        style={{
+          textAlign: "center",
+          marginBottom: isMobile ? "24px" : "36px",
+        }}
+      >
+        <h1
+          style={{
+            fontSize: isMobile ? "1.6em" : isTablet ? "2em" : "2.4em",
+            background: DS.colors.gradientPrimary,
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            marginBottom: "8px",
+            fontWeight: 800,
+          }}
+        >
+          🌍 Real World Applications
+        </h1>
+        <p
+          style={{
+            fontSize: isMobile ? "0.95em" : "1.1em",
+            color: DS.colors.textLight,
+            padding: "0 10px",
+          }}
+        >
+          Discover how heat transfer and water cycle concepts are applied in
+          real life
+        </p>
       </div>
 
-      <div style={styles.examplesGrid}>
-        {examples.map((example, index) => (
-          <div
-            key={example.id}
-            style={styles.exampleCard(selectedExample === index)}
-            onClick={() => setSelectedExample(index)}
+      {/* Cards grid */}
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: isMobile
+            ? "1fr"
+            : isTablet
+              ? "repeat(2, 1fr)"
+              : "repeat(auto-fit, minmax(200px, 1fr))",
+          gap: isMobile ? "12px" : "18px",
+          marginBottom: isMobile ? "24px" : "36px",
+        }}
+      >
+        {examples.map((example, index) => {
+          const isActive = selectedExample === index;
+          return (
+            <div
+              key={example.id}
+              onClick={() => setSelectedExample(index)}
+              style={{
+                background: isActive
+                  ? DS.colors.gradientSubtle
+                  : DS.colors.white,
+                padding: isMobile ? "18px" : "22px",
+                borderRadius: DS.radius.lg,
+                boxShadow: isActive ? DS.shadow.glow : DS.shadow.sm,
+                cursor: "pointer",
+                transition: "all 0.3s cubic-bezier(.4,0,.2,1)",
+                textAlign: "center",
+                border: `2px solid ${isActive ? DS.colors.primary : "transparent"}`,
+              }}
+            >
+              <div
+                style={{
+                  fontSize: isMobile ? "2.2em" : "2.6em",
+                  marginBottom: "10px",
+                }}
+              >
+                {iconMap[example.id]}
+              </div>
+              <h3
+                style={{
+                  fontSize: isMobile ? "0.95em" : "1.05em",
+                  color: DS.colors.text,
+                  marginBottom: "8px",
+                  fontWeight: 600,
+                }}
+              >
+                {example.title}
+              </h3>
+              <p
+                style={{
+                  fontSize: isMobile ? "0.8em" : "0.85em",
+                  color: DS.colors.textLight,
+                  marginBottom: "10px",
+                }}
+              >
+                📍 {example.location}
+              </p>
+              <span
+                style={{
+                  display: "inline-block",
+                  padding: isMobile ? "4px 14px" : "5px 16px",
+                  background: DS.colors.primary,
+                  color: DS.colors.white,
+                  borderRadius: DS.radius.pill,
+                  fontSize: isMobile ? "0.75em" : "0.8em",
+                  fontWeight: 600,
+                }}
+              >
+                {example.category}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Detail section */}
+      <div
+        key={selectedExample}
+        style={{
+          background: DS.colors.white,
+          borderRadius: DS.radius.lg,
+          padding: isMobile ? "20px" : isTablet ? "28px" : "34px",
+          boxShadow: DS.shadow.md,
+          border: `1px solid ${DS.colors.grayLight}`,
+          animation: "fadeIn 0.35s ease",
+        }}
+      >
+        {/* Title row */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: isMobile ? "18px" : "24px",
+            paddingBottom: isMobile ? "14px" : "18px",
+            borderBottom: `2px solid ${DS.colors.grayLight}`,
+            flexWrap: "wrap",
+            gap: "12px",
+          }}
+        >
+          <h2
+            style={{
+              color: DS.colors.text,
+              margin: 0,
+              fontSize: isMobile ? "1.3em" : isTablet ? "1.6em" : "1.8em",
+              fontWeight: 700,
+            }}
           >
-            <div style={styles.exampleIcon}>{iconMap[example.id]}</div>
-            <h3 style={styles.exampleTitle}>{example.title}</h3>
-            <p style={styles.exampleLocation}>📍 {example.location}</p>
-            <span style={styles.exampleCategory}>{example.category}</span>
-          </div>
-        ))}
-      </div>
-
-      <div style={styles.detailSection}>
-        <div style={styles.detailHeader}>
-          <h2 style={styles.detailTitle}>{examples[selectedExample].title}</h2>
-          <span style={styles.detailCategory}>{examples[selectedExample].category}</span>
+            {examples[selectedExample].title}
+          </h2>
+          <span
+            style={{
+              padding: isMobile ? "6px 18px" : "8px 22px",
+              background: DS.colors.gradientPrimary,
+              color: DS.colors.white,
+              borderRadius: DS.radius.pill,
+              fontWeight: 600,
+              fontSize: isMobile ? "0.85em" : "0.95em",
+            }}
+          >
+            {examples[selectedExample].category}
+          </span>
         </div>
 
-        <div style={styles.locationBadge}>
-          <span style={{ fontSize: '1.3em' }}>📍</span>
-          <strong>Location:</strong> {examples[selectedExample].location}
+        {/* Location */}
+        <div
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "10px",
+            padding: isMobile ? "10px 16px" : "12px 20px",
+            background: DS.colors.surface,
+            borderRadius: DS.radius.md,
+            marginBottom: isMobile ? "18px" : "22px",
+            fontSize: isMobile ? "0.9em" : "1em",
+            border: `1px solid ${DS.colors.grayLight}`,
+          }}
+        >
+          <span style={{ fontSize: "1.2em" }}>📍</span>
+          <strong style={{ color: DS.colors.text }}>Location:</strong>
+          <span style={{ color: DS.colors.textLight }}>
+            {examples[selectedExample].location}
+          </span>
         </div>
 
-        <p style={styles.description}>{examples[selectedExample].description}</p>
+        {/* Description */}
+        <p
+          style={{
+            fontSize: isMobile ? "0.95em" : "1.05em",
+            lineHeight: 1.8,
+            color: DS.colors.text,
+            marginBottom: isMobile ? "20px" : "28px",
+          }}
+        >
+          {examples[selectedExample].description}
+        </p>
 
-        <div style={styles.impactCard}>
-          <span style={styles.impactIcon}>⚡</span>
-          <p style={styles.impactText}>
-            <strong>Real-World Impact:</strong> {examples[selectedExample].impact}
+        {/* Impact */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: isMobile ? "center" : "flex-start",
+            gap: isMobile ? "14px" : "20px",
+            padding: isMobile ? "18px" : "24px",
+            background: DS.colors.secondaryLight,
+            borderRadius: DS.radius.md,
+            marginBottom: isMobile ? "20px" : "28px",
+            borderLeft: `5px solid ${DS.colors.secondary}`,
+            flexDirection: isMobile ? "column" : "row",
+          }}
+        >
+          <span
+            style={{ fontSize: isMobile ? "1.8em" : "2.2em", flexShrink: 0 }}
+          >
+            ⚡
+          </span>
+          <p
+            style={{
+              fontSize: isMobile ? "0.95em" : "1.05em",
+              lineHeight: 1.7,
+              color: DS.colors.text,
+              margin: 0,
+              flex: 1,
+            }}
+          >
+            <strong style={{ color: DS.colors.secondary }}>
+              Real-World Impact:
+            </strong>{" "}
+            {examples[selectedExample].impact}
           </p>
         </div>
 
-        <h3 style={styles.sectionTitle}>Key Features</h3>
-        <ul style={styles.featuresList}>
+        {/* Features */}
+        <h3
+          style={{
+            color: DS.colors.primary,
+            marginBottom: isMobile ? "14px" : "18px",
+            fontSize: isMobile ? "1.05em" : "1.2em",
+            fontWeight: 700,
+          }}
+        >
+          Key Features
+        </h3>
+        <ul
+          style={{
+            listStyle: "none",
+            padding: 0,
+            marginBottom: isMobile ? "20px" : "28px",
+          }}
+        >
           {examples[selectedExample].keyFeatures.map((feature, index) => (
-            <li key={index} style={styles.featureItem}>
-              <span style={styles.featureIcon}>✓</span>
-              {feature}
+            <li
+              key={index}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                padding: isMobile ? "12px" : "14px",
+                marginBottom: "8px",
+                background: DS.colors.surface,
+                borderRadius: DS.radius.sm,
+                fontSize: isMobile ? "0.9em" : "1em",
+                lineHeight: 1.5,
+                border: `1px solid ${DS.colors.grayLight}`,
+              }}
+            >
+              <span
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "24px",
+                  height: "24px",
+                  background: DS.colors.success,
+                  color: DS.colors.white,
+                  borderRadius: DS.radius.circle,
+                  marginRight: "14px",
+                  flexShrink: 0,
+                  fontWeight: 700,
+                  fontSize: "0.75em",
+                }}
+              >
+                ✓
+              </span>
+              <span style={{ color: DS.colors.text }}>{feature}</span>
             </li>
           ))}
         </ul>
 
-        <div style={styles.connectionBox}>
-          <h3 style={styles.connectionTitle}>🔗 Connection to Water Cycle & Heat Transfer</h3>
-          <p style={styles.connectionText}>{examples[selectedExample].connection}</p>
+        {/* Connection */}
+        <div
+          style={{
+            padding: isMobile ? "18px" : "24px",
+            background: `${DS.colors.primary}08`,
+            borderRadius: DS.radius.md,
+            borderLeft: `5px solid ${DS.colors.primary}`,
+          }}
+        >
+          <h3
+            style={{
+              color: DS.colors.primaryDark,
+              margin: "0 0 12px 0",
+              fontSize: isMobile ? "1.05em" : "1.15em",
+              fontWeight: 700,
+            }}
+          >
+            🔗 Connection to Water Cycle & Heat Transfer
+          </h3>
+          <p
+            style={{
+              fontSize: isMobile ? "0.95em" : "1em",
+              lineHeight: 1.7,
+              color: DS.colors.text,
+              margin: 0,
+            }}
+          >
+            {examples[selectedExample].connection}
+          </p>
         </div>
       </div>
     </div>
@@ -1571,38 +2330,41 @@ const RealWorldMode: React.FC<{
 // MAIN COMPONENT
 // ═══════════════════════════════════════════════════════════════════════════
 
-const WaterCycleTool: React.FC<WaterCycleToolProps> = ({ props = {}, setStepDetails, stopAutoNext, setStopAutoNext }) => {
+const WaterCycleTool: React.FC<WaterCycleToolProps> = ({
+  props = {},
+  setStepDetails,
+  stopAutoNext,
+  setStopAutoNext,
+}) => {
   const {
-    width = 800,
-    height = 600,
     initialMode = "learn",
     showModeSelector = true,
     enabledModes = ["learn", "practice", "realWorld"],
     showNavigation = true,
     showPlayPause = true,
     showStepIndicator = true,
-    initialStep = 0,
     filterSteps,
     animationSpeed = 1,
     autoPlayDuration = 7000,
-    themeColor = "#2196f3",
     darkMode = false,
     additionalProps = {},
   } = props;
 
-  const {
-    customPhases,
-    customQuestions,
-    customExamples,
-  } = additionalProps;
+  const { customPhases, customQuestions, customExamples } = additionalProps;
 
   const [activeTab, setActiveTab] = useState<ModeType>(initialMode);
   const { isMobile, isTablet, isSmallScreen } = useResponsive();
 
   const phases = useMemo(() => customPhases || DEFAULT_PHASES, [customPhases]);
-  const questions = useMemo(() => customQuestions || DEFAULT_QUESTIONS, [customQuestions]);
-  const examples = useMemo(() => customExamples || DEFAULT_EXAMPLES, [customExamples]);
-  
+  const questions = useMemo(
+    () => customQuestions || DEFAULT_QUESTIONS,
+    [customQuestions],
+  );
+  const examples = useMemo(
+    () => customExamples || DEFAULT_EXAMPLES,
+    [customExamples],
+  );
+
   const steps = useMemo(() => {
     let allSteps = DEFAULT_STEPS;
     if (filterSteps && filterSteps.length > 0) {
@@ -1612,127 +2374,142 @@ const WaterCycleTool: React.FC<WaterCycleToolProps> = ({ props = {}, setStepDeta
   }, [filterSteps]);
 
   useEffect(() => {
-    const styleId = "water-cycle-animations";
+    const styleId = "singularity-water-cycle-keyframes";
     if (document.getElementById(styleId)) return;
-
     const style = document.createElement("style");
     style.id = styleId;
     style.textContent = KEYFRAMES_CSS;
     document.head.appendChild(style);
-
     return () => {
       const el = document.getElementById(styleId);
       if (el) el.remove();
     };
   }, []);
 
-  const appContainerStyle: CSSProperties = {
-    minHeight: '100vh',
-    background: darkMode
-      ? 'linear-gradient(135deg, #1f2937 0%, #111827 100%)'
-      : 'linear-gradient(135deg, #eff6ff 0%, #d1fae5 100%)',
-  };
-
-  const navStyle: CSSProperties = {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    zIndex: 50,
-    background: darkMode ? '#1f2937' : '#ffffff',
-    borderBottom: `1px solid ${darkMode ? '#374151' : '#e5e7eb'}`,
-    boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-  };
-
-  const navContentStyle: CSSProperties = {
-    maxWidth: '1400px',
-    margin: '0 auto',
-    padding: isMobile ? '0 12px' : '0 16px',
-  };
-
-  const navInnerStyle: CSSProperties = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    height: isMobile ? '56px' : '64px',
-    gap: '12px',
-  };
-
-  const logoStyle: CSSProperties = {
-    display: 'flex',
-    alignItems: 'center',
-    gap: isMobile ? '6px' : '8px',
-  };
-
-  const logoTextStyle: CSSProperties = {
-    fontSize: isMobile ? '16px' : '20px',
-    fontWeight: '700',
-    background: `linear-gradient(135deg, ${themeColor} 0%, #14b8a6 100%)`,
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-    whiteSpace: 'nowrap' as const,
-  };
-
-  const tabsStyle: CSSProperties = {
-    display: 'flex',
-    gap: isMobile ? '4px' : '8px',
-    flexWrap: 'wrap' as const,
-  };
-
-  const tabButtonBaseStyle: CSSProperties = {
-    display: 'flex',
-    alignItems: 'center',
-    gap: isMobile ? '4px' : '8px',
-    padding: isMobile ? '6px 10px' : '8px 16px',
-    borderRadius: '8px',
-    fontWeight: '600',
-    border: 'none',
-    cursor: 'pointer',
-    transition: 'all 0.3s ease',
-    fontSize: isMobile ? '12px' : '14px',
-    whiteSpace: 'nowrap' as const,
-  };
-
-  const getTabStyle = (tab: ModeType): CSSProperties => ({
-    ...tabButtonBaseStyle,
-    background: activeTab === tab ? `linear-gradient(135deg, ${themeColor} 0%, #14b8a6 100%)` : 'transparent',
-    color: activeTab === tab ? '#ffffff' : darkMode ? '#e5e7eb' : '#374151',
-  });
-
-  const contentStyle: CSSProperties = {
-    paddingTop: isMobile ? '56px' : '64px',
-    padding: isMobile ? '56px 0 0' : '64px 16px 16px',
-  };
+  const tabConfig: {
+    mode: ModeType;
+    label: string;
+    Icon: React.FC<{ size?: number; color?: string }>;
+  }[] = [
+    { mode: "learn", label: "Learn", Icon: BookOpenIcon },
+    { mode: "practice", label: "Practice", Icon: ClipboardCheckIcon },
+    { mode: "realWorld", label: "Real World", Icon: GlobeIcon },
+  ];
 
   return (
-    <div style={appContainerStyle}>
+    <div
+      style={{
+        minHeight: "100vh",
+        background: darkMode ? "#1A1A2E" : DS.colors.surface,
+        fontFamily: DS.font,
+      }}
+    >
+      <style>{KEYFRAMES_CSS}</style>
+
+      {/* Navigation Bar */}
       {showModeSelector && (
-        <nav style={navStyle}>
-          <div style={navContentStyle}>
-            <div style={navInnerStyle}>
-              <div style={logoStyle}>
-                <DropletIcon size={isMobile ? 20 : 24} color={themeColor} />
-                <span style={logoTextStyle}>Water Cycle</span>
+        <nav
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            zIndex: 50,
+            background: darkMode ? "#1A1A2E" : DS.colors.white,
+            borderBottom: `1px solid ${darkMode ? "#2A2A4A" : DS.colors.grayLight}`,
+            boxShadow: DS.shadow.sm,
+          }}
+        >
+          <div
+            style={{
+              maxWidth: "1400px",
+              margin: "0 auto",
+              padding: isMobile ? "0 12px" : "0 20px",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                height: isMobile ? "56px" : "64px",
+                gap: "12px",
+              }}
+            >
+              {/* Logo */}
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: isMobile ? "6px" : "10px",
+                }}
+              >
+                <DropletIcon
+                  size={isMobile ? 20 : 24}
+                  color={DS.colors.primary}
+                />
+                <span
+                  style={{
+                    fontSize: isMobile ? "16px" : "20px",
+                    fontWeight: 800,
+                    background: DS.colors.gradientPrimary,
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    whiteSpace: "nowrap",
+                    letterSpacing: "-0.02em",
+                  }}
+                >
+                  Water Cycle
+                </span>
               </div>
 
-              <div style={tabsStyle}>
-                {enabledModes.includes("learn") && (
-                  <button onClick={() => setActiveTab("learn")} style={getTabStyle("learn")}>
-                    <BookOpenIcon size={isMobile ? 16 : 20} />
-                    {!isMobile && 'Learn'}
-                  </button>
-                )}
-                {enabledModes.includes("practice") && (
-                  <button onClick={() => setActiveTab("practice")} style={getTabStyle("practice")}>
-                    <ClipboardCheckIcon size={isMobile ? 16 : 20} />
-                    {!isMobile && 'Practice'}
-                  </button>
-                )}
-                {enabledModes.includes("realWorld") && (
-                  <button onClick={() => setActiveTab("realWorld")} style={getTabStyle("realWorld")}>
-                    <GlobeIcon size={isMobile ? 16 : 20} />
-                    {!isMobile && 'Real World'}
-                  </button>
+              {/* Tabs */}
+              <div style={{ display: "flex", gap: isMobile ? "4px" : "8px" }}>
+                {tabConfig.map(
+                  ({ mode, label, Icon }) =>
+                    enabledModes.includes(mode) && (
+                      <button
+                        key={mode}
+                        onClick={() => setActiveTab(mode)}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: isMobile ? "4px" : "8px",
+                          padding: isMobile ? "6px 12px" : "8px 18px",
+                          borderRadius: DS.radius.pill,
+                          fontWeight: 600,
+                          border:
+                            activeTab === mode
+                              ? "none"
+                              : `1.5px solid ${darkMode ? "#444" : DS.colors.grayLight}`,
+                          cursor: "pointer",
+                          transition: "all 0.3s cubic-bezier(.4,0,.2,1)",
+                          fontSize: isMobile ? "12px" : "14px",
+                          whiteSpace: "nowrap",
+                          fontFamily: DS.font,
+                          background:
+                            activeTab === mode
+                              ? DS.colors.gradientPrimary
+                              : "transparent",
+                          color:
+                            activeTab === mode
+                              ? DS.colors.white
+                              : darkMode
+                                ? "#CCC"
+                                : DS.colors.text,
+                          boxShadow:
+                            activeTab === mode ? DS.shadow.glow : "none",
+                        }}
+                      >
+                        <Icon
+                          size={isMobile ? 16 : 18}
+                          color={
+                            activeTab === mode ? "#fff" : DS.colors.primary
+                          }
+                        />
+                        {!isMobile && label}
+                      </button>
+                    ),
                 )}
               </div>
             </div>
@@ -1740,7 +2517,12 @@ const WaterCycleTool: React.FC<WaterCycleToolProps> = ({ props = {}, setStepDeta
         </nav>
       )}
 
-      <div style={contentStyle}>
+      {/* Content */}
+      <div
+        style={{
+          paddingTop: showModeSelector ? (isMobile ? "56px" : "64px") : 0,
+        }}
+      >
         {activeTab === "learn" ? (
           <LearnMode
             steps={steps}
@@ -1750,13 +2532,12 @@ const WaterCycleTool: React.FC<WaterCycleToolProps> = ({ props = {}, setStepDeta
             showNavigation={showNavigation}
             showPlayPause={showPlayPause}
             showStepIndicator={showStepIndicator}
-            themeColor={themeColor}
             setStepDetails={setStepDetails}
           />
         ) : activeTab === "practice" ? (
-          <PracticeMode questions={questions} themeColor={themeColor} />
+          <PracticeMode questions={questions} />
         ) : (
-          <RealWorldMode examples={examples} themeColor={themeColor} />
+          <RealWorldMode examples={examples} />
         )}
       </div>
     </div>

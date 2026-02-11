@@ -1,374 +1,310 @@
-# Radiation Learning Interactive Component - Agent Prompt
+# Radiation Tool — Agent Instructions
 
 ## Overview
-You are tasked with creating a comprehensive, multilingual educational tool for teaching radiation concepts to Grade 7 students in India. This tool should be interactive, engaging, and support English, Hindi, and Gujarati languages.
 
-## Component Structure
+The **Radiation Tool** is an interactive educational component for Grade 7 students, aligned with **NCERT Chapter 7.3 (Heat Transfer in Nature)**. It teaches the concept of radiation — the process of heat transfer that does not require any material medium.
 
-### Base Files
-1. **RadiationLearning.tsx** - Main TypeScript component (English only)
-2. **radiation_translations.json** - Complete translations for Hindi and Gujarati
-3. **AGENT_PROMPT.md** - This instruction file
-
-### Core Requirements
-
-#### 1. Language Support
-- **Primary Language**: English (embedded in TypeScript)
-- **Translation Languages**: Hindi (hi), Gujarati (gu)
-- All UI text, questions, explanations, and content must be translatable
-- Support for language-specific fonts:
-  - Hindi: "Noto Sans Devanagari"
-  - Gujarati: "Noto Sans Gujarati"
-  - English: "Poppins"
-
-#### 2. Learning Modes
-
-##### A. Learn Mode (Interactive Demonstrations)
-- **Purpose**: Teach radiation concepts through step-by-step visual demonstrations
-- **Features**:
-  - Animated explanations with canvas rendering
-  - 7+ steps covering radiation fundamentals
-  - Auto-play with pause/resume controls
-  - Progress indicators
-  - Visual animations showing:
-    - Heat radiation waves
-    - Temperature differences
-    - Particle-free heat transfer
-    - Sun-Earth radiation
-    - Color absorption/reflection
-    - Comparison with conduction/convection
-
-- **Step Types**:
-  1. Introduction to radiation
-  2. Fireplace heat demonstration
-  3. Sun's heat reaching Earth
-  4. Object cooling through radiation
-  5. Light vs dark color absorption
-  6. Comparison of heat transfer methods
-  7. Heating water animation
-
-##### B. Practice Mode (Interactive Quiz)
-- **Purpose**: Test understanding through various question types
-- **Question Types**:
-  - Multiple Choice (MCQ)
-  - True/False
-  - Fill in the Blank
-  - Matching pairs
-  - Sequence ordering
-  - Classification
-
-- **Features**:
-  - 12+ questions covering all radiation concepts
-  - Difficulty levels: Easy, Medium, Hard
-  - Point-based scoring system
-  - Immediate feedback with explanations
-  - Progress tracking
-  - Grade calculation (A/B/C)
-  - Ability to retry questions
-  - Final summary with key reminders
-
-##### C. Real World Applications
-- **Purpose**: Connect concepts to practical Indian examples
-- **Features**:
-  - 10+ real-world applications
-  - Categories: Nature, Home, Everyday, Technology, Clothing
-  - Expandable cards with detailed information
-  - Filter by category
-  - Difficulty indicators
-  - Each application includes:
-    - Description
-    - How it works
-    - Science behind it
-    - Real Indian example
-    - Benefits and importance
-
-#### 3. Technical Implementation
-
-##### Component Architecture
-```typescript
-// Main Components
-- LanguageProvider: Context for language management
-- Navbar: Navigation between modes
-- RadiationLearnMode: Learn mode component
-- RadiationPracticeMode: Practice quiz component
-- RadiationRealWorld: Applications component
-- LanguageSelector: Language switcher
-```
-
-##### State Management
-- Current mode (learn/practice/applications)
-- Selected language (en/hi/gu)
-- Current step/question index
-- User answers and scoring
-- Animation states
-- UI preferences
-
-##### Animations
-- Canvas-based animations for visual demonstrations
-- Smooth transitions between steps
-- Particle systems for radiation waves
-- Temperature visualizations
-- Interactive elements
-
-#### 4. Content Requirements
-
-##### Learn Mode Content
-Cover these concepts:
-1. **Radiation Definition**: Heat transfer without medium
-2. **Vacuum Travel**: Unlike conduction/convection
-3. **Sun's Energy**: 150 million km journey
-4. **Color Effects**: Light colors reflect, dark colors absorb
-5. **Universal Process**: All objects radiate
-6. **Comparison**: How radiation differs from other methods
-
-##### Practice Mode Content
-Question topics:
-- Radiation definition and properties
-- Medium requirements (none needed)
-- Sun-Earth heat transfer
-- Color and heat relationship
-- Object cooling processes
-- Everyday applications
-- Comparison with conduction/convection
-- Real-world scenarios
-
-##### Real World Content
-Applications covering:
-- Feeling warmth from fire
-- Sun's energy reaching Earth
-- White vs dark clothing choices
-- Drying clothes in sunlight
-- Solar cookers
-- Greenhouse effect
-- Thermal imaging
-- Heat radiation from utensils
-- Night vision technology
-- Earth's energy balance
-
-#### 5. UI/UX Requirements
-
-##### Design Principles
-- **Responsive**: Mobile, tablet, desktop support
-- **Accessible**: Screen reader compatible, keyboard navigation
-- **Colorful**: Engaging gradients and color schemes
-- **Clear**: Easy-to-read fonts and layouts
-- **Interactive**: Clickable, draggable, animated elements
-
-##### Color Scheme
-- Primary: Orange-Red gradient (#FF6347, #FF4500)
-- Secondary: Purple-Pink accent (#9333EA, #EC4899)
-- Success: Green (#10B981)
-- Error: Red (#EF4444)
-- Neutral: Gray scale (#F3F4F6 to #1F2937)
-
-##### Typography
-- Headers: Bold, large (24-32px)
-- Body: Regular, readable (14-16px)
-- Questions: Medium-bold (16-20px)
-- Captions: Small (12-14px)
-
-##### Interactive Elements
-- Buttons: Rounded, gradient backgrounds
-- Cards: Elevated shadows, hover effects
-- Inputs: Clear borders, focus states
-- Animations: Smooth, purposeful
-
-#### 6. Translation Structure
-
-##### JSON Format
-```json
-{
-  "language": {
-    "en": "English",
-    "hi": "हिंदी",
-    "gu": "ગુજરાતી",
-    "selectorLabel": "Choose language"
-  },
-  "nav": {
-    "logo": "Heat Transfer",
-    "tabs": {
-      "learn": "Learn",
-      "practice": "Practice",
-      "applications": "Real World"
-    }
-  },
-  "radiation": {
-    "learn": {
-      "title": "...",
-      "steps": [...]
-    },
-    "practice": {
-      "questions": [...]
-    },
-    "realWorld": {
-      "applications": [...]
-    }
-  }
-}
-```
-
-##### Translation Keys Structure
-- `language.*` - Language selector labels
-- `nav.*` - Navigation menu items
-- `radiation.learn.*` - Learn mode content
-- `radiation.practice.*` - Practice mode content
-- `radiation.realWorld.*` - Applications content
-- `common.*` - Shared UI elements
-
-#### 7. Data Flow
-
-##### Initialization
-1. Detect user's preferred language
-2. Load appropriate translations
-3. Initialize default mode (learn)
-4. Setup state management
-
-##### User Interactions
-1. **Language Change**: Update all text instantly
-2. **Mode Switch**: Transition to selected mode
-3. **Step Navigation**: Update content and visuals
-4. **Question Answer**: Validate and provide feedback
-5. **Practice Complete**: Calculate and display results
-
-#### 8. Performance Requirements
-
-- **Load Time**: < 2 seconds initial load
-- **Animation FPS**: 60fps for smooth animations
-- **Language Switch**: Instant (< 100ms)
-- **Mode Transition**: Smooth (< 300ms)
-- **Response Time**: < 50ms for user interactions
-
-#### 9. Accessibility
-
-- **WCAG 2.1 AA** compliance
-- Keyboard navigation support
-- Screen reader compatible
-- High contrast mode
-- Scalable text (up to 200%)
-- Clear focus indicators
-- Alt text for visuals
-
-#### 10. Educational Effectiveness
-
-##### Learning Objectives
-Students should be able to:
-1. Define radiation and explain how it differs from conduction/convection
-2. Understand that radiation requires no medium
-3. Explain how Sun's heat reaches Earth
-4. Apply knowledge to real-world scenarios
-5. Identify conductors and insulators in context
-6. Solve basic radiation-related problems
-
-##### Assessment Criteria
-- **Knowledge**: Factual recall (30%)
-- **Understanding**: Concept explanation (40%)
-- **Application**: Problem solving (30%)
-
-##### Feedback Mechanisms
-- Immediate correct/incorrect indication
-- Detailed explanations for all questions
-- Progress visualization
-- Encouraging messages
-- Constructive error handling
-
-## Implementation Guidelines
-
-### Phase 1: Core Structure
-1. Setup TypeScript component with React
-2. Implement language context and provider
-3. Create basic navigation structure
-4. Setup translation loading system
-
-### Phase 2: Learn Mode
-1. Create step-by-step demonstration system
-2. Implement canvas animations
-3. Add interactive controls (play/pause/next/prev)
-4. Create visual representations of concepts
-
-### Phase 3: Practice Mode
-1. Build question rendering system
-2. Implement answer validation
-3. Create scoring mechanism
-4. Add feedback system
-5. Design results summary
-
-### Phase 4: Real World Applications
-1. Create application card system
-2. Implement category filtering
-3. Add expandable details
-4. Design responsive layout
-
-### Phase 5: Polish
-1. Add animations and transitions
-2. Optimize performance
-3. Test accessibility
-4. Refine translations
-5. Add loading states
-
-## Quality Checklist
-
-### Functionality
-- [ ] All modes work correctly
-- [ ] Language switching is seamless
-- [ ] Questions are properly validated
-- [ ] Scoring is accurate
-- [ ] Animations are smooth
-- [ ] Navigation is intuitive
-
-### Content
-- [ ] All radiation concepts covered
-- [ ] Explanations are clear and accurate
-- [ ] Examples are relevant to Indian students
-- [ ] Questions test understanding effectively
-- [ ] Real-world applications are practical
-
-### Technical
-- [ ] Code is type-safe (TypeScript)
-- [ ] Components are reusable
-- [ ] State management is efficient
-- [ ] Performance is optimized
-- [ ] Responsive design works on all screens
-
-### Accessibility
-- [ ] Keyboard navigation works
-- [ ] Screen readers supported
-- [ ] Color contrast meets standards
-- [ ] Focus indicators are visible
-- [ ] Text is scalable
-
-### Translations
-- [ ] All text is translatable
-- [ ] Hindi translations are accurate
-- [ ] Gujarati translations are accurate
-- [ ] Fonts display correctly
-- [ ] Text lengths don't break layout
-
-## Success Criteria
-
-A successful implementation will:
-1. **Engage** students through interactive visuals and animations
-2. **Educate** effectively about radiation concepts
-3. **Assess** understanding through varied question types
-4. **Connect** concepts to real Indian examples
-5. **Support** multiple languages seamlessly
-6. **Perform** smoothly on various devices
-7. **Comply** with accessibility standards
-
-## Notes for Future Enhancement
-
-- Add audio narration support
-- Include video demonstrations
-- Add gamification elements (badges, achievements)
-- Create printable worksheets
-- Add teacher dashboard for tracking
-- Include AR/VR demonstrations
-- Add collaborative learning features
-- Expand to other heat transfer topics
+The tool includes 4 modes with animated visuals, quizzes, real-world examples, and hands-on slider experiments.
 
 ---
 
-**Version**: 1.0  
-**Target Audience**: Grade 7 Students (India)  
-**Subject**: Science - Heat Transfer (Radiation)  
-**Languages**: English, Hindi, Gujarati  
-**Last Updated**: 2026-01-27
+## Quick Reference Table
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `initialMode` | string | `"learn"` | Starting mode: learn, practice, real_world, hands_on |
+| `showModeSelector` | boolean | `true` | Show/hide mode tabs |
+| `enabledModes` | string[] | all 4 | Which modes to enable |
+| `showNavigation` | boolean | `true` | Show prev/next buttons |
+| `showPlayPause` | boolean | `true` | Show auto-play (learn mode) |
+| `showStepIndicator` | boolean | `true` | Show step counter |
+| `filterSteps` | number[] | all | Only show specific step IDs |
+| `autoPlayDuration` | number | `8000` | Auto-advance delay (ms) |
+| `darkMode` | boolean | `false` | Dark mode toggle |
+
+---
+
+## additionalProps Reference
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `showSunDemo` | boolean | `true` | Show Sun-Earth radiation animation |
+| `showFireDemo` | boolean | `true` | Show fireplace radiation animation |
+| `showClothingDemo` | boolean | `true` | Show light vs dark clothing demo |
+| `heatSourceType` | string | `"all"` | Focus: "sun", "fire", "heater", or "all" |
+| `showWaveAnimation` | boolean | `true` | Animate heat waves |
+| `radiationIntensity` | number (1-10) | `5` | Intensity of wave animation |
+| `showMediumComparison` | boolean | `true` | Show conduction vs convection vs radiation |
+| `customScenarios` | object[] | `[]` | Custom real-world scenarios |
+
+---
+
+## Modes & Steps
+
+### Learn Mode (Step IDs: 1–6)
+1. **What is Radiation?** — Intro with animated sun visual
+2. **Heat from the Sun** — Sun-Earth animation with heat waves through vacuum
+3. **Warmth from a Fire** — Fireplace scene with Pema and Palden
+4. **All Objects Radiate Heat** — Hot utensil radiating heat outward
+5. **No Medium Needed!** — Conduction vs Convection vs Radiation comparison cards
+6. **Light vs Dark Colours** — Clothing absorption/reflection visual
+
+### Practice Mode (Step IDs: 10–13)
+- 4 MCQ questions with instant feedback and explanations
+
+### Real World Mode (Step IDs: 20–22)
+- **Campfire** — Distance and radiation
+- **Solar Water Heater** — Dark panels absorbing radiation
+- **Thermos Flask** — Mirror walls reflecting radiation
+
+### Hands On Mode (Step IDs: 30–31)
+- **Colour & Heat** — Slider to change surface darkness, see absorption vs reflection
+- **Distance & Heat** — Drag person closer/further from fire, see heat felt change
+
+---
+
+## Tool Call Examples
+
+### Example 1: Full Tool (default)
+```json
+{
+    "frontend_action": "show_interactive_tool",
+    "title": "Radiation - Heat Transfer",
+    "data": {
+        "toolName": "radiation_tool",
+        "parameters": {}
+    },
+    "instructions_for_student": "Explore how heat travels without any medium!"
+}
+```
+
+### Example 2: Start with Practice Mode
+```json
+{
+    "frontend_action": "show_interactive_tool",
+    "title": "Radiation Quiz",
+    "data": {
+        "toolName": "radiation_tool",
+        "parameters": {
+            "initialMode": "practice",
+            "showModeSelector": true
+        }
+    },
+    "instructions_for_student": "Test your knowledge about radiation!"
+}
+```
+
+### Example 3: Only Learn Mode (Guided Lesson)
+```json
+{
+    "frontend_action": "show_interactive_tool",
+    "title": "Learn About Radiation",
+    "data": {
+        "toolName": "radiation_tool",
+        "parameters": {
+            "initialMode": "learn",
+            "enabledModes": ["learn"],
+            "showModeSelector": false,
+            "autoPlayDuration": 10000
+        }
+    },
+    "instructions_for_student": "Watch the animated lesson about radiation step by step."
+}
+```
+
+### Example 4: Focus on Sun's Radiation
+```json
+{
+    "frontend_action": "show_interactive_tool",
+    "title": "Sun's Radiation",
+    "data": {
+        "toolName": "radiation_tool",
+        "parameters": {
+            "initialMode": "learn",
+            "filterSteps": [1, 2, 5],
+            "additionalProps": {
+                "heatSourceType": "sun",
+                "showWaveAnimation": true,
+                "radiationIntensity": 8
+            }
+        }
+    },
+    "instructions_for_student": "See how the Sun's heat reaches Earth through the vacuum of space!"
+}
+```
+
+### Example 5: Clothing & Colour Science Only
+```json
+{
+    "frontend_action": "show_interactive_tool",
+    "title": "Why Light Clothes in Summer?",
+    "data": {
+        "toolName": "radiation_tool",
+        "parameters": {
+            "initialMode": "learn",
+            "filterSteps": [6],
+            "showNavigation": false,
+            "showPlayPause": false,
+            "additionalProps": {
+                "showClothingDemo": true
+            }
+        }
+    },
+    "instructions_for_student": "Light colours reflect heat and dark colours absorb it!"
+}
+```
+
+### Example 6: Hands-On Experiments Only
+```json
+{
+    "frontend_action": "show_interactive_tool",
+    "title": "Radiation Experiments",
+    "data": {
+        "toolName": "radiation_tool",
+        "parameters": {
+            "initialMode": "hands_on",
+            "enabledModes": ["hands_on"],
+            "showModeSelector": false
+        }
+    },
+    "instructions_for_student": "Drag the sliders to explore how colour and distance affect heat radiation!"
+}
+```
+
+### Example 7: Real-World Examples
+```json
+{
+    "frontend_action": "show_interactive_tool",
+    "title": "Radiation in Daily Life",
+    "data": {
+        "toolName": "radiation_tool",
+        "parameters": {
+            "initialMode": "real_world",
+            "enabledModes": ["real_world"],
+            "showModeSelector": false
+        }
+    },
+    "instructions_for_student": "See how radiation works in campfires, solar heaters, and thermos flasks!"
+}
+```
+
+### Example 8: Dark Mode
+```json
+{
+    "frontend_action": "show_interactive_tool",
+    "title": "Radiation Tool",
+    "data": {
+        "toolName": "radiation_tool",
+        "parameters": {
+            "darkMode": true
+        }
+    },
+    "instructions_for_student": "Explore radiation in dark mode!"
+}
+```
+
+### Example 9: Comparison Only (Conduction vs Convection vs Radiation)
+```json
+{
+    "frontend_action": "show_interactive_tool",
+    "title": "Three Types of Heat Transfer",
+    "data": {
+        "toolName": "radiation_tool",
+        "parameters": {
+            "initialMode": "learn",
+            "filterSteps": [5],
+            "showNavigation": false,
+            "showPlayPause": false,
+            "additionalProps": {
+                "showMediumComparison": true
+            }
+        }
+    },
+    "instructions_for_student": "Compare conduction, convection, and radiation side by side!"
+}
+```
+
+### Example 10: Minimal UI (Auto-play presentation)
+```json
+{
+    "frontend_action": "show_interactive_tool",
+    "title": "Radiation Slideshow",
+    "data": {
+        "toolName": "radiation_tool",
+        "parameters": {
+            "showModeSelector": false,
+            "showNavigation": false,
+            "showPlayPause": false,
+            "showStepIndicator": false,
+            "enabledModes": ["learn"],
+            "autoPlayDuration": 6000
+        }
+    },
+    "instructions_for_student": "Sit back and watch the radiation lesson!"
+}
+```
+
+---
+
+## Decision Tree for Agents
+
+```
+Student asks about heat/radiation
+    │
+    ├─ "What is radiation?"
+    │   └─ Use: initialMode: "learn", filterSteps: [1]
+    │
+    ├─ "How does Sun's heat reach Earth?"
+    │   └─ Use: initialMode: "learn", filterSteps: [1, 2, 5]
+    │
+    ├─ "Why do we wear white clothes in summer?"
+    │   └─ Use: initialMode: "learn", filterSteps: [6]
+    │
+    ├─ "What's the difference between conduction, convection, radiation?"
+    │   └─ Use: initialMode: "learn", filterSteps: [5]
+    │
+    ├─ "Give me a quiz on radiation"
+    │   └─ Use: initialMode: "practice"
+    │
+    ├─ "Show real-life examples of radiation"
+    │   └─ Use: initialMode: "real_world"
+    │
+    ├─ "Let me experiment with radiation"
+    │   └─ Use: initialMode: "hands_on"
+    │
+    └─ General radiation topic
+        └─ Use: default (all modes enabled)
+```
+
+---
+
+## Design System
+
+The tool uses the **Singularity Design System**:
+- **Primary**: #4A4DC9 (Indigo)
+- **Secondary**: #FF7212 (Orange)
+- **Gradient**: #533086 → #FC9145
+- **Light accents**: #C1C1EA, #FFF3E4
+- **Font**: Poppins (sans-serif fallback)
+- **Border radius**: 12–24px
+- **Animations**: CSS keyframes with smooth easing, 60fps
+
+---
+
+## Error Handling
+
+- If `filterSteps` contains IDs not in the default steps: those steps are skipped
+- If `initialMode` is not in `enabledModes`: defaults to first enabled mode
+- Empty `additionalProps`: uses all default visuals
+- Invalid mode string: defaults to "learn"
+
+---
+
+## Tips for Agents
+
+1. **For quick demos**: Use `filterSteps` to show only 1-2 specific steps
+2. **For assessments**: Use `initialMode: "practice"` with `enabledModes: ["practice"]`
+3. **For self-paced learning**: Enable auto-play with appropriate `autoPlayDuration`
+4. **For interactive exploration**: Use `initialMode: "hands_on"` 
+5. **For minimal distractions**: Set `showModeSelector: false` and `showNavigation: false`
+6. **For specific topics**: Use `filterSteps` array with relevant step IDs

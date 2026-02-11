@@ -1,7 +1,7 @@
 // ConvectionLearningTool.tsx
 // A comprehensive interactive tool for teaching convection in heat transfer
 // Supports Learn, Practice, and Real World Application modes
-// Redesigned with new color scheme and responsive layout
+// Redesigned with PDF design system and responsive layout
 
 import React, { useState, useEffect, useRef, useMemo } from "react";
 
@@ -1467,7 +1467,7 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
       : applications.filter((app) => app.category === selectedCategory);
 
   // ═════════════════════════════════════════════════════════════════════════
-  // STYLES - REDESIGNED WITH NEW COLOR SCHEME
+  // STYLES - PDF DESIGN SYSTEM WITH RESPONSIVE DESIGN
   // ═════════════════════════════════════════════════════════════════════════
 
   const baseColors = {
@@ -1503,7 +1503,7 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
     header: {
       background: `linear-gradient(135deg, ${baseColors.gradientStart} 0%, ${baseColors.gradientEnd} 100%)`,
       color: "#ffffff",
-      padding: "24px",
+      padding: "clamp(16px, 4vw, 24px)",
       position: "relative" as const,
       overflow: "hidden",
     },
@@ -1515,6 +1515,7 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
     },
     modeButton: (isActive: boolean) => ({
       padding: "10px 20px",
+      minHeight: "40px",
       border: "none",
       borderRadius: "8px",
       backgroundColor: isActive
@@ -1523,19 +1524,20 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
       color: isActive ? baseColors.primary : "#ffffff",
       cursor: "pointer",
       fontWeight: "600" as const,
-      fontSize: "14px",
+      fontSize: "clamp(12px, 2vw, 14px)",
       fontFamily: "'Poppins', Arial, sans-serif",
       transition: "all 0.3s ease",
       transform: isActive ? "scale(1.05)" : "scale(1)",
       animation: mounted ? "fadeIn 0.5s ease" : "none",
     }),
     canvasContainer: {
-      padding: "24px",
+      padding: "clamp(12px, 3vw, 24px)",
       backgroundColor: darkMode ? "#252525" : "#ffffff",
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      minHeight: "400px",
+      minHeight: "clamp(300px, 50vw, 400px)",
+      overflow: "auto",
     },
     canvas: {
       borderRadius: "12px",
@@ -1547,10 +1549,10 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
       height: "auto",
     },
     description: {
-      padding: "24px",
+      padding: "clamp(16px, 3vw, 24px)",
       backgroundColor: darkMode ? "#2a2a2a" : baseColors.lightPurple,
       borderLeft: `4px solid ${baseColors.primary}`,
-      margin: "16px 24px",
+      margin: "clamp(12px, 2vw, 16px) clamp(12px, 3vw, 24px)",
       borderRadius: "8px",
       animation: mounted ? "slideInLeft 0.5s ease" : "none",
     },
@@ -1558,7 +1560,7 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
       display: "flex",
       justifyContent: "space-between",
       alignItems: "center",
-      padding: "24px",
+      padding: "clamp(16px, 3vw, 24px)",
       backgroundColor: darkMode ? "#2a2a2a" : "#ffffff",
       borderTop: `1px solid ${baseColors.borderLight}`,
       flexWrap: "wrap" as const,
@@ -1566,16 +1568,19 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
     },
     button: {
       padding: "12px 24px",
+      minHeight: "40px",
       border: "none",
       borderRadius: "8px",
       cursor: "pointer",
       fontWeight: "600" as const,
-      fontSize: "14px",
+      fontSize: "clamp(12px, 2vw, 14px)",
       fontFamily: "'Poppins', Arial, sans-serif",
       transition: "all 0.3s ease",
       display: "flex",
       alignItems: "center",
-      gap: "8px",
+      justifyContent: "center",
+      gap: "4px",
+      whiteSpace: "nowrap" as const,
     },
     primaryButton: {
       backgroundColor: baseColors.primary,
@@ -1590,8 +1595,8 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
       color: "#ffffff",
     },
     questionCard: {
-      padding: "24px",
-      margin: "16px 24px",
+      padding: "clamp(16px, 3vw, 24px)",
+      margin: "clamp(12px, 2vw, 16px) clamp(12px, 3vw, 24px)",
       backgroundColor: darkMode ? "#2a2a2a" : "#ffffff",
       borderRadius: "12px",
       border: `1px solid ${baseColors.borderLight}`,
@@ -1603,7 +1608,7 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
       showFeedback: boolean,
     ) => ({
       width: "100%",
-      padding: "16px",
+      padding: "clamp(12px, 2vw, 16px)",
       marginBottom: "12px",
       border: `2px solid ${
         showFeedback
@@ -1629,13 +1634,13 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
       color: baseColors.text,
       cursor: showFeedback ? "not-allowed" : "pointer",
       textAlign: "left" as const,
-      fontSize: "16px",
+      fontSize: "clamp(14px, 2vw, 16px)",
       fontFamily: "'Poppins', Arial, sans-serif",
       transition: "all 0.3s ease",
       fontWeight: isSelected ? ("600" as const) : ("400" as const),
     }),
     feedbackBox: (isCorrect: boolean) => ({
-      padding: "20px",
+      padding: "clamp(16px, 3vw, 20px)",
       marginTop: "16px",
       borderRadius: "12px",
       border: `2px solid ${isCorrect ? "#10b981" : "#ef4444"}`,
@@ -1645,7 +1650,7 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
       animation: mounted ? "slideInRight 0.5s ease" : "none",
     }),
     appCard: {
-      marginBottom: "24px",
+      marginBottom: "clamp(16px, 3vw, 24px)",
       backgroundColor: darkMode ? "#2a2a2a" : "#ffffff",
       borderRadius: "16px",
       border: `1px solid ${baseColors.borderLight}`,
@@ -1654,19 +1659,19 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
       animation: mounted ? "fadeIn 0.5s ease" : "none",
     },
     appHeader: {
-      padding: "24px",
+      padding: "clamp(16px, 3vw, 24px)",
       cursor: "pointer",
       transition: "background-color 0.3s ease",
     },
     appExpanded: {
-      padding: "24px",
+      padding: "clamp(16px, 3vw, 24px)",
       backgroundColor: darkMode ? "#1f1f1f" : baseColors.background,
       borderTop: `1px solid ${baseColors.borderLight}`,
     },
     badge: {
       padding: "6px 12px",
       borderRadius: "20px",
-      fontSize: "12px",
+      fontSize: "clamp(10px, 1.5vw, 12px)",
       fontWeight: "600" as const,
       fontFamily: "'Poppins', Arial, sans-serif",
     },
@@ -1746,13 +1751,17 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
         )}
 
         <h1
-          style={{ fontSize: "32px", fontWeight: "700", margin: "0 0 8px 0" }}
+          style={{
+            fontSize: "clamp(24px, 5vw, 32px)",
+            fontWeight: "700",
+            margin: "0 0 8px 0",
+          }}
         >
           {data.title || "Convection - Heat Transfer"}
         </h1>
         <p
           style={{
-            fontSize: "16px",
+            fontSize: "clamp(14px, 2vw, 16px)",
             margin: 0,
             opacity: 0.95,
             fontWeight: "400",
@@ -1765,7 +1774,7 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
           <div
             style={{
               marginTop: "16px",
-              fontSize: "14px",
+              fontSize: "clamp(12px, 2vw, 14px)",
               opacity: 0.95,
               fontWeight: "500",
             }}
@@ -1790,7 +1799,7 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
           <div style={styles.description}>
             <h2
               style={{
-                fontSize: "24px",
+                fontSize: "clamp(18px, 3vw, 24px)",
                 fontWeight: "600",
                 marginBottom: "12px",
                 color: baseColors.primary,
@@ -1800,7 +1809,7 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
             </h2>
             <p
               style={{
-                fontSize: "16px",
+                fontSize: "clamp(14px, 2vw, 16px)",
                 lineHeight: "1.6",
                 margin: 0,
                 fontWeight: "400",
@@ -1933,7 +1942,7 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
 
             <h3
               style={{
-                fontSize: "20px",
+                fontSize: "clamp(16px, 3vw, 20px)",
                 fontWeight: "600",
                 marginBottom: "20px",
               }}
@@ -1992,6 +2001,7 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
                       fontWeight: "600",
                       marginBottom: "12px",
                       color: baseColors.primary,
+                      fontSize: "clamp(14px, 2vw, 16px)",
                     }}
                   >
                     Processes
@@ -2009,7 +2019,13 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
                         border: `2px solid ${baseColors.primary}40`,
                       }}
                     >
-                      <div style={{ fontWeight: "600", marginBottom: "8px" }}>
+                      <div
+                        style={{
+                          fontWeight: "600",
+                          marginBottom: "8px",
+                          fontSize: "clamp(12px, 2vw, 14px)",
+                        }}
+                      >
                         {item}
                       </div>
                       <select
@@ -2024,7 +2040,7 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
                           backgroundColor: baseColors.background,
                           color: baseColors.text,
                           fontFamily: "'Poppins', Arial, sans-serif",
-                          fontSize: "14px",
+                          fontSize: "clamp(12px, 2vw, 14px)",
                         }}
                       >
                         <option value="">Select...</option>
@@ -2043,6 +2059,7 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
                       fontWeight: "600",
                       marginBottom: "12px",
                       color: baseColors.secondary,
+                      fontSize: "clamp(14px, 2vw, 16px)",
                     }}
                   >
                     Characteristics
@@ -2060,7 +2077,14 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
                         border: `2px solid ${baseColors.secondary}40`,
                       }}
                     >
-                      <div style={{ fontWeight: "600" }}>{item}</div>
+                      <div
+                        style={{
+                          fontWeight: "600",
+                          fontSize: "clamp(12px, 2vw, 14px)",
+                        }}
+                      >
+                        {item}
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -2074,7 +2098,7 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
                   style={{
                     marginBottom: "16px",
                     color: baseColors.textSecondary,
-                    fontSize: "14px",
+                    fontSize: "clamp(12px, 2vw, 14px)",
                   }}
                 >
                   Arrange the steps in correct order using ▲ and ▼ buttons
@@ -2102,11 +2126,19 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
                         fontWeight: "600",
                         minWidth: "40px",
                         textAlign: "center",
+                        fontSize: "clamp(12px, 2vw, 14px)",
                       }}
                     >
                       {index + 1}
                     </span>
-                    <span style={{ flex: 1, fontSize: "15px" }}>{item}</span>
+                    <span
+                      style={{
+                        flex: 1,
+                        fontSize: "clamp(13px, 2vw, 15px)",
+                      }}
+                    >
+                      {item}
+                    </span>
                     {!showFeedback && (
                       <div style={{ display: "flex", gap: "4px" }}>
                         <button
@@ -2124,6 +2156,7 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
                             cursor: index === 0 ? "not-allowed" : "pointer",
                             fontWeight: "600",
                             fontFamily: "'Poppins', Arial, sans-serif",
+                            fontSize: "clamp(12px, 2vw, 14px)",
                           }}
                         >
                           ▲
@@ -2146,6 +2179,7 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
                                 : "pointer",
                             fontWeight: "600",
                             fontFamily: "'Poppins', Arial, sans-serif",
+                            fontSize: "clamp(12px, 2vw, 14px)",
                           }}
                         >
                           ▼
@@ -2161,14 +2195,20 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
               <div style={styles.feedbackBox(isAnswerCorrect())}>
                 <div
                   style={{
-                    fontSize: "18px",
+                    fontSize: "clamp(16px, 3vw, 18px)",
                     fontWeight: "600",
                     marginBottom: "8px",
                   }}
                 >
                   {isAnswerCorrect() ? "✓ Correct!" : "✗ Incorrect"}
                 </div>
-                <p style={{ margin: 0, lineHeight: "1.6", fontSize: "15px" }}>
+                <p
+                  style={{
+                    margin: 0,
+                    lineHeight: "1.6",
+                    fontSize: "clamp(13px, 2vw, 15px)",
+                  }}
+                >
                   {currentQuestion.explanation}
                 </p>
               </div>
@@ -2247,7 +2287,7 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
 
             <div
               style={{
-                fontSize: "18px",
+                fontSize: "clamp(16px, 3vw, 18px)",
                 fontWeight: "600",
                 color: baseColors.primary,
               }}
@@ -2260,11 +2300,11 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
 
       {/* Real World Applications Mode */}
       {currentMode === "real_world" && (
-        <div style={{ padding: "24px" }}>
+        <div style={{ padding: "clamp(16px, 3vw, 24px)" }}>
           <div
             style={{
-              marginBottom: "24px",
-              padding: "20px",
+              marginBottom: "clamp(16px, 3vw, 24px)",
+              padding: "clamp(16px, 3vw, 20px)",
               backgroundColor: darkMode ? "#2a2a2a" : baseColors.lightPurple,
               borderRadius: "12px",
               border: `1px solid ${baseColors.borderLight}`,
@@ -2272,7 +2312,7 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
           >
             <h3
               style={{
-                fontSize: "18px",
+                fontSize: "clamp(16px, 3vw, 18px)",
                 fontWeight: "600",
                 marginBottom: "12px",
               }}
@@ -2293,6 +2333,7 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
                   onClick={() => setSelectedCategory(category)}
                   style={{
                     padding: "8px 16px",
+                    minHeight: "40px",
                     border: "none",
                     borderRadius: "8px",
                     backgroundColor:
@@ -2306,7 +2347,7 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
                     cursor: "pointer",
                     fontWeight: selectedCategory === category ? "600" : "400",
                     fontFamily: "'Poppins', Arial, sans-serif",
-                    fontSize: "14px",
+                    fontSize: "clamp(12px, 2vw, 14px)",
                     transition: "all 0.3s ease",
                   }}
                   onMouseEnter={(e) => {
@@ -2327,7 +2368,7 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
             <div
               style={{
                 marginTop: "12px",
-                fontSize: "14px",
+                fontSize: "clamp(12px, 2vw, 14px)",
                 color: baseColors.textSecondary,
                 fontWeight: "500",
               }}
@@ -2371,7 +2412,7 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
                     >
                       <h3
                         style={{
-                          fontSize: "20px",
+                          fontSize: "clamp(18px, 3vw, 20px)",
                           fontWeight: "600",
                           margin: 0,
                         }}
@@ -2412,13 +2453,18 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
                         margin: 0,
                         color: baseColors.textSecondary,
                         lineHeight: "1.6",
-                        fontSize: "15px",
+                        fontSize: "clamp(13px, 2vw, 15px)",
                       }}
                     >
                       {app.description}
                     </p>
                   </div>
-                  <div style={{ fontSize: "24px", flexShrink: 0 }}>
+                  <div
+                    style={{
+                      fontSize: "clamp(20px, 3vw, 24px)",
+                      flexShrink: 0,
+                    }}
+                  >
                     {expandedApp === app.id ? "▼" : "▶"}
                   </div>
                 </div>
@@ -2429,7 +2475,7 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
                   <div style={{ marginBottom: "20px" }}>
                     <h4
                       style={{
-                        fontSize: "16px",
+                        fontSize: "clamp(14px, 2vw, 16px)",
                         fontWeight: "600",
                         marginBottom: "8px",
                         color: baseColors.primary,
@@ -2438,7 +2484,11 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
                       How It Works
                     </h4>
                     <p
-                      style={{ margin: 0, lineHeight: "1.6", fontSize: "15px" }}
+                      style={{
+                        margin: 0,
+                        lineHeight: "1.6",
+                        fontSize: "clamp(13px, 2vw, 15px)",
+                      }}
                     >
                       {app.howItWorks}
                     </p>
@@ -2447,7 +2497,7 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
                   <div style={{ marginBottom: "20px" }}>
                     <h4
                       style={{
-                        fontSize: "16px",
+                        fontSize: "clamp(14px, 2vw, 16px)",
                         fontWeight: "600",
                         marginBottom: "8px",
                         color: baseColors.secondary,
@@ -2456,7 +2506,11 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
                       Science Behind It
                     </h4>
                     <p
-                      style={{ margin: 0, lineHeight: "1.6", fontSize: "15px" }}
+                      style={{
+                        margin: 0,
+                        lineHeight: "1.6",
+                        fontSize: "clamp(13px, 2vw, 15px)",
+                      }}
                     >
                       {app.scienceBehind}
                     </p>
@@ -2465,7 +2519,7 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
                   <div style={{ marginBottom: "20px" }}>
                     <h4
                       style={{
-                        fontSize: "16px",
+                        fontSize: "clamp(14px, 2vw, 16px)",
                         fontWeight: "600",
                         marginBottom: "8px",
                         color: baseColors.primary,
@@ -2478,7 +2532,7 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
                         margin: 0,
                         lineHeight: "1.6",
                         fontStyle: "italic",
-                        fontSize: "15px",
+                        fontSize: "clamp(13px, 2vw, 15px)",
                       }}
                     >
                       {app.realExample}
@@ -2488,7 +2542,7 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
                   <div>
                     <h4
                       style={{
-                        fontSize: "16px",
+                        fontSize: "clamp(14px, 2vw, 16px)",
                         fontWeight: "600",
                         marginBottom: "12px",
                         color: baseColors.secondary,
@@ -2504,7 +2558,10 @@ const ConvectionLearningTool: React.FC<ConvectionLearningToolProps> = ({
                       }}
                     >
                       {app.benefits.map((benefit, index) => (
-                        <li key={index} style={{ fontSize: "15px" }}>
+                        <li
+                          key={index}
+                          style={{ fontSize: "clamp(13px, 2vw, 15px)" }}
+                        >
                           {benefit}
                         </li>
                       ))}
