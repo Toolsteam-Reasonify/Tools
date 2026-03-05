@@ -1,0 +1,345 @@
+{
+    "toolName": "heat_conduction_tool",
+    "version": "1.0.0",
+    "description": "Interactive heat conduction tool for learning about thermal energy transfer, conductors, insulators, and the wax-pin experiment",
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Component width in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Component height in pixels"
+        },
+        "initialMode": {
+            "type": "string",
+            "enum": [
+                "learn",
+                "practice",
+                "real_world",
+                "hands_on"
+            ],
+            "default": "learn",
+            "description": "Starting mode"
+        },
+        "showModeSelector": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide mode selector tabs"
+        },
+        "enabledModes": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "default": [
+                "learn",
+                "practice",
+                "real_world",
+                "hands_on"
+            ],
+            "description": "Which modes to enable"
+        },
+        "showNavigation": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide prev/next buttons"
+        },
+        "showPlayPause": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide play/pause button"
+        },
+        "showStepIndicator": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide step counter"
+        },
+        "initialStep": {
+            "type": "number",
+            "default": 1,
+            "description": "Starting step ID"
+        },
+        "filterSteps": {
+            "type": "array",
+            "items": {
+                "type": "number"
+            },
+            "default": null,
+            "description": "Array of step IDs to show"
+        },
+        "autoPlayDuration": {
+            "type": "number",
+            "default": 8000,
+            "description": "Auto-advance delay in ms (0 = disabled)"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#4A4DC9",
+            "description": "Primary theme color (hex)"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable dark mode"
+        }
+    },
+    "additionalProps": {
+        "description": "Tool-specific dynamic content passed by the agent",
+        "schema": {
+            "customPins": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "string"
+                        },
+                        "label": {
+                            "type": "string"
+                        },
+                        "xPosition": {
+                            "type": "number"
+                        },
+                        "fallOrder": {
+                            "type": "number"
+                        },
+                        "color": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "default": null,
+                "description": "Custom pin configuration for the experiment"
+            },
+            "maxHeatIntensity": {
+                "type": "number",
+                "default": 100,
+                "description": "Maximum heat intensity (0-100)"
+            },
+            "heatSpeed": {
+                "type": "number",
+                "default": 80,
+                "description": "Speed of heat propagation in ms per tick"
+            },
+            "customMaterials": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "type": {
+                            "type": "string",
+                            "enum": [
+                                "conductor",
+                                "insulator"
+                            ]
+                        },
+                        "color": {
+                            "type": "string"
+                        },
+                        "emoji": {
+                            "type": "string"
+                        },
+                        "conductivity": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "default": null,
+                "description": "Custom materials for testing"
+            },
+            "showLabels": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show pin labels"
+            },
+            "showHeatVisualization": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show heat flow visualization"
+            },
+            "enableDragDrop": {
+                "type": "boolean",
+                "default": true,
+                "description": "Enable drag-and-drop for materials"
+            },
+            "showMolecularView": {
+                "type": "boolean",
+                "default": false,
+                "description": "Show molecular-level heat transfer"
+            }
+        },
+        "examples": {
+            "basic_experiment": {},
+            "fast_experiment": {
+                "heatSpeed": 40,
+                "maxHeatIntensity": 100
+            },
+            "custom_pins": {
+                "customPins": [
+                    {
+                        "id": "a",
+                        "label": "A",
+                        "xPosition": 350,
+                        "fallOrder": 1,
+                        "color": "#EF4444"
+                    },
+                    {
+                        "id": "b",
+                        "label": "B",
+                        "xPosition": 250,
+                        "fallOrder": 2,
+                        "color": "#3B82F6"
+                    },
+                    {
+                        "id": "c",
+                        "label": "C",
+                        "xPosition": 150,
+                        "fallOrder": 3,
+                        "color": "#10B981"
+                    }
+                ]
+            },
+            "custom_materials": {
+                "customMaterials": [
+                    {
+                        "id": "gold",
+                        "name": "Gold",
+                        "type": "conductor",
+                        "color": "#FFD700",
+                        "emoji": "🥇",
+                        "conductivity": 317
+                    },
+                    {
+                        "id": "rubber",
+                        "name": "Rubber",
+                        "type": "insulator",
+                        "color": "#1F2937",
+                        "emoji": "⬛",
+                        "conductivity": 0.13
+                    }
+                ]
+            }
+        }
+    },
+    "modes": {
+        "learn": {
+            "description": "Step-by-step lesson on heat conduction with interactive experiment and material testing",
+            "steps": [
+                1,
+                2,
+                3,
+                4,
+                5
+            ]
+        },
+        "practice": {
+            "description": "Quiz questions about conduction concepts",
+            "steps": [
+                10,
+                11,
+                12,
+                13,
+                14
+            ]
+        },
+        "real_world": {
+            "description": "Real-world applications of conduction in cooking, building, and technology",
+            "steps": [
+                20,
+                21,
+                22
+            ]
+        },
+        "hands_on": {
+            "description": "Interactive material testing and classification activities",
+            "steps": [
+                30,
+                31
+            ]
+        }
+    },
+    "steps": {
+        "learn_steps": [
+            {
+                "id": 1,
+                "title": "What is Heat Conduction?"
+            },
+            {
+                "id": 2,
+                "title": "The Wax-Pin Experiment"
+            },
+            {
+                "id": 3,
+                "title": "Conductors vs Insulators"
+            },
+            {
+                "id": 4,
+                "title": "Why Do Metals Conduct Heat?"
+            },
+            {
+                "id": 5,
+                "title": "Rate of Conduction"
+            }
+        ],
+        "practice_steps": [
+            {
+                "id": 10,
+                "title": "What is Conduction?"
+            },
+            {
+                "id": 11,
+                "title": "Metals and Heat"
+            },
+            {
+                "id": 12,
+                "title": "Best Conductor"
+            },
+            {
+                "id": 13,
+                "title": "Pin Fall Order"
+            },
+            {
+                "id": 14,
+                "title": "Insulator Purpose"
+            }
+        ],
+        "real_world_steps": [
+            {
+                "id": 20,
+                "title": "Cooking Utensils"
+            },
+            {
+                "id": 21,
+                "title": "Building Insulation"
+            },
+            {
+                "id": 22,
+                "title": "Computer Heat Sinks"
+            }
+        ],
+        "hands_on_steps": [
+            {
+                "id": 30,
+                "title": "Build Your Experiment"
+            },
+            {
+                "id": 31,
+                "title": "Classify Materials"
+            }
+        ]
+    }
+}

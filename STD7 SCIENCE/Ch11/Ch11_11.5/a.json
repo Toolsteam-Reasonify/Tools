@@ -1,0 +1,505 @@
+{
+  "toolName": "reflection_of_light",
+  "parameters": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Reflection of Light Interactive Tool",
+    "description": "An educational tool for teaching the concept of reflection of light with multiple learning modes, animations, and interactive experiments",
+    "type": "object",
+    "properties": {
+      "frontend_action": {
+        "type": "string",
+        "const": "show_interactive_tool",
+        "description": "Action to display the interactive tool"
+      },
+      "title": {
+        "type": "string",
+        "description": "Title displayed to the student",
+        "examples": [
+          "Reflection of Light",
+          "How Light Bounces",
+          "Mirror Experiments"
+        ]
+      },
+      "data": {
+        "type": "object",
+        "required": [
+          "toolName"
+        ],
+        "properties": {
+          "toolName": {
+            "type": "string",
+            "const": "reflection_of_light_tool",
+            "description": "Identifier for this tool"
+          },
+          "parameters": {
+            "type": "object",
+            "description": "Configuration parameters for the tool",
+            "properties": {
+              "width": {
+                "type": "number",
+                "default": 800,
+                "description": "Width of the tool in pixels",
+                "minimum": 400,
+                "maximum": 1200
+              },
+              "height": {
+                "type": "number",
+                "default": 600,
+                "description": "Height of the tool in pixels",
+                "minimum": 400,
+                "maximum": 900
+              },
+              "initialMode": {
+                "type": "string",
+                "enum": [
+                  "learn",
+                  "practice",
+                  "real_world",
+                  "hands_on"
+                ],
+                "default": "learn",
+                "description": "Starting mode for the tool"
+              },
+              "showModeSelector": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show or hide mode selection tabs"
+              },
+              "enabledModes": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "learn",
+                    "practice",
+                    "real_world",
+                    "hands_on"
+                  ]
+                },
+                "default": [
+                  "learn",
+                  "practice",
+                  "real_world",
+                  "hands_on"
+                ],
+                "description": "Which modes to make available"
+              },
+              "showNavigation": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show or hide navigation buttons"
+              },
+              "showPlayPause": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show or hide play/pause button"
+              },
+              "showStepIndicator": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show or hide step counter"
+              },
+              "initialStep": {
+                "type": "number",
+                "default": 1,
+                "minimum": 1,
+                "description": "Starting step number"
+              },
+              "filterSteps": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "description": "Array of step IDs to show (filters out others)",
+                "examples": [
+                  [
+                    1,
+                    2,
+                    3
+                  ],
+                  [
+                    5,
+                    6,
+                    7
+                  ]
+                ]
+              },
+              "animationSpeed": {
+                "type": "number",
+                "default": 1,
+                "minimum": 0.5,
+                "maximum": 3,
+                "description": "Speed multiplier for animations"
+              },
+              "autoPlayDuration": {
+                "type": "number",
+                "default": 8000,
+                "description": "Milliseconds before auto-advancing (0 = disabled)",
+                "minimum": 0
+              },
+              "themeColor": {
+                "type": "string",
+                "default": "#3b82f6",
+                "description": "Primary theme color (hex code)",
+                "pattern": "^#[0-9A-Fa-f]{6}$"
+              },
+              "darkMode": {
+                "type": "boolean",
+                "default": false,
+                "description": "Enable dark mode"
+              },
+              "additionalProps": {
+                "type": "object",
+                "description": "Tool-specific dynamic configuration",
+                "properties": {
+                  "initialAngle": {
+                    "type": "number",
+                    "default": 45,
+                    "minimum": 0,
+                    "maximum": 90,
+                    "description": "Initial mirror angle for hands-on mode (degrees)"
+                  },
+                  "showGrid": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Show background grid for reference"
+                  },
+                  "lightColor": {
+                    "type": "string",
+                    "default": "#fbbf24",
+                    "description": "Color of light rays",
+                    "pattern": "^#[0-9A-Fa-f]{6}$"
+                  },
+                  "mirrorCount": {
+                    "type": "number",
+                    "default": 1,
+                    "minimum": 1,
+                    "maximum": 3,
+                    "description": "Number of mirrors to show (for advanced demonstrations)"
+                  },
+                  "showAngles": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Display angle measurements"
+                  },
+                  "autoRotate": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Automatically rotate mirror in hands-on mode"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "instructions_for_student": {
+        "type": "string",
+        "description": "Additional context or instructions for the student",
+        "examples": [
+          "Watch how light bounces off the mirror!",
+          "Try adjusting the mirror angle to see how the reflection changes.",
+          "Complete all practice questions to test your understanding."
+        ]
+      }
+    },
+    "required": [
+      "frontend_action",
+      "title",
+      "data"
+    ],
+    "examples": [
+      {
+        "name": "Basic Learning Mode",
+        "description": "Simple introduction to reflection with default settings",
+        "value": {
+          "frontend_action": "show_interactive_tool",
+          "title": "Introduction to Reflection of Light",
+          "data": {
+            "toolName": "reflection_of_light_tool",
+            "parameters": {
+              "initialMode": "learn",
+              "showModeSelector": true
+            }
+          },
+          "instructions_for_student": "Let's learn how light reflects off mirrors!"
+        }
+      },
+      {
+        "name": "Practice Mode Only",
+        "description": "Quiz questions to test understanding",
+        "value": {
+          "frontend_action": "show_interactive_tool",
+          "title": "Reflection Quiz",
+          "data": {
+            "toolName": "reflection_of_light_tool",
+            "parameters": {
+              "initialMode": "practice",
+              "showModeSelector": false,
+              "enabledModes": [
+                "practice"
+              ]
+            }
+          },
+          "instructions_for_student": "Answer these questions about light reflection!"
+        }
+      },
+      {
+        "name": "Hands-On Experiment",
+        "description": "Interactive mirror angle experiment",
+        "value": {
+          "frontend_action": "show_interactive_tool",
+          "title": "Mirror Angle Experiment",
+          "data": {
+            "toolName": "reflection_of_light_tool",
+            "parameters": {
+              "initialMode": "hands_on",
+              "showModeSelector": false,
+              "enabledModes": [
+                "hands_on"
+              ],
+              "additionalProps": {
+                "initialAngle": 30,
+                "showAngles": true
+              }
+            }
+          },
+          "instructions_for_student": "Adjust the mirror and observe how the light path changes!"
+        }
+      },
+      {
+        "name": "Real World Applications",
+        "description": "Show practical uses of reflection",
+        "value": {
+          "frontend_action": "show_interactive_tool",
+          "title": "Mirrors in Daily Life",
+          "data": {
+            "toolName": "reflection_of_light_tool",
+            "parameters": {
+              "initialMode": "real_world",
+              "filterSteps": [
+                8,
+                9,
+                10
+              ]
+            }
+          },
+          "instructions_for_student": "Discover how we use reflection every day!"
+        }
+      },
+      {
+        "name": "Laws of Reflection Focus",
+        "description": "Focus only on the laws of reflection",
+        "value": {
+          "frontend_action": "show_interactive_tool",
+          "title": "Laws of Reflection",
+          "data": {
+            "toolName": "reflection_of_light_tool",
+            "parameters": {
+              "initialMode": "learn",
+              "filterSteps": [
+                3
+              ],
+              "showNavigation": false,
+              "showPlayPause": false,
+              "autoPlayDuration": 0
+            }
+          },
+          "instructions_for_student": "The angle of incidence equals the angle of reflection!"
+        }
+      },
+      {
+        "name": "Dark Mode with Custom Colors",
+        "description": "Custom themed version",
+        "value": {
+          "frontend_action": "show_interactive_tool",
+          "title": "Reflection Visualization",
+          "data": {
+            "toolName": "reflection_of_light_tool",
+            "parameters": {
+              "darkMode": true,
+              "themeColor": "#8b5cf6",
+              "additionalProps": {
+                "lightColor": "#06b6d4"
+              }
+            }
+          },
+          "instructions_for_student": "See light reflection in a new way!"
+        }
+      },
+      {
+        "name": "Periscope Demonstration",
+        "description": "Show how periscopes work with two mirrors",
+        "value": {
+          "frontend_action": "show_interactive_tool",
+          "title": "How Periscopes Work",
+          "data": {
+            "toolName": "reflection_of_light_tool",
+            "parameters": {
+              "initialMode": "real_world",
+              "filterSteps": [
+                9
+              ],
+              "showModeSelector": false,
+              "animationSpeed": 0.8
+            }
+          },
+          "instructions_for_student": "Submarines use periscopes to see above water using two mirrors!"
+        }
+      },
+      {
+        "name": "Kaleidoscope Pattern",
+        "description": "Multiple reflection demonstration",
+        "value": {
+          "frontend_action": "show_interactive_tool",
+          "title": "Kaleidoscope Magic",
+          "data": {
+            "toolName": "reflection_of_light_tool",
+            "parameters": {
+              "initialMode": "real_world",
+              "filterSteps": [
+                10
+              ],
+              "showModeSelector": false
+            }
+          },
+          "instructions_for_student": "Multiple mirrors create beautiful symmetric patterns!"
+        }
+      },
+      {
+        "name": "Complete Tutorial",
+        "description": "All learning steps with auto-play",
+        "value": {
+          "frontend_action": "show_interactive_tool",
+          "title": "Complete Reflection Tutorial",
+          "data": {
+            "toolName": "reflection_of_light_tool",
+            "parameters": {
+              "initialMode": "learn",
+              "enabledModes": [
+                "learn"
+              ],
+              "autoPlayDuration": 10000,
+              "animationSpeed": 1.2
+            }
+          },
+          "instructions_for_student": "Sit back and watch the complete tutorial on light reflection!"
+        }
+      },
+      {
+        "name": "Quick Mirror Image Demo",
+        "description": "Show how images form in mirrors",
+        "value": {
+          "frontend_action": "show_interactive_tool",
+          "title": "Mirror Images",
+          "data": {
+            "toolName": "reflection_of_light_tool",
+            "parameters": {
+              "initialMode": "learn",
+              "filterSteps": [
+                4
+              ],
+              "showNavigation": false,
+              "showStepIndicator": false
+            }
+          },
+          "instructions_for_student": "Your image appears at the same distance behind the mirror as you are in front of it!"
+        }
+      }
+    ],
+    "agent_usage_guide": {
+      "description": "Quick reference for AI agents using this tool",
+      "common_queries": {
+        "what_is_reflection": {
+          "response": "Show basic introduction",
+          "parameters": {
+            "initialMode": "learn",
+            "filterSteps": [
+              1,
+              2
+            ]
+          }
+        },
+        "laws_of_reflection": {
+          "response": "Focus on laws with angle demonstration",
+          "parameters": {
+            "initialMode": "learn",
+            "filterSteps": [
+              3
+            ]
+          }
+        },
+        "mirror_images": {
+          "response": "Show how images form",
+          "parameters": {
+            "initialMode": "learn",
+            "filterSteps": [
+              4
+            ]
+          }
+        },
+        "practice_questions": {
+          "response": "Launch practice mode",
+          "parameters": {
+            "initialMode": "practice"
+          }
+        },
+        "real_world_examples": {
+          "response": "Show practical applications",
+          "parameters": {
+            "initialMode": "real_world"
+          }
+        },
+        "experiment": {
+          "response": "Open interactive experiment",
+          "parameters": {
+            "initialMode": "hands_on"
+          }
+        },
+        "periscope": {
+          "response": "Demonstrate periscope",
+          "parameters": {
+            "initialMode": "real_world",
+            "filterSteps": [
+              9
+            ]
+          }
+        },
+        "kaleidoscope": {
+          "response": "Show kaleidoscope patterns",
+          "parameters": {
+            "initialMode": "real_world",
+            "filterSteps": [
+              10
+            ]
+          }
+        }
+      },
+      "step_ids": {
+        "1": "What is Reflection of Light? (Learn)",
+        "2": "How Does Light Reflect? (Learn)",
+        "3": "Laws of Reflection (Learn)",
+        "4": "Mirrors and Images (Learn)",
+        "5": "Question 1: What is Reflection? (Practice)",
+        "6": "Question 2: Light Travel (Practice)",
+        "7": "Question 3: Angle of Reflection (Practice)",
+        "8": "Mirrors in Daily Life (Real World)",
+        "9": "Periscopes (Real World)",
+        "10": "Kaleidoscopes (Real World)",
+        "11": "Experiment: Control the Mirror (Hands On)"
+      },
+      "decision_tree": "Student asks about reflection → Check keywords → 'what is' = step 1 | 'laws' or 'angle' = step 3 | 'image' = step 4 | 'practice' or 'test' = practice mode | 'experiment' or 'try' = hands_on | 'periscope' = step 9 | 'kaleidoscope' = step 10 | 'real world' or 'daily life' = real_world mode",
+      "tips": [
+        "For concept introduction: Use learn mode with steps 1-4",
+        "For testing knowledge: Use practice mode",
+        "For engagement: Start with hands_on mode",
+        "For minimal UI: Set showModeSelector=false, showNavigation=false",
+        "For focused content: Use filterSteps with specific step IDs",
+        "For auto-play demos: Set autoPlayDuration > 0",
+        "For dark environments: Enable darkMode=true",
+        "For custom branding: Change themeColor and lightColor"
+      ]
+    }
+  },
+  "usage_example": {}
+}

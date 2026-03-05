@@ -1,0 +1,278 @@
+{
+    "toolName": "circuit_symbols_tool",
+    "version": "2.0.0",
+    "description": "An interactive circuit diagram symbols learning tool for Grade 7 Science (NCERT Chapter 3). The tool has two modes: Learn mode with 7 progressive steps covering introduction, cell symbol (long line = positive, short = negative), battery symbol (multiple cells), lamp symbol (cross in circle), LED symbol (triangle with light arrows, one-direction only), switch ON/OFF symbols, and a complete circuit diagram. Practice mode provides 6 quiz questions testing symbol identification, terminal recognition, and circuit behavior prediction with immediate feedback. Canvas-based rendering with accurate symbol proportions. Indian school educational context. Clean, colorful UI styled with Singularity Design System — Poppins font, #4A4DC9 primary indigo, #FF7212 accent orange, #533086→#FC9145 gradient, pill-shaped contained/outlined buttons.",
+    "designSystem": {
+        "name": "Singularity",
+        "font": "Poppins",
+        "colors": {
+            "primary": "#4A4DC9",
+            "primaryDark": "#533086",
+            "accent": "#FF7212",
+            "accentWarm": "#FC9145",
+            "primaryLight": "#C1C1EA",
+            "accentLight": "#FFF3E4",
+            "neutralDark": "#4E4E4E",
+            "neutralMid": "#CACACA",
+            "neutralLight": "#EBEBEB",
+            "surface": "#F5F5F5",
+            "white": "#FFFFFF"
+        },
+        "gradients": {
+            "primary": "linear-gradient(135deg, #533086 0%, #FC9145 100%)",
+            "header": "linear-gradient(135deg, #533086 0%, #4A4DC9 50%, #FC9145 100%)",
+            "accent": "linear-gradient(135deg, #FF7212 0%, #FC9145 100%)"
+        },
+        "buttons": {
+            "style": "pill (border-radius: 999px)",
+            "variants": [
+                "contained",
+                "outlined",
+                "texted"
+            ],
+            "states": [
+                "enabled",
+                "disabled",
+                "hover",
+                "pressed"
+            ],
+            "padding": "10px 24px",
+            "iconGap": "4px"
+        },
+        "borderRadius": {
+            "sm": 8,
+            "md": 12,
+            "lg": 16,
+            "xl": 24,
+            "full": 999
+        }
+    },
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Width of the tool container in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Height of the tool container in pixels"
+        },
+        "initialMode": {
+            "type": "string",
+            "enum": [
+                "learn",
+                "practice"
+            ],
+            "default": "learn",
+            "description": "Starting mode for the tool"
+        },
+        "showModeSelector": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show or hide the Learn/Practice mode tabs"
+        },
+        "enabledModes": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "enum": [
+                    "learn",
+                    "practice"
+                ]
+            },
+            "default": [
+                "learn",
+                "practice"
+            ],
+            "description": "Which modes to enable"
+        },
+        "showNavigation": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show or hide prev/next navigation buttons"
+        },
+        "showPlayPause": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show or hide the auto-play button"
+        },
+        "showStepIndicator": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show or hide the step progress dots"
+        },
+        "initialStep": {
+            "type": "number",
+            "default": 1,
+            "description": "Starting step ID"
+        },
+        "filterSteps": {
+            "type": "array",
+            "items": {
+                "type": "number"
+            },
+            "default": null,
+            "description": "Only show these step IDs (null = show all)"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier"
+        },
+        "autoPlayDuration": {
+            "type": "number",
+            "default": 8000,
+            "description": "Auto-advance delay in ms (0 to disable)"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#4A4DC9",
+            "description": "Primary theme color (Singularity indigo default)"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Dark mode toggle"
+        }
+    },
+    "additionalProps": {
+        "symbolSet": {
+            "type": "string",
+            "enum": [
+                "basic",
+                "extended"
+            ],
+            "default": "basic",
+            "description": "Which set of symbols to display"
+        },
+        "showLabels": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show labels on symbols"
+        },
+        "showTerminals": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show positive/negative terminal markers"
+        },
+        "quizDifficulty": {
+            "type": "string",
+            "enum": [
+                "easy",
+                "medium",
+                "hard"
+            ],
+            "default": "medium",
+            "description": "Difficulty level for practice questions"
+        },
+        "examples": [
+            {
+                "description": "Default — all symbols with terminal labels",
+                "value": {
+                    "showTerminals": true,
+                    "showLabels": true
+                }
+            },
+            {
+                "description": "Quiz-focused — skip to practice mode",
+                "value": {
+                    "quizDifficulty": "easy"
+                }
+            }
+        ]
+    },
+    "modes": {
+        "learn": {
+            "label": "Learn",
+            "icon": "BookOpen",
+            "description": "Step-by-step walkthrough of all 7 circuit symbols with terminal info, descriptions, and fun facts",
+            "stepCount": 7
+        },
+        "practice": {
+            "label": "Practice",
+            "icon": "Target",
+            "description": "6 quiz questions testing symbol identification, terminal recognition, and circuit behaviour prediction",
+            "stepCount": 6
+        }
+    },
+    "steps": {
+        "learn": [
+            {
+                "id": 1,
+                "title": "Welcome to Circuit Symbols!",
+                "type": "intro"
+            },
+            {
+                "id": 2,
+                "title": "Electric Cell",
+                "type": "explanation",
+                "symbolIndex": 0
+            },
+            {
+                "id": 3,
+                "title": "Battery",
+                "type": "explanation",
+                "symbolIndex": 1
+            },
+            {
+                "id": 4,
+                "title": "Electric Lamp",
+                "type": "explanation",
+                "symbolIndex": 2
+            },
+            {
+                "id": 5,
+                "title": "LED (Light Emitting Diode)",
+                "type": "explanation",
+                "symbolIndex": 3
+            },
+            {
+                "id": 6,
+                "title": "Switch ON & OFF",
+                "type": "explanation",
+                "symbolIndex": 4
+            },
+            {
+                "id": 7,
+                "title": "Complete Circuit Diagram",
+                "type": "explanation",
+                "symbolIndex": 6
+            }
+        ],
+        "practice": [
+            {
+                "id": 10,
+                "title": "Identify cell symbol",
+                "questionIndex": 0
+            },
+            {
+                "id": 11,
+                "title": "Positive terminal recognition",
+                "questionIndex": 1
+            },
+            {
+                "id": 12,
+                "title": "Lamp filament",
+                "questionIndex": 2
+            },
+            {
+                "id": 13,
+                "title": "LED direction rule",
+                "questionIndex": 3
+            },
+            {
+                "id": 14,
+                "title": "Switch OFF behaviour",
+                "questionIndex": 4
+            },
+            {
+                "id": 15,
+                "title": "Battery composition",
+                "questionIndex": 5
+            }
+        ]
+    },
+    "teaching_notes": "Activate AFTER showing the symbols reference chart image. Start in Learn mode and guide the student through each symbol step: 'Step 2 shows the cell — notice the long line is positive. Step 3 shows the battery — it's just multiple cells joined.' After completing Learn mode, switch to Practice mode: 'Now let's see if you can identify them on your own!' The tool's built-in practice questions provide immediate feedback.",
+    "instructions_for_student": "Learn all seven circuit symbols one by one in Learn mode — pay attention to which line is positive and which is negative! Then switch to Practice mode to test yourself with quiz questions. Can you identify every symbol correctly?"
+}

@@ -1,0 +1,460 @@
+{
+    "toolName": "simultaneous_division_method_tool",
+    "version": "1.0.0",
+    "description": "Interactive tool for teaching the Simultaneous Division Method to find HCF (Highest Common Factor) and LCM (Lowest Common Multiple) of two numbers. Aligned with Ganita Prakash Grade 7 Chapter 3.",
+
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Component width in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Component height in pixels"
+        },
+        "initialMode": {
+            "type": "string",
+            "enum": ["learn", "practice"],
+            "default": "learn",
+            "description": "Starting mode"
+        },
+        "showModeSelector": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide mode selector tabs"
+        },
+        "enabledModes": {
+            "type": "array",
+            "items": { "type": "string", "enum": ["learn", "practice"] },
+            "default": ["learn", "practice"],
+            "description": "Which modes to enable"
+        },
+        "showNavigation": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide prev/next buttons and step indicator"
+        },
+        "showStepIndicator": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide step progress dots"
+        },
+        "initialStep": {
+            "type": "number",
+            "default": 1,
+            "description": "Starting step ID"
+        },
+        "filterSteps": {
+            "type": "array",
+            "items": { "type": "number" },
+            "default": null,
+            "description": "Array of step IDs to show (null = show all)"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier"
+        },
+        "autoPlayDuration": {
+            "type": "number",
+            "default": 0,
+            "description": "Auto-advance delay in ms (0 = disabled)"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#4A4DC9",
+            "description": "Primary theme color (hex)"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable dark mode"
+        }
+    },
+
+    "additionalProps": {
+        "description": "Tool-specific dynamic content passed by the agent to customize the numbers used in the simultaneous division method",
+        "schema": {
+            "numberA": {
+                "type": "number",
+                "default": 84,
+                "description": "First number for learn mode HCF/LCM calculation"
+            },
+            "numberB": {
+                "type": "number",
+                "default": 180,
+                "description": "Second number for learn mode HCF/LCM calculation"
+            },
+            "practiceNumberA": {
+                "type": "number",
+                "default": 300,
+                "description": "First number for practice mode (student fills in divisors)"
+            },
+            "practiceNumberB": {
+                "type": "number",
+                "default": 150,
+                "description": "Second number for practice mode (student fills in divisors)"
+            }
+        },
+        "examples": {
+            "default_84_and_180": {
+                "numberA": 84,
+                "numberB": 180
+            },
+            "small_numbers": {
+                "numberA": 12,
+                "numberB": 18
+            },
+            "large_numbers": {
+                "numberA": 360,
+                "numberB": 540
+            },
+            "coprime_numbers": {
+                "numberA": 15,
+                "numberB": 28
+            },
+            "one_divides_other": {
+                "numberA": 24,
+                "numberB": 72
+            },
+            "equal_numbers": {
+                "numberA": 60,
+                "numberB": 60
+            },
+            "practice_easy": {
+                "practiceNumberA": 24,
+                "practiceNumberB": 36
+            },
+            "practice_medium": {
+                "practiceNumberA": 300,
+                "practiceNumberB": 150
+            },
+            "practice_hard": {
+                "practiceNumberA": 420,
+                "practiceNumberB": 630
+            },
+            "custom_learn_and_practice": {
+                "numberA": 48,
+                "numberB": 180,
+                "practiceNumberA": 60,
+                "practiceNumberB": 90
+            }
+        }
+    },
+
+    "modes": {
+        "learn": {
+            "steps": [1, 2, 3, 4, 5, 6, 7, 8],
+            "description": "Step-by-step walkthrough of simultaneous division method showing how to find HCF and LCM. Includes Guna's shortcut (dividing by HCF directly)."
+        },
+        "practice": {
+            "steps": [10],
+            "description": "Student fills in the common prime divisors for practiceNumberA and practiceNumberB. Answers are validated with feedback."
+        }
+    },
+
+    "stepSummary": {
+        "1": { "title": "The Division Table", "mode": "learn", "type": "intro", "description": "Introduction with real-world context (vegetable market packing problem). Shows the two numbers." },
+        "2": { "title": "Divide by 2", "mode": "learn", "type": "explanation", "description": "First division step — divides both numbers by 2." },
+        "3": { "title": "Divide by 2 Again", "mode": "learn", "type": "explanation", "description": "Second division step — divides quotients by 2 again." },
+        "4": { "title": "Divide by 3", "mode": "learn", "type": "explanation", "description": "Third division step — divides quotients by 3." },
+        "5": { "title": "Stop! No More Common Primes", "mode": "learn", "type": "explanation", "description": "Identifies when to stop (no more shared prime factors)." },
+        "6": { "title": "Read Off the HCF", "mode": "learn", "type": "explanation", "description": "Shows HCF = product of left column divisors." },
+        "7": { "title": "Read Off the LCM", "mode": "learn", "type": "explanation", "description": "Shows LCM = product of all divisors × bottom row remainders." },
+        "8": { "title": "Guna's Shortcut!", "mode": "learn", "type": "explanation", "description": "Alternative: divide by HCF directly in one step instead of prime-by-prime." },
+        "10": { "title": "Your Turn", "mode": "practice", "type": "practice", "description": "Student inputs divisors for practiceNumberA and practiceNumberB. Validated on submit." }
+    },
+
+    "designSystem": {
+        "name": "Singularity",
+        "colors": {
+            "primary": "#4A4DC9",
+            "primaryDark": "#3638A0",
+            "primaryLight": "#C1C1EA",
+            "primaryMuted": "#E8E8F5",
+            "accent": "#FF7212",
+            "accentDark": "#D95E0A",
+            "accentLight": "#FFF3E4",
+            "accentMuted": "#FC9145",
+            "gradientStart": "#533086",
+            "gradientEnd": "#FC9145",
+            "neutralDark": "#4E4E4E",
+            "neutralMed": "#CACACA",
+            "neutralLight": "#EBEBEB",
+            "neutralBg": "#F5F5F5"
+        },
+        "font": "Poppins",
+        "buttonStyle": "pill (border-radius: 24px, height: 40px)",
+        "buttonVariants": ["contained", "outlined", "texted"],
+        "buttonStates": ["enabled", "disabled", "hover", "pressed"],
+        "decorativeShapes": ["circle", "triangle", "square"]
+    },
+
+    "agentToolCallExamples": [
+        {
+            "name": "Example 1: Default Learn Mode",
+            "description": "Teach HCF and LCM of 84 and 180 (default numbers)",
+            "toolCall": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Simultaneous Division: 84 and 180",
+                "data": {
+                    "toolName": "simultaneous_division_method_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "showModeSelector": true
+                    }
+                },
+                "instructions_for_student": "Watch how we divide 84 and 180 step by step to find their HCF and LCM!"
+            }
+        },
+        {
+            "name": "Example 2: Custom Numbers — Learn Mode",
+            "description": "Teach HCF and LCM of 48 and 60",
+            "toolCall": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Find HCF and LCM of 48 and 60",
+                "data": {
+                    "toolName": "simultaneous_division_method_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "additionalProps": {
+                            "numberA": 48,
+                            "numberB": 60
+                        }
+                    }
+                },
+                "instructions_for_student": "Let's find the HCF and LCM of 48 and 60 using the simultaneous division method!"
+            }
+        },
+        {
+            "name": "Example 3: Practice Mode Only",
+            "description": "Student practices finding divisors for 24 and 36",
+            "toolCall": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Practice: 24 and 36",
+                "data": {
+                    "toolName": "simultaneous_division_method_tool",
+                    "parameters": {
+                        "initialMode": "practice",
+                        "showModeSelector": false,
+                        "additionalProps": {
+                            "practiceNumberA": 24,
+                            "practiceNumberB": 36
+                        }
+                    }
+                },
+                "instructions_for_student": "Fill in the common prime divisors for 24 and 36. Keep dividing until no common primes remain!"
+            }
+        },
+        {
+            "name": "Example 4: Jump to HCF Explanation",
+            "description": "Show only the HCF result step",
+            "toolCall": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Reading the HCF",
+                "data": {
+                    "toolName": "simultaneous_division_method_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "filterSteps": [6],
+                        "showNavigation": false,
+                        "showModeSelector": false,
+                        "additionalProps": {
+                            "numberA": 84,
+                            "numberB": 180
+                        }
+                    }
+                },
+                "instructions_for_student": "The HCF is the product of all divisors in the left column: 2 × 2 × 3 = 12."
+            }
+        },
+        {
+            "name": "Example 5: Jump to LCM Explanation",
+            "description": "Show only the LCM result step",
+            "toolCall": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Reading the LCM",
+                "data": {
+                    "toolName": "simultaneous_division_method_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "filterSteps": [7],
+                        "showNavigation": false,
+                        "showModeSelector": false,
+                        "additionalProps": {
+                            "numberA": 84,
+                            "numberB": 180
+                        }
+                    }
+                },
+                "instructions_for_student": "The LCM uses ALL numbers: left column divisors AND the bottom row remainders multiplied together."
+            }
+        },
+        {
+            "name": "Example 6: Guna's Shortcut Only",
+            "description": "Show only the shortcut step for dividing by HCF directly",
+            "toolCall": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Guna's Shortcut",
+                "data": {
+                    "toolName": "simultaneous_division_method_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "filterSteps": [8],
+                        "showNavigation": false,
+                        "showModeSelector": false,
+                        "additionalProps": {
+                            "numberA": 84,
+                            "numberB": 180
+                        }
+                    }
+                },
+                "instructions_for_student": "Instead of dividing by one prime at a time, Guna divides by the entire HCF in a single step!"
+            }
+        },
+        {
+            "name": "Example 7: Large Numbers Learn + Practice",
+            "description": "Learn with 360 and 540, then practice with 420 and 630",
+            "toolCall": {
+                "frontend_action": "show_interactive_tool",
+                "title": "HCF & LCM of Large Numbers",
+                "data": {
+                    "toolName": "simultaneous_division_method_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "showModeSelector": true,
+                        "additionalProps": {
+                            "numberA": 360,
+                            "numberB": 540,
+                            "practiceNumberA": 420,
+                            "practiceNumberB": 630
+                        }
+                    }
+                },
+                "instructions_for_student": "First watch the method for 360 and 540, then switch to Practice mode and try 420 and 630 yourself!"
+            }
+        },
+        {
+            "name": "Example 8: Small Numbers for Beginners",
+            "description": "Easy example with 12 and 18",
+            "toolCall": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Start Simple: 12 and 18",
+                "data": {
+                    "toolName": "simultaneous_division_method_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "additionalProps": {
+                            "numberA": 12,
+                            "numberB": 18,
+                            "practiceNumberA": 16,
+                            "practiceNumberB": 24
+                        }
+                    }
+                },
+                "instructions_for_student": "We'll start with small numbers — 12 and 18 — so the method is easy to follow!"
+            }
+        },
+        {
+            "name": "Example 9: One Number Divides the Other",
+            "description": "Special case where numberA divides numberB exactly",
+            "toolCall": {
+                "frontend_action": "show_interactive_tool",
+                "title": "When One Divides the Other: 24 and 72",
+                "data": {
+                    "toolName": "simultaneous_division_method_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "additionalProps": {
+                            "numberA": 24,
+                            "numberB": 72
+                        }
+                    }
+                },
+                "instructions_for_student": "Notice something special: when one number divides the other exactly, the HCF equals the smaller number!"
+            }
+        },
+        {
+            "name": "Example 10: Practice Only — No Distractions",
+            "description": "Minimal UI for focused practice",
+            "toolCall": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Quick Practice",
+                "data": {
+                    "toolName": "simultaneous_division_method_tool",
+                    "parameters": {
+                        "initialMode": "practice",
+                        "showModeSelector": false,
+                        "showNavigation": false,
+                        "autoPlayDuration": 0,
+                        "additionalProps": {
+                            "practiceNumberA": 60,
+                            "practiceNumberB": 90
+                        }
+                    }
+                },
+                "instructions_for_student": "Find the common prime divisors for 60 and 90. Type each divisor and click Check!"
+            }
+        }
+    ],
+
+    "decisionTree": {
+        "description": "Decision tree for agents to determine which parameters to use",
+        "rules": [
+            {
+                "trigger": "Student asks 'What is simultaneous division?' or 'How to find HCF and LCM?'",
+                "action": "Use: initialMode: 'learn', showModeSelector: true"
+            },
+            {
+                "trigger": "Student asks 'Find HCF and LCM of [A] and [B]'",
+                "action": "Use: initialMode: 'learn', additionalProps: { numberA: A, numberB: B }"
+            },
+            {
+                "trigger": "Student asks to practice or 'Let me try'",
+                "action": "Use: initialMode: 'practice', additionalProps: { practiceNumberA: A, practiceNumberB: B }"
+            },
+            {
+                "trigger": "Student asks 'What is HCF?' specifically",
+                "action": "Use: initialMode: 'learn', filterSteps: [1, 2, 3, 4, 5, 6]"
+            },
+            {
+                "trigger": "Student asks 'What is LCM?' specifically",
+                "action": "Use: initialMode: 'learn', filterSteps: [1, 2, 3, 4, 5, 7]"
+            },
+            {
+                "trigger": "Student asks about Guna's shortcut or 'Is there a faster way?'",
+                "action": "Use: initialMode: 'learn', filterSteps: [8]"
+            },
+            {
+                "trigger": "Teacher wants minimal distractions for assessment",
+                "action": "Use: initialMode: 'practice', showModeSelector: false, showNavigation: false"
+            },
+            {
+                "trigger": "Student needs a specific step explained again",
+                "action": "Use: filterSteps: [stepId], showNavigation: false, showModeSelector: false"
+            }
+        ]
+    },
+
+    "errorHandling": {
+        "invalidNumbers": "If numberA or numberB are less than 2, or not integers, the division table will be empty. Always use integers >= 2.",
+        "coprimeNumbers": "If the two numbers share no common factor (e.g., 7 and 15), the division table will be empty and HCF = 1. This is valid behavior.",
+        "invalidMode": "If initialMode is not 'learn' or 'practice', defaults to 'learn'.",
+        "emptyAdditionalProps": "If no additionalProps are provided, defaults to numberA=84, numberB=180, practiceNumberA=300, practiceNumberB=150.",
+        "filterStepsEmpty": "If filterSteps is an empty array or contains no matching IDs, no content will be shown. Always include valid step IDs."
+    },
+
+    "tipsForAgents": [
+        "For learn mode, the steps are tied to the default numbers (84 and 180). Step descriptions reference specific divisions (÷2, ÷2, ÷3). If you change numberA/numberB, the table content adapts but the step descriptions still reference the default example text.",
+        "For practice mode, always choose numbers that share at least one common prime factor, otherwise the table will be empty.",
+        "Use filterSteps to show only relevant steps when answering a specific question (e.g., 'What is HCF?' → filterSteps: [6]).",
+        "Set showModeSelector: false when you want the student to focus on one mode only.",
+        "Set showNavigation: false for single-step views (combined with filterSteps).",
+        "The practice mode validates divisors exactly — the student must enter primes in the correct order (smallest first, repeated as needed).",
+        "Guna's Shortcut (step 8) teaches that dividing by any common factor (not just primes) works. It's a great follow-up after the main method.",
+        "For a complete lesson flow: start with learn mode (all steps), then switch to practice mode.",
+        "Both numbers must be positive integers >= 2 for meaningful results."
+    ]
+}

@@ -1,0 +1,317 @@
+{
+    "toolName": "mean_median_patterns_tool",
+    "version": "2.0.0",
+    "description": "Interactive step-based progressive comparison for Grade 7 Mathematics — Mean vs Median patterns. Redesigned with Singularity Design System. Two-column comparison table with indigo (#4A4DC9) header for Mean and orange (#FF7212) header for Median. Rows appear one at a time with slide-in animation. Each row shows a scenario name on the left, with the mean value in indigo and median value in orange. Row 1: balanced newspaper data with mean ≈ median shown with an approximately-equal sign between them. Row 2: Poovizhi's family with a downward red arrow on the mean side showing it pulled below median. Row 3: bookworm data with an upward red arrow on the mean side showing it pulled above median. Row 4: pattern summary with visual arrows. Row 5: formal definition of central tendency with icons. Each row highlighted on reveal with a soft glow. Mini dot plots beside each row showing data points, mean marker (indigo), and median marker (orange). Poppins font throughout. Singularity 5-colour palette: indigo (#4A4DC9), orange (#FF7212), gradient purple-to-orange (#533086 to #FC9145), white background (#FFFFFF), dark text (#2D2D3F). Mobile-responsive table that scrolls horizontally on narrow screens. Practice mode shows correct answer highlighted in green when user picks wrong.",
+    "designSystem": "Singularity",
+    "category": "mathematics",
+    "grade": "7",
+    "topic": "Statistics — Mean vs Median Patterns and Measures of Central Tendency",
+    "curriculum": "NCERT Ganita Prakash Grade 7 Part-II Chapter 5 — Connecting the Dots",
+    "dependencies": {
+        "lucide-react": "0.263.1",
+        "icons_used": ["ChevronLeft", "ChevronRight", "Play", "Pause", "Globe", "BookOpen", "Target", "Plus"]
+    },
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Width of the tool container in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Minimum height of the tool container in pixels"
+        },
+        "initialMode": {
+            "type": "string",
+            "enum": ["learn", "practice", "real_world"],
+            "default": "learn",
+            "description": "Starting mode for the tool"
+        },
+        "showModeSelector": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show or hide mode selector tabs in the header"
+        },
+        "enabledModes": {
+            "type": "array",
+            "items": { "type": "string" },
+            "default": ["learn", "practice", "real_world"],
+            "description": "Which modes to enable"
+        },
+        "showNavigation": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show or hide Previous/Next navigation buttons"
+        },
+        "showPlayPause": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show or hide auto-play controls"
+        },
+        "showStepIndicator": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show or hide step counter badge"
+        },
+        "initialStep": {
+            "type": "number",
+            "default": 1,
+            "description": "Starting step ID"
+        },
+        "filterSteps": {
+            "type": "array",
+            "items": { "type": "number" },
+            "default": null,
+            "description": "Only show specific step IDs"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier"
+        },
+        "autoPlayDuration": {
+            "type": "number",
+            "default": 10000,
+            "description": "Auto-advance delay in milliseconds (0 to disable)"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#4A4DC9",
+            "description": "Primary theme color (Singularity indigo)"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Dark mode toggle"
+        }
+    },
+    "additionalProps": {
+        "description": "Tool-specific dynamic data for customizing scenarios, colors, and display",
+        "properties": {
+            "scenarios": {
+                "type": "array",
+                "description": "Custom scenario data sets to compare mean vs median",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "name": { "type": "string", "description": "Display name of the scenario" },
+                        "label": { "type": "string", "description": "Badge label (e.g., 'Balanced Data', 'Low Outlier')" },
+                        "dataPoints": { "type": "array", "items": { "type": "number" }, "description": "Sorted array of data values" },
+                        "mean": { "type": "number", "description": "Pre-calculated mean value" },
+                        "median": { "type": "number", "description": "Pre-calculated median value" },
+                        "relationship": { "type": "string", "enum": ["equal", "less", "greater"], "description": "'equal' when mean ≈ median, 'less' when mean < median, 'greater' when mean > median" },
+                        "outlierDirection": { "type": "string", "enum": ["none", "low", "high"], "description": "Direction of the outlier if present" },
+                        "description": { "type": "string", "description": "Short description of the data context" },
+                        "teachingNote": { "type": "string", "description": "Teaching hint displayed below the table for this scenario" }
+                    }
+                },
+                "default": "Three default scenarios from NCERT textbook: Newspaper pages (balanced), Poovizhi's family heights (low outlier), Bookworm stories (high outlier)"
+            },
+            "showDotPlots": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show mini SVG dot plots beside each scenario row"
+            },
+            "meanColor": {
+                "type": "string",
+                "default": "#4A4DC9",
+                "description": "Color for mean indicators (Singularity indigo)"
+            },
+            "medianColor": {
+                "type": "string",
+                "default": "#FF7212",
+                "description": "Color for median indicators (Singularity orange)"
+            },
+            "accentColor": {
+                "type": "string",
+                "default": "#533086",
+                "description": "Accent color for gradient dark (Singularity purple)"
+            },
+            "fontFamily": {
+                "type": "string",
+                "default": "'Poppins', sans-serif",
+                "description": "Font family for the entire tool"
+            }
+        },
+        "examples": {
+            "default_textbook": {
+                "description": "Default scenarios from NCERT Grade 7 textbook",
+                "additionalProps": {}
+            },
+            "custom_cricket_data": {
+                "description": "Custom cricket batting scores comparison",
+                "additionalProps": {
+                    "scenarios": [
+                        {
+                            "name": "Shubman's Scores",
+                            "label": "High Outlier",
+                            "dataPoints": [0, 17, 21, 90],
+                            "mean": 32,
+                            "median": 19,
+                            "relationship": "greater",
+                            "outlierDirection": "high",
+                            "description": "Runs: 0, 17, 21, 90",
+                            "teachingNote": "The 90-run innings pulls the mean above the median."
+                        },
+                        {
+                            "name": "Yashasvi's Scores",
+                            "label": "More Balanced",
+                            "dataPoints": [18, 35, 55, 67],
+                            "mean": 43.75,
+                            "median": 45,
+                            "relationship": "equal",
+                            "outlierDirection": "none",
+                            "description": "Runs: 67, 55, 18, 35",
+                            "teachingNote": "More consistent scores — mean and median are close together."
+                        }
+                    ]
+                }
+            },
+            "onion_prices_comparison": {
+                "description": "Comparing onion prices in Yahapur and Wahapur",
+                "additionalProps": {
+                    "scenarios": [
+                        {
+                            "name": "Yahapur Prices",
+                            "label": "Gradual Rise",
+                            "dataPoints": [24, 25, 26, 28, 30, 35, 39, 43, 44, 49, 56, 59],
+                            "mean": 38.17,
+                            "median": 37,
+                            "relationship": "equal",
+                            "outlierDirection": "none",
+                            "description": "Monthly onion prices (Rs/kg) in Yahapur",
+                            "teachingNote": "Prices rise gradually — no extreme outliers, so mean ≈ median."
+                        },
+                        {
+                            "name": "Wahapur Prices",
+                            "label": "More Spread",
+                            "dataPoints": [17, 19, 23, 30, 35, 38, 39, 42, 42, 52, 53, 60],
+                            "mean": 37.5,
+                            "median": 38.5,
+                            "relationship": "equal",
+                            "outlierDirection": "none",
+                            "description": "Monthly onion prices (Rs/kg) in Wahapur",
+                            "teachingNote": "More spread out but still roughly balanced."
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "modes": {
+        "learn": {
+            "description": "Progressive step-by-step comparison: reveals three scenarios one at a time, then pattern summary, then central tendency definition. Rows animate in with slideInFromRight. Active row gets a soft indigo glow. Teaching notes appear at bottom for each scenario.",
+            "icon": "BookOpen (lucide-react)",
+            "steps": [
+                { "id": 1, "title": "Balanced Data: Newspaper Pages", "type": "intro", "scenarioIndex": 0 },
+                { "id": 2, "title": "Low Outlier: Poovizhi's Family", "type": "explanation", "scenarioIndex": 1 },
+                { "id": 3, "title": "High Outlier: Bookworm Stories", "type": "explanation", "scenarioIndex": 2 },
+                { "id": 4, "title": "The Pattern Revealed!", "type": "explanation", "isPattern": true },
+                { "id": 5, "title": "Measures of Central Tendency", "type": "explanation", "isCentralTendency": true }
+            ]
+        },
+        "practice": {
+            "description": "Students predict whether mean will be greater than, less than, or equal to median based on data characteristics. Three pill-shaped answer buttons. On wrong answer: selected button highlights red, correct button highlights green with checkmark icon and bounceIn animation. Feedback banner shows correct answer in a green pill. Practice state resets automatically via useEffect when navigating between questions.",
+            "icon": "Target (lucide-react)",
+            "steps": [
+                { "id": 10, "title": "Predict the Relationship (High Outlier)", "type": "practice", "answer": "greater" },
+                { "id": 11, "title": "Spot the Outlier Effect (Low Outlier)", "type": "practice", "answer": "less" },
+                { "id": 12, "title": "Balanced or Skewed?", "type": "practice", "answer": "equal" }
+            ]
+        },
+        "real_world": {
+            "description": "Real-world examples showing when mean or median is more appropriate. Each example shows a large icon, description, and side-by-side Mean vs Median cards with slide-in animations.",
+            "icon": "Globe (lucide-react)",
+            "steps": [
+                { "id": 20, "title": "Cricket Scores", "type": "real_world", "context": "cricket" },
+                { "id": 21, "title": "Class Test Marks", "type": "real_world", "context": "marks" }
+            ]
+        }
+    },
+    "teaching_notes": {
+        "step_1_balanced": "Point out that mean and median are close — this is the 'normal' case when data has no extreme outliers.",
+        "step_2_low_outlier": "Ask: 'Which direction did the outlier pull the mean?' The low outlier (118 cm) drags the mean below the median.",
+        "step_3_high_outlier": "Ask the student to PREDICT the relationship before revealing. The high outlier (40 stories) pulls mean above median.",
+        "step_4_pattern": "Let the student state the pattern in their own words first before showing the summary cards.",
+        "step_5_central_tendency": "Introduce the formal term 'measures of central tendency' and explain two different ways of finding the centre."
+    },
+    "instructions_for_student": "Watch as three different data sets appear one by one. For each, compare the mean and median. After seeing all three, look for the pattern: when is the mean pulled below the median? When is it pulled above? Think about WHY this happens before the explanation appears.",
+    "behavior": {
+        "practice_state_reset": "useEffect watches currentStepIndex and selectedMode. Whenever either changes (via Next, Previous, progress dots, or mode switch), practiceAnswer and showFeedback are both reset to null/false automatically.",
+        "wrong_answer_feedback": "When user selects a wrong answer: (1) selected button turns red with red border, (2) correct answer button highlights green with green border, checkmark icon, and bounceIn animation, (3) feedback banner shows 'Not quite!' in red plus a green pill showing the correct answer label.",
+        "correct_answer_feedback": "When user selects the correct answer: selected button turns green, feedback banner shows '🎉 Correct! You understand the pattern!'",
+        "row_reveal": "Each scenario row is revealed via slideInFromRight animation when the corresponding learn step is reached. Rows persist once revealed so the comparison table builds progressively."
+    },
+    "design_system": {
+        "name": "Singularity",
+        "fonts": {
+            "primary": "Poppins",
+            "weights": ["300", "400", "500", "600", "700", "800", "900"],
+            "source": "Google Fonts"
+        },
+        "colors": {
+            "indigo": "#4A4DC9",
+            "orange": "#FF7212",
+            "gradientDark": "#533086",
+            "gradientLight": "#FC9145",
+            "indigoLight": "#C1C1EA",
+            "orangeLight": "#FFF3E4",
+            "indigoBg": "#EEEEF8",
+            "orangeBg": "#FFF8F0",
+            "dark": "#4E4E4E",
+            "gray": "#CACACA",
+            "lightGray": "#EBEBEB",
+            "offWhite": "#F5F5F5",
+            "white": "#FFFFFF",
+            "textPrimary": "#2D2D3F",
+            "textSecondary": "#6B6B80",
+            "textMuted": "#9E9EB0"
+        },
+        "radii": {
+            "sm": "8px",
+            "md": "12px",
+            "lg": "16px",
+            "pill": "100px"
+        },
+        "shadows": {
+            "sm": "0 1px 3px rgba(74,77,201,0.08)",
+            "md": "0 4px 16px rgba(74,77,201,0.10)",
+            "lg": "0 8px 32px rgba(74,77,201,0.12)",
+            "glow": "0 0 20px rgba(74,77,201,0.18)"
+        },
+        "buttons": {
+            "height": "40px",
+            "padding": "0 24px",
+            "borderRadius": "100px (pill)",
+            "variants": {
+                "contained": "Gradient fill (indigo to gradientDark), white text, shadow on hover",
+                "outlined": "Transparent background, 2px indigo border, indigo text, indigoBg on hover",
+                "highlight": "Gradient fill (orange to gradientLight), white text"
+            },
+            "states": {
+                "enabled": "Full opacity, pointer cursor",
+                "disabled": "lightGray background, gray text, 0.6 opacity, not-allowed cursor",
+                "hover": "scale(1.03), shadow elevation, background shift",
+                "pressed": "scale(1) with shadow"
+            }
+        },
+        "header_gradient": "linear-gradient(135deg, #533086, #4A4DC9 40%, #FC9145) with gradientShift 8s animation"
+    },
+    "animations": {
+        "row_reveal": "slideInFromRight 0.65s ease-out",
+        "pattern_row": "slideInFromLeft 0.65s ease-out",
+        "number_count": "numberCount 0.5s ease-out with staggered delay",
+        "relationship_icon": "bounceIn 0.5s ease-out",
+        "dot_plot_dots": "drawDot 0.35s staggered per dot (0.04s interval)",
+        "dot_plot_markers": "fadeIn 0.5s ease-out with staggered delay (0.7s-0.95s)",
+        "active_row_glow": "box-shadow: 0 0 20px rgba(74,77,201,0.18)",
+        "pattern_cards": "popIn 0.5s staggered (0.15s, 0.35s, 0.55s)",
+        "central_tendency_cards": "fadeInUp 0.5s staggered (0.4s, 0.6s)",
+        "header_gradient": "gradientShift 8s ease infinite",
+        "pulse_arrow_down": "pulseArrow 1.4s ease-in-out infinite",
+        "pulse_arrow_up": "pulseArrowUp 1.4s ease-in-out infinite (with rotate 180deg)",
+        "correct_answer_reveal": "bounceIn 0.5s ease-out 0.3s both",
+        "feedback_banner": "bounceIn 0.5s ease-out both"
+    }
+}

@@ -1,0 +1,109 @@
+{
+    "toolName": "token_multiplication_tool",
+    "version": "2.0.0",
+    "description": "Step-based explanation tool for Grade 7 Mathematics — Token Multiplication Simulator. Redesigned with Singularity Design System. Demonstrates integer multiplication using the token (bag) model, covering Positive × Positive and Positive × Negative cases. Students watch a jute bag fill with purple (+) or orange (−) tokens group by group. Based on NCERT Ganita Prakash Grade 7 Chapter 2.",
+    "designSystem": "Singularity",
+    "category": "mathematics",
+    "grade": "7",
+    "subject": "Mathematics",
+    "chapter": "Operations with Integers",
+    "topic": "Positive × Positive and Positive × Negative Multiplication",
+    "curriculum": "NCERT Ganita Prakash",
+
+    "parameters": {
+        "width": { "type": "number", "default": 800, "description": "Component width in pixels" },
+        "height": { "type": "number", "default": 600, "description": "Component height in pixels" },
+        "initialMode": { "type": "string", "default": "learn", "enum": ["learn"], "description": "Starting mode" },
+        "showModeSelector": { "type": "boolean", "default": false },
+        "showNavigation": { "type": "boolean", "default": true },
+        "showPlayPause": { "type": "boolean", "default": true },
+        "showStepIndicator": { "type": "boolean", "default": true },
+        "initialStep": { "type": "number", "default": 1 },
+        "filterSteps": { "type": "array", "default": null, "items": { "type": "number" } },
+        "animationSpeed": { "type": "number", "default": 1 },
+        "autoPlayDuration": { "type": "number", "default": 0 },
+        "themeColor": { "type": "string", "default": "#4A4DC9" },
+        "darkMode": { "type": "boolean", "default": false }
+    },
+
+    "additionalProps": {
+        "description": "Tool-specific dynamic content for customizing the multiplication examples",
+        "properties": {
+            "multiplierA": { "type": "number", "default": 4, "description": "Multiplier for Positive × Positive (Step 2)" },
+            "multiplicandA": { "type": "number", "default": 2, "description": "Multiplicand for Positive × Positive (Step 2). Must be positive." },
+            "multiplierB": { "type": "number", "default": 4, "description": "Multiplier for Positive × Negative (Step 3)" },
+            "multiplicandB": { "type": "number", "default": -2, "description": "Multiplicand for Positive × Negative (Step 3). Must be negative." },
+            "tokenSize": { "type": "number", "default": 38, "description": "Token diameter in px" },
+            "context": { "type": "string", "default": "samosa", "enum": ["samosa", "default"] }
+        },
+        "examples": [
+            {
+                "description": "Default: 4 × 2 and 4 × (−2)",
+                "value": { "multiplierA": 4, "multiplicandA": 2, "multiplierB": 4, "multiplicandB": -2 }
+            },
+            {
+                "description": "Textbook: 3 × (−2) and 3 × 2",
+                "value": { "multiplierA": 3, "multiplicandA": 2, "multiplierB": 3, "multiplicandB": -2 }
+            },
+            {
+                "description": "Larger: 5 × 3 and 5 × (−3)",
+                "value": { "multiplierA": 5, "multiplicandA": 3, "multiplierB": 5, "multiplicandB": -3 }
+            }
+        ]
+    },
+
+    "modes": {
+        "learn": { "label": "Learn", "description": "Step-by-step guided walkthrough", "icon": "BookOpen" }
+    },
+
+    "steps": {
+        "total": 5,
+        "list": [
+            { "id": 1, "title": "The Empty Bag", "phase": "empty_bag" },
+            { "id": 2, "title": "Positive × Positive", "phase": "pos_pos" },
+            { "id": 3, "title": "Positive × Negative", "phase": "pos_neg" },
+            { "id": 4, "title": "Compare the Results", "phase": "compare" },
+            { "id": 5, "title": "The Sign Rule", "phase": "sign_rule" }
+        ]
+    },
+
+    "design": {
+        "system": "Singularity",
+        "palette": {
+            "primary": "#4A4DC9",
+            "accent": "#FF7212",
+            "gradientStart": "#533086",
+            "gradientEnd": "#FC9145",
+            "primaryLight": "#C1C1EA",
+            "accentLight": "#FFF3E4",
+            "textDark": "#4E4E4E",
+            "textMuted": "#CACACA",
+            "borderLight": "#EBEBEB",
+            "bgLight": "#F5F5F5",
+            "white": "#FFFFFF"
+        },
+        "font": "Poppins",
+        "buttons": {
+            "height": "40px",
+            "padding": "0 24px",
+            "borderRadius": "40px (pill)",
+            "variants": ["contained", "outlined", "texted", "highlight"],
+            "states": ["enabled", "disabled", "hover", "pressed"]
+        },
+        "tokens": {
+            "positive": "Purple (#4A4DC9) gradient circle with + symbol",
+            "negative": "Orange (#FF7212) gradient circle with − symbol"
+        },
+        "animations": {
+            "tokenDrop": "0.5s arc + bounce with rotation",
+            "resultBounce": "0.55s elastic bounce",
+            "stepTransition": "0.28s fade + slide",
+            "buttonHover": "scale(1.03) + elevated shadow",
+            "buttonPress": "scale(0.96)"
+        }
+    },
+
+    "teaching_notes": "Use a 'bag' metaphor — a physical bag drawn on the board helps students visualise the operation. At Step 1, emphasise the empty bag rule: every new multiplication starts fresh. At Step 2, pause and ask: 'Why is the result positive?' before advancing. At Step 3, create anticipation: 'What do you think will happen when we use orange tokens instead?' At Step 4, ask: 'Is the magnitude the same? Only the sign changed — why?' This leads naturally into the sign rule at Step 5. Extension: ask students to predict 9 × (−7) using the rule before computing.",
+
+    "instructions_for_student": "Watch the bag fill with tokens at each step. In Step 1, note the empty bag and the two key numbers: how many groups (multiplier) and what type of token (multiplicand sign). In Step 2, count all the purple tokens and form the answer. In Step 3, predict: if we change the tokens from purple to orange, what happens to the result? In Step 4, verify your prediction. In Step 5, state the sign rule in your own words."
+}

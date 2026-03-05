@@ -1,0 +1,327 @@
+{
+    "toolName": "4_3",
+    "parameters": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Conductors & Insulators Circuit Tool Schema",
+        "description": "Schema for generating interactive conductor/insulator testing circuit visualizations with Singularity design system",
+        "type": "object",
+        "properties": {
+            "frontend_action": {
+                "type": "string",
+                "const": "show_interactive_tool",
+                "description": "Action identifier for the frontend"
+            },
+            "title": {
+                "type": "string",
+                "description": "Title shown to the student",
+                "examples": [
+                    "Test Materials for Conductivity",
+                    "Which Materials Conduct Electricity?",
+                    "Circuit Tester Activity"
+                ]
+            },
+            "data": {
+                "type": "object",
+                "required": [
+                    "toolName",
+                    "parameters"
+                ],
+                "properties": {
+                    "toolName": {
+                        "type": "string",
+                        "const": "conductors_insulators_circuit_tool",
+                        "description": "Identifier for this specific tool"
+                    },
+                    "parameters": {
+                        "type": "object",
+                        "description": "Configuration parameters for the tool",
+                        "properties": {
+                            "initialMode": {
+                                "type": "string",
+                                "enum": [
+                                    "learn",
+                                    "practice",
+                                    "real_world"
+                                ],
+                                "default": "learn",
+                                "description": "Starting mode for the tool. 'hands_on' mode has been removed in the redesigned version."
+                            },
+                            "showModeSelector": {
+                                "type": "boolean",
+                                "default": true,
+                                "description": "Show/hide the mode selection pill tabs"
+                            },
+                            "enabledModes": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "enum": [
+                                        "learn",
+                                        "practice",
+                                        "real_world"
+                                    ]
+                                },
+                                "default": [
+                                    "learn",
+                                    "practice",
+                                    "real_world"
+                                ],
+                                "description": "Which modes to enable in the tab bar"
+                            },
+                            "additionalProps": {
+                                "type": "object",
+                                "description": "Tool-specific dynamic content for circuit configuration",
+                                "properties": {
+                                    "materials": {
+                                        "type": "array",
+                                        "description": "Custom materials to test. If omitted, 8 default materials are used (iron, copper, graphite, wood, plastic, pencil, rubber, glass).",
+                                        "items": {
+                                            "type": "object",
+                                            "required": [
+                                                "id",
+                                                "label",
+                                                "type",
+                                                "color",
+                                                "description"
+                                            ],
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "description": "Unique identifier for the material"
+                                                },
+                                                "label": {
+                                                    "type": "string",
+                                                    "description": "Display name of the material (max ~10 chars recommended for SVG label)"
+                                                },
+                                                "type": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "conductor",
+                                                        "insulator"
+                                                    ],
+                                                    "description": "Whether material conducts electricity"
+                                                },
+                                                "color": {
+                                                    "type": "string",
+                                                    "pattern": "^#[0-9A-Fa-f]{6}$",
+                                                    "description": "Color of the material chip in the SVG (hex format). Recommended to use Singularity palette colors: #4A4DC9, #FF7212, #533086, #FC9145, #C1C1EA, etc."
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "description": "Educational description shown in the info panel when material is placed in the circuit"
+                                                }
+                                            }
+                                        },
+                                        "examples": [
+                                            [
+                                                {
+                                                    "id": "aluminum",
+                                                    "label": "Aluminum",
+                                                    "type": "conductor",
+                                                    "color": "#C0C0C0",
+                                                    "description": "a lightweight metal that conducts electricity well"
+                                                },
+                                                {
+                                                    "id": "ceramic",
+                                                    "label": "Ceramic",
+                                                    "type": "insulator",
+                                                    "color": "#D2691E",
+                                                    "description": "a hard material that does not conduct electricity"
+                                                }
+                                            ]
+                                        ]
+                                    },
+                                    "testMaterial": {
+                                        "type": "string",
+                                        "description": "ID of material to automatically place in circuit gap on load",
+                                        "examples": [
+                                            "copper",
+                                            "iron",
+                                            "plastic"
+                                        ]
+                                    },
+                                    "showPrediction": {
+                                        "type": "boolean",
+                                        "default": false,
+                                        "description": "Show prediction UI immediately when a material is placed"
+                                    },
+                                    "showCurrentFlow": {
+                                        "type": "boolean",
+                                        "default": true,
+                                        "description": "Show animated current flow dots (orange, Singularity secondary color) when circuit is complete"
+                                    },
+                                    "circuitComplete": {
+                                        "type": "boolean",
+                                        "description": "Override circuit completion state"
+                                    },
+                                    "bulbState": {
+                                        "type": "string",
+                                        "enum": [
+                                            "on",
+                                            "off"
+                                        ],
+                                        "description": "Override bulb state"
+                                    },
+                                    "customMarkers": {
+                                        "type": "array",
+                                        "description": "Custom labels/markers overlaid on the circuit SVG",
+                                        "items": {
+                                            "type": "object",
+                                            "required": [
+                                                "position",
+                                                "label",
+                                                "color"
+                                            ],
+                                            "properties": {
+                                                "position": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "x",
+                                                        "y"
+                                                    ],
+                                                    "properties": {
+                                                        "x": {
+                                                            "type": "number",
+                                                            "description": "X coordinate in SVG viewBox (0-500)"
+                                                        },
+                                                        "y": {
+                                                            "type": "number",
+                                                            "description": "Y coordinate in SVG viewBox (0-370)"
+                                                        }
+                                                    }
+                                                },
+                                                "label": {
+                                                    "type": "string",
+                                                    "description": "Text to display at the marker position"
+                                                },
+                                                "color": {
+                                                    "type": "string",
+                                                    "pattern": "^#[0-9A-Fa-f]{6}$",
+                                                    "description": "Color of the marker text"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "interactive": {
+                                        "type": "boolean",
+                                        "default": true,
+                                        "description": "Allow user interaction with the circuit"
+                                    },
+                                    "allowDrag": {
+                                        "type": "boolean",
+                                        "default": true,
+                                        "description": "Allow dragging materials into the gap. Uses pointer events for touch + mouse support."
+                                    },
+                                    "snapDistance": {
+                                        "type": "number",
+                                        "default": 40,
+                                        "description": "Distance in SVG units for snapping materials to the circuit gap"
+                                    },
+                                    "highlightComponents": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "description": "Component IDs to highlight",
+                                        "examples": [
+                                            [
+                                                "battery",
+                                                "bulb",
+                                                "wire1"
+                                            ]
+                                        ]
+                                    }
+                                },
+                                "examples": [
+                                    {
+                                        "materials": [
+                                            {
+                                                "id": "copper",
+                                                "label": "Copper Rod",
+                                                "type": "conductor",
+                                                "color": "#C98A5A",
+                                                "description": "an excellent conductor used in electrical wiring"
+                                            },
+                                            {
+                                                "id": "rubber",
+                                                "label": "Rubber",
+                                                "type": "insulator",
+                                                "color": "#533086",
+                                                "description": "used to insulate wires and prevent shocks"
+                                            }
+                                        ],
+                                        "showCurrentFlow": true
+                                    },
+                                    {
+                                        "testMaterial": "iron",
+                                        "showPrediction": true,
+                                        "showCurrentFlow": false
+                                    },
+                                    {
+                                        "materials": [
+                                            {
+                                                "id": "saltwater",
+                                                "label": "Salt Water",
+                                                "type": "conductor",
+                                                "color": "#4A4DC9",
+                                                "description": "water with dissolved salt conducts electricity"
+                                            }
+                                        ],
+                                        "customMarkers": [
+                                            {
+                                                "position": {
+                                                    "x": 250,
+                                                    "y": 100
+                                                },
+                                                "label": "⚠️ Caution!",
+                                                "color": "#FF7212"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            "instructions_for_student": {
+                "type": "string",
+                "description": "Instructions or context for the student",
+                "examples": [
+                    "Drag different materials into the circuit gap to see which ones conduct electricity!",
+                    "Can you predict which materials will make the bulb light up?",
+                    "Test each material and observe what happens to the bulb."
+                ]
+            }
+        },
+        "required": [
+            "frontend_action",
+            "title",
+            "data",
+            "instructions_for_student"
+        ],
+        "additionalProperties": false
+    },
+    "usage_example": {
+        "frontend_action": "show_interactive_tool",
+        "title": "Test Materials for Conductivity",
+        "data": {
+            "toolName": "conductors_insulators_circuit_tool",
+            "parameters": {
+                "initialMode": "learn",
+                "showModeSelector": true,
+                "enabledModes": [
+                    "learn",
+                    "practice",
+                    "real_world"
+                ],
+                "additionalProps": {
+                    "showCurrentFlow": true,
+                    "allowDrag": true,
+                    "snapDistance": 40
+                }
+            }
+        },
+        "instructions_for_student": "Drag different materials into the circuit gap to discover which ones conduct electricity!"
+    }
+}

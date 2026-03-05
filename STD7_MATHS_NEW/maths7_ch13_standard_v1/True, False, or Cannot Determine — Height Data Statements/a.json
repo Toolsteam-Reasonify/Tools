@@ -1,0 +1,396 @@
+{
+    "toolName": "height_data_validation_quiz",
+    "version": "2.0.0",
+    "description": "Interactive MCQ quiz for Grade 7 Mathematics — Validating Statements from Height Data. Redesigned with the Singularity Design System. Clean card-based layout with one statement per card. Each card shows the statement text at the top, followed by three large touch-friendly buttons: True (green), False (red), Cannot Determine (grey). After selection, the card expands to show the explanation with relevant data values highlighted. Correct answers show a green border with checkmark. Incorrect answers show a red border with the correct answer highlighted. A progress bar at the top shows 'Question X of 6' with an animated indigo-to-purple-to-orange gradient. After all 6 questions, a summary screen shows score, lists all answers, and highlights the key lesson: always check claims against actual data. Indian context — heights of Indian children across decades. Reference to the data table floats as an outlined pill button that opens the full height table in a modal. Decorative geometric shapes (circles, triangles, squares) float in the background. Mobile-first responsive design.",
+    "designSystem": {
+        "name": "Singularity",
+        "version": "1.0",
+        "colorPalette": {
+            "primary": {
+                "indigo": "#4A4DC9",
+                "orange": "#FF7212"
+            },
+            "gradient": {
+                "purple": "#533086",
+                "orangeGrad": "#FC9145",
+                "usage": "linear-gradient(135deg, #533086, #FC9145)"
+            },
+            "lightAccents": {
+                "lavender": "#C1C1EA",
+                "peach": "#FFF3E4"
+            },
+            "neutrals": {
+                "dark": "#4E4E4E",
+                "grey": "#CACACA",
+                "greyLight": "#EBEBEB",
+                "greyBg": "#F5F5F5",
+                "white": "#FFFFFF"
+            },
+            "semantic": {
+                "correct": "#22c55e",
+                "correctBg": "#f0fdf4",
+                "incorrect": "#ef4444",
+                "incorrectBg": "#fef2f2"
+            },
+            "derived": {
+                "indigoLight": "#4A4DC915",
+                "indigoBorder": "#4A4DC940",
+                "orangeLight": "#FF721215",
+                "orangeBorder": "#FF721240",
+                "lavenderBg": "#C1C1EA30",
+                "peachBg": "#FFF3E480"
+            }
+        },
+        "typography": {
+            "fontFamily": "Poppins",
+            "googleFontsImport": "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap",
+            "weights": {
+                "regular": 400,
+                "medium": 500,
+                "semiBold": 600,
+                "bold": 700,
+                "extraBold": 800
+            }
+        },
+        "borderRadius": {
+            "pill": "100px",
+            "card": "20px",
+            "button": "12px",
+            "medium": "14px",
+            "small": "8px"
+        },
+        "spacing": {
+            "base": 24,
+            "buttonPaddingH": "24px",
+            "buttonPaddingV": "0",
+            "buttonHeight": "40px",
+            "iconGap": "4px"
+        },
+        "buttons": {
+            "contained": {
+                "enabled": {
+                    "background": "#4A4DC9",
+                    "color": "#FFFFFF",
+                    "border": "none",
+                    "borderRadius": "100px",
+                    "height": "40px",
+                    "padding": "0 24px"
+                },
+                "hover": {
+                    "transform": "scale(1.03)",
+                    "boxShadow": "0 6px 20px rgba(74, 77, 201, 0.35)"
+                },
+                "pressed": {
+                    "transform": "scale(0.95)"
+                },
+                "disabled": {
+                    "background": "#EBEBEB",
+                    "color": "#CACACA",
+                    "opacity": 0.55
+                }
+            },
+            "outlined": {
+                "enabled": {
+                    "background": "#FFFFFF",
+                    "color": "#4A4DC9",
+                    "border": "2px solid #4A4DC9",
+                    "borderRadius": "100px",
+                    "height": "40px",
+                    "padding": "0 24px"
+                },
+                "hover": {
+                    "transform": "scale(1.03)",
+                    "boxShadow": "0 4px 14px rgba(74, 77, 201, 0.15)"
+                },
+                "pressed": {
+                    "transform": "scale(0.95)"
+                },
+                "disabled": {
+                    "background": "#FFFFFF",
+                    "color": "#CACACA",
+                    "border": "2px solid #CACACA"
+                }
+            },
+            "highlight": {
+                "enabled": {
+                    "background": "#FF7212",
+                    "color": "#FFFFFF",
+                    "border": "none",
+                    "borderRadius": "100px",
+                    "height": "40px",
+                    "padding": "0 24px"
+                },
+                "hover": {
+                    "transform": "scale(1.03)",
+                    "boxShadow": "0 6px 20px rgba(255, 114, 18, 0.35)"
+                },
+                "pressed": {
+                    "transform": "scale(0.95)"
+                }
+            }
+        },
+        "decorativeShapes": {
+            "types": ["circle", "triangle", "square"],
+            "variants": ["outlined", "filled"],
+            "colors": ["#C1C1EA", "#4A4DC9", "#FF7212", "#533086"],
+            "usage": "Floating background elements with sg-shapeDrift animation, inline accents alongside headings and data labels"
+        }
+    },
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 560,
+            "description": "Max width of the quiz container in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 800,
+            "description": "Min height of the quiz container in pixels"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#4A4DC9",
+            "description": "Primary indigo theme colour (Singularity design system)"
+        },
+        "additionalProps": {
+            "type": "object",
+            "description": "Tool-specific dynamic content for the quiz",
+            "properties": {
+                "questions": {
+                    "type": "array",
+                    "description": "Array of quiz questions. Each question has a statement, correct answer, explanation, and highlighted data values.",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "number",
+                                "description": "Unique question identifier"
+                            },
+                            "statement": {
+                                "type": "string",
+                                "description": "The statement to evaluate (True/False/Cannot Determine)"
+                            },
+                            "correctAnswer": {
+                                "type": "string",
+                                "enum": ["true", "false", "cannot_determine"],
+                                "description": "The correct classification of the statement"
+                            },
+                            "explanation": {
+                                "type": "string",
+                                "description": "Detailed explanation with data references"
+                            },
+                            "highlightData": {
+                                "type": "array",
+                                "items": { "type": "string" },
+                                "description": "Key data values that support/refute the statement, shown with indigo-to-orange gradient bullet points"
+                            }
+                        },
+                        "required": ["id", "statement", "correctAnswer", "explanation", "highlightData"]
+                    }
+                },
+                "themeColor": {
+                    "type": "string",
+                    "default": "#4A4DC9",
+                    "description": "Override the primary indigo colour"
+                },
+                "fontFamily": {
+                    "type": "string",
+                    "default": "Poppins",
+                    "description": "Custom font family (must be Poppins per Singularity design system)"
+                }
+            }
+        }
+    },
+    "features": {
+        "progressBar": {
+            "description": "Shows 'Question X of 6' with animated indigo → purple → orange gradient fill",
+            "height": "6px",
+            "borderRadius": "3px",
+            "gradient": "linear-gradient(90deg, #4A4DC9, #533086, #FC9145)",
+            "animation": "sg-gradientShift 3s ease infinite"
+        },
+        "dataTableOverlay": {
+            "description": "Outlined pill button ('Data Table') with BookOpen icon, opens full height survey table as modal",
+            "buttonStyle": "outlined (Singularity)",
+            "modalBackdrop": "rgba(83, 48, 134, 0.45) with blur(4px)",
+            "tableHeaderGradient": "linear-gradient(135deg, #533086, #4A4DC9)",
+            "yearHeaderColors": {
+                "1989": "#C1C1EA (lavender)",
+                "1999": "#4A4DC9 25% opacity",
+                "2009": "#FFF3E4 (peach)",
+                "2019": "linear-gradient(peach, orangeLight)"
+            }
+        },
+        "cardLayout": {
+            "description": "One statement per card, 20px border-radius, white background, subtle indigo shadow",
+            "borderRadius": "20px",
+            "boxShadow": "0 4px 24px rgba(74, 77, 201, 0.06)",
+            "statementBackground": "linear-gradient(135deg, #4A4DC915, #FFF3E480)",
+            "questionBadge": "linear-gradient(135deg, #4A4DC9, #533086) with white text"
+        },
+        "answerButtons": {
+            "description": "Three answer buttons per card with icon squares, full-width, 14px border-radius",
+            "options": [
+                { "value": "true", "label": "True", "iconBg": "#22c55e area", "icon": "Check" },
+                { "value": "false", "label": "False", "iconBg": "#ef4444 area", "icon": "X" },
+                { "value": "cannot_determine", "label": "Cannot Determine", "iconBg": "#CACACA area", "icon": "HelpCircle" }
+            ],
+            "states": {
+                "default": "white bg, #EBEBEB border",
+                "hover": "tinted bg, colored border, scale(1.015)",
+                "pressed": "scale(0.97)",
+                "correctHighlight": "#f0fdf4 bg, #22c55e border, green icon fill",
+                "incorrectHighlight": "#fef2f2 bg, #ef4444 border, red icon fill",
+                "inactive": "opacity 0.45"
+            }
+        },
+        "explanationPanel": {
+            "description": "Expands below card after answer selection with sg-expandExplanation animation",
+            "resultBadge": "Pill shape with correct/incorrect color border",
+            "keyDataValues": {
+                "background": "linear-gradient(135deg, #4A4DC915, #C1C1EA30)",
+                "border": "1px solid #C1C1EA 60% opacity",
+                "bulletGradient": "linear-gradient(135deg, #4A4DC9, #FF7212)"
+            },
+            "nextButton": "Contained (Singularity) with gradient background linear-gradient(135deg, #4A4DC9, #533086)"
+        },
+        "summaryScreen": {
+            "description": "Bounces in after all questions answered. Shows score, answer list, key lesson, restart button.",
+            "titleGradient": "linear-gradient(135deg, #533086, #FC9145) with text-clip",
+            "scoreColor": "#4A4DC9",
+            "trophyBackground": "linear-gradient(135deg, #4A4DC920, #FF721220)",
+            "answerListStyle": "Left-aligned cards with 4px colored left border, correctBg/incorrectBg fills",
+            "keyLessonCard": {
+                "background": "linear-gradient(135deg, #4A4DC915, #FF721215)",
+                "border": "1.5px dashed #4A4DC950",
+                "accentShape": "filled square 8px in indigo"
+            },
+            "restartButton": "Contained (Singularity) primary with RotateCcw icon"
+        },
+        "decorativeShapes": {
+            "description": "Floating outlined circles, triangles, and squares in background using sg-shapeDrift animation",
+            "positions": [
+                { "type": "circle", "size": 44, "color": "#C1C1EA", "location": "top-right" },
+                { "type": "square", "size": 20, "color": "#FF721250", "location": "mid-left" },
+                { "type": "triangle", "size": 22, "color": "#4A4DC940", "location": "bottom-right" }
+            ],
+            "animation": "sg-shapeDrift with 5-7s duration, staggered delays"
+        },
+        "animations": {
+            "cardEnter": "sg-fadeInUp 0.4s ease",
+            "cardExit": "sg-fadeOutUp 0.3s ease",
+            "buttonReveal": "sg-slideInRight 0.35s ease with 0.07s stagger",
+            "correctPulse": "sg-pulse 0.4s ease",
+            "incorrectShake": "sg-shake 0.45s ease",
+            "explanationExpand": "sg-expandExplanation 0.5s ease",
+            "dataHighlightSlide": "sg-slideInLeft 0.3s ease with 0.1s stagger",
+            "summaryBounce": "sg-bounceIn 0.6s ease",
+            "trophySpin": "sg-starSpin 0.8s ease 0.3s",
+            "progressGradient": "sg-gradientShift 3s ease infinite",
+            "shapeFloat": "sg-shapeDrift 5-7s ease-in-out infinite",
+            "buttonFloat": "sg-float 4s ease-in-out infinite"
+        },
+        "responsiveDesign": "Mobile-first with max-width 560px, touch-friendly 38px icon squares, 40-44px button heights"
+    },
+    "defaultQuestions": [
+        {
+            "id": 1,
+            "statement": "The average heights of both boys and girls at every age increased from 1989 to 2019.",
+            "correctAnswer": "true",
+            "explanation": "This is TRUE. Looking at the data for every age from 5 to 19, the heights consistently increased across decades. For example, at age 10: boys went from 127.5 cm (1989) → 132.6 cm (2019), and girls went from 127.3 cm (1989) → 132.8 cm (2019). This pattern holds for all ages.",
+            "highlightData": [
+                "Age 10 Boys: 127.5 (1989) → 132.6 (2019)",
+                "Age 10 Girls: 127.3 (1989) → 132.8 (2019)",
+                "Age 15 Boys: 155.4 (1989) → 159.0 (2019)"
+            ]
+        },
+        {
+            "id": 2,
+            "statement": "The average height of 13-year-old girls in 1989 is more than the average height of 14-year-old girls in 2009.",
+            "correctAnswer": "false",
+            "explanation": "This is FALSE. The height of 13-year-old girls in 1989 was 143.2 cm, while 14-year-old girls in 2009 had an average height of 148 cm. So 148 > 143.2, making the statement incorrect.",
+            "highlightData": [
+                "13-year-old girls in 1989: 143.2 cm",
+                "14-year-old girls in 2009: 148.0 cm",
+                "148.0 > 143.2 → Statement is False"
+            ]
+        },
+        {
+            "id": 3,
+            "statement": "The average height of 15-year-old boys in 2019 is more than the average height of 16-year-old boys in 1989.",
+            "correctAnswer": "true",
+            "explanation": "This is TRUE. The height of 15-year-old boys in 2019 was 159 cm, while 16-year-old boys in 1989 had an average height of 158.9 cm. Since 159 > 158.9, the statement is correct — showing how much children have grown taller over 30 years!",
+            "highlightData": [
+                "15-year-old boys in 2019: 159.0 cm",
+                "16-year-old boys in 1989: 158.9 cm",
+                "159.0 > 158.9 → Statement is True"
+            ]
+        },
+        {
+            "id": 4,
+            "statement": "All girls aged 13 are taller than all girls aged 11.",
+            "correctAnswer": "false",
+            "explanation": "This is FALSE. The data shows average heights, not individual heights. While the average height of 13-year-old girls (e.g., 147.7 cm in 2019) is more than 11-year-old girls (138.6 cm in 2019), individual heights vary widely. Some tall 11-year-olds could be taller than some short 13-year-olds. Averages don't tell us about every individual!",
+            "highlightData": [
+                "Avg 13-yr girls (2019): 147.7 cm",
+                "Avg 11-yr girls (2019): 138.6 cm",
+                "⚠️ These are averages, NOT individual heights"
+            ]
+        },
+        {
+            "id": 5,
+            "statement": "Throughout the age period 5 to 19, the average boy's height is more than the average girl's height.",
+            "correctAnswer": "false",
+            "explanation": "This is FALSE! Look carefully at ages 10-12. At age 11 in 2019, girls (138.6 cm) are taller than boys (137 cm). At age 12 in 2019, girls (143.8 cm) are taller than boys (142.2 cm). During these years, girls tend to have a growth spurt earlier than boys, making them temporarily taller.",
+            "highlightData": [
+                "Age 11 (2019): Boys 137.0 < Girls 138.6",
+                "Age 12 (2019): Boys 142.2 < Girls 143.8",
+                "Girls grow faster around ages 10-12!"
+            ]
+        },
+        {
+            "id": 6,
+            "statement": "Boys keep growing even beyond age 19.",
+            "correctAnswer": "cannot_determine",
+            "explanation": "CANNOT DETERMINE from the given data. The table only shows heights from ages 5 to 19. To know if boys grow beyond 19, we would need height data for ages 20 and above. While the data shows the growth rate is slowing (only 0.5 cm increase from age 18 to 19 in 2019), we cannot conclude from this data alone whether growth stops at 19.",
+            "highlightData": [
+                "Age 18 Boys (2019): 166.0 cm",
+                "Age 19 Boys (2019): 166.5 cm",
+                "Growth from 18→19: only 0.5 cm, but no data beyond 19"
+            ]
+        }
+    ],
+    "teachingNotes": {
+        "overview": "This quiz tests a critical skill: validating statements against data rather than relying on assumptions.",
+        "q1_note": "Q1 is a warm-up — students verify a straightforward trend across all age groups and decades.",
+        "q2_note": "Q2 requires cross-referencing two different ages across two different years — a common data literacy task.",
+        "q3_note": "Q3 is similar to Q2 but with a very close margin (159 vs 158.9), teaching precision in data reading.",
+        "q4_note": "For Q4, emphasise the crucial distinction between averages and individuals — this is a common misconception. The statement uses 'All girls' which cannot be determined from averages alone.",
+        "q5_note": "For Q5, many students will assume boys are always taller, so the correction at ages 10-12 is impactful. This teaches that growth patterns differ between genders at different ages.",
+        "q6_note": "For Q6, teach the 'Cannot Determine' option — not every statement can be answered from available data. The data stops at age 19, so any claim about beyond-19 growth is unanswerable.",
+        "followUp": "After completion, ask the student to create one new statement about the height data and classify it themselves."
+    },
+    "instructionsForStudent": "Read each statement about Indian children's heights carefully. Use the data from the height survey (ages 5-19, years 1989-2019) to decide: is the statement True, False, or Cannot Determine from the given data? After selecting your answer, read the explanation to see exactly which data values prove or disprove the claim. Tap the 'Data Table' button anytime to view the full dataset.",
+    "context": {
+        "subject": "Mathematics (Statistics)",
+        "grade": "Grade 7",
+        "textbook": "Ganita Prakash, Part-II",
+        "chapter": "Chapter 5 — Connecting the Dots",
+        "topic": "Validating Statements and Growth Patterns from Height Data",
+        "curriculum": "NCERT / Indian National Curriculum",
+        "section": "5.4 Data Detective — Telling Tall Tales"
+    },
+    "heightDataTable": {
+        "description": "Average heights of Indian boys and girls (in cm) across ages 5-19, surveyed in 1989, 1999, 2009, and 2019. Each year has two columns: Boys (B) and Girls (G).",
+        "source": "Indian Children Height Survey (as presented in Ganita Prakash Grade 7)",
+        "ages": [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
+        "years": [1989, 1999, 2009, 2019],
+        "sampleData": {
+            "age10_1989": { "boys": 127.5, "girls": 127.3 },
+            "age10_2019": { "boys": 132.6, "girls": 132.8 },
+            "age11_2019": { "boys": 137.0, "girls": 138.6 },
+            "age12_2019": { "boys": 142.2, "girls": 143.8 },
+            "age19_2019": { "boys": 166.5, "girls": 155.2 }
+        }
+    }
+}

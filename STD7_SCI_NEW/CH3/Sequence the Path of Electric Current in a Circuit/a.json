@@ -1,0 +1,725 @@
+{
+    "toolName": "circuit_current_flow_sequencer",
+    "version": "1.0.0",
+    "description": "An interactive sequencing tool for Grade 7 Science (NCERT Chapter 3). Seven step cards are displayed in shuffled order. Each card describes one step in the path of electric current through a simple circuit: (1) Current starts at positive terminal of cell, (2) flows through wire to lamp, (3) enters lamp through metal case terminal, (4) passes through filament which glows, (5) exits through metal tip terminal, (6) flows back through wire, (7) returns to negative terminal — loop complete. Students drag cards into the correct numbered slots (1-7). Visual feedback: correct placement shows green border and number. Incorrect shows red shake. When all 7 are correct, an animated current flow arrow traces the complete loop with a celebration effect. Optional hints toggle. Blue theme colour for circuit/electricity. Indian school context. Clean card-based UI with touch-friendly drag-and-drop. Numbers shown on slots.",
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Width of the tool in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Minimum height of the tool in pixels"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#2563eb",
+            "description": "Primary theme colour (blue for electricity/circuits)"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable dark mode"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier"
+        }
+    },
+    "additionalProps": {
+        "description": "Tool-specific dynamic content passed by agent",
+        "schema": {
+            "steps": {
+                "type": "array",
+                "description": "Custom sequence steps (overrides default circuit current flow steps)",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "number",
+                            "description": "Unique step ID (used in correctOrder)"
+                        },
+                        "label": {
+                            "type": "string",
+                            "description": "Step card label text"
+                        },
+                        "description": {
+                            "type": "string",
+                            "description": "Optional description shown below label"
+                        },
+                        "icon": {
+                            "type": "string",
+                            "description": "Emoji icon for the step card"
+                        }
+                    },
+                    "required": [
+                        "id",
+                        "label"
+                    ]
+                }
+            },
+            "correctOrder": {
+                "type": "array",
+                "items": {
+                    "type": "number"
+                },
+                "description": "Array of step IDs in the correct order. If not provided, uses the order of steps array."
+            },
+            "title": {
+                "type": "string",
+                "default": "Trace the Path of Electric Current",
+                "description": "Title shown in the header"
+            },
+            "subtitle": {
+                "type": "string",
+                "default": "NCERT Grade 7 · Chapter 3 — Electricity: Circuits and their Components",
+                "description": "Subtitle shown below the title"
+            },
+            "instructionText": {
+                "type": "string",
+                "default": "Arrange these 7 steps in the correct order to trace the path of electric current! Start from where current begins and follow the complete loop. Drag to rearrange!",
+                "description": "Instruction text shown above the activity"
+            },
+            "completionMessage": {
+                "type": "string",
+                "default": "Excellent! You traced the complete loop of electric current! Remember — any break in this loop stops all current flow!",
+                "description": "Message shown on successful completion"
+            },
+            "hintText": {
+                "type": "string",
+                "default": "💡 Hint: Where does current START? Think about the positive terminal of the cell!",
+                "description": "Hint text shown when hint button is pressed"
+            },
+            "showHintButton": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show/hide the hint toggle button"
+            },
+            "showStepNumbers": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show numbered circles on slots"
+            },
+            "showDescriptions": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show description text on available cards"
+            },
+            "correctColor": {
+                "type": "string",
+                "default": "#22c55e",
+                "description": "Colour for correct placements"
+            },
+            "incorrectColor": {
+                "type": "string",
+                "default": "#ef4444",
+                "description": "Colour for incorrect placements"
+            },
+            "celebrationEmoji": {
+                "type": "string",
+                "default": "⚡",
+                "description": "Emoji used in celebration"
+            }
+        },
+        "examples": {
+            "default_circuit_flow": {
+                "description": "Default — 7 steps of current flow in a simple circuit (no additionalProps needed)",
+                "additionalProps": {}
+            },
+            "custom_title_and_hint": {
+                "description": "Custom title and hint for scaffolded use",
+                "additionalProps": {
+                    "title": "How Does Current Flow?",
+                    "subtitle": "Activity 3.6 — Follow the Loop!",
+                    "hintText": "💡 Hint: Current always starts at the POSITIVE terminal (+) of the cell!",
+                    "completionMessage": "Well done! It's a complete LOOP — any break stops all current flow!"
+                }
+            },
+            "no_hints_challenge_mode": {
+                "description": "Challenge mode without hints or descriptions",
+                "additionalProps": {
+                    "showHintButton": false,
+                    "showDescriptions": false,
+                    "title": "Circuit Challenge!",
+                    "instructionText": "Can you arrange all 7 steps without any hints? Drag to rearrange!"
+                }
+            },
+            "custom_5_step_sequence": {
+                "description": "Custom 5-step simplified sequence for younger learners",
+                "additionalProps": {
+                    "title": "Simple Circuit Path",
+                    "subtitle": "Beginner Level",
+                    "instructionText": "Put these 5 steps in the right order!",
+                    "steps": [
+                        {
+                            "id": 1,
+                            "label": "Current starts at the positive (+) terminal of the cell",
+                            "icon": "🔋"
+                        },
+                        {
+                            "id": 2,
+                            "label": "Current flows through the wire to the lamp",
+                            "icon": "〰️"
+                        },
+                        {
+                            "id": 3,
+                            "label": "Current passes through the lamp — it glows!",
+                            "icon": "💡"
+                        },
+                        {
+                            "id": 4,
+                            "label": "Current flows back through the wire",
+                            "icon": "〰️"
+                        },
+                        {
+                            "id": 5,
+                            "label": "Current returns to the negative (−) terminal",
+                            "icon": "🔄"
+                        }
+                    ],
+                    "correctOrder": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5
+                    ],
+                    "hintText": "💡 Hint: Where does current BEGIN its journey?"
+                }
+            },
+            "led_circuit_sequence": {
+                "description": "LED circuit variant — current must flow in correct direction through LED",
+                "additionalProps": {
+                    "title": "Trace Current in an LED Circuit",
+                    "subtitle": "NCERT Grade 7 · Section 3.2.4",
+                    "instructionText": "Arrange the steps for current flow in an LED circuit. Remember: LED only works in one direction!",
+                    "steps": [
+                        {
+                            "id": 1,
+                            "label": "Current starts at positive terminal (+) of the battery",
+                            "icon": "🔋"
+                        },
+                        {
+                            "id": 2,
+                            "label": "Current flows through wire to the LED",
+                            "icon": "〰️"
+                        },
+                        {
+                            "id": 3,
+                            "label": "Current enters the longer wire (positive terminal) of LED",
+                            "icon": "🔌"
+                        },
+                        {
+                            "id": 4,
+                            "label": "Current passes through the LED — it glows!",
+                            "icon": "💡"
+                        },
+                        {
+                            "id": 5,
+                            "label": "Current exits through the shorter wire (negative terminal) of LED",
+                            "icon": "🔌"
+                        },
+                        {
+                            "id": 6,
+                            "label": "Current flows back through the return wire",
+                            "icon": "〰️"
+                        },
+                        {
+                            "id": 7,
+                            "label": "Current returns to negative terminal (−) of the battery",
+                            "icon": "🔄"
+                        }
+                    ],
+                    "correctOrder": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7
+                    ],
+                    "completionMessage": "Great work! Remember: LED only allows current in ONE direction — positive to negative!",
+                    "hintText": "💡 Hint: LED has a longer wire (+) and shorter wire (−). Current enters from the positive side!"
+                }
+            },
+            "dark_mode": {
+                "description": "Dark mode for projector/screen use",
+                "additionalProps": {
+                    "title": "Circuit Current Flow"
+                }
+            },
+            "water_pipe_analogy_sequence": {
+                "description": "Water pipe analogy for understanding circuits",
+                "additionalProps": {
+                    "title": "Water Pipe Analogy for Circuits",
+                    "subtitle": "Understanding electricity using water flow",
+                    "instructionText": "Arrange the water pipe analogy steps to understand how electric current works!",
+                    "steps": [
+                        {
+                            "id": 1,
+                            "label": "Water pump pushes water (like the cell pushes current)",
+                            "icon": "🔋"
+                        },
+                        {
+                            "id": 2,
+                            "label": "Water flows through pipe to the water wheel (like wire to lamp)",
+                            "icon": "🔵"
+                        },
+                        {
+                            "id": 3,
+                            "label": "Water turns the wheel (like current lights the lamp)",
+                            "icon": "💡"
+                        },
+                        {
+                            "id": 4,
+                            "label": "Water flows back through return pipe (like return wire)",
+                            "icon": "🔵"
+                        },
+                        {
+                            "id": 5,
+                            "label": "Water returns to the pump — loop complete!",
+                            "icon": "🔄"
+                        }
+                    ],
+                    "correctOrder": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5
+                    ],
+                    "completionMessage": "Just like water in pipes, electricity flows in a complete loop!",
+                    "hintText": "💡 Hint: Think of the cell as a water pump — where does the water start?"
+                }
+            },
+            "switch_circuit_sequence": {
+                "description": "Circuit with switch — includes switch ON step",
+                "additionalProps": {
+                    "title": "Current Flow with a Switch",
+                    "subtitle": "NCERT Grade 7 · Section 3.2.6",
+                    "instructionText": "Trace the path of current in a circuit that has a switch. What happens when the switch is ON?",
+                    "steps": [
+                        {
+                            "id": 1,
+                            "label": "Current starts at positive terminal (+) of the cell",
+                            "icon": "🔋"
+                        },
+                        {
+                            "id": 2,
+                            "label": "Current flows through wire to the switch",
+                            "icon": "〰️"
+                        },
+                        {
+                            "id": 3,
+                            "label": "Switch is ON — safety pin touches both drawing pins, completing the path",
+                            "icon": "🔘"
+                        },
+                        {
+                            "id": 4,
+                            "label": "Current flows through wire to the lamp",
+                            "icon": "〰️"
+                        },
+                        {
+                            "id": 5,
+                            "label": "Current passes through the filament — lamp glows!",
+                            "icon": "💡"
+                        },
+                        {
+                            "id": 6,
+                            "label": "Current flows back through the return wire",
+                            "icon": "〰️"
+                        },
+                        {
+                            "id": 7,
+                            "label": "Current returns to negative terminal (−) — loop complete!",
+                            "icon": "🔄"
+                        }
+                    ],
+                    "correctOrder": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7
+                    ],
+                    "completionMessage": "The switch completes or breaks the circuit. When ON, current flows and the lamp glows!",
+                    "hintText": "💡 Hint: The switch comes BEFORE the lamp in this circuit!"
+                }
+            }
+        }
+    },
+    "modes": {
+        "description": "This tool operates as a single interactive practice activity (no learn/practice/real_world mode selector needed)",
+        "available": [
+            "practice"
+        ],
+        "default": "practice"
+    },
+    "steps": {
+        "description": "The tool uses a single interactive step — the sequencing activity itself",
+        "default": [
+            {
+                "id": 1,
+                "title": "Circuit Current Flow Sequencer",
+                "description": "Drag and arrange the 7 steps of electric current flow in the correct order",
+                "type": "practice",
+                "mode": "practice"
+            }
+        ]
+    },
+    "teachingNotes": {
+        "activation": "Activate AFTER the circuit diagram image and water pipe analogy. Let student arrange independently.",
+        "scaffolding": "If stuck, prompt: 'Where does current START?' After correct ordering, emphasize: 'It's a complete LOOP — any break stops all current flow!'",
+        "curriculumAlignment": "NCERT Grade 7 Curiosity Textbook, Chapter 3 — Electricity: Circuits and their Components, Section 3.2.5 An Electrical Circuit",
+        "keyConceptsReinforced": [
+            "Electric current flows from positive to negative terminal",
+            "A complete closed loop is required for current to flow",
+            "Current passes through the filament causing it to glow",
+            "The circuit must be unbroken for the lamp to work",
+            "The direction of current: positive terminal → wire → lamp → wire → negative terminal"
+        ]
+    },
+    "instructionsForStudent": "Arrange these 7 steps in the correct order to trace the path of electric current! Start from where current begins and follow the complete loop. Drag to rearrange!",
+    "agentReadme": {
+        "overview": "Interactive sequencing tool for Grade 7 Science (NCERT Chapter 3 — Electricity: Circuits and their Components). Students arrange 7 shuffled step cards into the correct order showing the path of electric current through a simple circuit. Drag-and-drop with visual feedback (green for correct, red shake for incorrect). Celebration animation on completion. Supports customisation via additionalProps for different circuit types (LED, switch circuits, water analogy, etc.).",
+        "quickReference": {
+            "defaultUse": "No additionalProps needed — uses built-in 7-step circuit current flow",
+            "customSteps": "Pass steps[] array with id, label, description, icon",
+            "customOrder": "Pass correctOrder[] array of step IDs",
+            "hideHints": "Set showHintButton: false",
+            "challengeMode": "Set showHintButton: false, showDescriptions: false",
+            "darkMode": "Set darkMode: true in main props"
+        },
+        "additionalPropsReference": {
+            "steps": "Array of {id, label, description?, icon?} — custom sequence cards",
+            "correctOrder": "Array of step IDs in correct order",
+            "title": "Header title string",
+            "subtitle": "Header subtitle string",
+            "instructionText": "Instruction bar text",
+            "completionMessage": "Success screen message",
+            "hintText": "Hint toggle text",
+            "showHintButton": "boolean — show/hide hint button (default: true)",
+            "showDescriptions": "boolean — show descriptions on cards (default: true)",
+            "correctColor": "Hex colour for correct state (default: #22c55e)",
+            "incorrectColor": "Hex colour for incorrect state (default: #ef4444)"
+        },
+        "toolCallExamples": [
+            {
+                "description": "Default circuit current flow (simplest use)",
+                "json": {
+                    "frontend_action": "show_interactive_tool",
+                    "title": "Trace the Path of Electric Current",
+                    "data": {
+                        "toolName": "circuit_current_flow_sequencer",
+                        "parameters": {}
+                    },
+                    "instructions_for_student": "Arrange these 7 steps in the correct order to trace the path of electric current!"
+                }
+            },
+            {
+                "description": "With custom hint and title",
+                "json": {
+                    "frontend_action": "show_interactive_tool",
+                    "title": "How Does Current Flow?",
+                    "data": {
+                        "toolName": "circuit_current_flow_sequencer",
+                        "parameters": {
+                            "additionalProps": {
+                                "title": "How Does Current Flow?",
+                                "hintText": "💡 Hint: Current always starts at the POSITIVE terminal!"
+                            }
+                        }
+                    },
+                    "instructions_for_student": "Follow the path of current from start to finish!"
+                }
+            },
+            {
+                "description": "Challenge mode — no hints, no descriptions",
+                "json": {
+                    "frontend_action": "show_interactive_tool",
+                    "title": "Circuit Challenge",
+                    "data": {
+                        "toolName": "circuit_current_flow_sequencer",
+                        "parameters": {
+                            "additionalProps": {
+                                "showHintButton": false,
+                                "showDescriptions": false,
+                                "title": "Circuit Challenge!",
+                                "instructionText": "Can you arrange all 7 steps without any hints?"
+                            }
+                        }
+                    },
+                    "instructions_for_student": "Test your knowledge — arrange the steps without hints!"
+                }
+            },
+            {
+                "description": "LED circuit variant",
+                "json": {
+                    "frontend_action": "show_interactive_tool",
+                    "title": "LED Circuit Current Flow",
+                    "data": {
+                        "toolName": "circuit_current_flow_sequencer",
+                        "parameters": {
+                            "additionalProps": {
+                                "title": "Trace Current in an LED Circuit",
+                                "subtitle": "NCERT Grade 7 · Section 3.2.4",
+                                "steps": [
+                                    {
+                                        "id": 1,
+                                        "label": "Current starts at positive terminal (+) of the battery",
+                                        "icon": "🔋"
+                                    },
+                                    {
+                                        "id": 2,
+                                        "label": "Current flows through wire to the LED",
+                                        "icon": "〰️"
+                                    },
+                                    {
+                                        "id": 3,
+                                        "label": "Current enters the longer wire (+) of LED",
+                                        "icon": "🔌"
+                                    },
+                                    {
+                                        "id": 4,
+                                        "label": "Current passes through the LED — it glows!",
+                                        "icon": "💡"
+                                    },
+                                    {
+                                        "id": 5,
+                                        "label": "Current exits through the shorter wire (−) of LED",
+                                        "icon": "🔌"
+                                    },
+                                    {
+                                        "id": 6,
+                                        "label": "Current flows back through the return wire",
+                                        "icon": "〰️"
+                                    },
+                                    {
+                                        "id": 7,
+                                        "label": "Current returns to negative terminal (−) of the battery",
+                                        "icon": "🔄"
+                                    }
+                                ],
+                                "correctOrder": [
+                                    1,
+                                    2,
+                                    3,
+                                    4,
+                                    5,
+                                    6,
+                                    7
+                                ],
+                                "hintText": "💡 Hint: LED has a longer wire (+) and shorter wire (−). Current enters from the positive side!"
+                            }
+                        }
+                    },
+                    "instructions_for_student": "Arrange the steps for current flow in an LED circuit!"
+                }
+            },
+            {
+                "description": "Simplified 5-step version for beginners",
+                "json": {
+                    "frontend_action": "show_interactive_tool",
+                    "title": "Simple Circuit Path",
+                    "data": {
+                        "toolName": "circuit_current_flow_sequencer",
+                        "parameters": {
+                            "additionalProps": {
+                                "title": "Simple Circuit Path",
+                                "subtitle": "Beginner Level",
+                                "steps": [
+                                    {
+                                        "id": 1,
+                                        "label": "Current starts at + terminal",
+                                        "icon": "🔋"
+                                    },
+                                    {
+                                        "id": 2,
+                                        "label": "Current flows through wire to lamp",
+                                        "icon": "〰️"
+                                    },
+                                    {
+                                        "id": 3,
+                                        "label": "Lamp glows!",
+                                        "icon": "💡"
+                                    },
+                                    {
+                                        "id": 4,
+                                        "label": "Current flows back through wire",
+                                        "icon": "〰️"
+                                    },
+                                    {
+                                        "id": 5,
+                                        "label": "Current returns to − terminal",
+                                        "icon": "🔄"
+                                    }
+                                ],
+                                "correctOrder": [
+                                    1,
+                                    2,
+                                    3,
+                                    4,
+                                    5
+                                ]
+                            }
+                        }
+                    },
+                    "instructions_for_student": "Put these 5 steps in the right order!"
+                }
+            },
+            {
+                "description": "Circuit with switch",
+                "json": {
+                    "frontend_action": "show_interactive_tool",
+                    "title": "Current Flow with a Switch",
+                    "data": {
+                        "toolName": "circuit_current_flow_sequencer",
+                        "parameters": {
+                            "additionalProps": {
+                                "title": "Current Flow with a Switch",
+                                "steps": [
+                                    {
+                                        "id": 1,
+                                        "label": "Current starts at + terminal of cell",
+                                        "icon": "🔋"
+                                    },
+                                    {
+                                        "id": 2,
+                                        "label": "Current flows to the switch",
+                                        "icon": "〰️"
+                                    },
+                                    {
+                                        "id": 3,
+                                        "label": "Switch is ON — path is complete",
+                                        "icon": "🔘"
+                                    },
+                                    {
+                                        "id": 4,
+                                        "label": "Current flows to the lamp",
+                                        "icon": "〰️"
+                                    },
+                                    {
+                                        "id": 5,
+                                        "label": "Filament glows!",
+                                        "icon": "💡"
+                                    },
+                                    {
+                                        "id": 6,
+                                        "label": "Current flows back through wire",
+                                        "icon": "〰️"
+                                    },
+                                    {
+                                        "id": 7,
+                                        "label": "Returns to − terminal — loop complete!",
+                                        "icon": "🔄"
+                                    }
+                                ],
+                                "correctOrder": [
+                                    1,
+                                    2,
+                                    3,
+                                    4,
+                                    5,
+                                    6,
+                                    7
+                                ]
+                            }
+                        }
+                    },
+                    "instructions_for_student": "Trace the path when the switch is ON!"
+                }
+            },
+            {
+                "description": "Water pipe analogy",
+                "json": {
+                    "frontend_action": "show_interactive_tool",
+                    "title": "Water Pipe Analogy",
+                    "data": {
+                        "toolName": "circuit_current_flow_sequencer",
+                        "parameters": {
+                            "additionalProps": {
+                                "title": "Water Pipe Analogy for Circuits",
+                                "steps": [
+                                    {
+                                        "id": 1,
+                                        "label": "Water pump pushes water (like the cell)",
+                                        "icon": "🔋"
+                                    },
+                                    {
+                                        "id": 2,
+                                        "label": "Water flows through pipe to wheel",
+                                        "icon": "🔵"
+                                    },
+                                    {
+                                        "id": 3,
+                                        "label": "Water turns the wheel (like current lights lamp)",
+                                        "icon": "💡"
+                                    },
+                                    {
+                                        "id": 4,
+                                        "label": "Water flows back through return pipe",
+                                        "icon": "🔵"
+                                    },
+                                    {
+                                        "id": 5,
+                                        "label": "Water returns to pump — loop complete!",
+                                        "icon": "🔄"
+                                    }
+                                ],
+                                "correctOrder": [
+                                    1,
+                                    2,
+                                    3,
+                                    4,
+                                    5
+                                ]
+                            }
+                        }
+                    },
+                    "instructions_for_student": "Arrange the water pipe analogy to understand circuits!"
+                }
+            },
+            {
+                "description": "Dark mode for projector use",
+                "json": {
+                    "frontend_action": "show_interactive_tool",
+                    "title": "Circuit Current Flow",
+                    "data": {
+                        "toolName": "circuit_current_flow_sequencer",
+                        "parameters": {
+                            "darkMode": true,
+                            "additionalProps": {
+                                "title": "Trace the Current Path"
+                            }
+                        }
+                    },
+                    "instructions_for_student": "Arrange the steps in order!"
+                }
+            }
+        ],
+        "decisionTree": {
+            "defaultCircuit": "Use default (no additionalProps) for standard incandescent lamp circuit",
+            "LEDCircuit": "Pass custom steps with LED-specific terminals (longer/shorter wire)",
+            "switchCircuit": "Include switch step between cell and lamp",
+            "simplifiedVersion": "Use 5-step version for younger or struggling students",
+            "challengeMode": "Hide hints and descriptions for assessment",
+            "analogyFirst": "Use water pipe analogy before the actual circuit sequencing",
+            "darkMode": "Use darkMode: true for classroom projector display"
+        },
+        "tipsForAgents": [
+            "Activate this tool AFTER showing the circuit diagram and explaining the water pipe analogy",
+            "For struggling students, start with the 5-step simplified version, then progress to 7 steps",
+            "If a student gets stuck, prompt: 'Where does current START?' to scaffold thinking",
+            "After completion, emphasise: 'It's a complete LOOP — any break stops all current flow!'",
+            "Use the LED variant after teaching Section 3.2.4 about making an LED glow",
+            "Use the switch variant after Section 3.2.6 about electric switches",
+            "Challenge mode (no hints) works well as a quick formative assessment"
+        ]
+    }
+}

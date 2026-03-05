@@ -1,0 +1,258 @@
+{
+    "toolName": "median_finding_tool",
+    "version": "1.0.0",
+    "description": "Interactive step-based process walkthrough for Grade 7 Mathematics — Finding the Median. Shows data values as numbered cards that animate into sorted order. Phase 1: cards in original order. Phase 2: cards slide into ascending order with sorting animation. Phase 3: a count badge appears above the sorted row. Phase 4: the middle card(s) glow with a pulsing highlight — for odd count, one card glows; for even count, two cards glow and an averaging animation plays. Phase 5: second data set (Yaangba's family) appears with even-count handling. Phase 6: comparison table slides in showing Mean vs Median for both families, with divergence for Poovizhi highlighted in red. Number line below shows data points with mean and median marked as vertical lines. Purple (#8b5cf6) theme. Indian family context — heights of family members including a young child as the outlier. Lily Script One font family for headings, Nunito for body. 5-colour palette: purple primary, blue data cards, green median highlight, red for outlier, white background. Touch-friendly with tap-to-advance. Mobile-responsive.",
+    "category": "statistics",
+    "grade": "7",
+    "topic": "The Median — Sorting Data and Finding the Middle",
+    "textbook": "Ganita Prakash | Grade 7 | Part-II | Chapter 5: Connecting the Dots",
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Component width in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Component height in pixels"
+        },
+        "initialMode": {
+            "type": "string",
+            "default": "learn",
+            "enum": ["learn", "practice", "real_world"],
+            "description": "Starting mode"
+        },
+        "showModeSelector": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide mode selector tabs"
+        },
+        "enabledModes": {
+            "type": "array",
+            "default": ["learn"],
+            "description": "Which modes are available"
+        },
+        "showNavigation": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide prev/next navigation buttons"
+        },
+        "showPlayPause": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide play/pause auto-advance"
+        },
+        "showStepIndicator": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide step progress dots"
+        },
+        "initialStep": {
+            "type": "number",
+            "default": 1,
+            "description": "Starting step ID"
+        },
+        "filterSteps": {
+            "type": "array",
+            "default": null,
+            "description": "Only show these specific step IDs"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier"
+        },
+        "autoPlayDuration": {
+            "type": "number",
+            "default": 0,
+            "description": "Auto-advance delay in ms (0 = manual only)"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#8b5cf6",
+            "description": "Primary theme color"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable dark mode"
+        }
+    },
+    "additionalProps": {
+        "description": "Tool-specific dynamic data for customizing datasets and display options",
+        "schema": {
+            "datasets": {
+                "type": "array",
+                "description": "Custom datasets to visualize. Each dataset has a label, array of values, optional unit, and optional outlier index.",
+                "items": {
+                    "label": { "type": "string", "description": "Display name for the dataset" },
+                    "values": { "type": "array", "items": "number", "description": "Array of numeric values" },
+                    "unit": { "type": "string", "default": "cm", "description": "Unit label" },
+                    "outlierIndex": { "type": "number", "description": "Index of the outlier value (0-based)" },
+                    "highlightColor": { "type": "string", "description": "Custom highlight color for this dataset" }
+                }
+            },
+            "showNumberLine": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show number line visualization below data cards"
+            },
+            "showComparison": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show comparison table at the final step"
+            },
+            "comparisonMetrics": {
+                "type": "array",
+                "default": ["mean", "median"],
+                "description": "Which metrics to show in the comparison"
+            }
+        },
+        "examples": {
+            "default_textbook": {
+                "description": "Default textbook example with Poovizhi and Yaangba families",
+                "value": {}
+            },
+            "custom_single_dataset": {
+                "description": "Single custom dataset with outlier",
+                "value": {
+                    "datasets": [
+                        {
+                            "label": "Daily temperatures",
+                            "values": [32, 34, 33, 31, 15, 35],
+                            "unit": "°C",
+                            "outlierIndex": 4
+                        }
+                    ]
+                }
+            },
+            "custom_comparison": {
+                "description": "Two custom datasets for comparison",
+                "value": {
+                    "datasets": [
+                        {
+                            "label": "Class A marks",
+                            "values": [85, 76, 90, 85, 39, 48, 56, 95, 81, 75],
+                            "unit": "marks"
+                        },
+                        {
+                            "label": "Class B marks",
+                            "values": [68, 59, 73, 86, 47, 79, 90, 93, 86],
+                            "unit": "marks"
+                        }
+                    ],
+                    "showComparison": true
+                }
+            }
+        }
+    },
+    "modes": {
+        "learn": {
+            "label": "Learn",
+            "icon": "BookOpen",
+            "description": "Step-by-step walkthrough of finding the median"
+        },
+        "practice": {
+            "label": "Practice",
+            "icon": "Target",
+            "description": "Try finding medians on your own"
+        },
+        "real_world": {
+            "label": "Real World",
+            "icon": "BarChart3",
+            "description": "Real-world examples of median usage"
+        }
+    },
+    "steps": {
+        "learn": [
+            {
+                "id": 1,
+                "title": "Meet the Families",
+                "description": "Introduction — view both families' height data and their means",
+                "phase": "intro"
+            },
+            {
+                "id": 2,
+                "title": "Step 1 — The Raw Data",
+                "description": "Poovizhi's family data shown with outlier identified",
+                "phase": "raw",
+                "dataset": "poovizhi"
+            },
+            {
+                "id": 3,
+                "title": "Step 2 — Sort the Data",
+                "description": "Sort values ascending with animation",
+                "phase": "sort",
+                "dataset": "poovizhi"
+            },
+            {
+                "id": 4,
+                "title": "Step 3 — Count the Values",
+                "description": "Count n, determine odd/even, find middle position formula",
+                "phase": "count",
+                "dataset": "poovizhi"
+            },
+            {
+                "id": 5,
+                "title": "Step 4 — Find the Middle",
+                "description": "Highlight median card with glow animation",
+                "phase": "pick",
+                "dataset": "poovizhi"
+            },
+            {
+                "id": 6,
+                "title": "Step 5 — Yaangba's Family (Even Count)",
+                "description": "Second dataset with even number of values",
+                "phase": "raw",
+                "dataset": "yaangba"
+            },
+            {
+                "id": 7,
+                "title": "Step 6 — Sort & Find (Even)",
+                "description": "Sort, highlight two middle values, show averaging",
+                "phase": "sort_and_pick",
+                "dataset": "yaangba"
+            },
+            {
+                "id": 8,
+                "title": "Step 7 — Compare Mean vs Median",
+                "description": "Comparison table and number lines showing divergence",
+                "phase": "compare"
+            }
+        ]
+    },
+    "teaching_notes": {
+        "step_1": "Remind the student that the mean of 160.2 seems too low — it's less than the heights of 4 out of 5 members of Poovizhi's family.",
+        "step_2": "Ask the student to arrange the values themselves before revealing. Sorting is the essential first step for finding the median.",
+        "step_3": "Teach the formula: middle position = (n+1)/2 for odd n. Here, (5+1)/2 = 3rd position.",
+        "step_4": "Highlight that 170 is closer to most values than 160.2. The median 'ignores' the extreme value of the young child.",
+        "step_5_6": "For even data, explain why we average the two middle values. Middle positions are at n/2 and n/2 + 1.",
+        "step_7": "Create a simple table and ask: 'Which measure would you trust more for Poovizhi's family?' The median is more resistant to outliers."
+    },
+    "instructions_for_student": "Follow along as we learn to find the median step by step. First we sort, then we count, then we find the middle. Watch how the median tells a different story from the mean when there is an extreme value. At each step, try to predict what comes next before it appears.",
+    "design_specs": {
+        "fonts": {
+            "heading": "Lily Script One",
+            "body": "Nunito"
+        },
+        "colors": {
+            "primary": "#8b5cf6",
+            "data_cards": "#3b82f6",
+            "median_highlight": "#22c55e",
+            "outlier": "#ef4444",
+            "background": "#faf8ff"
+        },
+        "interaction": "Touch-friendly tap-to-advance",
+        "responsive": true,
+        "animations": [
+            "Cards pop in with staggered delay",
+            "Sorting animation with arrow indicator",
+            "Count badge bounces in above sorted row",
+            "Median card(s) glow with pulsing green highlight",
+            "Averaging animation for even-count median",
+            "Comparison table slides in from below",
+            "Number line grows from left with data points popping in"
+        ]
+    }
+}

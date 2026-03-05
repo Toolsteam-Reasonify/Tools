@@ -1,0 +1,206 @@
+{
+    "toolName": "hcf_lcm_quiz_tool",
+    "version": "1.0.0",
+    "description": "Interactive standalone MCQ quiz for Grade 7 Mathematics — Chapter 3 (Finding Common Ground): HCF and LCM Review. Twelve questions displayed one at a time in a clean card layout. Each question has 4 options displayed as large tap-friendly buttons. After answering, the correct option turns green and wrong options grey, with a detailed explanation panel sliding in from the bottom. A progress bar at the top shows completion (1/12, 2/12, etc.). A score tracker in the corner shows correct/total. Questions cover prime factorisation, factor identification, HCF and LCM computation, co-prime numbers, the product property, composite factor caution, simultaneous division, and word problems (cube packing, cowherd). Violet accent (#7c3aed) for the quiz theme. Indian school context with culturally relevant word problems. Clean educational design with Lilita One + Nunito fonts, varied numeric styles. Mobile-responsive, touch-friendly buttons. 5-colour palette: violet, emerald for correct, rose for wrong, white background, dark text.",
+    "category": "assessment",
+    "gradeLevel": "7",
+    "subject": "Mathematics",
+    "chapter": "Chapter 3 — Finding Common Ground",
+    "textbook": "Ganita Prakash Grade 7 Part-II",
+    "curriculum": "NCERT / NCF 2023",
+    "teachingNotes": "Comprehensive end-of-chapter review. Questions progress from basic factorisation through computation, properties, procedures, and word problems. Encourage students to review explanations for wrong answers. The quiz covers: prime factorisation using division method, identifying factors from prime factorisations, computing HCF (minimum prime powers), computing LCM (maximum prime powers), co-prime numbers, the HCF × LCM = Product property, danger of using composite factorisations, simultaneous division procedure, cube packing word problem, cowherd folklore problem from Karnataka, and the HCF doubling property.",
+    "instructionsForStudent": "Test your mastery of Chapter 3 with 12 questions covering all major concepts. Read each explanation carefully after answering!",
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Container width in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Container height in pixels"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#7c3aed",
+            "description": "Primary violet accent colour"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Dark mode toggle"
+        }
+    },
+    "additionalProps": {
+        "description": "Quiz-specific dynamic content. All fields are optional — defaults provide a complete 12-question Chapter 3 review quiz.",
+        "schema": {
+            "questions": {
+                "type": "array",
+                "description": "Array of quiz question objects. Each must have id, question, options (4 strings), correctIndex (0-3), explanation, and topic.",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "id": { "type": "number", "description": "Unique question ID" },
+                        "question": { "type": "string", "description": "The question text" },
+                        "options": {
+                            "type": "array",
+                            "items": { "type": "string" },
+                            "minItems": 4,
+                            "maxItems": 4,
+                            "description": "Exactly 4 answer options"
+                        },
+                        "correctIndex": { "type": "number", "min": 0, "max": 3, "description": "Index of correct option (0–3)" },
+                        "explanation": { "type": "string", "description": "Detailed explanation shown after answering" },
+                        "topic": { "type": "string", "description": "Topic tag shown above the question" }
+                    }
+                }
+            },
+            "themeColor": {
+                "type": "string",
+                "default": "#7c3aed",
+                "description": "Primary violet accent colour"
+            },
+            "correctColor": {
+                "type": "string",
+                "default": "#10b981",
+                "description": "Colour for correct answers (emerald green)"
+            },
+            "wrongColor": {
+                "type": "string",
+                "default": "#f43f5e",
+                "description": "Colour for wrong answers (rose)"
+            },
+            "title": {
+                "type": "string",
+                "default": "HCF & LCM — Chapter Review Quiz",
+                "description": "Main title on the intro screen"
+            },
+            "subtitle": {
+                "type": "string",
+                "default": "Grade 7 • Ganita Prakash • Chapter 3: Finding Common Ground",
+                "description": "Subtitle on the intro screen"
+            },
+            "instructionsForStudent": {
+                "type": "string",
+                "default": "Test your mastery of Chapter 3 with 12 questions covering all major concepts. Read each explanation carefully after answering!",
+                "description": "Instruction text shown on the intro card"
+            },
+            "showTopicTags": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show or hide the topic tag above each question"
+            }
+        },
+        "examples": {
+            "default_full_quiz": {
+                "description": "Full 12-question end-of-chapter review with all defaults",
+                "value": {}
+            },
+            "custom_5_questions": {
+                "description": "Custom 5-question mini quiz on HCF only",
+                "value": {
+                    "title": "HCF Quick Quiz",
+                    "subtitle": "5 questions on Highest Common Factor",
+                    "questions": [
+                        {
+                            "id": 1,
+                            "question": "What is the HCF of 24 and 180?",
+                            "options": ["6", "12", "24", "36"],
+                            "correctIndex": 1,
+                            "explanation": "24 = 2³ × 3, 180 = 2² × 3² × 5. Common primes: min 2s = 2, min 3s = 1. HCF = 2² × 3 = 12.",
+                            "topic": "HCF Computation"
+                        },
+                        {
+                            "id": 2,
+                            "question": "Find HCF of 42, 75, and 24.",
+                            "options": ["1", "3", "6", "12"],
+                            "correctIndex": 1,
+                            "explanation": "42 = 2 × 3 × 7, 75 = 3 × 5², 24 = 2³ × 3. Only common prime is 3 (one occurrence in each). HCF = 3.",
+                            "topic": "HCF of Three Numbers"
+                        },
+                        {
+                            "id": 3,
+                            "question": "HCF of two consecutive numbers is always:",
+                            "options": ["2", "1", "The smaller number", "Cannot determine"],
+                            "correctIndex": 1,
+                            "explanation": "Consecutive numbers never share a factor greater than 1. If d divides both n and n+1, then d divides their difference which is 1. So HCF = 1.",
+                            "topic": "HCF Property"
+                        },
+                        {
+                            "id": 4,
+                            "question": "HCF of 240 and 378 is:",
+                            "options": ["2", "6", "12", "3"],
+                            "correctIndex": 1,
+                            "explanation": "240 = 2⁴ × 3 × 5, 378 = 2 × 3³ × 7. Common primes: min(4,1)=1 two, min(1,3)=1 three. HCF = 2 × 3 = 6.",
+                            "topic": "HCF Computation"
+                        },
+                        {
+                            "id": 5,
+                            "question": "If both numbers are doubled, their HCF is:",
+                            "options": ["Same", "Halved", "Doubled", "Quadrupled"],
+                            "correctIndex": 2,
+                            "explanation": "Doubling adds one extra 2 to each number's prime factorisation, which enters the HCF. So the HCF doubles.",
+                            "topic": "HCF Doubling Property"
+                        }
+                    ]
+                }
+            },
+            "custom_theme_colours": {
+                "description": "Same default quiz with orange theme",
+                "value": {
+                    "themeColor": "#f97316",
+                    "correctColor": "#22c55e",
+                    "wrongColor": "#ef4444"
+                }
+            }
+        }
+    },
+    "modes": {
+        "description": "This tool operates as a single-mode quiz. No mode selector is needed.",
+        "available": ["practice"],
+        "default": "practice"
+    },
+    "features": [
+        "12 MCQ questions covering all chapter topics",
+        "One question at a time with clean card UI",
+        "4 tap-friendly option buttons per question",
+        "Instant correct/wrong feedback with colour coding",
+        "Detailed explanation panel after each answer",
+        "Progress bar showing completion fraction",
+        "Score tracker (correct / total)",
+        "Confetti animation on correct answers",
+        "Shake animation on wrong answers",
+        "Dot indicator row showing answered status",
+        "Final results screen with percentage ring",
+        "Question-by-question breakdown on results",
+        "Restart functionality",
+        "Fully responsive and mobile-friendly",
+        "Smooth CSS animations throughout"
+    ],
+    "topicsCovered": [
+        "Prime factorisation (division method)",
+        "Factor identification from prime factors",
+        "HCF computation (minimum prime powers)",
+        "LCM computation (maximum prime powers)",
+        "Co-prime numbers (HCF = 1)",
+        "HCF × LCM = Product property",
+        "Composite factor caution",
+        "Simultaneous division procedure",
+        "Word problem: cube packing",
+        "Word problem: cowherd (Karnataka folklore)",
+        "LCM of prime numbers",
+        "HCF doubling property"
+    ],
+    "colourPalette": {
+        "violet": "#7c3aed",
+        "emerald": "#10b981",
+        "rose": "#f43f5e",
+        "white": "#ffffff",
+        "darkText": "#1e293b"
+    },
+    "fonts": {
+        "display": "Lilita One",
+        "body": "Nunito"
+    }
+}

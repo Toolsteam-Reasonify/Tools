@@ -1,0 +1,407 @@
+{
+    "toolName": "dc_ac_comparison_tool",
+    "version": "2.0.0",
+    "designSystem": "Singularity",
+    "description": "An interactive comparison table tool for Grade 7 Science (NCERT Chapter 3, Dive Deeper section). Redesigned with Singularity Design System — Poppins font, #4A4DC9 primary, #FF7212 accent, #533086→#FC9145 gradient, pill-shaped buttons, #C1C1EA/#FFF3E4 light fills. Two columns: 'Direct Current (DC)' and 'Alternating Current (AC)'. Five rows: (1) Full form, (2) Source, (3) Direction, (4) Devices powered, (5) Safe for experiments? Student drags/taps 10 shuffled answer labels into the correct cells. Green highlight for correct, red shake + explanation for incorrect. Safety row pulses with warning border. Indian school context.",
+    "designTokens": {
+        "primary": "#4A4DC9",
+        "primaryDark": "#533086",
+        "primaryLight": "#C1C1EA",
+        "primaryLightest": "#EEEEF8",
+        "accent": "#FF7212",
+        "accentMid": "#FC9145",
+        "accentLight": "#FFF3E4",
+        "gradient": "linear-gradient(135deg, #533086, #4A4DC9, #FC9145)",
+        "grays": [
+            "#4E4E4E",
+            "#CACACA",
+            "#EBEBEB",
+            "#F5F5F5"
+        ],
+        "font": "Poppins",
+        "borderRadius": {
+            "pill": "999px",
+            "xl": "20px",
+            "lg": "16px",
+            "md": "12px",
+            "sm": "8px"
+        },
+        "buttonStyle": "pill-shaped, 24px horizontal padding, 40px height"
+    },
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Container width in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Minimum container height in pixels"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#4A4DC9",
+            "description": "Primary theme colour (Singularity primary blue-purple)"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable dark mode rendering"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier"
+        }
+    },
+    "additionalProps": {
+        "description": "Tool-specific dynamic content for DC vs AC comparison",
+        "schema": {
+            "rows": {
+                "type": "array",
+                "description": "Array of comparison rows with property name, DC answer, AC answer, safety flag, and explanation.",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "property": {
+                            "type": "string",
+                            "description": "Property name in first column"
+                        },
+                        "dcAnswer": {
+                            "type": "string",
+                            "description": "Correct DC column answer"
+                        },
+                        "acAnswer": {
+                            "type": "string",
+                            "description": "Correct AC column answer"
+                        },
+                        "isSafetyRow": {
+                            "type": "boolean",
+                            "default": false,
+                            "description": "Red warning pulse border"
+                        },
+                        "explanation": {
+                            "type": "string",
+                            "description": "Shown on incorrect answer or for safety rows"
+                        }
+                    }
+                },
+                "default": [
+                    {
+                        "property": "Full Form",
+                        "dcAnswer": "Direct Current",
+                        "acAnswer": "Alternating Current",
+                        "isSafetyRow": false
+                    },
+                    {
+                        "property": "Source",
+                        "dcAnswer": "Cells and batteries",
+                        "acAnswer": "Power plants and wall sockets",
+                        "isSafetyRow": false
+                    },
+                    {
+                        "property": "Direction of Current",
+                        "dcAnswer": "Flows in one direction only",
+                        "acAnswer": "Changes direction rapidly",
+                        "isSafetyRow": false
+                    },
+                    {
+                        "property": "Devices Powered",
+                        "dcAnswer": "Torchlight, remote, wall clock",
+                        "acAnswer": "Refrigerator, washing machine, AC unit",
+                        "isSafetyRow": false
+                    },
+                    {
+                        "property": "Safe for experiments?",
+                        "dcAnswer": "Yes — safe for experiments!",
+                        "acAnswer": "No — very dangerous!",
+                        "isSafetyRow": true
+                    }
+                ]
+            },
+            "dcColumnTitle": {
+                "type": "string",
+                "default": "Direct Current (DC)"
+            },
+            "acColumnTitle": {
+                "type": "string",
+                "default": "Alternating Current (AC)"
+            },
+            "safetyWarning": {
+                "type": "string",
+                "default": "Remember: Only use batteries/cells for experiments. Wall socket electricity is very dangerous!"
+            },
+            "showTeachingNotes": {
+                "type": "boolean",
+                "default": false
+            },
+            "teachingNotes": {
+                "type": "string",
+                "default": "Activate AFTER the DC vs AC image. Let student fill independently. Most critical row: 'Safe for experiments?' — reinforces the safety rule."
+            }
+        },
+        "examples": [
+            {
+                "name": "Default — Full 5-row DC vs AC comparison",
+                "value": {}
+            },
+            {
+                "name": "Simplified — 3-row for quick review",
+                "value": {
+                    "rows": [
+                        {
+                            "property": "Full Form",
+                            "dcAnswer": "Direct Current",
+                            "acAnswer": "Alternating Current",
+                            "isSafetyRow": false,
+                            "explanation": "DC = Direct Current, AC = Alternating Current."
+                        },
+                        {
+                            "property": "Source",
+                            "dcAnswer": "Cells and batteries",
+                            "acAnswer": "Power plants and wall sockets",
+                            "isSafetyRow": false,
+                            "explanation": "DC is portable. AC comes from power plants."
+                        },
+                        {
+                            "property": "Safe for experiments?",
+                            "dcAnswer": "Yes — safe!",
+                            "acAnswer": "No — dangerous!",
+                            "isSafetyRow": true,
+                            "explanation": "Only use DC (batteries) for experiments!"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "Extended — 6-row with voltage",
+                "value": {
+                    "rows": [
+                        {
+                            "property": "Full Form",
+                            "dcAnswer": "Direct Current",
+                            "acAnswer": "Alternating Current",
+                            "isSafetyRow": false
+                        },
+                        {
+                            "property": "Source",
+                            "dcAnswer": "Cells and batteries",
+                            "acAnswer": "Power plants and wall sockets",
+                            "isSafetyRow": false
+                        },
+                        {
+                            "property": "Direction",
+                            "dcAnswer": "One direction only",
+                            "acAnswer": "Changes direction rapidly",
+                            "isSafetyRow": false
+                        },
+                        {
+                            "property": "Typical Voltage",
+                            "dcAnswer": "1.5V to 12V (low)",
+                            "acAnswer": "220V in India (high)",
+                            "isSafetyRow": false
+                        },
+                        {
+                            "property": "Devices Powered",
+                            "dcAnswer": "Torchlight, remote, clock",
+                            "acAnswer": "Fridge, washing machine, AC",
+                            "isSafetyRow": false
+                        },
+                        {
+                            "property": "Safe for experiments?",
+                            "dcAnswer": "Yes — safe!",
+                            "acAnswer": "No — dangerous!",
+                            "isSafetyRow": true
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "teaching_notes": "Activate AFTER the DC vs AC image. Let student fill independently. Most critical row: 'Safe for experiments?' — reinforces the safety rule that only DC (batteries) should be used in school experiments.",
+    "instructions_for_student": "Compare DC and AC by dragging the correct descriptions into each cell. Remember: DC from batteries is safe, AC from wall sockets is dangerous!",
+    "tool_call_examples": [
+        {
+            "name": "Example 1: Default full comparison",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "DC vs AC — Spot the Difference!",
+                "data": {
+                    "toolName": "dc_ac_comparison_tool",
+                    "parameters": {
+                        "additionalProps": {}
+                    }
+                },
+                "instructions_for_student": "Compare DC and AC by dragging the correct descriptions into each cell."
+            }
+        },
+        {
+            "name": "Example 2: Safety-focused 3-row",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "DC vs AC — Safety First!",
+                "data": {
+                    "toolName": "dc_ac_comparison_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "rows": [
+                                {
+                                    "property": "Full Form",
+                                    "dcAnswer": "Direct Current",
+                                    "acAnswer": "Alternating Current",
+                                    "isSafetyRow": false
+                                },
+                                {
+                                    "property": "Source",
+                                    "dcAnswer": "Cells and batteries",
+                                    "acAnswer": "Power plants and wall sockets",
+                                    "isSafetyRow": false
+                                },
+                                {
+                                    "property": "Safe for experiments?",
+                                    "dcAnswer": "Yes — safe!",
+                                    "acAnswer": "No — dangerous!",
+                                    "isSafetyRow": true
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "Example 3: Hindi-English bilingual",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "DC बनाम AC",
+                "data": {
+                    "toolName": "dc_ac_comparison_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "dcColumnTitle": "DC — दिष्ट धारा",
+                            "acColumnTitle": "AC — प्रत्यावर्ती धारा"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "Example 4: Extended with voltage row",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "DC vs AC — Complete Comparison",
+                "data": {
+                    "toolName": "dc_ac_comparison_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "rows": [
+                                {
+                                    "property": "Full Form",
+                                    "dcAnswer": "Direct Current",
+                                    "acAnswer": "Alternating Current",
+                                    "isSafetyRow": false
+                                },
+                                {
+                                    "property": "Source",
+                                    "dcAnswer": "Cells and batteries",
+                                    "acAnswer": "Power plants and wall sockets",
+                                    "isSafetyRow": false
+                                },
+                                {
+                                    "property": "Direction",
+                                    "dcAnswer": "One direction only",
+                                    "acAnswer": "Changes direction rapidly",
+                                    "isSafetyRow": false
+                                },
+                                {
+                                    "property": "Typical Voltage",
+                                    "dcAnswer": "1.5V to 12V (low)",
+                                    "acAnswer": "220V in India (high)",
+                                    "isSafetyRow": false
+                                },
+                                {
+                                    "property": "Devices Powered",
+                                    "dcAnswer": "Torchlight, remote, clock",
+                                    "acAnswer": "Fridge, washing machine, AC",
+                                    "isSafetyRow": false
+                                },
+                                {
+                                    "property": "Safe for experiments?",
+                                    "dcAnswer": "Yes — safe!",
+                                    "acAnswer": "No — dangerous!",
+                                    "isSafetyRow": true
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "Example 5: Mobile-width",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "DC vs AC Quiz",
+                "data": {
+                    "toolName": "dc_ac_comparison_tool",
+                    "parameters": {
+                        "width": 420,
+                        "height": 500,
+                        "additionalProps": {}
+                    }
+                }
+            }
+        },
+        {
+            "name": "Example 6: Safety-only single row",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Safety Check: DC vs AC",
+                "data": {
+                    "toolName": "dc_ac_comparison_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "rows": [
+                                {
+                                    "property": "Safe for experiments?",
+                                    "dcAnswer": "Yes — batteries are safe!",
+                                    "acAnswer": "No — wall sockets are dangerous!",
+                                    "isSafetyRow": true
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "decision_tree": {
+        "rules": [
+            {
+                "condition": "First time learning DC vs AC",
+                "action": "Use default config with all 5 rows"
+            },
+            {
+                "condition": "Quick review/revision",
+                "action": "Use simplified 3-row version"
+            },
+            {
+                "condition": "Emphasize safety",
+                "action": "Use safety-only single-row version"
+            },
+            {
+                "condition": "Advanced / deeper dive",
+                "action": "Use extended 6-row version with voltage"
+            },
+            {
+                "condition": "Mobile / small screen",
+                "action": "Set width to 400-500 pixels"
+            },
+            {
+                "condition": "Hindi medium / bilingual",
+                "action": "Customize column titles with Hindi"
+            }
+        ]
+    }
+}

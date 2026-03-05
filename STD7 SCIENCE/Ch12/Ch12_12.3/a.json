@@ -1,0 +1,291 @@
+{
+    "toolName": "eclipses_learning_tool",
+    "version": "1.0.0",
+    "description": "Interactive educational tool for learning about solar and lunar eclipses with animated visualizations, practice quizzes, and real-world applications",
+    
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Component width in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Component height in pixels"
+        },
+        "initialMode": {
+            "type": "string",
+            "enum": ["learn", "practice", "applications"],
+            "default": "learn",
+            "description": "Starting mode: learn (educational content), practice (quiz questions), or applications (real-world scenarios)"
+        },
+        "showModeSelector": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide mode selector tabs (Learn, Practice, Real World)"
+        },
+        "enabledModes": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "enum": ["learn", "practice", "applications"]
+            },
+            "default": ["learn", "practice", "applications"],
+            "description": "Which modes to enable in the selector"
+        },
+        "showNavigation": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide navigation controls (not applicable for this tool - uses mode-based navigation)"
+        },
+        "showPlayPause": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide play/pause button (not applicable for this tool)"
+        },
+        "showStepIndicator": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide step counter (not applicable for this tool)"
+        },
+        "initialStep": {
+            "type": "number",
+            "default": null,
+            "description": "Starting step ID (not applicable - tool uses mode-based content)"
+        },
+        "filterSteps": {
+            "type": "array",
+            "items": { "type": "number" },
+            "default": null,
+            "description": "Array of step IDs to show (not applicable for this tool)"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier for eclipse visualizations (1 = normal, 2 = 2x faster, 0.5 = 2x slower)"
+        },
+        "autoPlayDuration": {
+            "type": "number",
+            "default": 0,
+            "description": "Auto-advance delay in ms (0 = disabled, not applicable for this tool)"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#14b8a6",
+            "description": "Primary theme color (hex) - teal is default for eclipse theme"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable dark mode (tool uses dark space theme by default)"
+        }
+    },
+    
+    "additionalProps": {
+        "description": "Tool-specific dynamic content for customizing eclipse visualizations and content",
+        "schema": {
+            "eclipseType": {
+                "type": "string",
+                "enum": ["solar", "lunar", "both"],
+                "default": "both",
+                "description": "Which eclipse type to focus on: solar (Sun-Moon-Earth), lunar (Sun-Earth-Moon), or both (show toggle)"
+            },
+            "animationSpeed": {
+                "type": "number",
+                "default": 1,
+                "description": "Speed of eclipse animation (1 = normal, 2 = 2x faster, 0.5 = 2x slower)"
+            },
+            "showLabels": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show labels (Sun, Earth, Moon) on the visualization"
+            },
+            "highlightPhase": {
+                "type": "number",
+                "default": null,
+                "description": "Specific animation phase to highlight (0-360 degrees, null = animate normally)"
+            },
+            "customColors": {
+                "type": "object",
+                "properties": {
+                    "sun": {
+                        "type": "string",
+                        "default": "#ff9500",
+                        "description": "Color of the Sun in visualization"
+                    },
+                    "earth": {
+                        "type": "string",
+                        "default": "#4a9eff",
+                        "description": "Color of the Earth in visualization"
+                    },
+                    "moon": {
+                        "type": "string",
+                        "default": "#b8b8b8",
+                        "description": "Color of the Moon in visualization"
+                    },
+                    "shadow": {
+                        "type": "string",
+                        "default": "rgba(0,0,0,0.5)",
+                        "description": "Color of eclipse shadow (umbra/penumbra)"
+                    }
+                },
+                "default": {},
+                "description": "Custom colors for celestial bodies and shadows"
+            }
+        },
+        "examples": {
+            "solar_eclipse_focus": {
+                "eclipseType": "solar",
+                "animationSpeed": 1,
+                "showLabels": true,
+                "customColors": {
+                    "sun": "#ffcc00",
+                    "moon": "#808080"
+                }
+            },
+            "lunar_eclipse_focus": {
+                "eclipseType": "lunar",
+                "animationSpeed": 0.8,
+                "showLabels": true,
+                "customColors": {
+                    "moon": "#a04040",
+                    "shadow": "rgba(160, 64, 64, 0.6)"
+                }
+            },
+            "fast_animation": {
+                "eclipseType": "both",
+                "animationSpeed": 2,
+                "showLabels": true
+            },
+            "slow_detailed": {
+                "eclipseType": "both",
+                "animationSpeed": 0.5,
+                "showLabels": true,
+                "highlightPhase": null
+            },
+            "custom_colors": {
+                "eclipseType": "solar",
+                "customColors": {
+                    "sun": "#ff6b00",
+                    "earth": "#2d8a4e",
+                    "moon": "#c0c0c0",
+                    "shadow": "rgba(0, 0, 0, 0.7)"
+                }
+            },
+            "minimal_labels": {
+                "eclipseType": "both",
+                "showLabels": false,
+                "animationSpeed": 1
+            }
+        }
+    },
+    
+    "modes": {
+        "learn": {
+            "description": "Educational content about solar and lunar eclipses with animated visualizations",
+            "features": [
+                "Animated canvas showing Sun-Earth-Moon alignment",
+                "Solar eclipse explanation with apparent size concept",
+                "Lunar eclipse explanation with Blood Moon phenomenon",
+                "Safety warnings for solar eclipse viewing",
+                "Historical and cultural significance",
+                "Key facts and measurements"
+            ]
+        },
+        "practice": {
+            "description": "Interactive quiz with 20 questions testing eclipse knowledge",
+            "features": [
+                "Multiple choice and true/false questions",
+                "Difficulty levels (easy, medium, hard)",
+                "Immediate feedback with explanations",
+                "Score tracking and progress bar",
+                "Celebration animations on completion",
+                "Questions cover all topics from Learn mode"
+            ],
+            "questionCount": 20
+        },
+        "applications": {
+            "description": "Real-world examples and applications of eclipse knowledge",
+            "features": [
+                "8 real-world examples showing practical applications",
+                "One example displayed at a time with navigation",
+                "Previous/Next buttons for easy navigation",
+                "Example counter showing progress",
+                "Detailed explanations of real-world connections",
+                "Topics include: tourism, science, safety, wildlife, navigation, energy, culture"
+            ],
+            "exampleCount": 8
+        }
+    },
+    
+    "contentStructure": {
+        "learn": {
+            "sections": [
+                "Solar Eclipse - Moon blocks Sun",
+                "Apparent Size Science",
+                "Total vs Partial Solar Eclipse",
+                "Safety Warnings",
+                "Lunar Eclipse - Earth blocks Moon",
+                "Blood Moon Phenomenon",
+                "Total vs Partial Lunar Eclipse",
+                "Safe Viewing Information",
+                "Historical Context",
+                "Key Facts (diameters, distances, durations)"
+            ]
+        },
+        "practice": {
+            "topics": [
+                "Causes of eclipses",
+                "Apparent size concept",
+                "Safety for viewing",
+                "Blood Moon phenomenon",
+                "Shadow types (umbra, penumbra)",
+                "Indian observatories",
+                "Eclipse visibility",
+                "Corona visibility",
+                "Eclipse duration differences",
+                "Moon-Sun size ratio (1:400)",
+                "Eclipse phases and timing",
+                "Historical predictions (Surya Siddhanta)",
+                "Distance measurements",
+                "Moon phases and eclipse occurrence"
+            ],
+            "questionCount": 20
+        },
+        "applications": {
+            "examples": [
+                "Eclipse Tourism and Travel",
+                "Eclipse Photography and Science",
+                "Historical Eclipse Predictions",
+                "Eclipse Safety and Public Health",
+                "Eclipse Impact on Wildlife",
+                "Eclipse in Navigation and Timekeeping",
+                "Solar Eclipse and Renewable Energy",
+                "Lunar Eclipse and Cultural Celebrations"
+            ],
+            "features": [
+                "Navigation with Previous/Next buttons",
+                "One example displayed at a time",
+                "Example counter indicator",
+                "Detailed real-world connections"
+            ],
+            "exampleCount": 8
+        }
+    },
+    
+    "educationalStandards": {
+        "grade": "Grade 7",
+        "subject": "Science",
+        "chapter": "Chapter 12.3",
+        "textbook": "NCERT Curiosity Textbook of Science",
+        "topics": [
+            "Earth, Moon, and the Sun",
+            "Solar Eclipses",
+            "Lunar Eclipses",
+            "Celestial Mechanics",
+            "Apparent Size",
+            "Safety in Astronomy"
+        ]
+    }
+}

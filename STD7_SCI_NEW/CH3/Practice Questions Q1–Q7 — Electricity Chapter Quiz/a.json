@@ -1,0 +1,359 @@
+{
+    "toolName": "practice_questions_quiz_tool",
+    "version": "2.0.0",
+    "designSystem": "Singularity",
+    "description": "An interactive multiple-choice quiz tool for Grade 7 Science (NCERT Chapter 3, Practice Questions). Redesigned with Singularity design system — Poppins font, #4A4DC9 primary indigo, #FF7212 highlight orange, #533086→#FC9145 warm gradient, pill-shaped buttons (40px radius) with proper Enabled/Hover/Pressed/Disabled states, #C1C1EA/#FFF3E4 light tints, clean card UI. Seven questions testing key chapter concepts: (Q1) classifying electricity uses — ceiling fan is cooling not transportation. (Q2) conductor vs insulator in a circuit — rubber eraser blocks current. (Q3) series circuit behaviour — if one lamp breaks, the other stops too. (Q4) cell symbol terminals — longer line is positive. (Q5) switch function — completes or breaks the circuit. (Q6) LED polarity — wrong polarity is most common reason for no glow. (Q7) troubleshooting — dead cell, fused lamp, loose wire are valid faults.",
+    "designTokens": {
+        "colors": {
+            "primary": "#4A4DC9",
+            "primaryDark": "#3A3DB0",
+            "primaryDeep": "#533086",
+            "highlight": "#FF7212",
+            "highlightDark": "#E5660F",
+            "gradientOrange": "#FC9145",
+            "lightPurple": "#C1C1EA",
+            "lightOrange": "#FFF3E4",
+            "neutralDark": "#4E4E4E",
+            "neutralMuted": "#8A8A8A",
+            "gray300": "#CACACA",
+            "gray200": "#EBEBEB",
+            "gray100": "#F5F5F5",
+            "white": "#FFFFFF"
+        },
+        "gradients": {
+            "warm": "linear-gradient(135deg, #533086 0%, #FC9145 100%)",
+            "primary": "linear-gradient(135deg, #533086 0%, #4A4DC9 40%, #FC9145 100%)",
+            "subtle": "linear-gradient(135deg, #C1C1EA 0%, #FFF3E4 100%)"
+        },
+        "typography": {
+            "fontFamily": "Poppins",
+            "weights": [
+                400,
+                500,
+                600,
+                700,
+                800,
+                900
+            ]
+        },
+        "borderRadius": {
+            "pill": "40px",
+            "card": "20px",
+            "medium": "14px",
+            "small": "10px"
+        },
+        "buttonStates": {
+            "contained": {
+                "enabled": {
+                    "bg": "#4A4DC9",
+                    "text": "#FFFFFF"
+                },
+                "hover": {
+                    "bg": "#FF7212",
+                    "text": "#FFFFFF",
+                    "shadow": "0 8px 28px #FF721250"
+                },
+                "pressed": {
+                    "bg": "#3A3DB0",
+                    "text": "#FFFFFF",
+                    "scale": 0.96
+                },
+                "disabled": {
+                    "bg": "#EBEBEB",
+                    "text": "#CACACA"
+                }
+            },
+            "highlight": {
+                "enabled": {
+                    "bg": "#FF7212",
+                    "text": "#FFFFFF"
+                },
+                "hover": {
+                    "bg": "#4A4DC9",
+                    "text": "#FFFFFF"
+                },
+                "pressed": {
+                    "bg": "#E5660F",
+                    "text": "#FFFFFF"
+                }
+            },
+            "outlined": {
+                "enabled": {
+                    "bg": "transparent",
+                    "text": "#4A4DC9",
+                    "border": "#4A4DC9"
+                },
+                "hover": {
+                    "bg": "#EAEAFF",
+                    "text": "#FF7212",
+                    "border": "#FF7212"
+                },
+                "pressed": {
+                    "bg": "#EAEAFF",
+                    "text": "#4A4DC9"
+                }
+            }
+        }
+    },
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Width in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Height in pixels"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#4A4DC9",
+            "description": "Primary Singularity indigo"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1
+        }
+    },
+    "additionalProps": {
+        "description": "Tool-specific dynamic content for quiz customization",
+        "schema": {
+            "questions": {
+                "type": "array",
+                "description": "Array of quiz question objects with 4 MCQ options each",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "number"
+                        },
+                        "question": {
+                            "type": "string"
+                        },
+                        "options": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "text": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "correctAnswer": {
+                            "type": "string"
+                        },
+                        "explanation": {
+                            "type": "string"
+                        },
+                        "figureRef": {
+                            "type": "string"
+                        },
+                        "conceptTag": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "quizTitle": {
+                "type": "string",
+                "default": "Practice Questions"
+            },
+            "quizSubtitle": {
+                "type": "string",
+                "default": "Chapter 3: Electricity — Circuits and their Components"
+            },
+            "passingScore": {
+                "type": "number",
+                "default": 5
+            },
+            "showExplanations": {
+                "type": "boolean",
+                "default": true
+            },
+            "accentColor": {
+                "type": "string",
+                "default": "#4A4DC9"
+            },
+            "instructionsForStudent": {
+                "type": "string",
+                "default": "Answer these 7 practice questions from Chapter 3! Read each question carefully and select your answer. Read the explanations to reinforce your learning!"
+            },
+            "teachingNotes": {
+                "type": "string",
+                "default": "Activate AFTER chapter summary and review. Let student work independently. After completion, discuss wrong answers using the built-in explanations. For Q3 (series), ensure student grasps single-loop concept. For Q7 (troubleshooting), encourage creative fault analysis."
+            }
+        }
+    },
+    "screens": {
+        "start": "Welcome screen with gradient icon, title, instructions card, stat badges, and pill Start Quiz button",
+        "quiz": "Question screen with progress bar (gradient fill), score pill (#FFF3E4 bg), concept tags, 4 option cards, explanation panel, pill Next button",
+        "result": "Score circle with gradient, answer dots, correct/incorrect stats, confetti, pill Try Again button"
+    },
+    "features": {
+        "singularityButtons": "Pill-shaped (40px radius) buttons with Enabled→Hover(orange)→Pressed states from design system",
+        "poppinsTypography": "Poppins font across all text with weights 400-900",
+        "warmGradient": "#533086→#FC9145 gradient on progress bar, score circle, icon backgrounds",
+        "lightTintBadges": "#C1C1EA light purple and #FFF3E4 light orange for tags and score",
+        "immediateFeedback": "Green/red with scale and shake animations on answer selection",
+        "explanations": "Detailed explanation panel after each answer",
+        "confetti": "Shapes include circles, squares, and triangles matching Singularity shape system",
+        "responsiveOptions": "Large touch-friendly option cards with hover slide animation"
+    },
+    "teachingNotes": "Activate AFTER chapter summary and review. Let student work independently. After completion, discuss wrong answers using the built-in explanations. For Q3 (series), ensure student grasps single-loop concept. For Q7 (troubleshooting), encourage creative fault analysis.",
+    "instructionsForStudent": "Answer these 7 practice questions from Chapter 3! Read each question carefully and select your answer. Read the explanations to reinforce your learning!",
+    "defaultQuestions": [
+        {
+            "id": 1,
+            "correctAnswer": "b (Ceiling fan)",
+            "conceptTag": "Uses of Electricity"
+        },
+        {
+            "id": 2,
+            "correctAnswer": "c (Rubber eraser)",
+            "conceptTag": "Conductors & Insulators"
+        },
+        {
+            "id": 3,
+            "correctAnswer": "c (Does not glow)",
+            "conceptTag": "Series Circuits"
+        },
+        {
+            "id": 4,
+            "correctAnswer": "b (Positive terminal)",
+            "conceptTag": "Cell Symbols"
+        },
+        {
+            "id": 5,
+            "correctAnswer": "c (Completes or breaks the circuit)",
+            "conceptTag": "Switch Function"
+        },
+        {
+            "id": 6,
+            "correctAnswer": "b (Wrong polarity)",
+            "conceptTag": "LED Polarity"
+        },
+        {
+            "id": 7,
+            "correctAnswer": "b (Wires made of copper)",
+            "conceptTag": "Circuit Troubleshooting"
+        }
+    ],
+    "agentToolCallExamples": [
+        {
+            "description": "Default quiz — all 7 Chapter 3 practice questions with Singularity theme",
+            "toolCall": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Practice Questions: Concepts and Circuit Analysis",
+                "data": {
+                    "toolName": "practice_questions_quiz_tool",
+                    "parameters": {
+                        "themeColor": "#4A4DC9"
+                    }
+                },
+                "instructions_for_student": "Answer these 7 practice questions from Chapter 3!"
+            }
+        },
+        {
+            "description": "Exam-style quiz without explanations",
+            "toolCall": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Chapter 3 Assessment",
+                "data": {
+                    "toolName": "practice_questions_quiz_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "showExplanations": false,
+                            "quizTitle": "Chapter 3 Assessment",
+                            "quizSubtitle": "Electricity: Circuits and their Components"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "description": "Custom single concept-check with orange accent",
+            "toolCall": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Quick Concept Check",
+                "data": {
+                    "toolName": "practice_questions_quiz_tool",
+                    "parameters": {
+                        "height": 450,
+                        "additionalProps": {
+                            "quizTitle": "Concept Check",
+                            "quizSubtitle": "Conductors and Insulators",
+                            "accentColor": "#FF7212",
+                            "questions": [
+                                {
+                                    "id": 1,
+                                    "question": "Which of these materials is a conductor of electricity?",
+                                    "options": [
+                                        {
+                                            "id": "a",
+                                            "text": "Plastic ruler"
+                                        },
+                                        {
+                                            "id": "b",
+                                            "text": "Rubber band"
+                                        },
+                                        {
+                                            "id": "c",
+                                            "text": "Iron nail"
+                                        },
+                                        {
+                                            "id": "d",
+                                            "text": "Wooden stick"
+                                        }
+                                    ],
+                                    "correctAnswer": "c",
+                                    "explanation": "Iron is a metal, and metals are good conductors of electricity.",
+                                    "conceptTag": "Conductors & Insulators"
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "description": "Challenge mode with strict passing",
+            "toolCall": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Revision Quiz — Score 6/7 to Pass!",
+                "data": {
+                    "toolName": "practice_questions_quiz_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "quizTitle": "Revision Challenge",
+                            "quizSubtitle": "You need 6 out of 7 to pass!",
+                            "passingScore": 6
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "description": "After chapter summary — default deployment",
+            "toolCall": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Chapter 3 Practice Questions",
+                "data": {
+                    "toolName": "practice_questions_quiz_tool",
+                    "parameters": {}
+                },
+                "instructions_for_student": "Now that you've read the chapter summary, test your understanding!",
+                "teaching_notes": "Activate AFTER chapter summary. Let student work independently. Discuss wrong answers using built-in explanations."
+            }
+        }
+    ]
+}

@@ -1,0 +1,452 @@
+{
+    "toolName": "chapter5_mcq_quiz_tool",
+    "version": "2.0.0",
+    "description": "Interactive MCQ review quiz for Grade 7 Mathematics — Chapter 5 'Connecting the Dots' (Statistics). Card-based quiz layout with progress indicator, immediate feedback with explanations, and results dashboard with circular progress ring. Covers arithmetic mean, median, outliers, bar graphs, statistical questions, zero vs no value, and choosing the right measure. Redesigned per Singularity Design System — Poppins font, #4A4DC9 primary, #FF7212 accent, purple-to-orange gradient buttons, pill shapes, floating geometric decorations. Indian school context.",
+    "designSystem": "Singularity v1.0",
+    "category": "assessment",
+    "subject": "Mathematics",
+    "grade": 7,
+    "chapter": "5 — Connecting the Dots",
+    "textbook": "Ganita Prakash Grade 7 Part-II",
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Container width in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Container height in pixels"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#4A4DC9",
+            "description": "Primary theme color (Singularity DS primary)"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Dark mode toggle"
+        }
+    },
+    "additionalProps": {
+        "description": "Quiz-specific dynamic content passed by the agent",
+        "schema": {
+            "questions": {
+                "type": "array",
+                "description": "Array of quiz questions. If omitted, uses built-in 8-question default set covering all chapter topics.",
+                "items": {
+                    "id": { "type": "number", "description": "Unique question ID" },
+                    "question": { "type": "string", "description": "The question text" },
+                    "options": { "type": "array", "items": "string", "description": "Exactly 4 option strings" },
+                    "correctIndex": { "type": "number", "description": "0-based index of the correct option" },
+                    "explanation": { "type": "string", "description": "Detailed explanation shown after answering" },
+                    "topic": { "type": "string", "description": "Topic tag displayed above the question (shown in accent tint pill)" }
+                }
+            },
+            "title": {
+                "type": "string",
+                "default": "Chapter Review Quiz",
+                "description": "Quiz title displayed at the top (Poppins 800 weight)"
+            },
+            "subtitle": {
+                "type": "string",
+                "default": "Connecting the Dots — Statistics",
+                "description": "Subtitle / chapter label (shown in primary tint pill)"
+            },
+            "instructionsForStudent": {
+                "type": "string",
+                "default": "Answer all 8 questions covering mean, median, outliers, bar graphs, and statistical questions. Take your time — read each question and all options carefully before selecting your answer. After each question, read the explanation to reinforce your understanding.",
+                "description": "Instructions shown to the student"
+            },
+            "teachingNotes": {
+                "type": "string",
+                "default": "This is a summative review quiz. Let the student attempt all questions independently first. After each answer, the tool provides immediate feedback. At the end, review any incorrect answers. Q4 (outlier direction) and Q6 (zero vs no value) are the most commonly missed — spend extra time on these if the student gets them wrong. Q7 (door height = maximum, not mean) connects to the 'A Mean Decision!' lesson from the chapter. After the quiz, ask: 'Which concept from this chapter surprised you the most?'",
+                "description": "Teaching notes for the instructor"
+            },
+            "showTopicTags": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show topic tags above each question"
+            },
+            "shuffleOptions": {
+                "type": "boolean",
+                "default": false,
+                "description": "Shuffle option order (keeps correctIndex updated)"
+            }
+        },
+        "examples": {
+            "default_quiz": {
+                "description": "Use the built-in 8-question chapter review quiz with Singularity DS styling",
+                "value": {}
+            },
+            "custom_title": {
+                "description": "Customize quiz title and subtitle",
+                "value": {
+                    "title": "Statistics Quick Check",
+                    "subtitle": "Mean, Median & Outliers"
+                }
+            },
+            "custom_questions": {
+                "description": "Pass custom questions for targeted practice",
+                "value": {
+                    "title": "Mean Practice",
+                    "questions": [
+                        {
+                            "id": 1,
+                            "question": "The mean of 10, 20, 30 is:",
+                            "options": ["10", "15", "20", "30"],
+                            "correctIndex": 2,
+                            "explanation": "Mean = (10 + 20 + 30) ÷ 3 = 60 ÷ 3 = 20.",
+                            "topic": "Arithmetic Mean"
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "defaultQuestions": [
+        {
+            "id": 1,
+            "question": "Virat scored 45, 32, 67, 12, and 94 runs in five innings. What is his arithmetic mean (average) score?",
+            "options": ["50 runs", "45 runs", "67 runs", "52 runs"],
+            "correctIndex": 0,
+            "explanation": "Mean = Sum ÷ Count = (45 + 32 + 67 + 12 + 94) ÷ 5 = 250 ÷ 5 = 50 runs.",
+            "topic": "Arithmetic Mean"
+        },
+        {
+            "id": 2,
+            "question": "The daily prices (₹/kg) of tomatoes at a sabzi mandi over a week are: 18, 22, 25, 28, 30, 35, 40. What is the median price?",
+            "options": ["₹25", "₹28", "₹30", "₹27"],
+            "correctIndex": 1,
+            "explanation": "Sorted data has 7 values (odd). Median = 4th value = ₹28.",
+            "topic": "Median (Odd)"
+        },
+        {
+            "id": 3,
+            "question": "Six students scored 12, 15, 18, 22, 25, 30 in a quiz. What is the median score?",
+            "options": ["18", "22", "20", "19"],
+            "correctIndex": 2,
+            "explanation": "Even count: median = (18 + 22) ÷ 2 = 20.",
+            "topic": "Median (Even)"
+        },
+        {
+            "id": 4,
+            "question": "Heights of a family: 170, 168, 172, 165, 95 cm (a toddler). The outlier 95 cm pulls the mean ______ the median.",
+            "options": ["above", "below", "equal to", "it depends on the data"],
+            "correctIndex": 1,
+            "explanation": "A low outlier drags the mean downward, so mean < median.",
+            "topic": "Outlier Effect"
+        },
+        {
+            "id": 5,
+            "question": "Which of these is a statistical question?",
+            "options": ["What is your name?", "How many runs did India score today?", "How tall are Grade 7 students in our school?", "Is 7 a prime number?"],
+            "correctIndex": 2,
+            "explanation": "A statistical question expects variability and requires data collection.",
+            "topic": "Statistical Questions"
+        },
+        {
+            "id": 6,
+            "question": "A cricketer's scores: 57, 13, 0, 84, —, 51. The '—' means did not play. To find the mean, divide total by:",
+            "options": ["6 (all matches)", "5 (matches played)", "4 (non-zero scores)", "It cannot be calculated"],
+            "correctIndex": 1,
+            "explanation": "Zero is a valid score; '—' is no participation. Divide by 5 matches played.",
+            "topic": "Zero vs No Value"
+        },
+        {
+            "id": 7,
+            "question": "A family wants to build a door. Heights: 160, 155, 170, 175, 168 cm. Which measure for door height?",
+            "options": ["Mean (165.6 cm)", "Median (168 cm)", "Maximum (175 cm) or more", "Minimum (155 cm)"],
+            "correctIndex": 2,
+            "explanation": "A door must be tall enough for the tallest person — use maximum, not mean!",
+            "topic": "Right Measure"
+        },
+        {
+            "id": 8,
+            "question": "In a clustered bar graph comparing onion prices in two towns, placing bars side-by-side helps us:",
+            "options": ["Calculate the mean price", "Compare month-wise prices at a glance", "Find the median price", "Show annual total"],
+            "correctIndex": 1,
+            "explanation": "Clustered bar graphs make visual comparison of categories easy by placing bars side by side.",
+            "topic": "Bar Graphs"
+        }
+    ],
+    "designSpecification": {
+        "designSystem": "Singularity v1.0",
+        "fontFamily": {
+            "primary": "Poppins, sans-serif",
+            "weights": {
+                "regular": 400,
+                "medium": 500,
+                "semibold": 600,
+                "bold": 700,
+                "extrabold": 800
+            },
+            "usage": {
+                "heading": "Poppins 800 (extrabold)",
+                "subheading": "Poppins 700 (bold)",
+                "body": "Poppins 500 (medium)",
+                "label": "Poppins 600–700 (semibold–bold), uppercase, 0.6px letter-spacing",
+                "caption": "Poppins 500 (medium), 11–12px"
+            }
+        },
+        "colorPalette": {
+            "primary": {
+                "value": "#4A4DC9",
+                "usage": "Primary brand color — progress bar start, question card left border, letter circles, subtitle pill text"
+            },
+            "accent": {
+                "value": "#FF7212",
+                "usage": "Accent/highlight — topic tag text, progress bar end, score ring for medium scores"
+            },
+            "gradientDark": {
+                "value": "#533086",
+                "usage": "Gradient start — pill buttons (CTA), hover states"
+            },
+            "gradientLight": {
+                "value": "#FC9145",
+                "usage": "Gradient end — pill buttons (CTA), hover states"
+            },
+            "primaryTint": {
+                "value": "#C1C1EA",
+                "usage": "Light primary tint — subtitle pill background, progress counter background, letter circle default fill, geometric decoration strokes"
+            },
+            "accentTint": {
+                "value": "#FFF3E4",
+                "usage": "Light accent tint — topic tag background, geometric decoration fills"
+            },
+            "neutralDark": {
+                "value": "#4E4E4E",
+                "usage": "Secondary text, explanation body text"
+            },
+            "neutralGray": {
+                "value": "#CACACA",
+                "usage": "Disabled text, dimmed option letter circles"
+            },
+            "neutralLightGray": {
+                "value": "#EBEBEB",
+                "usage": "Default option borders, progress track, score ring track"
+            },
+            "neutralOffWhite": {
+                "value": "#F5F5F5",
+                "usage": "Page background, dimmed option background"
+            },
+            "white": {
+                "value": "#FFFFFF",
+                "usage": "Card backgrounds, button text on gradient"
+            },
+            "correct": {
+                "value": "#2DB866",
+                "usage": "Correct answer border, letter circle fill, score ring (high scores)"
+            },
+            "correctLight": {
+                "value": "#E8F9EF",
+                "usage": "Correct answer card background, result row background"
+            },
+            "correctDark": {
+                "value": "#1A8A4A",
+                "usage": "Correct answer text, explanation header"
+            },
+            "incorrect": {
+                "value": "#E5453F",
+                "usage": "Incorrect answer border, letter circle fill, score ring (low scores)"
+            },
+            "incorrectLight": {
+                "value": "#FDECEB",
+                "usage": "Incorrect answer card background, result row background"
+            },
+            "incorrectDark": {
+                "value": "#C0322D",
+                "usage": "Incorrect answer text, explanation header"
+            }
+        },
+        "buttons": {
+            "contained": {
+                "height": "44px",
+                "paddingHorizontal": "28px",
+                "borderRadius": "40px (fully rounded pill)",
+                "background": "linear-gradient(135deg, #533086, #FC9145)",
+                "color": "#FFFFFF",
+                "fontWeight": 600,
+                "fontSize": "14px",
+                "shadow": "0 4px 18px rgba(255, 114, 18, 0.18)",
+                "hoverTransform": "scale(1.06)",
+                "hoverShadow": "0 8px 28px rgba(255, 114, 18, 0.18)"
+            },
+            "outlined": {
+                "height": "44px",
+                "paddingHorizontal": "28px",
+                "borderRadius": "40px",
+                "border": "2px solid #4A4DC9",
+                "background": "#FFFFFF",
+                "color": "#4A4DC9",
+                "fontWeight": 600
+            },
+            "disabled": {
+                "opacity": 0.5,
+                "cursor": "default"
+            }
+        },
+        "cards": {
+            "background": "#FFFFFF",
+            "borderRadius": "20px",
+            "shadow": "0 6px 24px rgba(74, 77, 201, 0.10)",
+            "questionCard": {
+                "borderLeft": "5px solid #4A4DC9",
+                "padding": "26px 24px 22px"
+            },
+            "explanationCard": {
+                "borderLeft": "4px solid (correct/incorrect color)",
+                "borderRadius": "16px",
+                "padding": "18px 20px"
+            },
+            "resultCard": {
+                "borderTop": "4px solid #4A4DC9"
+            }
+        },
+        "optionButtons": {
+            "borderRadius": "14px",
+            "border": "2px solid #EBEBEB (default)",
+            "padding": "14px 16px",
+            "letterCircle": {
+                "width": "34px",
+                "height": "34px",
+                "borderRadius": "50%",
+                "defaultBackground": "#C1C1EA55",
+                "defaultColor": "#4A4DC9"
+            },
+            "states": {
+                "default": {
+                    "background": "#FFFFFF",
+                    "border": "#EBEBEB",
+                    "shadow": "0 2px 8px rgba(74,77,201,0.10)"
+                },
+                "hover": {
+                    "background": "#C1C1EA20",
+                    "border": "#4A4DC9",
+                    "transform": "translateY(-2px) scale(1.01)",
+                    "shadow": "0 4px 16px rgba(74,77,201,0.10)"
+                },
+                "correct": {
+                    "background": "#E8F9EF",
+                    "border": "#2DB866",
+                    "letterCircle": "#2DB866 with white icon",
+                    "animation": "correctGlow 0.6s ease-out"
+                },
+                "incorrect": {
+                    "background": "#FDECEB",
+                    "border": "#E5453F",
+                    "letterCircle": "#E5453F with white icon",
+                    "animation": "shakeX 0.5s ease-out"
+                },
+                "dimmed": {
+                    "background": "#F5F5F5",
+                    "border": "#EBEBEB",
+                    "color": "#CACACA"
+                }
+            }
+        },
+        "progressBar": {
+            "height": "6px",
+            "borderRadius": "3px",
+            "trackColor": "#EBEBEB",
+            "fillGradient": "linear-gradient(90deg, #4A4DC9, #FF7212)",
+            "counterPill": {
+                "background": "#C1C1EA35",
+                "borderRadius": "20px",
+                "fontSize": "12px",
+                "fontWeight": 700,
+                "color": "#4A4DC9"
+            }
+        },
+        "scoreRing": {
+            "radius": 45,
+            "strokeWidth": 7,
+            "trackColor": "#EBEBEB",
+            "highScore": "#2DB866 (>= 75%)",
+            "mediumScore": "#FF7212 (>= 50%)",
+            "lowScore": "#E5453F (< 50%)",
+            "animationDuration": "1400ms with easeOutCubic"
+        },
+        "geometricDecorations": {
+            "description": "Floating geometric shapes inspired by Singularity DS shape system (circles, triangles, squares) using primary tint and accent tint colors with gentle floating animations",
+            "elements": [
+                {
+                    "shape": "circle-outline",
+                    "position": "top-right",
+                    "size": "80px",
+                    "stroke": "#C1C1EA",
+                    "animation": "geoFloat1 6s ease-in-out infinite"
+                },
+                {
+                    "shape": "triangle-filled",
+                    "position": "bottom-left",
+                    "size": "60px",
+                    "fill": "#FFF3E4",
+                    "animation": "geoFloat2 7s ease-in-out infinite"
+                },
+                {
+                    "shape": "square-outline",
+                    "position": "mid-right",
+                    "size": "50px",
+                    "stroke": "#FFF3E4",
+                    "animation": "geoFloat3 8s ease-in-out infinite"
+                },
+                {
+                    "shape": "circle-filled",
+                    "position": "top-left",
+                    "size": "24px",
+                    "fill": "#C1C1EA",
+                    "opacity": 0.18,
+                    "animation": "geoFloat3 5s ease-in-out infinite"
+                },
+                {
+                    "shape": "circle-filled",
+                    "position": "bottom-right",
+                    "size": "16px",
+                    "fill": "#FF7212",
+                    "opacity": 0.12,
+                    "animation": "geoFloat1 9s ease-in-out infinite"
+                },
+                {
+                    "shape": "square-filled",
+                    "position": "bottom-center",
+                    "size": "20px",
+                    "fill": "#C1C1EA",
+                    "opacity": 0.12,
+                    "animation": "geoFloat2 6.5s ease-in-out infinite"
+                }
+            ]
+        },
+        "animations": {
+            "correctAnswer": "correctGlow 0.6s — green glow pulse with checkmark icon swap",
+            "incorrectAnswer": "shakeX 0.5s — gentle horizontal shake, correct option highlighted green",
+            "explanationEntry": "slideInFromBelow 0.4s — card slides up from below with left-border accent",
+            "questionTransition": "fadeInUp 0.45s — card fades up on question change",
+            "optionEntry": "fadeInUp 0.35s with 0.07s stagger per option",
+            "resultRing": "animated stroke draw over 1400ms with easeOutCubic",
+            "resultCards": "resultCardSlide 0.6s with 0.15s stagger per card",
+            "nextButton": "float 2.5s ease-in-out infinite — gentle vertical bob",
+            "hoverScale": "scale(1.06) with 0.3s cubic-bezier transition",
+            "geometricShapes": "geoFloat1/2/3 — 5–9s ease-in-out infinite subtle translate+rotate"
+        },
+        "responsiveBreakpoints": {
+            "mobile": "< 480px — stacked single-column options, 14px body, 22px heading",
+            "tablet": "480–768px — 2-column option grid (minmax 270px)",
+            "desktop": "> 768px — max-width 660px centered container"
+        }
+    },
+    "instructionsForStudent": "This is your chapter review quiz! Answer all 8 questions covering mean, median, outliers, bar graphs, and statistical questions. Take your time — read each question and all options carefully before selecting your answer. After each question, read the explanation to reinforce your understanding.",
+    "teachingNotes": "This is a summative review quiz. Let the student attempt all questions independently first. After each answer, the tool provides immediate feedback. At the end, review any incorrect answers. Q4 (outlier direction) and Q6 (zero vs no value) are the most commonly missed — spend extra time on these if the student gets them wrong. Q7 (door height = maximum, not mean) connects to the 'A Mean Decision!' lesson from the chapter. After the quiz, ask: 'Which concept from this chapter surprised you the most?'",
+    "topicsCovered": [
+        "Arithmetic Mean formula and calculation",
+        "Median computation for odd data sets",
+        "Median computation for even data sets",
+        "Outlier effects on mean vs median",
+        "Statistical vs non-statistical questions",
+        "Zero vs no value distinction",
+        "Choosing the right measure for the situation",
+        "Reading and interpreting clustered bar graphs"
+    ]
+}

@@ -1,0 +1,203 @@
+{
+    "toolName": "decimal_place_value_tool",
+    "version": "1.0.0",
+    "description": "Interactive decimal place value tool for Grade 7 (NCERT Ganita Prakash Ch.3 - A Peek Beyond the Point). Teaches tenths, hundredths, thousandths, decimal notation, reading decimals, expanded form, comparing, addition/subtraction, and real-world unit conversions.",
+
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Component width in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 700,
+            "description": "Component height in pixels"
+        },
+        "initialMode": {
+            "type": "string",
+            "enum": ["learn", "practice", "real_world"],
+            "default": "learn",
+            "description": "Starting mode"
+        },
+        "showModeSelector": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide mode selector tabs"
+        },
+        "enabledModes": {
+            "type": "array",
+            "items": { "type": "string", "enum": ["learn", "practice", "real_world"] },
+            "default": ["learn", "practice", "real_world"],
+            "description": "Which modes are enabled"
+        },
+        "showNavigation": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide prev/next buttons"
+        },
+        "showPlayPause": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide play/pause button"
+        },
+        "showStepIndicator": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide step counter"
+        },
+        "initialStep": {
+            "type": "number",
+            "default": 1,
+            "description": "Starting step ID"
+        },
+        "filterSteps": {
+            "type": "array",
+            "items": { "type": "number" },
+            "default": null,
+            "description": "Array of step IDs to show (null = show all)"
+        },
+        "autoPlayDuration": {
+            "type": "number",
+            "default": 0,
+            "description": "Auto-advance delay in ms (0 = disabled)"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#6366f1",
+            "description": "Primary theme color (hex)"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable dark mode"
+        }
+    },
+
+    "additionalProps": {
+        "description": "Tool-specific dynamic content passed by the agent",
+        "schema": {
+            "decimalNumber": {
+                "type": "number",
+                "default": null,
+                "description": "A specific decimal number to visualize in the place value chart"
+            },
+            "showPlaceValueChart": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to show the animated place value chart"
+            },
+            "highlightPlace": {
+                "type": "string",
+                "enum": ["ones", "tenths", "hundredths", "thousandths", "tens", "hundreds"],
+                "default": null,
+                "description": "Which place to highlight with glow animation"
+            },
+            "showExpandedForm": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to show the expanded form breakdown"
+            },
+            "compareNumbers": {
+                "type": "array",
+                "items": { "type": "number" },
+                "minItems": 2,
+                "maxItems": 2,
+                "default": null,
+                "description": "Two decimal numbers to compare"
+            },
+            "conversionType": {
+                "type": "string",
+                "enum": ["mm_cm", "cm_m", "g_kg", "paise_rupee"],
+                "default": null,
+                "description": "Type of unit conversion to show"
+            },
+            "conversionValue": {
+                "type": "number",
+                "default": null,
+                "description": "A specific value to convert"
+            },
+            "practiceQuestions": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "question": { "type": "string" },
+                        "options": { "type": "array", "items": { "type": "string" } },
+                        "correctIndex": { "type": "number" },
+                        "explanation": { "type": "string" }
+                    }
+                },
+                "default": null,
+                "description": "Custom practice questions to override defaults"
+            }
+        },
+        "examples": {
+            "show_specific_number": {
+                "decimalNumber": 285.347,
+                "highlightPlace": "hundredths",
+                "showExpandedForm": true
+            },
+            "tenths_focus": {
+                "decimalNumber": 3.7,
+                "highlightPlace": "tenths"
+            },
+            "compare_two_numbers": {
+                "compareNumbers": [6.456, 6.465]
+            },
+            "unit_conversion": {
+                "conversionType": "g_kg",
+                "conversionValue": 254
+            },
+            "custom_quiz": {
+                "practiceQuestions": [
+                    {
+                        "question": "What is 234 hundredths in decimal?",
+                        "options": ["23.4", "2.34", "0.234", "234.0"],
+                        "correctIndex": 1,
+                        "explanation": "234 hundredths = 234/100 = 2.34"
+                    }
+                ]
+            }
+        }
+    },
+
+    "modes": {
+        "learn": {
+            "description": "Step-by-step visual introduction to decimal place value system",
+            "steps": [
+                { "id": 1, "title": "Why Do We Need Decimals?", "type": "intro" },
+                { "id": 2, "title": "Tenths — Splitting a Unit into 10", "type": "explanation" },
+                { "id": 3, "title": "Hundredths — Even Smaller Parts", "type": "explanation" },
+                { "id": 4, "title": "Thousandths — Going Even Deeper", "type": "explanation" },
+                { "id": 5, "title": "The Decimal Place Value Chart", "type": "explanation" },
+                { "id": 6, "title": "Reading Decimal Numbers", "type": "explanation" }
+            ]
+        },
+        "practice": {
+            "description": "Interactive quizzes on place value identification, fraction-to-decimal conversion, comparison, expanded form, and arithmetic",
+            "steps": [
+                { "id": 10, "title": "Identify the Place Value", "type": "practice" },
+                { "id": 11, "title": "Convert Fractions to Decimals", "type": "practice" },
+                { "id": 12, "title": "Compare Decimal Numbers", "type": "practice" },
+                { "id": 13, "title": "Expanded Form Challenge", "type": "practice" },
+                { "id": 14, "title": "Addition & Subtraction", "type": "practice" }
+            ]
+        },
+        "real_world": {
+            "description": "Real-world applications: mm↔cm, cm↔m, g↔kg, rupees↔paise conversions with interactive calculator",
+            "steps": [
+                { "id": 20, "title": "Measuring Length: mm ↔ cm", "type": "real_world" },
+                { "id": 21, "title": "Measuring Length: cm ↔ m", "type": "real_world" },
+                { "id": 22, "title": "Weight: grams ↔ kilograms", "type": "real_world" },
+                { "id": 23, "title": "Money: Rupees & Paise", "type": "real_world" },
+                { "id": 24, "title": "Decimal Disasters!", "type": "real_world" }
+            ]
+        }
+    }
+}

@@ -1,0 +1,193 @@
+{
+    "toolName": "number_play_quiz",
+    "version": "1.0.0",
+    "description": "Interactive standalone MCQ quiz for Grade 7 Mathematics — Chapter 6: Number Play. 12 multiple-choice questions covering parity, magic squares, Virahanka-Fibonacci sequence, cryptarithms, and algebraic parity. Each question displayed as a card with radio-button options, correct/incorrect animations, and detailed explanations connecting to chapter concepts.",
+    "category": "assessment",
+    "subject": "Mathematics",
+    "grade": 7,
+    "chapter": "6 — Number Play",
+    "textbook": "Ganita Prakash (NCERT)",
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 680,
+            "description": "Max width of the quiz container"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Height (auto-adjusts based on content)"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#6366f1",
+            "description": "Primary indigo accent color"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false
+        },
+        "initialMode": {
+            "type": "string",
+            "enum": ["quiz", "review"],
+            "default": "quiz"
+        },
+        "showModeSelector": {
+            "type": "boolean",
+            "default": false
+        },
+        "showNavigation": {
+            "type": "boolean",
+            "default": false
+        },
+        "showPlayPause": {
+            "type": "boolean",
+            "default": false
+        },
+        "autoPlayDuration": {
+            "type": "number",
+            "default": 0
+        }
+    },
+    "additionalProps": {
+        "description": "Quiz-specific dynamic content that agents can pass to customise the quiz.",
+        "schema": {
+            "questions": {
+                "type": "array",
+                "description": "Custom array of question objects. If omitted, uses the built-in 12-question bank.",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "id": { "type": "number", "description": "Unique question ID" },
+                        "topic": { "type": "string", "description": "Topic name for grouping (e.g. 'Parity', 'Magic Squares')" },
+                        "topicIcon": { "type": "string", "description": "Emoji icon for the topic" },
+                        "question": { "type": "string", "description": "Question text" },
+                        "options": { "type": "array", "items": { "type": "string" }, "description": "Array of 4 option strings" },
+                        "correctIndex": { "type": "number", "description": "0-based index of the correct option" },
+                        "explanation": { "type": "string", "description": "Detailed explanation shown after answering" }
+                    },
+                    "required": ["id", "topic", "question", "options", "correctIndex", "explanation"]
+                }
+            },
+            "shuffleQuestions": {
+                "type": "boolean",
+                "default": true,
+                "description": "Randomise question order on each attempt"
+            },
+            "shuffleOptions": {
+                "type": "boolean",
+                "default": false,
+                "description": "Randomise option order within each question"
+            },
+            "showExplanations": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show explanation card after each answer"
+            },
+            "passingScore": {
+                "type": "number",
+                "default": 10,
+                "description": "Minimum correct answers needed for a 'pass' message"
+            },
+            "title": {
+                "type": "string",
+                "default": "Number Play Quiz",
+                "description": "Quiz header title"
+            },
+            "subtitle": {
+                "type": "string",
+                "default": "Chapter 6 — Ganita Prakash, Grade 7",
+                "description": "Subtitle under the header"
+            }
+        },
+        "examples": {
+            "default_full_quiz": {
+                "description": "Run the full 12-question quiz with defaults",
+                "value": {}
+            },
+            "parity_only": {
+                "description": "Filter to parity questions only",
+                "value": {
+                    "questions": [
+                        {
+                            "id": 1,
+                            "topic": "Parity",
+                            "topicIcon": "⚖️",
+                            "question": "What is the parity of the sum of 5 odd numbers?",
+                            "options": ["Even", "Odd", "Could be either", "Cannot determine"],
+                            "correctIndex": 1,
+                            "explanation": "An odd count of odd numbers always sums to odd. 5 odd numbers → odd sum."
+                        }
+                    ],
+                    "title": "Parity Mini-Quiz",
+                    "passingScore": 1
+                }
+            },
+            "custom_passing_score": {
+                "description": "Lower passing threshold for struggling students",
+                "value": {
+                    "passingScore": 6,
+                    "subtitle": "Take your time — aim for 6 or more!"
+                }
+            },
+            "no_shuffle": {
+                "description": "Present questions in fixed order",
+                "value": {
+                    "shuffleQuestions": false
+                }
+            }
+        }
+    },
+    "modes": {
+        "quiz": {
+            "name": "Quiz",
+            "description": "Answer questions one-by-one with immediate feedback"
+        },
+        "review": {
+            "name": "Review",
+            "description": "Browse all questions and explanations"
+        }
+    },
+    "topics_covered": [
+        {
+            "name": "Parity",
+            "sections": ["6.2 Picking Parity"],
+            "question_ids": [1, 2, 3],
+            "concepts": ["even/odd sums", "parity of products", "consecutive numbers"]
+        },
+        {
+            "name": "Magic Squares",
+            "sections": ["6.3 Some Explorations in Grids"],
+            "question_ids": [4, 5, 6],
+            "concepts": ["magic sum = 15", "centre must be 5", "Chautisa Yantra"]
+        },
+        {
+            "name": "Virahanka–Fibonacci",
+            "sections": ["6.4 Nature's Favourite Sequence"],
+            "question_ids": [7, 8, 9],
+            "concepts": ["sequence rule", "staircase problem", "historical origin"]
+        },
+        {
+            "name": "Cryptarithms",
+            "sections": ["6.5 Digits in Disguise"],
+            "question_ids": [10],
+            "concepts": ["digit substitution", "logical deduction"]
+        },
+        {
+            "name": "Algebraic Parity",
+            "sections": ["6.2 Parity of Expressions"],
+            "question_ids": [11, 12],
+            "concepts": ["always-odd expressions", "nth even/odd number formulas"]
+        }
+    ],
+    "teaching_notes": "This is a standalone review quiz — the student works through it independently. Questions cover all five chapter sections: parity (Q1-Q3), magic squares (Q4-Q6), Virahanka-Fibonacci sequence (Q7-Q9), cryptarithms (Q10), and algebraic parity (Q11-Q12). Questions shuffle on each attempt to prevent pattern memorisation. Explanations appear after each answer to reinforce learning. Use as a diagnostic tool to identify which topics need revision using the topic-wise breakdown on the results screen.",
+    "instructions_for_student": "Test your understanding of the entire Chapter 6: Number Play! Answer each question by selecting the best option. After answering, read the explanation carefully — it connects back to the key concepts you learned. Try to get at least 10 out of 12 correct!",
+    "design_palette": {
+        "primary": "#6366f1",
+        "correct": "#10b981",
+        "incorrect": "#ef4444",
+        "background": "#ffffff",
+        "text": "#374151",
+        "accent_gold": "#f59e0b"
+    }
+}

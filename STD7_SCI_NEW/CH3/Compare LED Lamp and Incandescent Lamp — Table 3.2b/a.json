@@ -1,0 +1,282 @@
+{
+    "toolName": "led_lamp_comparison_tool",
+    "version": "2.0.0",
+    "description": "Interactive drag-and-drop comparison table for Grade 7 Science (NCERT Ch3). Singularity Design System: #4A4DC9 primary purple, #FF7212 accent orange, #533086-#FC9145 gradient, Poppins font, pill buttons.",
+    "designSystem": {
+        "name": "Singularity",
+        "colors": {
+            "primaryPurple": "#4A4DC9",
+            "accentOrange": "#FF7212",
+            "gradientStart": "#533086",
+            "gradientEnd": "#FC9145",
+            "lightPurple": "#C1C1EA",
+            "lightOrange": "#FFF3E4",
+            "grays": [
+                "#4E4E4E",
+                "#CACACA",
+                "#EBEBEB",
+                "#F5F5F5"
+            ]
+        },
+        "font": "Poppins",
+        "buttonRadius": "100px",
+        "buttonHeight": "40px"
+    },
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800
+        },
+        "height": {
+            "type": "number",
+            "default": 600
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#4A4DC9"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false
+        },
+        "showModeSelector": {
+            "type": "boolean",
+            "default": false
+        },
+        "showNavigation": {
+            "type": "boolean",
+            "default": false
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1
+        },
+        "autoPlayDuration": {
+            "type": "number",
+            "default": 0
+        }
+    },
+    "additionalProps": {
+        "schema": {
+            "properties": {
+                "type": "array",
+                "description": "Row definitions"
+            },
+            "columns": {
+                "type": "array",
+                "description": "Column definitions"
+            },
+            "answers": {
+                "type": "array",
+                "description": "10 answer labels"
+            },
+            "title": {
+                "type": "string",
+                "default": "Incandescent Lamp vs LED Lamp"
+            },
+            "subtitle": {
+                "type": "string",
+                "default": "Drag the correct description into each cell!"
+            },
+            "completionMessage": {
+                "type": "string"
+            },
+            "shuffleLabels": {
+                "type": "boolean",
+                "default": true
+            }
+        }
+    },
+    "teaching_notes": {
+        "activation": "Activate AFTER Activities 3.4, 3.5, 3.7.",
+        "key_insight": "LEDs have no filament and require correct polarity; incandescent lamps work either way.",
+        "curriculum": "NCERT Grade 7 Science Ch3 Sections 3.2.3-3.2.5",
+        "time": "5-8 minutes"
+    },
+    "instructions_for_student": "Fill in the comparison table! Drag the correct description into each cell. Think about Activities 3.4, 3.5, and 3.7.",
+    "tool_call_examples": [
+        {
+            "description": "Default full comparison",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "LED Lamp and Its Terminals",
+                "data": {
+                    "toolName": "led_lamp_comparison_tool",
+                    "parameters": {
+                        "themeColor": "#4A4DC9"
+                    }
+                },
+                "instructions_for_student": "Drag answers into the correct cells!"
+            }
+        },
+        {
+            "description": "Simplified 3-property version",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Quick Lamp Comparison",
+                "data": {
+                    "toolName": "led_lamp_comparison_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "properties": [
+                                {
+                                    "id": "filament",
+                                    "label": "Has filament?",
+                                    "icon": "🔥"
+                                },
+                                {
+                                    "id": "polarity",
+                                    "label": "Works in both directions?",
+                                    "icon": "↔️"
+                                },
+                                {
+                                    "id": "efficiency",
+                                    "label": "Energy efficiency",
+                                    "icon": "⚡"
+                                }
+                            ],
+                            "answers": [
+                                {
+                                    "propertyId": "filament",
+                                    "columnId": "incandescent",
+                                    "text": "Yes — thin coiled wire glows"
+                                },
+                                {
+                                    "propertyId": "filament",
+                                    "columnId": "led",
+                                    "text": "No — no filament inside"
+                                },
+                                {
+                                    "propertyId": "polarity",
+                                    "columnId": "incandescent",
+                                    "text": "Yes — works either way"
+                                },
+                                {
+                                    "propertyId": "polarity",
+                                    "columnId": "led",
+                                    "text": "No — correct polarity only"
+                                },
+                                {
+                                    "propertyId": "efficiency",
+                                    "columnId": "incandescent",
+                                    "text": "Lower — wastes energy as heat"
+                                },
+                                {
+                                    "propertyId": "efficiency",
+                                    "columnId": "led",
+                                    "text": "Higher — more light per watt"
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "description": "Orange accent theme",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Lamp Comparison",
+                "data": {
+                    "toolName": "led_lamp_comparison_tool",
+                    "parameters": {
+                        "themeColor": "#FF7212"
+                    }
+                }
+            }
+        },
+        {
+            "description": "Hindi completion message",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Lamp Types Review",
+                "data": {
+                    "toolName": "led_lamp_comparison_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "completionMessage": "🌟 शाबाश! You mastered the differences!"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "description": "Wide desktop layout",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "LED vs Incandescent",
+                "data": {
+                    "toolName": "led_lamp_comparison_tool",
+                    "parameters": {
+                        "width": 900,
+                        "height": 650
+                    }
+                }
+            }
+        },
+        {
+            "description": "Polarity focus only",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Does Polarity Matter?",
+                "data": {
+                    "toolName": "led_lamp_comparison_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "title": "Does Polarity Matter?",
+                            "properties": [
+                                {
+                                    "id": "polarity",
+                                    "label": "Works in both directions?",
+                                    "icon": "↔️"
+                                }
+                            ],
+                            "answers": [
+                                {
+                                    "propertyId": "polarity",
+                                    "columnId": "incandescent",
+                                    "text": "Yes — works either way"
+                                },
+                                {
+                                    "propertyId": "polarity",
+                                    "columnId": "led",
+                                    "text": "No — correct polarity only"
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "description": "Without shuffle for guided walkthrough",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Guided Comparison",
+                "data": {
+                    "toolName": "led_lamp_comparison_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "shuffleLabels": false,
+                            "subtitle": "Answers are in order — place each one carefully."
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "description": "Mobile compact layout",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Lamp Comparison",
+                "data": {
+                    "toolName": "led_lamp_comparison_tool",
+                    "parameters": {
+                        "width": 400,
+                        "height": 700
+                    }
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,104 @@
+{
+    "toolName": "conductor_insulator_tool",
+    "version": "2.1.0",
+    "designSystem": "Singularity",
+    "description": "Interactive conductor-insulator testing circuit tool with MCQ quiz for Grade 7 Science (NCERT Ch 3, Section 3.4). Practice mode has two sub-tabs: Circuit Test (drag-and-drop predict-then-test) and MCQ Quiz (10 NCERT-aligned multiple-choice questions with difficulty levels, explanations, scoring, and results screen).",
+    "subject": "Science",
+    "grade": "Grade 7",
+    "chapter": "Chapter 3 - Electricity: Circuits and their Components",
+    "section": "3.4 Electrical Conductors and Insulators",
+    "curriculum": "NCERT",
+    "modes": {
+        "learn": {
+            "description": "Guided drag-and-drop circuit testing with instant feedback and explanations."
+        },
+        "practice": {
+            "description": "Two sub-tabs for comprehensive practice.",
+            "subTabs": {
+                "circuit": "Predict-then-test: Tap a material, predict conductor/insulator, then see the circuit result. Scored.",
+                "mcq": "10 multiple-choice questions covering classification, concepts, safety, and applications. Each question has 4 options, difficulty tag (easy/medium/hard), detailed explanation after answering, and a final results screen with score ring and grade."
+            }
+        },
+        "real_world": {
+            "description": "Carousel of 5 everyday objects showing conductor and insulator parts."
+        }
+    },
+    "mcqQuestions": {
+        "total": 10,
+        "difficulties": {
+            "easy": 5,
+            "medium": 4,
+            "hard": 1
+        },
+        "topics": [
+            "Material classification (conductor vs insulator)",
+            "Electrician safety equipment (rubber gloves)",
+            "Graphite as non-metal conductor exception",
+            "Wire construction (copper + plastic coating)",
+            "Glass rod in circuit (insulator behavior)",
+            "Pole insulators (glass/ceramic discs)",
+            "Group classification (all-conductor groups)",
+            "Insulator definition",
+            "Tool design for electrical safety",
+            "General rule with exceptions"
+        ],
+        "features": [
+            "A/B/C/D option labels with colored badges",
+            "Hover interaction (translateX shift)",
+            "Selected state (purple highlight)",
+            "Correct answer: green pulse animation + checkmark",
+            "Wrong answer: red shake animation + X icon",
+            "Detailed explanation card after each answer",
+            "Progress bar and question dots",
+            "Final results: score ring SVG, percentage, grade message, retry button"
+        ]
+    },
+    "teachingNotes": "Practice mode now has MCQ Quiz alongside Circuit Test. Students should complete Learn mode first, then use Circuit Test to build intuition, and MCQ Quiz to test conceptual understanding. The 10 questions cover easy→hard difficulty and test not just classification but reasoning (why wires have plastic, why electricians wear rubber).",
+    "agentToolCallExamples": [
+        {
+            "scenario": "Full tool with all modes",
+            "toolCall": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Conductors & Insulators",
+                "data": {
+                    "toolName": "conductor_insulator_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "showModeSelector": true
+                    }
+                }
+            }
+        },
+        {
+            "scenario": "MCQ quiz only",
+            "toolCall": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Conductor-Insulator Quiz",
+                "data": {
+                    "toolName": "conductor_insulator_tool",
+                    "parameters": {
+                        "initialMode": "practice",
+                        "showModeSelector": false,
+                        "enabledModes": [
+                            "practice"
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "scenario": "Practice mode (circuit + MCQ)",
+            "toolCall": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Practice: Conductors & Insulators",
+                "data": {
+                    "toolName": "conductor_insulator_tool",
+                    "parameters": {
+                        "initialMode": "practice",
+                        "showModeSelector": true
+                    }
+                }
+            }
+        }
+    ]
+}

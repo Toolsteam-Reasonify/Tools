@@ -1,0 +1,227 @@
+{
+  "toolName": "hundredths_decimal_tool",
+  "version": "1.0.0",
+  "description": "Interactive educational tool for Grade 7 Chapter 3.3 — A Hundredth Part. Teaches students about hundredths in the decimal system, place value extension (units → tenths → hundredths), reading/writing hundredths, addition/subtraction with hundredths, and real-world applications (money, length, weight). Based on NCERT Ganita Prakash Grade 7.",
+  "category": "mathematics",
+  "grade": "7",
+  "subject": "Mathematics",
+  "chapter": "3 — A Peek Beyond the Point",
+  "topic": "3.3 A Hundredth Part",
+  "curriculum": "NCERT / NCF 2023",
+
+  "parameters": {
+    "width": {
+      "type": "number",
+      "default": 800,
+      "description": "Component width in pixels"
+    },
+    "height": {
+      "type": "number",
+      "default": 600,
+      "description": "Component height in pixels"
+    },
+    "initialMode": {
+      "type": "string",
+      "enum": ["learn", "practice", "real_world"],
+      "default": "learn",
+      "description": "Starting mode"
+    },
+    "showModeSelector": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide mode tabs"
+    },
+    "enabledModes": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["learn", "practice", "real_world"] },
+      "default": ["learn", "practice", "real_world"],
+      "description": "Which modes to enable"
+    },
+    "showNavigation": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide prev/next buttons"
+    },
+    "showPlayPause": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide play/pause button"
+    },
+    "showStepIndicator": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide step dots"
+    },
+    "initialStep": {
+      "type": "number",
+      "description": "Starting step ID"
+    },
+    "filterSteps": {
+      "type": "array",
+      "items": { "type": "number" },
+      "description": "Only show these step IDs"
+    },
+    "animationSpeed": {
+      "type": "number",
+      "default": 1,
+      "description": "Animation speed multiplier"
+    },
+    "autoPlayDuration": {
+      "type": "number",
+      "default": 10000,
+      "description": "Auto-advance delay in ms (0 to disable)"
+    },
+    "themeColor": {
+      "type": "string",
+      "default": "#2563eb",
+      "description": "Primary theme color"
+    },
+    "darkMode": {
+      "type": "boolean",
+      "default": false,
+      "description": "Dark mode toggle"
+    }
+  },
+
+  "additionalProps": {
+    "description": "Tool-specific dynamic content for customizing the hundredths visualization",
+    "schema": {
+      "wholeUnits": {
+        "type": "number",
+        "default": 0,
+        "description": "Number of whole units to display"
+      },
+      "tenths": {
+        "type": "number",
+        "default": 4,
+        "description": "Number of tenths (0-9)"
+      },
+      "hundredths": {
+        "type": "number",
+        "default": 5,
+        "description": "Number of hundredths (0-9)"
+      },
+      "showGrid": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the 10×10 grid visualization"
+      },
+      "gridRows": {
+        "type": "number",
+        "default": 10,
+        "description": "Number of rows in the grid"
+      },
+      "gridCols": {
+        "type": "number",
+        "default": 10,
+        "description": "Number of columns in the grid"
+      },
+      "highlightCount": {
+        "type": "number",
+        "default": 45,
+        "description": "Number of cells to highlight in the 100-grid (represents hundredths)"
+      },
+      "zoomLevel": {
+        "type": "string",
+        "enum": ["unit", "tenth", "hundredth"],
+        "default": "hundredth",
+        "description": "Zoom level for the visualization"
+      },
+      "showNumberLine": {
+        "type": "boolean",
+        "default": false,
+        "description": "Show a number line alongside the grid"
+      },
+      "numberLineMin": {
+        "type": "number",
+        "default": 0,
+        "description": "Number line minimum value"
+      },
+      "numberLineMax": {
+        "type": "number",
+        "default": 1,
+        "description": "Number line maximum value"
+      },
+      "numberLineHighlight": {
+        "type": "number",
+        "description": "Value to highlight on the number line"
+      },
+      "showConversion": {
+        "type": "boolean",
+        "default": false,
+        "description": "Show unit conversion examples"
+      },
+      "conversionValue": {
+        "type": "string",
+        "description": "Value to convert (e.g., '75 paise', '15 cm')"
+      },
+      "conversionTarget": {
+        "type": "string",
+        "enum": ["tenths", "hundredths", "decimal"],
+        "description": "Target format for conversion"
+      }
+    },
+    "examples": [
+      {
+        "name": "Show 45 hundredths",
+        "value": { "highlightCount": 45, "tenths": 4, "hundredths": 5 }
+      },
+      {
+        "name": "Show 7 tenths as hundredths",
+        "value": { "highlightCount": 70, "tenths": 7, "hundredths": 0, "showConversion": true }
+      },
+      {
+        "name": "Money conversion",
+        "value": { "showConversion": true, "conversionValue": "75 paise", "conversionTarget": "decimal" }
+      },
+      {
+        "name": "Length conversion",
+        "value": { "showConversion": true, "conversionValue": "15 cm", "conversionTarget": "decimal" }
+      }
+    ]
+  },
+
+  "modes": {
+    "learn": {
+      "label": "Learn",
+      "icon": "BookOpen",
+      "description": "Step-by-step visual explanation of hundredths",
+      "stepIds": [1, 2, 3, 4, 5]
+    },
+    "practice": {
+      "label": "Practice",
+      "icon": "Target",
+      "description": "Interactive questions on counting, converting, adding, subtracting, and comparing hundredths",
+      "stepIds": [10, 11, 12, 13, 14]
+    },
+    "real_world": {
+      "label": "Real World",
+      "icon": "BarChart3",
+      "description": "Real-life examples: money (rupees-paise), length (cm-m), weight (g-kg), and decimal disasters",
+      "stepIds": [20, 21, 22, 23]
+    }
+  },
+
+  "steps": {
+    "learn": [
+      { "id": 1, "title": "Why Do We Need Hundredths?", "visual": "intro_fold" },
+      { "id": 2, "title": "Splitting a Tenth into 10 Parts", "visual": "split_tenth" },
+      { "id": 3, "title": "Reading Hundredths", "visual": "read_hundredths" },
+      { "id": 4, "title": "The 10-100 Connection", "visual": "connection" },
+      { "id": 5, "title": "Adding with Hundredths", "visual": "addition" }
+    ],
+    "practice": [
+      { "id": 10, "title": "Identify the Hundredths", "questionType": "count_hundredths" },
+      { "id": 11, "title": "Convert to Hundredths", "questionType": "convert" },
+      { "id": 12, "title": "Add with Hundredths", "questionType": "addition" },
+      { "id": 13, "title": "Compare Hundredths", "questionType": "compare" },
+      { "id": 14, "title": "Subtract with Hundredths", "questionType": "subtraction" }
+    ],
+    "real_world": [
+      { "id": 20, "title": "Money: Rupees and Paise", "context": "money" },
+      { "id": 21, "title": "Length: cm and m", "context": "length" },
+      { "id": 22, "title": "Weight: Grams and Kilograms", "context": "weight" },
+      { "id": 23, "title": "Decimal Disasters!", "context": "disaster" }
+    ]
+  }
+}

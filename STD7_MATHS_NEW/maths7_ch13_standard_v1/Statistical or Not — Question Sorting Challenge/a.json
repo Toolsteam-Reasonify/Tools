@@ -1,0 +1,298 @@
+{
+    "toolName": "statistical_questions_tool",
+    "version": "1.0.0",
+    "description": "Interactive drag-and-drop sorting tool for classifying questions as Statistical or Non-Statistical. Students read question cards and drag them into the correct bin. Includes hints on wrong answers, animated feedback, confetti celebration, and a full results summary with explanations. Designed for Grade 7 Mathematics — Chapter 5: Connecting the Dots.",
+
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 820,
+            "description": "Component width in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Component height in pixels"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#4A4DC9",
+            "description": "Primary theme color (hex) — Singularity design system purple"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable dark mode"
+        }
+    },
+
+    "additionalProps": {
+        "description": "Tool-specific dynamic content passed by the agent to customize questions, title, and subtitle",
+        "schema": {
+            "questions": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "number",
+                            "description": "Unique numeric ID for the question"
+                        },
+                        "text": {
+                            "type": "string",
+                            "description": "The question text displayed on the card"
+                        },
+                        "isStatistical": {
+                            "type": "boolean",
+                            "description": "true if the question is statistical, false if non-statistical"
+                        },
+                        "explanation": {
+                            "type": "string",
+                            "description": "Explanation shown in the results summary for why this question is or isn't statistical"
+                        },
+                        "hint": {
+                            "type": "string",
+                            "description": "Hint shown when the student drags the card to the wrong bin"
+                        },
+                        "icon": {
+                            "type": "string",
+                            "description": "Emoji icon displayed on the card (e.g. '📏', '🕷️', '🏏')"
+                        }
+                    },
+                    "required": ["id", "text", "isStatistical", "explanation", "hint", "icon"]
+                },
+                "default": null,
+                "description": "Array of question cards. If null, uses 8 built-in default questions covering Grade 7 topics."
+            },
+            "title": {
+                "type": "string",
+                "default": "Statistical vs Non-Statistical Questions",
+                "description": "Main heading displayed in the header"
+            },
+            "subtitle": {
+                "type": "string",
+                "default": "Chapter 5: Connecting the Dots — Grade 7 Mathematics",
+                "description": "Subtitle/chapter reference shown below the badge"
+            }
+        },
+        "examples": {
+            "default_questions": {
+                "title": "Statistical vs Non-Statistical Questions",
+                "subtitle": "Chapter 5: Connecting the Dots — Grade 7 Mathematics"
+            },
+            "custom_4_questions": {
+                "title": "Sort These Questions!",
+                "subtitle": "Statistics — Grade 7",
+                "questions": [
+                    {
+                        "id": 1,
+                        "text": "How many pets do students in our class have?",
+                        "isStatistical": true,
+                        "explanation": "Statistical! Different students have different numbers of pets — there is variability.",
+                        "hint": "Would every student give the same answer?",
+                        "icon": "🐾"
+                    },
+                    {
+                        "id": 2,
+                        "text": "How many days are in a week?",
+                        "isStatistical": false,
+                        "explanation": "Not statistical — there are always exactly 7 days in a week. No variability.",
+                        "hint": "Is the answer always the same?",
+                        "icon": "📅"
+                    },
+                    {
+                        "id": 3,
+                        "text": "What is the favourite ice cream flavour of students in Grade 7?",
+                        "isStatistical": true,
+                        "explanation": "Statistical! Different students have different preferences. You need to survey to find out.",
+                        "hint": "Does everyone like the same flavour?",
+                        "icon": "🍦"
+                    },
+                    {
+                        "id": 4,
+                        "text": "What is the boiling point of water?",
+                        "isStatistical": false,
+                        "explanation": "Not statistical — water always boils at 100°C at standard pressure. Fixed answer.",
+                        "hint": "Does this change depending on who you ask?",
+                        "icon": "🌡️"
+                    }
+                ]
+            },
+            "sabzi_mandi_theme": {
+                "title": "Sabzi Mandi Statistics Challenge",
+                "subtitle": "Real-World Data Collection — Grade 7",
+                "questions": [
+                    {
+                        "id": 1,
+                        "text": "What are the prices of tomatoes at different shops today?",
+                        "isStatistical": true,
+                        "explanation": "Statistical! Prices vary from shop to shop.",
+                        "hint": "Would every shop charge the same?",
+                        "icon": "🍅"
+                    },
+                    {
+                        "id": 2,
+                        "text": "How many grams are in one kilogram?",
+                        "isStatistical": false,
+                        "explanation": "Not statistical — always 1000 grams. Fixed fact.",
+                        "hint": "Is this a fixed conversion?",
+                        "icon": "⚖️"
+                    },
+                    {
+                        "id": 3,
+                        "text": "How many customers visit the mandi each hour?",
+                        "isStatistical": true,
+                        "explanation": "Statistical! The count changes every hour — variability exists.",
+                        "hint": "Is it the same number every hour?",
+                        "icon": "👥"
+                    },
+                    {
+                        "id": 4,
+                        "text": "Which vegetables are most popular among families in our area?",
+                        "isStatistical": true,
+                        "explanation": "Statistical! Different families prefer different vegetables.",
+                        "hint": "Does every family buy the same vegetables?",
+                        "icon": "🥕"
+                    },
+                    {
+                        "id": 5,
+                        "text": "What is the Hindi word for potato?",
+                        "isStatistical": false,
+                        "explanation": "Not statistical — it's always 'aloo'. Fixed fact with no variability.",
+                        "hint": "Does the answer change?",
+                        "icon": "🥔"
+                    },
+                    {
+                        "id": 6,
+                        "text": "How much weight of vegetables do different shops sell in a day?",
+                        "isStatistical": true,
+                        "explanation": "Statistical! Each shop sells different amounts — you need data to find out.",
+                        "hint": "Do all shops sell the same amount?",
+                        "icon": "📦"
+                    }
+                ]
+            },
+            "sports_theme": {
+                "title": "Sports Statistics Sorter",
+                "subtitle": "Data Handling in Sports — Grade 7",
+                "questions": [
+                    {
+                        "id": 1,
+                        "text": "How many runs did each player score in yesterday's cricket match?",
+                        "isStatistical": true,
+                        "explanation": "Statistical! Each player scored differently — classic variability.",
+                        "hint": "Did every player score the same runs?",
+                        "icon": "🏏"
+                    },
+                    {
+                        "id": 2,
+                        "text": "How many players are in a football team on the field?",
+                        "isStatistical": false,
+                        "explanation": "Not statistical — always 11 players. Fixed rule.",
+                        "hint": "Is this a fixed number?",
+                        "icon": "⚽"
+                    },
+                    {
+                        "id": 3,
+                        "text": "What are the heights of basketball players in the NBA?",
+                        "isStatistical": true,
+                        "explanation": "Statistical! Players have different heights — you need to measure many players.",
+                        "hint": "Are all basketball players the same height?",
+                        "icon": "🏀"
+                    },
+                    {
+                        "id": 4,
+                        "text": "How many sets are needed to win a tennis match in a Grand Slam (men's)?",
+                        "isStatistical": false,
+                        "explanation": "Not statistical — you always need 3 sets (best of 5). Fixed rule.",
+                        "hint": "Is this a rule that changes?",
+                        "icon": "🎾"
+                    },
+                    {
+                        "id": 5,
+                        "text": "How much time do students in our school spend playing sports each week?",
+                        "isStatistical": true,
+                        "explanation": "Statistical! Different students spend different amounts of time. Variability!",
+                        "hint": "Does every student play the same number of hours?",
+                        "icon": "⏱️"
+                    },
+                    {
+                        "id": 6,
+                        "text": "Which sport is most popular among students in Class 7?",
+                        "isStatistical": true,
+                        "explanation": "Statistical! Preferences vary — you'd need to survey the class.",
+                        "hint": "Would you need to ask multiple students?",
+                        "icon": "📊"
+                    }
+                ]
+            },
+            "minimal_static": {
+                "title": "Quick Check: Statistical or Not?",
+                "subtitle": "Warm-Up Activity",
+                "questions": [
+                    {
+                        "id": 1,
+                        "text": "How old are the students in your class?",
+                        "isStatistical": true,
+                        "explanation": "Statistical — ages vary among students.",
+                        "hint": "Is everyone the same age?",
+                        "icon": "🎂"
+                    },
+                    {
+                        "id": 2,
+                        "text": "What is 12 ÷ 4?",
+                        "isStatistical": false,
+                        "explanation": "Not statistical — the answer is always 3.",
+                        "hint": "Is there only one answer?",
+                        "icon": "➗"
+                    }
+                ]
+            }
+        }
+    },
+
+    "modes": {
+        "sort": {
+            "description": "Single interactive mode — students drag question cards into Statistical or Non-Statistical bins"
+        }
+    },
+
+    "features": {
+        "drag_and_drop": "Cards can be dragged (mouse and touch) into two sorting bins",
+        "wrong_answer_feedback": "Cards shake and return to the unsorted pile with a hint displayed",
+        "correct_answer_feedback": "Cards celebrate with animation and move into the bin permanently",
+        "progress_bar": "Header shows a live progress bar of correctly sorted cards",
+        "confetti": "Confetti animation plays when all cards are correctly sorted",
+        "results_summary": "Expandable table showing all questions, their categories, and explanations",
+        "key_takeaway": "Summary includes a 'Key Pattern to Remember' section",
+        "teacher_prompt": "Summary includes a prompt asking students to create their own questions",
+        "reset_shuffle": "Reset button shuffles cards and starts over"
+    },
+
+    "designSystem": {
+        "name": "Singularity",
+        "font": "Poppins",
+        "colors": {
+            "primary_purple": "#4A4DC9",
+            "accent_orange": "#FF7212",
+            "deep_purple": "#533086",
+            "deep_orange": "#FC9145",
+            "soft_purple": "#C1C1EA",
+            "soft_orange": "#FFF3E4",
+            "dark": "#4E4E4E",
+            "gray": "#CACACA",
+            "light_gray": "#EBEBEB",
+            "off_white": "#F5F5F5"
+        },
+        "gradients": {
+            "header": "linear-gradient(135deg, #533086, #FC9145)",
+            "purple": "linear-gradient(135deg, #4A4DC9, #533086)",
+            "orange": "linear-gradient(135deg, #FF7212, #FC9145)"
+        },
+        "buttons": {
+            "variants": ["contained", "outlined", "text"],
+            "states": ["enabled", "disabled", "hover", "pressed"],
+            "border_radius": "pill (999px)"
+        }
+    }
+}

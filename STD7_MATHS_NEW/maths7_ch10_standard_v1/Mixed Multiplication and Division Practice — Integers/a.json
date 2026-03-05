@@ -1,0 +1,206 @@
+{
+  "toolName": "integer_mult_div_practice_tool",
+  "version": "1.0.0",
+  "description": "Mixed calculation practice tool for Grade 7 Mathematics — Multiplication and Division of Integers. Clean worksheet-style layout with one problem at a time, sign-aware feedback, and step-by-step sign rule explanations.",
+  "topic": "Division and Multiplication Practice Problems",
+  "grade": 7,
+  "subject": "Mathematics",
+  "textbookReference": "Ganita Prakash | Grade 7 | Part-II — Chapter 2: Operations with Integers",
+  "parameters": {
+    "width": {
+      "type": "number",
+      "default": 800,
+      "description": "Component width in pixels"
+    },
+    "height": {
+      "type": "number",
+      "default": 600,
+      "description": "Component height in pixels"
+    },
+    "themeColor": {
+      "type": "string",
+      "default": "#ec4899",
+      "description": "Primary theme color (pink)"
+    },
+    "darkMode": {
+      "type": "boolean",
+      "default": false,
+      "description": "Enable dark mode"
+    }
+  },
+  "additionalProps": {
+    "description": "Tool-specific dynamic content for agent customization",
+    "schema": {
+      "problems": {
+        "type": "array",
+        "description": "Array of problem objects. If not provided, uses the 8 default textbook problems.",
+        "items": {
+          "id": { "type": "string", "description": "Unique problem identifier (e.g. 'm1', 'm2')" },
+          "type": { "type": "string", "enum": ["compute", "fill_blank", "word_problem"], "description": "Problem type determines UI layout" },
+          "expression": { "type": "string", "description": "The math expression as a string for display and review" },
+          "displayParts": {
+            "type": "array",
+            "description": "Ordered segments of the expression for rendering. Each part has: text (string), isBlank (bool), isOperator (bool), isEquals (bool)",
+            "items": {
+              "text": { "type": "string" },
+              "isBlank": { "type": "boolean", "default": false },
+              "isOperator": { "type": "boolean", "default": false },
+              "isEquals": { "type": "boolean", "default": false }
+            }
+          },
+          "answer": { "type": "number", "description": "The correct integer answer" },
+          "signNote": { "type": "string", "description": "Explanation of the sign rule applied" },
+          "blankIndex": { "type": "number", "description": "Index of the blank in displayParts (for fill_blank type)" },
+          "wordProblemText": { "type": "string", "description": "Full word problem text (for word_problem type)" },
+          "contextIcon": { "type": "string", "enum": ["snowflake", "warehouse"], "description": "Icon to show with word problem" }
+        }
+      },
+      "teachingNotes": {
+        "type": "string",
+        "description": "Notes for the teacher about this problem set"
+      },
+      "instructionsForStudent": {
+        "type": "string",
+        "description": "Instructions shown to the student before they begin"
+      }
+    },
+    "defaults": {
+      "problems": "8 default problems from NCERT Ganita Prakash Grade 7 Chapter 2: m1 (14×−15), m2 (−16×−5), m3 (36÷−18), m4 (−46÷−23), m5 (−3×?=27), m6 (5×?=−35), m7 (?÷−8=7), m8 (temperature word problem)"
+    },
+    "examples": {
+      "default_usage": {
+        "description": "Use the tool with all 8 default problems from the textbook",
+        "parameters": {}
+      },
+      "custom_3_problems": {
+        "description": "A shorter set with just 3 custom problems",
+        "parameters": {
+          "additionalProps": {
+            "problems": [
+              {
+                "id": "c1",
+                "type": "compute",
+                "expression": "(−8) × 4",
+                "displayParts": [
+                  { "text": "(−8)" },
+                  { "text": " × ", "isOperator": true },
+                  { "text": "4" },
+                  { "text": " = ", "isEquals": true }
+                ],
+                "answer": -32,
+                "signNote": "Negative × Positive → Negative. Magnitude: 8 × 4 = 32. Answer: −32."
+              },
+              {
+                "id": "c2",
+                "type": "fill_blank",
+                "expression": "___ × (−12) = 132",
+                "displayParts": [
+                  { "text": "___", "isBlank": true },
+                  { "text": " × ", "isOperator": true },
+                  { "text": "(−12)" },
+                  { "text": " = ", "isEquals": true },
+                  { "text": "132" }
+                ],
+                "answer": -11,
+                "blankIndex": 0,
+                "signNote": "132 is positive, and −12 is negative. So the missing factor must also be negative. 132 ÷ 12 = 11, answer: −11."
+              },
+              {
+                "id": "c3",
+                "type": "compute",
+                "expression": "(−56) ÷ (−2)",
+                "displayParts": [
+                  { "text": "(−56)" },
+                  { "text": " ÷ ", "isOperator": true },
+                  { "text": "(−2)" },
+                  { "text": " = ", "isEquals": true }
+                ],
+                "answer": 28,
+                "signNote": "Negative ÷ Negative → Positive. Magnitude: 56 ÷ 2 = 28. Answer: +28."
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "designSpecification": {
+    "font": "Lilita One (display), Nunito (body)",
+    "palette": {
+      "pink": "#ec4899",
+      "green": "#22c55e",
+      "red": "#ef4444",
+      "background": "#ffffff",
+      "darkText": "#1e293b"
+    },
+    "layout": "One problem at a time, worksheet-style, mobile-responsive",
+    "problemTypeTags": {
+      "Compute": "#ec4899",
+      "Fill in the Blank": "#8b5cf6",
+      "Word Problem": "#f59e0b"
+    },
+    "progressTracker": "Horizontal bar with dot indicators",
+    "signNotePanel": "Slides in after answer submission with applied sign rule",
+    "summaryScreen": "Score, bar chart, and incorrect problem review"
+  },
+  "teachingNotes": "Problems m1-m4 are from the textbook 'Figure it Out' set — use these to validate that students can apply sign rules to larger numbers. Problems m5-m7 reverse the operation, testing whether students understand multiplication and division as inverses. Problem m8 uses the cold storage context — connect to real cold storage facilities in Nashik, Maharashtra for mangoes. If students struggle with m5-m7, ask: 'What operation is the reverse of multiplication? How can you find the missing factor?'",
+  "instructionsForStudent": "Solve each problem by entering the complete answer including sign. For fill-in-the-blank problems, think: 'What do I need to divide or multiply to find the missing number?' For the word problem, write an integer expression first, then compute. After each answer, read the sign note to check your reasoning.",
+  "problemDetails": [
+    {
+      "id": "m1",
+      "type": "compute",
+      "expression": "14 × (−15)",
+      "answer": -210,
+      "source": "Chapter 2, Figure it Out (p. 39), Q1a"
+    },
+    {
+      "id": "m2",
+      "type": "compute",
+      "expression": "(−16) × (−5)",
+      "answer": 80,
+      "source": "Chapter 2, Figure it Out (p. 39), Q1b"
+    },
+    {
+      "id": "m3",
+      "type": "compute",
+      "expression": "36 ÷ (−18)",
+      "answer": -2,
+      "source": "Chapter 2, Figure it Out (p. 39), Q1c"
+    },
+    {
+      "id": "m4",
+      "type": "compute",
+      "expression": "(−46) ÷ (−23)",
+      "answer": 2,
+      "source": "Chapter 2, Figure it Out (p. 39), Q1d"
+    },
+    {
+      "id": "m5",
+      "type": "fill_blank",
+      "expression": "(−3) × ___ = 27",
+      "answer": -9,
+      "source": "Chapter 2, Figure it Out (p. 39), Q4a"
+    },
+    {
+      "id": "m6",
+      "type": "fill_blank",
+      "expression": "5 × ___ = (−35)",
+      "answer": -7,
+      "source": "Chapter 2, Figure it Out (p. 39), Q4b"
+    },
+    {
+      "id": "m7",
+      "type": "fill_blank",
+      "expression": "___ ÷ (−8) = 7",
+      "answer": -56,
+      "source": "Chapter 2, Figure it Out (p. 39), Q4e"
+    },
+    {
+      "id": "m8",
+      "type": "word_problem",
+      "expression": "32 + 10 × (−5)",
+      "answer": -18,
+      "source": "Chapter 2, Figure it Out (p. 39), Q2 — adapted with Nashik cold storage context"
+    }
+  ]
+}

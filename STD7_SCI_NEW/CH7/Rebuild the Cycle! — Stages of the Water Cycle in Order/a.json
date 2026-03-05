@@ -1,0 +1,459 @@
+{
+    "toolName": "water_cycle_sequencing_tool",
+    "version": "1.0.0",
+    "description": "An interactive sequencing activity where students arrange 8 shuffled stages of the water cycle into the correct order: from the Sun heating water through evaporation, transpiration, condensation, precipitation, runoff, and infiltration. Rebuilding the sequence from memory builds mastery of the complete cycle. Blue water-themed colour palette with Indian village monsoon setting in the background.",
+    "category": "science",
+    "grade": 7,
+    "subject": "Science",
+    "topic": "The Water Cycle — Evaporation, Condensation, and Precipitation",
+    "chapter_reference": "Chapter 7: Heat Transfer in Nature (Section 7.4 Water Cycle)",
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Width of the tool in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Height of the tool in pixels"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#1e88e5",
+            "description": "Primary blue theme color"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Dark mode toggle"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier"
+        }
+    },
+    "additionalProps": {
+        "description": "Water Cycle Sequencing tool-specific dynamic content",
+        "properties": {
+            "stages": {
+                "type": "array",
+                "description": "Custom 8 stages of the water cycle. Each stage has id (1-8), title, description, keyword (in CAPS), icon name, and color.",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "number",
+                            "description": "Stage number 1-8 (determines correct order)"
+                        },
+                        "title": {
+                            "type": "string",
+                            "description": "Stage title shown on card"
+                        },
+                        "description": {
+                            "type": "string",
+                            "description": "Brief explanation of this stage"
+                        },
+                        "keyword": {
+                            "type": "string",
+                            "description": "Key scientific term in CAPS (e.g., EVAPORATES)"
+                        },
+                        "icon": {
+                            "type": "string",
+                            "enum": [
+                                "sun",
+                                "arrow-up",
+                                "leaf",
+                                "cloud",
+                                "rain",
+                                "waves",
+                                "arrow-down",
+                                "droplets"
+                            ],
+                            "description": "Icon to display"
+                        },
+                        "color": {
+                            "type": "string",
+                            "description": "Hex color for the stage"
+                        }
+                    }
+                }
+            },
+            "showHints": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show stage number hints in empty slots"
+            },
+            "showStageNumbers": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show numbered badges on slots and completed cards"
+            },
+            "shuffleSeed": {
+                "type": "number",
+                "description": "Seed for deterministic shuffle. Omit for random shuffle."
+            },
+            "backgroundTheme": {
+                "type": "string",
+                "enum": [
+                    "monsoon",
+                    "default"
+                ],
+                "default": "monsoon",
+                "description": "Background scenery theme"
+            },
+            "difficulty": {
+                "type": "string",
+                "enum": [
+                    "easy",
+                    "medium",
+                    "hard"
+                ],
+                "default": "medium",
+                "description": "Easy shows keywords and hints. Medium shows keywords. Hard hides keywords."
+            },
+            "maxAttempts": {
+                "type": "number",
+                "description": "Maximum allowed attempts before showing answer (0 = unlimited)"
+            }
+        },
+        "examples": {
+            "default_water_cycle": {
+                "description": "Default 8-stage water cycle sequencing activity",
+                "value": {}
+            },
+            "easy_mode": {
+                "description": "Easier version with all hints enabled",
+                "value": {
+                    "showHints": true,
+                    "showStageNumbers": true,
+                    "difficulty": "easy"
+                }
+            },
+            "hard_mode": {
+                "description": "Harder version without keywords shown on cards",
+                "value": {
+                    "showHints": false,
+                    "showStageNumbers": false,
+                    "difficulty": "hard"
+                }
+            },
+            "custom_stages": {
+                "description": "Custom stage definitions with modified descriptions",
+                "value": {
+                    "stages": [
+                        {
+                            "id": 1,
+                            "title": "Sun Heats Water Bodies",
+                            "description": "The Sun heats water in oceans, rivers, and lakes.",
+                            "keyword": "SOLAR HEATING",
+                            "icon": "sun",
+                            "color": "#f59e0b"
+                        },
+                        {
+                            "id": 2,
+                            "title": "Water EVAPORATES",
+                            "description": "Water turns into water vapour and rises.",
+                            "keyword": "EVAPORATES",
+                            "icon": "arrow-up",
+                            "color": "#06b6d4"
+                        },
+                        {
+                            "id": 3,
+                            "title": "TRANSPIRATION from Plants",
+                            "description": "Plants release water vapour through transpiration.",
+                            "keyword": "TRANSPIRATION",
+                            "icon": "leaf",
+                            "color": "#22c55e"
+                        },
+                        {
+                            "id": 4,
+                            "title": "Vapour CONDENSES",
+                            "description": "Water vapour cools and forms clouds.",
+                            "keyword": "CONDENSES",
+                            "icon": "cloud",
+                            "color": "#8b5cf6"
+                        },
+                        {
+                            "id": 5,
+                            "title": "PRECIPITATION Falls",
+                            "description": "Clouds bring rain, snow, and hail.",
+                            "keyword": "PRECIPITATION",
+                            "icon": "rain",
+                            "color": "#3b82f6"
+                        },
+                        {
+                            "id": 6,
+                            "title": "Water RUNOFF",
+                            "description": "Rainwater flows over surface into water bodies.",
+                            "keyword": "RUNOFF",
+                            "icon": "waves",
+                            "color": "#0ea5e9"
+                        },
+                        {
+                            "id": 7,
+                            "title": "INFILTRATION into Ground",
+                            "description": "Water seeps through soil into aquifers.",
+                            "keyword": "INFILTRATION",
+                            "icon": "arrow-down",
+                            "color": "#a16207"
+                        },
+                        {
+                            "id": 8,
+                            "title": "Water Returns",
+                            "description": "Water returns to oceans completing the cycle.",
+                            "keyword": "REPLENISHMENT",
+                            "icon": "droplets",
+                            "color": "#1d4ed8"
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "teaching_notes": "Activate AFTER the water cycle video and diagram, as a self-test. Watch for common errors: transpiration placement, precipitation before condensation, and forgetting infiltration. After completion, ask: 'Where does Stage 8 connect back to Stage 1?' to reinforce the cyclical nature.",
+    "instructions_for_student": "The 8 stages of the water cycle are all MIXED UP! Drag each stage into the correct position to rebuild the complete cycle from start to finish. Remember: the cycle begins with the Sun and ends with water returning to the ground. Can you get all 8 stages in the right order?",
+    "learning_objectives": [
+        "Understand the complete water cycle process from solar heating to groundwater replenishment",
+        "Identify and sequence the key stages: evaporation, transpiration, condensation, precipitation, runoff, and infiltration",
+        "Recognize that the water cycle is a continuous, never-ending loop",
+        "Learn key scientific terminology: evaporation, condensation, precipitation, transpiration, infiltration, runoff, aquifer"
+    ],
+    "tool_call_examples": [
+        {
+            "title": "Default Water Cycle Activity",
+            "description": "Standard 8-stage sequencing with all default settings",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Water Cycle Sequencing",
+                "data": {
+                    "toolName": "water_cycle_sequencing_tool",
+                    "parameters": {}
+                },
+                "instructions_for_student": "The 8 stages of the water cycle are all MIXED UP! Drag each stage into the correct position to rebuild the complete cycle."
+            }
+        },
+        {
+            "title": "Easy Mode for Beginners",
+            "description": "With all hints and stage numbers visible",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Water Cycle — Easy Mode",
+                "data": {
+                    "toolName": "water_cycle_sequencing_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "showHints": true,
+                            "showStageNumbers": true,
+                            "difficulty": "easy"
+                        }
+                    }
+                },
+                "instructions_for_student": "Arrange the stages in order. Use the keywords and stage numbers to help you!"
+            }
+        },
+        {
+            "title": "Hard Mode Challenge",
+            "description": "No hints, no keywords, no stage numbers",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Water Cycle Challenge",
+                "data": {
+                    "toolName": "water_cycle_sequencing_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "showHints": false,
+                            "showStageNumbers": false,
+                            "difficulty": "hard"
+                        }
+                    }
+                },
+                "instructions_for_student": "Can you arrange all 8 stages without any hints? This is the challenge mode!"
+            }
+        },
+        {
+            "title": "Post-Video Self Test",
+            "description": "Use after showing the water cycle video/diagram",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Test Your Knowledge — Water Cycle",
+                "data": {
+                    "toolName": "water_cycle_sequencing_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "showHints": false,
+                            "difficulty": "medium"
+                        }
+                    }
+                },
+                "instructions_for_student": "You just learned about the water cycle. Now test yourself — arrange the 8 stages from memory!"
+            }
+        },
+        {
+            "title": "Compact Widget",
+            "description": "Smaller dimensions for embedded use",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Water Cycle Stages",
+                "data": {
+                    "toolName": "water_cycle_sequencing_tool",
+                    "parameters": {
+                        "width": 600,
+                        "height": 500,
+                        "additionalProps": {
+                            "difficulty": "easy"
+                        }
+                    }
+                },
+                "instructions_for_student": "Put the water cycle stages in order!"
+            }
+        },
+        {
+            "title": "Custom Stage Descriptions",
+            "description": "Teacher-customized stage descriptions for local context",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Water Cycle — Monsoon Edition",
+                "data": {
+                    "toolName": "water_cycle_sequencing_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "stages": [
+                                {
+                                    "id": 1,
+                                    "title": "Sun Heats Arabian Sea",
+                                    "description": "The Sun heats the Indian Ocean and Arabian Sea during summer.",
+                                    "keyword": "SOLAR HEATING",
+                                    "icon": "sun",
+                                    "color": "#f59e0b"
+                                },
+                                {
+                                    "id": 2,
+                                    "title": "Massive EVAPORATION",
+                                    "description": "Enormous amounts of water evaporate from warm seas.",
+                                    "keyword": "EVAPORATES",
+                                    "icon": "arrow-up",
+                                    "color": "#06b6d4"
+                                },
+                                {
+                                    "id": 3,
+                                    "title": "Forest TRANSPIRATION",
+                                    "description": "The Western Ghats forests release water through transpiration.",
+                                    "keyword": "TRANSPIRATION",
+                                    "icon": "leaf",
+                                    "color": "#22c55e"
+                                },
+                                {
+                                    "id": 4,
+                                    "title": "Monsoon Clouds Form — CONDENSATION",
+                                    "description": "Moisture-laden winds condense into massive monsoon clouds.",
+                                    "keyword": "CONDENSES",
+                                    "icon": "cloud",
+                                    "color": "#8b5cf6"
+                                },
+                                {
+                                    "id": 5,
+                                    "title": "Monsoon PRECIPITATION",
+                                    "description": "Heavy monsoon rains fall across India from June to September.",
+                                    "keyword": "PRECIPITATION",
+                                    "icon": "rain",
+                                    "color": "#3b82f6"
+                                },
+                                {
+                                    "id": 6,
+                                    "title": "River RUNOFF",
+                                    "description": "Rainwater flows into the Ganga, Brahmaputra, and other rivers.",
+                                    "keyword": "RUNOFF",
+                                    "icon": "waves",
+                                    "color": "#0ea5e9"
+                                },
+                                {
+                                    "id": 7,
+                                    "title": "Groundwater INFILTRATION",
+                                    "description": "Water seeps through soil into aquifers beneath the Indo-Gangetic plain.",
+                                    "keyword": "INFILTRATION",
+                                    "icon": "arrow-down",
+                                    "color": "#a16207"
+                                },
+                                {
+                                    "id": 8,
+                                    "title": "Water Returns to Sea",
+                                    "description": "Rivers carry water back to the ocean, completing the monsoon water cycle.",
+                                    "keyword": "REPLENISHMENT",
+                                    "icon": "droplets",
+                                    "color": "#1d4ed8"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "instructions_for_student": "Arrange the Indian monsoon water cycle stages in order!"
+            }
+        },
+        {
+            "title": "Deterministic Shuffle",
+            "description": "Same shuffle order every time for consistent testing",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Water Cycle Quiz",
+                "data": {
+                    "toolName": "water_cycle_sequencing_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "shuffleSeed": 42
+                        }
+                    }
+                },
+                "instructions_for_student": "Arrange the water cycle stages in the correct order."
+            }
+        },
+        {
+            "title": "Dark Theme",
+            "description": "Dark mode for reduced eye strain",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Water Cycle",
+                "data": {
+                    "toolName": "water_cycle_sequencing_tool",
+                    "parameters": {
+                        "darkMode": true,
+                        "additionalProps": {}
+                    }
+                },
+                "instructions_for_student": "Arrange the 8 stages of the water cycle in order."
+            }
+        }
+    ],
+    "decision_tree": {
+        "description": "How an agent decides which parameters to use",
+        "rules": [
+            {
+                "condition": "Student learning water cycle for the first time",
+                "action": "Use default with difficulty: easy, showHints: true"
+            },
+            {
+                "condition": "Student has already watched video/read chapter",
+                "action": "Use difficulty: medium, showHints: false for self-test"
+            },
+            {
+                "condition": "Student wants a challenge or revision quiz",
+                "action": "Use difficulty: hard, showHints: false, showStageNumbers: false"
+            },
+            {
+                "condition": "Teacher wants Indian monsoon context",
+                "action": "Use custom stages with Indian geography references"
+            },
+            {
+                "condition": "Consistent testing/assessment needed",
+                "action": "Use shuffleSeed for deterministic order"
+            }
+        ]
+    },
+    "error_handling": {
+        "empty_additionalProps": "Uses default 8-stage water cycle with medium difficulty",
+        "invalid_stages_count": "Tool works with any number of stages but designed for 8",
+        "missing_stage_fields": "Falls back to defaults for missing icon, color, or description",
+        "invalid_difficulty": "Defaults to 'medium'"
+    }
+}

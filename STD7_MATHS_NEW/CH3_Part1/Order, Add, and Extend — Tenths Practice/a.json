@@ -1,0 +1,199 @@
+{
+  "toolName": "ordering_sequences_tool",
+  "version": "1.0.0",
+  "title": "Practice: Ordering, Honeybee Total, and Extending Sequences",
+  "description": "Interactive number line tool for CBSE Grade 7 Mathematics (Decimals chapter). The tool presents a horizontal number line from 0 to 45 with tenth-level granularity. Students drag four labelled tokens — 4/10, 4 1/10, 41/10, and 41 1/10 — to their correct positions. The tool highlights when two tokens overlap (4 1/10 and 41/10 both equal 4.1) with a special 'Same value!' badge. After correct placement, the ordering statement '4/10 < 4 1/10 = 41/10 < 41 1/10' appears. A second tab provides six sequences where students drag the next four terms onto a number line segment, seeing the common difference pattern visually. Feedback is immediate with green/red indicators.",
+  "chapter": "Chapter 3 — A Peek Beyond the Point",
+  "grade": "Grade 7",
+  "subject": "Mathematics",
+  "textbook": "Ganita Prakash",
+  "curriculum": "NCERT / CBSE",
+  "frontend_action": "show_interactive_tool",
+  "instructions_for_student": "Drag each of the four values to the correct position on the number line. Convert all to one-tenths first. Did you notice two values land at the same spot? Which ones and why?",
+  "teaching_notes": "Use AFTER students have attempted the ordering exercise on paper. The number line reveals that 4 1/10 and 41/10 are the same value (4.1), which surprises many students. After the ordering section, switch to sequence extension mode for the six sequences.",
+  "parameters": {
+    "width": {
+      "type": "number",
+      "default": 800,
+      "description": "Width of the tool in pixels"
+    },
+    "height": {
+      "type": "number",
+      "default": 600,
+      "description": "Height of the tool in pixels"
+    },
+    "initialMode": {
+      "type": "string",
+      "enum": ["ordering", "sequences"],
+      "default": "ordering",
+      "description": "Which mode to show first"
+    },
+    "showModeSelector": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide the mode tabs"
+    },
+    "themeColor": {
+      "type": "string",
+      "default": "#6366f1",
+      "description": "Primary theme color"
+    },
+    "darkMode": {
+      "type": "boolean",
+      "default": false,
+      "description": "Toggle dark mode"
+    },
+    "animationSpeed": {
+      "type": "number",
+      "default": 1,
+      "description": "Animation speed multiplier"
+    }
+  },
+  "additionalProps": {
+    "description": "Tool-specific dynamic content passed by the agent",
+    "schema": {
+      "tokens": {
+        "type": "array",
+        "description": "Array of token objects for the ordering mode",
+        "items": {
+          "id": { "type": "string", "description": "Unique identifier" },
+          "label": { "type": "string", "description": "Display label e.g. '4/10'" },
+          "fracLabel": { "type": "string", "description": "Unicode fraction label e.g. '⁴⁄₁₀'" },
+          "value": { "type": "number", "description": "Numeric decimal value e.g. 0.4" },
+          "color": { "type": "string", "description": "Hex color for the token" }
+        },
+        "default": [
+          { "id": "a", "label": "4/10", "fracLabel": "⁴⁄₁₀", "value": 0.4, "color": "#f97316" },
+          { "id": "b", "label": "4 1/10", "fracLabel": "4¹⁄₁₀", "value": 4.1, "color": "#8b5cf6" },
+          { "id": "c", "label": "41/10", "fracLabel": "⁴¹⁄₁₀", "value": 4.1, "color": "#06b6d4" },
+          { "id": "d", "label": "41 1/10", "fracLabel": "41¹⁄₁₀", "value": 41.1, "color": "#ef4444" }
+        ]
+      },
+      "sequences": {
+        "type": "array",
+        "description": "Array of sequence objects for the sequences mode",
+        "items": {
+          "id": { "type": "string" },
+          "label": { "type": "string" },
+          "given": { "type": "array", "items": { "type": "number" } },
+          "commonDiff": { "type": "number" },
+          "answers": { "type": "array", "items": { "type": "number" } },
+          "rangeMin": { "type": "number" },
+          "rangeMax": { "type": "number" }
+        }
+      },
+      "numberLineMin": {
+        "type": "number",
+        "default": 0,
+        "description": "Minimum value on the ordering number line"
+      },
+      "numberLineMax": {
+        "type": "number",
+        "default": 45,
+        "description": "Maximum value on the ordering number line"
+      },
+      "snapTolerance": {
+        "type": "number",
+        "default": 0.8,
+        "description": "How close a drop must be to the correct value to count as correct"
+      }
+    },
+    "examples": {
+      "default_ordering": {
+        "description": "Default ordering with the four textbook values",
+        "tokens": [
+          { "id": "a", "label": "4/10", "fracLabel": "⁴⁄₁₀", "value": 0.4, "color": "#f97316" },
+          { "id": "b", "label": "4 1/10", "fracLabel": "4¹⁄₁₀", "value": 4.1, "color": "#8b5cf6" },
+          { "id": "c", "label": "41/10", "fracLabel": "⁴¹⁄₁₀", "value": 4.1, "color": "#06b6d4" },
+          { "id": "d", "label": "41 1/10", "fracLabel": "41¹⁄₁₀", "value": 41.1, "color": "#ef4444" }
+        ]
+      },
+      "custom_sequence": {
+        "description": "A custom decreasing sequence",
+        "sequences": [
+          {
+            "id": "custom",
+            "label": "(x)",
+            "given": [20, 18.5, 17],
+            "commonDiff": -1.5,
+            "answers": [15.5, 14, 12.5, 11],
+            "rangeMin": 10,
+            "rangeMax": 21
+          }
+        ]
+      }
+    }
+  },
+  "modes": {
+    "ordering": {
+      "name": "Ordering",
+      "description": "Drag tokens to place four fractional values (4/10, 4 1/10, 41/10, 41 1/10) on a number line from 0 to 45. Reveals that 4 1/10 and 41/10 are the same value.",
+      "icon": "📏"
+    },
+    "sequences": {
+      "name": "Sequences",
+      "description": "Extend six arithmetic sequences by dragging the next four terms to their correct positions on a number line segment. Covers increasing and decreasing patterns.",
+      "icon": "🔢"
+    }
+  },
+  "learning_objectives": [
+    "Convert mixed fractions and improper fractions to decimal one-tenths for comparison",
+    "Discover that 4 1/10 (mixed number) and 41/10 (improper fraction) represent the same decimal value 4.1",
+    "Order fractional/decimal values on a number line",
+    "Identify arithmetic sequence patterns with decimal common differences",
+    "Extend both increasing and decreasing decimal sequences",
+    "Calculate the total length of a honeybee's body using addition of tenths"
+  ],
+  "tool_call_examples": [
+    {
+      "description": "Default — ordering mode first, all textbook content",
+      "json": {
+        "frontend_action": "show_interactive_tool",
+        "title": "Practice: Ordering & Sequences",
+        "data": {
+          "toolName": "ordering_sequences_tool",
+          "parameters": {
+            "initialMode": "ordering"
+          }
+        },
+        "instructions_for_student": "Drag each of the four values to the correct position on the number line. Convert all to one-tenths first."
+      }
+    },
+    {
+      "description": "Jump directly to sequences mode",
+      "json": {
+        "frontend_action": "show_interactive_tool",
+        "title": "Extend the Sequences",
+        "data": {
+          "toolName": "ordering_sequences_tool",
+          "parameters": {
+            "initialMode": "sequences"
+          }
+        },
+        "instructions_for_student": "Find the common difference and drag the next four terms to the number line."
+      }
+    },
+    {
+      "description": "Custom tokens for a different ordering exercise",
+      "json": {
+        "frontend_action": "show_interactive_tool",
+        "title": "Order These Decimals",
+        "data": {
+          "toolName": "ordering_sequences_tool",
+          "parameters": {
+            "initialMode": "ordering",
+            "additionalProps": {
+              "tokens": [
+                { "id": "p", "label": "9/10", "fracLabel": "⁹⁄₁₀", "value": 0.9, "color": "#f97316" },
+                { "id": "q", "label": "1 7/10", "fracLabel": "1⁷⁄₁₀", "value": 1.7, "color": "#8b5cf6" },
+                { "id": "r", "label": "130/10", "fracLabel": "¹³⁰⁄₁₀", "value": 13, "color": "#06b6d4" },
+                { "id": "s", "label": "13 1/10", "fracLabel": "13¹⁄₁₀", "value": 13.1, "color": "#ef4444" }
+              ]
+            }
+          }
+        },
+        "instructions_for_student": "Place these values from the textbook exercise on the number line."
+      }
+    }
+  ]
+}

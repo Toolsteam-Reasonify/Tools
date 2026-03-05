@@ -1,0 +1,597 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "ConvectionLearningToolSchema",
+    "description": "Schema for configuring the Convection Learning Tool - an interactive educational component for teaching heat transfer through convection",
+    "type": "object",
+    "properties": {
+        "props": {
+            "type": "object",
+            "description": "Configuration properties for the Convection Learning Tool",
+            "properties": {
+                "width": {
+                    "type": "number",
+                    "default": 800,
+                    "description": "Width of the tool canvas in pixels",
+                    "minimum": 400,
+                    "maximum": 2000
+                },
+                "height": {
+                    "type": "number",
+                    "default": 600,
+                    "description": "Height of the tool canvas in pixels",
+                    "minimum": 300,
+                    "maximum": 1500
+                },
+                "data": {
+                    "type": "object",
+                    "description": "Base data configuration",
+                    "properties": {
+                        "title": {
+                            "type": "string",
+                            "default": "Convection - Heat Transfer",
+                            "description": "Main title of the tool"
+                        },
+                        "subtitle": {
+                            "type": "string",
+                            "default": "Understanding heat transfer through fluid motion",
+                            "description": "Subtitle or description"
+                        },
+                        "description": {
+                            "type": "string",
+                            "description": "Additional description text"
+                        }
+                    }
+                },
+                "initialMode": {
+                    "type": "string",
+                    "enum": [
+                        "learn",
+                        "practice",
+                        "real_world"
+                    ],
+                    "default": "learn",
+                    "description": "Starting mode when tool loads"
+                },
+                "showModeSelector": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Show/hide mode selection tabs"
+                },
+                "enabledModes": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "learn",
+                            "practice",
+                            "real_world"
+                        ]
+                    },
+                    "default": [
+                        "learn",
+                        "practice",
+                        "real_world"
+                    ],
+                    "description": "Which modes to enable"
+                },
+                "showNavigation": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Show/hide previous/next navigation buttons"
+                },
+                "showPlayPause": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Show/hide play/pause button"
+                },
+                "showStepIndicator": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Show/hide step counter (Step X of Y)"
+                },
+                "initialStep": {
+                    "type": "number",
+                    "default": 0,
+                    "description": "Starting step index (0-based)"
+                },
+                "filterSteps": {
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    },
+                    "description": "Array of step IDs to show (filters out others)"
+                },
+                "animationSpeed": {
+                    "type": "number",
+                    "default": 1,
+                    "minimum": 0.1,
+                    "maximum": 5,
+                    "description": "Animation speed multiplier (1 = normal, 2 = double speed)"
+                },
+                "autoPlayDuration": {
+                    "type": "number",
+                    "default": 8000,
+                    "description": "Time in milliseconds before auto-advancing to next step (0 = disabled)"
+                },
+                "themeColor": {
+                    "type": "string",
+                    "default": "#0891b2",
+                    "description": "Primary theme color in hex format",
+                    "pattern": "^#[0-9A-Fa-f]{6}$"
+                },
+                "darkMode": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Enable dark mode theme"
+                },
+                "additionalProps": {
+                    "type": "object",
+                    "description": "Tool-specific dynamic content and customizations",
+                    "properties": {
+                        "customSteps": {
+                            "type": "array",
+                            "description": "Custom learning steps to replace default ones",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "number",
+                                        "description": "Unique step identifier"
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "description": "Step title"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "description": "Step description/explanation"
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "enum": [
+                                            "intro",
+                                            "explanation",
+                                            "demonstration",
+                                            "interactive"
+                                        ],
+                                        "description": "Type of learning step"
+                                    },
+                                    "animationData": {
+                                        "type": "object",
+                                        "properties": {
+                                            "experiment": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "paper_cups",
+                                                    "hot_air_rising",
+                                                    "water_heating",
+                                                    "sea_breeze",
+                                                    "land_breeze",
+                                                    "convection_intro"
+                                                ],
+                                                "description": "Which animation/experiment to display"
+                                            }
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "id",
+                                    "title",
+                                    "description",
+                                    "type"
+                                ]
+                            }
+                        },
+                        "focusedConcept": {
+                            "type": "string",
+                            "enum": [
+                                "hot_air_rises",
+                                "cold_air_sinks",
+                                "sea_breeze",
+                                "land_breeze",
+                                "convection_currents"
+                            ],
+                            "description": "Focus on a specific concept by filtering steps"
+                        },
+                        "customQuestions": {
+                            "type": "array",
+                            "description": "Custom practice questions to replace default ones",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "number"
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "enum": [
+                                            "mcq",
+                                            "true-false",
+                                            "match",
+                                            "sequence"
+                                        ]
+                                    },
+                                    "question": {
+                                        "type": "string"
+                                    },
+                                    "options": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "description": "For MCQ and true-false questions"
+                                    },
+                                    "pairs": {
+                                        "type": "object",
+                                        "properties": {
+                                            "left": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "right": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "description": "For match questions"
+                                    },
+                                    "sequence": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "description": "For sequence questions"
+                                    },
+                                    "correctAnswer": {
+                                        "oneOf": [
+                                            {
+                                                "type": "string"
+                                            },
+                                            {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            {
+                                                "type": "object"
+                                            }
+                                        ]
+                                    },
+                                    "explanation": {
+                                        "type": "string"
+                                    },
+                                    "difficulty": {
+                                        "type": "string",
+                                        "enum": [
+                                            "easy",
+                                            "medium",
+                                            "hard"
+                                        ]
+                                    },
+                                    "points": {
+                                        "type": "number"
+                                    }
+                                },
+                                "required": [
+                                    "id",
+                                    "type",
+                                    "question",
+                                    "correctAnswer",
+                                    "explanation",
+                                    "difficulty",
+                                    "points"
+                                ]
+                            }
+                        },
+                        "difficultyLevel": {
+                            "type": "string",
+                            "enum": [
+                                "easy",
+                                "medium",
+                                "hard"
+                            ],
+                            "description": "Filter practice questions by difficulty"
+                        },
+                        "questionTypes": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "mcq",
+                                    "true-false",
+                                    "match",
+                                    "sequence"
+                                ]
+                            },
+                            "description": "Filter practice questions by type"
+                        },
+                        "customApplications": {
+                            "type": "array",
+                            "description": "Custom real-world applications to replace default ones",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "number"
+                                    },
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "category": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "howItWorks": {
+                                        "type": "string"
+                                    },
+                                    "scienceBehind": {
+                                        "type": "string"
+                                    },
+                                    "realExample": {
+                                        "type": "string"
+                                    },
+                                    "benefits": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "difficulty": {
+                                        "type": "string",
+                                        "enum": [
+                                            "everyday",
+                                            "nature",
+                                            "technology"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "id",
+                                    "title",
+                                    "category",
+                                    "description",
+                                    "howItWorks",
+                                    "scienceBehind",
+                                    "realExample",
+                                    "benefits",
+                                    "difficulty"
+                                ]
+                            }
+                        },
+                        "filterCategories": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "description": "Filter real-world applications by category"
+                        },
+                        "particleCount": {
+                            "type": "number",
+                            "default": 30,
+                            "minimum": 10,
+                            "maximum": 100,
+                            "description": "Number of particles in animations"
+                        },
+                        "animationIntensity": {
+                            "type": "string",
+                            "enum": [
+                                "low",
+                                "medium",
+                                "high"
+                            ],
+                            "default": "medium",
+                            "description": "Intensity of animation movements"
+                        },
+                        "showLabels": {
+                            "type": "boolean",
+                            "default": true,
+                            "description": "Show/hide text labels on animations"
+                        },
+                        "highlightFeatures": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "description": "Array of features to highlight in animations"
+                        }
+                    }
+                }
+            }
+        },
+        "setStepDetails": {
+            "type": "function",
+            "description": "Callback function to receive step change information"
+        },
+        "stopAutoNext": {
+            "type": "boolean",
+            "description": "External control to stop auto-progression"
+        },
+        "setStopAutoNext": {
+            "type": "function",
+            "description": "Callback to update stopAutoNext state"
+        }
+    },
+    "examples": [
+        {
+            "name": "Default Configuration",
+            "description": "Basic setup with all default values",
+            "value": {
+                "props": {}
+            }
+        },
+        {
+            "name": "Learn Mode Only - Sea Breeze Focus",
+            "description": "Show only sea breeze concept in learn mode",
+            "value": {
+                "props": {
+                    "initialMode": "learn",
+                    "enabledModes": [
+                        "learn"
+                    ],
+                    "additionalProps": {
+                        "focusedConcept": "sea_breeze"
+                    }
+                }
+            }
+        },
+        {
+            "name": "Practice Mode - Easy Questions Only",
+            "description": "Filter to show only easy difficulty questions",
+            "value": {
+                "props": {
+                    "initialMode": "practice",
+                    "enabledModes": [
+                        "practice"
+                    ],
+                    "additionalProps": {
+                        "difficultyLevel": "easy"
+                    }
+                }
+            }
+        },
+        {
+            "name": "Real World - Kitchen Applications",
+            "description": "Show only kitchen-related applications",
+            "value": {
+                "props": {
+                    "initialMode": "real_world",
+                    "enabledModes": [
+                        "real_world"
+                    ],
+                    "additionalProps": {
+                        "filterCategories": [
+                            "Kitchen",
+                            "Home"
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "name": "Minimal UI - Auto-play Demo",
+            "description": "Clean interface for demonstration purposes",
+            "value": {
+                "props": {
+                    "showModeSelector": false,
+                    "showNavigation": false,
+                    "showPlayPause": false,
+                    "showStepIndicator": false,
+                    "autoPlayDuration": 5000,
+                    "additionalProps": {
+                        "showLabels": true,
+                        "animationIntensity": "high"
+                    }
+                }
+            }
+        },
+        {
+            "name": "Specific Steps Only",
+            "description": "Show only selected steps (introduction and sea breeze)",
+            "value": {
+                "props": {
+                    "filterSteps": [
+                        1,
+                        5
+                    ],
+                    "autoPlayDuration": 10000
+                }
+            }
+        },
+        {
+            "name": "Dark Mode with Custom Theme",
+            "description": "Dark theme with purple accent color",
+            "value": {
+                "props": {
+                    "darkMode": true,
+                    "themeColor": "#8b5cf6"
+                }
+            }
+        },
+        {
+            "name": "Fast Learning Mode",
+            "description": "Quick-paced learning with high animation speed",
+            "value": {
+                "props": {
+                    "animationSpeed": 2,
+                    "autoPlayDuration": 4000,
+                    "additionalProps": {
+                        "animationIntensity": "high",
+                        "particleCount": 50
+                    }
+                }
+            }
+        },
+        {
+            "name": "MCQ Questions Only",
+            "description": "Practice mode with only multiple choice questions",
+            "value": {
+                "props": {
+                    "initialMode": "practice",
+                    "enabledModes": [
+                        "practice"
+                    ],
+                    "additionalProps": {
+                        "questionTypes": [
+                            "mcq",
+                            "true-false"
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "name": "Nature Applications Focus",
+            "description": "Real world mode showing natural phenomena only",
+            "value": {
+                "props": {
+                    "initialMode": "real_world",
+                    "additionalProps": {
+                        "filterCategories": [
+                            "Nature"
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "name": "Custom Title and Data",
+            "description": "Override default title and subtitle",
+            "value": {
+                "props": {
+                    "data": {
+                        "title": "Heat Transfer: Convection",
+                        "subtitle": "Grade 7 Science - Chapter 4"
+                    }
+                }
+            }
+        },
+        {
+            "name": "Static Display - No Auto-play",
+            "description": "Manual control only, no automatic progression",
+            "value": {
+                "props": {
+                    "autoPlayDuration": 0,
+                    "showPlayPause": false,
+                    "additionalProps": {
+                        "showLabels": true
+                    }
+                }
+            }
+        }
+    ],
+    "usageNotes": {
+        "modeSelection": "Use enabledModes to restrict which tabs are available. Set showModeSelector to false to hide mode tabs entirely.",
+        "stepFiltering": "Use filterSteps array to show only specific step IDs, or use focusedConcept to automatically filter by concept.",
+        "customContent": "Use customSteps, customQuestions, or customApplications to completely replace default content.",
+        "animations": "Control animation behavior with animationSpeed, particleCount, and animationIntensity.",
+        "accessibility": "Dark mode can be enabled for better accessibility. Labels can be toggled with showLabels.",
+        "autoPlay": "Set autoPlayDuration to 0 to disable auto-play. Use stopAutoNext prop for external control."
+    }
+}

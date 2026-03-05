@@ -1,0 +1,258 @@
+{
+    "toolName": "token_model_subtraction_tool",
+    "version": "1.0.0",
+    "description": "Step-based explanation tool for Grade 7 Mathematics — Token Model for Integer Subtraction. Walks students through the token model using a concrete worked example (default: 7 − 18). Each step progressively reveals a key phase: starting tokens, adding zero pairs, removing tokens, counting what remains, and generalising to the additive inverse rule. Indian school context (NCERT Ganita Prakash Grade 7).",
+    "category": "mathematics",
+    "grade": "7",
+    "subject": "Mathematics",
+    "topic": "Operations with Integers — Token Model Recap: Addition, Subtraction, and Additive Inverse",
+    "curriculum": "NCERT / Indian National Curriculum",
+    "textbook": "Ganita Prakash Grade 7 Part-II, Chapter 2",
+
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Width of the tool container in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Height of the tool container in pixels"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier (0.5 = slower, 2 = faster)"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#3b82f6",
+            "description": "Primary accent colour"
+        },
+        "showNavigation": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide prev/next/reset buttons"
+        },
+        "showStepIndicator": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide step indicator dots at top"
+        },
+        "autoPlayDuration": {
+            "type": "number",
+            "default": 0,
+            "description": "Auto-advance delay in ms. 0 = manual only."
+        }
+    },
+
+    "additionalProps": {
+        "description": "Tool-specific dynamic content for token model subtraction",
+        "properties": {
+            "minuend": {
+                "type": "number",
+                "default": 7,
+                "description": "The number being subtracted from (a in a − b). Should be a positive integer for the visual model to work correctly.",
+                "examples": [7, 4, 10, 3]
+            },
+            "subtrahend": {
+                "type": "number",
+                "default": 18,
+                "description": "The number being subtracted (b in a − b). Should be greater than minuend so that zero pairs are needed, demonstrating the concept.",
+                "examples": [18, 12, 25, 8]
+            },
+            "showTeachingNotes": {
+                "type": "boolean",
+                "default": false,
+                "description": "If true, show teaching notes alongside student instructions (for teacher mode)"
+            }
+        },
+        "constraints": [
+            "minuend should be a non-negative integer",
+            "subtrahend should be greater than minuend for the tool to meaningfully demonstrate zero pairs",
+            "Both values should be small enough for visual clarity (recommended: minuend ≤ 15, subtrahend ≤ 25)"
+        ],
+        "examples": {
+            "default_7_minus_18": {
+                "minuend": 7,
+                "subtrahend": 18
+            },
+            "simple_4_minus_12": {
+                "minuend": 4,
+                "subtrahend": 12
+            },
+            "small_3_minus_8": {
+                "minuend": 3,
+                "subtrahend": 8
+            },
+            "larger_10_minus_25": {
+                "minuend": 10,
+                "subtrahend": 25
+            }
+        }
+    },
+
+    "modes": {
+        "learn": {
+            "label": "Learn",
+            "description": "Step-through explanation mode — the primary and default mode for this tool."
+        }
+    },
+
+    "steps": {
+        "total": 5,
+        "details": [
+            {
+                "id": 1,
+                "title": "Place the Starting Tokens",
+                "phase": "place",
+                "visual": "Green (+1) tokens appear one by one with pop-in animation",
+                "teachingNote": "Ask students to count tokens and notice the shortfall when they need to remove more than they have."
+            },
+            {
+                "id": 2,
+                "title": "Add Zero Pairs",
+                "phase": "zeroPairs",
+                "visual": "Green-red pairs slide in from side, labelled 'zero pair' with bracket showing = 0",
+                "teachingNote": "Ask what a zero pair is and why adding one doesn't change the total."
+            },
+            {
+                "id": 3,
+                "title": "Remove Green Tokens",
+                "phase": "remove",
+                "visual": "Green tokens fade out with ✕ mark, only red tokens remain",
+                "teachingNote": "Demonstrate the removal visually. Ask students to predict what remains."
+            },
+            {
+                "id": 4,
+                "title": "Count What Remains",
+                "phase": "result",
+                "visual": "Remaining red tokens pulse once and a result badge animates in showing the answer",
+                "teachingNote": "Ask students to state the answer before revealing the result badge."
+            },
+            {
+                "id": 5,
+                "title": "The Additive Inverse Rule",
+                "phase": "rule",
+                "visual": "Rule card animates into view: 'Subtract b = Add −b (additive inverse)' with concrete example",
+                "teachingNote": "Connect to algebraic rule, then test with: 'If we subtract −12 from 4, what does that become?'"
+            }
+        ]
+    },
+
+    "design": {
+        "font": "Lilita One (display), Nunito (body)",
+        "palette": {
+            "green": "#22c55e",
+            "red": "#ef4444",
+            "white": "#ffffff",
+            "dark": "#1e293b",
+            "blue": "#3b82f6"
+        },
+        "tokens": {
+            "positive": "Bright green circular token with + symbol, radial gradient, inner glow",
+            "negative": "Bright red circular token with − symbol, radial gradient, inner glow"
+        },
+        "workspace": "Grid-patterned activity mat bordered by thin blue line, resembling a classroom activity mat",
+        "responsive": true,
+        "touchFriendly": true,
+        "transitions": "Smooth 0.4s transitions between steps"
+    },
+
+    "teachingNotes": {
+        "step1": "At Step 1, ask: 'How many tokens do we have, and how many do we need to remove?' — let students notice the shortfall.",
+        "step2": "At Step 2, ask: 'What is a zero pair and why does adding one not change the total?' — pause for discussion.",
+        "step3": "At Step 3, demonstrate the removal visually.",
+        "step4": "At Step 4, ask students to read the result before revealing it.",
+        "step5": "At Step 5, connect to the algebraic rule: 7 − 18 = 7 + (−18). Then ask: 'If we subtract −12 from 4, what does that become?' to test inverse understanding."
+    },
+
+    "instructionsForStudent": {
+        "overview": "Watch the token workspace change at each step.",
+        "step1": "Count the green tokens placed.",
+        "step2": "Predict: why do we add zero pairs instead of just removing tokens?",
+        "step3": "See the removal happen.",
+        "step4": "Count what remains and form the answer.",
+        "step5": "State the general rule in your own words before reading it."
+    },
+
+    "agentToolCallExamples": [
+        {
+            "description": "Default: 7 − 18 (textbook example)",
+            "parameters": {
+                "additionalProps": {
+                    "minuend": 7,
+                    "subtrahend": 18
+                }
+            }
+        },
+        {
+            "description": "Simpler example: 4 − 12",
+            "parameters": {
+                "additionalProps": {
+                    "minuend": 4,
+                    "subtrahend": 12
+                }
+            }
+        },
+        {
+            "description": "Very small example for beginners: 3 − 8",
+            "parameters": {
+                "width": 600,
+                "additionalProps": {
+                    "minuend": 3,
+                    "subtrahend": 8
+                }
+            }
+        },
+        {
+            "description": "Larger example for advanced students: 10 − 25",
+            "parameters": {
+                "additionalProps": {
+                    "minuend": 10,
+                    "subtrahend": 25
+                }
+            }
+        },
+        {
+            "description": "Minimal UI — no navigation, step indicator only",
+            "parameters": {
+                "showNavigation": false,
+                "showStepIndicator": true,
+                "additionalProps": {
+                    "minuend": 7,
+                    "subtrahend": 18
+                }
+            }
+        },
+        {
+            "description": "Mobile-sized view",
+            "parameters": {
+                "width": 400,
+                "additionalProps": {
+                    "minuend": 5,
+                    "subtrahend": 9
+                }
+            }
+        },
+        {
+            "description": "5 − 13 for classroom practice",
+            "parameters": {
+                "additionalProps": {
+                    "minuend": 5,
+                    "subtrahend": 13
+                }
+            }
+        },
+        {
+            "description": "2 − 7 for quick demonstration",
+            "parameters": {
+                "additionalProps": {
+                    "minuend": 2,
+                    "subtrahend": 7
+                }
+            }
+        }
+    ]
+}

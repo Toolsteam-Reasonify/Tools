@@ -1,0 +1,260 @@
+{
+    "toolName": "decimals_chapter_quiz_tool",
+    "version": "2.0.0",
+    "description": "Interactive MCQ quiz tool for CBSE Grade 7 Mathematics (Decimals chapter — 'A Peek Beyond the Point'). Redesigned with Singularity Design System (Poppins font, #4A4DC9 primary, #FF7212 accent, #533086→#FC9145 gradient). 10 multiple-choice questions covering the entire chapter: fraction-to-decimal conversion, decomposition, descending order, digit puzzles, word problems, unit conversion, and comparisons. Each question shows 4 options with one correct. After answering, explanation appears with optional KaTeX math rendering in the explanation only (question-level KaTeX display has been removed). Options are shuffled. Score tracker shows correct/total. Geometric decorative shapes (circles, triangles, squares) from design system appear on intro and results screens.",
+    "chapter": "Chapter 3 — A Peek Beyond the Point",
+    "grade": "CBSE Grade 7",
+    "textbook": "Ganita Prakash",
+    "topic": "Figure it Out — Comprehensive Chapter Practice (Q1–Q16)",
+    "designSystem": {
+        "name": "Singularity",
+        "font": "Poppins (400–900)",
+        "colors": {
+            "primary": "#4A4DC9",
+            "accent": "#FF7212",
+            "gradientStart": "#533086",
+            "gradientEnd": "#FC9145",
+            "primaryLight": "#C1C1EA",
+            "accentLight": "#FFF3E4",
+            "primarySoft": "#EEEEF8",
+            "dark": "#4E4E4E",
+            "gray": "#CACACA",
+            "grayLight": "#EBEBEB",
+            "surface": "#F5F5F5",
+            "correct": "#2DB87A",
+            "incorrect": "#E5453F"
+        },
+        "buttons": {
+            "style": "Contained (pill-shaped), Outlined, Texted",
+            "states": "Enabled, Disabled, Hover, Pressed",
+            "height": "42–48px",
+            "borderRadius": 50
+        },
+        "decorations": "Floating geometric shapes (circles, triangles, squares) with subtle animation"
+    },
+    "teaching_notes": "Use as chapter review quiz AFTER all practice topics. The 10 MCQs sample the most important concepts from Q1-Q16. Focus on Q4 (descending order) and Q5 (more-digits fallacy) as common misconceptions.",
+    "instructions_for_student": "This quiz covers the entire chapter! Select the best answer for each question and read the explanation after.",
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Width of the quiz container in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 700,
+            "description": "Height of the quiz container in pixels"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#4A4DC9",
+            "description": "Primary theme color (hex) — Singularity primary indigo"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Toggle dark mode"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier"
+        }
+    },
+    "additionalProps": {
+        "description": "Quiz-specific configuration passed by agent",
+        "schema": {
+            "questions": {
+                "type": "array",
+                "description": "Array of quiz questions. Each has id, question text, options (4 choices), explanation, topic tag, and difficulty level. Note: questionKatex is retained in data but no longer rendered in the question UI. explanationKatex is rendered in the explanation panel after answering.",
+                "items": {
+                    "id": "number",
+                    "question": "string — question text (should contain all math info in plain text since KaTeX display is removed from question area)",
+                    "questionKatex": "string (optional) — retained in data for reference but NOT displayed in question UI",
+                    "options": [
+                        {
+                            "id": "string — unique option identifier (a/b/c/d)",
+                            "text": "string — option display text",
+                            "isCorrect": "boolean — whether this is the correct answer"
+                        }
+                    ],
+                    "explanation": "string — explanation shown after answering",
+                    "explanationKatex": "string (optional) — KaTeX math rendered in explanation panel after answering",
+                    "topic": "string — topic tag (e.g. 'Fraction to Decimal')",
+                    "difficulty": "string — 'easy' | 'medium' | 'hard'"
+                }
+            },
+            "shuffleOptions": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to shuffle the order of options"
+            },
+            "shuffleQuestions": {
+                "type": "boolean",
+                "default": false,
+                "description": "Whether to shuffle question order"
+            },
+            "showExplanations": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show explanations after answering"
+            },
+            "showScore": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show score tracker in header"
+            },
+            "showTopicTags": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show topic category tags on questions"
+            },
+            "passingScore": {
+                "type": "number",
+                "default": 7,
+                "description": "Number of correct answers needed to pass"
+            },
+            "title": {
+                "type": "string",
+                "default": "Figure it Out — Chapter 3 Practice",
+                "description": "Quiz title on intro screen"
+            },
+            "subtitle": {
+                "type": "string",
+                "default": "A Peek Beyond the Point · Comprehensive Quiz",
+                "description": "Quiz subtitle on intro screen"
+            },
+            "instructionText": {
+                "type": "string",
+                "default": "This quiz covers the entire chapter! Select the best answer for each question and read the explanation after.",
+                "description": "Instruction text shown to student before starting"
+            }
+        },
+        "examples": {
+            "default_chapter_quiz": {
+                "description": "Default 10-question comprehensive quiz covering Q1-Q16",
+                "additionalProps": {}
+            },
+            "custom_passing_score": {
+                "description": "Quiz with a custom passing score of 8/10",
+                "additionalProps": {
+                    "passingScore": 8
+                }
+            },
+            "no_shuffle": {
+                "description": "Quiz with options in fixed order (no shuffling)",
+                "additionalProps": {
+                    "shuffleOptions": false,
+                    "shuffleQuestions": false
+                }
+            },
+            "minimal_ui": {
+                "description": "Quiz without topic tags or score display",
+                "additionalProps": {
+                    "showTopicTags": false,
+                    "showScore": false
+                }
+            }
+        }
+    },
+    "questions_summary": [
+        {
+            "id": 1,
+            "topic": "Fraction to Decimal",
+            "source": "Q1 — Convert 5/100",
+            "correct_answer": "0.05",
+            "difficulty": "easy"
+        },
+        {
+            "id": 2,
+            "topic": "Fraction to Decimal",
+            "source": "Q1 — Convert 254/1000",
+            "correct_answer": "0.254",
+            "difficulty": "medium"
+        },
+        {
+            "id": 3,
+            "topic": "Decomposition",
+            "source": "Q2 — Decompose 0.34",
+            "correct_answer": "3 tenths + 4 hundredths",
+            "difficulty": "easy"
+        },
+        {
+            "id": 4,
+            "topic": "Descending Order",
+            "source": "Q4 — Arrange descending",
+            "correct_answer": "11.10, 11.01, 1.101, 1.011, 1.01",
+            "difficulty": "medium"
+        },
+        {
+            "id": 5,
+            "topic": "Comparing Decimals",
+            "source": "Q6 — More digits fallacy",
+            "correct_answer": "1.0 > 0.999",
+            "difficulty": "medium"
+        },
+        {
+            "id": 6,
+            "topic": "Word Problem",
+            "source": "Q7 — Mahi's vegetables",
+            "correct_answer": "1.3 kg",
+            "difficulty": "medium"
+        },
+        {
+            "id": 7,
+            "topic": "Unit Conversion",
+            "source": "Q11 — mm in 1 km",
+            "correct_answer": "1,000,000",
+            "difficulty": "medium"
+        },
+        {
+            "id": 8,
+            "topic": "Comparing Fractions",
+            "source": "Q13 — 10/1000 vs 1/10",
+            "correct_answer": "1/10 is greater",
+            "difficulty": "easy"
+        },
+        {
+            "id": 9,
+            "topic": "Fraction to Decimal",
+            "source": "Q16 — 1/4 as decimal",
+            "correct_answer": "0.25",
+            "difficulty": "easy"
+        },
+        {
+            "id": 10,
+            "topic": "Fraction to Decimal",
+            "source": "Q16 — 4/5 as decimal",
+            "correct_answer": "0.8",
+            "difficulty": "easy"
+        }
+    ],
+    "agent_tool_calls": [
+        {
+            "description": "Show default chapter quiz with all 10 questions",
+            "parameters": {
+                "additionalProps": {}
+            }
+        },
+        {
+            "description": "Show quiz with shuffled questions and higher passing score",
+            "parameters": {
+                "additionalProps": {
+                    "shuffleQuestions": true,
+                    "passingScore": 9
+                }
+            }
+        },
+        {
+            "description": "Show quiz with custom title for a specific student",
+            "parameters": {
+                "additionalProps": {
+                    "title": "Decimal Challenge — Review Time!",
+                    "subtitle": "Grade 7 · Chapter 3 Final Assessment",
+                    "instructionText": "Answer all 10 questions carefully. You need 8 correct to pass!",
+                    "passingScore": 8
+                }
+            }
+        }
+    ]
+}

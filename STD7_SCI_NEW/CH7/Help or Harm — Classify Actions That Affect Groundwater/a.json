@@ -1,0 +1,634 @@
+{
+    "toolName": "groundwater_action_classifier",
+    "version": "2.0.0",
+    "description": "An interactive categorization tool for Grade 7 Science where students classify 9 real-world actions into 'Depletes Groundwater' (harmful) or 'Recharges Groundwater' (helpful). Students apply cause-and-effect reasoning about infiltration to determine each action's impact on groundwater levels. Features drag-and-drop + tap-to-sort interaction, immediate feedback with explanations/hints, score tracking, animated cross-section illustrations per step (including an animated bore-well pump in Step 2), and a split-screen completion summary with underground cross-sections showing water table levels.",
+    "subject": "Science",
+    "grade": "Grade 7",
+    "topic": "Groundwater Depletion and Rainwater Harvesting",
+    "context": "Indian neighbourhood",
+    "teaching_notes": "Activate AFTER discussing both groundwater depletion causes and rainwater harvesting solutions. Watch for tricky items: deforestation and concrete surfaces require understanding that these BLOCK infiltration. After completion, ask students what all helpful actions have in common (they help water seep into the ground).",
+    "instructions_for_student": "Sort these 9 actions into two groups: actions that HARM groundwater (deplete it) and actions that HELP groundwater (recharge it). For each action, think: does this INCREASE or DECREASE the amount of water seeping into the ground? Tap a card, then tap the correct category bin to sort it — or drag and drop!",
+    "iconApproach": "All icons are inline SVG components (IconCheck, IconX, IconRotateCcw, IconChevronLeft, IconChevronRight, IconDroplets, IconBookOpen, IconTarget, IconZap, IconFlaskConical). No external icon library (e.g. lucide-react) is required — the component is fully self-contained.",
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Component width in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Component height in pixels"
+        },
+        "initialMode": {
+            "type": "string",
+            "default": "practice",
+            "enum": [
+                "learn",
+                "practice",
+                "real_world",
+                "hands_on"
+            ],
+            "description": "Starting mode. 'practice' launches the sorting activity directly."
+        },
+        "showModeSelector": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide mode tabs"
+        },
+        "enabledModes": {
+            "type": "array",
+            "default": [
+                "learn",
+                "practice",
+                "real_world",
+                "hands_on"
+            ],
+            "description": "Which modes to enable"
+        },
+        "showNavigation": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide prev/next navigation buttons (applies to learn and real_world modes)"
+        },
+        "showPlayPause": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide play/pause button"
+        },
+        "showStepIndicator": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide step counter (e.g. 2/5)"
+        },
+        "initialStep": {
+            "type": "number",
+            "default": 10,
+            "description": "Starting step ID"
+        },
+        "filterSteps": {
+            "type": "array",
+            "default": null,
+            "description": "Only show these step IDs (null = show all)"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier"
+        },
+        "autoPlayDuration": {
+            "type": "number",
+            "default": 0,
+            "description": "Auto-advance delay in ms (0 = disabled)"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#4A4DC9",
+            "description": "Primary theme color (Singularity design system purple)"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Dark mode toggle"
+        }
+    },
+    "additionalProps": {
+        "description": "Tool-specific dynamic content for the groundwater classifier",
+        "schema": {
+            "actions": {
+                "type": "array",
+                "description": "Array of action card objects to sort. Each has id, label, category, explanation, hint, and icon.",
+                "items": {
+                    "id": "string — unique identifier",
+                    "label": "string — display text on card",
+                    "category": "'depletes' | 'recharges' — correct answer",
+                    "explanation": "string — shown on correct placement (green banner)",
+                    "hint": "string — shown on incorrect placement (red banner, card bounces back)",
+                    "icon": "string — emoji icon for the card"
+                },
+                "default": "9 default actions (bore wells, deforestation, concrete surfaces, rainwater harvesting, recharge pits, planting trees, open soil, industrial overuse, check dams)"
+            },
+            "depletesLabel": {
+                "type": "string",
+                "default": "Depletes Groundwater ⚠️",
+                "description": "Label for the harmful (left) category bin"
+            },
+            "rechargesLabel": {
+                "type": "string",
+                "default": "Recharges Groundwater ✅",
+                "description": "Label for the helpful (right) category bin"
+            },
+            "depletesColor": {
+                "type": "string",
+                "default": "#DC2626",
+                "description": "Color for the depletes bin (red)"
+            },
+            "rechargesColor": {
+                "type": "string",
+                "default": "#16A34A",
+                "description": "Color for the recharges bin (green)"
+            },
+            "shuffleOnLoad": {
+                "type": "boolean",
+                "default": true,
+                "description": "Shuffle cards randomly on load/reset"
+            },
+            "showExplanations": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show explanations on correct sort"
+            },
+            "showCrossSection": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show underground cross-section diagrams in completion summary"
+            },
+            "context": {
+                "type": "string",
+                "default": "indian",
+                "enum": [
+                    "indian",
+                    "global"
+                ],
+                "description": "Contextual setting for real-world examples"
+            }
+        },
+        "examples": {
+            "default_activity": {
+                "description": "Default 9-card sorting activity with Indian context — uses all built-in actions"
+            },
+            "custom_actions": {
+                "actions": [
+                    {
+                        "id": "over_irrigation",
+                        "label": "Over-irrigation of Crops",
+                        "category": "depletes",
+                        "explanation": "Excessive irrigation draws water from underground aquifers faster than they recharge.",
+                        "hint": "Think: Is the water being pumped out or put back in?",
+                        "icon": "🚿"
+                    },
+                    {
+                        "id": "percolation_tank",
+                        "label": "Percolation Tanks",
+                        "category": "recharges",
+                        "explanation": "Percolation tanks store rainwater and let it slowly seep underground to recharge aquifers.",
+                        "hint": "Think: What happens to water stored in these tanks over time?",
+                        "icon": "🪣"
+                    }
+                ]
+            },
+            "minimal_activity": {
+                "actions": [
+                    {
+                        "id": "a1",
+                        "label": "Bore Wells",
+                        "category": "depletes",
+                        "explanation": "Pumps out groundwater.",
+                        "hint": "Does this take water out?",
+                        "icon": "🔧"
+                    },
+                    {
+                        "id": "a2",
+                        "label": "Check Dams",
+                        "category": "recharges",
+                        "explanation": "Slows water for infiltration.",
+                        "hint": "Does this help water seep in?",
+                        "icon": "🧱"
+                    },
+                    {
+                        "id": "a3",
+                        "label": "Concrete Roads",
+                        "category": "depletes",
+                        "explanation": "Blocks infiltration.",
+                        "hint": "Can water pass through concrete?",
+                        "icon": "🏗️"
+                    },
+                    {
+                        "id": "a4",
+                        "label": "Planting Trees",
+                        "category": "recharges",
+                        "explanation": "Roots create channels.",
+                        "hint": "What do roots do to soil?",
+                        "icon": "🌳"
+                    }
+                ]
+            }
+        }
+    },
+    "modes": {
+        "learn": {
+            "steps": [
+                1,
+                2,
+                3,
+                4,
+                5
+            ],
+            "description": "Step-by-step explanation of groundwater, depletion causes, and rainwater harvesting. Each step has an animated cross-section illustration. Step 2 features a fully animated bore-well pump SVG scene with motor vibration, handle rocking, piston movement, water stream from spout, underground pipe flow, rising bubbles, and a sinking water table."
+        },
+        "practice": {
+            "steps": [
+                10
+            ],
+            "description": "Interactive sorting activity — classify 9 action cards as 'depletes' or 'recharges' groundwater via drag-and-drop or tap-to-sort"
+        },
+        "real_world": {
+            "steps": [
+                20,
+                21
+            ],
+            "description": "Real-world Indian examples: neighbourhood impervious surfaces and the 2019 Chennai water crisis with mandatory rainwater harvesting"
+        },
+        "hands_on": {
+            "steps": [
+                30
+            ],
+            "description": "Same classification activity presented in a hands-on lab/activity context"
+        }
+    },
+    "stepSummary": {
+        "1": {
+            "title": "What is Groundwater?",
+            "mode": "learn",
+            "illustration": "Default cross-section: sky with clouds, trees and house grounded on soil surface at 30% line with green grass strip and grass patches, soil and rock layers below, water table at 25% height"
+        },
+        "2": {
+            "title": "Groundwater Depletion",
+            "mode": "learn",
+            "illustration": "Animated pump scene (280px tall): sky with sun, clouds, house and trees grounded on 32% soil line. Full SVG pump overlay with: concrete base pad on ground, red motor housing with vibration animation (motorVibrate), rocking handle (pumpHandleDown 1.6s -25deg), moving piston rod (pumpPistonMove), spout nozzle with flowing water arcs (spoutStream stroke-dashoffset), 3 falling drops with directional trajectories (spoutDrop1/2/3), splash rings on ground (spoutSplash), underground pipe casing with inner pipe and perforated screen in aquifer, animated upward water flow (pipeFlowUp dashed blue line), 5 rising bubbles (bubbleRise1/2/3), red directional arrow with WATER PUMPED UP label, Water out label at spout. Water table sinks from 42% to 15% (waterTableSink 4s). Warning label with pulsing icon (warningPulse)."
+        },
+        "3": {
+            "title": "What Causes Depletion?",
+            "mode": "learn",
+            "illustration": "Default cross-section with water table at 25%"
+        },
+        "4": {
+            "title": "Rainwater Harvesting",
+            "mode": "learn",
+            "illustration": "Default cross-section with rain drops falling from sky, water table rises to 40%"
+        },
+        "5": {
+            "title": "How Recharge Works",
+            "mode": "learn",
+            "illustration": "Default cross-section with rain drops, water table at 40%"
+        },
+        "10": {
+            "title": "Sort the Actions!",
+            "mode": "practice",
+            "illustration": "No cross-section — interactive card sorting UI with score bar, left depletes bin (red dashed border), center shuffled cards, right recharges bin (green dashed border)"
+        },
+        "20": {
+            "title": "Indian Neighbourhood Context",
+            "mode": "real_world",
+            "illustration": "Text content in orange-themed card with India flag icon"
+        },
+        "21": {
+            "title": "Chennai Water Crisis",
+            "mode": "real_world",
+            "illustration": "Text content in orange-themed card with India flag icon"
+        },
+        "30": {
+            "title": "Classify Actions",
+            "mode": "hands_on",
+            "illustration": "Same interactive card sorting UI as step 10"
+        }
+    },
+    "completionSummary": {
+        "description": "On sorting all 9 cards, a celebration triggers (40 confetti particles) followed by a split-screen summary.",
+        "depletedSide": {
+            "header": "Depletes Groundwater (red gradient header)",
+            "crossSection": "80px tall, sky to soil, green ground line at 30% with dead stump, factory, construction grounded on surface, low water table at 20% (red-tinted dashed top border), label Low Water Table",
+            "list": "Lists all depleting actions with icons"
+        },
+        "rechargedSide": {
+            "header": "Recharges Groundwater (green gradient header)",
+            "crossSection": "80px tall, sky to soil, green ground line at 30% with trees and house grounded on surface, rain drops falling, high water table at 65% (green-tinted dashed top border), label High Water Table",
+            "list": "Lists all recharging actions with icons"
+        },
+        "keyInsight": "All helpful actions share one thing in common: they help water seep into the ground (infiltration)."
+    },
+    "defaultActions": [
+        {
+            "id": "bore_wells",
+            "label": "Excessive Bore Wells",
+            "category": "depletes",
+            "explanation": "Too many bore wells pump out groundwater faster than it can naturally recharge, lowering the water table.",
+            "hint": "Think: Are we taking water OUT of the ground or putting it IN?",
+            "icon": "🔧"
+        },
+        {
+            "id": "deforestation",
+            "label": "Deforestation",
+            "category": "depletes",
+            "explanation": "Without tree roots, rainwater runs off the surface instead of seeping deep into the ground.",
+            "hint": "Think: Do tree roots help or block water from going underground?",
+            "icon": "🪓"
+        },
+        {
+            "id": "concrete_surfaces",
+            "label": "Concrete Surfaces",
+            "category": "depletes",
+            "explanation": "Concrete and asphalt are impermeable — they block rainwater from infiltrating into the soil below.",
+            "hint": "Think: Does concrete let water pass through or block it?",
+            "icon": "🏗️"
+        },
+        {
+            "id": "industrial_overuse",
+            "label": "Industrial Overuse",
+            "category": "depletes",
+            "explanation": "Factories and industries often pump massive amounts of groundwater, depleting it rapidly.",
+            "hint": "Think: Do industries put water back into the ground or take it out?",
+            "icon": "🏭"
+        },
+        {
+            "id": "rainwater_harvesting",
+            "label": "Rainwater Harvesting",
+            "category": "recharges",
+            "explanation": "Collecting and directing rainwater into the ground helps replenish underground aquifers.",
+            "hint": "Think: Where does the collected rainwater go — drains or underground?",
+            "icon": "🌧️"
+        },
+        {
+            "id": "recharge_pits",
+            "label": "Recharge Pits",
+            "category": "recharges",
+            "explanation": "Recharge pits are dug specifically to allow surface water to percolate down and replenish groundwater.",
+            "hint": "Think: What is the purpose of digging these special pits?",
+            "icon": "🕳️"
+        },
+        {
+            "id": "planting_trees",
+            "label": "Planting Trees",
+            "category": "recharges",
+            "explanation": "Tree roots create channels in the soil that help water seep through into underground aquifers.",
+            "hint": "Think: What do tree roots do to the soil structure?",
+            "icon": "🌳"
+        },
+        {
+            "id": "open_soil",
+            "label": "Open Soil / Permeable Surfaces",
+            "category": "recharges",
+            "explanation": "Open soil and permeable surfaces allow rainwater to naturally infiltrate and recharge groundwater.",
+            "hint": "Think: Can water pass through open soil easily?",
+            "icon": "🌱"
+        },
+        {
+            "id": "check_dams",
+            "label": "Check Dams",
+            "category": "recharges",
+            "explanation": "Check dams slow down flowing water, giving it time to seep into the ground and recharge aquifers.",
+            "hint": "Think: What happens when flowing water is slowed down near soil?",
+            "icon": "🧱"
+        }
+    ],
+    "animations": {
+        "description": "All animations are CSS keyframes injected via useEffect into a style tag with id 'groundwater-classifier-keyframes'. No external animation library is used.",
+        "general": [
+            {
+                "name": "fadeInUp",
+                "use": "Page/step entry transitions"
+            },
+            {
+                "name": "fadeInDown",
+                "use": "Instruction banner entry"
+            },
+            {
+                "name": "fadeOutDown",
+                "use": "Step exit transition"
+            },
+            {
+                "name": "popIn",
+                "use": "Feedback banners, score elements"
+            },
+            {
+                "name": "pulse",
+                "use": "Sun glow, generic pulsing"
+            },
+            {
+                "name": "bounce",
+                "use": "Generic bounce effect"
+            },
+            {
+                "name": "float",
+                "use": "Clouds, rain drops gentle bob"
+            },
+            {
+                "name": "shimmer",
+                "use": "Background shimmer effect"
+            },
+            {
+                "name": "ripple",
+                "use": "Click ripple feedback"
+            }
+        ],
+        "classifier": [
+            {
+                "name": "shakeX",
+                "use": "Wrong answer — card shakes horizontally"
+            },
+            {
+                "name": "correctGlow",
+                "use": "Correct answer green glow"
+            },
+            {
+                "name": "slideInLeft",
+                "use": "Summary depleted side entry"
+            },
+            {
+                "name": "slideInRight",
+                "use": "Summary recharged side entry"
+            },
+            {
+                "name": "dropIn",
+                "use": "Sorted card drops into bin"
+            },
+            {
+                "name": "confetti",
+                "use": "40 confetti particles on completion"
+            },
+            {
+                "name": "scorePopIn",
+                "use": "Score counter update pop"
+            },
+            {
+                "name": "cardHoverGlow",
+                "use": "Card hover glow effect"
+            }
+        ],
+        "pumpScene_step2": [
+            {
+                "name": "pumpHandleDown",
+                "duration": "1.6s",
+                "use": "Handle rocks -25deg and returns. Pivots from transformOrigin 168px 54px."
+            },
+            {
+                "name": "pumpPistonMove",
+                "duration": "1.6s",
+                "use": "Piston rod moves up 10px inside motor body, synced with handle."
+            },
+            {
+                "name": "motorVibrate",
+                "duration": "0.15s",
+                "use": "Subtle +/-0.5px horizontal vibration on motor housing."
+            },
+            {
+                "name": "spoutStream",
+                "duration": "0.8s",
+                "use": "Water arc from nozzle — stroke-dashoffset animates for flowing effect. Two overlapping paths."
+            },
+            {
+                "name": "spoutDrop1",
+                "duration": "1s",
+                "use": "Water drop falls from arc point 1 with directional translate(6px, 20px)."
+            },
+            {
+                "name": "spoutDrop2",
+                "duration": "1s",
+                "delay": "0.35s",
+                "use": "Water drop falls from arc point 2 with translate(3px, 22px)."
+            },
+            {
+                "name": "spoutDrop3",
+                "duration": "1s",
+                "delay": "0.7s",
+                "use": "Water drop falls from arc point 3 with translate(8px, 18px)."
+            },
+            {
+                "name": "spoutSplash",
+                "duration": "1s",
+                "use": "Pulsing ellipse rings where water hits ground."
+            },
+            {
+                "name": "pipeFlowUp",
+                "duration": "0.5s",
+                "use": "Dashed blue line inside pipe moves upward (stroke-dashoffset 16 to 0)."
+            },
+            {
+                "name": "bubbleRise1",
+                "duration": "1.8s",
+                "use": "Bubble at y=220 rises 40px and shrinks."
+            },
+            {
+                "name": "bubbleRise2",
+                "duration": "1.8s",
+                "delay": "0.6s",
+                "use": "Bubble at y=200 rises 35px and shrinks."
+            },
+            {
+                "name": "bubbleRise3",
+                "duration": "1.8s",
+                "delay": "1.2s",
+                "use": "Bubble at y=180 rises 45px and shrinks."
+            },
+            {
+                "name": "waterTableSink",
+                "duration": "4s",
+                "use": "Water table div height shrinks from 42% to 15% on scene load."
+            },
+            {
+                "name": "warningPulse",
+                "duration": "1.5s",
+                "use": "Warning emoji scales 1 to 1.15 to 1 with opacity shift."
+            }
+        ],
+        "crossSection_default": [
+            {
+                "name": "waterRise",
+                "use": "Water table height 20% to 65% (available but not currently auto-triggered)"
+            },
+            {
+                "name": "waterDrop",
+                "use": "Water table height 65% to 20% (available but not currently auto-triggered)"
+            }
+        ]
+    },
+    "visualLayout": {
+        "groundPlacement": "All trees, houses, and objects are positioned using CSS calc() relative to the ground surface line. For example top: calc(30% - 34px) anchors a 32px-tall tree so its base sits exactly on the 30% ground line. The ground surface is marked by a solid green gradient strip with grass emoji patches.",
+        "pumpScene": {
+            "containerHeight": 280,
+            "groundLinePosition": "32%",
+            "backgroundLayers": "Sky (#87CEEB) 0-32%, Soil (#A0885A to #8B7355) 32-48%, Rock (#6B5B3E to #5A4A30) 48-100%",
+            "svgViewBox": "0 0 300 280",
+            "svgCoverage": "Full scene height, 70% width, centered horizontally",
+            "pumpBaseY": "y=86 in SVG (aligns with 32% ground line)",
+            "pipeExtent": "y=96 to y=257 (from base through soil and rock into aquifer)",
+            "surfaceElements": "House at calc(32% - 30px), tree at calc(32% - 34px), smaller tree at calc(32% - 24px), grass patches at calc(32% - 4px)"
+        },
+        "defaultCrossSection": {
+            "containerHeight": 200,
+            "groundLinePosition": "30%",
+            "backgroundLayers": "Sky (#87CEEB) 0-30%, Soil (#8B7355) 30-45%, Rock (#6B5B3E) 45-100%",
+            "waterTableSteps1to3": "25% height",
+            "waterTableSteps4to5": "40% height (rain visible)",
+            "surfaceElements": "Tree1 at calc(30% - 34px), tree2 at calc(30% - 26px), tree3 at calc(30% - 32px), house at calc(30% - 24px), grass patches at calc(30% - 4px)"
+        },
+        "summaryCrossSections": {
+            "height": 80,
+            "depletedSide": "Sky (#fef2f2) 0-30%, soil/rock below. Ground line at 30% with stump, factory, construction on surface. Water table at 20% (red).",
+            "rechargedSide": "Sky (#f0fdf4) 0-30%, soil/rock below. Ground line at 30% with trees and house on surface, rain drops. Water table at 65% (green)."
+        }
+    },
+    "designTokens": {
+        "colors": {
+            "primary": "#4A4DC9",
+            "secondary": "#FF7212",
+            "purple": "#533086",
+            "orange": "#FC9145",
+            "lightPurple": "#C1C1EA",
+            "lightOrange": "#FFF3E4",
+            "gray": "#4E4E4E",
+            "lightGray": "#F5F5F5",
+            "depletes": "#DC2626",
+            "recharges": "#16A34A",
+            "pumpBody": "#DC2626",
+            "pumpBodyDark": "#991B1B",
+            "pumpBodyDarkest": "#B91C1C",
+            "pipeMetal": "#78716C",
+            "pipeMetalLight": "#A8A29E",
+            "pipeMetalDark": "#57534E",
+            "handleDark": "#44403C",
+            "handleMid": "#4B5563",
+            "boltGray": "#6B7280",
+            "waterBlue": "#3B82F6",
+            "waterLight": "#60A5FA",
+            "bubbleBlue": "#93C5FD",
+            "bubbleLighter": "#BFDBFE",
+            "soilBrown": "#8B7355",
+            "soilLight": "#A0885A",
+            "rockBrown": "#6B5B3E",
+            "rockDark": "#5A4A30",
+            "grassGreen": "#4CAF50",
+            "grassDark": "#6B8E23",
+            "skyBlue": "#87CEEB"
+        },
+        "fonts": {
+            "primary": "Poppins",
+            "weights": [
+                400,
+                500,
+                600,
+                700,
+                800
+            ],
+            "fallback": "-apple-system, BlinkMacSystemFont, sans-serif",
+            "loadedVia": "@import url in injected style tag"
+        },
+        "borderRadius": {
+            "card": 12,
+            "container": 24,
+            "button": 10,
+            "bin": 16,
+            "feedback": 12,
+            "scoreBar": 12
+        }
+    },
+    "interactionMethods": {
+        "dragAndDrop": "Mouse/touch drag from center cards to left/right bins. Ghost card follows cursor at fixed position with rotation and elevation. Bins scale up and change opacity on hover.",
+        "tapToSort": "Tap a card to select it (highlighted with primary color border and shadow). Then tap a bin to place it. Selection toggles on second tap."
+    },
+    "feedbackSystem": {
+        "correct": "Card removed from center, inserted into bin with dropIn animation. Green banner shows check icon + Correct + explanation text. Banner auto-dismisses after 3s.",
+        "incorrect": "Card shakes in place (shakeX, 0.5s). Red banner shows X icon + Not quite + hint text. Banner auto-dismisses after 3s.",
+        "completion": "Score reaches 9/9 then 0.8s delay then completed flag then triggerCelebration (40 confetti particles, 4s) then 1.5s delay then showSummary flag then split-screen summary with key insight."
+    }
+}

@@ -1,0 +1,95 @@
+{
+    "toolName": "decimal_matching_tool",
+    "version": "2.0.0",
+    "description": "Interactive matching tool for CBSE Grade 7 Mathematics (Decimals chapter) — redesigned with Singularity Design System. Two sections. Section 1: Two number lines (Line A: 8–8.1 with points d,e; Line B: 4.3–4.8 with points f,g,h). Five draggable point labels matched to five decimal values. Section 2: Three comparison pairs matched to answers. All items shuffled. Poppins font, pill-shaped buttons, purple-orange gradient theme.",
+    "designSystem": {
+        "name": "Singularity",
+        "font": "Poppins",
+        "colors": {
+            "primary": "#4A4DC9",
+            "secondary": "#FF7212",
+            "gradientStart": "#533086",
+            "gradientEnd": "#FC9145",
+            "primaryLight": "#C1C1EA",
+            "secondaryLight": "#FFF3E4",
+            "textDark": "#4E4E4E",
+            "textMuted": "#CACACA",
+            "disabled": "#EBEBEB",
+            "surface": "#F5F5F5"
+        },
+        "buttonStyle": "pill (border-radius: 40px)",
+        "buttonStates": ["Enabled", "Disabled", "Hover", "Pressed"],
+        "buttonVariants": ["Contained", "Outlined", "Texted", "Highlight"]
+    },
+    "parameters": {
+        "width": { "type": "number", "default": 800, "description": "Width of the tool in pixels" },
+        "height": { "type": "number", "default": 600, "description": "Minimum height of the tool in pixels" },
+        "themeColor": { "type": "string", "default": "#4A4DC9", "description": "Primary theme color (Singularity purple)" },
+        "darkMode": { "type": "boolean", "default": false, "description": "Dark mode toggle" },
+        "showModeSelector": { "type": "boolean", "default": false },
+        "showNavigation": { "type": "boolean", "default": false },
+        "animationSpeed": { "type": "number", "default": 1 },
+        "autoPlayDuration": { "type": "number", "default": 0 }
+    },
+    "additionalProps": {
+        "description": "Tool-specific dynamic content for decimal matching exercises",
+        "schema": {
+            "numberLines": {
+                "type": "array",
+                "description": "Number line configurations with labeled points",
+                "items": {
+                    "id": "string",
+                    "from": "number — start value",
+                    "to": "number — end value",
+                    "points": "array of {label: string, value: number}",
+                    "label": "string — display label"
+                }
+            },
+            "pointLabels": { "type": "array", "description": "Left-side items for Section 1", "items": { "id": "string", "label": "string" } },
+            "pointValues": { "type": "array", "description": "Right-side items for Section 1", "items": { "id": "string", "label": "string" } },
+            "comparisonPairs": { "type": "array", "description": "Left-side items for Section 2", "items": { "id": "string", "label": "string" } },
+            "comparisonAnswers": { "type": "array", "description": "Right-side items for Section 2", "items": { "id": "string", "label": "string" } },
+            "correctPointMatches": { "type": "object", "description": "Maps pointLabel IDs → pointValue IDs" },
+            "correctComparisonMatches": { "type": "object", "description": "Maps comparisonPair IDs → comparisonAnswer IDs" },
+            "themeColors": {
+                "type": "object",
+                "description": "Override Singularity design system colors",
+                "properties": {
+                    "primary": "#4A4DC9 — main purple",
+                    "secondary": "#FF7212 — main orange",
+                    "accent": "#FC9145 — gradient end orange",
+                    "accentLight": "#FFF3E4 — light peach",
+                    "primaryLight": "#C1C1EA — light purple",
+                    "correctGreen": "#22C55E",
+                    "incorrectRed": "#EF4444",
+                    "textDark": "#4E4E4E",
+                    "textMuted": "#CACACA",
+                    "disabled": "#EBEBEB",
+                    "surface": "#F5F5F5"
+                }
+            }
+        },
+        "examples": [
+            {
+                "name": "Default CBSE Grade 7 exercise",
+                "value": {
+                    "numberLines": [
+                        { "id": "lineA", "from": 8, "to": 8.1, "points": [{ "label": "d", "value": 8.03 }, { "label": "e", "value": 8.07 }], "label": "Line A" },
+                        { "id": "lineB", "from": 4.3, "to": 4.8, "points": [{ "label": "f", "value": 4.40 }, { "label": "g", "value": 4.55 }, { "label": "h", "value": 4.70 }], "label": "Line B" }
+                    ]
+                }
+            }
+        ]
+    },
+    "modes": { "practice": { "name": "Practice", "description": "Interactive matching exercise" } },
+    "teachingNotes": "Use AFTER teaching digit-by-digit comparison and non-standard number line reading. The matching format forces calculation. The 3.81 vs 13.800 pair tests tens-digit dominance.",
+    "instructionsForStudent": "Match each labeled point to its decimal value, and each comparison pair to the correct answer. Calculate the value per division first!",
+    "curriculum": {
+        "board": "CBSE",
+        "grade": 7,
+        "subject": "Mathematics",
+        "chapter": "A Peek Beyond the Point (Chapter 3)",
+        "book": "Ganita Prakash",
+        "topics": ["Locating decimals on number line", "Comparing decimal numbers", "Ordering decimals", "Place value in decimals"]
+    }
+}

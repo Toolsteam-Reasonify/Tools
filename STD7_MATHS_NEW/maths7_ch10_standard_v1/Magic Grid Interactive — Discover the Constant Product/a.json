@@ -1,0 +1,185 @@
+{
+  "toolName": "magic_grid_tool",
+  "version": "1.0.0",
+  "description": "Step-based interactive tool for Grade 7 Mathematics — Magic Grid of Integers. Walks students through the circle-and-strike procedure on a 4×4 integer grid, revealing that the product of circled numbers is always the same regardless of which numbers are chosen.",
+  "category": "mathematics",
+  "grade": 7,
+  "topic": "Operations with Integers",
+  "subtopic": "A Magic Grid of Integers",
+  "curriculum": "NCERT Ganita Prakash Grade 7 Part-II, Chapter 2",
+  "parameters": {
+    "width": {
+      "type": "number",
+      "default": 900,
+      "description": "Maximum width of the tool container in pixels"
+    },
+    "height": {
+      "type": "number",
+      "default": 700,
+      "description": "Approximate height of the tool container in pixels"
+    },
+    "initialMode": {
+      "type": "string",
+      "default": "learn",
+      "enum": ["learn"],
+      "description": "This tool operates in learn mode with step-based progression"
+    },
+    "showModeSelector": {
+      "type": "boolean",
+      "default": false,
+      "description": "Mode selector is not used for this tool"
+    },
+    "showNavigation": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show previous/next navigation buttons"
+    },
+    "showStepIndicator": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show the 6-step progress indicator at the top"
+    },
+    "animationSpeed": {
+      "type": "number",
+      "default": 1,
+      "description": "Multiplier for animation speed. Higher = faster. Range 0.5 to 3."
+    },
+    "autoPlayDuration": {
+      "type": "number",
+      "default": 0,
+      "description": "Not used — steps advance manually via Next button"
+    },
+    "themeColor": {
+      "type": "string",
+      "default": "#f97316",
+      "description": "Primary accent color (orange)"
+    },
+    "darkMode": {
+      "type": "boolean",
+      "default": false,
+      "description": "Dark mode toggle (not currently supported)"
+    }
+  },
+  "additionalProps": {
+    "description": "Tool-specific dynamic data for the Magic Grid",
+    "schema": {
+      "grid": {
+        "type": "number[][]",
+        "default": [
+          [8, -4, 12, -6],
+          [-28, 14, -42, 21],
+          [12, -6, 18, -9],
+          [20, -10, 30, -15]
+        ],
+        "description": "A 4×4 grid of integers. Must have the magic property where any selection via the circle-and-strike procedure yields the same product."
+      },
+      "run1Choices": {
+        "type": "[number, number][]",
+        "default": [[3, 0], [1, 1], [0, 2], [2, 3]],
+        "description": "Array of 4 [row, col] pairs for the first demonstration run. Each pair must select a cell not already struck out by a previous selection."
+      },
+      "run2Choices": {
+        "type": "[number, number][]",
+        "default": [[1, 0], [0, 1], [2, 2], [3, 3]],
+        "description": "Array of 4 [row, col] pairs for the second demonstration run (the 'magic reveal'). Must be different from run1Choices to show the product stays the same."
+      },
+      "expectedProduct": {
+        "type": "number",
+        "default": null,
+        "description": "The constant product of the grid. If not provided, it is calculated from run1Choices. For the default grid, this is -30240."
+      }
+    },
+    "examples": {
+      "default_textbook_grid": {
+        "grid": [
+          [8, -4, 12, -6],
+          [-28, 14, -42, 21],
+          [12, -6, 18, -9],
+          [20, -10, 30, -15]
+        ],
+        "run1Choices": [[3, 0], [1, 1], [0, 2], [2, 3]],
+        "run2Choices": [[1, 0], [0, 1], [2, 2], [3, 3]],
+        "expectedProduct": -30240
+      },
+      "simple_positive_grid": {
+        "grid": [
+          [2, 6, 4, 10],
+          [3, 9, 6, 15],
+          [1, 3, 2, 5],
+          [5, 15, 10, 25]
+        ],
+        "run1Choices": [[0, 0], [1, 1], [2, 2], [3, 3]],
+        "run2Choices": [[0, 3], [1, 2], [2, 1], [3, 0]],
+        "expectedProduct": 900
+      }
+    }
+  },
+  "modes": {
+    "learn": {
+      "description": "Step-by-step walkthrough of the circle-and-strike procedure with two runs",
+      "enabled": true
+    }
+  },
+  "steps": {
+    "description": "6 steps in the learn mode",
+    "list": [
+      {
+        "id": 0,
+        "title": "The Magic Grid",
+        "description": "Introduction to the 4×4 grid and the circle-and-strike procedure. Students read instructions and prepare."
+      },
+      {
+        "id": 1,
+        "title": "Run 1 — Round 1",
+        "description": "First number is circled, its row and column are struck out."
+      },
+      {
+        "id": 2,
+        "title": "Run 1 — Round 2",
+        "description": "Second number is circled from remaining unstruck cells."
+      },
+      {
+        "id": 3,
+        "title": "Run 1 — Rounds 3 & 4",
+        "description": "Third and fourth numbers are circled, completing the first run."
+      },
+      {
+        "id": 4,
+        "title": "The Product — Run 1",
+        "description": "All 4 circled numbers are multiplied together. Students are asked: will different choices give the same product?"
+      },
+      {
+        "id": 5,
+        "title": "Magic Revealed!",
+        "description": "A second run with completely different choices is shown. The product is identical — revealing the grid's magic property."
+      }
+    ]
+  },
+  "teaching_notes": {
+    "step_0": "Briefly explain the grid and the circle-and-strike procedure. Let students trace their own copy with a pencil.",
+    "step_4": "DO NOT reveal the constant product property immediately. Instead ask: 'Does anyone want to try a different set of choices? Do you think the answer will be the same or different?' Create suspense.",
+    "step_5": "The reveal should feel like a magic trick. Then ask: 'What is special about this grid? Is it the numbers, the arrangement, or both?' This opens the door to deeper pattern thinking. If time permits, challenge students to create their own magic grid."
+  },
+  "instructions_for_student": "Watch each round carefully: one number is circled and its entire row and column are crossed out. After 4 rounds, count the circled numbers and multiply them. After the first run is complete, predict: if we chose completely different numbers at each round, would the product change? Then watch the reveal.",
+  "visual_design": {
+    "description": "Central visual: a crisp 4×4 grid of integer cells on a light parchment background, reminiscent of a maths classroom blackboard activity in India.",
+    "font": "Lilita One (headings/numbers), Nunito (body text)",
+    "palette": {
+      "orange": "#f97316",
+      "red_strike": "#ef4444",
+      "green_circle": "#22c55e",
+      "white_background": "#fffbf0",
+      "dark_text": "#1e293b"
+    },
+    "animations": {
+      "circle": "Bright orange ring animates around selected cell (0.4s scale-in)",
+      "strike": "Red diagonal line sweeps across each struck cell (0.3s), struck cells dim to 40% opacity",
+      "circled_panel": "Cards accumulate on the right, one per round (slide-in)",
+      "product": "Cards slide together with × symbol, product appears in a large badge",
+      "step_indicator": "6-step progress bar at top",
+      "magic_reveal": "Second run plays automatically, 'Magic Revealed!' banner slides in with sparkle animation"
+    },
+    "responsive": true,
+    "aesthetic": "Indian school magic-show aesthetic"
+  }
+}

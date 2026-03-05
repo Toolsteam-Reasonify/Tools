@@ -1,0 +1,252 @@
+{
+  "toolName": "hcf_coprime_practice_tool",
+  "version": "1.0.0",
+  "description": "Interactive standalone calculation practice tool for Grade 7 Mathematics — HCF Practice with Co-prime Detection. Five problems displayed as cards that students work through sequentially. Each card shows two numbers. Student enters the prime factorisation of each in an input area. The tool highlights matching primes with connecting lines between the two factorisations. Student selects minimum counts via dropdowns. The HCF is computed and validated. When HCF = 1, a special green CO-PRIME badge appears with a brief explanation. A progress bar at the top tracks completion. Emerald green (#10b981) accent for correct answers, rose for errors. Venn diagram overlay shows shared vs unique primes. Indian school context. Clean educational design using Lilita One + Nunito font family. Touch-friendly inputs for mobile. 5-colour palette: emerald, rose, white background, dark slate text, light grey card backgrounds.",
+  "topic": "HCF When No Common Prime Factors and Practice",
+  "subject": "Mathematics",
+  "grade": 7,
+  "curriculum": "NCERT / Ganita Prakash — Chapter 3: Finding Common Ground",
+  "teachingNotes": "Standalone practice tool — students work independently with immediate validation. Problem 3 (77, 725) is co-prime (HCF = 1). Problem 5 (81, 243) is special because 81 divides 243. Show a summary after all 5 are completed.",
+  "instructionsForStudent": "For each pair of numbers, first find the prime factorisation of both. Then identify which primes are common. For each common prime, take the minimum count. Multiply them to get the HCF. Watch out for co-prime pairs where HCF = 1!",
+  "parameters": {
+    "width": {
+      "type": "number",
+      "default": 800,
+      "description": "Container width in pixels"
+    },
+    "height": {
+      "type": "number",
+      "default": 600,
+      "description": "Container height in pixels"
+    },
+    "animationSpeed": {
+      "type": "number",
+      "default": 1,
+      "description": "Animation speed multiplier"
+    },
+    "themeColor": {
+      "type": "string",
+      "default": "#10b981",
+      "description": "Primary emerald accent colour"
+    },
+    "darkMode": {
+      "type": "boolean",
+      "default": false,
+      "description": "Dark mode toggle"
+    }
+  },
+  "additionalProps": {
+    "description": "Tool-specific dynamic content for HCF practice",
+    "schema": {
+      "problems": {
+        "type": "array",
+        "description": "Array of number pairs for practice. Each pair has num1 and num2.",
+        "items": {
+          "type": "object",
+          "properties": {
+            "num1": { "type": "number", "description": "First number" },
+            "num2": { "type": "number", "description": "Second number" }
+          },
+          "required": ["num1", "num2"]
+        },
+        "default": [
+          { "num1": 50, "num2": 60 },
+          { "num1": 140, "num2": 275 },
+          { "num1": 77, "num2": 725 },
+          { "num1": 370, "num2": 592 },
+          { "num1": 81, "num2": 243 }
+        ]
+      },
+      "showVennDiagram": {
+        "type": "boolean",
+        "default": true,
+        "description": "Whether to show a Venn diagram of shared vs unique primes after validation"
+      },
+      "showHints": {
+        "type": "boolean",
+        "default": false,
+        "description": "Show step-by-step hints for each problem"
+      },
+      "accentColor": {
+        "type": "string",
+        "default": "#10b981",
+        "description": "Override emerald accent colour"
+      },
+      "errorColor": {
+        "type": "string",
+        "default": "#f43f5e",
+        "description": "Override rose error colour"
+      }
+    },
+    "examples": {
+      "default_five_problems": {
+        "problems": [
+          { "num1": 50, "num2": 60 },
+          { "num1": 140, "num2": 275 },
+          { "num1": 77, "num2": 725 },
+          { "num1": 370, "num2": 592 },
+          { "num1": 81, "num2": 243 }
+        ]
+      },
+      "all_coprime_pairs": {
+        "problems": [
+          { "num1": 7, "num2": 11 },
+          { "num1": 8, "num2": 15 },
+          { "num1": 13, "num2": 27 },
+          { "num1": 96, "num2": 275 }
+        ]
+      },
+      "easy_problems": {
+        "problems": [
+          { "num1": 12, "num2": 16 },
+          { "num1": 24, "num2": 36 },
+          { "num1": 18, "num2": 30 }
+        ]
+      },
+      "chapter_exercise_set": {
+        "problems": [
+          { "num1": 24, "num2": 180 },
+          { "num1": 240, "num2": 378 },
+          { "num1": 400, "num2": 2500 },
+          { "num1": 300, "num2": 800 }
+        ]
+      }
+    }
+  },
+  "modes": {
+    "practice": {
+      "label": "Practice",
+      "description": "Students work through 5 problems sequentially with immediate validation"
+    }
+  },
+  "features": [
+    "Prime factorisation input with flexible parsing (accepts ×, *, x as separators)",
+    "Automatic validation of prime factorisations and HCF",
+    "Co-prime detection with animated badge when HCF = 1",
+    "Animated Venn diagram showing shared vs unique prime factors",
+    "Progress bar tracking completion across all problems",
+    "Summary screen with star rating at the end",
+    "Touch-friendly inputs for mobile devices",
+    "Staggered entry animations for each problem card",
+    "Shake animation on incorrect answers",
+    "Confetti animation on summary screen"
+  ],
+  "colorPalette": {
+    "emerald": "#10b981",
+    "rose": "#f43f5e",
+    "white": "#ffffff",
+    "darkSlate": "#1e293b",
+    "lightGrey": "#f1f5f9"
+  },
+  "fonts": {
+    "display": "Lilita One",
+    "body": "Nunito"
+  },
+  "toolCallExamples": [
+    {
+      "description": "Default textbook exercise (Chapter 3 Figure it Out)",
+      "parameters": {
+        "additionalProps": {
+          "problems": [
+            { "num1": 50, "num2": 60 },
+            { "num1": 140, "num2": 275 },
+            { "num1": 77, "num2": 725 },
+            { "num1": 370, "num2": 592 },
+            { "num1": 81, "num2": 243 }
+          ]
+        }
+      }
+    },
+    {
+      "description": "Easy warm-up problems for introduction",
+      "parameters": {
+        "additionalProps": {
+          "problems": [
+            { "num1": 12, "num2": 16 },
+            { "num1": 8, "num2": 12 },
+            { "num1": 15, "num2": 25 }
+          ],
+          "showVennDiagram": true,
+          "showHints": true
+        }
+      }
+    },
+    {
+      "description": "Focus on co-prime pairs only",
+      "parameters": {
+        "additionalProps": {
+          "problems": [
+            { "num1": 7, "num2": 11 },
+            { "num1": 96, "num2": 275 },
+            { "num1": 13, "num2": 27 },
+            { "num1": 8, "num2": 15 },
+            { "num1": 49, "num2": 100 }
+          ]
+        }
+      }
+    },
+    {
+      "description": "Advanced HCF problems from chapter exercises",
+      "parameters": {
+        "additionalProps": {
+          "problems": [
+            { "num1": 24, "num2": 180 },
+            { "num1": 240, "num2": 378 },
+            { "num1": 400, "num2": 2500 },
+            { "num1": 300, "num2": 800 },
+            { "num1": 225, "num2": 750 }
+          ]
+        }
+      }
+    },
+    {
+      "description": "Factor-multiple relationship problems (HCF = smaller number)",
+      "parameters": {
+        "additionalProps": {
+          "problems": [
+            { "num1": 6, "num2": 18 },
+            { "num1": 3, "num2": 24 },
+            { "num1": 12, "num2": 48 },
+            { "num1": 81, "num2": 243 }
+          ]
+        }
+      }
+    },
+    {
+      "description": "Compact mode without Venn diagram",
+      "parameters": {
+        "additionalProps": {
+          "problems": [
+            { "num1": 45, "num2": 75 },
+            { "num1": 112, "num2": 84 }
+          ],
+          "showVennDiagram": false
+        }
+      }
+    },
+    {
+      "description": "Two-number pairs from real-world contexts (rice bags, tiles)",
+      "parameters": {
+        "additionalProps": {
+          "problems": [
+            { "num1": 84, "num2": 108 },
+            { "num1": 12, "num2": 16 },
+            { "num1": 30, "num2": 72 }
+          ]
+        }
+      }
+    },
+    {
+      "description": "Three numbers practice via pairwise HCF",
+      "parameters": {
+        "additionalProps": {
+          "problems": [
+            { "num1": 42, "num2": 75 },
+            { "num1": 75, "num2": 24 },
+            { "num1": 42, "num2": 24 }
+          ]
+        }
+      }
+    }
+  ]
+}

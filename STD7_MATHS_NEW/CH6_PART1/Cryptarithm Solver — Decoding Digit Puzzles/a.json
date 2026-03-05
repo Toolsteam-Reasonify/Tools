@@ -1,0 +1,228 @@
+{
+  "toolName": "cryptarithm_solver_tool",
+  "version": "1.0.0",
+  "description": "Interactive step-based cryptarithm solver for Grade 7 Mathematics — Chapter 6: Number Play. Displays cryptarithm puzzles in vertical addition format with letter placeholders. Six progressive phases covering two puzzles: T+T+T=UT (simple, single-column) and K2+K2=HMM (multi-column with carry). Active column highlighted with a glowing border. Digit testing shown as a scrolling list where invalid digits are crossed out in red and the valid digit glows green. Carry values shown as small superscript numbers between columns. Solved letters appear in a decoder panel on the side with letter-to-digit mappings. Emerald green accent (#10b981) for solved digits, red for eliminated digits, amber for active testing. Vertical addition layout with clear column separators. Indian school context — described as detective work decoding secret messages. Clean educational design with Lilita One font family and Space Mono for decoded digits. Touch-friendly, mobile-responsive. 5-colour palette: emerald, red, amber, white, dark grey.",
+  "parameters": {
+    "width": {
+      "type": "number",
+      "default": 800,
+      "description": "Width of the tool container in pixels"
+    },
+    "height": {
+      "type": "number",
+      "default": 600,
+      "description": "Height of the tool container in pixels"
+    },
+    "initialMode": {
+      "type": "string",
+      "enum": ["learn", "practice"],
+      "default": "learn",
+      "description": "Starting mode. 'learn' for guided step-by-step walkthrough, 'practice' for independent solving"
+    },
+    "showModeSelector": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide the mode tabs at the top"
+    },
+    "enabledModes": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["learn", "practice"] },
+      "default": ["learn", "practice"],
+      "description": "Which modes to enable"
+    },
+    "showNavigation": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide previous/next navigation buttons"
+    },
+    "showPlayPause": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide auto-play button"
+    },
+    "showStepIndicator": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide the step counter (e.g., 3/9)"
+    },
+    "initialStep": {
+      "type": "number",
+      "default": 1,
+      "description": "Starting step ID"
+    },
+    "filterSteps": {
+      "type": "array",
+      "items": { "type": "number" },
+      "default": null,
+      "description": "If provided, only show steps with these IDs"
+    },
+    "animationSpeed": {
+      "type": "number",
+      "default": 1,
+      "description": "Animation speed multiplier (0.5 = slow, 1 = normal, 2 = fast)"
+    },
+    "autoPlayDuration": {
+      "type": "number",
+      "default": 0,
+      "description": "Auto-advance delay in ms. 0 = manual advance only"
+    },
+    "themeColor": {
+      "type": "string",
+      "default": "#10b981",
+      "description": "Primary accent color (emerald green by default)"
+    },
+    "darkMode": {
+      "type": "boolean",
+      "default": false,
+      "description": "Dark mode toggle"
+    }
+  },
+  "additionalProps": {
+    "description": "Tool-specific dynamic data for customizing puzzles and behavior",
+    "properties": {
+      "puzzles": {
+        "type": "array",
+        "description": "Custom cryptarithm puzzles to use instead of defaults",
+        "items": {
+          "type": "object",
+          "properties": {
+            "operands": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Array of operand strings, e.g., ['T', 'T', 'T'] or ['K2', 'K2']"
+            },
+            "operator": {
+              "type": "string",
+              "enum": ["+"],
+              "description": "Currently only addition is supported"
+            },
+            "result": {
+              "type": "string",
+              "description": "Result string, e.g., 'UT' or 'HMM'"
+            },
+            "solution": {
+              "type": "object",
+              "description": "Letter-to-digit mapping, e.g., { T: 5, U: 1 }"
+            },
+            "carries": {
+              "type": "object",
+              "description": "Column carries, e.g., { 0: 0, 1: 1 }"
+            }
+          }
+        }
+      },
+      "showHints": {
+        "type": "boolean",
+        "default": true,
+        "description": "Whether to show hint buttons in practice mode"
+      },
+      "animationSpeed": {
+        "type": "string",
+        "enum": ["slow", "normal", "fast"],
+        "default": "normal",
+        "description": "Speed of digit testing reveal animations"
+      }
+    },
+    "examples": {
+      "default_guided_mode": {
+        "description": "Default tool with guided walkthrough of T+T+T=UT and K2+K2=HMM"
+      },
+      "practice_only": {
+        "showHints": true,
+        "description": "Jump straight to practice mode"
+      }
+    }
+  },
+  "modes": {
+    "learn": {
+      "label": "Guided Solve",
+      "icon": "🔍",
+      "description": "Step-by-step guided walkthrough of two cryptarithm puzzles"
+    },
+    "practice": {
+      "label": "Practice",
+      "icon": "✏️",
+      "description": "Solve cryptarithm puzzles independently with optional hints"
+    }
+  },
+  "steps": {
+    "learn": [
+      {
+        "id": 1,
+        "title": "Welcome, Detective!",
+        "description": "Introduction to cryptarithms as code-breaking"
+      },
+      {
+        "id": 2,
+        "title": "Understanding the Puzzle",
+        "description": "Explains T+T+T=UT structure"
+      },
+      {
+        "id": 3,
+        "title": "Testing Digits for T",
+        "description": "Systematic digit testing 0-9 with elimination"
+      },
+      {
+        "id": 4,
+        "title": "Puzzle 1 Solved!",
+        "description": "T=5, U=1 revealed with celebration"
+      },
+      {
+        "id": 5,
+        "title": "Puzzle 2: K2+K2=HMM",
+        "description": "Introduction to multi-column puzzle"
+      },
+      {
+        "id": 6,
+        "title": "Column 1: Units Place",
+        "description": "Solving 2+2 to find M with column highlighting"
+      },
+      {
+        "id": 7,
+        "title": "Column 2: Tens Place",
+        "description": "Testing K values with carry handling"
+      },
+      {
+        "id": 8,
+        "title": "The Leading Zero Trap!",
+        "description": "Why K=2 fails (H would be 0) — common mistake"
+      },
+      {
+        "id": 9,
+        "title": "Puzzle 2 Solved!",
+        "description": "K=7, M=4, H=1 revealed"
+      }
+    ],
+    "practice": [
+      {
+        "id": 10,
+        "title": "YY + Z = ZOO",
+        "description": "Practice puzzle from textbook"
+      },
+      {
+        "id": 11,
+        "title": "B5 + 3D = ED5",
+        "description": "Practice puzzle from textbook"
+      },
+      {
+        "id": 12,
+        "title": "KP + KP = PRR",
+        "description": "Practice puzzle from textbook"
+      },
+      {
+        "id": 13,
+        "title": "C1 + C = 1FF",
+        "description": "Practice puzzle from textbook"
+      }
+    ]
+  },
+  "instructions_for_student": "Follow along as we solve two cryptarithm puzzles step by step. Watch how we work column by column from right to left, testing digits systematically and tracking carries. After the guided examples, try the practice puzzles on your own!",
+  "teaching_notes": {
+    "step_1": "Build excitement — frame it as code-breaking. You are a detective decoding secret messages!",
+    "step_2": "Let the student guess before systematic testing. Ask: What do you think T could be?",
+    "step_3": "Emphasize testing ALL digits 0-9, not just guessing. This is the systematic approach.",
+    "steps_4_to_6": "Introduce the column-by-column strategy and carry handling — just like regular addition.",
+    "step_8": "Point out the leading-zero trap (K=2 gives H=0) — this is a very common mistake!",
+    "after_tool": "Give students the practice cryptarithms (YY+Z=ZOO, B5+3D=ED5, KP+KP=PRR, C1+C=1FF) to solve independently."
+  }
+}

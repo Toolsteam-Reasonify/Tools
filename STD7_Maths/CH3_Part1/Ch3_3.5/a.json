@@ -1,0 +1,209 @@
+{
+    "toolName": "units_of_measurement_tool",
+    "version": "1.0.0",
+    "description": "Interactive tool for learning unit conversions (mm↔cm, cm↔m, g↔kg, rupees↔paise) with decimal notation, based on NCERT Ganita Prakash Grade 7, Chapter 3, Section 3.5.",
+    "category": "mathematics",
+    "grade": 7,
+    "chapter": 3,
+    "section": "3.5",
+    "topic": "Units of Measurement",
+
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Width of the tool in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Height of the tool in pixels"
+        },
+        "initialMode": {
+            "type": "string",
+            "enum": ["learn", "practice", "real_world"],
+            "default": "learn",
+            "description": "Starting mode for the tool"
+        },
+        "showModeSelector": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide mode selection tabs"
+        },
+        "enabledModes": {
+            "type": "array",
+            "items": { "type": "string", "enum": ["learn", "practice", "real_world"] },
+            "default": ["learn", "practice", "real_world"],
+            "description": "Which modes are enabled"
+        },
+        "showNavigation": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide navigation buttons"
+        },
+        "showPlayPause": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide auto-play button"
+        },
+        "showStepIndicator": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide step counter"
+        },
+        "initialStep": {
+            "type": "number",
+            "default": 1,
+            "description": "ID of the starting step"
+        },
+        "filterSteps": {
+            "type": "array",
+            "items": { "type": "number" },
+            "default": null,
+            "description": "Only show steps with these IDs"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier"
+        },
+        "autoPlayDuration": {
+            "type": "number",
+            "default": 10000,
+            "description": "Auto-advance delay in ms (0 to disable)"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#2563eb",
+            "description": "Primary theme color"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable dark mode"
+        }
+    },
+
+    "additionalProps": {
+        "description": "Tool-specific dynamic content for unit conversions",
+        "properties": {
+            "conversionType": {
+                "type": "string",
+                "enum": ["mm_cm", "cm_m", "g_kg", "rupee_paise", "mg_g", "mm_m"],
+                "description": "Type of unit conversion to display"
+            },
+            "fromValue": {
+                "type": "number",
+                "description": "Value to convert from"
+            },
+            "toValue": {
+                "type": "number",
+                "description": "Expected converted value"
+            },
+            "fromUnit": {
+                "type": "string",
+                "description": "Source unit label"
+            },
+            "toUnit": {
+                "type": "string",
+                "description": "Target unit label"
+            },
+            "showScale": {
+                "type": "boolean",
+                "default": false,
+                "description": "Show a visual ruler/scale"
+            },
+            "highlightConversion": {
+                "type": "boolean",
+                "default": false,
+                "description": "Highlight the conversion with animation"
+            },
+            "customConversions": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "from": { "type": "number" },
+                        "fromUnit": { "type": "string" },
+                        "to": { "type": "number" },
+                        "toUnit": { "type": "string" },
+                        "label": { "type": "string" }
+                    }
+                },
+                "description": "Array of custom conversions to visualise"
+            },
+            "showRealWorldContext": {
+                "type": "string",
+                "description": "Context key for real-world examples (tiny_things, sea_creatures, disasters, rice_weights)"
+            },
+            "animateConversion": {
+                "type": "boolean",
+                "default": true,
+                "description": "Animate conversion arrows and values"
+            }
+        },
+        "examples": {
+            "mm_to_cm": {
+                "conversionType": "mm_cm",
+                "fromValue": 56,
+                "fromUnit": "mm",
+                "toUnit": "cm"
+            },
+            "cm_to_m": {
+                "conversionType": "cm_m",
+                "fromValue": 325,
+                "fromUnit": "cm",
+                "toUnit": "m"
+            },
+            "g_to_kg": {
+                "conversionType": "g_kg",
+                "fromValue": 254,
+                "fromUnit": "g",
+                "toUnit": "kg"
+            },
+            "paise_to_rupees": {
+                "conversionType": "rupee_paise",
+                "fromValue": 75,
+                "fromUnit": "paise",
+                "toUnit": "₹"
+            }
+        }
+    },
+
+    "modes": {
+        "learn": {
+            "description": "Guided lessons on mm↔cm, cm↔m, g↔kg, rupee↔paise conversions with animated visuals",
+            "stepIds": [1, 2, 3, 4, 5]
+        },
+        "practice": {
+            "description": "Interactive quiz questions for each conversion type with scoring",
+            "stepIds": [10, 11, 12, 13]
+        },
+        "real_world": {
+            "description": "Real-world examples: tiny things in nature, sea creatures, decimal disasters, rice weights",
+            "stepIds": [20, 21, 22, 23]
+        }
+    },
+
+    "steps": {
+        "learn": [
+            { "id": 1, "title": "Why Do We Need Unit Conversions?", "type": "intro" },
+            { "id": 2, "title": "Millimetres ↔ Centimetres", "type": "explanation" },
+            { "id": 3, "title": "Centimetres ↔ Metres", "type": "explanation" },
+            { "id": 4, "title": "Grams ↔ Kilograms", "type": "explanation" },
+            { "id": 5, "title": "Rupees ↔ Paise", "type": "explanation" }
+        ],
+        "practice": [
+            { "id": 10, "title": "Convert mm to cm", "type": "practice" },
+            { "id": 11, "title": "Convert cm to m", "type": "practice" },
+            { "id": 12, "title": "Convert g to kg", "type": "practice" },
+            { "id": 13, "title": "Mixed Conversions", "type": "practice" }
+        ],
+        "real_world": [
+            { "id": 20, "title": "How Small Is a Hair?", "type": "real_world" },
+            { "id": 21, "title": "Tiny Ocean Creatures", "type": "real_world" },
+            { "id": 22, "title": "Decimal Disasters!", "type": "real_world" },
+            { "id": 23, "title": "Rice Weights Visualised", "type": "real_world" }
+        ]
+    }
+}

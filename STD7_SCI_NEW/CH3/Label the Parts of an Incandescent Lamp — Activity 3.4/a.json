@@ -1,0 +1,231 @@
+{
+    "toolName": "incandescent_lamp_labeling_tool",
+    "version": "1.0.0",
+    "description": "An interactive drag-and-label tool for Grade 7 Science (NCERT Chapter 3, Activity 3.4). A large, clear illustration of an incandescent lamp is displayed in the centre, showing the internal structure: transparent glass bulb dome at top, thin coiled filament inside, two thick support wires holding the filament, cylindrical metal case at the base (terminal 1), small circular metal tip at the very bottom (terminal 2), and insulator material between metal case and metal tip. Six floating label cards are arranged around the diagram: Glass Bulb, Filament, Support Wires, Metal Case (Terminal 1), Metal Tip (Terminal 2), Insulator. Students drag each label to the correct target zone on the lamp. Green highlight and checkmark for correct placement. Red shake and snap-back for incorrect. Toggle-able hint system shows brief descriptions. Amber theme colour. Indian school educational context. Responsive touch-friendly drag-and-drop. Score tracking with completion celebration.",
+    "subject": "Science",
+    "grade": 7,
+    "chapter": "Chapter 3 - Electricity: Circuits and their Components",
+    "activity": "Activity 3.4",
+    "curriculum": "NCERT",
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Component width in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Component height in pixels"
+        },
+        "initialMode": {
+            "type": "string",
+            "enum": [
+                "learn",
+                "practice"
+            ],
+            "default": "practice",
+            "description": "Starting mode"
+        },
+        "showModeSelector": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide mode tabs"
+        },
+        "enabledModes": {
+            "type": "array",
+            "default": [
+                "learn",
+                "practice"
+            ],
+            "description": "Which modes to enable"
+        },
+        "showNavigation": {
+            "type": "boolean",
+            "default": false,
+            "description": "Show/hide prev/next buttons"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#d97706",
+            "description": "Primary amber theme colour"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Dark mode toggle"
+        }
+    },
+    "additionalProps": {
+        "description": "Tool-specific dynamic data for customising the labeling activity",
+        "properties": {
+            "labels": {
+                "type": "array",
+                "description": "Array of label objects for the parts to identify",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "string",
+                            "description": "Unique identifier for the label"
+                        },
+                        "text": {
+                            "type": "string",
+                            "description": "Display text for the label"
+                        },
+                        "hint": {
+                            "type": "string",
+                            "description": "Hint description shown when hints are enabled"
+                        }
+                    },
+                    "required": [
+                        "id",
+                        "text"
+                    ]
+                },
+                "default": [
+                    {
+                        "id": "glass_bulb",
+                        "text": "Glass Bulb",
+                        "hint": "The transparent dome at the top that protects the filament"
+                    },
+                    {
+                        "id": "filament",
+                        "text": "Filament",
+                        "hint": "The thin coiled wire that glows white-hot to produce light"
+                    },
+                    {
+                        "id": "support_wires",
+                        "text": "Support Wires",
+                        "hint": "Two thick wires that hold the filament in place"
+                    },
+                    {
+                        "id": "metal_case",
+                        "text": "Metal Case (Terminal 1)",
+                        "hint": "The cylindrical metal base — one of two electrical terminals"
+                    },
+                    {
+                        "id": "metal_tip",
+                        "text": "Metal Tip (Terminal 2)",
+                        "hint": "The small circular contact at the very bottom — the other terminal"
+                    },
+                    {
+                        "id": "insulator",
+                        "text": "Insulator",
+                        "hint": "Material between the metal case and metal tip preventing short circuit"
+                    }
+                ]
+            },
+            "targetZones": {
+                "type": "array",
+                "description": "Target drop zones on the lamp diagram (x, y as percentages of SVG viewBox 0-100)",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "string"
+                        },
+                        "labelId": {
+                            "type": "string",
+                            "description": "Matching label id for correct placement"
+                        },
+                        "x": {
+                            "type": "number",
+                            "description": "Centre X position (0-100)"
+                        },
+                        "y": {
+                            "type": "number",
+                            "description": "Centre Y position (0-100)"
+                        },
+                        "width": {
+                            "type": "number"
+                        },
+                        "height": {
+                            "type": "number"
+                        }
+                    }
+                }
+            },
+            "showHints": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether hints are shown by default"
+            },
+            "celebrationMessage": {
+                "type": "string",
+                "default": "🎉 Excellent! You labelled all parts correctly!",
+                "description": "Custom celebration message on completion"
+            }
+        },
+        "examples": [
+            {
+                "description": "Default - all 6 parts with hints ON",
+                "value": {
+                    "showHints": true
+                }
+            },
+            {
+                "description": "Challenge mode - no hints",
+                "value": {
+                    "showHints": false
+                }
+            },
+            {
+                "description": "Custom celebration message",
+                "value": {
+                    "showHints": true,
+                    "celebrationMessage": "🌟 Shabaash! You know all the parts of the lamp!"
+                }
+            },
+            {
+                "description": "Only 3 key parts for younger students",
+                "value": {
+                    "labels": [
+                        {
+                            "id": "glass_bulb",
+                            "text": "Glass Bulb",
+                            "hint": "The round glass part at the top"
+                        },
+                        {
+                            "id": "filament",
+                            "text": "Filament",
+                            "hint": "The wire that glows and gives light"
+                        },
+                        {
+                            "id": "metal_case",
+                            "text": "Metal Base",
+                            "hint": "The metal part at the bottom"
+                        }
+                    ],
+                    "showHints": true
+                }
+            }
+        ]
+    },
+    "teaching_notes": "Activate DURING Activity 3.4 when students are examining the lamp structure. Say: 'You've seen the labeled diagram — now label the parts yourself!' Start with hints ON. If student gets all correct, challenge them to try with hints OFF. Key teaching: the insulator separates the two terminals to prevent a short circuit.",
+    "instructions_for_student": "Drag each label to the correct part of the incandescent lamp! Start from the top (glass bulb) and work your way down. Use hints if you're stuck!",
+    "learning_objectives": [
+        "Identify the six key parts of an incandescent lamp",
+        "Understand the function of the filament in producing light",
+        "Know that a lamp has two terminals (metal case and metal tip)",
+        "Understand the role of the insulator in preventing short circuits",
+        "Learn how support wires hold the filament in position"
+    ],
+    "keywords": [
+        "incandescent lamp",
+        "filament",
+        "glass bulb",
+        "electric lamp",
+        "terminals",
+        "insulator",
+        "support wires",
+        "NCERT Grade 7",
+        "electricity",
+        "circuit components"
+    ]
+}

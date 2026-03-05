@@ -1,0 +1,79 @@
+{
+  "toolName": "pinhole_camera",
+  "parameters": {
+    "width": {
+      "type": "number",
+      "default": 800,
+      "description": "Component width in pixels"
+    },
+    "height": {
+      "type": "number",
+      "default": 600,
+      "description": "Component height in pixels"
+    },
+    "initialMode": {
+      "type": "string",
+      "enum": [
+        "learn",
+        "practice",
+        "realWorld"
+      ],
+      "default": "learn",
+      "description": "Starting mode"
+    },
+    "showModeSelector": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide mode selector tabs"
+    },
+    "showNavigation": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide prev/next buttons"
+    },
+    "showPlayPause": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide play/pause button"
+    },
+    "showStepIndicator": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide step counter"
+    },
+    "initialStep": {
+      "type": "number",
+      "default": 1,
+      "description": "Starting step ID"
+    },
+    "filterSteps": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      },
+      "default": null,
+      "description": "Array of step IDs to show"
+    },
+    "autoPlayDuration": {
+      "type": "number",
+      "default": 8000,
+      "description": "Auto-advance delay in ms (0 = disabled)"
+    },
+    "animationSpeed": {
+      "type": "number",
+      "default": 1,
+      "description": "Animation speed multiplier"
+    },
+    "themeColor": {
+      "type": "string",
+      "default": "#3b82f6",
+      "description": "Primary theme color (hex)"
+    },
+    "darkMode": {
+      "type": "boolean",
+      "default": false,
+      "description": "Enable dark mode"
+    }
+  },
+  "usage_example": {}
+}

@@ -1,0 +1,692 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Heat Conduction Interactive Tool Schema",
+    "description": "JSON schema for configuring the Heat Conduction learning tool with three modes: Learn (interactive experiment), Practice (quiz questions), and Real World (applications)",
+    "type": "object",
+    "required": [
+        "frontend_action",
+        "title",
+        "data"
+    ],
+    "properties": {
+        "frontend_action": {
+            "type": "string",
+            "const": "show_interactive_tool",
+            "description": "Action type to display the interactive tool"
+        },
+        "title": {
+            "type": "string",
+            "description": "Display title for the tool",
+            "examples": [
+                "Heat Conduction Experiment",
+                "Understanding Heat Transfer",
+                "Conductors and Insulators"
+            ]
+        },
+        "data": {
+            "type": "object",
+            "required": [
+                "toolName"
+            ],
+            "properties": {
+                "toolName": {
+                    "type": "string",
+                    "const": "heat_conduction_tool",
+                    "description": "Identifier for the heat conduction tool"
+                },
+                "parameters": {
+                    "type": "object",
+                    "description": "Configuration parameters for the tool",
+                    "properties": {
+                        "width": {
+                            "type": "number",
+                            "default": 800,
+                            "description": "Width of the tool container in pixels",
+                            "minimum": 400,
+                            "maximum": 1600
+                        },
+                        "height": {
+                            "type": "number",
+                            "default": 600,
+                            "description": "Minimum height of the tool container in pixels",
+                            "minimum": 400,
+                            "maximum": 1200
+                        },
+                        "initialMode": {
+                            "type": "string",
+                            "enum": [
+                                "learn",
+                                "practice",
+                                "real_world"
+                            ],
+                            "default": "learn",
+                            "description": "Starting mode when tool loads"
+                        },
+                        "showModeSelector": {
+                            "type": "boolean",
+                            "default": true,
+                            "description": "Show/hide mode selection tabs"
+                        },
+                        "enabledModes": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "learn",
+                                    "practice",
+                                    "real_world"
+                                ]
+                            },
+                            "default": [
+                                "learn",
+                                "practice",
+                                "real_world"
+                            ],
+                            "description": "Which modes to make available"
+                        },
+                        "showNavigation": {
+                            "type": "boolean",
+                            "default": true,
+                            "description": "Show/hide previous/next buttons in practice mode"
+                        },
+                        "showPlayPause": {
+                            "type": "boolean",
+                            "default": true,
+                            "description": "Show/hide play/pause button for animations"
+                        },
+                        "showStepIndicator": {
+                            "type": "boolean",
+                            "default": true,
+                            "description": "Show/hide step counter and heat intensity indicator"
+                        },
+                        "animationSpeed": {
+                            "type": "number",
+                            "default": 1,
+                            "minimum": 0.1,
+                            "maximum": 5,
+                            "description": "Animation speed multiplier (1 = normal speed)"
+                        },
+                        "themeColor": {
+                            "type": "string",
+                            "default": "#14B8A6",
+                            "description": "Primary theme color (hex format)",
+                            "pattern": "^#[0-9A-Fa-f]{6}$"
+                        },
+                        "darkMode": {
+                            "type": "boolean",
+                            "default": false,
+                            "description": "Enable dark theme"
+                        },
+                        "additionalProps": {
+                            "type": "object",
+                            "description": "Tool-specific dynamic configuration",
+                            "properties": {
+                                "numberOfPins": {
+                                    "type": "number",
+                                    "default": 4,
+                                    "minimum": 2,
+                                    "maximum": 8,
+                                    "description": "Number of pins with wax on the metal strip"
+                                },
+                                "pinSpacing": {
+                                    "type": "number",
+                                    "default": 70,
+                                    "description": "Spacing between pins in pixels"
+                                },
+                                "customPins": {
+                                    "type": "array",
+                                    "description": "Custom pin configuration",
+                                    "items": {
+                                        "type": "object",
+                                        "required": [
+                                            "label",
+                                            "xPosition",
+                                            "fallOrder",
+                                            "color"
+                                        ],
+                                        "properties": {
+                                            "label": {
+                                                "type": "string",
+                                                "description": "Pin label (e.g., 'I', 'II', 'A', 'B')"
+                                            },
+                                            "xPosition": {
+                                                "type": "number",
+                                                "description": "X position on SVG (closer to heat source = higher value)"
+                                            },
+                                            "fallOrder": {
+                                                "type": "number",
+                                                "description": "Order in which pin falls (1 = first)"
+                                            },
+                                            "color": {
+                                                "type": "string",
+                                                "description": "Pin color (hex format)"
+                                            }
+                                        }
+                                    }
+                                },
+                                "maxHeatIntensity": {
+                                    "type": "number",
+                                    "default": 100,
+                                    "description": "Maximum heat intensity value"
+                                },
+                                "heatSpeed": {
+                                    "type": "number",
+                                    "default": 100,
+                                    "description": "Heating speed in milliseconds per intensity unit"
+                                },
+                                "customMaterials": {
+                                    "type": "array",
+                                    "description": "Custom materials for testing",
+                                    "items": {
+                                        "type": "object",
+                                        "required": [
+                                            "name",
+                                            "type",
+                                            "color",
+                                            "emoji"
+                                        ],
+                                        "properties": {
+                                            "name": {
+                                                "type": "string",
+                                                "description": "Material name"
+                                            },
+                                            "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "conductor",
+                                                    "insulator"
+                                                ],
+                                                "description": "Material thermal property"
+                                            },
+                                            "color": {
+                                                "type": "string",
+                                                "description": "Material color (hex format)"
+                                            },
+                                            "emoji": {
+                                                "type": "string",
+                                                "description": "Emoji icon for the material"
+                                            }
+                                        }
+                                    }
+                                },
+                                "customQuestions": {
+                                    "type": "array",
+                                    "description": "Custom practice questions",
+                                    "items": {
+                                        "type": "object",
+                                        "required": [
+                                            "id",
+                                            "type",
+                                            "question",
+                                            "correctAnswer",
+                                            "explanation",
+                                            "difficulty",
+                                            "points"
+                                        ],
+                                        "properties": {
+                                            "id": {
+                                                "type": "number",
+                                                "description": "Unique question ID"
+                                            },
+                                            "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "mcq",
+                                                    "true-false",
+                                                    "fill-blank",
+                                                    "match",
+                                                    "ordering",
+                                                    "classify"
+                                                ],
+                                                "description": "Question type"
+                                            },
+                                            "question": {
+                                                "type": "string",
+                                                "description": "Question text"
+                                            },
+                                            "options": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                },
+                                                "description": "Answer options (for MCQ, true-false)"
+                                            },
+                                            "correctAnswer": {
+                                                "oneOf": [
+                                                    {
+                                                        "type": "string"
+                                                    },
+                                                    {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                ],
+                                                "description": "Correct answer or array of correct answers"
+                                            },
+                                            "explanation": {
+                                                "type": "string",
+                                                "description": "Explanation of the answer"
+                                            },
+                                            "difficulty": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "easy",
+                                                    "medium",
+                                                    "hard"
+                                                ],
+                                                "description": "Question difficulty level"
+                                            },
+                                            "points": {
+                                                "type": "number",
+                                                "description": "Points awarded for correct answer"
+                                            }
+                                        }
+                                    }
+                                },
+                                "customApplications": {
+                                    "type": "array",
+                                    "description": "Custom real-world applications",
+                                    "items": {
+                                        "type": "object",
+                                        "required": [
+                                            "id",
+                                            "title",
+                                            "category",
+                                            "description",
+                                            "howItWorks",
+                                            "conductor",
+                                            "insulator",
+                                            "scienceBehind",
+                                            "realExample",
+                                            "benefits",
+                                            "difficulty"
+                                        ],
+                                        "properties": {
+                                            "id": {
+                                                "type": "number",
+                                                "description": "Unique application ID"
+                                            },
+                                            "title": {
+                                                "type": "string",
+                                                "description": "Application title"
+                                            },
+                                            "category": {
+                                                "type": "string",
+                                                "description": "Application category"
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "description": "Brief description"
+                                            },
+                                            "howItWorks": {
+                                                "type": "string",
+                                                "description": "Explanation of how it works"
+                                            },
+                                            "conductor": {
+                                                "type": "string",
+                                                "description": "What conductor material is used"
+                                            },
+                                            "insulator": {
+                                                "type": "string",
+                                                "description": "What insulator material is used"
+                                            },
+                                            "scienceBehind": {
+                                                "type": "string",
+                                                "description": "Scientific explanation"
+                                            },
+                                            "realExample": {
+                                                "type": "string",
+                                                "description": "Real-life example"
+                                            },
+                                            "benefits": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                },
+                                                "description": "List of benefits"
+                                            },
+                                            "difficulty": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "everyday",
+                                                    "industrial",
+                                                    "advanced"
+                                                ],
+                                                "description": "Application complexity level"
+                                            }
+                                        }
+                                    }
+                                },
+                                "showLabels": {
+                                    "type": "boolean",
+                                    "default": true,
+                                    "description": "Show/hide labels on diagram"
+                                },
+                                "showHeatVisualization": {
+                                    "type": "boolean",
+                                    "default": true,
+                                    "description": "Show/hide heat glow and wave effects"
+                                },
+                                "enableDragDrop": {
+                                    "type": "boolean",
+                                    "default": true,
+                                    "description": "Enable/disable drag and drop for materials"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "instructions_for_student": {
+            "type": "string",
+            "description": "Optional instructions or context for the student"
+        }
+    },
+    "examples": [
+        {
+            "example_name": "Default Learn Mode",
+            "description": "Standard conduction experiment with all features enabled",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Heat Conduction Experiment",
+                "data": {
+                    "toolName": "heat_conduction_tool",
+                    "parameters": {
+                        "initialMode": "learn"
+                    }
+                },
+                "instructions_for_student": "Click 'Start Heating' to see how heat travels through the metal strip!"
+            }
+        },
+        {
+            "example_name": "Practice Mode Only",
+            "description": "Show only quiz questions without other modes",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Heat Conduction Quiz",
+                "data": {
+                    "toolName": "heat_conduction_tool",
+                    "parameters": {
+                        "initialMode": "practice",
+                        "enabledModes": [
+                            "practice"
+                        ],
+                        "showModeSelector": false
+                    }
+                },
+                "instructions_for_student": "Test your knowledge about heat conduction!"
+            }
+        },
+        {
+            "example_name": "Real World Applications",
+            "description": "Focus on real-world examples and applications",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Heat Conduction in Daily Life",
+                "data": {
+                    "toolName": "heat_conduction_tool",
+                    "parameters": {
+                        "initialMode": "real_world",
+                        "enabledModes": [
+                            "real_world"
+                        ],
+                        "showModeSelector": false
+                    }
+                },
+                "instructions_for_student": "Explore how conductors and insulators are used around us!"
+            }
+        },
+        {
+            "example_name": "Custom Pin Configuration",
+            "description": "Custom number and positioning of pins",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Custom Heat Experiment",
+                "data": {
+                    "toolName": "heat_conduction_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "customPins": [
+                                {
+                                    "label": "A",
+                                    "xPosition": 380,
+                                    "fallOrder": 1,
+                                    "color": "#EF4444"
+                                },
+                                {
+                                    "label": "B",
+                                    "xPosition": 310,
+                                    "fallOrder": 2,
+                                    "color": "#F59E0B"
+                                },
+                                {
+                                    "label": "C",
+                                    "xPosition": 240,
+                                    "fallOrder": 3,
+                                    "color": "#10B981"
+                                },
+                                {
+                                    "label": "D",
+                                    "xPosition": 170,
+                                    "fallOrder": 4,
+                                    "color": "#3B82F6"
+                                },
+                                {
+                                    "label": "E",
+                                    "xPosition": 100,
+                                    "fallOrder": 5,
+                                    "color": "#8B5CF6"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "instructions_for_student": "Watch which pin falls first as heat travels through the metal!"
+            }
+        },
+        {
+            "example_name": "Fast Animation",
+            "description": "Speed up the heating animation for quick demonstration",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Quick Heat Demo",
+                "data": {
+                    "toolName": "heat_conduction_tool",
+                    "parameters": {
+                        "animationSpeed": 3,
+                        "additionalProps": {
+                            "heatSpeed": 50
+                        }
+                    }
+                },
+                "instructions_for_student": "Watch a faster demonstration of heat conduction!"
+            }
+        },
+        {
+            "example_name": "Custom Materials",
+            "description": "Add custom materials for testing",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Test Different Materials",
+                "data": {
+                    "toolName": "heat_conduction_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "customMaterials": [
+                                {
+                                    "name": "Gold",
+                                    "type": "conductor",
+                                    "color": "#FFD700",
+                                    "emoji": "🥇"
+                                },
+                                {
+                                    "name": "Silver",
+                                    "type": "conductor",
+                                    "color": "#C0C0C0",
+                                    "emoji": "🥈"
+                                },
+                                {
+                                    "name": "Iron",
+                                    "type": "conductor",
+                                    "color": "#696969",
+                                    "emoji": "⚙️"
+                                },
+                                {
+                                    "name": "Rubber",
+                                    "type": "insulator",
+                                    "color": "#2C2C2C",
+                                    "emoji": "⚫"
+                                },
+                                {
+                                    "name": "Ceramic",
+                                    "type": "insulator",
+                                    "color": "#DEB887",
+                                    "emoji": "🏺"
+                                },
+                                {
+                                    "name": "Air",
+                                    "type": "insulator",
+                                    "color": "#E0F2FE",
+                                    "emoji": "💨"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "instructions_for_student": "Drag materials to the test zone to see if they conduct heat!"
+            }
+        },
+        {
+            "example_name": "Custom Questions",
+            "description": "Provide custom quiz questions",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Heat Conduction Assessment",
+                "data": {
+                    "toolName": "heat_conduction_tool",
+                    "parameters": {
+                        "initialMode": "practice",
+                        "additionalProps": {
+                            "customQuestions": [
+                                {
+                                    "id": 1,
+                                    "type": "mcq",
+                                    "question": "Which metal is the best conductor of heat?",
+                                    "options": [
+                                        "Iron",
+                                        "Silver",
+                                        "Gold",
+                                        "Lead"
+                                    ],
+                                    "correctAnswer": "Silver",
+                                    "explanation": "Silver has the highest thermal conductivity of all metals.",
+                                    "difficulty": "medium",
+                                    "points": 15
+                                },
+                                {
+                                    "id": 2,
+                                    "type": "true-false",
+                                    "question": "Wood is a good conductor of heat.",
+                                    "options": [
+                                        "True",
+                                        "False"
+                                    ],
+                                    "correctAnswer": "False",
+                                    "explanation": "Wood is an insulator and does not conduct heat well.",
+                                    "difficulty": "easy",
+                                    "points": 10
+                                }
+                            ]
+                        }
+                    }
+                },
+                "instructions_for_student": "Answer these questions to test your understanding!"
+            }
+        },
+        {
+            "example_name": "Dark Theme",
+            "description": "Use dark mode for better visibility in low light",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Heat Conduction (Dark Mode)",
+                "data": {
+                    "toolName": "heat_conduction_tool",
+                    "parameters": {
+                        "darkMode": true,
+                        "themeColor": "#06B6D4"
+                    }
+                },
+                "instructions_for_student": "Explore heat conduction with a dark theme!"
+            }
+        },
+        {
+            "example_name": "Minimal UI",
+            "description": "Hide all UI elements except the core experiment",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Heat Conduction Demo",
+                "data": {
+                    "toolName": "heat_conduction_tool",
+                    "parameters": {
+                        "showModeSelector": false,
+                        "showNavigation": false,
+                        "showPlayPause": false,
+                        "additionalProps": {
+                            "showLabels": true,
+                            "showHeatVisualization": true
+                        }
+                    }
+                },
+                "instructions_for_student": "Observe the pure heat conduction demonstration!"
+            }
+        },
+        {
+            "example_name": "Complete Custom Setup",
+            "description": "Fully customized configuration with all features",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Advanced Heat Study",
+                "data": {
+                    "toolName": "heat_conduction_tool",
+                    "parameters": {
+                        "width": 1000,
+                        "height": 700,
+                        "themeColor": "#8B5CF6",
+                        "animationSpeed": 1.5,
+                        "additionalProps": {
+                            "customPins": [
+                                {
+                                    "label": "1",
+                                    "xPosition": 370,
+                                    "fallOrder": 1,
+                                    "color": "#DC2626"
+                                },
+                                {
+                                    "label": "2",
+                                    "xPosition": 290,
+                                    "fallOrder": 2,
+                                    "color": "#EA580C"
+                                },
+                                {
+                                    "label": "3",
+                                    "xPosition": 210,
+                                    "fallOrder": 3,
+                                    "color": "#CA8A04"
+                                }
+                            ],
+                            "maxHeatIntensity": 100,
+                            "heatSpeed": 80,
+                            "showLabels": true,
+                            "showHeatVisualization": true,
+                            "enableDragDrop": true
+                        }
+                    }
+                },
+                "instructions_for_student": "Explore this comprehensive heat conduction experiment!"
+            }
+        }
+    ]
+}

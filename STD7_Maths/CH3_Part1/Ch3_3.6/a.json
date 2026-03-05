@@ -1,0 +1,113 @@
+{
+    "toolName": "decimal_number_line_tool",
+    "version": "1.0.0",
+    "description": "Interactive decimal number line tool for locating, comparing, and understanding decimal numbers (tenths, hundredths, thousandths). Based on NCERT Ganita Prakash Grade 7, Chapter 3 — A Peek Beyond the Point, Section 3.6.",
+
+    "parameters": {
+        "width": { "type": "number", "default": 800, "description": "Component width in pixels" },
+        "height": { "type": "number", "default": 600, "description": "Component height in pixels" },
+        "initialMode": { "type": "string", "enum": ["learn", "practice", "real_world"], "default": "learn", "description": "Starting mode" },
+        "showModeSelector": { "type": "boolean", "default": true, "description": "Show/hide mode selector tabs" },
+        "enabledModes": { "type": "array", "items": { "type": "string" }, "default": ["learn", "practice", "real_world"], "description": "Which modes to enable" },
+        "showNavigation": { "type": "boolean", "default": true, "description": "Show/hide prev/next buttons" },
+        "showPlayPause": { "type": "boolean", "default": true, "description": "Show/hide play/pause button" },
+        "showStepIndicator": { "type": "boolean", "default": true, "description": "Show/hide step counter" },
+        "initialStep": { "type": "number", "default": 1, "description": "Starting step ID" },
+        "filterSteps": { "type": "array", "items": { "type": "number" }, "default": null, "description": "Array of step IDs to show (null = all)" },
+        "autoPlayDuration": { "type": "number", "default": 8000, "description": "Auto-advance delay in ms (0 = disabled)" },
+        "animationSpeed": { "type": "number", "default": 1, "description": "Animation speed multiplier" },
+        "themeColor": { "type": "string", "default": "#3b82f6", "description": "Primary theme color (hex)" },
+        "darkMode": { "type": "boolean", "default": false, "description": "Enable dark mode" }
+    },
+
+    "additionalProps": {
+        "description": "Tool-specific dynamic content for decimal number lines",
+        "schema": {
+            "minValue": { "type": "number", "default": 0, "description": "Minimum value on the number line" },
+            "maxValue": { "type": "number", "default": 10, "description": "Maximum value on the number line" },
+            "step": { "type": "number", "default": 1, "description": "Interval between major ticks" },
+            "decimalPrecision": { "type": "number", "default": 1, "description": "Number of decimal places to show (1=tenths, 2=hundredths, 3=thousandths)" },
+            "numbers": { "type": "array", "items": { "type": "number" }, "default": null, "description": "Custom array of numbers (overrides min/max/step)" },
+            "highlightNumbers": { "type": "array", "items": { "type": "number" }, "default": [], "description": "Numbers to highlight with accent color" },
+            "activeNumber": { "type": "number", "default": null, "description": "The active/selected number (shown with filled circle)" },
+            "compareNumbers": { "type": "array", "items": { "type": "number" }, "default": [], "description": "Two numbers to compare visually" },
+            "showZoom": { "type": "boolean", "default": false, "description": "Show zoom magnifier effect" },
+            "zoomRange": { "type": "object", "properties": { "from": { "type": "number" }, "to": { "type": "number" } }, "default": null, "description": "Range to zoom into" },
+            "customMarkers": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "position": { "type": "number" },
+                        "label": { "type": "string" },
+                        "color": { "type": "string" }
+                    }
+                },
+                "default": [],
+                "description": "Custom labeled markers on the line"
+            },
+            "lineColor": { "type": "string", "default": "#64748b", "description": "Color of the main line" },
+            "showLabels": { "type": "boolean", "default": true, "description": "Show number labels" },
+            "showTicks": { "type": "boolean", "default": true, "description": "Show tick marks" },
+            "showSubTicks": { "type": "boolean", "default": false, "description": "Show sub-tick marks between main ticks" }
+        },
+        "examples": [
+            {
+                "name": "Tenths between 1 and 2",
+                "props": { "minValue": 1, "maxValue": 2, "step": 0.1, "decimalPrecision": 1, "highlightNumbers": [1.4], "activeNumber": 1.4 }
+            },
+            {
+                "name": "Hundredths between 4.3 and 4.4",
+                "props": { "minValue": 4.3, "maxValue": 4.4, "step": 0.01, "decimalPrecision": 2, "highlightNumbers": [4.35] }
+            },
+            {
+                "name": "Compare two decimals",
+                "props": { "minValue": 6.4, "maxValue": 6.5, "step": 0.01, "decimalPrecision": 3, "compareNumbers": [6.456, 6.465] }
+            },
+            {
+                "name": "Ruler (cm with mm divisions)",
+                "props": { "minValue": 0, "maxValue": 5, "step": 0.1, "decimalPrecision": 1, "highlightNumbers": [3.4], "customMarkers": [{ "position": 3.4, "label": "Pencil", "color": "#f59e0b" }] }
+            }
+        ]
+    },
+
+    "modes": {
+        "learn": {
+            "name": "Learn",
+            "description": "Step-by-step visual explanations of locating & comparing decimals on a number line",
+            "stepIds": [1, 2, 3, 4, 5]
+        },
+        "practice": {
+            "name": "Practice",
+            "description": "Interactive exercises — locate decimals, compare pairs, order sets, find closest values",
+            "stepIds": [10, 11, 12, 13, 14]
+        },
+        "real_world": {
+            "name": "Real World",
+            "description": "Real-life contexts where decimals matter — rulers, medicine dosage, money",
+            "stepIds": [20, 21, 22]
+        }
+    },
+
+    "steps": {
+        "learn": [
+            { "id": 1, "title": "Decimals on a Number Line", "description": "Locate 1.4 between 1 and 2" },
+            { "id": 2, "title": "Zooming In — Tenths", "description": "Divide units into 10 equal parts" },
+            { "id": 3, "title": "Zooming In Further — Hundredths", "description": "Divide tenths into 10 more parts" },
+            { "id": 4, "title": "Comparing Decimals", "description": "Compare 6.456 and 6.465 digit by digit" },
+            { "id": 5, "title": "The Zero Trick", "description": "0.2 = 0.20 = 0.200 but ≠ 0.02" }
+        ],
+        "practice": [
+            { "id": 10, "title": "Locate the Decimal!", "description": "Find 1.7 on the number line" },
+            { "id": 11, "title": "Which is Bigger?", "description": "Compare 3.81 and 3.18" },
+            { "id": 12, "title": "Locate the Hundredth!", "description": "Find 4.35 on a zoomed line" },
+            { "id": 13, "title": "Order These Decimals", "description": "Sort 2.5, 2.05, 2.50, 2.005" },
+            { "id": 14, "title": "Closest to 1?", "description": "Pick the number closest to 1" }
+        ],
+        "real_world": [
+            { "id": 20, "title": "Measuring with a Ruler", "description": "Ruler mm marks = tenths of cm" },
+            { "id": 21, "title": "Medicine Dosage Matters!", "description": "0.05 mg vs 0.5 mg = 10× difference" },
+            { "id": 22, "title": "Price Tags & Money", "description": "₹2.45 = 2 rupees + 45 paise" }
+        ]
+    }
+}

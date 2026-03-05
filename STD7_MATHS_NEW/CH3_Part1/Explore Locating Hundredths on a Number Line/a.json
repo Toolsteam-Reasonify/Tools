@@ -1,0 +1,446 @@
+{
+    "toolName": "locating_hundredths_number_line",
+    "version": "1.0.0",
+    "description": "Interactive step-based number line tool for CBSE Grade 7 Mathematics (Decimals chapter). A horizontal number line from 0 to 2 with fine hundredths markings. In learn mode, the tool progressively reveals values across 4 steps: Step 1 places 1/100 and 20/100 with an equivalence badge showing 20/100 = 2/10. Step 2 adds 50/100 with badge showing = 5/10 = 1/2. Step 3 shows 99/100 just before 1 and 100/100 at exactly 1. Step 4 places 130/100 past the 1 mark with badge showing = 1 3/10 and enables interactive drag-and-drop mode. Major tenths are labeled, hundredths are fine ticks. Color-coded: Orange for hundredths values, Dark Green for equivalence badges, Navy Blue for the number line.",
+    "subject": "Mathematics",
+    "grade": "7",
+    "chapter": "A Peek Beyond the Point (Chapter 3)",
+    "topic": "Locating Hundredths on Number Lines",
+    "curriculum": "CBSE / NCF 2025 / Ganita Prakash",
+
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Width of the tool in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Height of the tool in pixels"
+        },
+        "initialMode": {
+            "type": "string",
+            "enum": ["learn", "practice", "real_world", "hands_on"],
+            "default": "learn",
+            "description": "Starting mode of the tool"
+        },
+        "showModeSelector": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show or hide mode tabs"
+        },
+        "enabledModes": {
+            "type": "array",
+            "items": { "type": "string", "enum": ["learn", "practice", "real_world", "hands_on"] },
+            "default": ["learn", "practice", "real_world", "hands_on"],
+            "description": "Which modes to enable"
+        },
+        "showNavigation": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show prev/next/play buttons"
+        },
+        "showPlayPause": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show play/pause button"
+        },
+        "showStepIndicator": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show step counter badge"
+        },
+        "initialStep": {
+            "type": "number",
+            "default": 1,
+            "description": "Starting step ID"
+        },
+        "filterSteps": {
+            "type": "array",
+            "items": { "type": "number" },
+            "default": null,
+            "description": "Only show these step IDs"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier (0.5 = slower, 2 = faster)"
+        },
+        "autoPlayDuration": {
+            "type": "number",
+            "default": 10000,
+            "description": "Auto-advance delay in ms. 0 disables auto-play."
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#1B4F72",
+            "description": "Primary theme color (Navy Blue by default)"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable dark mode"
+        }
+    },
+
+    "additionalProps": {
+        "description": "Tool-specific dynamic data for customizing the number line",
+        "properties": {
+            "minValue": {
+                "type": "number",
+                "default": 0,
+                "description": "Minimum value on the number line"
+            },
+            "maxValue": {
+                "type": "number",
+                "default": 2,
+                "description": "Maximum value on the number line"
+            },
+            "lineColor": {
+                "type": "string",
+                "default": "#1B4F72",
+                "description": "Color of the main number line (Navy Blue)"
+            },
+            "markerColor": {
+                "type": "string",
+                "default": "#E8740C",
+                "description": "Color of value markers (Orange)"
+            },
+            "badgeColor": {
+                "type": "string",
+                "default": "#1B6B3A",
+                "description": "Color of equivalence badges (Dark Green)"
+            },
+            "markersToPlace": {
+                "type": "array",
+                "description": "Custom markers to place on the number line",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "value": { "type": "number", "description": "Position value on the number line" },
+                        "label": { "type": "string", "description": "Display label (e.g. '45/100')" },
+                        "equivalence": { "type": "string", "description": "Optional equivalence text (e.g. '= 9/20')" },
+                        "color": { "type": "string", "description": "Marker color override" }
+                    }
+                }
+            },
+            "showDragMode": {
+                "type": "boolean",
+                "default": false,
+                "description": "Enable drag-and-drop interaction"
+            },
+            "dragTargets": {
+                "type": "array",
+                "items": { "type": "number" },
+                "description": "Values for drag-and-drop targets"
+            },
+            "showTenthLabels": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show labels at every tenth mark"
+            },
+            "showHundredthTicks": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show fine hundredth tick marks"
+            },
+            "highlightRange": {
+                "type": "object",
+                "description": "Highlight a range on the number line",
+                "properties": {
+                    "from": { "type": "number" },
+                    "to": { "type": "number" },
+                    "color": { "type": "string" }
+                }
+            }
+        },
+        "examples": [
+            {
+                "name": "Default Learn Mode",
+                "props": {}
+            },
+            {
+                "name": "Focus on 0-1 range",
+                "props": {
+                    "minValue": 0,
+                    "maxValue": 1
+                }
+            },
+            {
+                "name": "Custom marker colors",
+                "props": {
+                    "markerColor": "#DC2626",
+                    "badgeColor": "#7C3AED",
+                    "lineColor": "#1E3A5F"
+                }
+            }
+        ]
+    },
+
+    "modes": {
+        "learn": {
+            "label": "Learn",
+            "icon": "BookOpen",
+            "description": "Step through 4 stages placing hundredths on the number line with guided explanations and equivalence badges."
+        },
+        "practice": {
+            "label": "Practice",
+            "icon": "Target",
+            "description": "Tap on the number line to place given hundredth values. Immediate feedback for correct/incorrect placement."
+        },
+        "real_world": {
+            "label": "Real World",
+            "icon": "Zap",
+            "description": "See how hundredths connect to rulers (mm) and money (paise/rupees)."
+        },
+        "hands_on": {
+            "label": "Hands On",
+            "icon": "Award",
+            "description": "Drag-and-drop value chips onto the number line to place them at correct positions."
+        }
+    },
+
+    "steps": {
+        "learn": [
+            {
+                "id": 1,
+                "title": "Placing 1/100 and 20/100",
+                "description": "Place the first two hundredth values. Learn that 20/100 = 2/10."
+            },
+            {
+                "id": 2,
+                "title": "50/100 = 5/10 = 1/2",
+                "description": "Place 50/100 at the halfway mark. Understand the equivalence."
+            },
+            {
+                "id": 3,
+                "title": "99/100 and 100/100",
+                "description": "See 99/100 just before 1, and 100/100 exactly at 1."
+            },
+            {
+                "id": 4,
+                "title": "130/100 — Going Past 1!",
+                "description": "130/100 = 1 3/10. Place values beyond 1 and try the drag interaction."
+            }
+        ],
+        "practice": [
+            { "id": 10, "title": "Place 45/100" },
+            { "id": 11, "title": "Find 75/100" },
+            { "id": 12, "title": "Locate 150/100" }
+        ],
+        "real_world": [
+            { "id": 20, "title": "Measuring with a Ruler" },
+            { "id": 21, "title": "Money: Rupees and Paise" }
+        ],
+        "hands_on": [
+            { "id": 30, "title": "Drag & Drop Challenge" }
+        ]
+    },
+
+    "teaching_notes": "Use as the primary teaching tool. Step through 4 stages: (1) Place 1/100 and 20/100, (2) Show 50/100 = 1/2, (3) Place 99/100 and 100/100, (4) Place 130/100 past 1 and enable student interaction.",
+
+    "instructions_for_student": "Follow along as we place values on a number line from 0 to 2. Each tiny mark is 1/100. Watch how tenths and hundredths connect!",
+
+    "tool_call_examples": [
+        {
+            "name": "Default: Full Learn Experience",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Locating Hundredths on Number Lines",
+                "data": {
+                    "toolName": "locating_hundredths_number_line",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "showModeSelector": true
+                    }
+                },
+                "instructions_for_student": "Follow along as we place values on a number line from 0 to 2."
+            }
+        },
+        {
+            "name": "Step 1 Only — Just 1/100 and 20/100",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Hundredths: First Look",
+                "data": {
+                    "toolName": "locating_hundredths_number_line",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "filterSteps": [1],
+                        "showModeSelector": false,
+                        "showNavigation": false,
+                        "autoPlayDuration": 0
+                    }
+                },
+                "instructions_for_student": "Each tiny mark is 1/100. See where 1/100 and 20/100 sit."
+            }
+        },
+        {
+            "name": "Practice Mode Only",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Practice: Place Hundredths!",
+                "data": {
+                    "toolName": "locating_hundredths_number_line",
+                    "parameters": {
+                        "initialMode": "practice",
+                        "showModeSelector": false,
+                        "enabledModes": ["practice"]
+                    }
+                },
+                "instructions_for_student": "Tap the number line to place each hundredth value!"
+            }
+        },
+        {
+            "name": "Hands-On Drag Mode",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Drag & Drop Hundredths",
+                "data": {
+                    "toolName": "locating_hundredths_number_line",
+                    "parameters": {
+                        "initialMode": "hands_on",
+                        "showModeSelector": false,
+                        "enabledModes": ["hands_on"]
+                    }
+                },
+                "instructions_for_student": "Drag each value to the correct spot on the number line."
+            }
+        },
+        {
+            "name": "Step 4 Focus — Past 1",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "130/100 — Going Past 1!",
+                "data": {
+                    "toolName": "locating_hundredths_number_line",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "filterSteps": [4],
+                        "showModeSelector": false,
+                        "autoPlayDuration": 0
+                    }
+                },
+                "instructions_for_student": "130/100 = 1 and 3/10. See how it sits past the 1 mark!"
+            }
+        },
+        {
+            "name": "Real World: Money Connection",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Hundredths in Money",
+                "data": {
+                    "toolName": "locating_hundredths_number_line",
+                    "parameters": {
+                        "initialMode": "real_world",
+                        "filterSteps": [21],
+                        "showModeSelector": false
+                    }
+                },
+                "instructions_for_student": "1 paisa = 1/100 rupee. See how money connects to our number line!"
+            }
+        },
+        {
+            "name": "Dark Mode",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Hundredths on Number Lines (Dark)",
+                "data": {
+                    "toolName": "locating_hundredths_number_line",
+                    "parameters": {
+                        "darkMode": true,
+                        "initialMode": "learn"
+                    }
+                },
+                "instructions_for_student": "Explore hundredths in dark mode."
+            }
+        },
+        {
+            "name": "Custom Colors",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Hundredths — Custom Theme",
+                "data": {
+                    "toolName": "locating_hundredths_number_line",
+                    "parameters": {
+                        "themeColor": "#7C3AED",
+                        "additionalProps": {
+                            "lineColor": "#4C1D95",
+                            "markerColor": "#F59E0B",
+                            "badgeColor": "#059669"
+                        }
+                    }
+                },
+                "instructions_for_student": "Same hundredths, different colors!"
+            }
+        },
+        {
+            "name": "Slow Animation for Younger Learners",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Hundredths — Slow & Steady",
+                "data": {
+                    "toolName": "locating_hundredths_number_line",
+                    "parameters": {
+                        "animationSpeed": 0.5,
+                        "autoPlayDuration": 15000,
+                        "initialMode": "learn"
+                    }
+                },
+                "instructions_for_student": "Watch carefully as each value appears slowly."
+            }
+        },
+        {
+            "name": "Static Display — No Auto-Play",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "All Hundredths Placed",
+                "data": {
+                    "toolName": "locating_hundredths_number_line",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "filterSteps": [4],
+                        "autoPlayDuration": 0,
+                        "showPlayPause": false
+                    }
+                },
+                "instructions_for_student": "All values placed. Study the positions and equivalences."
+            }
+        }
+    ],
+
+    "decision_tree": {
+        "description": "Decision tree for agents choosing tool parameters",
+        "rules": [
+            {
+                "trigger": "Student asks 'What are hundredths on a number line?'",
+                "action": "Use initialMode: 'learn', showModeSelector: true"
+            },
+            {
+                "trigger": "Teacher wants to show just 50/100 = 1/2",
+                "action": "Use filterSteps: [2], showModeSelector: false"
+            },
+            {
+                "trigger": "Student needs practice placing hundredths",
+                "action": "Use initialMode: 'practice'"
+            },
+            {
+                "trigger": "Student asks about values greater than 1",
+                "action": "Use filterSteps: [4]"
+            },
+            {
+                "trigger": "Student wants to interact hands-on",
+                "action": "Use initialMode: 'hands_on'"
+            },
+            {
+                "trigger": "Teacher wants static reference display",
+                "action": "Use filterSteps: [4], autoPlayDuration: 0, showPlayPause: false"
+            },
+            {
+                "trigger": "Student asks about paise and rupees connection",
+                "action": "Use initialMode: 'real_world', filterSteps: [21]"
+            }
+        ]
+    }
+}

@@ -1,0 +1,126 @@
+{
+  "toolName": "mean_practice_tool",
+  "version": "1.0.0",
+  "description": "Interactive calculation practice tool for Grade 7 Mathematics — Arithmetic Mean practice problems from NCERT Ganita Prakash Chapter 5: Connecting the Dots. Students compute the arithmetic mean step-by-step for four data sets with verification at each stage.",
+  "topic": "Figure it Out — Practice Problems on Mean",
+  "subject": "Mathematics",
+  "grade": "Grade 7",
+  "curriculum": "NCERT — Ganita Prakash Part-II",
+  "chapter": "Chapter 5: Connecting the Dots",
+  "learning_objectives": [
+    "Calculate the arithmetic mean using the formula: Mean = Sum ÷ Count",
+    "Practice step-by-step computation (sum → count → mean)",
+    "Discover that different data sets can have the same mean",
+    "Understand that the mean falls between the minimum and maximum values"
+  ],
+  "teaching_notes": "Let the student choose which problem to start with. For the running problem, do NOT reveal that both means are equal until the student computes both. Ask: 'Before calculating Sunil's mean, do you think it will be higher or lower than Nikhil's?' The surprise that both means are 17.43 is a powerful teaching moment — different data can have the same mean. For enrolment, note that the mean (1859) falls between the minimum (1555) and maximum (2126).",
+  "instructions_for_student": "Select a problem, then calculate the mean step by step. First enter the sum of all values, then the count, and finally the mean. The tool will check each step. Pay special attention to Nikhil and Sunil — you might discover something surprising!",
+  "frontend_action": "show_interactive_tool",
+  "data": {
+    "toolName": "mean_practice_tool",
+    "parameters": {
+      "width": 900,
+      "height": 600,
+      "themeColor": "#f59e0b",
+      "darkMode": false,
+      "showModeSelector": false,
+      "showNavigation": false,
+      "additionalProps": {}
+    }
+  },
+  "ui_specification": {
+    "layout": "Problem selector tabs across the top (Ball Bouncing, Nikhil's Running, Sunil's Running, School Enrolment). Each problem displays the data set as colourful number chips in a row, with an animated sum line below. Three input fields appear sequentially: Sum (with addition animation), Count (with counting animation), and Mean (with division animation). Each input has a 'Check' button. Correct answers glow green with a checkmark; incorrect answers shake gently with a hint. After completing a problem, a summary card appears. Special feature: after both Nikhil and Sunil are done, a 'Compare!' button reveals they have the same mean with a surprise animation.",
+    "context": "Indian school context — cricket, 100m race, school enrolment.",
+    "font_family": "Lilita One (headings), Nunito (body)",
+    "color_palette": {
+      "primary_amber": "#f59e0b",
+      "blue_chips": "#3b82f6",
+      "green_correct": "#22c55e",
+      "red_incorrect": "#ef4444",
+      "white_background": "#fffefb"
+    },
+    "touch_friendly": true,
+    "mobile_responsive": true
+  },
+  "problems": [
+    {
+      "id": "ball",
+      "title": "Ball Bouncing",
+      "emoji": "🏏",
+      "description": "Shreyas bounces a ball on his bat. Calculate the average bounces across 8 attempts.",
+      "values": [6, 2, 9, 5, 4, 6, 3, 5],
+      "correctSum": 40,
+      "correctCount": 8,
+      "correctMean": 5,
+      "meanDisplay": "5",
+      "chipColor": "#3b82f6",
+      "note": "The mean tells us if every attempt had the same bounces, each would have 5!"
+    },
+    {
+      "id": "nikhil",
+      "title": "Nikhil's Running",
+      "emoji": "🏃",
+      "description": "Nikhil is training for a 100m race. His times (in seconds) over the past week:",
+      "values": [17, 18, 17, 16, 19, 17, 18],
+      "correctSum": 122,
+      "correctCount": 7,
+      "correctMean": 17.43,
+      "meanDisplay": "17.43",
+      "chipColor": "#8b5cf6"
+    },
+    {
+      "id": "sunil",
+      "title": "Sunil's Running",
+      "emoji": "🏃‍♂️",
+      "description": "Sunil is also training. Before calculating, guess: will his mean be higher or lower than Nikhil's?",
+      "values": [20, 18, 18, 17, 16, 16, 17],
+      "correctSum": 122,
+      "correctCount": 7,
+      "correctMean": 17.43,
+      "meanDisplay": "17.43",
+      "chipColor": "#06b6d4"
+    },
+    {
+      "id": "enrolment",
+      "title": "School Enrolment",
+      "emoji": "🏫",
+      "description": "Find the mean enrolment of a school over six consecutive years.",
+      "values": [1555, 1670, 1750, 2013, 2040, 2126],
+      "correctSum": 11154,
+      "correctCount": 6,
+      "correctMean": 1859,
+      "meanDisplay": "1859",
+      "chipColor": "#10b981",
+      "note": "Notice that the mean (1859) falls between the minimum (1555) and maximum (2126)."
+    }
+  ],
+  "special_features": {
+    "nikhil_sunil_comparison": {
+      "trigger": "Both Nikhil and Sunil problems are completed",
+      "reveal": "Both have the same mean of 17.43 (122 ÷ 7)",
+      "teaching_moment": "Different data sets can have the same mean. Nikhil's values cluster around 17-18, while Sunil's are more spread out (16 to 20), yet both average to 17.43."
+    }
+  },
+  "agent_examples": [
+    {
+      "description": "Default — show the tool with all 4 problems",
+      "json": {
+        "frontend_action": "show_interactive_tool",
+        "title": "Figure it Out — Arithmetic Mean Practice",
+        "data": {
+          "toolName": "mean_practice_tool",
+          "parameters": {}
+        },
+        "instructions_for_student": "Select a problem, then calculate the mean step by step. First enter the sum of all values, then the count, and finally the mean."
+      }
+    },
+    {
+      "description": "After student completes Nikhil's problem — prompt for Sunil's",
+      "agent_dialogue": "Great job finding Nikhil's average running time! Now let's look at Sunil's times. Before you calculate, take a guess — do you think Sunil's mean will be higher or lower than 17.43? Click on 'Sunil's Running' to find out!"
+    },
+    {
+      "description": "After both Nikhil and Sunil are done",
+      "agent_dialogue": "Wow, did you notice that? Both Nikhil and Sunil have the exact same mean of 17.43 seconds! Even though their individual times are different, the averages are identical. This is an important lesson: different data can produce the same mean. Click 'Compare!' to see them side by side."
+    }
+  ]
+}

@@ -1,0 +1,148 @@
+{
+    "toolName": "heat_transfer_comparison_tool",
+    "version": "2.0.0",
+    "description": "Interactive drag-and-drop comparison table for conduction, convection, and radiation. Built with Singularity Design System: Poppins font, #4A4DC9 primary, #FF7212 accent, gradient #533086-#FC9145, pill buttons, DS spacing and radius tokens.",
+    "designSystem": "Singularity",
+    "subject": "Science",
+    "grade": "Grade 7",
+    "chapter": "Chapter 7 - Heat Transfer in Nature",
+    "topic": "Conduction, Convection, and Radiation Together",
+    "learning_objectives": [
+        "Compare and contrast the three modes of heat transfer",
+        "Identify whether particles move in each mode",
+        "Determine which modes require a material medium",
+        "Associate each mode with solids, liquids/gases, or vacuum",
+        "Connect each mode with everyday Indian examples"
+    ],
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800
+        },
+        "height": {
+            "type": "number",
+            "default": 600
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#4A4DC9"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1
+        },
+        "additionalProps": {
+            "columns": {
+                "type": "array",
+                "default": [
+                    {
+                        "id": "conduction",
+                        "label": "Conduction",
+                        "color": "#4A4DC9",
+                        "icon": "spoon"
+                    },
+                    {
+                        "id": "convection",
+                        "label": "Convection",
+                        "color": "#533086",
+                        "icon": "waves"
+                    },
+                    {
+                        "id": "radiation",
+                        "label": "Radiation",
+                        "color": "#FF7212",
+                        "icon": "sun"
+                    }
+                ]
+            },
+            "rows": {
+                "type": "array",
+                "default": [
+                    {
+                        "id": "definition",
+                        "label": "What is it?"
+                    },
+                    {
+                        "id": "particle",
+                        "label": "Do particles move?"
+                    },
+                    {
+                        "id": "medium",
+                        "label": "Needs a medium?"
+                    },
+                    {
+                        "id": "occurs",
+                        "label": "Occurs mainly in"
+                    },
+                    {
+                        "id": "example",
+                        "label": "Everyday example"
+                    }
+                ]
+            },
+            "answers": {
+                "type": "array",
+                "description": "15 answer tiles with rowId, colId, text, hint"
+            },
+            "showHints": {
+                "type": "boolean",
+                "default": true
+            },
+            "shuffleTiles": {
+                "type": "boolean",
+                "default": true
+            }
+        }
+    },
+    "teaching_notes": "Activate AFTER discussing all three modes individually and showing the combined diagram (Fig. 7.8). This tool is the key synthesis activity. Watch for common confusions: students often mix up 'particles vibrate in place' (conduction) with 'particles actually move' (convection). After completion, the summary highlights: 'Radiation is the only mode that works without any medium.'",
+    "instructions_for_student": "Complete the comparison table! For each row, drag the correct description into the Conduction, Convection, and Radiation columns. There are 15 cells to fill — each has a unique answer. You can also tap a tile to select it, then tap the cell where it belongs.",
+    "tool_call_examples": [
+        {
+            "title": "Default — Full comparison",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Compare Heat Transfer Modes",
+                "data": {
+                    "toolName": "heat_transfer_comparison_tool",
+                    "parameters": {
+                        "width": 800,
+                        "height": 600
+                    }
+                },
+                "instructions_for_student": "Complete the comparison table! Drag the correct description into each cell."
+            }
+        },
+        {
+            "title": "Dark mode",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Heat Transfer Comparison",
+                "data": {
+                    "toolName": "heat_transfer_comparison_tool",
+                    "parameters": {
+                        "darkMode": true
+                    }
+                }
+            }
+        },
+        {
+            "title": "No hints — Challenge mode",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Heat Transfer Quiz",
+                "data": {
+                    "toolName": "heat_transfer_comparison_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "showHints": false
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

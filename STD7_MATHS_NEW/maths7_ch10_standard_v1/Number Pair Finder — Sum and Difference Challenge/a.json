@@ -1,0 +1,152 @@
+{
+    "toolName": "rakesh_puzzle_tool",
+    "version": "1.0.0",
+    "description": "Interactive calculation practice tool for Grade 7 Mathematics — Rakesh's Puzzle: Number Pair Finder. Students are given a sum and a difference and must find the two integers that satisfy both conditions. Includes running trial table, hints, and confetti celebration.",
+    "category": "mathematics",
+    "grade": 7,
+    "topic": "Operations with Integers",
+    "subtopic": "Finding Two Numbers from Sum and Difference",
+    "textbookReference": "Ganita Prakash Grade 7 Part-II, Chapter 2 — Operations with Integers, Section 2.1",
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 900,
+            "description": "Max width of the tool container in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Min height of the tool container in pixels"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#2563EB",
+            "description": "Primary accent color"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Dark mode toggle (not implemented in v1)"
+        }
+    },
+    "additionalProps": {
+        "description": "Tool-specific dynamic content for Rakesh's Puzzle",
+        "schema": {
+            "problems": {
+                "type": "array",
+                "description": "Array of puzzle problems. Each has sum, difference, answer pair, and hint.",
+                "items": {
+                    "id": { "type": "string", "description": "Unique ID for the problem (e.g. 'p1')" },
+                    "sum": { "type": "number", "description": "The sum clue (First + Second)" },
+                    "difference": { "type": "number", "description": "The difference clue (First − Second)" },
+                    "firstNumber": { "type": "number", "description": "Correct first number" },
+                    "secondNumber": { "type": "number", "description": "Correct second number" },
+                    "hint": { "type": "string", "description": "Hint text shown after failed attempts" }
+                },
+                "default": [
+                    {
+                        "id": "p1",
+                        "sum": 25,
+                        "difference": 11,
+                        "firstNumber": 18,
+                        "secondNumber": 7,
+                        "hint": "Both numbers are positive. Try numbers that add to 25, then check if the bigger minus the smaller gives 11."
+                    },
+                    {
+                        "id": "p2",
+                        "sum": 4,
+                        "difference": 12,
+                        "firstNumber": 8,
+                        "secondNumber": -4,
+                        "hint": "The difference is bigger than the sum! One number must be negative. Think: First Number − Second Number = 12."
+                    },
+                    {
+                        "id": "p3",
+                        "sum": 0,
+                        "difference": 10,
+                        "firstNumber": 5,
+                        "secondNumber": -5,
+                        "hint": "When the sum is 0, the two numbers are additive inverses. What two opposite numbers differ by 10?"
+                    },
+                    {
+                        "id": "p4",
+                        "sum": -7,
+                        "difference": -1,
+                        "firstNumber": -4,
+                        "secondNumber": -3,
+                        "hint": "Both numbers are negative! A negative sum means both numbers are below zero."
+                    }
+                ]
+            },
+            "maxHintAttempts": {
+                "type": "number",
+                "default": 2,
+                "description": "Number of failed attempts before the hint button appears"
+            },
+            "showTeachingNotes": {
+                "type": "boolean",
+                "default": false,
+                "description": "Reserved for future: show teacher annotations inline"
+            }
+        },
+        "examples": {
+            "default_puzzles": {
+                "description": "Default 4-problem set covering positive, mixed, zero-sum, and all-negative cases",
+                "value": {}
+            },
+            "easy_positive_only": {
+                "description": "Beginner set with only positive answers",
+                "value": {
+                    "problems": [
+                        { "id": "e1", "sum": 10, "difference": 4, "firstNumber": 7, "secondNumber": 3, "hint": "Both numbers are small and positive." },
+                        { "id": "e2", "sum": 20, "difference": 6, "firstNumber": 13, "secondNumber": 7, "hint": "Try numbers close to 10." },
+                        { "id": "e3", "sum": 15, "difference": 5, "firstNumber": 10, "secondNumber": 5, "hint": "One number is double the other." },
+                        { "id": "e4", "sum": 27, "difference": 9, "firstNumber": 18, "secondNumber": 9, "hint": "The second number is exactly half of the first." }
+                    ]
+                }
+            },
+            "negative_challenge": {
+                "description": "Advanced set with negative numbers",
+                "value": {
+                    "problems": [
+                        { "id": "n1", "sum": -10, "difference": 4, "firstNumber": -3, "secondNumber": -7, "hint": "Both are negative. The first is closer to zero." },
+                        { "id": "n2", "sum": 0, "difference": -10, "firstNumber": -5, "secondNumber": 5, "hint": "Sum is 0, but difference is negative — the first number is smaller." },
+                        { "id": "n3", "sum": -7, "difference": -13, "firstNumber": -10, "secondNumber": 3, "hint": "One is negative, one is positive. The negative one is first." },
+                        { "id": "n4", "sum": -20, "difference": 0, "firstNumber": -10, "secondNumber": -10, "hint": "Difference is 0 — the numbers are equal!" }
+                    ],
+                    "maxHintAttempts": 3
+                }
+            },
+            "single_problem_focus": {
+                "description": "Single problem for targeted practice",
+                "value": {
+                    "problems": [
+                        { "id": "s1", "sum": 25, "difference": -11, "firstNumber": 7, "secondNumber": 18, "hint": "This is Rakesh's second challenge! Swap the numbers from sum=25, diff=11." }
+                    ]
+                }
+            }
+        }
+    },
+    "modes": {
+        "practice": {
+            "description": "Interactive guess-and-check practice with trial table tracking"
+        }
+    },
+    "features": [
+        "Running trial table with tick/cross for each condition",
+        "Hint system activates after configurable failed attempts",
+        "Progress dots showing problem completion",
+        "Confetti celebration in Indian flag colours on correct answer",
+        "Negative number support with clear minus sign display",
+        "Mobile-responsive layout for Indian school tablets",
+        "Keyboard Enter to submit guess"
+    ],
+    "teachingNotes": {
+        "p1": "Start here. Positive sum and difference — students can use systematic trial. Ask: what happens if you increase the first number by 1 and decrease the second by 1?",
+        "p2": "The difference (12) exceeds the sum (4), so one number must be negative. Ask students WHY this must be so. (If both were positive, difference < sum.)",
+        "p3": "The 'additive inverse' reveal: when sum is 0, the two numbers cancel. This connects to the chapter's discussion of additive inverses.",
+        "p4": "Both numbers are negative — dispels the assumption that answers are always positive. Good for connecting to the number line model.",
+        "general": "Allow 2-3 attempts per problem before offering the hint. Encourage students to use the trial table systematically rather than random guessing."
+    },
+    "instructionsForStudent": "For each puzzle, you are given two clues: the Sum and the Difference of two mystery numbers. Enter your guesses for the First Number and Second Number. The tool will check if your guess satisfies both clues and add it to your trial table. Keep refining until you find the correct pair. Remember: Difference = First Number − Second Number."
+}

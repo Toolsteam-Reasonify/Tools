@@ -1,0 +1,351 @@
+{
+    "toolName": "sea_breeze_sequencing_tool",
+    "version": "2.0.0",
+    "description": "Interactive sequencing tool for Grade 7 Science (Ch.7: Heat Transfer in Nature). Seven shuffled step cards for sea breeze formation. Styled with Singularity Design System: Poppins font, #4A4DC9 indigo, #FF7212 orange, #533086 purple, pill buttons, circle shape tokens.",
+    "designSystem": "Singularity",
+    "designTokens": {
+        "font": "Poppins",
+        "primary": "#4A4DC9",
+        "accent": "#FF7212",
+        "secondary": "#533086",
+        "primaryLight": "#C1C1EA",
+        "accentLight": "#FFF3E4",
+        "grays": [
+            "#4E4E4E",
+            "#CACACA",
+            "#EBEBEB",
+            "#F5F5F5"
+        ],
+        "buttonStyle": "pill (border-radius: 100px)",
+        "cardRadius": "12px",
+        "containerRadius": "20px"
+    },
+    "subject": "Science",
+    "grade": "Grade 7",
+    "chapter": "Chapter 7 — Heat Transfer in Nature",
+    "topic": "Sea Breeze Formation (Section 7.2.1)",
+    "curriculum": "NCERT Curiosity Textbook",
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800
+        },
+        "height": {
+            "type": "number",
+            "default": 600
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#4A4DC9"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1
+        }
+    },
+    "additionalProps": {
+        "schema": {
+            "steps": {
+                "type": "array",
+                "description": "7 steps with id, text, hint, emoji",
+                "default": [
+                    {
+                        "id": 1,
+                        "text": "The Sun shines equally on both land and sea",
+                        "hint": "Everything starts with the Sun!",
+                        "emoji": "☀️"
+                    },
+                    {
+                        "id": 2,
+                        "text": "Land heats up much faster than the sea water",
+                        "hint": "Think about hot sand vs cool water!",
+                        "emoji": "🏖️"
+                    },
+                    {
+                        "id": 3,
+                        "text": "Air above the hot land gets heated and expands",
+                        "hint": "This comes AFTER land heats up.",
+                        "emoji": "🌡️"
+                    },
+                    {
+                        "id": 4,
+                        "text": "The hot, light air above the land rises upward",
+                        "hint": "Warm air is lighter — it rises!",
+                        "emoji": "⬆️"
+                    },
+                    {
+                        "id": 5,
+                        "text": "A low pressure area is created above the land",
+                        "hint": "When air rises, it leaves low pressure. Comes AFTER air rises.",
+                        "emoji": "🔽"
+                    },
+                    {
+                        "id": 6,
+                        "text": "Cool air from the sea rushes towards the land to fill the gap",
+                        "hint": "This comes AFTER the low pressure forms!",
+                        "emoji": "💨"
+                    },
+                    {
+                        "id": 7,
+                        "text": "This movement of cool air from sea to land is the Sea Breeze!",
+                        "hint": "The final result — the breeze at the beach!",
+                        "emoji": "🌊"
+                    }
+                ]
+            },
+            "correctOrder": {
+                "type": "array",
+                "default": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7
+                ]
+            },
+            "contextLocation": {
+                "type": "string",
+                "default": "Kerala beach"
+            },
+            "showAnimation": {
+                "type": "boolean",
+                "default": true
+            },
+            "difficulty": {
+                "type": "string",
+                "enum": [
+                    "easy",
+                    "medium",
+                    "hard"
+                ],
+                "default": "medium"
+            },
+            "titleText": {
+                "type": "string",
+                "default": "Sea Breeze Formation"
+            },
+            "instructionText": {
+                "type": "string",
+                "default": "Drag the jumbled steps into the correct order (1→7). Each step CAUSES the next!"
+            },
+            "completionMessage": {
+                "type": "string",
+                "default": "You've mastered the sea breeze mechanism!"
+            }
+        }
+    },
+    "teaching_notes": {
+        "when_to_use": "Activate AFTER the sea breeze mechanism diagram and video. Tests causal chain reconstruction.",
+        "common_mistakes": "Students often place 'air rushes from sea' before 'low pressure forms.'",
+        "follow_up": "Ask the student to explain sea breeze step by step in their own words.",
+        "learning_objectives": [
+            "Reconstruct the causal chain of sea breeze formation",
+            "Understand differential heating drives convection",
+            "Connect convection to real-world weather phenomena"
+        ]
+    },
+    "instructions_for_student": "The 7 steps of sea breeze formation are all JUMBLED UP! Drag them into the correct order from Step 1 to Step 7. Think carefully about cause and effect — each step CAUSES the next one!",
+    "tool_call_examples": [
+        {
+            "description": "Default — Kerala context",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Sea Breeze Sequencing",
+                "data": {
+                    "toolName": "sea_breeze_sequencing_tool",
+                    "parameters": {}
+                },
+                "instructions_for_student": "Drag the 7 steps into the correct order!"
+            }
+        },
+        {
+            "description": "Goa beach context",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Sea Breeze at Goa",
+                "data": {
+                    "toolName": "sea_breeze_sequencing_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "contextLocation": "Goa beach",
+                            "titleText": "Sea Breeze at Goa"
+                        }
+                    }
+                },
+                "instructions_for_student": "Arrange the 7 steps for Goa beach!"
+            }
+        },
+        {
+            "description": "Easy mode for struggling learners",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "How Sea Breeze Forms",
+                "data": {
+                    "toolName": "sea_breeze_sequencing_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "difficulty": "easy",
+                            "instructionText": "Put these steps in order!",
+                            "completionMessage": "Great job!"
+                        }
+                    }
+                },
+                "instructions_for_student": "Start with the Sun!"
+            }
+        },
+        {
+            "description": "Mumbai coastal context",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Sea Breeze at Mumbai",
+                "data": {
+                    "toolName": "sea_breeze_sequencing_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "contextLocation": "Mumbai coast",
+                            "titleText": "Sea Breeze at Mumbai",
+                            "completionMessage": "That's why Mumbai gets cool afternoon breezes!"
+                        }
+                    }
+                },
+                "instructions_for_student": "Why do people in Mumbai feel a cool breeze?"
+            }
+        },
+        {
+            "description": "Assessment / quiz mode",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Sea Breeze Quick Quiz",
+                "data": {
+                    "toolName": "sea_breeze_sequencing_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "titleText": "Quick Check — Sea Breeze",
+                            "instructionText": "Without looking at your textbook, arrange these 7 steps!",
+                            "completionMessage": "Perfect! Now explain to your partner."
+                        }
+                    }
+                },
+                "instructions_for_student": "From memory — arrange the steps!"
+            }
+        },
+        {
+            "description": "Projector / classroom display",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Class Activity",
+                "data": {
+                    "toolName": "sea_breeze_sequencing_tool",
+                    "parameters": {
+                        "width": 1000,
+                        "height": 700,
+                        "additionalProps": {
+                            "titleText": "Class Activity — Sea Breeze",
+                            "contextLocation": "Indian coast"
+                        }
+                    }
+                },
+                "instructions_for_student": "Work in pairs!"
+            }
+        },
+        {
+            "description": "Compact mobile version",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Sea Breeze Steps",
+                "data": {
+                    "toolName": "sea_breeze_sequencing_tool",
+                    "parameters": {
+                        "width": 400,
+                        "height": 500,
+                        "additionalProps": {
+                            "instructionText": "Tap a card, then tap the slot!"
+                        }
+                    }
+                },
+                "instructions_for_student": "Tap to place!"
+            }
+        },
+        {
+            "description": "Land breeze variant (night-time reverse)",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Land Breeze Sequencing",
+                "data": {
+                    "toolName": "sea_breeze_sequencing_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "titleText": "Land Breeze Formation",
+                            "instructionText": "At night, the breeze reverses! Arrange the 7 steps of land breeze.",
+                            "contextLocation": "Kerala coast at night",
+                            "completionMessage": "That's why fishermen go out at night!",
+                            "steps": [
+                                {
+                                    "id": 1,
+                                    "text": "The Sun sets and both land and sea begin to cool",
+                                    "hint": "Start with sunset!",
+                                    "emoji": "🌅"
+                                },
+                                {
+                                    "id": 2,
+                                    "text": "Land cools down much faster than the sea water",
+                                    "hint": "Land cools faster too!",
+                                    "emoji": "🌙"
+                                },
+                                {
+                                    "id": 3,
+                                    "text": "Air above the warmer sea gets heated",
+                                    "hint": "Now the sea is warmer!",
+                                    "emoji": "🌡️"
+                                },
+                                {
+                                    "id": 4,
+                                    "text": "The warm air above the sea rises upward",
+                                    "hint": "Warm air rises — over the sea!",
+                                    "emoji": "⬆️"
+                                },
+                                {
+                                    "id": 5,
+                                    "text": "A low pressure area is created above the sea",
+                                    "hint": "Low pressure over the sea this time!",
+                                    "emoji": "🔽"
+                                },
+                                {
+                                    "id": 6,
+                                    "text": "Cool air from the land rushes towards the sea",
+                                    "hint": "Air moves from land to sea!",
+                                    "emoji": "💨"
+                                },
+                                {
+                                    "id": 7,
+                                    "text": "This movement of cool air from land to sea is the Land Breeze!",
+                                    "hint": "The opposite of sea breeze!",
+                                    "emoji": "🌊"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "instructions_for_student": "At night the breeze reverses! Arrange the land breeze steps."
+            }
+        }
+    ],
+    "decision_tree": {
+        "Student learning about sea breeze": {
+            "First introduction": "Use default parameters",
+            "After reading textbook": "Use custom instructionText: 'Without looking...'",
+            "Struggling student": "Use difficulty: easy",
+            "Assessment": "Use custom titleText: 'Quick Check...'",
+            "Comparing sea and land breeze": "Show sea breeze first, then land breeze variant",
+            "Different coastal city": "Change contextLocation and titleText",
+            "Classroom projector": "Use width: 1000, height: 700",
+            "Mobile device": "Use width: 400 with tap-friendly instructionText"
+        }
+    }
+}

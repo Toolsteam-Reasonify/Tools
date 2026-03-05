@@ -1,0 +1,67 @@
+{
+    "toolName": "parity_operations_explorer",
+    "version": "2.0.0",
+    "description": "Interactive step-based parity operations explorer for Grade 7 Mathematics — Chapter 6: Number Play. Redesigned with Singularity Design System: Poppins font, #4A4DC9 indigo primary, #FF7212 orange accent, #533086 deep purple gradient, contained/outlined/text button variants with 40px height and pill-radius, geometric shape decorators (circle, triangle, square). Six progressive phases covering subtraction and multiplication parity. Phases 1-3: Subtraction parity with dot-pairing diagrams. Phases 4-6: Multiplication parity using animated rectangular grids (7x5, 4x7, 6x8). Grids fill with coloured unit squares in wave animation. Odd results glow orange, even results glow indigo. Phase 6 shows multiplication-as-repeated-addition connection bridge. Indian school context with classroom/playground examples.",
+    "designSystem": {
+        "name": "Singularity",
+        "font": "Poppins",
+        "colors": {
+            "primary": "#4A4DC9",
+            "accent": "#FF7212",
+            "deepPurple": "#533086",
+            "gradientOrange": "#FC9145",
+            "lightPurple": "#C1C1EA",
+            "lightPeach": "#FFF3E4",
+            "darkGray": "#4E4E4E",
+            "midGray": "#CACACA",
+            "borderGray": "#EBEBEB",
+            "bgGray": "#F5F5F5",
+            "white": "#FFFFFF"
+        },
+        "buttons": {
+            "height": 40,
+            "paddingH": 24,
+            "borderRadius": 20,
+            "variants": ["contained", "outlined", "text"],
+            "states": ["enabled", "disabled", "hover", "pressed"]
+        }
+    },
+    "parameters": {
+        "width": { "type": "number", "default": 800 },
+        "height": { "type": "number", "default": 600 },
+        "initialMode": { "type": "string", "default": "learn", "enum": ["learn"] },
+        "showNavigation": { "type": "boolean", "default": true },
+        "showStepIndicator": { "type": "boolean", "default": true },
+        "initialStep": { "type": "number", "default": 1 },
+        "filterSteps": { "type": "array", "items": { "type": "number" }, "default": null },
+        "autoPlayDuration": { "type": "number", "default": 0 }
+    },
+    "additionalProps": {
+        "properties": {
+            "oddColor": { "type": "string", "default": "#FF7212" },
+            "evenColor": { "type": "string", "default": "#4A4DC9" }
+        }
+    },
+    "steps": {
+        "learn": [
+            { "id": 1, "title": "Subtraction: Same Parity", "phase": "sub_same" },
+            { "id": 2, "title": "Subtraction: Different Parity", "phase": "sub_diff" },
+            { "id": 3, "title": "Subtraction Rules Summary", "phase": "sub_summary" },
+            { "id": 4, "title": "Multiplication: Grid Exploration", "phase": "mul_grids" },
+            { "id": 5, "title": "Multiplication Parity Rules", "phase": "mul_rules" },
+            { "id": 6, "title": "The Deep Connection", "phase": "connection" }
+        ]
+    },
+    "teaching_notes": "Advance one phase at a time. Steps 1-3 cover subtraction (quick since it mirrors addition). Steps 4-6 are the main content — multiplication parity via grids. At Step 4, show the three grids and ask the student to spot the pattern before revealing the rule. At Step 6, make the deep connection: multiplication is repeated addition, so the multiplication parity rules follow directly from the addition rules for sums of odd numbers.",
+    "instructions_for_student": "Watch as we first explore subtraction parity, then move to multiplication using colourful grid diagrams. At each step, try to predict the parity of the result before it is revealed. Notice how all the rules connect back to what you learned about addition!",
+    "tool_call_examples": [
+        { "description": "Default: all 6 phases", "parameters": {} },
+        { "description": "Subtraction only", "parameters": { "filterSteps": [1, 2, 3] } },
+        { "description": "Multiplication only", "parameters": { "filterSteps": [4, 5, 6] } },
+        { "description": "Start at grids", "parameters": { "initialStep": 4 } },
+        { "description": "Auto-play 10s", "parameters": { "autoPlayDuration": 10000 } },
+        { "description": "Connection bridge only", "parameters": { "filterSteps": [6] } },
+        { "description": "Minimal embed", "parameters": { "showNavigation": false, "showStepIndicator": false, "filterSteps": [4] } },
+        { "description": "Custom colours", "parameters": { "additionalProps": { "oddColor": "#ef4444", "evenColor": "#3b82f6" } } }
+    ]
+}

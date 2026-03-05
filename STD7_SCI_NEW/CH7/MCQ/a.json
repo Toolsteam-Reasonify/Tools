@@ -1,0 +1,335 @@
+{
+    "toolName": "mcq_quiz_tool",
+    "version": "1.0.0",
+    "description": "An interactive multiple-choice quiz tool for Grade 7 Science chapter practice. Presents questions one at a time with a progress bar, shuffled options, immediate feedback with explanations, and a results screen with score and recommendations. Purple-themed, designed for Indian school exam context.",
+    "category": "assessment",
+    "subject": "Science",
+    "grade": 7,
+    "chapter": "Heat Transfer in Nature (Chapter 7)",
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Width of the quiz container in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Minimum height of the quiz container in pixels"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#7c3aed",
+            "description": "Primary theme color (hex). Default is purple."
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable dark mode (not yet implemented)"
+        },
+        "initialMode": {
+            "type": "string",
+            "enum": [
+                "quiz",
+                "review"
+            ],
+            "default": "quiz",
+            "description": "Starting mode of the tool"
+        }
+    },
+    "additionalProps": {
+        "description": "Tool-specific dynamic content for the MCQ quiz",
+        "schema": {
+            "questions": {
+                "type": "array",
+                "description": "Array of MCQ question objects. If omitted, the default 8 Heat Transfer questions are used.",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "number",
+                            "description": "Unique question ID"
+                        },
+                        "question": {
+                            "type": "string",
+                            "description": "The question text"
+                        },
+                        "options": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string",
+                                        "description": "Option identifier (a, b, c, d)"
+                                    },
+                                    "text": {
+                                        "type": "string",
+                                        "description": "Option display text"
+                                    }
+                                }
+                            },
+                            "description": "Array of 4 options"
+                        },
+                        "correctOptionId": {
+                            "type": "string",
+                            "description": "ID of the correct option"
+                        },
+                        "explanation": {
+                            "type": "string",
+                            "description": "Detailed explanation shown after answering"
+                        },
+                        "diagramType": {
+                            "type": "string",
+                            "enum": [
+                                "saucepan",
+                                "metal_strip",
+                                "none"
+                            ],
+                            "description": "Type of inline SVG diagram to show with the question"
+                        },
+                        "topic": {
+                            "type": "string",
+                            "description": "Short topic label shown in the header badge"
+                        }
+                    }
+                }
+            },
+            "shuffleOptions": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to randomize the order of options for each question"
+            },
+            "showExplanations": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to show explanations after each answer"
+            },
+            "passingScore": {
+                "type": "number",
+                "default": 5,
+                "description": "Minimum score to pass (out of total questions)"
+            },
+            "themeColor": {
+                "type": "string",
+                "default": "#7c3aed",
+                "description": "Override theme color"
+            },
+            "title": {
+                "type": "string",
+                "default": "Heat Transfer in Nature",
+                "description": "Quiz title shown on start screen"
+            },
+            "subtitle": {
+                "type": "string",
+                "default": "Chapter 7 — Multiple Choice Quiz",
+                "description": "Subtitle shown below title"
+            },
+            "instructionsForStudent": {
+                "type": "string",
+                "default": "Test yourself with 8 multiple choice questions from this chapter! Read each question carefully, choose your answer, and see if you're right.",
+                "description": "Instructions shown on the start screen"
+            },
+            "teachingNotes": {
+                "type": "string",
+                "default": "",
+                "description": "Notes for the teacher (not displayed to student, for agent reference)"
+            }
+        },
+        "examples": {
+            "default_heat_transfer_quiz": {
+                "description": "Use the built-in 8-question Heat Transfer quiz with default settings",
+                "value": {}
+            },
+            "custom_passing_score": {
+                "description": "Adjust the passing score threshold",
+                "value": {
+                    "passingScore": 7,
+                    "title": "Heat Transfer in Nature",
+                    "subtitle": "Chapter 7 — Advanced Quiz"
+                }
+            },
+            "no_explanations_mode": {
+                "description": "Hide explanations for a timed test feel",
+                "value": {
+                    "showExplanations": false,
+                    "title": "Heat Transfer — Quick Test"
+                }
+            },
+            "custom_questions": {
+                "description": "Pass entirely custom questions",
+                "value": {
+                    "questions": [
+                        {
+                            "id": 1,
+                            "question": "Which of the following is a good conductor of heat?",
+                            "options": [
+                                {
+                                    "id": "a",
+                                    "text": "Wood"
+                                },
+                                {
+                                    "id": "b",
+                                    "text": "Glass"
+                                },
+                                {
+                                    "id": "c",
+                                    "text": "Copper"
+                                },
+                                {
+                                    "id": "d",
+                                    "text": "Plastic"
+                                }
+                            ],
+                            "correctOptionId": "c",
+                            "explanation": "Copper is a metal and metals are good conductors of heat.",
+                            "diagramType": "none",
+                            "topic": "Conductors"
+                        }
+                    ],
+                    "title": "Quick Check",
+                    "subtitle": "1 Question Test"
+                }
+            }
+        }
+    },
+    "teaching_notes": "Activate at the END of the chapter as a self-assessment. Score interpretation: 7-8 = Excellent understanding, 5-6 = Review weak topics shown in the results screen, below 5 = Re-teach the chapter with emphasis on activities. Focus on questions the student got wrong. Common weak areas: directional reasoning (candle in middle of strip), sea breeze vs land breeze direction, and trapped air insulation concept.",
+    "instructions_for_student": "Test yourself with 8 multiple choice questions from this chapter! Read each question carefully, choose your answer, and see if you're right. If you get one wrong, read the explanation to understand why. Try to score 8 out of 8 — you can retake the quiz as many times as you want!",
+    "features": [
+        "8 questions covering all major chapter concepts",
+        "Progress bar showing Q1/8, Q2/8... through the quiz",
+        "Shuffled option order on each attempt for replayability",
+        "Immediate feedback: green for correct, red for wrong",
+        "Correct answer always highlighted after selection",
+        "Detailed explanation revealed after each answer",
+        "Results screen with score breakdown per question",
+        "Performance-based recommendation message",
+        "Retake button to try again",
+        "Purple-themed animated interface",
+        "Inline SVG diagrams for saucepan and metal strip questions",
+        "Smooth CSS animations and transitions throughout"
+    ],
+    "topics_covered": [
+        "Good conductors vs poor conductors (insulators) of heat",
+        "Direction of heat flow in conduction (metal strip activity)",
+        "Convection — smoke rises, hot air rises",
+        "Sea breeze and land breeze",
+        "Air as an insulator (blanket question)",
+        "Seepage and infiltration through clay, sand, gravel",
+        "Radiation — heat transfer without medium",
+        "Aquifers and groundwater"
+    ],
+    "agent_tool_calls": [
+        {
+            "description": "Default quiz — all 8 Heat Transfer questions, purple theme",
+            "call": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Heat Transfer — MCQ Quiz",
+                "data": {
+                    "toolName": "mcq_quiz_tool",
+                    "parameters": {}
+                },
+                "instructions_for_student": "Test yourself with 8 questions from Chapter 7!"
+            }
+        },
+        {
+            "description": "Quiz with higher passing score for advanced students",
+            "call": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Heat Transfer — Challenge Quiz",
+                "data": {
+                    "toolName": "mcq_quiz_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "passingScore": 7,
+                            "title": "Heat Transfer Challenge",
+                            "subtitle": "Can you score 7 out of 8?"
+                        }
+                    }
+                },
+                "instructions_for_student": "Aim for 7 or more to pass this challenge quiz!"
+            }
+        },
+        {
+            "description": "Quiz without explanations for quick assessment",
+            "call": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Quick Assessment",
+                "data": {
+                    "toolName": "mcq_quiz_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "showExplanations": false,
+                            "title": "Quick Assessment",
+                            "subtitle": "Chapter 7 — No Hints!"
+                        }
+                    }
+                },
+                "instructions_for_student": "Answer all 8 questions without hints. Good luck!"
+            }
+        },
+        {
+            "description": "Quiz with green theme instead of purple",
+            "call": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Heat Transfer Quiz",
+                "data": {
+                    "toolName": "mcq_quiz_tool",
+                    "parameters": {
+                        "themeColor": "#059669",
+                        "additionalProps": {
+                            "themeColor": "#059669"
+                        }
+                    }
+                },
+                "instructions_for_student": "Take the Chapter 7 quiz!"
+            }
+        },
+        {
+            "description": "Custom single-question quick check",
+            "call": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Quick Check",
+                "data": {
+                    "toolName": "mcq_quiz_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "questions": [
+                                {
+                                    "id": 1,
+                                    "question": "Which process of heat transfer does NOT require a medium?",
+                                    "options": [
+                                        {
+                                            "id": "a",
+                                            "text": "Conduction"
+                                        },
+                                        {
+                                            "id": "b",
+                                            "text": "Convection"
+                                        },
+                                        {
+                                            "id": "c",
+                                            "text": "Radiation"
+                                        },
+                                        {
+                                            "id": "d",
+                                            "text": "Evaporation"
+                                        }
+                                    ],
+                                    "correctOptionId": "c",
+                                    "explanation": "Radiation does not require any material medium. That is how heat from the Sun reaches Earth through empty space.",
+                                    "diagramType": "none",
+                                    "topic": "Radiation"
+                                }
+                            ],
+                            "title": "Quick Check",
+                            "subtitle": "1 Question",
+                            "passingScore": 1
+                        }
+                    }
+                },
+                "instructions_for_student": "Answer this one question to check your understanding."
+            }
+        }
+    ]
+}

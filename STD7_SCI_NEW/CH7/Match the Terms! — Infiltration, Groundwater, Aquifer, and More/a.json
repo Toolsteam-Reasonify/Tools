@@ -1,0 +1,155 @@
+{
+    "toolName": "groundwater_matching_tool",
+    "version": "3.0.0",
+    "designSystem": "Singularity Design System",
+    "description": "Two-mode educational tool: (1) LEARN mode with a real-time animated canvas scene showing a raindrop's journey from cloud to impermeable rock — layer-by-layer underground reveal with water particle physics, and (2) MATCH mode — interactive matching of 5 groundwater terms to definitions. On completion, animated cross-section reward.",
+    "topic": "Infiltration, Groundwater, and Aquifers",
+    "grade": "Grade 7",
+    "subject": "Science",
+    "chapter": "Chapter 7 — Heat Transfer in Nature, Section 7.4",
+    "curriculum": "NCERT Curiosity Textbook",
+    "modes": {
+        "learn": {
+            "description": "5-step animated visual walkthrough with real-time canvas rendering",
+            "steps": [
+                {
+                    "step": 0,
+                    "title": "The Water Cycle Begins",
+                    "visual": "Rain clouds form, sky scene with Indian village (hut, well, tree)"
+                },
+                {
+                    "step": 1,
+                    "title": "Infiltration",
+                    "visual": "Rain falls, animated teardrop particles, dashed arrows show water seeping through soil layer"
+                },
+                {
+                    "step": 2,
+                    "title": "Groundwater & Aquifer",
+                    "visual": "Underground layers reveal — porous rock with 60+ animated water particles drifting through pore spaces"
+                },
+                {
+                    "step": 3,
+                    "title": "Water Table",
+                    "visual": "Pulsing orange dotted line appears at saturation level, well shows water reaching below it"
+                },
+                {
+                    "step": 4,
+                    "title": "Impermeable Rock",
+                    "visual": "Dense hatched rock layer revealed at bottom — water particles stop here"
+                }
+            ],
+            "animations": [
+                "requestAnimationFrame 60fps canvas rendering",
+                "Realistic raindrop teardrop-shaped particles",
+                "Dashed infiltration arrows with falling animation",
+                "60 water particles with random drift physics in aquifer",
+                "Pulsing water table line with sin-wave opacity",
+                "Sun with rotating rays",
+                "Grass with sine-wave surface",
+                "Soil with scattered texture dots",
+                "Aquifer rock with elliptical pebble textures",
+                "Impermeable rock with crosshatch pattern",
+                "Pill-shaped labels appearing at each step"
+            ]
+        },
+        "match": {
+            "description": "Interactive matching of 5 terms to shuffled definitions",
+            "features": {
+                "correct_match": "Color-coded SVG connector line draws, green checkmark pops, pill badge shows term name",
+                "incorrect_match": "Card shakes, contextual hint slides down in orange panel",
+                "completion": "Celebration burst + animated cross-section canvas scene (step 4, all labels)"
+            }
+        }
+    },
+    "visual_elements": {
+        "canvas_scene": {
+            "indian_village": [
+                "Thatched-roof hut with door/window",
+                "Stone well with bucket and cross-beam",
+                "Banyan tree with layered canopy"
+            ],
+            "underground_layers": [
+                {
+                    "layer": "Grass surface",
+                    "y": "128-140",
+                    "rendering": "Sine-wave path, gradient green"
+                },
+                {
+                    "layer": "Soil",
+                    "y": "140-200",
+                    "rendering": "Brown gradient with scattered texture dots"
+                },
+                {
+                    "layer": "Aquifer (porous rock)",
+                    "y": "200-320",
+                    "rendering": "Sandy brown with elliptical pebble pattern, 60 animated blue water particles"
+                },
+                {
+                    "layer": "Impermeable rock",
+                    "y": "320-400",
+                    "rendering": "Dark grey with crosshatch lines"
+                }
+            ],
+            "weather": [
+                "Sky gradient",
+                "Sun with animated rotating rays",
+                "Dark rain clouds with ellipse layering",
+                "Teardrop-shaped rain particles (25 simultaneously)"
+            ]
+        }
+    },
+    "teaching_notes": "Activate AFTER the infiltration video and the aquifer diagram. The LEARN mode walks through the underground journey step-by-step with animations. Watch for the classic error in MATCH mode: swapping 'aquifer' and 'water table'. Clarify: aquifer = entire rock layer, water table = surface level of water. After match completion, ask student to narrate a raindrop's journey using all 5 terms.",
+    "instructions_for_student": "Start in LEARN mode to watch a raindrop's animated journey underground! Step through all 5 stages, then switch to MATCH mode to test your knowledge. Match each groundwater term to its correct definition — 'aquifer' and 'water table' are tricky!",
+    "additionalProps": {
+        "pairs": {
+            "type": "array",
+            "description": "Custom term-definition pairs",
+            "default": "5 groundwater terms"
+        },
+        "shuffleSeed": {
+            "type": "number",
+            "description": "Deterministic shuffle seed"
+        },
+        "showHints": {
+            "type": "boolean",
+            "default": true
+        },
+        "showCrossSectionOnComplete": {
+            "type": "boolean",
+            "default": true
+        }
+    },
+    "agent_tool_calls": [
+        {
+            "title": "Full Learn + Match Experience",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Groundwater — Learn & Match",
+                "data": {
+                    "toolName": "groundwater_matching_tool",
+                    "parameters": {
+                        "additionalProps": {}
+                    }
+                },
+                "instructions_for_student": "Watch the animated underground journey, then match all 5 terms!"
+            }
+        },
+        {
+            "title": "Match Only (skip learn)",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Quick Match — Groundwater",
+                "data": {
+                    "toolName": "groundwater_matching_tool",
+                    "parameters": {
+                        "initialMode": "practice",
+                        "additionalProps": {
+                            "showHints": true
+                        }
+                    }
+                },
+                "instructions_for_student": "Match each groundwater term to its definition!"
+            }
+        }
+    ]
+}

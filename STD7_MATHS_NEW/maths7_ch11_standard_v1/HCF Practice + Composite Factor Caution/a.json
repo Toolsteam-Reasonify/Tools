@@ -1,0 +1,172 @@
+{
+    "toolName": "hcf_practice_composite_caution_tool",
+    "version": "3.0.0",
+    "description": "Interactive standalone calculation practice tool for Grade 7 Mathematics — HCF Practice with Composite Factor Caution. Two sections. Section 1: Five problem cards with input fields for HCF answers, green checkmarks for correct and red X for errors. Section 2: Dramatic caution demo with toggle between Composite View and Prime View for 72 and 144, red warning banner, matching prime table, thali analogy. Strictly follows Singularity Design System.",
+
+    "parameters": {
+        "width": { "type": "number", "default": 800, "description": "Component max width in pixels" },
+        "height": { "type": "number", "default": 600, "description": "Component height (flexible)" },
+        "showNavigation": { "type": "boolean", "default": true, "description": "Show prev/next buttons" },
+        "showPlayPause": { "type": "boolean", "default": true, "description": "Not used — interactive tool" },
+        "showStepIndicator": { "type": "boolean", "default": true, "description": "Show problem dot indicators" },
+        "animationSpeed": { "type": "number", "default": 1, "description": "Animation speed multiplier" },
+        "themeColor": { "type": "string", "default": "#4A4DC9", "description": "Primary accent" }
+    },
+
+    "additionalProps": {
+        "description": "Tool-specific dynamic content",
+        "schema": {
+            "problems": {
+                "type": "array",
+                "items": { "type": "object", "properties": { "num1": { "type": "number" }, "num2": { "type": "number" } }, "required": ["num1", "num2"] },
+                "default": [{ "num1": 24, "num2": 180 }, { "num1": 240, "num2": 378 }, { "num1": 400, "num2": 2500 }, { "num1": 300, "num2": 800 }, { "num1": 81, "num2": 243 }]
+            },
+            "cautionNumA": { "type": "number", "default": 72 },
+            "cautionNumB": { "type": "number", "default": 144 },
+            "compositeA": { "type": "string", "default": "6 × 12" },
+            "compositeB": { "type": "string", "default": "8 × 18" },
+            "showThaliAnalogy": { "type": "boolean", "default": true },
+            "accentColor": { "type": "string", "default": "#ef4444" }
+        }
+    },
+
+    "designSystem": {
+        "name": "Singularity Design System",
+        "font": "Poppins (400–900) — ONLY font used",
+        "palette": {
+            "primary_indigo": "#4A4DC9",
+            "primary_orange": "#FF7212",
+            "gradient": "#533086 → #FC9145",
+            "tint_indigo": "#C1C1EA",
+            "tint_orange": "#FFF3E4",
+            "dark_text": "#4E4E4E",
+            "disabled": "#CACACA",
+            "border": "#EBEBEB",
+            "bg_light": "#F5F5F5",
+            "white": "#FFFFFF"
+        },
+        "functionalColours": {
+            "red": "#ef4444 — caution, errors",
+            "emerald": "#10b981 — correct answers",
+            "amber": "#f59e0b — warnings, solutions"
+        },
+        "buttons": {
+            "height": "40px",
+            "padding": "0 24px",
+            "borderRadius": "40px",
+            "iconGap": "4px",
+            "contained": "bg=#4A4DC9 or #FF7212, color=white",
+            "outlined": "border=1px #4A4DC9, bg=transparent, color=#4A4DC9",
+            "texted": "no bg/border, color=#4A4DC9",
+            "highlight": "bg=#FF7212, color=white",
+            "disabled": "bg=#CACACA or border=#CACACA, opacity=0.5-0.6"
+        },
+        "cards": {
+            "borderRadius": "16px",
+            "border": "1px solid #EBEBEB",
+            "background": "#FFFFFF"
+        },
+        "inputs": {
+            "height": "40px",
+            "borderRadius": "40px",
+            "border": "1px solid #EBEBEB"
+        },
+        "decorativeShapes": "Circle, Triangle, Square, Rounded-square in outline/filled variants using palette colours"
+    },
+
+    "teachingNotes": "Students complete 5 practice problems using the minimum occurrences method (Chapter 3, page 54), then explore the caution demo. The caution demo addresses Question 2 from page 54: '72 = 6 × 12 and 144 = 8 × 18'. Toggling between composite and prime views shows why composite factors hide shared primes.",
+
+    "instructionsForStudent": "Solve five HCF problems using the minimum occurrences method. Then switch to Caution Demo and toggle between Composite View and Prime View to see why you must ALWAYS use prime factorisation.",
+
+    "toolCallExamples": [
+        {
+            "title": "Example 1: Default textbook problems",
+            "description": "Five problems from Chapter 3 exercises with 72/144 caution demo",
+            "parameters": {
+                "additionalProps": {
+                    "problems": [{ "num1": 24, "num2": 180 }, { "num1": 240, "num2": 378 }, { "num1": 400, "num2": 2500 }, { "num1": 300, "num2": 800 }, { "num1": 81, "num2": 243 }],
+                    "cautionNumA": 72, "cautionNumB": 144,
+                    "compositeA": "6 × 12", "compositeB": "8 × 18",
+                    "showThaliAnalogy": true
+                }
+            },
+            "instructions_for_student": "Solve all five HCF problems, then explore the Caution Demo."
+        },
+        {
+            "title": "Example 2: Easy warm-up",
+            "description": "Smaller numbers to build confidence",
+            "parameters": {
+                "additionalProps": {
+                    "problems": [{ "num1": 12, "num2": 16 }, { "num1": 18, "num2": 24 }, { "num1": 30, "num2": 72 }, { "num1": 45, "num2": 75 }, { "num1": 50, "num2": 60 }],
+                    "showThaliAnalogy": true
+                }
+            },
+            "instructions_for_student": "Start with simpler pairs to master the method."
+        },
+        {
+            "title": "Example 3: Co-prime detection",
+            "description": "Includes pairs where HCF = 1",
+            "parameters": {
+                "additionalProps": {
+                    "problems": [{ "num1": 96, "num2": 275 }, { "num1": 7, "num2": 11 }, { "num1": 35, "num2": 99 }, { "num1": 50, "num2": 60 }, { "num1": 77, "num2": 725 }],
+                    "cautionNumA": 96, "cautionNumB": 275,
+                    "compositeA": "32 × 3", "compositeB": "25 × 11"
+                }
+            },
+            "instructions_for_student": "Some pairs share NO common primes. Can you spot them?"
+        },
+        {
+            "title": "Example 4: Textbook worked examples",
+            "description": "Examples 1-5 from Chapter 3",
+            "parameters": {
+                "additionalProps": {
+                    "problems": [{ "num1": 45, "num2": 75 }, { "num1": 112, "num2": 84 }, { "num1": 96, "num2": 275 }, { "num1": 30, "num2": 72 }, { "num1": 225, "num2": 750 }]
+                }
+            },
+            "instructions_for_student": "Verify your answers against the textbook!"
+        },
+        {
+            "title": "Example 5: Factor-multiple pairs",
+            "description": "HCF equals the smaller number",
+            "parameters": {
+                "additionalProps": {
+                    "problems": [{ "num1": 6, "num2": 18 }, { "num1": 3, "num2": 24 }, { "num1": 81, "num2": 243 }, { "num1": 12, "num2": 60 }, { "num1": 25, "num2": 100 }]
+                }
+            },
+            "instructions_for_student": "When one number divides the other, HCF = the smaller number!"
+        },
+        {
+            "title": "Example 6: Compact 3-problem quiz",
+            "description": "Quick assessment without thali analogy",
+            "parameters": {
+                "additionalProps": {
+                    "problems": [{ "num1": 24, "num2": 180 }, { "num1": 400, "num2": 2500 }, { "num1": 81, "num2": 243 }],
+                    "showThaliAnalogy": false
+                }
+            },
+            "instructions_for_student": "Quick check: solve three HCF problems."
+        },
+        {
+            "title": "Example 7: Large numbers",
+            "description": "For advanced students",
+            "parameters": {
+                "additionalProps": {
+                    "problems": [{ "num1": 630, "num2": 770 }, { "num1": 300, "num2": 150 }, { "num1": 540, "num2": 100 }, { "num1": 1200, "num2": 360 }, { "num1": 840, "num2": 1050 }]
+                }
+            },
+            "instructions_for_student": "Big numbers — take your time with prime factorisation!"
+        },
+        {
+            "title": "Example 8: Custom caution demo",
+            "description": "Using 90 and 150 in caution section",
+            "parameters": {
+                "additionalProps": {
+                    "problems": [{ "num1": 24, "num2": 180 }, { "num1": 240, "num2": 378 }, { "num1": 400, "num2": 2500 }, { "num1": 300, "num2": 800 }, { "num1": 81, "num2": 243 }],
+                    "cautionNumA": 90, "cautionNumB": 150,
+                    "compositeA": "9 × 10", "compositeB": "15 × 10"
+                }
+            },
+            "instructions_for_student": "Even with shared '10', you still need primes for the full HCF!"
+        }
+    ]
+}

@@ -1,0 +1,615 @@
+{
+  "tool_name": "decimal_measurement_tool",
+  "display_name": "Decimal Measurement Learning Tool",
+  "description": "Interactive educational tool for teaching decimal measurements, fractions, and precision in measurements through Learn, Practice, and Real World modes with professional animations",
+  "version": "2.0.0",
+  "category": "mathematics",
+  "subcategory": "decimals_and_measurements",
+  "grade_levels": [6, 7, 8],
+  
+  "modes": {
+    "learn": {
+      "name": "Learn Mode",
+      "description": "Story-based learning with animated visual instruments showing measurement concepts",
+      "total_steps": 5,
+      "steps": [
+        {
+          "id": 1,
+          "title": "Sonu's Discovery",
+          "description": "Introduction to why precise measurements matter through a story",
+          "visual": "screws",
+          "animations": ["toolbox bounce", "screws drop", "comparison arrow fade"]
+        },
+        {
+          "id": 2,
+          "title": "Why Small Differences Matter",
+          "description": "Understanding the importance of precision",
+          "visual": "magnifying",
+          "animations": ["glass rotation", "shine pulse", "ruler scale", "text fade"]
+        },
+        {
+          "id": 3,
+          "title": "Measuring with a Ruler",
+          "description": "How to read tenths on a ruler",
+          "visual": "ruler",
+          "animations": ["ruler slide", "markings pop", "arrow slide up", "label bounce"]
+        },
+        {
+          "id": 4,
+          "title": "Reading Measurements",
+          "description": "Practice reading decimal measurements on a number line",
+          "visual": "numberline",
+          "animations": ["line draw", "points pop", "pointer scale", "glow effect"]
+        },
+        {
+          "id": 5,
+          "title": "Why We Need Smaller Units",
+          "description": "Real-world applications of precise measurements",
+          "visual": "target",
+          "animations": ["rings expand", "crosshairs fade", "checkmarks pop"]
+        }
+      ]
+    },
+    "practice": {
+      "name": "Practice Mode",
+      "description": "Interactive quiz questions to test understanding",
+      "total_steps": 5,
+      "question_types": ["multiple_choice"],
+      "includes_scoring": true,
+      "includes_explanations": true,
+      "includes_completion_summary": true
+    },
+    "real_world": {
+      "name": "Real World Mode",
+      "description": "Real-world scenarios showing practical applications",
+      "total_steps": 4,
+      "scenarios": [
+        {
+          "id": 1,
+          "title": "Carpentry Workshop",
+          "emoji": "🪚",
+          "topic": "Precision in woodworking"
+        },
+        {
+          "id": 2,
+          "title": "Medicine Dosage",
+          "emoji": "💊",
+          "topic": "Accuracy in healthcare"
+        },
+        {
+          "id": 3,
+          "title": "Running a Race",
+          "emoji": "🏃",
+          "topic": "Timing in sports"
+        },
+        {
+          "id": 4,
+          "title": "Baking a Cake",
+          "emoji": "🎂",
+          "topic": "Measurements in cooking"
+        }
+      ]
+    }
+  },
+  
+  "props_schema": {
+    "props": {
+      "type": "object",
+      "properties": {
+        "width": {
+          "type": "number",
+          "default": null,
+          "description": "Container width in pixels (default: responsive)"
+        },
+        "height": {
+          "type": "number",
+          "default": null,
+          "description": "Container height in pixels (default: responsive)"
+        },
+        "initialMode": {
+          "type": "string",
+          "enum": ["learn", "practice", "real_world"],
+          "default": "learn",
+          "description": "Starting mode when tool loads"
+        },
+        "showModeSelector": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show/hide the mode selection tabs"
+        },
+        "enabledModes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["learn", "practice", "real_world"]
+          },
+          "default": ["learn", "practice", "real_world"],
+          "description": "Which modes are available to the user"
+        },
+        "showNavigation": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show/hide Previous and Next buttons"
+        },
+        "showPlayPause": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show/hide Play/Pause button for auto-advancement"
+        },
+        "showStepIndicator": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show/hide step counter and progress bar"
+        },
+        "initialStep": {
+          "type": "number",
+          "default": 0,
+          "description": "Starting step index (0-based)"
+        },
+        "filterSteps": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "default": null,
+          "description": "Array of step IDs to show (null = show all)"
+        },
+        "animationSpeed": {
+          "type": "number",
+          "default": 1,
+          "description": "Animation speed multiplier (1 = normal, 2 = twice as fast, 0.5 = half speed) - NOT USED IN v2.0, animations are fixed for quality"
+        },
+        "autoPlayDuration": {
+          "type": "number",
+          "default": 8000,
+          "description": "Milliseconds before auto-advancing to next step (0 = disabled)"
+        },
+        "themeColor": {
+          "type": "string",
+          "default": "#533086",
+          "description": "Primary theme color (hex format)"
+        },
+        "darkMode": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable dark mode theme"
+        },
+        "additionalProps": {
+          "type": "object",
+          "description": "Tool-specific dynamic configuration",
+          "properties": {
+            "markedValue": {
+              "type": "number",
+              "default": 2.7,
+              "description": "Value to mark on ruler (in Learn Mode step 3) - displays as 'X.X/5 cm'"
+            },
+            "numberLineValue": {
+              "type": "number",
+              "default": 2.7,
+              "description": "Value to mark on number line (in Learn Mode step 4) - displays as 'X.X/5'"
+            },
+            "customQuestions": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": { "type": "number" },
+                  "question": { "type": "string" },
+                  "options": { "type": "array", "items": { "type": "string" }, "minItems": 4, "maxItems": 4 },
+                  "correct": { "type": "string" },
+                  "explanation": { "type": "string" }
+                }
+              },
+              "description": "Custom practice questions (overrides default questions)"
+            },
+            "customScenarios": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": { "type": "number" },
+                  "title": { "type": "string" },
+                  "scenario": { "type": "string" },
+                  "visual": { "type": "string", "description": "Emoji or icon" },
+                  "question": { "type": "string" },
+                  "answer": { "type": "string" },
+                  "realLifeTip": { "type": "string" }
+                }
+              },
+              "description": "Custom real-world scenarios (overrides default scenarios)"
+            }
+          }
+        }
+      }
+    },
+    "setStepDetails": {
+      "type": "function",
+      "parameters": {
+        "stepDetails": {
+          "type": "object",
+          "properties": {
+            "currentStep": { "type": "number" },
+            "totalSteps": { "type": "number" },
+            "currentMode": { "type": "string" },
+            "stepTitle": { "type": "string" }
+          }
+        }
+      },
+      "description": "Callback function to receive step updates from the tool"
+    },
+    "stopAutoNext": {
+      "type": "boolean",
+      "default": false,
+      "description": "External control to stop auto-advancement"
+    },
+    "setStopAutoNext": {
+      "type": "function",
+      "parameters": {
+        "stop": { "type": "boolean" }
+      },
+      "description": "Callback function to control auto-advancement from parent"
+    }
+  },
+  
+  "usage_examples": [
+    {
+      "name": "Default Configuration",
+      "description": "Load tool with all default settings",
+      "code": {
+        "frontend_action": "show_interactive_tool",
+        "title": "Learn Decimal Measurements",
+        "data": {
+          "toolName": "decimal_measurement_tool",
+          "parameters": {}
+        },
+        "instructions_for_student": "Let's explore how to measure with decimals!"
+      }
+    },
+    {
+      "name": "Start in Practice Mode",
+      "description": "Jump directly to practice questions",
+      "code": {
+        "frontend_action": "show_interactive_tool",
+        "title": "Decimal Measurement Quiz",
+        "data": {
+          "toolName": "decimal_measurement_tool",
+          "parameters": {
+            "initialMode": "practice",
+            "showModeSelector": true
+          }
+        },
+        "instructions_for_student": "Test your knowledge about decimal measurements!"
+      }
+    },
+    {
+      "name": "Custom Ruler Value",
+      "description": "Show specific measurement on ruler",
+      "code": {
+        "frontend_action": "show_interactive_tool",
+        "title": "Measuring 3.5 cm",
+        "data": {
+          "toolName": "decimal_measurement_tool",
+          "parameters": {
+            "initialMode": "learn",
+            "initialStep": 2,
+            "showModeSelector": false,
+            "showNavigation": false,
+            "additionalProps": {
+              "markedValue": 3.5
+            }
+          }
+        },
+        "instructions_for_student": "Look at how 3.5 cm is marked on the ruler! The label shows 3.5/5 cm."
+      }
+    },
+    {
+      "name": "Dark Mode with Custom Theme",
+      "description": "Use dark theme with custom primary color",
+      "code": {
+        "frontend_action": "show_interactive_tool",
+        "title": "Decimals (Dark Mode)",
+        "data": {
+          "toolName": "decimal_measurement_tool",
+          "parameters": {
+            "darkMode": true,
+            "themeColor": "#9333ea"
+          }
+        },
+        "instructions_for_student": "Explore measurements with enhanced visuals in dark mode!"
+      }
+    },
+    {
+      "name": "Auto-Play Demo",
+      "description": "Auto-advance through learn mode",
+      "code": {
+        "frontend_action": "show_interactive_tool",
+        "title": "Measurement Concepts Demo",
+        "data": {
+          "toolName": "decimal_measurement_tool",
+          "parameters": {
+            "initialMode": "learn",
+            "autoPlayDuration": 5000,
+            "showPlayPause": true
+          }
+        },
+        "instructions_for_student": "Watch as we explore each measurement concept!"
+      }
+    },
+    {
+      "name": "Practice Mode Only",
+      "description": "Show only practice questions, no other modes",
+      "code": {
+        "frontend_action": "show_interactive_tool",
+        "title": "Measurement Quiz",
+        "data": {
+          "toolName": "decimal_measurement_tool",
+          "parameters": {
+            "initialMode": "practice",
+            "enabledModes": ["practice"],
+            "showModeSelector": false
+          }
+        },
+        "instructions_for_student": "Answer these questions about decimal measurements!"
+      }
+    },
+    {
+      "name": "Specific Real-World Scenario",
+      "description": "Show only one real-world example",
+      "code": {
+        "frontend_action": "show_interactive_tool",
+        "title": "Medicine Dosage Example",
+        "data": {
+          "toolName": "decimal_measurement_tool",
+          "parameters": {
+            "initialMode": "real_world",
+            "initialStep": 1,
+            "filterSteps": [1],
+            "showModeSelector": false,
+            "showNavigation": false
+          }
+        },
+        "instructions_for_student": "Learn why precise measurements matter in medicine!"
+      }
+    },
+    {
+      "name": "Custom Number Line Value",
+      "description": "Display specific value on number line",
+      "code": {
+        "frontend_action": "show_interactive_tool",
+        "title": "Finding 4.3 on Number Line",
+        "data": {
+          "toolName": "decimal_measurement_tool",
+          "parameters": {
+            "initialMode": "learn",
+            "initialStep": 3,
+            "showModeSelector": false,
+            "additionalProps": {
+              "numberLineValue": 4.3
+            }
+          }
+        },
+        "instructions_for_student": "Where does 4.3 fall on the number line? The label shows 4.3/5."
+      }
+    },
+    {
+      "name": "Minimal UI for Embedding",
+      "description": "Clean interface for embedding in other content",
+      "code": {
+        "frontend_action": "show_interactive_tool",
+        "title": "Ruler Visualization",
+        "data": {
+          "toolName": "decimal_measurement_tool",
+          "parameters": {
+            "initialMode": "learn",
+            "initialStep": 2,
+            "showModeSelector": false,
+            "showNavigation": false,
+            "showPlayPause": false,
+            "showStepIndicator": false,
+            "additionalProps": {
+              "markedValue": 2.7
+            }
+          }
+        },
+        "instructions_for_student": ""
+      }
+    },
+    {
+      "name": "All Real World Scenarios",
+      "description": "Show all real-world examples",
+      "code": {
+        "frontend_action": "show_interactive_tool",
+        "title": "Decimals in Real Life",
+        "data": {
+          "toolName": "decimal_measurement_tool",
+          "parameters": {
+            "initialMode": "real_world",
+            "showModeSelector": false
+          }
+        },
+        "instructions_for_student": "Explore 4 real-world scenarios where precise measurements matter!"
+      }
+    }
+  ],
+  
+  "agent_decision_tree": {
+    "description": "Guide for AI agents to determine which parameters to use",
+    "rules": [
+      {
+        "condition": "Student asks 'What are decimals?' or 'What is 2.7?'",
+        "action": "Use default learn mode",
+        "parameters": {
+          "initialMode": "learn"
+        }
+      },
+      {
+        "condition": "Student asks 'Show me how to read a ruler'",
+        "action": "Jump to ruler step",
+        "parameters": {
+          "initialMode": "learn",
+          "initialStep": 2
+        }
+      },
+      {
+        "condition": "Student asks 'Where is X.X on a number line?'",
+        "action": "Show number line with custom value",
+        "parameters": {
+          "initialMode": "learn",
+          "initialStep": 3,
+          "additionalProps": {
+            "numberLineValue": "<extracted_value>"
+          }
+        }
+      },
+      {
+        "condition": "Student says 'Test me' or 'Give me practice problems'",
+        "action": "Start practice mode",
+        "parameters": {
+          "initialMode": "practice"
+        }
+      },
+      {
+        "condition": "Student asks 'Why do we need decimals?' or 'Real world examples'",
+        "action": "Show real-world scenarios",
+        "parameters": {
+          "initialMode": "real_world"
+        }
+      },
+      {
+        "condition": "Student asks about specific measurement like '3.5 cm'",
+        "action": "Show ruler with that value",
+        "parameters": {
+          "initialMode": "learn",
+          "initialStep": 2,
+          "additionalProps": {
+            "markedValue": "<extracted_value>"
+          }
+        }
+      },
+      {
+        "condition": "Student wants quick demo or preview",
+        "action": "Enable auto-play",
+        "parameters": {
+          "autoPlayDuration": 5000,
+          "showPlayPause": true
+        }
+      },
+      {
+        "condition": "Student prefers dark theme or mentions vision difficulty",
+        "action": "Enable dark mode",
+        "parameters": {
+          "darkMode": true
+        }
+      },
+      {
+        "condition": "Student asks about medicine/cooking/sports/carpentry",
+        "action": "Show specific real-world scenario",
+        "parameters": {
+          "initialMode": "real_world",
+          "initialStep": "<scenario_index>",
+          "filterSteps": ["<scenario_index>"]
+        },
+        "note": "Carpentry=0, Medicine=1, Sports=2, Baking=3"
+      }
+    ]
+  },
+  
+  "features": {
+    "responsive_design": true,
+    "mobile_optimized": true,
+    "tablet_optimized": true,
+    "desktop_optimized": true,
+    "animations": {
+      "page_transitions": true,
+      "element_animations": true,
+      "hover_effects": true,
+      "svg_animations": true,
+      "sequential_timing": true,
+      "keyframe_based": true,
+      "gpu_accelerated": true
+    },
+    "accessibility": {
+      "keyboard_navigation": true,
+      "color_contrast": true,
+      "touch_friendly": true,
+      "screen_reader_compatible": true
+    },
+    "customization": {
+      "theme_colors": true,
+      "dark_mode": true,
+      "content_filtering": true,
+      "custom_values": true
+    },
+    "visual_instruments": {
+      "screws_and_toolbox": "Animated comparison with bounce and drop effects",
+      "magnifying_glass": "Rotating glass with breathing shine effect",
+      "interactive_ruler": "Sliding ruler with arrow pointing up from measurement",
+      "number_line": "Drawing line with popping points and static orange marker",
+      "precision_target": "Expanding rings with corner checkmarks"
+    }
+  },
+  
+  "technical_details": {
+    "framework": "React",
+    "language": "TypeScript",
+    "styling": "CSS-in-JS (inline styles with @keyframes)",
+    "external_dependencies": "None",
+    "bundle_size": "~135KB",
+    "browser_support": ["Chrome 90+", "Firefox 88+", "Safari 14+", "Edge 90+"],
+    "animation_system": "CSS keyframes with React state management",
+    "performance": "60fps animations, GPU accelerated transforms"
+  },
+  
+  "animation_details": {
+    "global_keyframes": [
+      "fadeIn", "slideUp", "slideDown", "slideLeft", "slideRight",
+      "scaleIn", "popIn", "bounce", "pulse", "rotate", "shimmer",
+      "drawLine", "fillProgress"
+    ],
+    "step_specific_animations": {
+      "screws": ["toolbox bounce", "screw drop with bounce", "comparison arrow fade"],
+      "magnifying": ["gentle rotation", "shine float", "content breath", "text fade"],
+      "ruler": ["slide from left", "marks pop sequentially", "arrow slide up", "arrow bounce infinite"],
+      "numberline": ["line draw (SVG)", "points pop sequentially", "pointer scale in", "static display"],
+      "target": ["rings expand sequentially", "crosshairs fade", "checkmarks pop in corners"]
+    },
+    "timing_strategy": "Sequential delays (0.1s-0.8s) for natural flow"
+  },
+  
+  "label_formats": {
+    "ruler": "X.X/5 cm (e.g., 2.7/5 cm)",
+    "number_line": "X.X/5 (e.g., 2.7/5)",
+    "note": "Labels show value as decimal over 5 to represent position on 0-5 scale"
+  },
+  
+  "learning_objectives": [
+    "Understand decimal notation (e.g., 2.7 = 2 7/10)",
+    "Read measurements on a ruler to the nearest tenth",
+    "Locate decimal numbers on a number line",
+    "Recognize the importance of precision in measurements",
+    "Apply decimal concepts to real-world situations",
+    "Practice with immediate feedback and explanations",
+    "Connect abstract concepts to concrete examples"
+  ],
+  
+  "metadata": {
+    "author": "Educational Tools Team",
+    "created": "2026-02-12",
+    "last_updated": "2026-02-12",
+    "version": "2.0.0",
+    "license": "Educational Use",
+    "tags": ["decimals", "measurements", "fractions", "precision", "grade7", "mathematics", "interactive", "animated", "responsive"],
+    "changes_in_v2": [
+      "Complete animation overhaul with professional keyframes",
+      "Fixed ruler arrow to point upward from marking",
+      "Changed label format to X.X/5 cm",
+      "Removed fraction blocks from ruler step",
+      "Fixed orange circle to be static (no pulse)",
+      "Added Practice and Real World mode content",
+      "Improved sequential animation timing",
+      "Added animation key system for re-mount triggers",
+      "Enhanced visual effects with shadows and glows",
+      "Added staggered entrance animations for all modes"
+    ]
+  }
+}

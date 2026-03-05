@@ -1,0 +1,477 @@
+{
+  "toolName": "double_bar_graph_tool",
+  "version": "2.0.0",
+  "description": "Interactive graph construction tool for Grade 7 Mathematics — Building Double Bar Graphs. Redesigned with Singularity Design System. Two problem tabs: Superpower Survey and Jodhpur Temperature. Each has a blank graph canvas with gridlines, X-axis category labels, and Y-axis. Student first picks a scale from radio buttons, then constructs bars by dragging or typing values. Correct bars lock with green checkmarks. A final Insights panel highlights key observations.",
+  "category": "mathematics",
+  "grade": "7",
+  "subject": "Mathematics",
+  "chapter": "Chapter 5: Connecting the Dots",
+  "textbook": "Ganita Prakash Grade 7 Part-II (NCERT)",
+  "topic": "Superpower Survey and Temperature Double Bar Graph",
+  "learningObjectives": [
+    "Tally raw survey responses into frequency counts",
+    "Select an appropriate scale for a bar graph given the data range",
+    "Construct a double bar graph with correct bar heights for two groups",
+    "Compare and interpret data across categories and groups",
+    "Identify patterns and draw insights from visualised data"
+  ],
+  "designSystem": {
+    "name": "Singularity Design System",
+    "version": "1.0",
+    "font": {
+      "family": "Poppins",
+      "weights": [400, 500, 600, 700, 800],
+      "importUrl": "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+    },
+    "colorPalette": {
+      "primary": {
+        "indigo": "#4A4DC9",
+        "indigoHover": "#3B3EB5",
+        "indigoPressed": "#533086",
+        "indigoMuted": "#C1C1EA",
+        "indigoGhost": "#EEEEF8"
+      },
+      "accent": {
+        "orange": "#FF7212",
+        "orangeHover": "#FC9145",
+        "orangeMuted": "#FFF3E4",
+        "orangeDark": "#E5600A"
+      },
+      "gradients": {
+        "purpleOrange": "linear-gradient(135deg, #533086 0%, #FC9145 100%)",
+        "indigoOrange": "linear-gradient(135deg, #4A4DC9 0%, #FF7212 100%)",
+        "subtle": "linear-gradient(135deg, #C1C1EA 0%, #FFF3E4 100%)"
+      },
+      "neutrals": {
+        "black": "#1A1A1A",
+        "grey900": "#4E4E4E",
+        "grey600": "#7A7A7A",
+        "grey400": "#CACACA",
+        "grey200": "#EBEBEB",
+        "grey100": "#F5F5F5",
+        "white": "#FFFFFF"
+      },
+      "semantic": {
+        "success": "#2ECC71",
+        "successLight": "#E8FAF0",
+        "successDark": "#1EA35A",
+        "error": "#E74C3C",
+        "errorLight": "#FDE8E6"
+      },
+      "functional": {
+        "barGroup1": "#4A4DC9",
+        "barGroup2": "#FF7212",
+        "barGroup1Light": "#C1C1EA",
+        "barGroup2Light": "#FFF3E4"
+      }
+    },
+    "buttons": {
+      "contained": {
+        "borderRadius": "24px",
+        "height": "40px",
+        "heightSm": "34px",
+        "padding": "10px 24px",
+        "paddingSm": "8px 16px",
+        "fontWeight": 600,
+        "fontSize": "14px",
+        "fontSizeSm": "12px",
+        "states": {
+          "enabled": { "background": "#4A4DC9", "color": "#FFFFFF", "shadow": "0 2px 8px rgba(74,77,201,0.15)" },
+          "hover": { "background": "#3B3EB5", "transform": "scale(1.02)", "shadow": "0 4px 16px rgba(74,77,201,0.3)" },
+          "pressed": { "background": "#533086", "transform": "scale(0.96)" },
+          "disabled": { "background": "#EBEBEB", "color": "#CACACA", "cursor": "not-allowed" }
+        },
+        "variants": {
+          "primary": { "bg": "#4A4DC9", "hover": "#3B3EB5", "pressed": "#533086" },
+          "accent": { "bg": "#FF7212", "hover": "#FC9145", "pressed": "#E5600A" },
+          "success": { "bg": "#2ECC71", "hover": "#1EA35A", "pressed": "#178F48" }
+        }
+      },
+      "outlined": {
+        "borderRadius": "24px",
+        "height": "40px",
+        "padding": "10px 24px",
+        "borderWidth": "2px",
+        "states": {
+          "enabled": { "border": "#CACACA", "color": "#4A4DC9", "background": "transparent" },
+          "hover": { "border": "#4A4DC9", "background": "rgba(74,77,201,0.06)", "transform": "scale(1.02)" },
+          "active": { "border": "#4A4DC9", "background": "#4A4DC9", "color": "#FFFFFF" }
+        }
+      },
+      "texted": {
+        "padding": "10px 24px",
+        "states": {
+          "enabled": { "color": "#4A4DC9", "background": "transparent", "border": "none" },
+          "hover": { "color": "#533086", "background": "rgba(74,77,201,0.06)" },
+          "disabled": { "color": "#CACACA" }
+        }
+      }
+    },
+    "spacing": {
+      "buttonPaddingH": "24px",
+      "buttonPaddingV": "10px",
+      "cardPadding": "14px",
+      "containerBorderRadius": "24px",
+      "cardBorderRadius": "14px-16px",
+      "buttonBorderRadius": "24px",
+      "iconGap": "6px"
+    },
+    "decorativeElements": {
+      "description": "Floating geometric shapes in header — circle, rotated square, triangle with transparent white borders",
+      "shapes": ["circle", "triangle", "square", "ellipse"],
+      "animation": "floatShape 6-8s ease-in-out infinite"
+    }
+  },
+  "parameters": {
+    "width": {
+      "type": "number",
+      "default": 720,
+      "description": "Container max-width in pixels"
+    },
+    "height": {
+      "type": "number",
+      "default": 600,
+      "description": "Container height (auto-adjusts to content)"
+    },
+    "themeColor": {
+      "type": "string",
+      "default": "#4A4DC9",
+      "description": "Primary theme colour (Singularity indigo)"
+    },
+    "darkMode": {
+      "type": "boolean",
+      "default": false,
+      "description": "Enable dark mode"
+    },
+    "initialTab": {
+      "type": "string",
+      "enum": ["superpower", "temperature"],
+      "default": "superpower",
+      "description": "Which problem tab to show first"
+    }
+  },
+  "additionalProps": {
+    "description": "Tool-specific dynamic content for customising the datasets",
+    "schema": {
+      "superpowerData": {
+        "type": "DataSet",
+        "description": "Custom superpower survey data (overrides built-in data)",
+        "properties": {
+          "title": { "type": "string", "description": "Graph title", "default": "Superpower Survey" },
+          "subtitle": { "type": "string", "description": "Graph subtitle", "default": "Grade 5 vs Grade 9 Preferences" },
+          "group1Label": { "type": "string", "description": "Label for first group", "default": "Grade 5" },
+          "group2Label": { "type": "string", "description": "Label for second group", "default": "Grade 9" },
+          "xAxisLabel": { "type": "string", "description": "X-axis label", "default": "Superpower Choice" },
+          "yAxisLabel": { "type": "string", "description": "Y-axis label", "default": "Number of Students" },
+          "categories": { "type": "string[]", "description": "Category names", "default": ["Water-borne", "Air-borne", "Space-borne", "None"] },
+          "group1Values": { "type": "number[]", "description": "Correct values for group 1", "default": [6, 13, 2, 4] },
+          "group2Values": { "type": "number[]", "description": "Correct values for group 2", "default": [6, 9, 8, 2] },
+          "scaleOptions": { "type": "number[]", "description": "Scale options to present", "default": [1, 2, 3, 5] },
+          "correctScale": { "type": "number[]", "description": "Acceptable scale choices", "default": [2, 3] },
+          "rawDataGroup1": { "type": "string", "description": "Raw comma-separated letter-coded survey responses for group 1" },
+          "rawDataGroup2": { "type": "string", "description": "Raw comma-separated letter-coded survey responses for group 2" },
+          "hasTallyStage": { "type": "boolean", "description": "Whether to show the tally counting stage", "default": true },
+          "insights": { "type": "string[]", "description": "Insight statements shown after graph completion" }
+        }
+      },
+      "temperatureData": {
+        "type": "DataSet",
+        "description": "Custom temperature data (overrides built-in Jodhpur data)",
+        "properties": {
+          "title": { "type": "string", "description": "Graph title", "default": "Jodhpur Temperature" },
+          "subtitle": { "type": "string", "description": "Graph subtitle", "default": "Two days across different months" },
+          "group1Label": { "type": "string", "description": "Label for first group", "default": "Day 1 (Cool month)" },
+          "group2Label": { "type": "string", "description": "Label for second group", "default": "Day 2 (Hot month)" },
+          "xAxisLabel": { "type": "string", "description": "X-axis label", "default": "Time of Day" },
+          "yAxisLabel": { "type": "string", "description": "Y-axis label", "default": "Temperature (°C)" },
+          "categories": { "type": "string[]", "description": "Time/category labels", "default": ["12 am", "3 am", "6 am", "9 am", "12 pm", "3 pm", "6 pm", "9 pm"] },
+          "group1Values": { "type": "number[]", "description": "Day 1 temperature values", "default": [20, 18, 16, 20, 26, 34, 30, 24] },
+          "group2Values": { "type": "number[]", "description": "Day 2 temperature values", "default": [37, 34, 30, 33, 37, 43, 42, 39] },
+          "scaleOptions": { "type": "number[]", "description": "Scale options to present", "default": [2, 4, 5, 8] },
+          "correctScale": { "type": "number[]", "description": "Acceptable scale choices", "default": [4, 5] },
+          "hasTallyStage": { "type": "boolean", "description": "Always false for temperature — no raw data tally", "default": false },
+          "insights": { "type": "string[]", "description": "Key observations for the student" }
+        }
+      }
+    },
+    "defaults": {
+      "superpowerSurvey": {
+        "categories": ["Water-borne", "Air-borne", "Space-borne", "None"],
+        "group1Values": [6, 13, 2, 4],
+        "group2Values": [6, 9, 8, 2],
+        "scaleOptions": [1, 2, 3, 5],
+        "correctScale": [2, 3],
+        "rawDataGroup1": "w, a, a, a, w, n, s, a, n, w, a, a, a, a, a, w, w, s, a, a, n, w, a, a, n",
+        "rawDataGroup2": "n, w, s, a, s, w, s, s, a, a, w, s, s, a, s, a, n, w, s, s, a, w, a, w, a",
+        "hasTallyStage": true
+      },
+      "jodhpurTemperature": {
+        "categories": ["12 am", "3 am", "6 am", "9 am", "12 pm", "3 pm", "6 pm", "9 pm"],
+        "group1Values": [20, 18, 16, 20, 26, 34, 30, 24],
+        "group2Values": [37, 34, 30, 33, 37, 43, 42, 39],
+        "scaleOptions": [2, 4, 5, 8],
+        "correctScale": [4, 5],
+        "hasTallyStage": false
+      }
+    }
+  },
+  "stages": {
+    "tally": {
+      "description": "Student tallies raw letter-coded survey responses into frequency counts per category",
+      "appliesTo": "Tabs with hasTallyStage: true (superpower survey by default)",
+      "interaction": "Type counts for each category for both groups, click indigo check button to verify",
+      "uiDetails": {
+        "rawDataCards": "White card with group-colored border (indigo for Group 1, orange for Group 2), letter codes shown as small pills",
+        "tallyGrid": "2-column grid on desktop, 1-column on mobile. Each card has category heading, two input rows with colored dot indicator",
+        "inputStyle": "Rounded 10px input, 2px border, Poppins 700, success green when correct",
+        "checkButton": "28px circular indigo button with Check icon",
+        "feedbackOnError": "Shake animation + red hint showing expected value"
+      }
+    },
+    "scale": {
+      "description": "Student selects appropriate scale from pill-shaped buttons",
+      "interaction": "Click a scale option; instant feedback with success/error styling",
+      "uiDetails": {
+        "scaleButtons": "24px border-radius pill buttons, 2px border. Correct = success green bg + border. Wrong = error red bg + border. Selected = indigo ghost bg",
+        "feedbackPanel": "Rounded 14px box with success/error background and explanatory text",
+        "continueButton": "Singularity ContainedBtn accent variant (orange), full width"
+      },
+      "teachingNote": "If max value is 13, scales of 2 or 3 work well. For max 43°C, scale of 4 or 5 is ideal."
+    },
+    "bars": {
+      "description": "Student constructs the bar graph on SVG canvas by dragging handles or typing values",
+      "interaction": "Drag circle handles on SVG bars (snap-to-grid) or type in input fields. Click colored check button to lock.",
+      "uiDetails": {
+        "svgCanvas": "White background, 14px border-radius, 2px #EBEBEB border, dashed #EBEBEB gridlines",
+        "barColors": "Group 1 = #4A4DC9 (indigo), Group 2 = #FF7212 (orange). Semi-transparent (88 alpha) until confirmed",
+        "dragHandles": "6px radius circles, white 2.5px stroke, group-colored fill. cursor: ns-resize",
+        "correctCheckmark": "8px radius green circle with white polyline checkmark, positioned above bar",
+        "inputCards": "Grid below chart, white cards with 14px border-radius, green border when both values correct",
+        "continueButton": "Singularity ContainedBtn success variant, full width"
+      },
+      "features": [
+        "Touch-friendly SVG drag handles with snap-to-grid",
+        "Correct bars lock with green checkmark overlay",
+        "Incorrect bars trigger shake animation",
+        "Dual input: drag handles + keyboard number inputs",
+        "Mobile responsive with 2-column input grid"
+      ]
+    },
+    "complete": {
+      "description": "Final animated completed graph with title, legend, axis labels, scale annotation, and insights panel",
+      "uiDetails": {
+        "graphTitle": "Poppins 800, 18px, indigo color",
+        "subtitle": "Poppins 500, 12px, grey600 with scale annotation",
+        "barAnimation": "growBar 0.7s ease with staggered delays per category",
+        "insightsPanel": {
+          "container": "White bg, 18px border-radius, 2px #C1C1EA border, subtle box-shadow",
+          "header": "32px gradient icon box (indigo→orange) with Zap icon + 'Key Insights' heading",
+          "insightRows": "Alternating backgrounds: #EEEEF8 (indigo ghost) and #FFF3E4 (orange muted)",
+          "numbering": "20px circles alternating indigo/orange with white number text",
+          "animation": "fadeInUp 0.4s staggered"
+        },
+        "resetButton": "Singularity OutlinedBtn with indigo color"
+      },
+      "features": [
+        "Animated bar growth with stagger",
+        "Numbered insights with alternating color scheme",
+        "Gradient icon in insights header",
+        "Clean outlined reset button"
+      ]
+    }
+  },
+  "animations": {
+    "keyframes": [
+      "fadeInUp — opacity 0→1, translateY 20px→0, 0.4s ease",
+      "popIn — scale 0→1.08→1, opacity 0→1, 0.4s ease",
+      "slideInRight — opacity 0→1, translateX 30px→0, 0.3s ease",
+      "shake — translateX oscillation ±5px, 0.4s ease",
+      "celebrate — scale 1→1.15→0.97→1, 0.5s ease",
+      "pulse — scale 1→1.04→1, infinite",
+      "growBar — height 0→final, 0.7s ease",
+      "bounce — translateY 0→-6px→0, 1s ease infinite",
+      "slideDown — opacity + max-height reveal, 0.6s ease",
+      "floatShape — translateY + rotate, 6-8s ease-in-out infinite",
+      "shimmer — background-position sweep, infinite"
+    ],
+    "transitions": {
+      "default": "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
+      "fast": "all 0.12s ease",
+      "border": "border-color 0.3s ease",
+      "stageOpacity": "opacity 0.28s ease"
+    }
+  },
+  "responsiveness": {
+    "breakpoint": "640px",
+    "mobile": {
+      "header": "Column flex layout",
+      "tabs": "12px padding, 12px font",
+      "stageIndicator": "Numbers only, no labels",
+      "chart": "350px width, 280px height, rotated category labels for 5+ categories",
+      "inputGrid": "2-column",
+      "tallyGrid": "1-column"
+    },
+    "desktop": {
+      "header": "Row flex layout",
+      "chart": "620px width, 340px height",
+      "inputGrid": "Up to 4-column",
+      "tallyGrid": "2-column"
+    }
+  },
+  "accessibility": {
+    "touchFriendly": "SVG drag handles with 6px radius (12px touch target with stroke), touchAction: none on SVG",
+    "colorCoding": "All color-coded elements also have shape/position differentiation",
+    "fontSizes": "Minimum 10px, primary content 12-14px",
+    "contrastRatios": "All text meets WCAG AA on their respective backgrounds"
+  },
+  "teachingNotes": {
+    "superpowerSurvey": "First have the student look at the raw letter codes and tally them (connects to data organisation). Then discuss scale choice: if max value is 13, a scale of 2 or 3 works well. After building, ask: 'What story does the graph tell? Which power is most popular in Grade 5 vs Grade 9?'",
+    "jodhpurTemperature": "For the temperature data, discuss why the scale matters: if the max is 43°C, a scale of 4 or 5 keeps the graph manageable. After building, ask: 'Can you guess which two months these days might belong to?' Day 1 looks like December/January, Day 2 like May/June.",
+    "general": "After both graphs are built, ask: 'What story does each graph tell? In the superpower survey, which power is most popular in Grade 5 vs Grade 9? For temperatures, how does the pattern change between morning and afternoon?'"
+  },
+  "instructionsForStudent": "Choose a data set and build your own double bar graph! First, select an appropriate scale from the options. Then, for each category, set the bar heights for both groups. The tool will check if your bars match the data. Can you build a graph that clearly shows the comparison?",
+  "toolCallExamples": [
+    {
+      "title": "Default — Superpower Survey first",
+      "description": "Opens with the superpower tally stage using built-in NCERT data",
+      "data": {
+        "toolName": "double_bar_graph_tool",
+        "parameters": {
+          "initialTab": "superpower"
+        }
+      },
+      "instructions_for_student": "Tally the survey responses for Grade 5 and Grade 9, then build the double bar graph!"
+    },
+    {
+      "title": "Start with Temperature tab",
+      "description": "Opens directly on the Jodhpur temperature problem (no tally stage)",
+      "data": {
+        "toolName": "double_bar_graph_tool",
+        "parameters": {
+          "initialTab": "temperature"
+        }
+      },
+      "instructions_for_student": "Build a temperature comparison graph for two days in Jodhpur. Can you guess which months these represent?"
+    },
+    {
+      "title": "Custom classroom data — Favourite Fruits",
+      "description": "Agent passes custom survey data without tally stage",
+      "data": {
+        "toolName": "double_bar_graph_tool",
+        "parameters": {
+          "initialTab": "superpower",
+          "additionalProps": {
+            "superpowerData": {
+              "title": "Favourite Fruit Survey",
+              "subtitle": "Boys vs Girls",
+              "group1Label": "Boys",
+              "group2Label": "Girls",
+              "xAxisLabel": "Fruit",
+              "yAxisLabel": "Number of Students",
+              "categories": ["Mango", "Apple", "Banana", "Grapes"],
+              "group1Values": [8, 4, 6, 2],
+              "group2Values": [5, 7, 3, 5],
+              "scaleOptions": [1, 2, 3, 4],
+              "correctScale": [2],
+              "hasTallyStage": false,
+              "insights": [
+                "Mango is the most popular fruit among boys (8 students).",
+                "Apple is the most popular fruit among girls (7 students).",
+                "Banana is more popular with boys than girls."
+              ]
+            }
+          }
+        }
+      },
+      "instructions_for_student": "Build a double bar graph comparing favourite fruits between boys and girls!"
+    },
+    {
+      "title": "Custom rainfall data on temperature tab",
+      "description": "Agent replaces Jodhpur temperature with custom city rainfall data",
+      "data": {
+        "toolName": "double_bar_graph_tool",
+        "parameters": {
+          "initialTab": "temperature",
+          "additionalProps": {
+            "temperatureData": {
+              "title": "Monthly Rainfall",
+              "subtitle": "City A vs City B",
+              "group1Label": "City A",
+              "group2Label": "City B",
+              "xAxisLabel": "Month",
+              "yAxisLabel": "Rainfall (mm)",
+              "categories": ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+              "group1Values": [10, 15, 30, 50, 80, 120],
+              "group2Values": [20, 25, 35, 45, 60, 90],
+              "scaleOptions": [10, 15, 20, 25],
+              "correctScale": [15, 20],
+              "hasTallyStage": false,
+              "insights": [
+                "Both cities show increasing rainfall from January to June.",
+                "City A receives more rainfall than City B from April onwards.",
+                "June has the highest rainfall in both cities."
+              ]
+            }
+          }
+        }
+      },
+      "instructions_for_student": "Compare monthly rainfall between two cities by building a double bar graph!"
+    },
+    {
+      "title": "Custom data with tally stage",
+      "description": "Agent passes raw coded data requiring students to tally first",
+      "data": {
+        "toolName": "double_bar_graph_tool",
+        "parameters": {
+          "initialTab": "superpower",
+          "additionalProps": {
+            "superpowerData": {
+              "title": "Favourite Sport Survey",
+              "subtitle": "Section A vs Section B",
+              "group1Label": "Section A",
+              "group2Label": "Section B",
+              "xAxisLabel": "Sport",
+              "yAxisLabel": "Number of Students",
+              "categories": ["Cricket", "Football", "Badminton", "Kabaddi"],
+              "group1Values": [10, 6, 5, 4],
+              "group2Values": [7, 8, 6, 4],
+              "scaleOptions": [1, 2, 3, 5],
+              "correctScale": [2, 3],
+              "rawDataGroup1": "c, f, c, b, c, k, c, f, b, c, f, c, k, c, b, f, c, k, b, f, c, k, f, b, c",
+              "rawDataGroup2": "f, c, b, f, k, c, f, b, c, f, k, b, c, f, b, c, k, f, c, b, f, k, c, b, f",
+              "hasTallyStage": true,
+              "insights": [
+                "Cricket is the most popular sport in Section A (10 students).",
+                "Football leads in Section B (8 students).",
+                "Kabaddi has equal popularity in both sections (4 each).",
+                "Section B preferences are more evenly distributed."
+              ]
+            }
+          }
+        }
+      },
+      "instructions_for_student": "Count the sport codes (c=Cricket, f=Football, b=Badminton, k=Kabaddi) for each section, then build the graph!"
+    }
+  ],
+  "agentQuickReference": {
+    "parameter": "initialTab",
+    "values": {
+      "superpower": "Shows superpower survey tab (has tally stage by default)",
+      "temperature": "Shows Jodhpur temperature tab (scale + bars only)"
+    },
+    "customisation": {
+      "replaceSuperpowerData": "Pass additionalProps.superpowerData with a full DataSet object",
+      "replaceTemperatureData": "Pass additionalProps.temperatureData with a full DataSet object",
+      "enableTally": "Set hasTallyStage: true and provide rawDataGroup1 + rawDataGroup2 strings",
+      "disableTally": "Set hasTallyStage: false (skips directly to scale selection)",
+      "customInsights": "Pass insights as string array — shown in alternating indigo/orange cards"
+    },
+    "designTokens": {
+      "group1Color": "#4A4DC9 (indigo) — used for Group 1 bars, labels, and indicators",
+      "group2Color": "#FF7212 (orange) — used for Group 2 bars, labels, and indicators",
+      "headerGradient": "#533086 → #FC9145 — Singularity purple-to-orange gradient",
+      "successColor": "#2ECC71 — correct answers, locked bars",
+      "errorColor": "#E74C3C — incorrect answers, shake feedback"
+    }
+  }
+}

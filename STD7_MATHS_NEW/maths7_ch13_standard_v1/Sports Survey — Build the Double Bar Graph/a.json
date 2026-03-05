@@ -1,0 +1,509 @@
+{
+    "toolName": "sports_survey_double_bar_graph",
+    "version": "2.0.0",
+    "description": "Interactive graph construction tool for Grade 7 Mathematics — Sports Survey Double Bar Graph. Redesigned with Singularity Design System. Blank graph canvas with 5 sport names on X-axis (Cricket, Basketball, Swimming, Hockey, Athletics). Y-axis with gridlines. Scale selector with 3 options (1 unit = 100, 200, or 250). For each sport, two bars: indigo (#4A4DC9) for Watching and orange (#FF7212) for Participating. Student types values to set heights. Correct bars lock with checkmark. Incorrect bars highlight and show expected value. After all 10 bars placed, an insights panel slides in showing: biggest watching sport (Cricket 1240), biggest gap (Cricket 620), smallest gap (Athletics 145), and overall pattern (watching > participating for all sports). Singularity design tokens: primary #4A4DC9, accent #FF7212, gradient #533086→#FC9145, tints #C1C1EA and #FFF3E4. Poppins font. Contained/Outlined/Highlight button variants with pill radius. Geometric shape decorations (circle, triangle, square, ellipse). Indian sports context. Mobile-responsive with horizontal scroll.",
+    "category": "data_visualization",
+    "grade": 7,
+    "chapter": "5 - Connecting the Dots",
+    "textbook": "Ganita Prakash (NCERT)",
+    "designSystem": {
+        "name": "Singularity",
+        "version": "1.0",
+        "colors": {
+            "primary": "#4A4DC9",
+            "accent": "#FF7212",
+            "gradientStart": "#533086",
+            "gradientEnd": "#FC9145",
+            "tintPurple": "#C1C1EA",
+            "tintPeach": "#FFF3E4",
+            "deepPurple": "#533086",
+            "neutral900": "#4E4E4E",
+            "neutral400": "#CACACA",
+            "neutral200": "#EBEBEB",
+            "neutral100": "#F5F5F5",
+            "white": "#FFFFFF",
+            "success": "#22C55E",
+            "error": "#EF4444"
+        },
+        "font": "Poppins",
+        "fontWeights": [300, 400, 500, 600, 700, 800, 900],
+        "borderRadius": {
+            "sm": "8px",
+            "md": "12px",
+            "lg": "20px",
+            "xl": "28px",
+            "pill": "40px"
+        },
+        "buttonVariants": {
+            "contained": {
+                "background": "#4A4DC9",
+                "color": "#FFFFFF",
+                "hoverBackground": "linear-gradient(135deg, #533086, #4A4DC9)",
+                "disabledBackground": "#EBEBEB",
+                "disabledColor": "#CACACA"
+            },
+            "outlined": {
+                "background": "transparent",
+                "color": "#4A4DC9",
+                "border": "2px solid #4A4DC9",
+                "hoverBackground": "rgba(74, 77, 201, 0.03)",
+                "disabledBorder": "2px solid #EBEBEB",
+                "disabledColor": "#CACACA"
+            },
+            "highlight": {
+                "background": "#FF7212",
+                "color": "#FFFFFF",
+                "hoverBackground": "linear-gradient(135deg, #FF7212, #FC9145)",
+                "disabledBackground": "#EBEBEB",
+                "disabledColor": "#CACACA"
+            }
+        },
+        "buttonSpecs": {
+            "height": "40px",
+            "paddingHorizontal": "24px",
+            "paddingVertical": "8px",
+            "borderRadius": "40px",
+            "iconSize": "24px",
+            "iconGap": "4px"
+        },
+        "shadows": {
+            "sm": "0 2px 8px rgba(74, 77, 201, 0.08)",
+            "md": "0 4px 20px rgba(74, 77, 201, 0.12)",
+            "lg": "0 12px 40px rgba(74, 77, 201, 0.18)",
+            "accent": "0 4px 20px rgba(255, 114, 18, 0.25)"
+        },
+        "decorativeShapes": ["circle", "triangle", "square", "ellipse"],
+        "shapeStates": {
+            "outline": "stroke only, no fill",
+            "filledPurple": "fill #533086 or #C1C1EA",
+            "outlinedOrange": "stroke #FC9145, no fill"
+        }
+    },
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Width of the tool container in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 700,
+            "description": "Height of the tool container in pixels"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#4A4DC9",
+            "description": "Primary theme color (Singularity primary indigo)"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Toggle dark mode"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier"
+        }
+    },
+    "additionalProps": {
+        "description": "Tool-specific dynamic data for the sports survey double bar graph",
+        "schema": {
+            "sports": {
+                "type": "array",
+                "description": "Array of sport data objects with name, watching count, participating count, and emoji",
+                "default": [
+                    { "name": "Cricket", "watching": 1240, "participating": 620, "emoji": "🏏" },
+                    { "name": "Basketball", "watching": 470, "participating": 320, "emoji": "🏀" },
+                    { "name": "Swimming", "watching": 510, "participating": 320, "emoji": "🏊" },
+                    { "name": "Hockey", "watching": 430, "participating": 250, "emoji": "🏑" },
+                    { "name": "Athletics", "watching": 250, "participating": 105, "emoji": "🏃" }
+                ],
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "name": { "type": "string", "description": "Sport name" },
+                        "watching": { "type": "number", "description": "Number of people watching" },
+                        "participating": { "type": "number", "description": "Number of people participating" },
+                        "emoji": { "type": "string", "description": "Emoji icon for the sport" }
+                    }
+                }
+            },
+            "scaleOptions": {
+                "type": "array",
+                "description": "Available Y-axis scale options for student to choose from",
+                "default": [100, 200, 250],
+                "items": { "type": "number" }
+            },
+            "defaultScale": {
+                "type": "number",
+                "description": "Pre-selected scale (bypasses scale selection phase)",
+                "default": null
+            },
+            "watchingColor": {
+                "type": "string",
+                "description": "Color for watching bars (default: Singularity primary #4A4DC9)",
+                "default": "#4A4DC9"
+            },
+            "participatingColor": {
+                "type": "string",
+                "description": "Color for participating bars (default: Singularity accent #FF7212)",
+                "default": "#FF7212"
+            },
+            "showInsightsAfter": {
+                "type": "boolean",
+                "description": "Show insights panel after graph completion",
+                "default": true
+            },
+            "title": {
+                "type": "string",
+                "description": "Graph title",
+                "default": "Sports Survey: Watching vs Participating"
+            },
+            "xAxisLabel": {
+                "type": "string",
+                "description": "X-axis label",
+                "default": "Sports"
+            },
+            "yAxisLabel": {
+                "type": "string",
+                "description": "Y-axis label",
+                "default": "Number of People"
+            }
+        },
+        "examples": [
+            {
+                "name": "Default Sports Survey (from textbook Q4)",
+                "additionalProps": {}
+            },
+            {
+                "name": "Custom Sports Data",
+                "additionalProps": {
+                    "sports": [
+                        { "name": "Football", "watching": 800, "participating": 400, "emoji": "⚽" },
+                        { "name": "Tennis", "watching": 350, "participating": 180, "emoji": "🎾" },
+                        { "name": "Kabaddi", "watching": 600, "participating": 450, "emoji": "🤼" }
+                    ],
+                    "scaleOptions": [100, 150, 200],
+                    "title": "Custom Sports Survey"
+                }
+            },
+            {
+                "name": "Pre-selected scale",
+                "additionalProps": {
+                    "defaultScale": 200
+                }
+            },
+            {
+                "name": "Singularity tint colors for bars",
+                "additionalProps": {
+                    "watchingColor": "#533086",
+                    "participatingColor": "#FC9145"
+                }
+            }
+        ]
+    },
+    "phases": {
+        "scale": {
+            "name": "Choose Scale",
+            "description": "Student selects the Y-axis scale from 3 options. Cards use Singularity neutral200 border with primary hover. Best-fit badge uses gradient #533086→#FC9145."
+        },
+        "build": {
+            "name": "Build Graph",
+            "description": "Student sets bar heights for all 10 bars (2 per sport × 5 sports). Input card uses white surface with neutral200 border. Submit button uses Contained variant (#4A4DC9). Progress bar uses primary→accent gradient."
+        },
+        "insights": {
+            "name": "Insights",
+            "description": "After completion, insights panel reveals 4 data patterns. Cards use neutral100 background with tintPurple/tintPeach hover states. Discussion box uses dashed primary border with gradient tint background."
+        }
+    },
+    "features": {
+        "scaleSelection": "3 card options (1:100, 1:200, 1:250) with ★ BEST FIT badge using gradient pill. Singularity shadow.lg on hover. Geometric SVG decorations (circle + triangle + square from design system).",
+        "barConstruction": "Sequential bar placement with value input, verification, and easeOutCubic animated growth. Active sport column highlighted with tintPurple dashed border and singGlow animation.",
+        "correctFeedback": "Green (#22C55E) circle with animated checkmark stroke-draw. Contained-style success feedback card with #F0FDF4 background.",
+        "incorrectFeedback": "singShake animation on input, red (#EF4444) circle with X icon, then auto-corrects showing correct value. Error card uses #FEF2F2 background.",
+        "insightsPanel": "4 animated insight cards with Lucide icons (Eye, BarChart3, Users, Sparkles). Each card has icon circle with 15% color fill, uses singSlidePanel stagger animation. Hover transforms translateX(4px) with tint background swap.",
+        "headerGradient": "Animated gradient using #533086→#4A4DC9→#FC9145 with singGradientShift keyframe (8s cycle). Decorative geometric SVG shapes (circle, square, triangle, ellipse) at 8% opacity from design system.",
+        "buttonSystem": "Three button variants matching Singularity PDF: Contained (#4A4DC9 fill, white text, pill radius), Outlined (primary border, transparent fill), Highlight (#FF7212 fill). All support Enabled/Disabled/Hover/Pressed states with scale transforms.",
+        "phaseIndicator": "Dot + line progress indicator in header. Active dot stretches to 28px width. Completed segments use 50% white opacity. Smooth 0.4s cubic-bezier transitions.",
+        "dataTable": "Reference data table with Singularity styling. Active sport column uses tintPurple 30% background. Active bar type row uses watching/participating color at 12% opacity.",
+        "progressBar": "8px rounded bar with primary→accent gradient fill. Smooth 0.5s width transition. Completion count in primary color bold text.",
+        "confetti": "24 particles using Singularity palette (primary, accent, tintPurple, success, deepPurple, gold). Mix of circles and rounded squares. singConfetti animation with rotation and scale-down.",
+        "responsiveDesign": "Horizontal scroll for graph on mobile devices. Flexible padding with DS.spacing tokens."
+    },
+    "animations": {
+        "prefix": "sing",
+        "keyframes": {
+            "singFadeInUp": "opacity 0→1, translateY 24px→0",
+            "singFadeInDown": "opacity 0→1, translateY -16px→0",
+            "singFadeInLeft": "opacity 0→1, translateX -24px→0",
+            "singFadeInRight": "opacity 0→1, translateX 24px→0",
+            "singPopIn": "scale 0→1.12→1, opacity 0→1",
+            "singPulse": "scale 1→1.03→1 with box-shadow fade",
+            "singBounce": "translateY 0→-6px→0",
+            "singSlidePanel": "opacity 0→1, translateY 20px→0",
+            "singConfetti": "translateY 0→280px, rotate 0→540deg, scale 1→0.3, opacity 1→0",
+            "singCheckDraw": "stroke-dashoffset 50→0",
+            "singShake": "translateX 0→-6→6→-4→4→0",
+            "singGlow": "box-shadow fade cycle with primary color",
+            "singFloat": "translateY 0→-4px→0",
+            "singGradientShift": "background-position 0%→100%→0% (8s)",
+            "singRipple": "scale 0→2.5, opacity 0.4→0"
+        }
+    },
+    "teachingNotes": {
+        "scaleGuidance": "Guide the student in scale selection: max value is 1240, so a scale of 200 works well (giving 7 rows on the y-axis). The ★ BEST FIT badge highlights this option.",
+        "afterGraphDiscussion": "After the graph is built, discuss: Cricket dominates in both watching (1240) and participating (620). The watching-participating gap is largest for Cricket (620 difference) and smallest for Athletics (145 difference).",
+        "discussionPrompts": [
+            "Why do you think more people watch cricket than play it?",
+            "What about swimming — the gap is 190, quite modest!",
+            "Which sport has the biggest difference between watching and participating?",
+            "Can you think of reasons why athletics has such a small gap?"
+        ],
+        "indianSportsContext": "Connect to Indian sports culture — cricket's dominance, hockey as national sport, growing athletics culture."
+    },
+    "instructionsForStudent": "The data shows how many people watch and participate in 5 sports. Your job: build a double bar graph! First, choose a scale that works for values up to 1240. Then set bar heights for Watching (indigo) and Participating (orange) for each sport. After building the graph, look at the gap between watching and participating — which sport has the biggest gap? The smallest?",
+    "toolCallExamples": [
+        {
+            "name": "Default textbook question",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Sports Survey Double Bar Graph",
+                "data": {
+                    "toolName": "sports_survey_double_bar_graph",
+                    "parameters": {}
+                },
+                "instructions_for_student": "Build a double bar graph from this sports survey data. Choose a scale first, then set each bar height!"
+            }
+        },
+        {
+            "name": "With pre-selected scale",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Sports Survey Double Bar Graph",
+                "data": {
+                    "toolName": "sports_survey_double_bar_graph",
+                    "parameters": {
+                        "additionalProps": {
+                            "defaultScale": 200
+                        }
+                    }
+                },
+                "instructions_for_student": "The scale is already set to 1:200. Now set each bar height for watching and participating!"
+            }
+        },
+        {
+            "name": "Custom data with different sports",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Favourite Activities Survey",
+                "data": {
+                    "toolName": "sports_survey_double_bar_graph",
+                    "parameters": {
+                        "additionalProps": {
+                            "sports": [
+                                { "name": "Reading", "watching": 300, "participating": 250, "emoji": "📚" },
+                                { "name": "Painting", "watching": 180, "participating": 120, "emoji": "🎨" },
+                                { "name": "Music", "watching": 450, "participating": 200, "emoji": "🎵" },
+                                { "name": "Dance", "watching": 350, "participating": 280, "emoji": "💃" }
+                            ],
+                            "scaleOptions": [50, 100, 150],
+                            "title": "Favourite Activities: Watching vs Doing",
+                            "yAxisLabel": "Number of Students"
+                        }
+                    }
+                },
+                "instructions_for_student": "This survey is about favourite activities. Build the double bar graph!"
+            }
+        },
+        {
+            "name": "Singularity gradient color scheme",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Sports Watching vs Playing",
+                "data": {
+                    "toolName": "sports_survey_double_bar_graph",
+                    "parameters": {
+                        "themeColor": "#533086",
+                        "additionalProps": {
+                            "watchingColor": "#533086",
+                            "participatingColor": "#FC9145"
+                        }
+                    }
+                },
+                "instructions_for_student": "Build the sports survey graph with deep purple and orange bars!"
+            }
+        },
+        {
+            "name": "Singularity tint color scheme",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Sports Survey — Soft Theme",
+                "data": {
+                    "toolName": "sports_survey_double_bar_graph",
+                    "parameters": {
+                        "additionalProps": {
+                            "watchingColor": "#4A4DC9",
+                            "participatingColor": "#FF7212"
+                        }
+                    }
+                },
+                "instructions_for_student": "Build the graph using indigo (watching) and orange (participating) bars!"
+            }
+        },
+        {
+            "name": "Minimal — only 3 sports",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Top 3 Sports Survey",
+                "data": {
+                    "toolName": "sports_survey_double_bar_graph",
+                    "parameters": {
+                        "additionalProps": {
+                            "sports": [
+                                { "name": "Cricket", "watching": 1240, "participating": 620, "emoji": "🏏" },
+                                { "name": "Swimming", "watching": 510, "participating": 320, "emoji": "🏊" },
+                                { "name": "Athletics", "watching": 250, "participating": 105, "emoji": "🏃" }
+                            ]
+                        }
+                    }
+                },
+                "instructions_for_student": "Here are the top 3 sports. Build a double bar graph!"
+            }
+        },
+        {
+            "name": "Large values — population data",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "City Population: Males vs Females",
+                "data": {
+                    "toolName": "sports_survey_double_bar_graph",
+                    "parameters": {
+                        "additionalProps": {
+                            "sports": [
+                                { "name": "Delhi", "watching": 9500, "participating": 8800, "emoji": "🏛️" },
+                                { "name": "Mumbai", "watching": 6800, "participating": 6400, "emoji": "🌊" },
+                                { "name": "Chennai", "watching": 4700, "participating": 4500, "emoji": "🛕" },
+                                { "name": "Kolkata", "watching": 4900, "participating": 4600, "emoji": "🌉" }
+                            ],
+                            "scaleOptions": [1000, 2000, 2500],
+                            "title": "City Population Comparison",
+                            "yAxisLabel": "Population (in thousands)",
+                            "watchingColor": "#4A4DC9",
+                            "participatingColor": "#FC9145"
+                        }
+                    }
+                },
+                "instructions_for_student": "Compare populations across cities using a double bar graph!"
+            }
+        },
+        {
+            "name": "GK Quiz comparison context",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "GK Quiz Scores: Group 1 vs Group 2",
+                "data": {
+                    "toolName": "sports_survey_double_bar_graph",
+                    "parameters": {
+                        "additionalProps": {
+                            "sports": [
+                                { "name": "Science", "watching": 85, "participating": 72, "emoji": "🔬" },
+                                { "name": "History", "watching": 76, "participating": 68, "emoji": "📜" },
+                                { "name": "Math", "watching": 90, "participating": 86, "emoji": "🔢" },
+                                { "name": "Geography", "watching": 65, "participating": 79, "emoji": "🌍" },
+                                { "name": "Sports", "watching": 95, "participating": 90, "emoji": "⚽" }
+                            ],
+                            "scaleOptions": [10, 20, 25],
+                            "title": "GK Quiz: Group 1 vs Group 2 Scores",
+                            "yAxisLabel": "Score (out of 100)",
+                            "watchingColor": "#533086",
+                            "participatingColor": "#FF7212"
+                        }
+                    }
+                },
+                "instructions_for_student": "Compare two groups' GK quiz scores across subjects. Build the double bar graph!"
+            }
+        },
+        {
+            "name": "Electric vehicle registrations (from textbook)",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "EV Registrations: 2022 vs 2024",
+                "data": {
+                    "toolName": "sports_survey_double_bar_graph",
+                    "parameters": {
+                        "additionalProps": {
+                            "sports": [
+                                { "name": "Uttarakhand", "watching": 5000, "participating": 12000, "emoji": "🏔️" },
+                                { "name": "West Bengal", "watching": 8000, "participating": 32000, "emoji": "🌸" },
+                                { "name": "Andhra Pradesh", "watching": 15000, "participating": 50000, "emoji": "🛕" },
+                                { "name": "Odisha", "watching": 10000, "participating": 30000, "emoji": "🏛️" }
+                            ],
+                            "scaleOptions": [5000, 10000, 15000],
+                            "title": "Electric Vehicle Registrations: 2022 vs 2024",
+                            "yAxisLabel": "Number of Registrations",
+                            "watchingColor": "#4A4DC9",
+                            "participatingColor": "#FC9145"
+                        }
+                    }
+                },
+                "instructions_for_student": "Compare EV registrations from 2022 (indigo) and 2024 (orange) across states!"
+            }
+        }
+    ],
+    "decisionTree": {
+        "sportsGraphDefault": {
+            "trigger": "Student asks about sports survey double bar graph or textbook Q4",
+            "action": "Use default parameters with no additionalProps. Default uses Singularity primary (#4A4DC9) for watching and accent (#FF7212) for participating."
+        },
+        "customData": {
+            "trigger": "Teacher wants to use different data categories",
+            "action": "Pass custom sports array with appropriate scaleOptions. Colors default to Singularity palette."
+        },
+        "scalePreset": {
+            "trigger": "Teacher wants to skip scale selection",
+            "action": "Pass defaultScale in additionalProps"
+        },
+        "themeChange": {
+            "trigger": "Different color scheme needed",
+            "action": "Change themeColor, watchingColor, participatingColor. Recommended Singularity-compatible pairs: (#533086, #FC9145), (#4A4DC9, #FF7212), (#C1C1EA, #FFF3E4 for soft theme)"
+        },
+        "gkQuizComparison": {
+            "trigger": "GK quiz or test score comparison needed",
+            "action": "Use smaller values with scaleOptions like [10, 20, 25]. Use deepPurple (#533086) and accent (#FF7212) for strong contrast."
+        }
+    },
+    "colorPalette": {
+        "primary": "#4A4DC9",
+        "accent": "#FF7212",
+        "gradientStart": "#533086",
+        "gradientEnd": "#FC9145",
+        "tintPurple": "#C1C1EA",
+        "tintPeach": "#FFF3E4",
+        "watching": "#4A4DC9",
+        "participating": "#FF7212",
+        "canvas": "#F5F5F5",
+        "surface": "#FFFFFF",
+        "gridlines": "#EBEBEB",
+        "text": "#4E4E4E",
+        "textMuted": "#CACACA"
+    },
+    "fonts": {
+        "family": "Poppins",
+        "weights": {
+            "light": 300,
+            "regular": 400,
+            "medium": 500,
+            "semibold": 600,
+            "bold": 700,
+            "extrabold": 800,
+            "black": 900
+        },
+        "usage": {
+            "headings": "700-800 weight",
+            "body": "400-500 weight",
+            "labels": "600 weight",
+            "captions": "500 weight, uppercase, 0.5px letter-spacing"
+        }
+    }
+}

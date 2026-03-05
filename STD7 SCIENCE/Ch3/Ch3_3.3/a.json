@@ -1,0 +1,675 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Electric Circuit Learning Tool Schema",
+    "description": "Interactive educational tool for teaching electric circuits, circuit symbols, and basic electrical concepts to Grade 7 students. Redesigned with Singularity Design System (Poppins font, #4A4DC9 primary, #FF7212 accent, pill buttons, responsive layout).",
+    "type": "object",
+    "required": [
+        "frontend_action",
+        "title",
+        "data"
+    ],
+    "properties": {
+        "frontend_action": {
+            "type": "string",
+            "const": "show_interactive_tool",
+            "description": "Action type for frontend"
+        },
+        "title": {
+            "type": "string",
+            "description": "Display title for the tool",
+            "examples": [
+                "Electric Circuit Symbols",
+                "Circuit Practice Questions",
+                "Build Your Own Circuit",
+                "Circuits in Real Life"
+            ]
+        },
+        "data": {
+            "type": "object",
+            "required": [
+                "toolName",
+                "parameters"
+            ],
+            "properties": {
+                "toolName": {
+                    "type": "string",
+                    "const": "electric_circuit_tool",
+                    "description": "Identifier for the electric circuit tool"
+                },
+                "parameters": {
+                    "type": "object",
+                    "description": "Configuration parameters for the tool. The component is fully responsive and auto-detects mobile (<640px) vs desktop layouts.",
+                    "properties": {
+                        "initialMode": {
+                            "type": "string",
+                            "enum": [
+                                "learn",
+                                "practice",
+                                "real_world",
+                                "hands_on"
+                            ],
+                            "default": "learn",
+                            "description": "Starting mode of the tool",
+                            "examples": [
+                                "learn",
+                                "practice",
+                                "real_world",
+                                "hands_on"
+                            ]
+                        },
+                        "showModeSelector": {
+                            "type": "boolean",
+                            "default": true,
+                            "description": "Show or hide the mode selector pill buttons (Learn, Practice, Real World, Hands-On)"
+                        },
+                        "enabledModes": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "learn",
+                                    "practice",
+                                    "real_world",
+                                    "hands_on"
+                                ]
+                            },
+                            "default": [
+                                "learn",
+                                "practice",
+                                "real_world",
+                                "hands_on"
+                            ],
+                            "description": "Which modes should be available to the user",
+                            "examples": [
+                                [
+                                    "learn",
+                                    "practice"
+                                ],
+                                [
+                                    "real_world",
+                                    "hands_on"
+                                ],
+                                [
+                                    "learn"
+                                ]
+                            ]
+                        },
+                        "additionalProps": {
+                            "type": "object",
+                            "description": "Tool-specific dynamic configuration",
+                            "properties": {
+                                "highlightComponent": {
+                                    "type": "string",
+                                    "enum": [
+                                        "cell",
+                                        "battery",
+                                        "lamp",
+                                        "led",
+                                        "switch-on",
+                                        "switch-off",
+                                        "wire"
+                                    ],
+                                    "description": "Component ID to highlight in learn mode",
+                                    "examples": [
+                                        "battery",
+                                        "led",
+                                        "switch-on"
+                                    ]
+                                },
+                                "showCircuitExample": {
+                                    "type": "boolean",
+                                    "default": true,
+                                    "description": "Show the complete circuit example card in learn mode"
+                                },
+                                "customLabels": {
+                                    "type": "object",
+                                    "description": "Custom labels for circuit polarity markers",
+                                    "properties": {
+                                        "positive": {
+                                            "type": "string",
+                                            "default": "+",
+                                            "description": "Label for positive terminal",
+                                            "examples": [
+                                                "+",
+                                                "Positive",
+                                                "धनात्मक (+)",
+                                                "ધન (+)"
+                                            ]
+                                        },
+                                        "negative": {
+                                            "type": "string",
+                                            "default": "−",
+                                            "description": "Label for negative terminal",
+                                            "examples": [
+                                                "−",
+                                                "Negative",
+                                                "ऋणात्मक (−)",
+                                                "ઋણ (−)"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "showHints": {
+                                    "type": "boolean",
+                                    "default": true,
+                                    "description": "Enable hint system in practice mode"
+                                },
+                                "maxAttempts": {
+                                    "type": "number",
+                                    "default": 3,
+                                    "description": "Maximum attempts allowed per practice question",
+                                    "minimum": 1,
+                                    "maximum": 10
+                                },
+                                "questions": {
+                                    "type": "array",
+                                    "description": "Custom practice questions (overrides built-in questions)",
+                                    "items": {
+                                        "type": "object",
+                                        "required": [
+                                            "id",
+                                            "question",
+                                            "type",
+                                            "circuits",
+                                            "correctAnswer",
+                                            "explanation"
+                                        ],
+                                        "properties": {
+                                            "id": {
+                                                "type": "string",
+                                                "description": "Unique question identifier"
+                                            },
+                                            "question": {
+                                                "type": "string",
+                                                "description": "Question text to display"
+                                            },
+                                            "type": {
+                                                "type": "string",
+                                                "const": "diagram",
+                                                "description": "Question type (currently only diagram supported)"
+                                            },
+                                            "circuits": {
+                                                "type": "array",
+                                                "description": "Array of circuit options",
+                                                "items": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "id",
+                                                        "isCorrect"
+                                                    ],
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string",
+                                                            "description": "Circuit option ID"
+                                                        },
+                                                        "isCorrect": {
+                                                            "type": "boolean",
+                                                            "description": "Whether this is the correct answer"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "correctAnswer": {
+                                                "type": "string",
+                                                "description": "ID of the correct circuit"
+                                            },
+                                            "explanation": {
+                                                "type": "string",
+                                                "description": "Explanation shown after answer submission"
+                                            },
+                                            "hint": {
+                                                "type": "string",
+                                                "description": "Optional hint text"
+                                            }
+                                        }
+                                    }
+                                },
+                                "components": {
+                                    "type": "array",
+                                    "description": "Custom circuit components configuration",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "string"
+                                            },
+                                            "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "cell",
+                                                    "battery",
+                                                    "lamp",
+                                                    "led",
+                                                    "switch",
+                                                    "wire",
+                                                    "conductor",
+                                                    "insulator"
+                                                ]
+                                            },
+                                            "position": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "x": {
+                                                        "type": "number"
+                                                    },
+                                                    "y": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            },
+                                            "connections": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "state": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "on",
+                                                    "off",
+                                                    "open",
+                                                    "closed"
+                                                ]
+                                            },
+                                            "polarity": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "correct",
+                                                    "incorrect",
+                                                    "neutral"
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "instructions_for_student": {
+            "type": "string",
+            "description": "Instructions or context for the student",
+            "examples": [
+                "Learn about circuit symbols and how to draw circuit diagrams!",
+                "Test your knowledge with these practice questions.",
+                "Follow these steps to build your own simple circuit safely.",
+                "Explore where electric circuits are used in everyday life."
+            ]
+        }
+    },
+    "examples": [
+        {
+            "name": "Basic Learn Mode",
+            "description": "Default learning mode showing all circuit symbols with Singularity design",
+            "value": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Electric Circuit Symbols",
+                "data": {
+                    "toolName": "electric_circuit_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "showModeSelector": true
+                    }
+                },
+                "instructions_for_student": "Let's learn about the standard symbols used in electric circuit diagrams!"
+            }
+        },
+        {
+            "name": "Practice Mode with Hints",
+            "description": "Practice questions with hints enabled",
+            "value": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Practice: Circuit Diagrams",
+                "data": {
+                    "toolName": "electric_circuit_tool",
+                    "parameters": {
+                        "initialMode": "practice",
+                        "showModeSelector": false,
+                        "additionalProps": {
+                            "showHints": true,
+                            "maxAttempts": 3
+                        }
+                    }
+                },
+                "instructions_for_student": "Test your understanding! Select the correct circuit diagram for each question."
+            }
+        },
+        {
+            "name": "Assessment Mode (No Hints)",
+            "description": "Assessment with single attempt and no hints",
+            "value": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Circuit Assessment",
+                "data": {
+                    "toolName": "electric_circuit_tool",
+                    "parameters": {
+                        "initialMode": "practice",
+                        "showModeSelector": false,
+                        "additionalProps": {
+                            "showHints": false,
+                            "maxAttempts": 1
+                        }
+                    }
+                },
+                "instructions_for_student": "Assessment: Choose the correct answer for each question. No hints available!"
+            }
+        },
+        {
+            "name": "Real World Applications",
+            "description": "Explore real-world uses of electric circuits",
+            "value": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Circuits in Daily Life",
+                "data": {
+                    "toolName": "electric_circuit_tool",
+                    "parameters": {
+                        "initialMode": "real_world",
+                        "showModeSelector": true,
+                        "enabledModes": [
+                            "real_world",
+                            "learn"
+                        ]
+                    }
+                },
+                "instructions_for_student": "See how electric circuits power devices and systems you use every day!"
+            }
+        },
+        {
+            "name": "Hands-On Experiments",
+            "description": "Safe DIY circuit building guide",
+            "value": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Build Your Own Circuit",
+                "data": {
+                    "toolName": "electric_circuit_tool",
+                    "parameters": {
+                        "initialMode": "hands_on",
+                        "showModeSelector": false
+                    }
+                },
+                "instructions_for_student": "Follow these safe steps to build simple circuits at home! Ask an adult for help."
+            }
+        },
+        {
+            "name": "Focus on Battery Symbol",
+            "description": "Highlight specific component in learn mode",
+            "value": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Understanding Battery Symbol",
+                "data": {
+                    "toolName": "electric_circuit_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "showModeSelector": false,
+                        "additionalProps": {
+                            "highlightComponent": "battery",
+                            "showCircuitExample": true,
+                            "customLabels": {
+                                "positive": "Positive (+)",
+                                "negative": "Negative (−)"
+                            }
+                        }
+                    }
+                },
+                "instructions_for_student": "The battery symbol: The longer line is positive (+) and the shorter line is negative (−)."
+            }
+        },
+        {
+            "name": "Minimal UI for Presentations",
+            "description": "Clean display without controls for presentations",
+            "value": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Circuit Symbols Reference",
+                "data": {
+                    "toolName": "electric_circuit_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "showModeSelector": false
+                    }
+                },
+                "instructions_for_student": "Quick reference sheet of electric circuit symbols."
+            }
+        },
+        {
+            "name": "LED Focus with Polarity",
+            "description": "Learn about LED and its polarity requirements",
+            "value": {
+                "frontend_action": "show_interactive_tool",
+                "title": "LED and Polarity",
+                "data": {
+                    "toolName": "electric_circuit_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "showModeSelector": true,
+                        "enabledModes": [
+                            "learn",
+                            "practice",
+                            "hands_on"
+                        ],
+                        "additionalProps": {
+                            "highlightComponent": "led"
+                        }
+                    }
+                },
+                "instructions_for_student": "LEDs only work when connected correctly! Learn about LED polarity and proper connection."
+            }
+        },
+        {
+            "name": "Complete Learning Journey",
+            "description": "All modes enabled for comprehensive learning",
+            "value": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Electric Circuits — Complete Course",
+                "data": {
+                    "toolName": "electric_circuit_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "showModeSelector": true,
+                        "enabledModes": [
+                            "learn",
+                            "practice",
+                            "real_world",
+                            "hands_on"
+                        ]
+                    }
+                },
+                "instructions_for_student": "Complete learning path: Learn symbols → Practice → Explore real-world uses → Try hands-on experiments!"
+            }
+        },
+        {
+            "name": "Torch Circuit Focus",
+            "description": "Understanding how a torch/flashlight circuit works",
+            "value": {
+                "frontend_action": "show_interactive_tool",
+                "title": "How a Torch Works",
+                "data": {
+                    "toolName": "electric_circuit_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "showModeSelector": true,
+                        "enabledModes": [
+                            "learn",
+                            "real_world",
+                            "hands_on"
+                        ],
+                        "additionalProps": {
+                            "showCircuitExample": true
+                        }
+                    }
+                },
+                "instructions_for_student": "A torch is a perfect example of a simple circuit! See how battery, switch, and bulb work together."
+            }
+        },
+        {
+            "name": "Switch Understanding",
+            "description": "Learn about switch function in circuits",
+            "value": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Understanding Switches",
+                "data": {
+                    "toolName": "electric_circuit_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "enabledModes": [
+                            "learn",
+                            "practice"
+                        ],
+                        "additionalProps": {
+                            "highlightComponent": "switch-on",
+                            "showCircuitExample": true
+                        }
+                    }
+                },
+                "instructions_for_student": "Switches control electricity flow. When ON, circuit is complete. When OFF, circuit is broken."
+            }
+        },
+        {
+            "name": "Hindi Language Support",
+            "description": "Custom labels in Hindi for Indian students",
+            "value": {
+                "frontend_action": "show_interactive_tool",
+                "title": "विद्युत परिपथ चिह्न",
+                "data": {
+                    "toolName": "electric_circuit_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "additionalProps": {
+                            "customLabels": {
+                                "positive": "धनात्मक (+)",
+                                "negative": "ऋणात्मक (−)"
+                            }
+                        }
+                    }
+                },
+                "instructions_for_student": "विद्युत परिपथ के मानक प्रतीकों के बारे में सीखें!"
+            }
+        },
+        {
+            "name": "Quick Practice — 5 Minutes",
+            "description": "Fast-paced practice session",
+            "value": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Quick Practice",
+                "data": {
+                    "toolName": "electric_circuit_tool",
+                    "parameters": {
+                        "initialMode": "practice",
+                        "showModeSelector": false,
+                        "additionalProps": {
+                            "showHints": true,
+                            "maxAttempts": 2
+                        }
+                    }
+                },
+                "instructions_for_student": "Quick 5-minute practice session! Test your circuit knowledge."
+            }
+        },
+        {
+            "name": "Safety-First Hands-On",
+            "description": "Emphasize safety in DIY experiments",
+            "value": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Safe Circuit Building",
+                "data": {
+                    "toolName": "electric_circuit_tool",
+                    "parameters": {
+                        "initialMode": "hands_on",
+                        "showModeSelector": false
+                    }
+                },
+                "instructions_for_student": "⚠️ IMPORTANT: Only use batteries, never mains electricity. Ask an adult to supervise!"
+            }
+        }
+    ],
+    "metadata": {
+        "tool_version": "2.0.0",
+        "design_system": "Singularity Design System",
+        "design_tokens": {
+            "colors": {
+                "primary": "#4A4DC9",
+                "accent": "#FF7212",
+                "gradientStart": "#533086",
+                "gradientEnd": "#FC9145",
+                "lightPurple": "#C1C1EA",
+                "lightOrange": "#FFF3E4",
+                "dark": "#4E4E4E",
+                "gray": "#CACACA",
+                "lightGray": "#EBEBEB",
+                "offWhite": "#F5F5F5",
+                "success": "#22C55E",
+                "error": "#EF4444"
+            },
+            "font": "Poppins (300–800)",
+            "borderRadius": {
+                "sm": "8px",
+                "md": "12px",
+                "lg": "20px",
+                "pill": "999px"
+            },
+            "buttonVariants": [
+                "contained",
+                "outlined",
+                "text",
+                "gradient"
+            ]
+        },
+        "curriculum_alignment": "NCERT Grade 7 Science — Electric Current and Its Effects",
+        "educational_level": "Grade 7 (Ages 11–13)",
+        "subject": "Science — Physics",
+        "topics": [
+            "Electric Circuits",
+            "Circuit Symbols",
+            "Circuit Diagrams",
+            "Electrical Components",
+            "Conductors",
+            "Power Sources",
+            "Switches",
+            "LEDs and Polarity"
+        ],
+        "learning_outcomes": [
+            "Identify standard electric circuit symbols",
+            "Draw simple circuit diagrams",
+            "Understand complete vs incomplete circuits",
+            "Recognize correct LED polarity",
+            "Explain function of switches",
+            "Apply circuit knowledge to real-world devices",
+            "Build safe, simple circuits"
+        ],
+        "supported_languages": [
+            "English",
+            "Hindi (via customLabels)",
+            "Gujarati (via customLabels)"
+        ],
+        "responsive_breakpoints": {
+            "mobile": "<640px (single-column grid, smaller fonts/padding)",
+            "desktop": "≥640px (multi-column auto-fill grid)"
+        },
+        "accessibility_features": [
+            "Keyboard navigation (tab/enter on cards)",
+            "ARIA labels on SVG symbols",
+            "Poppins font with clear weight hierarchy",
+            "High-contrast color pairings",
+            "Focus-visible states on interactive elements",
+            "Responsive fluid layout (no fixed pixel widths)"
+        ],
+        "removed_from_v1": {
+            "description": "Properties removed in the v2 redesign for simplification and responsive-first approach",
+            "properties": [
+                "width (now responsive, auto-fills container)",
+                "height (now min-height: 100vh, content-driven)",
+                "darkMode (Singularity DS is light-theme only)",
+                "themeColor (fixed to DS primary #4A4DC9 / accent #FF7212)",
+                "showNavigation (navigation is mode-contextual)",
+                "showPlayPause (auto-play removed for better UX)",
+                "showStepIndicator (replaced by question counter in practice)",
+                "initialStep (steps system removed; modes are top-level)",
+                "filterSteps (steps system removed)",
+                "animationSpeed (fixed CSS animation timings)",
+                "autoPlayDuration (auto-play removed)"
+            ]
+        }
+    }
+}

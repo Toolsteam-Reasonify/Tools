@@ -1,0 +1,110 @@
+{
+    "toolName": "lcm_max_occurrences_tool",
+    "version": "2.0.0",
+    "description": "Interactive step-based calculation practice tool for Grade 7 Mathematics — LCM via Maximum Occurrences. Redesigned with Singularity Design System: Poppins font, #4A4DC9 indigo + #FF7212 orange primary palette, #533086-to-#FC9145 gradient header, contained/outlined/texted button variants with 24px pill radius, #C1C1EA/#FFF3E4 light tints, #F5F5F5 backgrounds, decorative circle/triangle/square shapes. Two numbers displayed with indigo and orange gradient cards. Comparison table with step-by-step prime analysis. Suitcase packing analogy. HCF vs LCM symmetry cards in indigo (HCF) and orange (LCM). Touch-friendly, mobile-responsive.",
+    "designSystem": {
+        "name": "Singularity",
+        "colors": {
+            "primary": "#4A4DC9",
+            "secondary": "#FF7212",
+            "gradientStart": "#533086",
+            "gradientEnd": "#FC9145",
+            "lightPurple": "#C1C1EA",
+            "lightOrange": "#FFF3E4",
+            "dark": "#4E4E4E",
+            "grey": "#CACACA",
+            "lightGrey": "#EBEBEB",
+            "background": "#F5F5F5",
+            "white": "#FFFFFF"
+        },
+        "fonts": {
+            "family": "Poppins",
+            "weights": [400, 500, 600, 700, 800]
+        },
+        "buttons": {
+            "borderRadius": 24,
+            "padding": "10px 24px",
+            "variants": ["contained", "outlined", "texted", "highlight"],
+            "states": ["enabled", "disabled", "hover", "pressed"]
+        },
+        "shapes": ["circle", "triangle", "square", "oval"]
+    },
+    "parameters": {
+        "width": { "type": "number", "default": 800 },
+        "height": { "type": "number", "default": 600 },
+        "initialMode": { "type": "string", "enum": ["learn", "practice"], "default": "learn" },
+        "showModeSelector": { "type": "boolean", "default": true },
+        "enabledModes": { "type": "array", "default": ["learn", "practice"] },
+        "showNavigation": { "type": "boolean", "default": true },
+        "showStepIndicator": { "type": "boolean", "default": true },
+        "animationSpeed": { "type": "number", "default": 1 },
+        "autoPlayDuration": { "type": "number", "default": 0 },
+        "themeColor": { "type": "string", "default": "#4A4DC9" },
+        "darkMode": { "type": "boolean", "default": false },
+        "initialStep": { "type": "number", "default": 1 },
+        "filterSteps": { "type": "array", "default": null }
+    },
+    "additionalProps": {
+        "description": "Tool-specific dynamic content for LCM calculation",
+        "properties": {
+            "numberA": { "type": "number", "default": 96, "description": "First number for LCM (learn mode)" },
+            "numberB": { "type": "number", "default": 360, "description": "Second number for LCM (learn mode)" },
+            "practiceNumberA": { "type": "number", "default": 30, "description": "First number (practice mode)" },
+            "practiceNumberB": { "type": "number", "default": 72, "description": "Second number (practice mode)" }
+        },
+        "examples": [
+            {
+                "description": "Default: LCM(96, 360) with practice LCM(30, 72)",
+                "value": { "numberA": 96, "numberB": 360, "practiceNumberA": 30, "practiceNumberB": 72 }
+            },
+            {
+                "description": "Custom: LCM(84, 180)",
+                "value": { "numberA": 84, "numberB": 180, "practiceNumberA": 45, "practiceNumberB": 105 }
+            },
+            {
+                "description": "Simple: LCM(14, 35)",
+                "value": { "numberA": 14, "numberB": 35, "practiceNumberA": 6, "practiceNumberB": 8 }
+            }
+        ]
+    },
+    "modes": {
+        "learn": { "label": "Learn", "icon": "BookOpen", "description": "8-step walkthrough of LCM(96, 360)" },
+        "practice": { "label": "Practice", "icon": "Target", "description": "Student finds LCM(30, 72)" }
+    },
+    "steps": {
+        "learn": [
+            { "id": 1, "title": "Meet the Numbers" },
+            { "id": 2, "title": "Prime Factorisation" },
+            { "id": 3, "title": "List ALL Primes" },
+            { "id": 4, "title": "Maximum Count: Prime 2" },
+            { "id": 5, "title": "Maximum Count: Prime 3" },
+            { "id": 6, "title": "Maximum Count: Prime 5" },
+            { "id": 7, "title": "Compute the LCM" },
+            { "id": 8, "title": "HCF vs LCM Symmetry" }
+        ],
+        "practice": [
+            { "id": 10, "title": "Your Turn: LCM(30, 72)" }
+        ]
+    },
+    "teachingNotes": {
+        "step1": "Present numbers with indigo (96) and orange (360) gradient cards.",
+        "step2": "Show colour-coded prime factor blocks: blue-indigo for 2, orange for 3, green for 5.",
+        "step3": "List ALL primes from either factorisation — key difference from HCF.",
+        "steps4to6": "Comparison table grows row by row. Active row glows orange. MAX column highlighted.",
+        "step7": "LCM = 1440 displayed in gradient card. Suitcase packing analogy below.",
+        "step8": "Side-by-side: HCF card (indigo, min arrows down) vs LCM card (orange, max arrows up). Product property verified.",
+        "practice": "Student fills in MAX counts for LCM(30, 72). Immediate visual feedback."
+    },
+    "instructionsForStudent": "Follow the maximum occurrences method to build the LCM of 96 and 360. For each prime, take the MAXIMUM count — the opposite of HCF. Notice the symmetry!",
+    "curriculum": {
+        "subject": "Mathematics",
+        "grade": 7,
+        "textbook": "Ganita Prakash",
+        "part": "Part-II",
+        "chapter": 3,
+        "chapterTitle": "Finding Common Ground",
+        "section": "3.2",
+        "sectionTitle": "Finding LCM through Prime Factorisation",
+        "board": "NCERT / NCF 2023"
+    }
+}

@@ -1,0 +1,64 @@
+{
+    "toolName": "magic_square_explorer",
+    "version": "2.0.0",
+    "title": "Magic Square Transformation Explorer",
+    "description": "Interactive step-based magic square transformation explorer for Grade 7 Mathematics — Chapter 6: Number Play. Redesigned with Singularity Design System: Poppins font, #4A4DC9 indigo + #FF7212 orange primary palette, #533086-to-#FC9145 gradient, #C1C1EA/#FFF3E4 light fills, #4E4E4E/#CACACA/#EBEBEB/#F5F5F5 grey scale. Contained/Outlined/Texted button variants with 40px height, 24px padding, 20px border-radius.",
+    "designSystem": {
+        "name": "Singularity",
+        "font": "Poppins",
+        "colors": {
+            "primary": { "indigo": "#4A4DC9", "orange": "#FF7212" },
+            "gradient": { "purpleDark": "#533086", "orangeWarm": "#FC9145" },
+            "lightFills": { "indigoLight": "#C1C1EA", "orangeLight": "#FFF3E4" },
+            "greys": { "grey900": "#4E4E4E", "grey500": "#CACACA", "grey300": "#EBEBEB", "grey100": "#F5F5F5" }
+        },
+        "buttons": { "height": "40px", "paddingHorizontal": "24px", "borderRadius": "20px", "iconGap": "4px", "variants": ["contained", "outlined", "texted"], "states": ["enabled", "disabled", "hover", "pressed"] }
+    },
+    "parameters": {
+        "width": { "type": "number", "default": 800 },
+        "height": { "type": "number", "default": 600 },
+        "initialMode": { "type": "string", "enum": ["learn", "practice", "explore"], "default": "learn" },
+        "showModeSelector": { "type": "boolean", "default": true },
+        "enabledModes": { "type": "array", "default": ["learn", "practice", "explore"] },
+        "showNavigation": { "type": "boolean", "default": true },
+        "showPlayPause": { "type": "boolean", "default": true },
+        "showStepIndicator": { "type": "boolean", "default": true },
+        "initialStep": { "type": "number", "default": 1 },
+        "filterSteps": { "type": "array", "default": null },
+        "animationSpeed": { "type": "number", "default": 1 },
+        "autoPlayDuration": { "type": "number", "default": 10000 },
+        "themeColor": { "type": "string", "default": "#4A4DC9" },
+        "darkMode": { "type": "boolean", "default": false }
+    },
+    "additionalProps": {
+        "properties": {
+            "initialGrid": { "type": "array", "example": [[2,7,6],[9,5,1],[4,3,8]] },
+            "transformations": { "type": "array", "description": "Array of transformation configs with label, description, grid, magicSum, operation, color" },
+            "showVerification": { "type": "boolean", "default": true },
+            "showAlgebra": { "type": "boolean", "default": true },
+            "centerVariable": { "type": "string", "default": "m" },
+            "animationStyle": { "type": "string", "enum": ["morph","flip","slide"], "default": "morph" }
+        }
+    },
+    "modes": {
+        "learn": { "label": "Learn", "stepIds": [1,2,3,4,5] },
+        "practice": { "label": "Practice", "stepIds": [10,11] },
+        "explore": { "label": "Explore", "stepIds": [20] }
+    },
+    "teaching_notes": {
+        "step_1": "Let the student verify all eight sums of the Lo Shu.",
+        "step_2": "Emphasize adding 1 to each of 3 cells adds 3 to row sum.",
+        "step_3": "Ask WHY doubling works — distributive property.",
+        "step_4_5": "Enable prediction using pattern: adding k increases magic sum by 3k.",
+        "algebraic": "Centre number m determines magic sum as 3m."
+    },
+    "instructions_for_student": "Start with the Lo Shu magic square (1-9, magic sum 15). Watch what happens to the magic sum as we apply different transformations. At each step, try to predict the new magic sum before it is revealed!",
+    "curriculum_context": {
+        "subject": "Mathematics",
+        "grade": 7,
+        "board": "NCERT",
+        "textbook": "Ganita Prakash",
+        "chapter": "Chapter 6: Number Play",
+        "section": "6.3 Some Explorations in Grids — Magic Squares"
+    }
+}

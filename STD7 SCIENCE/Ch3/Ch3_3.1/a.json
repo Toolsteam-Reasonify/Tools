@@ -1,0 +1,99 @@
+{
+  "toolName": "torchlight",
+  "parameters": {
+    "width": {
+      "type": "number",
+      "default": 800,
+      "description": "Component width in pixels"
+    },
+    "height": {
+      "type": "number",
+      "default": 600,
+      "description": "Component height in pixels"
+    },
+    "initialMode": {
+      "type": "string",
+      "enum": [
+        "learn",
+        "practice",
+        "real_world",
+        "hands_on"
+      ],
+      "default": "learn",
+      "description": "Starting mode"
+    },
+    "showModeSelector": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide mode selector tabs"
+    },
+    "enabledModes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "learn",
+          "practice",
+          "real_world",
+          "hands_on"
+        ]
+      },
+      "default": [
+        "learn",
+        "practice",
+        "real_world",
+        "hands_on"
+      ],
+      "description": "Which modes to enable"
+    },
+    "showNavigation": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide prev/next buttons"
+    },
+    "showPlayPause": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide play/pause auto-advance button"
+    },
+    "showStepIndicator": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide step counter in header"
+    },
+    "initialStep": {
+      "type": "number",
+      "default": 1,
+      "description": "Starting step ID"
+    },
+    "filterSteps": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      },
+      "default": null,
+      "description": "Array of step IDs to show (null = show all)"
+    },
+    "autoPlayDuration": {
+      "type": "number",
+      "default": 8000,
+      "description": "Auto-advance delay in ms (0 = disabled)"
+    },
+    "animationSpeed": {
+      "type": "number",
+      "default": 1,
+      "description": "Animation speed multiplier (1 = normal)"
+    },
+    "themeColor": {
+      "type": "string",
+      "default": "#4A4DC9",
+      "description": "Primary theme color (hex). Default is Singularity primary purple."
+    },
+    "darkMode": {
+      "type": "boolean",
+      "default": false,
+      "description": "Enable dark mode"
+    }
+  },
+  "usage_example": {}
+}

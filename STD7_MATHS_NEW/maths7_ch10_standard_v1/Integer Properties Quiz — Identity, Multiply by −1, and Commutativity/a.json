@@ -1,0 +1,285 @@
+{
+  "tool_metadata": {
+    "toolName": "integer_properties_quiz",
+    "displayName": "Integer Properties Quiz",
+    "description": "MCQ quiz tool for Grade 7 Mathematics — tests understanding of multiplicative identity (1 × a = a), multiplication by −1 (−1 × a = −a), and commutative property (a × b = b × a). Features Indian school context with student names like Rahul, Priya, and Anita.",
+    "version": "1.0.0",
+    "category": "assessment",
+    "gradeLevel": "Grade 7",
+    "subject": "Mathematics",
+    "topic": "Operations with Integers",
+    "subtopic": "Identity, Multiplication by −1, and Commutativity",
+    "curriculum": "NCERT — Ganita Prakash Grade 7 Part II, Chapter 2",
+    "componentFile": "IntegerPropertiesQuiz.tsx"
+  },
+
+  "design_specification": {
+    "font": {
+      "display": "Lilita One (Google Fonts)",
+      "body": "Nunito (Google Fonts)"
+    },
+    "colorPalette": {
+      "skyBlue": "#0ea5e9",
+      "green": "#22c55e",
+      "red": "#ef4444",
+      "white": "#ffffff",
+      "darkText": "#1e293b"
+    },
+    "layout": {
+      "maxWidth": "680px",
+      "progressBar": "top — animated fill with step dots",
+      "questionCard": "light blue-accented white card with gradient top border",
+      "optionsGrid": "responsive 2×2 grid (collapses to 1-col on mobile)",
+      "feedbackAnimation": "correct → green + tick draw; wrong → red + shake + X draw",
+      "explanationPanel": "slides down below options with property name badge",
+      "resultScreen": "score number + star rating + confetti for passing scores"
+    },
+    "accessibility": {
+      "minButtonHeight": "48px (touch-friendly)",
+      "mobileResponsive": true,
+      "clampedFontSizes": true
+    }
+  },
+
+  "teaching_notes": "Use this quiz after explaining all three properties. Q1 tests whether students extend the identity property to negative integers (common misconception: identity only works for positives). Q2 and Q4 target commutativity, including the case where one factor is negative. Q3 and Q5 target the (−1) × a = −a rule — Q5 specifically checks if students can apply the rule when a is itself negative. Review Q3 and Q5 together after the quiz to consolidate the 'double negative' insight.",
+
+  "instructions_for_student": "Answer each question one at a time. After you choose an option, read the explanation carefully — it names the property involved. Try to connect each question back to the three rules: Identity (×1 unchanged), Sign-Flipper (×−1 gives additive inverse), and Commutativity (order doesn't matter).",
+
+  "default_questions": [
+    {
+      "id": 1,
+      "question": "Rahul says: \"1 × (−73) equals −73.\" Priya says: \"No, the identity property only works for positive numbers.\" Who is correct?",
+      "options": [
+        "A. Priya is correct — 1 × (−73) is +73",
+        "B. Rahul is correct — 1 × (−73) = −73",
+        "C. Neither — 1 × (−73) = 0",
+        "D. Both are partially correct"
+      ],
+      "correctIndex": 1,
+      "propertyName": "Multiplicative Identity Property",
+      "explanation": "1 × a = a for every integer a, whether positive or negative. So 1 × (−73) = −73. The identity property holds for all integers, not just positive ones.",
+      "targetProperty": "identity",
+      "misconceptionTested": "Identity only works for positive integers"
+    },
+    {
+      "id": 2,
+      "question": "Anita calculated 38 × (−5) = −190. Without doing the full multiplication, what is (−5) × 38?",
+      "options": [
+        "A. +190",
+        "B. −190",
+        "C. −38",
+        "D. +5"
+      ],
+      "correctIndex": 1,
+      "propertyName": "Commutative Property",
+      "explanation": "By the Commutative Property, a × b = b × a. Swapping the multiplier and multiplicand does not change the product. So (−5) × 38 = 38 × (−5) = −190.",
+      "targetProperty": "commutativity",
+      "misconceptionTested": "Sign changes when order changes"
+    },
+    {
+      "id": 3,
+      "question": "What is (−1) × 47?",
+      "options": [
+        "A. 47",
+        "B. −47",
+        "C. 1",
+        "D. 0"
+      ],
+      "correctIndex": 1,
+      "propertyName": "Multiplication by −1 (Sign-Flipper)",
+      "explanation": "Multiplying any integer by −1 gives its additive inverse: (−1) × a = −a. So (−1) × 47 = −47. This is the 'sign-flipper' rule — it flips the sign of the number.",
+      "targetProperty": "multiplication_by_neg1",
+      "misconceptionTested": "Multiplying by −1 makes a number 0 or 1"
+    },
+    {
+      "id": 4,
+      "question": "Priya knows that (−12) × 9 = −108. She needs to find 9 × (−12). What should she write?",
+      "options": [
+        "A. +108",
+        "B. −108",
+        "C. −12",
+        "D. Cannot determine without calculating"
+      ],
+      "correctIndex": 1,
+      "propertyName": "Commutative Property",
+      "explanation": "The Commutative Property tells us a × b = b × a. The order of multiplication does not change the result. So 9 × (−12) = (−12) × 9 = −108.",
+      "targetProperty": "commutativity",
+      "misconceptionTested": "Need to recalculate when order changes"
+    },
+    {
+      "id": 5,
+      "question": "What is (−1) × (−38)?",
+      "options": [
+        "A. −38",
+        "B. −1",
+        "C. +38",
+        "D. 0"
+      ],
+      "correctIndex": 2,
+      "propertyName": "Multiplication by −1 (Double Negative)",
+      "explanation": "The rule (−1) × a = −a gives the additive inverse. When a = −38, the additive inverse of −38 is +38. So (−1) × (−38) = +38. Multiplying a negative by −1 'flips' the sign back to positive!",
+      "targetProperty": "multiplication_by_neg1_double_negative",
+      "misconceptionTested": "Result stays negative when multiplying two negatives"
+    }
+  ],
+
+  "frontend_action": "show_interactive_tool",
+  "title": "Integer Properties Quiz",
+  "data": {
+    "toolName": "integer_properties_quiz",
+    "parameters": {
+      "width": 680,
+      "height": 800,
+      "themeColor": "#0ea5e9",
+      "darkMode": false,
+      "animationSpeed": 1,
+      "showModeSelector": false,
+      "showNavigation": false,
+      "additionalProps": {
+        "title": "Integer Properties Quiz",
+        "subtitle": "Identity · Sign-Flipper · Commutativity",
+        "passingScore": 3,
+        "instructionsForStudent": "Answer each question one at a time. After you choose an option, read the explanation carefully — it names the property involved. Try to connect each question back to the three rules: Identity (×1 unchanged), Sign-Flipper (×−1 gives additive inverse), and Commutativity (order doesn't matter).",
+        "teachingNotes": "Use this quiz after explaining all three properties. Q1 tests identity for negatives. Q2 and Q4 target commutativity. Q3 and Q5 target ×(−1) rule — review Q3 and Q5 together to consolidate the double-negative insight.",
+        "questions": [
+          {
+            "id": 1,
+            "question": "Rahul says: \"1 × (−73) equals −73.\" Priya says: \"No, the identity property only works for positive numbers.\" Who is correct?",
+            "options": [
+              "A. Priya is correct — 1 × (−73) is +73",
+              "B. Rahul is correct — 1 × (−73) = −73",
+              "C. Neither — 1 × (−73) = 0",
+              "D. Both are partially correct"
+            ],
+            "correctIndex": 1,
+            "propertyName": "Multiplicative Identity Property",
+            "explanation": "1 × a = a for every integer a, whether positive or negative. So 1 × (−73) = −73. The identity property holds for all integers, not just positive ones."
+          },
+          {
+            "id": 2,
+            "question": "Anita calculated 38 × (−5) = −190. Without doing the full multiplication, what is (−5) × 38?",
+            "options": [
+              "A. +190",
+              "B. −190",
+              "C. −38",
+              "D. +5"
+            ],
+            "correctIndex": 1,
+            "propertyName": "Commutative Property",
+            "explanation": "By the Commutative Property, a × b = b × a. Swapping the multiplier and multiplicand does not change the product. So (−5) × 38 = 38 × (−5) = −190."
+          },
+          {
+            "id": 3,
+            "question": "What is (−1) × 47?",
+            "options": [
+              "A. 47",
+              "B. −47",
+              "C. 1",
+              "D. 0"
+            ],
+            "correctIndex": 1,
+            "propertyName": "Multiplication by −1 (Sign-Flipper)",
+            "explanation": "Multiplying any integer by −1 gives its additive inverse: (−1) × a = −a. So (−1) × 47 = −47. This is the 'sign-flipper' rule — it flips the sign of the number."
+          },
+          {
+            "id": 4,
+            "question": "Priya knows that (−12) × 9 = −108. She needs to find 9 × (−12). What should she write?",
+            "options": [
+              "A. +108",
+              "B. −108",
+              "C. −12",
+              "D. Cannot determine without calculating"
+            ],
+            "correctIndex": 1,
+            "propertyName": "Commutative Property",
+            "explanation": "The Commutative Property tells us a × b = b × a. The order of multiplication does not change the result. So 9 × (−12) = (−12) × 9 = −108."
+          },
+          {
+            "id": 5,
+            "question": "What is (−1) × (−38)?",
+            "options": [
+              "A. −38",
+              "B. −1",
+              "C. +38",
+              "D. 0"
+            ],
+            "correctIndex": 2,
+            "propertyName": "Multiplication by −1 (Double Negative)",
+            "explanation": "The rule (−1) × a = −a gives the additive inverse. When a = −38, the additive inverse of −38 is +38. So (−1) × (−38) = +38. Multiplying a negative by −1 'flips' the sign back to positive!"
+          }
+        ]
+      }
+    }
+  },
+
+  "agent_readme": {
+    "quick_reference": {
+      "toolName": "integer_properties_quiz",
+      "purpose": "5-question MCQ quiz on integer multiplication properties for Grade 7",
+      "properties_covered": [
+        "Multiplicative Identity: 1 × a = a",
+        "Multiplication by −1: (−1) × a = −a (additive inverse)",
+        "Commutative Property: a × b = b × a"
+      ],
+      "key_parameters": {
+        "additionalProps.questions": "Array of QuizQuestion objects (override default 5 questions)",
+        "additionalProps.title": "Quiz title string",
+        "additionalProps.subtitle": "Subtitle below title",
+        "additionalProps.passingScore": "Minimum score to show celebration (default: 3)",
+        "additionalProps.instructionsForStudent": "Custom instruction text",
+        "additionalProps.teachingNotes": "Notes for teacher reference"
+      }
+    },
+    "question_schema": {
+      "id": "number — unique question identifier",
+      "question": "string — the question text (supports Unicode math symbols)",
+      "options": "string[] — exactly 4 options labelled A, B, C, D",
+      "correctIndex": "number — 0-based index of the correct option",
+      "propertyName": "string — name of the property (bolded in explanation panel)",
+      "explanation": "string — one-sentence explanation connecting to the property"
+    },
+    "example_tool_calls": [
+      {
+        "description": "Default quiz with all 5 built-in questions",
+        "parameters": {
+          "additionalProps": {}
+        }
+      },
+      {
+        "description": "Custom title and passing score",
+        "parameters": {
+          "additionalProps": {
+            "title": "Properties Practice Test",
+            "subtitle": "Chapter 2 Assessment",
+            "passingScore": 4
+          }
+        }
+      },
+      {
+        "description": "Single custom question for quick check",
+        "parameters": {
+          "additionalProps": {
+            "title": "Quick Check",
+            "questions": [
+              {
+                "id": 1,
+                "question": "What is 1 × (−99)?",
+                "options": ["A. 99", "B. −99", "C. 0", "D. 1"],
+                "correctIndex": 1,
+                "propertyName": "Multiplicative Identity",
+                "explanation": "1 × a = a for all integers. So 1 × (−99) = −99."
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "tips": [
+      "Use default questions for standard Chapter 2 assessment",
+      "Override questions array to create custom quizzes on the same properties",
+      "Set passingScore to control when celebration confetti appears",
+      "Questions use Indian student names (Rahul, Priya, Anita) — maintain this for context",
+      "The quiz auto-handles: progress tracking, animated feedback, explanation display, score calculation, star rating, and review mode"
+    ]
+  }
+}

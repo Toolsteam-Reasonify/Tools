@@ -1,0 +1,224 @@
+{
+    "toolName": "lamp_glow_observation_tool",
+    "version": "1.0.0",
+    "description": "An interactive fill-in observation table for Grade 7 Science (NCERT Chapter 3, Activity 3.6, Table 3.1). Students select whether an incandescent lamp glows or does not glow for each of six different cell-lamp arrangements, then receive instant feedback with explanations.",
+    "category": "science",
+    "grade": 7,
+    "subject": "Science",
+    "chapter": "Chapter 3 — Electricity: Circuits and their Components",
+    "activity": "Activity 3.6",
+    "curriculum": "NCERT / NCF 2023",
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Width of the tool container in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Height of the tool container in pixels"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#2563EB",
+            "description": "Primary blue theme colour for the circuit/electricity module"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Toggle dark mode"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier"
+        }
+    },
+    "additionalProps": {
+        "type": "object",
+        "description": "Tool-specific dynamic content for Activity 3.6 observation table",
+        "properties": {
+            "arrangements": {
+                "type": "array",
+                "description": "Array of 6 arrangement objects representing the different ways to connect a cell and lamp",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "number",
+                            "description": "Arrangement number (1–6)"
+                        },
+                        "description": {
+                            "type": "string",
+                            "description": "Text describing the arrangement of cell and lamp"
+                        },
+                        "detail": {
+                            "type": "string",
+                            "description": "Additional detail about wire connections"
+                        },
+                        "correctAnswer": {
+                            "type": "string",
+                            "enum": [
+                                "glows",
+                                "does_not_glow"
+                            ],
+                            "description": "Correct answer for this arrangement"
+                        },
+                        "explanation": {
+                            "type": "string",
+                            "description": "Explanation shown after submission"
+                        }
+                    }
+                },
+                "default": [
+                    {
+                        "id": 1,
+                        "description": "Both terminals of the lamp connected to both terminals of the cell via wires",
+                        "detail": "Wire from +ve terminal of cell → one terminal of lamp; Wire from −ve terminal of cell → other terminal of lamp",
+                        "correctAnswer": "glows",
+                        "explanation": "Both terminals are properly connected. A complete path exists for current to flow through the filament."
+                    },
+                    {
+                        "id": 2,
+                        "description": "Both wires from cell connected to the same terminal of the lamp",
+                        "detail": "Wire from +ve terminal of cell → metal tip of lamp; Wire from −ve terminal of cell → metal tip of lamp (same terminal)",
+                        "correctAnswer": "does_not_glow",
+                        "explanation": "Both wires connect to the same terminal. Current cannot pass through the filament — there is no complete path."
+                    },
+                    {
+                        "id": 3,
+                        "description": "Only one wire connected (from cell to lamp), other wire disconnected",
+                        "detail": "Wire from +ve terminal of cell → one terminal of lamp; −ve terminal of cell left unconnected",
+                        "correctAnswer": "does_not_glow",
+                        "explanation": "Only one wire is connected. The circuit is incomplete — current needs a complete loop to flow."
+                    },
+                    {
+                        "id": 4,
+                        "description": "Both wires from cell connected to the metal case (same terminal) of the lamp",
+                        "detail": "Wire from +ve terminal of cell → metal case of lamp; Wire from −ve terminal of cell → metal case of lamp",
+                        "correctAnswer": "does_not_glow",
+                        "explanation": "Both wires connect to the same terminal (metal case). No current flows through the filament."
+                    },
+                    {
+                        "id": 5,
+                        "description": "Wires from both terminals of cell connected, but one wire touches the glass (not the terminal)",
+                        "detail": "Wire from +ve terminal of cell → metal tip; Wire from −ve terminal of cell → glass bulb (not a terminal)",
+                        "correctAnswer": "does_not_glow",
+                        "explanation": "Glass is an insulator. The wire touching the glass does not make electrical contact — the circuit is incomplete."
+                    },
+                    {
+                        "id": 6,
+                        "description": "Lamp terminals connected to cell terminals (reversed polarity compared to arrangement 1)",
+                        "detail": "Wire from +ve terminal of cell → other terminal of lamp; Wire from −ve terminal of cell → first terminal of lamp",
+                        "correctAnswer": "glows",
+                        "explanation": "Both terminals are properly connected forming a complete path. For incandescent lamps, the polarity does not matter!"
+                    }
+                ]
+            },
+            "tableTitle": {
+                "type": "string",
+                "default": "Table 3.1: Trying to Make the Lamp Glow",
+                "description": "Title displayed at the top of the table"
+            },
+            "summaryInsight": {
+                "type": "string",
+                "default": "The lamp glows only when BOTH terminals of the lamp are connected to BOTH terminals of the cell through a complete path!",
+                "description": "Key insight shown in summary after submission"
+            },
+            "instructionsForStudent": {
+                "type": "string",
+                "default": "For each arrangement, select whether the lamp GLOWS or DOES NOT GLOW. Think: is there a complete path for current? Fill in all six rows!",
+                "description": "Instructions displayed to the student"
+            },
+            "teachingNotes": {
+                "type": "string",
+                "default": "Activate AFTER students have seen the six arrangements image and ideally tried the physical experiment. Let students fill in independently. After submission, discuss the pattern: 'Only arrangements 1 and 6 work — both have a COMPLETE path.' This builds the foundation for defining an electrical circuit.",
+                "description": "Teaching notes for the instructor (not shown to students)"
+            }
+        },
+        "examples": {
+            "default_activity": {
+                "description": "Standard Activity 3.6 with all 6 arrangements",
+                "value": {}
+            },
+            "custom_title": {
+                "description": "With a custom table title",
+                "value": {
+                    "tableTitle": "Observation Table: Does the Lamp Glow?"
+                }
+            },
+            "hindi_instructions": {
+                "description": "With Hindi instructions",
+                "value": {
+                    "instructionsForStudent": "प्रत्येक व्यवस्था के लिए, चुनें कि लैंप जलता है या नहीं जलता। सोचें: क्या विद्युत धारा के लिए पूर्ण पथ है?"
+                }
+            }
+        }
+    },
+    "teaching_notes": "Activate AFTER students have seen the six arrangements image (Table 3.1 in the textbook) and ideally tried the physical experiment. Let students fill in independently. After submission, discuss the pattern: 'Only arrangements 1 and 6 work — both have a COMPLETE path.' This builds the foundation for defining an electrical circuit (Section 3.2.5). The key takeaway is that a lamp glows only when there is a complete, unbroken path from one terminal of the cell through the filament to the other terminal.",
+    "instructions_for_student": "For each arrangement, select whether the lamp GLOWS or DOES NOT GLOW. Think: is there a complete path for current? Fill in all six rows!",
+    "learning_objectives": [
+        "Identify that a lamp glows only when both terminals are connected to form a complete circuit",
+        "Understand that connecting both wires to the same terminal does not make the lamp glow",
+        "Recognise that an incomplete circuit prevents current flow",
+        "Learn that polarity does not matter for incandescent lamps",
+        "Build foundation for the concept of an electrical circuit"
+    ],
+    "agent_tool_calls": {
+        "example_1_default": {
+            "description": "Standard Activity 3.6 observation table",
+            "frontend_action": "show_interactive_tool",
+            "title": "Making an Incandescent Lamp Glow — Observation Table",
+            "data": {
+                "toolName": "lamp_glow_observation_tool",
+                "parameters": {
+                    "themeColor": "#2563EB"
+                }
+            },
+            "instructions_for_student": "For each arrangement, select whether the lamp GLOWS or DOES NOT GLOW. Think: is there a complete path for current? Fill in all six rows!"
+        },
+        "example_2_dark_mode": {
+            "description": "Dark mode version for digital classrooms",
+            "frontend_action": "show_interactive_tool",
+            "title": "Activity 3.6: Lamp Glow Observation",
+            "data": {
+                "toolName": "lamp_glow_observation_tool",
+                "parameters": {
+                    "themeColor": "#3B82F6",
+                    "darkMode": true
+                }
+            },
+            "instructions_for_student": "Select Glows or Does Not Glow for each arrangement."
+        },
+        "example_3_custom_insight": {
+            "description": "With a custom summary insight message",
+            "frontend_action": "show_interactive_tool",
+            "title": "Activity 3.6: Observation Table",
+            "data": {
+                "toolName": "lamp_glow_observation_tool",
+                "parameters": {
+                    "additionalProps": {
+                        "summaryInsight": "Only arrangements 1 and 6 work because they form a COMPLETE PATH. This complete path is called an ELECTRICAL CIRCUIT!",
+                        "instructionsForStudent": "Look at each arrangement carefully. Is there a complete loop from the cell through the lamp and back? Select your answer for all 6 rows."
+                    }
+                }
+            },
+            "instructions_for_student": "Look at each arrangement carefully. Is there a complete loop from the cell through the lamp and back?"
+        },
+        "example_4_compact": {
+            "description": "Compact version for mobile screens",
+            "frontend_action": "show_interactive_tool",
+            "title": "Lamp Glow Table",
+            "data": {
+                "toolName": "lamp_glow_observation_tool",
+                "parameters": {
+                    "width": 400,
+                    "height": 500,
+                    "themeColor": "#2563EB"
+                }
+            },
+            "instructions_for_student": "Tap Glows or Does Not Glow for each row."
+        }
+    }
+}

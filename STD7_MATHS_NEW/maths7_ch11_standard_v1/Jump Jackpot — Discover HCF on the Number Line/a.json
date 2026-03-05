@@ -1,0 +1,443 @@
+{
+    "toolName": "jump_jackpot_hcf_tool",
+    "version": "1.0.0",
+    "description": "Interactive step-based number line explorer for Grade 7 Mathematics — Jump Jackpot HCF Discovery. A horizontal number line from 0 to 35 with two treasure chest icons at configurable positions. A frog character (Jumpy) hops forward from 0 in equal-sized jumps, landing positions highlighted with coloured dots. Green dots when landing on a treasure, red dots otherwise. Each step tests a different jump size with smooth hop animations. A verdict table grows on the right side, recording each jump size and whether it hit both treasures. Final reveal shows the HCF with a golden highlight. Indian school context — treasure chests styled with Diwali lantern colours. Clean educational design with Lily Script One and Nunito font families. Touch-friendly controls for mobile use. 5-colour palette: indigo (#6366f1) for jumps, emerald (#10b981) for hits, rose (#f43f5e) for misses, white background, dark slate (#1e293b) text.",
+    "subject": "Mathematics",
+    "grade": "Grade 7",
+    "chapter": "Chapter 3 — Finding Common Ground",
+    "topic": "Jump Jackpot Game — HCF as Longest Jump Size",
+    "curriculum": "NCERT Ganita Prakash Part-II",
+    "learningObjectives": [
+        "Understand that a jump size must be a common factor of both treasure positions to land on both",
+        "Discover that the longest working jump size equals the HCF of the two numbers",
+        "Visualize factors and common factors on a number line",
+        "Connect the Jump Jackpot game to the concept of Highest Common Factor (HCF / GCD)"
+    ],
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Width of the tool container in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Height of the tool container in pixels"
+        },
+        "initialMode": {
+            "type": "string",
+            "default": "learn",
+            "enum": ["learn", "practice", "explore"],
+            "description": "Starting mode for the tool"
+        },
+        "showModeSelector": {
+            "type": "boolean",
+            "default": false,
+            "description": "Show/hide mode selector tabs"
+        },
+        "showNavigation": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide previous/next step buttons"
+        },
+        "showPlayPause": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide play/pause button"
+        },
+        "showStepIndicator": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide step counter in header"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier (higher = faster)"
+        },
+        "autoPlayDuration": {
+            "type": "number",
+            "default": 0,
+            "description": "Auto-advance delay in ms. 0 = manual only"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#6366f1",
+            "description": "Primary theme colour (indigo)"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Toggle dark mode"
+        }
+    },
+    "additionalProps": {
+        "description": "Tool-specific dynamic content for the Jump Jackpot HCF game",
+        "schema": {
+            "treasureA": {
+                "type": "number",
+                "default": 14,
+                "description": "Position of the first treasure on the number line"
+            },
+            "treasureB": {
+                "type": "number",
+                "default": 30,
+                "description": "Position of the second treasure on the number line"
+            },
+            "numberLineMax": {
+                "type": "number",
+                "default": 35,
+                "description": "Maximum value on the number line. Defaults to max(treasureA, treasureB) + 5"
+            },
+            "jumpTrials": {
+                "type": "array",
+                "default": [
+                    { "jumpSize": 7 },
+                    { "jumpSize": 3 },
+                    { "jumpSize": 2 },
+                    { "jumpSize": 1 }
+                ],
+                "description": "Array of jump sizes to try, in order. Each trial becomes a step.",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "jumpSize": { "type": "number", "description": "The jump size to test" },
+                        "label": { "type": "string", "description": "Optional label for this trial" }
+                    }
+                }
+            },
+            "showFactorExplanation": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show detailed divisibility explanation in each trial step"
+            }
+        },
+        "examples": {
+            "default_14_and_30": {
+                "treasureA": 14,
+                "treasureB": 30,
+                "jumpTrials": [
+                    { "jumpSize": 7 },
+                    { "jumpSize": 3 },
+                    { "jumpSize": 2 },
+                    { "jumpSize": 1 }
+                ]
+            },
+            "treasures_28_and_42": {
+                "treasureA": 28,
+                "treasureB": 42,
+                "numberLineMax": 48,
+                "jumpTrials": [
+                    { "jumpSize": 7 },
+                    { "jumpSize": 6 },
+                    { "jumpSize": 14 },
+                    { "jumpSize": 2 }
+                ]
+            },
+            "coprime_7_and_11": {
+                "treasureA": 7,
+                "treasureB": 11,
+                "numberLineMax": 15,
+                "jumpTrials": [
+                    { "jumpSize": 7 },
+                    { "jumpSize": 11 },
+                    { "jumpSize": 1 }
+                ]
+            },
+            "treasures_30_and_50": {
+                "treasureA": 30,
+                "treasureB": 50,
+                "numberLineMax": 55,
+                "jumpTrials": [
+                    { "jumpSize": 15 },
+                    { "jumpSize": 5 },
+                    { "jumpSize": 10 },
+                    { "jumpSize": 2 }
+                ]
+            }
+        }
+    },
+    "modes": {
+        "learn": {
+            "name": "Learn",
+            "description": "Step-by-step guided exploration of Jump Jackpot game discovering HCF",
+            "icon": "BookOpen"
+        },
+        "practice": {
+            "name": "Practice",
+            "description": "Try different treasure positions and predict the HCF",
+            "icon": "Target"
+        },
+        "explore": {
+            "name": "Explore",
+            "description": "Free exploration with custom treasure numbers",
+            "icon": "FlaskConical"
+        }
+    },
+    "steps": {
+        "description": "Steps are dynamically generated from the treasureA, treasureB, and jumpTrials props",
+        "structure": [
+            {
+                "type": "intro",
+                "description": "Introduction — shows the number line with two treasures, introduces the game"
+            },
+            {
+                "type": "trial",
+                "description": "One per jumpTrial — animates the frog hopping, shows hits/misses, updates verdict table",
+                "repeats": "Once per item in jumpTrials array"
+            },
+            {
+                "type": "reveal",
+                "description": "Final reveal — shows that the longest working jump = HCF of the two numbers"
+            }
+        ]
+    },
+    "teachingNotes": {
+        "step1": "Show the number line with two treasures at the configured positions (default: 14 and 30). Ask the student what jump sizes they think would work.",
+        "step2": "Try the first jump size — observe which treasures it hits or misses. Ask why it fails for the one(s) it misses (the treasure position is not a multiple of the jump size).",
+        "step3": "Continue through each trial jump size. For each, ask: Is this number a factor of BOTH treasure positions?",
+        "step4": "After all trials, reveal the verdict table. The longest jump that hits both = HCF.",
+        "step5": "Ask: Why must the jump size be a COMMON FACTOR of both numbers? Because Jumpy lands only on multiples of the jump size, so both treasure positions must be multiples.",
+        "step6": "Connect to formal definition: HCF (Highest Common Factor) = Greatest Common Divisor (GCD)."
+    },
+    "instructionsForStudent": "Watch the number line as Jumpy tries different jump sizes. For each jump size, check whether Jumpy lands on BOTH treasure numbers. Keep track of which sizes work and which do not in the verdict table on the right. The longest jump size that hits both treasures is a special number — can you guess what it is before the reveal? Hint: Think about factors!",
+    "toolCallExamples": [
+        {
+            "title": "Default: Treasures at 14 and 30",
+            "description": "The textbook example from NCERT Grade 7 Chapter 3",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Jump Jackpot — HCF of 14 and 30",
+                "data": {
+                    "toolName": "jump_jackpot_hcf_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "treasureA": 14,
+                            "treasureB": 30,
+                            "jumpTrials": [
+                                { "jumpSize": 7 },
+                                { "jumpSize": 3 },
+                                { "jumpSize": 2 },
+                                { "jumpSize": 1 }
+                            ]
+                        }
+                    }
+                },
+                "instructions_for_student": "Watch Jumpy try different jump sizes. Which ones land on BOTH 14 and 30?"
+            }
+        },
+        {
+            "title": "Treasures at 28 and 42",
+            "description": "Another textbook pair from the exercises",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Jump Jackpot — HCF of 28 and 42",
+                "data": {
+                    "toolName": "jump_jackpot_hcf_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "treasureA": 28,
+                            "treasureB": 42,
+                            "numberLineMax": 48,
+                            "jumpTrials": [
+                                { "jumpSize": 7 },
+                                { "jumpSize": 6 },
+                                { "jumpSize": 14 },
+                                { "jumpSize": 2 }
+                            ]
+                        }
+                    }
+                },
+                "instructions_for_student": "Try to predict: which jump size will be the LONGEST one that hits both 28 and 42?"
+            }
+        },
+        {
+            "title": "Coprime numbers: 7 and 11",
+            "description": "When the HCF is 1 — coprime numbers",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Jump Jackpot — HCF of 7 and 11",
+                "data": {
+                    "toolName": "jump_jackpot_hcf_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "treasureA": 7,
+                            "treasureB": 11,
+                            "numberLineMax": 15,
+                            "jumpTrials": [
+                                { "jumpSize": 7 },
+                                { "jumpSize": 11 },
+                                { "jumpSize": 1 }
+                            ]
+                        }
+                    }
+                },
+                "instructions_for_student": "7 and 11 are both prime! What is the longest jump that works? What does this tell us about coprime numbers?"
+            }
+        },
+        {
+            "title": "Treasures at 30 and 50",
+            "description": "Larger numbers with HCF = 10",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Jump Jackpot — HCF of 30 and 50",
+                "data": {
+                    "toolName": "jump_jackpot_hcf_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "treasureA": 30,
+                            "treasureB": 50,
+                            "numberLineMax": 55,
+                            "jumpTrials": [
+                                { "jumpSize": 15 },
+                                { "jumpSize": 5 },
+                                { "jumpSize": 10 },
+                                { "jumpSize": 2 }
+                            ]
+                        }
+                    }
+                },
+                "instructions_for_student": "Explore which jump sizes work for 30 and 50. The longest working jump reveals HCF(30, 50)!"
+            }
+        },
+        {
+            "title": "Minimal UI — just the animation",
+            "description": "Hide navigation for embedding or teacher-controlled presentations",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Jump Jackpot Demo",
+                "data": {
+                    "toolName": "jump_jackpot_hcf_tool",
+                    "parameters": {
+                        "showNavigation": false,
+                        "showStepIndicator": false,
+                        "additionalProps": {
+                            "treasureA": 14,
+                            "treasureB": 30
+                        }
+                    }
+                },
+                "instructions_for_student": "Watch the frog hop!"
+            }
+        },
+        {
+            "title": "Fast animation speed",
+            "description": "Double speed animations for quick demo",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Jump Jackpot — Quick Demo",
+                "data": {
+                    "toolName": "jump_jackpot_hcf_tool",
+                    "parameters": {
+                        "animationSpeed": 2,
+                        "additionalProps": {
+                            "treasureA": 14,
+                            "treasureB": 30,
+                            "jumpTrials": [
+                                { "jumpSize": 7 },
+                                { "jumpSize": 2 }
+                            ]
+                        }
+                    }
+                },
+                "instructions_for_student": "A quick look at two jump sizes — 7 (fails) and 2 (works)."
+            }
+        },
+        {
+            "title": "Custom exercise: Student picks numbers",
+            "description": "For practice where teacher picks numbers for the student",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Jump Jackpot — Your Turn!",
+                "data": {
+                    "toolName": "jump_jackpot_hcf_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "treasureA": 24,
+                            "treasureB": 36,
+                            "numberLineMax": 40,
+                            "jumpTrials": [
+                                { "jumpSize": 8 },
+                                { "jumpSize": 6 },
+                                { "jumpSize": 12 },
+                                { "jumpSize": 4 }
+                            ]
+                        }
+                    }
+                },
+                "instructions_for_student": "Before watching each jump, predict: will it hit both 24 and 36? Write down your prediction, then check!"
+            }
+        },
+        {
+            "title": "One number is a factor of the other",
+            "description": "When treasureA divides treasureB, HCF = treasureA",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Jump Jackpot — HCF of 6 and 18",
+                "data": {
+                    "toolName": "jump_jackpot_hcf_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "treasureA": 6,
+                            "treasureB": 18,
+                            "numberLineMax": 22,
+                            "jumpTrials": [
+                                { "jumpSize": 9 },
+                                { "jumpSize": 3 },
+                                { "jumpSize": 6 },
+                                { "jumpSize": 2 }
+                            ]
+                        }
+                    }
+                },
+                "instructions_for_student": "Notice: 18 = 6 × 3. What happens when one treasure is a multiple of the other? What will the HCF be?"
+            }
+        }
+    ],
+    "decisionTree": {
+        "description": "Decision tree for agents to determine how to configure the tool",
+        "rules": [
+            {
+                "condition": "Student asks 'What is HCF?' or 'How to find HCF?'",
+                "action": "Use default treasureA=14, treasureB=30 with all 4 trial jumps for full walkthrough"
+            },
+            {
+                "condition": "Student asks about specific numbers, e.g. 'Find HCF of 28 and 42'",
+                "action": "Set treasureA and treasureB to those numbers. Auto-generate sensible jumpTrials: include some that miss, some that hit, and the HCF itself"
+            },
+            {
+                "condition": "Student is exploring coprime numbers",
+                "action": "Use two primes or coprime numbers. Show that only jump size 1 works"
+            },
+            {
+                "condition": "Student needs quick refresher",
+                "action": "Use only 2 jumpTrials (one miss, one hit=HCF) with animationSpeed: 2"
+            },
+            {
+                "condition": "Teacher embedding for presentation",
+                "action": "Set showNavigation: false, use autoPlayDuration for auto-advance"
+            }
+        ]
+    },
+    "colorPalette": {
+        "indigo": "#6366f1",
+        "emerald": "#10b981",
+        "rose": "#f43f5e",
+        "gold": "#f59e0b",
+        "darkSlate": "#1e293b",
+        "white": "#ffffff",
+        "diwaliOrange": "#ff6b35",
+        "diwaliPurple": "#7c3aed",
+        "diwaliFuchsia": "#d946ef"
+    },
+    "fonts": {
+        "heading": "Lily Script One",
+        "body": "Nunito"
+    },
+    "accessibility": {
+        "touchFriendly": true,
+        "minTapTarget": "44px",
+        "colorContrastAACompliant": true,
+        "keyboardNavigation": "Arrow keys for step navigation"
+    }
+}

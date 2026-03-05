@@ -1,0 +1,392 @@
+{
+    "toolName": "electricity_chapter_review_tool",
+    "version": "1.0.0",
+    "description": "An interactive chapter review tool for Grade 7 Science (NCERT Chapter 3: Electricity — Circuits and their Components). The tool provides a comprehensive multi-modal review experience. Learn mode: visual reference for all 7 circuit symbols (cell, battery, lamp, LED, switch ON/OFF, wire) with terminal identification, covering key concepts from the entire chapter. Practice mode: 6 multiple-choice and symbol-identification questions testing knowledge of circuit symbols, terminal polarity (+ and −), complete vs open circuits, conductor/insulator classification, LED polarity, and fused lamps. Immediate feedback with explanations after each answer. Hints available (toggleable). Real World mode: 4 everyday applications (torchlight, room light, doorbell, solar light) showing how circuit diagrams represent real devices. Hands-On mode: 4 safe revision activities (build circuit, make switch, test conductors, draw diagrams). Purple theme colour suggesting review/assessment. Indian school context. Clean educational UI suitable for self-paced revision by Grade 7 students.",
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Width of the tool in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Height of the tool in pixels"
+        },
+        "initialMode": {
+            "type": "string",
+            "enum": [
+                "learn",
+                "practice",
+                "real_world",
+                "hands_on"
+            ],
+            "default": "learn",
+            "description": "Starting mode when the tool loads"
+        },
+        "showModeSelector": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show or hide the mode tabs at the top"
+        },
+        "enabledModes": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "enum": [
+                    "learn",
+                    "practice",
+                    "real_world",
+                    "hands_on"
+                ]
+            },
+            "default": [
+                "learn",
+                "practice",
+                "real_world",
+                "hands_on"
+            ],
+            "description": "Which modes to enable"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#7c3aed",
+            "description": "Primary theme color (purple for review/assessment mood)"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Dark mode toggle"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier"
+        },
+        "autoPlayDuration": {
+            "type": "number",
+            "default": 0,
+            "description": "Auto-advance delay in ms (0 = disabled)"
+        }
+    },
+    "additionalProps": {
+        "description": "Tool-specific dynamic data for the electricity chapter review tool",
+        "properties": {
+            "showHints": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to show hint buttons in practice mode"
+            },
+            "quizDifficulty": {
+                "type": "string",
+                "enum": [
+                    "easy",
+                    "medium",
+                    "hard"
+                ],
+                "default": "medium",
+                "description": "Difficulty level for quiz questions"
+            },
+            "focusTopics": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                },
+                "default": [],
+                "description": "Filter quiz to specific topics. Empty = all topics. Options: 'Circuit Symbols', 'Circuits', 'Conductors & Insulators', 'LED Polarity', 'Fused Lamp', 'Current Direction'"
+            },
+            "symbolSet": {
+                "type": "string",
+                "enum": [
+                    "all",
+                    "basic",
+                    "advanced"
+                ],
+                "default": "all",
+                "description": "Which symbols to show in Learn mode. 'basic' = cell, lamp, wire, switch. 'advanced' = battery, LED. 'all' = all 7"
+            }
+        },
+        "examples": [
+            {
+                "description": "Default — full review with all modes",
+                "value": {}
+            },
+            {
+                "description": "Practice-only with hints hidden for assessment",
+                "value": {
+                    "showHints": false
+                }
+            },
+            {
+                "description": "Focus on conductor/insulator topic only",
+                "value": {
+                    "focusTopics": [
+                        "Conductors & Insulators"
+                    ]
+                }
+            }
+        ]
+    },
+    "modes": {
+        "learn": {
+            "name": "Learn",
+            "description": "Visual reference for all 7 circuit symbols with terminal identification and key chapter concepts",
+            "icon": "BookOpen",
+            "features": [
+                "Interactive symbol cards — tap to expand details",
+                "Terminal polarity labels (+ and −) on each symbol",
+                "SVG circuit symbol drawings matching Table 3.2 from textbook",
+                "Key Concepts summary covering all 8 chapter bullet points"
+            ]
+        },
+        "practice": {
+            "name": "Practice",
+            "description": "6 MCQ questions covering all chapter topics with instant feedback",
+            "icon": "Target",
+            "features": [
+                "Progress bar with score tracking",
+                "Topic badges per question",
+                "Toggleable hints",
+                "Immediate correct/wrong feedback with explanations",
+                "Final score with grade and retry option"
+            ],
+            "questions_covered": [
+                "Cell symbol terminal identification (+ and −)",
+                "Open vs closed circuits (switch ON/OFF)",
+                "Conductor vs insulator classification",
+                "LED polarity and connection rules",
+                "Fused lamp and broken filament",
+                "Direction of electric current convention"
+            ]
+        },
+        "real_world": {
+            "name": "Real World",
+            "description": "4 everyday devices showing how circuits power them",
+            "icon": "Zap",
+            "examples": [
+                "Torchlight — battery + slide switch + lamp",
+                "Room light — mains + wall switch + ceiling lamp",
+                "Electric doorbell — push-button switch + buzzer",
+                "Solar garden light — solar panel + auto switch + LED"
+            ]
+        },
+        "hands_on": {
+            "name": "Hands-On",
+            "description": "4 safe revision activities students can do with household materials",
+            "icon": "FlaskConical",
+            "activities": [
+                "Build a simple circuit with cell and lamp",
+                "Make a switch using safety pin and drawing pins",
+                "Test conductors and insulators with a tester",
+                "Draw circuit diagrams using standard symbols"
+            ]
+        }
+    },
+    "content_coverage": {
+        "chapter": "Chapter 3: Electricity — Circuits and their Components",
+        "textbook": "Curiosity — Textbook of Science, Grade 7 (NCERT)",
+        "sections_covered": [
+            "3.1 A Torchlight",
+            "3.2 A Simple Electrical Circuit (cell, battery, lamp, LED, making lamp glow, electrical circuit, switch)",
+            "3.3 Circuit Diagrams (all 7 symbols from Table 3.2)",
+            "3.4 Electrical Conductors and Insulators"
+        ],
+        "key_concepts": [
+            "Electric cell as portable source of electrical energy",
+            "Positive (+ve) and negative (−ve) terminals",
+            "Battery = two or more cells in series",
+            "Incandescent lamp filament glows when heated by current",
+            "LED passes current in one direction only (polarity matters)",
+            "Switch completes (ON/closed) or breaks (OFF/open) a circuit",
+            "Current direction: positive to negative terminal",
+            "Circuit diagram = representation using standard symbols",
+            "Conductors vs Insulators",
+            "Fused lamp = broken filament"
+        ]
+    },
+    "teaching_notes": "Activate AFTER showing the chapter concept map image and AFTER the student has completed the summary discussion. Say: 'Let's see how much you remember! Start with the Practice quiz — it covers ALL the topics we studied: cells, batteries, lamps, LEDs, switches, circuits, conductors, and insulators.' If the student struggles, guide them to Learn mode: 'Go back to Learn mode to revise that symbol, then try again.' Use Real World mode as a reward: 'Great job! Now see how everything connects to real devices.' Purple theme to signal review/assessment mood.",
+    "instructions_for_student": "Time to review everything you've learned! Start with Practice mode to test your knowledge of circuit symbols, components, and behaviour. If you get stuck, switch to Learn mode to revise any symbol. Then explore Real World to see how circuits power everyday devices, and Hands-On for fun revision activities. Try to score full marks in Practice!",
+    "tool_call_examples": [
+        {
+            "description": "Default — full chapter review with all modes",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Chapter 3: In a Nutshell — Review",
+                "data": {
+                    "toolName": "electricity_chapter_review_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "themeColor": "#7c3aed"
+                    }
+                },
+                "instructions_for_student": "Time to review everything you've learned! Start with Learn mode to revise all symbols, then switch to Practice to test yourself."
+            }
+        },
+        {
+            "description": "Start directly on Practice quiz",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Quick Quiz — Electricity Chapter",
+                "data": {
+                    "toolName": "electricity_chapter_review_tool",
+                    "parameters": {
+                        "initialMode": "practice",
+                        "themeColor": "#7c3aed",
+                        "additionalProps": {
+                            "showHints": true
+                        }
+                    }
+                },
+                "instructions_for_student": "Let's see how much you remember! Answer all 6 questions. Use hints if you get stuck."
+            }
+        },
+        {
+            "description": "Assessment mode — no hints, practice only",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Chapter 3 Assessment",
+                "data": {
+                    "toolName": "electricity_chapter_review_tool",
+                    "parameters": {
+                        "initialMode": "practice",
+                        "enabledModes": [
+                            "practice"
+                        ],
+                        "showModeSelector": false,
+                        "additionalProps": {
+                            "showHints": false
+                        }
+                    }
+                },
+                "instructions_for_student": "This is your chapter assessment. Answer each question carefully — no hints this time!"
+            }
+        },
+        {
+            "description": "Real World exploration only",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Circuits Around Us",
+                "data": {
+                    "toolName": "electricity_chapter_review_tool",
+                    "parameters": {
+                        "initialMode": "real_world",
+                        "enabledModes": [
+                            "real_world"
+                        ],
+                        "showModeSelector": false
+                    }
+                },
+                "instructions_for_student": "Explore how circuits power everyday devices like torchlights and doorbells!"
+            }
+        },
+        {
+            "description": "Learn mode only — symbol reference",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Circuit Symbols Reference",
+                "data": {
+                    "toolName": "electricity_chapter_review_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "enabledModes": [
+                            "learn"
+                        ],
+                        "showModeSelector": false
+                    }
+                },
+                "instructions_for_student": "Here are all 7 circuit symbols from Table 3.2. Tap each card to see details about the terminals."
+            }
+        },
+        {
+            "description": "Hands-on activities for revision",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Electricity — Revision Activities",
+                "data": {
+                    "toolName": "electricity_chapter_review_tool",
+                    "parameters": {
+                        "initialMode": "hands_on",
+                        "enabledModes": [
+                            "hands_on",
+                            "learn"
+                        ],
+                        "themeColor": "#7c3aed"
+                    }
+                },
+                "instructions_for_student": "Try these safe activities at home to revise everything we learned about circuits!"
+            }
+        },
+        {
+            "description": "Post-quiz reward — Real World + Hands-On only",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Great Job! Explore More",
+                "data": {
+                    "toolName": "electricity_chapter_review_tool",
+                    "parameters": {
+                        "initialMode": "real_world",
+                        "enabledModes": [
+                            "real_world",
+                            "hands_on"
+                        ]
+                    }
+                },
+                "instructions_for_student": "You scored well! Now see how circuits work in real life and try some fun activities."
+            }
+        },
+        {
+            "description": "Struggling student — Learn first then Practice",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Let's Revise Together",
+                "data": {
+                    "toolName": "electricity_chapter_review_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "enabledModes": [
+                            "learn",
+                            "practice"
+                        ],
+                        "additionalProps": {
+                            "showHints": true
+                        }
+                    }
+                },
+                "instructions_for_student": "Start by reviewing all the symbols in Learn mode. Once you feel confident, switch to Practice and use hints if needed."
+            }
+        }
+    ],
+    "decision_tree": {
+        "description": "Decision tree for agents to determine which configuration to use",
+        "rules": [
+            {
+                "condition": "Student completed chapter discussion, ready for review",
+                "action": "Use default config with initialMode: 'learn', all modes enabled"
+            },
+            {
+                "condition": "Student asks to test their knowledge / quiz",
+                "action": "Set initialMode: 'practice' with showHints: true"
+            },
+            {
+                "condition": "Teacher wants formal assessment",
+                "action": "Set initialMode: 'practice', enabledModes: ['practice'], showHints: false, showModeSelector: false"
+            },
+            {
+                "condition": "Student struggling with symbols",
+                "action": "Set initialMode: 'learn', enabledModes: ['learn', 'practice'] with hints on"
+            },
+            {
+                "condition": "Student scored well, wants to explore further",
+                "action": "Set initialMode: 'real_world', enabledModes: ['real_world', 'hands_on']"
+            },
+            {
+                "condition": "Student asks about real-world applications",
+                "action": "Set initialMode: 'real_world'"
+            },
+            {
+                "condition": "Student wants revision activities / homework ideas",
+                "action": "Set initialMode: 'hands_on'"
+            }
+        ]
+    }
+}

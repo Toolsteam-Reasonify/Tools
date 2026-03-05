@@ -1,0 +1,127 @@
+{
+  "toolName": "grid_puzzle_explorer",
+  "version": "2.1.0",
+  "title": "Grid Detective — Row & Column Sum Puzzle Explorer",
+  "description": "Interactive step-based grid puzzle explorer for Grade 7 Mathematics — Chapter 6: Number Play. Redesigned with Singularity Design System: Poppins font, #4A4DC9 primary purple, #FF7212 orange accent, pill-shaped buttons with Enabled/Disabled/Hover/Pressed states, Contained/Outlined/Text/Highlight button variants. Hints are text-based reasoning clues — they never reveal the answer directly in the grid.",
+  "subject": "Mathematics",
+  "grade": 7,
+  "chapter": "6 — Number Play",
+  "topic": "Explorations in Grids — Row and Column Sums",
+  "curriculum": "NCERT / Ganita Prakash",
+  "designSystem": "Singularity",
+  "parameters": {
+    "width": { "type": "number", "default": 800, "description": "Container width in pixels" },
+    "height": { "type": "number", "default": 600, "description": "Container height in pixels" },
+    "themeColor": { "type": "string", "default": "#4A4DC9", "description": "Primary color (Singularity purple)" },
+    "initialMode": { "type": "string", "enum": ["learn", "practice"], "default": "learn" },
+    "showModeSelector": { "type": "boolean", "default": true },
+    "showNavigation": { "type": "boolean", "default": true },
+    "showStepIndicator": { "type": "boolean", "default": true },
+    "animationSpeed": { "type": "number", "default": 1 },
+    "autoPlayDuration": { "type": "number", "default": 0 }
+  },
+  "additionalProps": {
+    "description": "Tool-specific dynamic content",
+    "properties": {
+      "guidedPuzzle": {
+        "type": "object",
+        "description": "Custom puzzle for guided walkthrough",
+        "example": { "grid": [[4,7,5],[6,1,2],[3,9,8]], "rowSums": [16,9,20], "colSums": [13,17,15] }
+      },
+      "enableHints": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show hint button in practice mode. Hints are text-based reasoning clues that guide the student's thinking without revealing the answer or its position."
+      },
+      "difficulty": { "type": "string", "enum": ["easy","medium","hard"], "default": "medium" }
+    }
+  },
+  "design": {
+    "system": "Singularity",
+    "palette": {
+      "primary": "#4A4DC9",
+      "primaryDark": "#533086",
+      "primaryLight": "#C1C1EA",
+      "primaryBg": "#EEEDF7",
+      "accent": "#FF7212",
+      "accentSecondary": "#FC9145",
+      "accentLight": "#FFF3E4",
+      "dark": "#4E4E4E",
+      "grey": "#CACACA",
+      "greyLight": "#EBEBEB",
+      "greyBg": "#F5F5F5",
+      "white": "#FFFFFF",
+      "semanticGreen": "#2ECC71",
+      "semanticRed": "#E74C3C",
+      "semanticGold": "#F0A500"
+    },
+    "typography": {
+      "fontFamily": "Poppins",
+      "weights": [400, 500, 600, 700, 800]
+    },
+    "buttons": {
+      "height": 40,
+      "paddingHorizontal": 24,
+      "borderRadius": "pill (40px)",
+      "variants": ["contained", "outlined", "text", "highlight"],
+      "states": ["enabled", "disabled", "hover", "pressed"]
+    },
+    "radii": { "pill": 40, "lg": 20, "md": 14, "sm": 10, "xs": 8 },
+    "icons": {
+      "library": "lucide-react",
+      "used": ["Target", "BookOpen", "Zap", "Star", "Lightbulb", "Sparkles", "RotateCcw", "ChevronLeft", "ChevronRight", "Check", "X"],
+      "note": "Grid3X3 was removed — does not exist in lucide-react. Target is used for the header icon."
+    }
+  },
+  "features": {
+    "learnMode": {
+      "description": "6-step guided walkthrough solving a 3x3 grid puzzle",
+      "steps": [
+        "Introduction — 3,62,880 possibilities, one answer",
+        "Read the clues — row and column sum targets",
+        "List valid triplets for Row 1",
+        "Cross-check with column sums to narrow down",
+        "Fill Row 2 by elimination",
+        "Complete Row 3 and verify all sums"
+      ]
+    },
+    "practiceMode": {
+      "description": "Independent puzzle solving with randomly generated grids",
+      "interactions": [
+        "Click number chip to select, click cell to place",
+        "Drag-and-drop number chips to grid cells",
+        "Click filled cell to remove its number",
+        "Green glow for correct placements, red glow for wrong",
+        "Confetti animation on successful puzzle completion"
+      ]
+    },
+    "hintSystem": {
+      "type": "text-based",
+      "description": "Hints appear as a dismissible text banner below the number chips. They guide reasoning without revealing answers or highlighting cells.",
+      "strategies": [
+        "Row nearly complete (2 of 3 filled) — tells partial sum and target, asks student to find the difference",
+        "Column nearly complete (2 of 3 filled) — same logic for columns",
+        "Empty row — suggests starting with most constrained row, lists available numbers",
+        "Wrong placement detected — points out row/column sum mismatch, suggests removal",
+        "General fallback — lists remaining numbers, suggests focusing on nearly-complete row/column"
+      ],
+      "autoDismiss": "8 seconds",
+      "manualDismiss": "X button on the hint banner"
+    }
+  },
+  "instructions_for_student": "Follow along as the grid is solved step by step using logical reasoning. Watch how listing possible triplets and cross-checking with column sums narrows down 3,62,880 possibilities to just one answer. Then try solving a new grid on your own! If you get stuck, tap Hint for a reasoning clue — it won't give you the answer, but it will point you in the right direction.",
+  "teaching_notes": {
+    "step1": "Emphasize the scale of the problem (3,62,880 arrangements).",
+    "step2": "Guide student to read ALL constraints before filling cells.",
+    "step3": "Show how to list triplets systematically.",
+    "step4": "Demonstrate cross-checking — the key reasoning step.",
+    "step5": "Let student predict Row 2 before revealing.",
+    "step6": "Switch to practice mode for independent solving.",
+    "hints": "Hints are deliberately text-based — they teach reasoning strategies (partial sums, elimination, cross-checking) rather than giving away answers. This builds transferable problem-solving skills."
+  },
+  "changelog": {
+    "2.1.0": "Text-based hint system replacing grid-highlight hints. Fixed Grid3X3 icon (not in lucide-react) replaced with Target. Removed unused hintCell/showHint state. Added dismissible hint banner with 5 smart strategies.",
+    "2.0.0": "Redesigned with Singularity Design System. Poppins font, purple/orange palette, DSButton component with 4 variants and 4 states.",
+    "1.0.0": "Initial version with Lilita One + Nunito fonts, sky blue palette, grid-highlight hints."
+  }
+}

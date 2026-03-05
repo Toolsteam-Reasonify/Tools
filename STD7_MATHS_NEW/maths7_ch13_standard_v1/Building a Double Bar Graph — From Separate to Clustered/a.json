@@ -1,0 +1,424 @@
+{
+    "toolName": "double_bar_graph_tool",
+    "version": "2.0.0",
+    "description": "Interactive step-based graph construction walkthrough for Grade 7 Mathematics — Double Bar Graphs. Demonstrates how two separate bar graphs can be combined into a single clustered (double) bar graph for easier comparison. Uses the Yahapur and Wahapur onion price data from NCERT Ganita Prakash Chapter 5. Styled with Singularity Design System.",
+    "category": "data_visualization",
+    "grade": 7,
+    "subject": "Mathematics",
+    "chapter": "Chapter 5 — Connecting the Dots",
+    "topic": "Column Graphs and Clubbing the Columns",
+    "curriculum": "NCERT Ganita Prakash Grade 7 Part-II",
+    "dependencies": {
+        "external": "NONE — zero external dependencies",
+        "icons": "Inline SVG icons (Play, Pause, ChevronLeft, ChevronRight, RotateCcw, Eye, Lightbulb, BarChart, Layers, Tag, Search, Sparkle)",
+        "fonts": "Google Fonts — Poppins (400, 500, 600, 700, 800) loaded via @import in injected stylesheet"
+    },
+    "designSystem": {
+        "name": "Singularity",
+        "version": "1.0",
+        "tokens": {
+            "indigo": "#4A4DC9",
+            "orange": "#FF7212",
+            "gradientDark": "#533086",
+            "gradientLight": "#FC9145",
+            "lavender": "#C1C1EA",
+            "peach": "#FFF3E4",
+            "lavenderLight": "#EDEDF7",
+            "grey900": "#4E4E4E",
+            "grey400": "#CACACA",
+            "grey200": "#EBEBEB",
+            "grey100": "#F5F5F5",
+            "white": "#FFFFFF"
+        },
+        "fontFamily": "'Poppins', sans-serif",
+        "radii": {
+            "pill": 40,
+            "card": 16,
+            "small": 10
+        },
+        "buttonSpec": {
+            "height": 40,
+            "paddingX": 24,
+            "variants": ["contained", "outlined"],
+            "states": ["enabled", "disabled", "hover", "pressed"],
+            "containedStyle": "linear-gradient(135deg, #4A4DC9, #533086) with white text",
+            "outlinedStyle": "2px solid #4A4DC9, white bg, indigo text, lavender hover bg",
+            "disabledOpacity": 0.45,
+            "hoverScale": 1.06,
+            "pressedScale": 0.93
+        },
+        "headerGradient": "linear-gradient(135deg, #533086 0%, #4A4DC9 45%, #FC9145 100%)",
+        "progressBarGradient": "linear-gradient(90deg, #4A4DC9, #FC9145)",
+        "teachingNoteStyle": {
+            "background": "#FFF3E4 (peach)",
+            "borderLeft": "4px solid #FF7212 (orange)",
+            "textColor": "#4E4E4E"
+        },
+        "instructionsStyle": {
+            "background": "#EDEDF7 (lavender light)",
+            "borderLeft": "4px solid #4A4DC9 (indigo)",
+            "textColor": "#4E4E4E"
+        },
+        "tooltipStyle": {
+            "background": "#533086 (gradient dark)",
+            "textColor": "#FFFFFF",
+            "borderRadius": 10
+        }
+    },
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Component width in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Component height in pixels"
+        },
+        "initialMode": {
+            "type": "string",
+            "default": "learn",
+            "enum": ["learn"],
+            "description": "Starting mode (currently learn-only for step-based walkthrough)"
+        },
+        "showModeSelector": {
+            "type": "boolean",
+            "default": false,
+            "description": "Show/hide mode selector tabs"
+        },
+        "showNavigation": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide prev/next/play navigation buttons"
+        },
+        "showPlayPause": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide auto-play button"
+        },
+        "showStepIndicator": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide step counter (e.g., Step 3 / 6)"
+        },
+        "initialStep": {
+            "type": "number",
+            "default": 1,
+            "description": "Starting step ID (1-6)"
+        },
+        "filterSteps": {
+            "type": "array",
+            "default": null,
+            "description": "Only show these step IDs (e.g., [1, 3, 6] to skip steps)"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier"
+        },
+        "autoPlayDuration": {
+            "type": "number",
+            "default": 0,
+            "description": "Auto-advance delay in milliseconds (0 = manual only)"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#4A4DC9",
+            "description": "Primary theme color (Singularity indigo)"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Dark mode toggle"
+        }
+    },
+    "additionalProps": {
+        "description": "Tool-specific dynamic data for customizing chart content, colors, and datasets",
+        "properties": {
+            "dataset1": {
+                "type": "object",
+                "description": "First dataset (left bars — default indigo with slanted pattern)",
+                "properties": {
+                    "label": { "type": "string", "default": "Yahapur" },
+                    "values": { "type": "array", "items": { "type": "number" }, "default": [25, 24, 26, 28, 30, 35, 39, 43, 49, 56, 59, 44] },
+                    "color": { "type": "string", "default": "#4A4DC9" },
+                    "patternType": { "type": "string", "enum": ["slanted", "dotted", "solid"], "default": "slanted" }
+                }
+            },
+            "dataset2": {
+                "type": "object",
+                "description": "Second dataset (right bars — default orange with dotted pattern)",
+                "properties": {
+                    "label": { "type": "string", "default": "Wahapur" },
+                    "values": { "type": "array", "items": { "type": "number" }, "default": [19, 17, 23, 30, 38, 35, 42, 39, 53, 60, 52, 42] },
+                    "color": { "type": "string", "default": "#FF7212" },
+                    "patternType": { "type": "string", "enum": ["slanted", "dotted", "solid"], "default": "dotted" }
+                }
+            },
+            "categories": {
+                "type": "array",
+                "items": { "type": "string" },
+                "default": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                "description": "X-axis category labels"
+            },
+            "yAxisLabel": { "type": "string", "default": "Price (in ₹)" },
+            "xAxisLabel": { "type": "string", "default": "Months" },
+            "chartTitle": { "type": "string", "default": "Monthly Onion Prices in Yahapur and Wahapur" },
+            "yMax": { "type": "number", "default": 60, "description": "Maximum value on Y-axis" },
+            "yStep": { "type": "number", "default": 10, "description": "Y-axis tick interval" },
+            "scaleNote": { "type": "string", "default": "Scale: 1 unit = ₹10" }
+        },
+        "examples": {
+            "default_onion_prices": {
+                "description": "Default — Yahapur vs Wahapur onion prices (textbook data, Singularity indigo/orange)",
+                "value": {}
+            },
+            "custom_two_cities_rainfall": {
+                "description": "Custom — rainfall comparison between two cities",
+                "value": {
+                    "dataset1": { "label": "City A", "values": [12, 15, 25, 40, 80, 120, 150, 140, 90, 50, 20, 10], "color": "#4A4DC9", "patternType": "slanted" },
+                    "dataset2": { "label": "City B", "values": [8, 10, 18, 35, 70, 100, 130, 125, 80, 40, 15, 8], "color": "#FF7212", "patternType": "dotted" },
+                    "categories": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                    "yAxisLabel": "Rainfall (mm)",
+                    "chartTitle": "Monthly Rainfall — City A vs City B",
+                    "yMax": 160,
+                    "yStep": 20,
+                    "scaleNote": "Scale: 1 unit = 20 mm"
+                }
+            },
+            "cricket_batting": {
+                "description": "Custom — two batsmen run comparison across matches",
+                "value": {
+                    "dataset1": { "label": "Shubman", "values": [23, 7, 10, 52, 18], "color": "#4A4DC9", "patternType": "solid" },
+                    "dataset2": { "label": "Yashasvi", "values": [26, 53, 2, 0, 15], "color": "#FF7212", "patternType": "solid" },
+                    "categories": ["Match 1", "Match 2", "Match 3", "Match 4", "Match 5"],
+                    "yAxisLabel": "Runs",
+                    "xAxisLabel": "Matches",
+                    "chartTitle": "Runs Scored — Shubman vs Yashasvi",
+                    "yMax": 60,
+                    "yStep": 10,
+                    "scaleNote": "Scale: 1 unit = 10 runs"
+                }
+            }
+        }
+    },
+    "modes": {
+        "learn": {
+            "name": "Learn",
+            "description": "Step-by-step walkthrough of how separate bar graphs become a double bar graph",
+            "icon": "BarChart (inline SVG)"
+        }
+    },
+    "steps": {
+        "description": "6-step walkthrough for constructing a double bar graph",
+        "defaultSteps": [
+            {
+                "id": 1,
+                "title": "Yahapur's Onion Prices",
+                "phase": "Phase 1 — Single bar graph",
+                "description": "Shows Yahapur's 12-month indigo bar chart with slanted pattern",
+                "teachingNote": "Ask the student to describe the trend (prices rise through the year).",
+                "stepIcon": "BarChart"
+            },
+            {
+                "id": 2,
+                "title": "Wahapur's Onion Prices",
+                "phase": "Phase 2 — Second bar graph appears",
+                "description": "Wahapur's orange bar chart with dotted pattern appears alongside",
+                "teachingNote": "Ask: 'Can you easily compare month by month with two separate graphs?' (It is difficult.)",
+                "stepIcon": "Layers"
+            },
+            {
+                "id": 3,
+                "title": "Clubbing the Columns!",
+                "phase": "Phase 3 — Animated merge",
+                "description": "Bars slide together so each month has paired bars side by side, forming a clustered bar graph",
+                "teachingNote": "This is the KEY moment. Pause and ask: 'What changed? Why is this better?'",
+                "stepIcon": "Layers"
+            },
+            {
+                "id": 4,
+                "title": "Reading the Graph",
+                "phase": "Phase 4 — Labels and legend animate in",
+                "description": "Title, axis labels, scale indicator (1 unit = ₹10), colour legend animate into view",
+                "teachingNote": "Emphasise that every graph MUST have a title, axis labels, scale, and legend.",
+                "stepIcon": "Tag"
+            },
+            {
+                "id": 5,
+                "title": "Explore the Data",
+                "phase": "Phase 5 — Hover interaction",
+                "description": "Touching any bar shows a tooltip (dark purple #533086) with the exact ₹/kg value",
+                "teachingNote": "Let the student explore. Guide them to count months where each town is costlier.",
+                "stepIcon": "Search"
+            },
+            {
+                "id": 6,
+                "title": "Insights & Patterns",
+                "phase": "Phase 6 — Insight annotations",
+                "description": "Annotations appear: biggest gap (orange callout on peach #FFF3E4), equal month (indigo callout on lavender #EDEDF7), rising trend arrow (gradient orange #FC9145)",
+                "teachingNote": "Discuss insights. Which town is costlier overall? Which has more price variation?",
+                "stepIcon": "Sparkle"
+            }
+        ]
+    },
+    "toolCallExamples": [
+        {
+            "description": "Default — Textbook onion prices walkthrough (Singularity themed)",
+            "call": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Clubbing the Columns — Double Bar Graphs",
+                "data": {
+                    "toolName": "double_bar_graph_tool",
+                    "parameters": {}
+                },
+                "instructions_for_student": "Watch how two separate bar graphs transform into one powerful double bar graph."
+            }
+        },
+        {
+            "description": "Start directly at the merged chart (step 3)",
+            "call": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Double Bar Graph — Combined View",
+                "data": {
+                    "toolName": "double_bar_graph_tool",
+                    "parameters": {
+                        "initialStep": 3,
+                        "showNavigation": true
+                    }
+                },
+                "instructions_for_student": "See how the paired bars make month-by-month comparison easy!"
+            }
+        },
+        {
+            "description": "Skip to insights only (steps 5 and 6)",
+            "call": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Onion Price Insights",
+                "data": {
+                    "toolName": "double_bar_graph_tool",
+                    "parameters": {
+                        "filterSteps": [5, 6]
+                    }
+                },
+                "instructions_for_student": "Explore and find patterns in the onion price data."
+            }
+        },
+        {
+            "description": "Custom data — rainfall comparison (Singularity palette)",
+            "call": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Rainfall Comparison",
+                "data": {
+                    "toolName": "double_bar_graph_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "dataset1": { "label": "Chennai", "values": [25, 10, 5, 15, 30, 50, 80, 100, 120, 180, 300, 140], "color": "#4A4DC9", "patternType": "slanted" },
+                            "dataset2": { "label": "Mumbai", "values": [2, 1, 1, 2, 20, 500, 600, 550, 300, 80, 20, 5], "color": "#FF7212", "patternType": "dotted" },
+                            "categories": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                            "yAxisLabel": "Rainfall (mm)",
+                            "chartTitle": "Monthly Rainfall — Chennai vs Mumbai",
+                            "yMax": 700,
+                            "yStep": 100,
+                            "scaleNote": "Scale: 1 unit = 100 mm"
+                        }
+                    }
+                },
+                "instructions_for_student": "Compare when each city gets the most rain. Can you explain the pattern?"
+            }
+        },
+        {
+            "description": "Auto-play walkthrough (8 seconds per step)",
+            "call": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Clubbing the Columns — Auto Tour",
+                "data": {
+                    "toolName": "double_bar_graph_tool",
+                    "parameters": {
+                        "autoPlayDuration": 8000,
+                        "showPlayPause": true
+                    }
+                },
+                "instructions_for_student": "Sit back and watch the step-by-step animation, or pause anytime to explore."
+            }
+        },
+        {
+            "description": "Cricket batting comparison (custom categories, Singularity colours)",
+            "call": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Batting Comparison",
+                "data": {
+                    "toolName": "double_bar_graph_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "dataset1": { "label": "Shubman", "values": [0, 17, 21, 90], "color": "#4A4DC9", "patternType": "solid" },
+                            "dataset2": { "label": "Yashasvi", "values": [67, 55, 18, 35], "color": "#FF7212", "patternType": "solid" },
+                            "categories": ["Match 1", "Match 2", "Match 3", "Match 4"],
+                            "yAxisLabel": "Runs Scored",
+                            "xAxisLabel": "Matches",
+                            "chartTitle": "Runs Scored — Shubman vs Yashasvi",
+                            "yMax": 100,
+                            "yStep": 20,
+                            "scaleNote": "Scale: 1 unit = 20 runs"
+                        }
+                    }
+                },
+                "instructions_for_student": "Compare the batting performances. Who was more consistent?"
+            }
+        },
+        {
+            "description": "Electric vehicle registrations (from textbook exercise, Singularity palette)",
+            "call": {
+                "frontend_action": "show_interactive_tool",
+                "title": "EV Registrations Comparison",
+                "data": {
+                    "toolName": "double_bar_graph_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "dataset1": { "label": "2022", "values": [5, 10, 30, 48, 25, 69, 62], "color": "#4A4DC9", "patternType": "slanted" },
+                            "dataset2": { "label": "2024", "values": [12, 20, 50, 52, 40, 78, 81], "color": "#FF7212", "patternType": "dotted" },
+                            "categories": ["UK", "WB", "AP", "OD", "AS", "GJ", "DL"],
+                            "yAxisLabel": "Registrations (thousands)",
+                            "chartTitle": "EV Registrations 2022 vs 2024",
+                            "yMax": 100,
+                            "yStep": 20,
+                            "scaleNote": "Scale: 1 unit = 20 thousand"
+                        }
+                    }
+                },
+                "instructions_for_student": "Which state saw the biggest increase in EV registrations?"
+            }
+        },
+        {
+            "description": "Minimal UI — just the chart, no navigation",
+            "call": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Onion Prices — Quick View",
+                "data": {
+                    "toolName": "double_bar_graph_tool",
+                    "parameters": {
+                        "initialStep": 5,
+                        "showNavigation": false,
+                        "showPlayPause": false,
+                        "showStepIndicator": false
+                    }
+                },
+                "instructions_for_student": "Tap any bar to see its exact value."
+            }
+        }
+    ],
+    "decisionTree": {
+        "description": "How agents should decide which parameters to use",
+        "rules": [
+            { "trigger": "Student learning double bar graphs for the first time", "action": "Use default parameters — full 6-step walkthrough" },
+            { "trigger": "Student needs to compare two datasets", "action": "Use additionalProps with custom dataset1, dataset2, categories" },
+            { "trigger": "Student wants to see just the merged chart", "action": "Set initialStep: 3 or filterSteps: [3, 4, 5, 6]" },
+            { "trigger": "Student wants to explore data interactively", "action": "Set initialStep: 5 for hover interaction" },
+            { "trigger": "Student needs a quick static view", "action": "Set initialStep: 5, showNavigation: false, showPlayPause: false" },
+            { "trigger": "Teacher wants auto-play presentation", "action": "Set autoPlayDuration: 8000" },
+            { "trigger": "Custom textbook exercise data", "action": "Pass custom additionalProps matching exercise requirements" },
+            { "trigger": "Custom colour scheme needed", "action": "Override dataset1.color and dataset2.color — recommended to stay within Singularity palette (#4A4DC9, #FF7212, #533086, #FC9145, #C1C1EA)" }
+        ]
+    }
+}

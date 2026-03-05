@@ -1,0 +1,269 @@
+{
+    "toolName": "direct_hcf_method_tool",
+    "version": "1.0.0",
+    "description": "Interactive step-based calculation practice tool for Grade 7 Mathematics — Direct HCF Method with Minimum Occurrences. Walks students through finding HCF using prime factorisations with progressive reveal, comparison table, coloured prime blocks, pencil box analogy, and verification. Singularity Design System with Poppins font.",
+
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Component width in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Component height in pixels"
+        },
+        "initialMode": {
+            "type": "string",
+            "enum": ["learn"],
+            "default": "learn",
+            "description": "Starting mode — this tool is learn-mode focused"
+        },
+        "showModeSelector": {
+            "type": "boolean",
+            "default": false,
+            "description": "Show/hide mode tabs (usually hidden for step-based tool)"
+        },
+        "showNavigation": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide prev/next buttons"
+        },
+        "showPlayPause": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide auto-play button"
+        },
+        "showStepIndicator": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide step counter"
+        },
+        "autoPlayDuration": {
+            "type": "number",
+            "default": 0,
+            "description": "Auto-advance delay in ms (0 = disabled, 4000 recommended for auto)"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#f59e0b",
+            "description": "Primary accent color (amber)"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable dark mode"
+        }
+    },
+
+    "additionalProps": {
+        "description": "Tool-specific dynamic content passed by the agent to configure the HCF example",
+        "schema": {
+            "numberA": {
+                "type": "number",
+                "default": 225,
+                "description": "First number for HCF computation"
+            },
+            "numberB": {
+                "type": "number",
+                "default": 750,
+                "description": "Second number for HCF computation"
+            },
+            "showPencilBoxAnalogy": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show the pencil box matching analogy panel"
+            },
+            "accentColor": {
+                "type": "string",
+                "default": "#f59e0b",
+                "description": "Override accent colour for active steps"
+            }
+        },
+        "examples": {
+            "textbook_example_225_750": {
+                "numberA": 225,
+                "numberB": 750,
+                "showPencilBoxAnalogy": true
+            },
+            "textbook_example_30_72": {
+                "numberA": 30,
+                "numberB": 72,
+                "showPencilBoxAnalogy": true
+            },
+            "textbook_example_112_84": {
+                "numberA": 112,
+                "numberB": 84,
+                "showPencilBoxAnalogy": true
+            },
+            "coprime_example_96_275": {
+                "numberA": 96,
+                "numberB": 275,
+                "showPencilBoxAnalogy": true
+            },
+            "easy_warmup_12_16": {
+                "numberA": 12,
+                "numberB": 16,
+                "showPencilBoxAnalogy": true
+            },
+            "advanced_400_2500": {
+                "numberA": 400,
+                "numberB": 2500,
+                "showPencilBoxAnalogy": true
+            },
+            "factor_multiple_81_243": {
+                "numberA": 81,
+                "numberB": 243,
+                "showPencilBoxAnalogy": true
+            },
+            "compact_no_analogy": {
+                "numberA": 45,
+                "numberB": 75,
+                "showPencilBoxAnalogy": false
+            }
+        }
+    },
+
+    "steps": {
+        "description": "7-step progressive reveal walkthrough",
+        "sequence": [
+            { "step": 1, "title": "Meet the Numbers", "reveals": "Two numbers side by side" },
+            { "step": 2, "title": "Prime Factorisations", "reveals": "Coloured prime factor blocks for both" },
+            { "step": 3, "title": "Identify Common Primes", "reveals": "Highlights common primes, dims non-common, pencil box analogy" },
+            { "step": 4, "title": "Count Prime 3", "reveals": "Comparison table row for prime 3 with min count" },
+            { "step": 5, "title": "Count Prime 5", "reveals": "Comparison table row for prime 5 with min count" },
+            { "step": 6, "title": "Multiply for HCF", "reveals": "HCF assembly area with drop-in animation" },
+            { "step": 7, "title": "Verify the Answer", "reveals": "Division check, stars, celebration" }
+        ]
+    },
+
+    "designSystem": {
+        "name": "Singularity",
+        "font": "Poppins (400-900)",
+        "primaryColor": "#4A4DC9",
+        "accentColor": "#FF7212",
+        "gradientStart": "#533086",
+        "gradientEnd": "#FC9145",
+        "activeStepColor": "#f59e0b",
+        "primeColors": {
+            "2": "#4A4DC9",
+            "3": "#FF7212",
+            "5": "#2ECC71",
+            "7": "#533086",
+            "11": "#f59e0b"
+        },
+        "buttons": "pill-shaped, 42px height, 40px border-radius",
+        "cards": "rounded 16px, 1px border #EBEBEB"
+    },
+
+    "toolCallExamples": [
+        {
+            "title": "Example 1: Default textbook — HCF(225, 750)",
+            "description": "Step-based walkthrough of HCF(225,750) from Chapter 3 Example 5",
+            "parameters": {
+                "showNavigation": true,
+                "showPlayPause": true,
+                "additionalProps": {
+                    "numberA": 225,
+                    "numberB": 750,
+                    "showPencilBoxAnalogy": true
+                }
+            },
+            "teaching_notes": "Step 1: Present numbers. Step 2: Show factorisations. Step 3: Identify common primes (2 is NOT common). Steps 4-5: Count each common prime and take minimum. Step 6: Multiply. Step 7: Verify.",
+            "instructions_for_student": "Follow the direct HCF method step by step. For each common prime, take the minimum count. Multiply to get the HCF."
+        },
+        {
+            "title": "Example 2: Easy warm-up — HCF(12, 16)",
+            "description": "Simpler numbers for introducing the method",
+            "parameters": {
+                "additionalProps": {
+                    "numberA": 12,
+                    "numberB": 16,
+                    "showPencilBoxAnalogy": true
+                }
+            },
+            "instructions_for_student": "Start with these small numbers to understand the method before trying harder ones."
+        },
+        {
+            "title": "Example 3: HCF(30, 72) from textbook Example 4",
+            "description": "Numbers from Chapter 3 Example 4",
+            "parameters": {
+                "additionalProps": {
+                    "numberA": 30,
+                    "numberB": 72,
+                    "showPencilBoxAnalogy": true
+                }
+            },
+            "instructions_for_student": "30 = 2 × 3 × 5, 72 = 2³ × 3². Common primes are 2 and 3. Take minimum of each."
+        },
+        {
+            "title": "Example 4: Co-prime detection — HCF(96, 275)",
+            "description": "No common primes, HCF = 1",
+            "parameters": {
+                "additionalProps": {
+                    "numberA": 96,
+                    "numberB": 275,
+                    "showPencilBoxAnalogy": true
+                }
+            },
+            "instructions_for_student": "When numbers share NO common primes, the HCF is 1. These are co-prime numbers."
+        },
+        {
+            "title": "Example 5: Factor-multiple — HCF(81, 243)",
+            "description": "81 divides 243, so HCF equals 81",
+            "parameters": {
+                "additionalProps": {
+                    "numberA": 81,
+                    "numberB": 243,
+                    "showPencilBoxAnalogy": true
+                }
+            },
+            "instructions_for_student": "When one number divides the other exactly, the HCF equals the smaller number."
+        },
+        {
+            "title": "Example 6: Advanced — HCF(400, 2500)",
+            "description": "Larger numbers from Figure it Out exercises",
+            "parameters": {
+                "additionalProps": {
+                    "numberA": 400,
+                    "numberB": 2500,
+                    "showPencilBoxAnalogy": true
+                }
+            },
+            "instructions_for_student": "The method works the same way with larger numbers. Stay systematic!"
+        },
+        {
+            "title": "Example 7: Compact mode without analogy",
+            "description": "Hide pencil box for focused mathematical view",
+            "parameters": {
+                "showPlayPause": false,
+                "additionalProps": {
+                    "numberA": 45,
+                    "numberB": 75,
+                    "showPencilBoxAnalogy": false
+                }
+            },
+            "instructions_for_student": "Find HCF(45, 75) using the direct method."
+        },
+        {
+            "title": "Example 8: Auto-play presentation mode",
+            "description": "Teacher can project and let it auto-advance",
+            "parameters": {
+                "autoPlayDuration": 5000,
+                "showNavigation": false,
+                "additionalProps": {
+                    "numberA": 225,
+                    "numberB": 750,
+                    "showPencilBoxAnalogy": true
+                }
+            },
+            "instructions_for_student": "Watch the steps unfold automatically and follow along!"
+        }
+    ]
+}

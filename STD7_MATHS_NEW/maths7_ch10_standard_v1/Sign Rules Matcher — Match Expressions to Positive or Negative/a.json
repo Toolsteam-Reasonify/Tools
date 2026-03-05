@@ -1,0 +1,189 @@
+{
+    "toolName": "sign_rules_matcher",
+    "version": "1.0.0",
+    "description": "Interactive matching activity for Grade 7 Mathematics — Sign Rules Matcher. Students drag eight integer multiplication expressions to either a 'Positive Result' bin or a 'Negative Result' bin. Expressions cover all four sign cases. Instant feedback after each placement. Summary card with complete sign rule on completion.",
+    "category": "mathematics",
+    "grade": 7,
+    "topic": "Operations with Integers — Patterns with Negative Multiplicand and Complete Sign Rules",
+    "curriculum": "NCERT / CBSE",
+    "textbook_reference": "Ganita Prakash Grade 7 Part-II, Chapter 2: Operations with Integers, Section 2.2",
+    "learning_objectives": [
+        "Determine the sign of a product without computing the value",
+        "Recall that same-sign multiplication yields a positive result",
+        "Recall that different-sign multiplication yields a negative result",
+        "Connect (−1) × a = −a to the additive inverse property",
+        "Bridge multiplication sign rules to division sign rules"
+    ],
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 900,
+            "description": "Container width in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Container minimum height in pixels"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#8b5cf6",
+            "description": "Primary accent color (purple)"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Dark mode toggle"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier"
+        }
+    },
+    "additionalProps": {
+        "schema": {
+            "expressions": {
+                "type": "array",
+                "description": "Custom set of multiplication expressions. Each has id, display text, sign parts, and correct bin.",
+                "items": {
+                    "id": "string — unique identifier e.g. 'e1'",
+                    "expression": "string — full display e.g. '(−4) × (−6)'",
+                    "left": "string — left operand e.g. '−4'",
+                    "op": "string — operator e.g. '×'",
+                    "right": "string — right operand e.g. '−6'",
+                    "correctBin": "'positive' | 'negative'",
+                    "hint": "string — optional hint text"
+                }
+            },
+            "positiveBinLabel": {
+                "type": "string",
+                "default": "Positive Result (+)",
+                "description": "Label for positive bin"
+            },
+            "negativeBinLabel": {
+                "type": "string",
+                "default": "Negative Result (−)",
+                "description": "Label for negative bin"
+            },
+            "summaryTitle": {
+                "type": "string",
+                "default": "Sign Rules for Multiplication",
+                "description": "Title shown on summary card"
+            },
+            "summaryRule": {
+                "type": "string",
+                "default": "Same signs → Positive  |  Different signs → Negative",
+                "description": "Summary rule text"
+            },
+            "instructionText": {
+                "type": "string",
+                "default": "Drag each expression to the correct bin. Determine the sign of the result — no calculation needed!",
+                "description": "Instruction shown below header"
+            },
+            "showHints": {
+                "type": "boolean",
+                "default": false,
+                "description": "Show hints after wrong attempts"
+            },
+            "accentColor": {
+                "type": "string",
+                "default": "#8b5cf6",
+                "description": "Accent colour"
+            },
+            "successColor": {
+                "type": "string",
+                "default": "#22c55e",
+                "description": "Positive / success colour"
+            },
+            "errorColor": {
+                "type": "string",
+                "default": "#ef4444",
+                "description": "Negative / error colour"
+            }
+        },
+        "defaults": {
+            "expressions": [
+                { "id": "e1", "expression": "(+3) × (+7)", "left": "+3", "op": "×", "right": "+7", "correctBin": "positive" },
+                { "id": "e2", "expression": "(−4) × (−6)", "left": "−4", "op": "×", "right": "−6", "correctBin": "positive" },
+                { "id": "e3", "expression": "(+5) × (−8)", "left": "+5", "op": "×", "right": "−8", "correctBin": "negative" },
+                { "id": "e4", "expression": "(−9) × (+2)", "left": "−9", "op": "×", "right": "+2", "correctBin": "negative" },
+                { "id": "e5", "expression": "(−1) × (−1)", "left": "−1", "op": "×", "right": "−1", "correctBin": "positive" },
+                { "id": "e6", "expression": "(−1) × (+5)", "left": "−1", "op": "×", "right": "+5", "correctBin": "negative" },
+                { "id": "e7", "expression": "(−12) × (−3)", "left": "−12", "op": "×", "right": "−3", "correctBin": "positive" },
+                { "id": "e8", "expression": "(+10) × (−17)", "left": "+10", "op": "×", "right": "−17", "correctBin": "negative" }
+            ]
+        },
+        "examples": {
+            "default_8_expressions": {
+                "description": "Default set covering all four sign cases with tricky examples",
+                "additionalProps": {}
+            },
+            "division_sign_rules": {
+                "description": "Same activity but for division — bridging from multiplication",
+                "additionalProps": {
+                    "expressions": [
+                        { "id": "d1", "expression": "(+24) ÷ (+6)", "left": "+24", "op": "÷", "right": "+6", "correctBin": "positive" },
+                        { "id": "d2", "expression": "(−36) ÷ (−9)", "left": "−36", "op": "÷", "right": "−9", "correctBin": "positive" },
+                        { "id": "d3", "expression": "(+100) ÷ (−25)", "left": "+100", "op": "÷", "right": "−25", "correctBin": "negative" },
+                        { "id": "d4", "expression": "(−56) ÷ (+8)", "left": "−56", "op": "÷", "right": "+8", "correctBin": "negative" },
+                        { "id": "d5", "expression": "(−100) ÷ (−4)", "left": "−100", "op": "÷", "right": "−4", "correctBin": "positive" },
+                        { "id": "d6", "expression": "(+50) ÷ (−25)", "left": "+50", "op": "÷", "right": "−25", "correctBin": "negative" }
+                    ],
+                    "summaryTitle": "Sign Rules for Division",
+                    "instructionText": "Division follows the same sign rules as multiplication! Sort each expression."
+                }
+            },
+            "larger_numbers_cbse": {
+                "description": "Expressions with larger CBSE-style numbers",
+                "additionalProps": {
+                    "expressions": [
+                        { "id": "c1", "expression": "(−123) × (456)", "left": "−123", "op": "×", "right": "456", "correctBin": "negative" },
+                        { "id": "c2", "expression": "(−123) × (−456)", "left": "−123", "op": "×", "right": "−456", "correctBin": "positive" },
+                        { "id": "c3", "expression": "(123) × (−456)", "left": "123", "op": "×", "right": "−456", "correctBin": "negative" },
+                        { "id": "c4", "expression": "(−548) × (972)", "left": "−548", "op": "×", "right": "972", "correctBin": "negative" },
+                        { "id": "c5", "expression": "(−547) × (−971)", "left": "−547", "op": "×", "right": "−971", "correctBin": "positive" },
+                        { "id": "c6", "expression": "(207) × (−26)", "left": "207", "op": "×", "right": "−26", "correctBin": "negative" }
+                    ],
+                    "instructionText": "You do NOT need to calculate — just determine whether the product is positive or negative!"
+                }
+            }
+        }
+    },
+    "teaching_notes": {
+        "purpose": "This tool tests active recall of the sign rule after the pattern-based derivation in the textbook (Ganita Prakash Ch.2). Students classify expressions by sign without computing exact values.",
+        "key_teaching_moments": [
+            "Expressions e5 (−1)×(−1) and e6 (−1)×(+5) are deliberately included: (−1)×(−1) = +1 surprises many students; (−1)×(+5) = −5 connects to the additive inverse property (−1 × a = −a).",
+            "After the activity, ask: 'Can you now state the sign rule for multiplication in one sentence without looking?'",
+            "Bridge to division: 'Do you think division follows the same rule? Why?' — then optionally load the division variant."
+        ],
+        "prerequisite_knowledge": [
+            "Addition and subtraction of integers (Grade 6 recap)",
+            "Token model for integer multiplication (positive multiplier placing tokens, negative multiplier removing tokens)",
+            "Pattern observation: decreasing multiplier with positive/negative multiplicand"
+        ],
+        "common_misconceptions": [
+            "Students may think (−1)×(−1) is negative because both numbers 'look' negative",
+            "Confusing the sign of the result with the sign of the larger number",
+            "Applying addition rules (same sign = add, different sign = subtract) to multiplication"
+        ]
+    },
+    "instructions_for_student": "Drag each multiplication expression to the correct bin — Positive Result (+) or Negative Result (−). You do NOT need to calculate the exact answer, just determine the sign. After each placement you will see if you are right. Once all 8 are correctly placed, a summary card shows you the complete sign rule.",
+    "design_spec": {
+        "layout": "Top half: row of shuffled expression cards in Lilita One font. Bottom half: two bins side-by-side — left green-bordered 'Positive Result (+)' and right red-bordered 'Negative Result (−)'. Cards styled like CBSE exam question slips.",
+        "feedback": {
+            "correct": "Card snaps into bin with green tick animation (0.3s bounce)",
+            "wrong": "Card shakes back to row with red flash"
+        },
+        "summary_card": "Slides up from bottom after all 8 correct: 'Same signs → Positive | Different signs → Negative' with colour-coded rows. Includes Brahmagupta historical note.",
+        "font": "Lilita One for headings/cards, Nunito for body",
+        "palette": ["#8b5cf6", "#22c55e", "#ef4444", "#ffffff", "#1e293b"],
+        "interaction": "Mouse-drag and touch-tap both supported. Mobile-responsive with wrapping cards on small screens."
+    },
+    "accessibility": {
+        "touch_support": true,
+        "mobile_responsive": true,
+        "tap_to_place_mobile": true,
+        "keyboard_support": "planned"
+    }
+}

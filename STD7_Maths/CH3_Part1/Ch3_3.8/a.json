@@ -1,0 +1,268 @@
+{
+    "toolName": "decimal_place_value_tool",
+    "version": "2.1.0",
+    "description": "Interactive tool for learning decimal numbers, place value, unit conversions, and decimal operations — based on NCERT Ganita Prakash Grade 7 Chapter 3: A Peek Beyond the Point. Styled with the Singularity Design System.",
+
+    "designSystem": {
+        "name": "Singularity",
+        "font": "Poppins",
+        "colors": {
+            "primary": "#4A4DC9",
+            "accent": "#FF7212",
+            "gradientDark": "#533086",
+            "gradientLight": "#FC9145",
+            "purpleLight": "#C1C1EA",
+            "orangeLight": "#FFF3E4",
+            "purpleBg": "#EEEEF8",
+            "orangeBg": "#FFF8F0",
+            "gray900": "#4E4E4E",
+            "gray400": "#CACACA",
+            "gray200": "#EBEBEB",
+            "gray100": "#F5F5F5",
+            "white": "#FFFFFF",
+            "success": "#2ECC71",
+            "error": "#E74C3C"
+        },
+        "borderRadius": {
+            "pill": "999px",
+            "lg": "20px",
+            "md": "14px",
+            "sm": "10px",
+            "xs": "8px"
+        },
+        "buttons": {
+            "height": "40px",
+            "paddingHorizontal": "24px",
+            "shape": "pill",
+            "states": ["enabled", "disabled", "hover", "pressed"],
+            "variants": ["contained", "outlined", "texted"]
+        }
+    },
+
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Width of the tool container"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Height of the tool container"
+        },
+        "initialMode": {
+            "type": "string",
+            "enum": ["learn", "practice", "real_world"],
+            "default": "learn",
+            "description": "Starting mode"
+        },
+        "showModeSelector": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide mode tabs (text-only pill buttons, no icons)"
+        },
+        "enabledModes": {
+            "type": "array",
+            "items": { "type": "string", "enum": ["learn", "practice", "real_world"] },
+            "default": ["learn", "practice", "real_world"],
+            "description": "Which modes to enable"
+        },
+        "showNavigation": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide prev/next pill buttons"
+        },
+        "showPlayPause": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide play/pause contained pill button"
+        },
+        "showStepIndicator": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide step counter badge in header"
+        },
+        "initialStep": {
+            "type": "number",
+            "default": 1,
+            "description": "Starting step ID"
+        },
+        "filterSteps": {
+            "type": "array",
+            "items": { "type": "number" },
+            "default": null,
+            "description": "Only show these step IDs"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier (spring-feel cubic-bezier used)"
+        },
+        "autoPlayDuration": {
+            "type": "number",
+            "default": 10000,
+            "description": "Auto-advance delay in ms (0 to disable). Disabled in practice mode."
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#4A4DC9",
+            "description": "Primary theme color (Singularity purple by default)"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Dark mode toggle"
+        }
+    },
+
+    "additionalProps": {
+        "description": "Tool-specific dynamic content for decimal place value visualization",
+        "properties": {
+            "decimalNumber": {
+                "type": "number",
+                "description": "A decimal number to visualize in the place value table",
+                "examples": [7.05, 70.5, 0.274, 4.45]
+            },
+            "showPlaceValueTable": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to show the place value table"
+            },
+            "highlightPlace": {
+                "type": "string",
+                "enum": ["ones", "tenths", "hundredths", "thousandths", "tens", "hundreds"],
+                "description": "Which place value column to highlight (uses orange gradient in Singularity style)"
+            },
+            "conversionType": {
+                "type": "string",
+                "enum": ["mm_cm", "cm_m", "g_kg", "paise_rupee"],
+                "description": "Type of unit conversion to show"
+            },
+            "conversionValue": {
+                "type": "number",
+                "description": "Value to convert in the conversion visual"
+            },
+            "compareNumbers": {
+                "type": "array",
+                "items": { "type": "number" },
+                "minItems": 2,
+                "maxItems": 2,
+                "description": "Two decimal numbers to compare (shown in purple vs orange cards)"
+            },
+            "fractionNumerator": {
+                "type": "number",
+                "description": "Numerator of a fraction to convert to decimal"
+            },
+            "fractionDenominator": {
+                "type": "number",
+                "description": "Denominator of a fraction to convert to decimal (10, 100, or 1000)"
+            }
+        },
+        "examples": {
+            "showPlaceValue": {
+                "decimalNumber": 70.5,
+                "highlightPlace": "tenths"
+            },
+            "unitConversion": {
+                "conversionType": "g_kg",
+                "conversionValue": 254
+            },
+            "compareTwoDecimals": {
+                "compareNumbers": [0.509, 0.59]
+            }
+        }
+    },
+
+    "modes": {
+        "learn": {
+            "description": "Step-by-step lessons on decimal concepts: place value, tenths, hundredths, thousandths, addition, subtraction",
+            "stepIds": [1, 2, 3, 4, 5, 6, 7],
+            "headerGradient": "linear-gradient(135deg, #533086, #4A4DC9)",
+            "descriptionBg": "#EEEEF8",
+            "accentColor": "#4A4DC9",
+            "modeLabel": "Learn"
+        },
+        "practice": {
+            "description": "5 MCQ quiz questions: place value identification, fraction-to-decimal conversion, decimal addition, decimal comparison, decimal subtraction. Options are always visible (no staggered fade-in).",
+            "stepIds": [10, 11, 12, 13, 14],
+            "headerGradient": "linear-gradient(135deg, #FF7212, #FC9145)",
+            "descriptionBg": "#FFF8F0",
+            "accentColor": "#FF7212",
+            "modeLabel": "Practice"
+        },
+        "real_world": {
+            "description": "Real-world applications: mm↔cm, cm↔m, g↔kg, paise↔rupee conversions, and decimal disaster stories",
+            "stepIds": [20, 21, 22, 23, 24],
+            "headerGradient": "linear-gradient(135deg, #533086, #FC9145)",
+            "descriptionBg": "#F8F0FF",
+            "accentColor": "#533086",
+            "modeLabel": "Real World"
+        }
+    },
+
+    "steps": {
+        "learn": [
+            { "id": 1, "title": "What is a Decimal Number?", "type": "intro" },
+            { "id": 2, "title": "Place Value Table", "type": "explanation" },
+            { "id": 3, "title": "Tenths — Splitting into 10 Parts", "type": "explanation" },
+            { "id": 4, "title": "Hundredths — Even Smaller Parts", "type": "explanation" },
+            { "id": 5, "title": "Thousandths — Going Deeper", "type": "explanation" },
+            { "id": 6, "title": "Adding Decimals", "type": "explanation" },
+            { "id": 7, "title": "Subtracting Decimals", "type": "explanation" }
+        ],
+        "practice": [
+            {
+                "id": 10,
+                "title": "Place Value of a Digit",
+                "type": "practice",
+                "description": "In the number 83.519, what is the place value of the digit 1?",
+                "questionType": "placeValue",
+                "options": ["Tenths", "Hundredths", "Thousandths", "Ones"],
+                "answer": "Hundredths"
+            },
+            {
+                "id": 11,
+                "title": "Decimal from a Fraction",
+                "type": "practice",
+                "description": "What is the decimal form of 37/100?",
+                "questionType": "fractionToDecimal",
+                "options": ["3.7", "0.37", "0.037", "37.0"],
+                "answer": "0.37"
+            },
+            {
+                "id": 12,
+                "title": "Decimal Addition",
+                "type": "practice",
+                "description": "What is 12.6 + 4.85?",
+                "questionType": "addition",
+                "options": ["17.45", "16.45", "17.85", "16.85"],
+                "answer": "17.45"
+            },
+            {
+                "id": 13,
+                "title": "Which is Smaller?",
+                "type": "practice",
+                "description": "Which of these decimal numbers is the smallest?",
+                "questionType": "compare",
+                "options": ["0.509", "0.59", "Both are equal"],
+                "answer": "0.509"
+            },
+            {
+                "id": 14,
+                "title": "Decimal Subtraction",
+                "type": "practice",
+                "description": "What is 20.03 − 8.7?",
+                "questionType": "subtraction",
+                "options": ["11.33", "12.33", "11.03", "12.67"],
+                "answer": "11.33"
+            }
+        ],
+        "real_world": [
+            { "id": 20, "title": "Length: mm ↔ cm", "type": "real_world" },
+            { "id": 21, "title": "Length: cm ↔ m", "type": "real_world" },
+            { "id": 22, "title": "Weight: g ↔ kg", "type": "real_world" },
+            { "id": 23, "title": "Money: Paise ↔ Rupees", "type": "real_world" },
+            { "id": 24, "title": "Decimal Disasters!", "type": "real_world" }
+        ]
+    }
+}

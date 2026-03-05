@@ -1,0 +1,533 @@
+{
+    "toolName": "electricity_categorization_tool",
+    "version": "1.0.0",
+    "description": "An interactive categorization tool for Grade 7 Science (NCERT Chapter 3). Seven category bins are displayed at the top, each with a distinct color: Cooking (red), Lighting (amber), Transportation (blue), Heating & Cooling (cyan), Entertainment (purple), Communication (green), Others (grey). Below, 14 shuffled appliance cards are displayed with Indian appliance names. Students drag each card into the correct category bin. Instant green checkmark for correct placement, red shake for incorrect. Progress bar shows how many items sorted. Final score displayed. Indian educational context with warm amber theme. Clean drag-and-drop interface optimized for touch screens.",
+    "topic": "Uses of Electricity in Daily Life",
+    "grade": "Grade 7",
+    "subject": "Science",
+    "curriculum": "NCERT",
+    "chapter": "Chapter 3: Electricity: Circuits and their Components",
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 900,
+            "description": "Width of the tool container in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 700,
+            "description": "Minimum height of the tool container in pixels"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#D97706",
+            "description": "Primary amber theme color for Indian educational context"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Toggle dark mode for the tool"
+        },
+        "additionalProps": {
+            "type": "object",
+            "description": "Tool-specific dynamic data passed by agent",
+            "properties": {
+                "title": {
+                    "type": "string",
+                    "default": "Uses of Electricity in Daily Life",
+                    "description": "Title displayed in the header"
+                },
+                "subtitle": {
+                    "type": "string",
+                    "default": "Grade 7 Science — NCERT Chapter 3",
+                    "description": "Subtitle displayed in the header"
+                },
+                "categories": {
+                    "type": "array",
+                    "description": "Array of category bin definitions. Each must have id, label, color, bgLight, icon, border.",
+                    "default": [
+                        {
+                            "id": "cooking",
+                            "label": "Cooking",
+                            "color": "#DC2626",
+                            "bgLight": "#FEE2E2",
+                            "icon": "🍳",
+                            "border": "#FECACA"
+                        },
+                        {
+                            "id": "lighting",
+                            "label": "Lighting",
+                            "color": "#D97706",
+                            "bgLight": "#FEF3C7",
+                            "icon": "💡",
+                            "border": "#FDE68A"
+                        },
+                        {
+                            "id": "transportation",
+                            "label": "Transportation",
+                            "color": "#2563EB",
+                            "bgLight": "#DBEAFE",
+                            "icon": "🚆",
+                            "border": "#BFDBFE"
+                        },
+                        {
+                            "id": "heating_cooling",
+                            "label": "Heating & Cooling",
+                            "color": "#0891B2",
+                            "bgLight": "#CFFAFE",
+                            "icon": "❄️",
+                            "border": "#A5F3FC"
+                        },
+                        {
+                            "id": "entertainment",
+                            "label": "Entertainment",
+                            "color": "#7C3AED",
+                            "bgLight": "#EDE9FE",
+                            "icon": "🎬",
+                            "border": "#DDD6FE"
+                        },
+                        {
+                            "id": "communication",
+                            "label": "Communication",
+                            "color": "#059669",
+                            "bgLight": "#D1FAE5",
+                            "icon": "📱",
+                            "border": "#A7F3D0"
+                        },
+                        {
+                            "id": "others",
+                            "label": "Others",
+                            "color": "#6B7280",
+                            "bgLight": "#F3F4F6",
+                            "icon": "⚡",
+                            "border": "#E5E7EB"
+                        }
+                    ]
+                },
+                "appliances": {
+                    "type": "array",
+                    "description": "Array of appliance card objects. Each must have id, name, category (matching a category id), and emoji.",
+                    "default": [
+                        {
+                            "id": "mixer_grinder",
+                            "name": "Mixer Grinder",
+                            "category": "cooking",
+                            "emoji": "🫙"
+                        },
+                        {
+                            "id": "electric_kettle",
+                            "name": "Electric Kettle",
+                            "category": "cooking",
+                            "emoji": "☕"
+                        },
+                        {
+                            "id": "led_bulb",
+                            "name": "LED Bulb",
+                            "category": "lighting",
+                            "emoji": "💡"
+                        },
+                        {
+                            "id": "street_light",
+                            "name": "Street Light",
+                            "category": "lighting",
+                            "emoji": "🏮"
+                        },
+                        {
+                            "id": "electric_train",
+                            "name": "Electric Train",
+                            "category": "transportation",
+                            "emoji": "🚃"
+                        },
+                        {
+                            "id": "escalator",
+                            "name": "Escalator",
+                            "category": "transportation",
+                            "emoji": "🪜"
+                        },
+                        {
+                            "id": "ceiling_fan",
+                            "name": "Ceiling Fan",
+                            "category": "heating_cooling",
+                            "emoji": "🌀"
+                        },
+                        {
+                            "id": "air_conditioner",
+                            "name": "Air Conditioner",
+                            "category": "heating_cooling",
+                            "emoji": "🧊"
+                        },
+                        {
+                            "id": "television",
+                            "name": "Television",
+                            "category": "entertainment",
+                            "emoji": "📺"
+                        },
+                        {
+                            "id": "radio",
+                            "name": "Radio",
+                            "category": "entertainment",
+                            "emoji": "📻"
+                        },
+                        {
+                            "id": "mobile_phone",
+                            "name": "Mobile Phone",
+                            "category": "communication",
+                            "emoji": "📞"
+                        },
+                        {
+                            "id": "internet_router",
+                            "name": "Internet Router",
+                            "category": "communication",
+                            "emoji": "📡"
+                        },
+                        {
+                            "id": "computer",
+                            "name": "Computer",
+                            "category": "others",
+                            "emoji": "💻"
+                        },
+                        {
+                            "id": "water_pump",
+                            "name": "Water Pump",
+                            "category": "others",
+                            "emoji": "🔧"
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "teaching_notes": "Activate AFTER showing the infographic image of electricity use categories. Say: 'You've seen the seven categories — now let's test if you can sort these appliances correctly!' Allow the student to work independently. If they struggle with borderline items, discuss the concept of PRIMARY use. For example, a computer could arguably be used for communication or entertainment, but its PRIMARY use is categorized under 'Others'. Discuss with students why some devices might belong to multiple categories.",
+    "instructions_for_student": "Drag each electrical appliance card into its correct category! Think about the PRIMARY purpose of each device. Sort all 14 appliances correctly to complete the activity!",
+    "learning_objectives": [
+        "Identify common electrical appliances used in Indian households and daily life",
+        "Classify electrical appliances into seven major categories of electricity use",
+        "Understand the PRIMARY purpose of each electrical device",
+        "Reinforce understanding of how electricity serves different purposes in daily life",
+        "Connect textbook knowledge (NCERT Chapter 3) with real-world Indian context"
+    ],
+    "tool_call_examples": [
+        {
+            "title": "Default — Full 14-appliance sorting activity",
+            "description": "Standard activity with all 7 categories and 14 Indian appliances",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Uses of Electricity in Daily Life",
+                "data": {
+                    "toolName": "electricity_categorization_tool",
+                    "parameters": {}
+                },
+                "instructions_for_student": "Drag each electrical appliance card into its correct category! Think about the PRIMARY purpose of each device."
+            }
+        },
+        {
+            "title": "Custom appliances — Add more Indian devices",
+            "description": "Extend the activity with additional Indian household appliances",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Extended Electricity Uses Challenge",
+                "data": {
+                    "toolName": "electricity_categorization_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "title": "Extended Electricity Uses Challenge",
+                            "subtitle": "Can you sort 18 appliances?",
+                            "appliances": [
+                                {
+                                    "id": "mixer_grinder",
+                                    "name": "Mixer Grinder",
+                                    "category": "cooking",
+                                    "emoji": "🫙"
+                                },
+                                {
+                                    "id": "electric_kettle",
+                                    "name": "Electric Kettle",
+                                    "category": "cooking",
+                                    "emoji": "☕"
+                                },
+                                {
+                                    "id": "toaster",
+                                    "name": "Toaster",
+                                    "category": "cooking",
+                                    "emoji": "🍞"
+                                },
+                                {
+                                    "id": "led_bulb",
+                                    "name": "LED Bulb",
+                                    "category": "lighting",
+                                    "emoji": "💡"
+                                },
+                                {
+                                    "id": "street_light",
+                                    "name": "Street Light",
+                                    "category": "lighting",
+                                    "emoji": "🏮"
+                                },
+                                {
+                                    "id": "tube_light",
+                                    "name": "Tube Light",
+                                    "category": "lighting",
+                                    "emoji": "🔦"
+                                },
+                                {
+                                    "id": "electric_train",
+                                    "name": "Electric Train",
+                                    "category": "transportation",
+                                    "emoji": "🚃"
+                                },
+                                {
+                                    "id": "escalator",
+                                    "name": "Escalator",
+                                    "category": "transportation",
+                                    "emoji": "🪜"
+                                },
+                                {
+                                    "id": "ceiling_fan",
+                                    "name": "Ceiling Fan",
+                                    "category": "heating_cooling",
+                                    "emoji": "🌀"
+                                },
+                                {
+                                    "id": "air_conditioner",
+                                    "name": "Air Conditioner",
+                                    "category": "heating_cooling",
+                                    "emoji": "🧊"
+                                },
+                                {
+                                    "id": "room_heater",
+                                    "name": "Room Heater",
+                                    "category": "heating_cooling",
+                                    "emoji": "🔥"
+                                },
+                                {
+                                    "id": "television",
+                                    "name": "Television",
+                                    "category": "entertainment",
+                                    "emoji": "📺"
+                                },
+                                {
+                                    "id": "radio",
+                                    "name": "Radio",
+                                    "category": "entertainment",
+                                    "emoji": "📻"
+                                },
+                                {
+                                    "id": "gaming_console",
+                                    "name": "Gaming Console",
+                                    "category": "entertainment",
+                                    "emoji": "🎮"
+                                },
+                                {
+                                    "id": "mobile_phone",
+                                    "name": "Mobile Phone",
+                                    "category": "communication",
+                                    "emoji": "📞"
+                                },
+                                {
+                                    "id": "internet_router",
+                                    "name": "Internet Router",
+                                    "category": "communication",
+                                    "emoji": "📡"
+                                },
+                                {
+                                    "id": "computer",
+                                    "name": "Computer",
+                                    "category": "others",
+                                    "emoji": "💻"
+                                },
+                                {
+                                    "id": "water_pump",
+                                    "name": "Water Pump",
+                                    "category": "others",
+                                    "emoji": "🔧"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "instructions_for_student": "This extended version has 18 appliances! Sort them all correctly!"
+            }
+        },
+        {
+            "title": "Dark mode variant",
+            "description": "Same activity with dark theme for projector-friendly classroom display",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Uses of Electricity — Dark Mode",
+                "data": {
+                    "toolName": "electricity_categorization_tool",
+                    "parameters": {
+                        "darkMode": true,
+                        "additionalProps": {
+                            "title": "Uses of Electricity in Daily Life",
+                            "subtitle": "Grade 7 Science — NCERT Chapter 3"
+                        }
+                    }
+                },
+                "instructions_for_student": "Drag each appliance card into the correct category!"
+            }
+        },
+        {
+            "title": "Focused — Cooking and Lighting only",
+            "description": "Simplified version for younger learners, focusing on just 2 categories",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Sort the Kitchen and Lighting Appliances",
+                "data": {
+                    "toolName": "electricity_categorization_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "title": "Kitchen vs Lighting — Can You Tell?",
+                            "subtitle": "A quick sorting challenge!",
+                            "categories": [
+                                {
+                                    "id": "cooking",
+                                    "label": "Cooking",
+                                    "color": "#DC2626",
+                                    "bgLight": "#FEE2E2",
+                                    "icon": "🍳",
+                                    "border": "#FECACA"
+                                },
+                                {
+                                    "id": "lighting",
+                                    "label": "Lighting",
+                                    "color": "#D97706",
+                                    "bgLight": "#FEF3C7",
+                                    "icon": "💡",
+                                    "border": "#FDE68A"
+                                }
+                            ],
+                            "appliances": [
+                                {
+                                    "id": "mixer_grinder",
+                                    "name": "Mixer Grinder",
+                                    "category": "cooking",
+                                    "emoji": "🫙"
+                                },
+                                {
+                                    "id": "electric_kettle",
+                                    "name": "Electric Kettle",
+                                    "category": "cooking",
+                                    "emoji": "☕"
+                                },
+                                {
+                                    "id": "toaster",
+                                    "name": "Toaster",
+                                    "category": "cooking",
+                                    "emoji": "🍞"
+                                },
+                                {
+                                    "id": "microwave",
+                                    "name": "Microwave",
+                                    "category": "cooking",
+                                    "emoji": "📦"
+                                },
+                                {
+                                    "id": "led_bulb",
+                                    "name": "LED Bulb",
+                                    "category": "lighting",
+                                    "emoji": "💡"
+                                },
+                                {
+                                    "id": "street_light",
+                                    "name": "Street Light",
+                                    "category": "lighting",
+                                    "emoji": "🏮"
+                                },
+                                {
+                                    "id": "tube_light",
+                                    "name": "Tube Light",
+                                    "category": "lighting",
+                                    "emoji": "🔦"
+                                },
+                                {
+                                    "id": "table_lamp",
+                                    "name": "Table Lamp",
+                                    "category": "lighting",
+                                    "emoji": "🪔"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "instructions_for_student": "Sort these 8 appliances into Cooking or Lighting!"
+            }
+        },
+        {
+            "title": "Compact width for mobile devices",
+            "description": "Narrower layout for smartphones",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Electricity Uses — Mobile",
+                "data": {
+                    "toolName": "electricity_categorization_tool",
+                    "parameters": {
+                        "width": 400,
+                        "height": 800
+                    }
+                },
+                "instructions_for_student": "Tap an appliance, then tap its category!"
+            }
+        }
+    ],
+    "decision_tree": {
+        "description": "Guide for agents to decide which parameters to use",
+        "rules": [
+            {
+                "condition": "Student starting Chapter 3 for the first time",
+                "action": "Use default parameters — full 14-appliance activity"
+            },
+            {
+                "condition": "Student needs a simpler activity",
+                "action": "Use focused variant with 2-3 categories only"
+            },
+            {
+                "condition": "Student wants a harder challenge",
+                "action": "Use extended variant with 18+ appliances"
+            },
+            {
+                "condition": "Classroom projector or dark environment",
+                "action": "Set darkMode: true"
+            },
+            {
+                "condition": "Mobile device detected",
+                "action": "Set width: 400, height: 800"
+            },
+            {
+                "condition": "Student completed and wants to redo",
+                "action": "Re-render with same parameters — cards auto-shuffle"
+            }
+        ]
+    },
+    "additionalProps_reference": {
+        "title": {
+            "type": "string",
+            "description": "Custom title for the activity header"
+        },
+        "subtitle": {
+            "type": "string",
+            "description": "Custom subtitle/byline"
+        },
+        "categories": {
+            "type": "array",
+            "description": "Custom array of category objects with id, label, color, bgLight, icon, border"
+        },
+        "appliances": {
+            "type": "array",
+            "description": "Custom array of appliance objects with id, name, category, emoji"
+        }
+    },
+    "validation": {
+        "required_fields": [
+            "id",
+            "name",
+            "category",
+            "emoji"
+        ],
+        "category_id_must_match": "Each appliance.category must match a categories[].id",
+        "minimum_appliances": 2,
+        "maximum_appliances": 30,
+        "minimum_categories": 2,
+        "maximum_categories": 10
+    }
+}

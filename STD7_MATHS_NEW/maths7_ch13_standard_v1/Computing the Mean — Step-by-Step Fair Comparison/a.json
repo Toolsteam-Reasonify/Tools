@@ -1,0 +1,185 @@
+{
+    "toolName": "need_for_average_tool",
+    "version": "1.0.0",
+    "description": "Interactive step-based process walkthrough for Grade 7 Mathematics — Data Handling. Shows the arithmetic mean calculation for two cricket players with different numbers of matches. Layout: two player cards side by side (Shubman in blue, Yashasvi in green) with match scores displayed as chips. Phase-by-phase reveal: first shows raw data and totals, then highlights the unequal match count problem, then shows sum calculation with animated addition, then count with number badges, then the division with animated fraction bars, and finally the comparison with the surprising result highlighted. Each phase slides in from the right with subtle transition. Active phase has a glowing border. Completed phases show a checkmark. Indian cricket context with player name labels in Baloo 2 font. 5-colour palette: blue (#3b82f6), green (#22c55e), white background, dark grey text, light amber for highlights. Touch-friendly step navigation. Mobile-responsive with cards stacking vertically on narrow screens.",
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Container width in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Container height in pixels"
+        },
+        "showNavigation": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide prev/next navigation buttons"
+        },
+        "showStepIndicator": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide step counter"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier"
+        },
+        "autoPlayDuration": {
+            "type": "number",
+            "default": 0,
+            "description": "Auto-advance delay in ms (0 = manual only)"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#3b82f6",
+            "description": "Primary theme color"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Dark mode toggle"
+        }
+    },
+    "additionalProps": {
+        "description": "Tool-specific dynamic content for customizing the average calculation walkthrough",
+        "properties": {
+            "player1": {
+                "type": "object",
+                "description": "First player's data",
+                "properties": {
+                    "name": { "type": "string", "default": "Shubman" },
+                    "color": { "type": "string", "default": "#3b82f6" },
+                    "colorLight": { "type": "string", "default": "#dbeafe" },
+                    "scores": {
+                        "type": "array",
+                        "items": { "type": ["number", "null"] },
+                        "default": [23, 7, 10, 52, 18],
+                        "description": "Array of scores. Use null for matches not played."
+                    },
+                    "matchLabels": {
+                        "type": "array",
+                        "items": { "type": "string" },
+                        "default": ["Match 1", "Match 2", "Match 3", "Match 4", "Match 5"]
+                    }
+                }
+            },
+            "player2": {
+                "type": "object",
+                "description": "Second player's data",
+                "properties": {
+                    "name": { "type": "string", "default": "Yashasvi" },
+                    "color": { "type": "string", "default": "#22c55e" },
+                    "colorLight": { "type": "string", "default": "#dcfce7" },
+                    "scores": {
+                        "type": "array",
+                        "items": { "type": ["number", "null"] },
+                        "default": [26, 53, 2, null, 15],
+                        "description": "Array of scores. Use null for matches not played."
+                    },
+                    "matchLabels": {
+                        "type": "array",
+                        "items": { "type": "string" },
+                        "default": ["Match 1", "Match 2", "Match 3", "Match 4", "Match 5"]
+                    }
+                }
+            },
+            "title": {
+                "type": "string",
+                "default": "Need for Average",
+                "description": "Tool title displayed in the header"
+            },
+            "subtitle": {
+                "type": "string",
+                "default": "When Totals Are Not Enough",
+                "description": "Tool subtitle displayed below the title"
+            }
+        },
+        "examples": [
+            {
+                "name": "Default Cricket Example (Shubman vs Yashasvi)",
+                "value": {
+                    "player1": {
+                        "name": "Shubman",
+                        "color": "#3b82f6",
+                        "colorLight": "#dbeafe",
+                        "scores": [23, 7, 10, 52, 18],
+                        "matchLabels": ["Match 1", "Match 2", "Match 3", "Match 4", "Match 5"]
+                    },
+                    "player2": {
+                        "name": "Yashasvi",
+                        "color": "#22c55e",
+                        "colorLight": "#dcfce7",
+                        "scores": [26, 53, 2, null, 15],
+                        "matchLabels": ["Match 1", "Match 2", "Match 3", "Match 4", "Match 5"]
+                    }
+                }
+            },
+            {
+                "name": "First Series from textbook",
+                "value": {
+                    "player1": {
+                        "name": "Shubman",
+                        "color": "#3b82f6",
+                        "colorLight": "#dbeafe",
+                        "scores": [0, 17, 21, 90],
+                        "matchLabels": ["Match 1", "Match 2", "Match 3", "Match 4"]
+                    },
+                    "player2": {
+                        "name": "Yashasvi",
+                        "color": "#22c55e",
+                        "colorLight": "#dcfce7",
+                        "scores": [67, 55, 18, 35],
+                        "matchLabels": ["Match 1", "Match 2", "Match 3", "Match 4"]
+                    },
+                    "title": "Comparing Batting Performance",
+                    "subtitle": "Series 1 — Equal Matches"
+                }
+            },
+            {
+                "name": "Custom students example",
+                "value": {
+                    "player1": {
+                        "name": "Team A",
+                        "color": "#8b5cf6",
+                        "colorLight": "#ede9fe",
+                        "scores": [12, 8, 15, 10, 5, 20],
+                        "matchLabels": ["Test 1", "Test 2", "Test 3", "Test 4", "Test 5", "Test 6"]
+                    },
+                    "player2": {
+                        "name": "Team B",
+                        "color": "#f97316",
+                        "colorLight": "#ffedd5",
+                        "scores": [18, 14, 22, null, 16],
+                        "matchLabels": ["Test 1", "Test 2", "Test 3", "Test 4", "Test 5"]
+                    },
+                    "title": "Comparing Test Scores",
+                    "subtitle": "When some students missed a test"
+                }
+            }
+        ]
+    },
+    "phases": {
+        "total": 6,
+        "list": [
+            { "id": 0, "title": "Raw Data", "description": "Shows raw scores for both players as colored chips" },
+            { "id": 1, "title": "The Problem", "description": "Highlights the unequal number of matches — why totals are unfair" },
+            { "id": 2, "title": "Sum", "description": "Animates the addition of all scores to compute totals" },
+            { "id": 3, "title": "Count", "description": "Shows the number of matches played with animated badges" },
+            { "id": 4, "title": "Divide", "description": "Shows the division (total ÷ matches) with animated fraction bars" },
+            { "id": 5, "title": "Compare", "description": "Reveals the surprising comparison result with trophy animation" }
+        ]
+    },
+    "teachingNotes": {
+        "phase0": "At Step 1 (given data), ask the student who they think performed better just from looking at the raw scores.",
+        "phase1": "At Step 2 (problem), emphasise the unfairness — Shubman had an extra innings.",
+        "phase2": "At Step 3 (sum), let the student try adding before revealing.",
+        "phase3": "At Step 4 (count), reinforce that different match counts make totals unfair.",
+        "phase4": "At Step 5 (divide), ask the student to predict who will have a higher average before showing the result.",
+        "phase5": "At Step 6 (compare), highlight the surprise: lower total but higher average!"
+    },
+    "instructionsForStudent": "Watch as we solve this step by step. At each stage, think about what the numbers tell us. When you see the totals, ask yourself: is comparing totals fair when the number of matches is different? Then watch how dividing by the number of matches gives us a fairer picture."
+}

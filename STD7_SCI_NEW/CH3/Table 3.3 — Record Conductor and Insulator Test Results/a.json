@@ -1,0 +1,507 @@
+{
+    "toolName": "conduction_tester_tool",
+    "version": "1.0.0",
+    "description": "An interactive fill-in observation table for Grade 7 Science (NCERT Chapter 3, Activity 3.11, Table 3.3). Students test 7 materials with a conduction tester, recording whether the lamp glows and classifying each as conductor or insulator. Instant animated feedback with green checkmarks and red Xs. Summary insight reveals that the iron key is the only conductor because it is the only metal.",
+    "category": "science_experiment",
+    "grade": "7",
+    "subject": "Science",
+    "chapter": "Chapter 3 - Electricity: Circuits and their Components",
+    "activity": "Activity 3.11 - Building and Using a Conduction Tester",
+    "curriculum": "NCERT Curiosity Textbook",
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Width of the tool in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 700,
+            "description": "Height of the tool in pixels"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#16a34a",
+            "description": "Primary green theme color for the conductors/insulators module"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable dark mode"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier"
+        }
+    },
+    "additionalProps": {
+        "description": "Tool-specific dynamic data for the conduction tester observation table",
+        "properties": {
+            "materials": {
+                "type": "array",
+                "description": "Array of material items to test. Each has sNo, object name, material type, and correctGlows (boolean for whether lamp actually glows).",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "sNo": {
+                            "type": "number",
+                            "description": "Serial number"
+                        },
+                        "object": {
+                            "type": "string",
+                            "description": "Name of the object (e.g., 'Key', 'Stick')"
+                        },
+                        "material": {
+                            "type": "string",
+                            "description": "Material it is made of (e.g., 'Metal (Iron)', 'Wood')"
+                        },
+                        "correctGlows": {
+                            "type": "boolean",
+                            "description": "true if lamp glows (conductor), false if not (insulator)"
+                        }
+                    }
+                },
+                "default": [
+                    {
+                        "sNo": 1,
+                        "object": "Stick",
+                        "material": "Wood",
+                        "correctGlows": false
+                    },
+                    {
+                        "sNo": 2,
+                        "object": "Scale",
+                        "material": "Plastic",
+                        "correctGlows": false
+                    },
+                    {
+                        "sNo": 3,
+                        "object": "Bangle",
+                        "material": "Glass",
+                        "correctGlows": false
+                    },
+                    {
+                        "sNo": 4,
+                        "object": "Paper strip",
+                        "material": "Paper",
+                        "correctGlows": false
+                    },
+                    {
+                        "sNo": 5,
+                        "object": "Candle",
+                        "material": "Wax",
+                        "correctGlows": false
+                    },
+                    {
+                        "sNo": 6,
+                        "object": "Key",
+                        "material": "Metal (Iron)",
+                        "correctGlows": true
+                    },
+                    {
+                        "sNo": 7,
+                        "object": "Eraser",
+                        "material": "Rubber",
+                        "correctGlows": false
+                    }
+                ]
+            },
+            "tableTitle": {
+                "type": "string",
+                "default": "Table 3.3: Identifying Conductors and Insulators",
+                "description": "Title displayed above the observation table"
+            },
+            "insightMessage": {
+                "type": "string",
+                "default": "The iron key is the ONLY conductor — because it is the ONLY metal! All metals are conductors of electricity.",
+                "description": "Key insight message shown after submission"
+            },
+            "teachingNote": {
+                "type": "string",
+                "default": "Activate AFTER the student has built the conduction tester. Let student fill in independently. After submission, highlight: 'The key is the ONLY conductor — because it's the ONLY metal!' This leads to the generalization about metals vs non-metals.",
+                "description": "Teaching note visible to teachers after submission"
+            },
+            "showTeachingNote": {
+                "type": "boolean",
+                "default": false,
+                "description": "Whether to show the teaching notes toggle"
+            }
+        },
+        "examples": {
+            "default_7_materials": {
+                "description": "Default NCERT Table 3.3 with 7 materials",
+                "value": {}
+            },
+            "custom_materials": {
+                "description": "Custom set of materials for testing",
+                "value": {
+                    "materials": [
+                        {
+                            "sNo": 1,
+                            "object": "Coin",
+                            "material": "Metal",
+                            "correctGlows": true
+                        },
+                        {
+                            "sNo": 2,
+                            "object": "Pencil lead",
+                            "material": "Graphite",
+                            "correctGlows": true
+                        },
+                        {
+                            "sNo": 3,
+                            "object": "Cardboard",
+                            "material": "Paper",
+                            "correctGlows": false
+                        },
+                        {
+                            "sNo": 4,
+                            "object": "Aluminium foil",
+                            "material": "Aluminium",
+                            "correctGlows": true
+                        },
+                        {
+                            "sNo": 5,
+                            "object": "Cork",
+                            "material": "Cork",
+                            "correctGlows": false
+                        }
+                    ],
+                    "insightMessage": "Metals and graphite are conductors! Notice how the coin and aluminium foil also conduct electricity."
+                }
+            },
+            "extended_table": {
+                "description": "Extended table with 9 materials including extra metals",
+                "value": {
+                    "materials": [
+                        {
+                            "sNo": 1,
+                            "object": "Stick",
+                            "material": "Wood",
+                            "correctGlows": false
+                        },
+                        {
+                            "sNo": 2,
+                            "object": "Scale",
+                            "material": "Plastic",
+                            "correctGlows": false
+                        },
+                        {
+                            "sNo": 3,
+                            "object": "Bangle",
+                            "material": "Glass",
+                            "correctGlows": false
+                        },
+                        {
+                            "sNo": 4,
+                            "object": "Paper strip",
+                            "material": "Paper",
+                            "correctGlows": false
+                        },
+                        {
+                            "sNo": 5,
+                            "object": "Candle",
+                            "material": "Wax",
+                            "correctGlows": false
+                        },
+                        {
+                            "sNo": 6,
+                            "object": "Key",
+                            "material": "Metal (Iron)",
+                            "correctGlows": true
+                        },
+                        {
+                            "sNo": 7,
+                            "object": "Eraser",
+                            "material": "Rubber",
+                            "correctGlows": false
+                        },
+                        {
+                            "sNo": 8,
+                            "object": "Coin",
+                            "material": "Metal",
+                            "correctGlows": true
+                        },
+                        {
+                            "sNo": 9,
+                            "object": "Sewing needle",
+                            "material": "Steel",
+                            "correctGlows": true
+                        }
+                    ],
+                    "insightMessage": "The key, coin, and needle are all conductors — they are ALL metals! Metals allow electric current to flow through them."
+                }
+            }
+        }
+    },
+    "tool_calls": [
+        {
+            "title": "Default NCERT Activity 3.11",
+            "description": "Standard 7-material observation table from the textbook",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Activity 3.11: Conduction Tester Observation Table",
+                "data": {
+                    "toolName": "conduction_tester_tool",
+                    "parameters": {}
+                },
+                "instructions_for_student": "For each object, fill in: Does the lamp glow? (Yes/No) and Is it a Conductor or Insulator? Fill in all 7 rows and check your answers!",
+                "teaching_notes": "Activate AFTER the student has built the conduction tester. Let student fill in independently. After submission, highlight: 'The key is the ONLY conductor — because it's the ONLY metal!' This leads to the generalization about metals vs non-metals."
+            }
+        },
+        {
+            "title": "Custom materials set with metals",
+            "description": "Extended materials including coins and aluminium foil",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Conductors and Insulators Test",
+                "data": {
+                    "toolName": "conduction_tester_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "materials": [
+                                {
+                                    "sNo": 1,
+                                    "object": "Coin",
+                                    "material": "Metal",
+                                    "correctGlows": true
+                                },
+                                {
+                                    "sNo": 2,
+                                    "object": "Pencil lead",
+                                    "material": "Graphite",
+                                    "correctGlows": true
+                                },
+                                {
+                                    "sNo": 3,
+                                    "object": "Cardboard",
+                                    "material": "Paper",
+                                    "correctGlows": false
+                                },
+                                {
+                                    "sNo": 4,
+                                    "object": "Aluminium foil",
+                                    "material": "Aluminium",
+                                    "correctGlows": true
+                                },
+                                {
+                                    "sNo": 5,
+                                    "object": "Cork",
+                                    "material": "Cork",
+                                    "correctGlows": false
+                                }
+                            ],
+                            "insightMessage": "Metals and graphite are conductors! Graphite (pencil lead) is a special non-metal that conducts electricity."
+                        }
+                    }
+                },
+                "instructions_for_student": "Test each material with the conduction tester. Record your observations!"
+            }
+        },
+        {
+            "title": "Minimal — only 3 materials",
+            "description": "Quick check with just 3 items",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Quick Conductor Check",
+                "data": {
+                    "toolName": "conduction_tester_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "materials": [
+                                {
+                                    "sNo": 1,
+                                    "object": "Rubber band",
+                                    "material": "Rubber",
+                                    "correctGlows": false
+                                },
+                                {
+                                    "sNo": 2,
+                                    "object": "Iron nail",
+                                    "material": "Iron",
+                                    "correctGlows": true
+                                },
+                                {
+                                    "sNo": 3,
+                                    "object": "Plastic straw",
+                                    "material": "Plastic",
+                                    "correctGlows": false
+                                }
+                            ],
+                            "tableTitle": "Quick Check: Conductors vs Insulators",
+                            "insightMessage": "The iron nail conducts electricity because iron is a metal!"
+                        }
+                    }
+                },
+                "instructions_for_student": "Test these 3 materials. Which one is a conductor?"
+            }
+        },
+        {
+            "title": "Custom theme color",
+            "description": "Using a blue theme instead of green",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Electrical Conductivity Lab",
+                "data": {
+                    "toolName": "conduction_tester_tool",
+                    "parameters": {
+                        "themeColor": "#2563eb",
+                        "additionalProps": {
+                            "tableTitle": "Electrical Conductivity Observations"
+                        }
+                    }
+                },
+                "instructions_for_student": "Record which materials allow electric current to pass through."
+            }
+        },
+        {
+            "title": "Full 9-material extended table",
+            "description": "Extended table with 9 materials for deeper exploration",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Extended Conduction Test",
+                "data": {
+                    "toolName": "conduction_tester_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "materials": [
+                                {
+                                    "sNo": 1,
+                                    "object": "Stick",
+                                    "material": "Wood",
+                                    "correctGlows": false
+                                },
+                                {
+                                    "sNo": 2,
+                                    "object": "Scale",
+                                    "material": "Plastic",
+                                    "correctGlows": false
+                                },
+                                {
+                                    "sNo": 3,
+                                    "object": "Bangle",
+                                    "material": "Glass",
+                                    "correctGlows": false
+                                },
+                                {
+                                    "sNo": 4,
+                                    "object": "Paper strip",
+                                    "material": "Paper",
+                                    "correctGlows": false
+                                },
+                                {
+                                    "sNo": 5,
+                                    "object": "Candle",
+                                    "material": "Wax",
+                                    "correctGlows": false
+                                },
+                                {
+                                    "sNo": 6,
+                                    "object": "Key",
+                                    "material": "Metal (Iron)",
+                                    "correctGlows": true
+                                },
+                                {
+                                    "sNo": 7,
+                                    "object": "Eraser",
+                                    "material": "Rubber",
+                                    "correctGlows": false
+                                },
+                                {
+                                    "sNo": 8,
+                                    "object": "Coin",
+                                    "material": "Metal",
+                                    "correctGlows": true
+                                },
+                                {
+                                    "sNo": 9,
+                                    "object": "Sewing needle",
+                                    "material": "Steel",
+                                    "correctGlows": true
+                                }
+                            ],
+                            "insightMessage": "The key, coin, and needle are all conductors — they are ALL metals! Metals allow electric current to flow."
+                        }
+                    }
+                },
+                "instructions_for_student": "Test all 9 materials. How many conductors can you find?"
+            }
+        },
+        {
+            "title": "Custom insight and teaching note",
+            "description": "Customized messages for a different pedagogical approach",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Activity 3.11: Observation Table",
+                "data": {
+                    "toolName": "conduction_tester_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "insightMessage": "Only metals conduct electricity! Wood, plastic, glass, paper, wax, and rubber are all insulators. This is why electrical wires are covered with plastic — to protect us!",
+                            "teachingNote": "After this activity, connect to real-world applications: Why are wire handles made of plastic? Why do electricians wear rubber gloves?"
+                        }
+                    }
+                },
+                "instructions_for_student": "Fill in the table based on your conduction tester experiment."
+            }
+        },
+        {
+            "title": "Pre-assessment before lab",
+            "description": "Use as prediction exercise before actual experiment",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Predict: Conductor or Insulator?",
+                "data": {
+                    "toolName": "conduction_tester_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "tableTitle": "Prediction Table: Will the lamp glow?",
+                            "insightMessage": "Now perform the actual experiment and compare your predictions with the observations!"
+                        }
+                    }
+                },
+                "instructions_for_student": "BEFORE testing, predict: Will the lamp glow for each material? Is it a conductor or insulator? Then check your predictions!"
+            }
+        },
+        {
+            "title": "Compact width for mobile",
+            "description": "Narrower width for mobile devices",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Conduction Tester",
+                "data": {
+                    "toolName": "conduction_tester_tool",
+                    "parameters": {
+                        "width": 500,
+                        "height": 600
+                    }
+                },
+                "instructions_for_student": "Test each material and record your results."
+            }
+        }
+    ],
+    "decision_tree": {
+        "description": "Decision tree for agents to determine which configuration to use",
+        "tree": {
+            "student_asks_about_conductors_insulators": {
+                "standard_ncert_activity": "Use default parameters (no additionalProps needed)",
+                "custom_materials": "Set additionalProps.materials with custom objects",
+                "prediction_exercise": "Set custom tableTitle mentioning 'Prediction'",
+                "extended_exploration": "Add more materials to the array",
+                "different_theme": "Set themeColor in parameters",
+                "mobile_device": "Set width: 500"
+            }
+        }
+    },
+    "tips_for_agents": [
+        "Default parameters work perfectly for the standard NCERT Activity 3.11 — no additionalProps needed.",
+        "The tool auto-validates answers against correctGlows for each material.",
+        "Only materials with correctGlows: true are conductors (metals).",
+        "Custom materials can include special cases like graphite (pencil lead) which conducts despite not being a metal.",
+        "The teaching note toggle is hidden by default and appears only after submission.",
+        "Insight message appears automatically after all row animations complete.",
+        "For prediction exercises, use the same tool but with a different tableTitle.",
+        "The tool handles any number of materials (not limited to 7)."
+    ]
+}

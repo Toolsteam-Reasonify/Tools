@@ -1,0 +1,209 @@
+{
+  "toolName": "distributive_property_explorer",
+  "version": "1.0.0",
+  "description": "Step-based explanation tool for Grade 7 Mathematics — Distributive Property Explorer. Two-column layout walking students through a × (b + c) = a × b + a × c with simultaneous LHS/RHS computation, sign rule highlighting, and worked examples using integers.",
+  "topic": "Sign Rules for Multiple Factors and Distributive Property",
+  "grade": 7,
+  "subject": "Mathematics",
+  "chapter": "Chapter 2: Operations with Integers",
+  "textbook": "Ganita Prakash Grade 7 Part-II (NCERT)",
+
+  "layout": {
+    "type": "two-column",
+    "leftColumn": {
+      "label": "Left Hand Side (LHS)",
+      "description": "Shows the direct computation path: simplify the bracket first, then multiply"
+    },
+    "rightColumn": {
+      "label": "Right Hand Side (RHS)",
+      "description": "Shows the expanded computation path: distribute multiplication over each term, then add"
+    },
+    "divider": "Vertical equals sign between columns, turns green and thick on confirmation step"
+  },
+
+  "designSpecification": {
+    "font": "Lilita One (headings/math) + Nunito (body)",
+    "palette": {
+      "emerald": "#10b981",
+      "red": "#ef4444",
+      "amber": "#f59e0b",
+      "white": "#ffffff",
+      "dark": "#1e293b",
+      "purple": "#8b5cf6"
+    },
+    "responsiveness": "Mobile-responsive with horizontal scroll for two-column layout on small screens",
+    "animations": {
+      "stepTransitions": "fadeInUp, slideFromLeft, slideFromRight",
+      "exampleTransitions": "Smooth slide animation between examples",
+      "amberGlow": "Numerical values glow in amber at computation steps",
+      "confirmBanner": "Property Confirmed banner with bounce animation",
+      "signRuleHighlight": "Purple glow animation on negative × negative = positive"
+    }
+  },
+
+  "parameters": {
+    "width": {
+      "type": "number",
+      "default": 800,
+      "description": "Component width in pixels"
+    },
+    "height": {
+      "type": "number",
+      "default": 600,
+      "description": "Component height in pixels"
+    },
+    "showNavigation": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide navigation buttons"
+    },
+    "showPlayPause": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide play/pause button"
+    },
+    "showStepIndicator": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide step counter"
+    },
+    "animationSpeed": {
+      "type": "number",
+      "default": 1,
+      "description": "Animation speed multiplier"
+    },
+    "autoPlayDuration": {
+      "type": "number",
+      "default": 0,
+      "description": "Auto-advance delay in ms (0 = manual only)"
+    },
+    "themeColor": {
+      "type": "string",
+      "default": "#10b981",
+      "description": "Primary theme color"
+    }
+  },
+
+  "additionalProps": {
+    "description": "Tool-specific dynamic content for customizing examples and features",
+    "schema": {
+      "examples": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "a": { "type": "number", "description": "The multiplier in a × (b + c)" },
+            "b": { "type": "number", "description": "First addend inside bracket" },
+            "c": { "type": "number", "description": "Second addend inside bracket (can be negative)" },
+            "label": { "type": "string", "description": "Optional label like 'Example 1'" }
+          },
+          "required": ["a", "b", "c"]
+        },
+        "default": [
+          { "a": 5, "b": 4, "c": -2, "label": "Example 1" },
+          { "a": -2, "b": 4, "c": -3, "label": "Example 2" }
+        ],
+        "description": "Array of examples. Each has a, b, c for a × (b + c). Steps are auto-generated."
+      },
+      "showTokenModel": {
+        "type": "boolean",
+        "default": false,
+        "description": "Show token-based visual proof alongside algebraic steps"
+      },
+      "highlightSignRules": {
+        "type": "boolean",
+        "default": true,
+        "description": "Highlight sign rules (negative × negative = positive) during expansion"
+      },
+      "diwaliContext": {
+        "type": "boolean",
+        "default": true,
+        "description": "Include Diwali budget context in step narrations"
+      }
+    },
+    "examples": {
+      "default_two_examples": {
+        "examples": [
+          { "a": 5, "b": 4, "c": -2, "label": "Example 1" },
+          { "a": -2, "b": 4, "c": -3, "label": "Example 2" }
+        ]
+      },
+      "textbook_challenge": {
+        "examples": [
+          { "a": -4, "b": 2, "c": -3, "label": "Textbook Challenge" }
+        ]
+      },
+      "all_positive": {
+        "examples": [
+          { "a": 3, "b": 5, "c": 2, "label": "All Positive" }
+        ]
+      },
+      "three_examples": {
+        "examples": [
+          { "a": 5, "b": 4, "c": -2, "label": "Example 1" },
+          { "a": -2, "b": 4, "c": -3, "label": "Example 2" },
+          { "a": -4, "b": 2, "c": -3, "label": "Example 3" }
+        ]
+      },
+      "negative_multiplier": {
+        "examples": [
+          { "a": -3, "b": 7, "c": -4, "label": "Negative Multiplier" }
+        ]
+      }
+    }
+  },
+
+  "steps": {
+    "perExample": 4,
+    "structure": [
+      {
+        "step": "intro",
+        "description": "Shows the full equation to verify, with context narrative"
+      },
+      {
+        "step": 1,
+        "lhs": "Simplify the bracket (b + c) — highlighted in a box",
+        "rhs": "Show expanded form a × b + a × c with terms highlighted in green/red",
+        "description": "First operation: bracket simplification vs expansion"
+      },
+      {
+        "step": 2,
+        "lhs": "Compute the multiplication a × (bracket result)",
+        "rhs": "Compute each term separately, with sign rule badges",
+        "description": "Numerical computation with amber glow. Sign rules highlighted for negative × negative"
+      },
+      {
+        "step": 3,
+        "lhs": "Show final result",
+        "rhs": "Show final result",
+        "description": "Both sides equal — thick green equals sign, Property Confirmed! banner"
+      }
+    ]
+  },
+
+  "teachingNotes": {
+    "simultaneousAdvancement": "Both LHS and RHS advance together for maximum 'both roads lead to the same answer' impact",
+    "signRuleHighlight": "At Example 2 Step 2, (−2) × (−3) = +6 is highlighted in purple with sparkle icon to reinforce negative × negative = positive",
+    "followUpChallenge": "After tool completion, students are asked to verify (−4) × (2 + (−3)) in their notebook — mirrors textbook challenge",
+    "tokenModelConnection": "Optionally use the token arrangement from textbook page 41 as visual proof before this tool"
+  },
+
+  "studentInstructions": {
+    "watch": "Observe both LHS and RHS being worked out simultaneously",
+    "notice": "At Step 2 for each example, notice sign rules during expansion — especially (−2) × (−3) in Example 2",
+    "predict": "At each step, predict: will the two sides match?",
+    "reflect": "After both examples, state the distributive property in your own words"
+  },
+
+  "stepSummary": {
+    "intro_1": { "title": "Example 1: 5 × (4 + (−2))", "type": "intro" },
+    "step_1_1": { "title": "Simplify vs Expand", "type": "computation" },
+    "step_1_2": { "title": "Compute Both Sides", "type": "computation" },
+    "step_1_3": { "title": "Confirm Equality", "type": "confirmation" },
+    "intro_2": { "title": "Example 2: (−2) × (4 + (−3))", "type": "intro" },
+    "step_2_1": { "title": "Simplify vs Expand (with negatives)", "type": "computation" },
+    "step_2_2": { "title": "Compute — Sign Rules at Work!", "type": "computation" },
+    "step_2_3": { "title": "Confirm Equality", "type": "confirmation" },
+    "completed": { "title": "Property Verified!", "type": "completion" }
+  }
+}

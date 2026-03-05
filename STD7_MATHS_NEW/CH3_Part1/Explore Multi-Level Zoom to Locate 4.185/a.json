@@ -1,0 +1,311 @@
+{
+  "toolName": "zoom_number_line_tool",
+  "version": "1.0.0",
+  "description": "Interactive step-based zoom number line tool for CBSE Grade 7 Mathematics (Decimals chapter). Five steps showing progressive zoom to locate 4.185. Step 1: Number line 0-10 with segment 4-5 highlighted in Orange. Step 2: Zoom to 4-5 divided into 10 parts (each 0.1), segment 4.1-4.2 highlighted in Dark Green. Step 3: Zoom to 4.1-4.2 divided into 10 parts (each 0.01), segment 4.18-4.19 highlighted. Step 4: Zoom to 4.18-4.19 divided into 10 parts (each 0.001), mark at 4.185 with bold Orange circle. Step 5: Practice mode — student clicks segments to zoom and locate 9.876. Magnifying glass animation between zoom levels. Level labels: Ones, Tenths, Hundredths, Thousandths in Navy Blue. Each zoom is animated with smooth transition.",
+  "subject": "Mathematics",
+  "grade": 7,
+  "chapter": "A Peek Beyond the Point (Chapter 3)",
+  "topic": "Zooming Into Number Lines to Locate Precise Decimals",
+  "curriculum": "CBSE / NCERT Ganita Prakash",
+  "teachingNotes": "Key teaching tool for the zoom technique. Steps 1-4 demonstrate with 4.185, Step 5 enables student practice with 9.876. Each zoom reveals one more decimal digit.",
+  "instructionsForStudent": "Watch how we zoom in step by step to find 4.185. Each level reveals one more digit. Then try locating 9.876 yourself!",
+  "parameters": {
+    "width": {
+      "type": "number",
+      "default": 800,
+      "description": "Width of the tool in pixels"
+    },
+    "height": {
+      "type": "number",
+      "default": 600,
+      "description": "Height of the tool in pixels"
+    },
+    "initialMode": {
+      "type": "string",
+      "enum": ["learn", "practice"],
+      "default": "learn",
+      "description": "Starting mode: 'learn' for guided demo, 'practice' for student interaction"
+    },
+    "showModeSelector": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide the Learn/Practice mode tabs"
+    },
+    "enabledModes": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["learn", "practice"] },
+      "default": ["learn", "practice"],
+      "description": "Which modes to enable"
+    },
+    "showNavigation": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide previous/next navigation buttons"
+    },
+    "showStepIndicator": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide the step progress dots"
+    },
+    "animationSpeed": {
+      "type": "number",
+      "default": 1,
+      "description": "Animation speed multiplier"
+    },
+    "autoPlayDuration": {
+      "type": "number",
+      "default": 0,
+      "description": "Auto-advance delay in ms (0 = no auto-play)"
+    },
+    "themeColor": {
+      "type": "string",
+      "default": "#1a3a5c",
+      "description": "Primary Navy Blue theme color"
+    },
+    "darkMode": {
+      "type": "boolean",
+      "default": false,
+      "description": "Toggle dark mode"
+    }
+  },
+  "additionalProps": {
+    "description": "Tool-specific dynamic content for customizing the zoom number line",
+    "properties": {
+      "targetNumber": {
+        "type": "number",
+        "default": 4.185,
+        "description": "The decimal number demonstrated in the learn mode"
+      },
+      "practiceNumber": {
+        "type": "number",
+        "default": 9.876,
+        "description": "The decimal number the student must locate in practice mode"
+      },
+      "showMagnifyingGlass": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show magnifying glass animation between zoom levels"
+      },
+      "levelLabelColor": {
+        "type": "string",
+        "default": "#1a3a5c",
+        "description": "Color for the Ones/Tenths/Hundredths/Thousandths level badges (Navy Blue)"
+      },
+      "highlightColor": {
+        "type": "string",
+        "default": "#FF8C00",
+        "description": "Color for the highlighted/target segments (Orange)"
+      },
+      "targetMarkColor": {
+        "type": "string",
+        "default": "#FF8C00",
+        "description": "Color for the final target point marker (Orange)"
+      },
+      "animationDurationMs": {
+        "type": "number",
+        "default": 700,
+        "description": "Duration of the zoom transition animation in milliseconds"
+      }
+    },
+    "examples": [
+      {
+        "name": "Default — Locate 4.185 then practice 9.876",
+        "value": {}
+      },
+      {
+        "name": "Custom target number for learn mode",
+        "value": {
+          "targetNumber": 7.325,
+          "practiceNumber": 2.641
+        }
+      },
+      {
+        "name": "Fast animations",
+        "value": {
+          "animationDurationMs": 400,
+          "showMagnifyingGlass": false
+        }
+      }
+    ]
+  },
+  "modes": {
+    "learn": {
+      "description": "Guided 4-step demonstration zooming into 4.185",
+      "steps": [
+        {
+          "id": 1,
+          "title": "Ones — The Big Picture (0 to 10)",
+          "zoomRange": "0-10",
+          "highlightSegment": "4-5",
+          "highlightColor": "Orange",
+          "levelLabel": "Ones"
+        },
+        {
+          "id": 2,
+          "title": "Tenths — Zooming In (4.0 to 5.0)",
+          "zoomRange": "4-5",
+          "highlightSegment": "4.1-4.2",
+          "highlightColor": "Dark Green",
+          "levelLabel": "Tenths"
+        },
+        {
+          "id": 3,
+          "title": "Hundredths — Even Closer (4.10 to 4.20)",
+          "zoomRange": "4.1-4.2",
+          "highlightSegment": "4.18-4.19",
+          "highlightColor": "Blue",
+          "levelLabel": "Hundredths"
+        },
+        {
+          "id": 4,
+          "title": "Thousandths — Pinpointed! (4.180 to 4.190)",
+          "zoomRange": "4.18-4.19",
+          "targetMark": 4.185,
+          "targetMarkColor": "Bold Orange circle",
+          "levelLabel": "Thousandths"
+        }
+      ]
+    },
+    "practice": {
+      "description": "Student clicks segments to zoom and locate 9.876",
+      "steps": [
+        {
+          "id": 5,
+          "title": "Your Turn — Locate 9.876!",
+          "interactionType": "click segments to zoom through Ones → Tenths → Hundredths → Thousandths"
+        }
+      ]
+    }
+  },
+  "animations": {
+    "zoomTransition": "Smooth scale + blur transition between zoom levels (zoomTransition keyframe)",
+    "magnifyingGlass": "magnifyIn animation with Search icon between each zoom level",
+    "tickAppear": "Staggered tick mark appearance using scaleY + opacity",
+    "drawLine": "stroke-dashoffset animation for the number line drawing",
+    "highlightSegment": "Pulsing opacity animation on the highlighted segment",
+    "targetMarker": "bounceIn + pulseGlow on the final target point",
+    "levelBadge": "popIn animation for the Ones/Tenths/Hundredths/Thousandths badge",
+    "progressDots": "Width and color transitions for step indicator dots",
+    "practiceComplete": "fadeInScale overlay with bounceIn award icon on success"
+  },
+  "toolCallExamples": [
+    {
+      "name": "Default usage — full guided + practice",
+      "json": {
+        "frontend_action": "show_interactive_tool",
+        "title": "Zooming Into Number Lines to Locate Precise Decimals",
+        "data": {
+          "toolName": "zoom_number_line_tool",
+          "parameters": {}
+        },
+        "instructions_for_student": "Watch how we zoom in step by step to find 4.185. Each level reveals one more digit. Then try locating 9.876 yourself!"
+      }
+    },
+    {
+      "name": "Start directly in practice mode",
+      "json": {
+        "frontend_action": "show_interactive_tool",
+        "title": "Practice: Locate 9.876",
+        "data": {
+          "toolName": "zoom_number_line_tool",
+          "parameters": {
+            "initialMode": "practice",
+            "showModeSelector": false
+          }
+        },
+        "instructions_for_student": "Click on the correct segment at each zoom level to locate 9.876!"
+      }
+    },
+    {
+      "name": "Learn mode only, no practice tab",
+      "json": {
+        "frontend_action": "show_interactive_tool",
+        "title": "How to Zoom Into a Number Line",
+        "data": {
+          "toolName": "zoom_number_line_tool",
+          "parameters": {
+            "enabledModes": ["learn"],
+            "showModeSelector": false
+          }
+        },
+        "instructions_for_student": "Watch the 4-step zoom demonstration to locate 4.185."
+      }
+    },
+    {
+      "name": "Auto-play with 6 second intervals",
+      "json": {
+        "frontend_action": "show_interactive_tool",
+        "title": "Zooming Into 4.185 — Auto Demo",
+        "data": {
+          "toolName": "zoom_number_line_tool",
+          "parameters": {
+            "autoPlayDuration": 6000,
+            "enabledModes": ["learn"],
+            "showModeSelector": false
+          }
+        },
+        "instructions_for_student": "Sit back and watch the automatic zoom demonstration!"
+      }
+    },
+    {
+      "name": "Show only step 1 (Ones level)",
+      "json": {
+        "frontend_action": "show_interactive_tool",
+        "title": "Finding the Whole Number Range",
+        "data": {
+          "toolName": "zoom_number_line_tool",
+          "parameters": {
+            "filterSteps": [1],
+            "showNavigation": false
+          }
+        },
+        "instructions_for_student": "4.185 lies between 4 and 5 on the number line."
+      }
+    },
+    {
+      "name": "Show steps 3-4 (hundredths and thousandths only)",
+      "json": {
+        "frontend_action": "show_interactive_tool",
+        "title": "Hundredths & Thousandths Zoom",
+        "data": {
+          "toolName": "zoom_number_line_tool",
+          "parameters": {
+            "filterSteps": [3, 4]
+          }
+        },
+        "instructions_for_student": "See how we zoom from hundredths to thousandths to pinpoint 4.185."
+      }
+    },
+    {
+      "name": "Dark mode version",
+      "json": {
+        "frontend_action": "show_interactive_tool",
+        "title": "Zoom Number Line (Dark Mode)",
+        "data": {
+          "toolName": "zoom_number_line_tool",
+          "parameters": {
+            "darkMode": true
+          }
+        },
+        "instructions_for_student": "Explore the zoom technique in dark mode!"
+      }
+    },
+    {
+      "name": "Compact size for embedding",
+      "json": {
+        "frontend_action": "show_interactive_tool",
+        "title": "Mini Zoom Demo",
+        "data": {
+          "toolName": "zoom_number_line_tool",
+          "parameters": {
+            "width": 600,
+            "height": 450,
+            "showModeSelector": false,
+            "enabledModes": ["learn"]
+          }
+        },
+        "instructions_for_student": "A compact zoom demonstration."
+      }
+    }
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "toolName": "unit_conversion_tables_tool",
+  "version": "2.0.0",
+  "description": "Interactive fill-in-the-blank tables for CBSE Grade 7 Mathematics (Decimals chapter). Redesigned with Singularity Design System — Poppins font, #4A4DC9 primary / #FF7212 accent palette, pill-shaped buttons, gradient headers (#533086→#FC9145).",
+  "designSystem": {
+    "name": "Singularity",
+    "font": "Poppins",
+    "colors": {
+      "primary": "#4A4DC9",
+      "primaryDark": "#533086",
+      "secondary": "#FF7212",
+      "secondaryDark": "#FC9145",
+      "primaryLight": "#C1C1EA",
+      "secondaryLight": "#FFF3E4",
+      "neutralDark": "#4E4E4E",
+      "neutralMid": "#CACACA",
+      "neutralLight": "#EBEBEB",
+      "neutralLightest": "#F5F5F5",
+      "gradient": "linear-gradient(135deg, #533086, #FC9145)"
+    },
+    "buttons": {
+      "height": "40px",
+      "padding": "0 24px",
+      "borderRadius": "pill (100px)",
+      "variants": ["contained", "outlined", "text"]
+    }
+  },
+  "topic": "Practice: All Unit Conversion Tables",
+  "subject": "Mathematics",
+  "grade": "Grade 7",
+  "curriculum": "CBSE / NCERT - Ganita Prakash",
+  "chapter": "Chapter 3: A Peek Beyond the Point",
+  "learning_objectives": [
+    "Convert between mm and cm using ÷10 / ×10",
+    "Convert between cm and m using ÷100 / ×100",
+    "Convert between g and kg using ÷1000 / ×1000",
+    "Convert between paise and rupees using ÷100 / ×100",
+    "Understand decimal place value shifts in unit conversions"
+  ],
+  "teaching_notes": "Use AFTER teaching all four conversion types. Start with Table 1 (÷10) and progress to Table 3 (÷1000). Highlight the pattern of zeros matching decimal shifts. Encourage students to check their answers mentally before typing.",
+  "instructions_for_student": "Complete all four tables using the correct conversion factor. The tool checks your answer immediately! Type your answer in the blue box and press Enter or click away to check.",
+  "parameters": {
+    "width": { "type": "number", "default": 800 },
+    "height": { "type": "number", "default": 600 },
+    "themeColor": { "type": "string", "default": "#4A4DC9" },
+    "darkMode": { "type": "boolean", "default": false }
+  },
+  "additionalProps": {
+    "description": "Tool-specific dynamic content for unit conversion tables",
+    "schema": {
+      "title": { "type": "string", "default": "Practice: All Unit Conversion Tables" },
+      "subtitle": { "type": "string", "default": "Complete all four tables using the correct conversion factor!" },
+      "showFormulaSidebar": { "type": "boolean", "default": true },
+      "showProgressBar": { "type": "boolean", "default": true },
+      "tables": {
+        "type": "array",
+        "description": "Array of conversion tables. Each uses DS colors: Table1=#4A4DC9, Table2=#533086, Table3=#FF7212, Table4=#FC9145",
+        "items": {
+          "type": "object",
+          "properties": {
+            "title": { "type": "string" },
+            "headerColor": { "type": "string", "description": "Use DS palette: #4A4DC9, #533086, #FF7212, #FC9145" },
+            "headerTextColor": { "type": "string", "default": "#ffffff" },
+            "conversionFactor": { "type": "string" },
+            "leftUnitLabel": { "type": "string" },
+            "rightUnitLabel": { "type": "string" },
+            "entries": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "leftValue": { "type": "string" },
+                  "rightValue": { "type": "string" },
+                  "leftBlank": { "type": "boolean" },
+                  "rightBlank": { "type": "boolean" },
+                  "leftUnit": { "type": "string" },
+                  "rightUnit": { "type": "string" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "examples": {
+      "default_all_four_tables": {
+        "title": "Practice: All Unit Conversion Tables",
+        "subtitle": "Complete all four tables using the correct conversion factor!",
+        "showFormulaSidebar": true,
+        "showProgressBar": true
+      },
+      "mm_cm_only": {
+        "title": "mm ↔ cm Conversion Practice",
+        "subtitle": "1 cm = 10 mm. Divide by 10 to convert!",
+        "tables": [
+          {
+            "title": "mm ↔ cm",
+            "headerColor": "#4A4DC9",
+            "headerTextColor": "#ffffff",
+            "conversionFactor": "÷ 10",
+            "leftUnitLabel": "mm",
+            "rightUnitLabel": "cm",
+            "entries": [
+              { "leftValue": "12", "rightValue": "1.2", "leftBlank": false, "rightBlank": false, "leftUnit": "mm", "rightUnit": "cm" },
+              { "leftValue": "70", "rightValue": "7", "leftBlank": false, "rightBlank": true, "leftUnit": "mm", "rightUnit": "cm" },
+              { "leftValue": "9", "rightValue": "0.9", "leftBlank": true, "rightBlank": false, "leftUnit": "mm", "rightUnit": "cm" }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "features": {
+    "immediate_feedback": "Green checkmark with pop animation for correct, red X with shake for incorrect",
+    "progress_bar": "White-to-light-purple gradient bar on gradient header, tracks X/24 correct",
+    "formula_sidebar": "4 formula reference cards with DS-colored borders and hover effects",
+    "celebration": "Gradient award badge, confetti particles, pill Continue button",
+    "reset_button": "Outlined pill button in header with hover scale",
+    "keyboard_support": "Enter to check answer, Tab to navigate",
+    "design_system": "Singularity DS: Poppins font, #4A4DC9/#FF7212 palette, pill buttons, 8/12/16/20px radius, gradient headers"
+  },
+  "blank_count": {
+    "table_1_mm_cm": 4,
+    "table_2_cm_m": 6,
+    "table_3_g_kg": 6,
+    "table_4_paise_rupees": 8,
+    "total": 24
+  }
+}

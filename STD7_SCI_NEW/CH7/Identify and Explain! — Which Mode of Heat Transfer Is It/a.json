@@ -1,0 +1,381 @@
+{
+    "toolName": "heat_transfer_scenario_tool",
+    "version": "1.0.0",
+    "description": "An interactive fill-in-table tool for Grade 7 Science (heat transfer scenario analysis). A 6-row, 3-column table where students identify modes of heat transfer and explain their reasoning for real-life Indian scenarios.",
+    "category": "science",
+    "grade": 7,
+    "subject": "Science",
+    "chapter": "Heat Transfer in Nature",
+    "topic": "Short Answer and Reasoning Questions",
+    "learningObjectives": [
+        "Identify conduction, convection, and radiation in real-life Indian scenarios",
+        "Explain WHY a scenario demonstrates a specific heat transfer mode",
+        "Distinguish between the three modes based on medium, particle movement, and contact",
+        "Apply textbook concepts to everyday situations"
+    ],
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Width of the tool container in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Height of the tool container in pixels"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#d9a23c",
+            "description": "Primary amber/gold theme color"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable dark mode"
+        }
+    },
+    "additionalProps": {
+        "description": "Tool-specific dynamic content for heat transfer scenarios",
+        "schema": {
+            "scenarios": {
+                "type": "array",
+                "description": "Array of 6 real-life Indian scenarios for heat transfer identification",
+                "items": {
+                    "id": {
+                        "type": "number",
+                        "description": "Unique scenario identifier"
+                    },
+                    "scenario": {
+                        "type": "string",
+                        "description": "Description of the real-life scenario"
+                    },
+                    "icon": {
+                        "type": "string",
+                        "description": "Emoji icon representing the scenario (e.g., 🥄, 🪔, 🔥, 🍳, 🚿, ☀️)"
+                    },
+                    "correctMode": {
+                        "type": "string",
+                        "enum": [
+                            "Conduction",
+                            "Convection",
+                            "Radiation"
+                        ],
+                        "description": "The correct mode of heat transfer"
+                    },
+                    "acceptableReasonKeywords": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "Keywords that indicate a good reasoning explanation"
+                    },
+                    "explanation": {
+                        "type": "string",
+                        "description": "Full explanation shown after correct or incorrect answer"
+                    },
+                    "hint": {
+                        "type": "string",
+                        "description": "Hint text to guide the student"
+                    }
+                }
+            },
+            "title": {
+                "type": "string",
+                "default": "Heat Transfer in Everyday Life",
+                "description": "Title displayed in the header"
+            },
+            "subtitle": {
+                "type": "string",
+                "default": "Identify the mode & explain your reasoning",
+                "description": "Subtitle displayed below the title"
+            },
+            "instructionsForStudent": {
+                "type": "string",
+                "description": "Custom instructions for the student"
+            },
+            "teachingNotes": {
+                "type": "string",
+                "description": "Notes for the teacher about common misconceptions"
+            }
+        },
+        "defaults": {
+            "scenarios": [
+                {
+                    "id": 1,
+                    "scenario": "You are stirring hot dal with a steel spoon. After a while, the handle of the spoon becomes hot.",
+                    "icon": "🥄",
+                    "correctMode": "Conduction",
+                    "acceptableReasonKeywords": [
+                        "solid",
+                        "metal",
+                        "contact",
+                        "particle",
+                        "transfer",
+                        "conduct",
+                        "spoon",
+                        "touch",
+                        "through",
+                        "along"
+                    ],
+                    "explanation": "Heat transfers from the hot dal through the steel spoon by conduction. In conduction, heat passes from particle to particle through the solid metal without the particles moving from their positions.",
+                    "hint": "Think about how heat moves through a solid material like metal — do the particles move, or just pass energy along?"
+                },
+                {
+                    "id": 2,
+                    "scenario": "You light an agarbatti (incense stick) during evening puja. The smoke rises upward towards the ceiling.",
+                    "icon": "🪔",
+                    "correctMode": "Convection",
+                    "acceptableReasonKeywords": [
+                        "air",
+                        "rise",
+                        "hot",
+                        "warm",
+                        "lighter",
+                        "moves",
+                        "movement",
+                        "gas",
+                        "actual",
+                        "particle"
+                    ],
+                    "explanation": "The smoke rises because the hot gases from the agarbatti are warmer and lighter than surrounding air. They expand and rise up — this is convection, where heat transfers by the actual movement of particles in fluids.",
+                    "hint": "Why does smoke always go UP? Think about what happens to air when it gets heated."
+                },
+                {
+                    "id": 3,
+                    "scenario": "During Lohri, you sit near a bonfire. You can feel warmth on your face and hands even though you are not touching the fire.",
+                    "icon": "🔥",
+                    "correctMode": "Radiation",
+                    "acceptableReasonKeywords": [
+                        "no medium",
+                        "without",
+                        "direct",
+                        "no contact",
+                        "distance",
+                        "wave",
+                        "radiat",
+                        "not touching"
+                    ],
+                    "explanation": "You feel warmth from the bonfire through radiation. Heat reaches you directly from the fire without needing any medium — there is no physical contact.",
+                    "hint": "You're NOT touching the fire, and the heat reaches you directly. Does this need a medium?"
+                },
+                {
+                    "id": 4,
+                    "scenario": "Your mother heats a tawa (flat pan) on the gas stove. The flame touches the bottom, and soon the entire tawa surface becomes hot.",
+                    "icon": "🍳",
+                    "correctMode": "Conduction",
+                    "acceptableReasonKeywords": [
+                        "solid",
+                        "metal",
+                        "particle",
+                        "contact",
+                        "conduct",
+                        "through",
+                        "along",
+                        "surface",
+                        "spread"
+                    ],
+                    "explanation": "Heat from the gas flame transfers through the solid metal tawa by conduction. The particles at the bottom get heated first and pass the heat to neighbouring particles.",
+                    "hint": "The tawa is a solid metal object. How does heat travel through solids?"
+                },
+                {
+                    "id": 5,
+                    "scenario": "In a geyser (water heater), water at the bottom gets heated first. Gradually, all the water in the tank becomes hot.",
+                    "icon": "🚿",
+                    "correctMode": "Convection",
+                    "acceptableReasonKeywords": [
+                        "water",
+                        "rise",
+                        "liquid",
+                        "movement",
+                        "actual",
+                        "particle",
+                        "lighter",
+                        "hot water",
+                        "expand",
+                        "cool"
+                    ],
+                    "explanation": "Water in the geyser heats up by convection. The water at the bottom gets heated, expands, becomes lighter, and rises. Cooler water from above comes down to take its place.",
+                    "hint": "Think about what happens to water when it's heated at the bottom — does hot water rise or sink?"
+                },
+                {
+                    "id": 6,
+                    "scenario": "On a sunny day, you step outside and feel the Sun's warmth on your skin. The heat has travelled millions of kilometres to reach you.",
+                    "icon": "☀️",
+                    "correctMode": "Radiation",
+                    "acceptableReasonKeywords": [
+                        "no medium",
+                        "vacuum",
+                        "space",
+                        "without",
+                        "wave",
+                        "radiat",
+                        "no contact",
+                        "distance"
+                    ],
+                    "explanation": "The Sun's heat reaches Earth through radiation. Between the Sun and Earth is mostly empty space (vacuum) — radiation is the only process that can transfer heat without any medium.",
+                    "hint": "There is empty space (vacuum) between the Sun and Earth. Can conduction or convection work without a medium?"
+                }
+            ]
+        },
+        "examples": [
+            {
+                "description": "Default 6 Indian scenarios",
+                "additionalProps": {}
+            },
+            {
+                "description": "Custom scenarios with different contexts",
+                "additionalProps": {
+                    "scenarios": [
+                        {
+                            "id": 1,
+                            "scenario": "Custom scenario here...",
+                            "icon": "🔧",
+                            "correctMode": "Conduction",
+                            "acceptableReasonKeywords": [
+                                "keyword1",
+                                "keyword2"
+                            ],
+                            "explanation": "Custom explanation...",
+                            "hint": "Custom hint..."
+                        }
+                    ],
+                    "title": "Custom Title",
+                    "subtitle": "Custom subtitle"
+                }
+            }
+        ]
+    },
+    "interactionDesign": {
+        "table": {
+            "columns": [
+                {
+                    "name": "Scenario",
+                    "type": "fixed",
+                    "style": "grey background",
+                    "description": "Real-life Indian scenario descriptions with contextual emoji icons"
+                },
+                {
+                    "name": "Mode of Heat Transfer",
+                    "type": "editable",
+                    "style": "white background, dropdown select",
+                    "options": [
+                        "Conduction",
+                        "Convection",
+                        "Radiation"
+                    ],
+                    "description": "Student selects from dropdown"
+                },
+                {
+                    "name": "Reason",
+                    "type": "editable",
+                    "style": "white background, textarea",
+                    "description": "Student types 1-2 sentence explanation of WHY"
+                }
+            ],
+            "rows": 6
+        },
+        "feedback": {
+            "correct": {
+                "trigger": "correct mode + reason with 2+ relevant keywords and 15+ chars",
+                "visual": "green row highlight with checkmark, score +1",
+                "message": "Excellent! + full explanation"
+            },
+            "partial": {
+                "trigger": "correct mode but weak/missing reason",
+                "visual": "yellow highlight",
+                "message": "Good mode! But can you explain WHY more specifically?"
+            },
+            "incorrect": {
+                "trigger": "wrong mode selected",
+                "visual": "red highlight with shake animation",
+                "message": "Correct answer revealed + full explanation"
+            }
+        },
+        "scoring": {
+            "display": "top-right corner, Award icon, X/6 format",
+            "perfectScore": "celebration overlay with trophy"
+        },
+        "hints": {
+            "available": true,
+            "trigger": "💡 Hint button below check button for unanswered rows"
+        },
+        "reset": {
+            "available": true,
+            "location": "bottom-right footer"
+        }
+    },
+    "theme": {
+        "primary": "#d9a23c",
+        "name": "Amber/Gold Educational",
+        "fonts": {
+            "heading": "Playfair Display",
+            "body": "Source Sans 3"
+        }
+    },
+    "teachingNotes": "Activate as the KEY practice activity for reasoning skills. Watch for: bonfire called 'convection' (it's radiation reaching them), tawa called 'radiation' (it's conduction through solid metal). Most importantly, check if students can EXPLAIN — naming the mode is easier than justifying it.",
+    "instructionsForStudent": "For each real-life scenario, fill in TWO things: (1) Which mode of heat transfer is happening? (Conduction, Convection, or Radiation) and (2) WHY? Explain your reasoning — what makes it that mode and not the other two? All 6 scenarios come from everyday Indian life!",
+    "toolCallExamples": [
+        {
+            "description": "Default — all 6 Indian scenarios with amber/gold theme",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Heat Transfer — Short Answer & Reasoning",
+                "data": {
+                    "toolName": "heat_transfer_scenario_tool",
+                    "parameters": {}
+                },
+                "instructions_for_student": "For each real-life scenario, fill in TWO things: (1) Which mode of heat transfer is happening? and (2) WHY?"
+            }
+        },
+        {
+            "description": "With custom title and narrower width",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Chapter 7 Activity — Identify Heat Transfer Modes",
+                "data": {
+                    "toolName": "heat_transfer_scenario_tool",
+                    "parameters": {
+                        "width": 720,
+                        "additionalProps": {
+                            "title": "Chapter 7: Heat Transfer Reasoning Activity",
+                            "subtitle": "Can you explain WHY each scenario uses that mode?"
+                        }
+                    }
+                },
+                "instructions_for_student": "Select the correct mode AND explain your reasoning for each scenario."
+            }
+        },
+        {
+            "description": "With custom scenarios (replace defaults)",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Custom Heat Transfer Scenarios",
+                "data": {
+                    "toolName": "heat_transfer_scenario_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "scenarios": [
+                                {
+                                    "id": 1,
+                                    "scenario": "You hold one end of a metal ruler over a candle flame. The other end slowly gets warm.",
+                                    "icon": "📏",
+                                    "correctMode": "Conduction",
+                                    "acceptableReasonKeywords": [
+                                        "solid",
+                                        "metal",
+                                        "particle",
+                                        "contact",
+                                        "through"
+                                    ],
+                                    "explanation": "Heat travels through the solid metal ruler by conduction — particle to particle.",
+                                    "hint": "The ruler is a solid metal object..."
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

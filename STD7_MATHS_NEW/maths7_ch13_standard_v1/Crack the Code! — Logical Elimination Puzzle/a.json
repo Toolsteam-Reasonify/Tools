@@ -1,0 +1,267 @@
+{
+    "toolName": "number_lock_puzzle_tool",
+    "version": "2.0.0",
+    "description": "Interactive step-based logic puzzle solver for Grade 7 Mathematics — Number Lock Puzzle. Redesigned with Singularity Design System: Poppins font, indigo #4A4DC9 primary, orange #FF7212 highlight, gradient #533086→#FC9145, pill-shaped buttons (40px height, 24px padding), decorative shape overlays (circle, triangle, square). 3D padlock graphic with three rotating digit wheels showing '???' initially. 5 clue cards with elimination/confirmation badges. Elimination grid (digits 0-9 × positions 1-3). Final step reveals 4-1-5 with unlock animation, confetti, and verification checklist. Touch-friendly, mobile-responsive.",
+    "category": "logic_puzzle",
+    "grade": 7,
+    "subject": "Mathematics",
+    "chapter": "Chapter 5 — Connecting the Dots",
+    "topic": "Puzzle Time — Crack the Number Lock Code",
+    "designSystem": "Singularity v1.0",
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Container width in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Container height in pixels"
+        },
+        "showNavigation": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show previous/next step buttons"
+        },
+        "showStepIndicator": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show step counter pill in header"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier"
+        },
+        "autoPlayDuration": {
+            "type": "number",
+            "default": 0,
+            "description": "Auto-advance delay in ms (0 = manual navigation)"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#4A4DC9",
+            "description": "Primary indigo theme color from Singularity DS"
+        }
+    },
+    "additionalProps": {
+        "schema": {
+            "clues": {
+                "type": "array",
+                "description": "Array of 5 clue objects with digits and hint text",
+                "items": {
+                    "digits": {
+                        "type": "array",
+                        "items": "number",
+                        "length": 3,
+                        "description": "The 3-digit number shown in the clue"
+                    },
+                    "hint": {
+                        "type": "string",
+                        "description": "The hint text for this clue"
+                    },
+                    "hintType": {
+                        "type": "string",
+                        "enum": [
+                            "correct_well_placed",
+                            "correct_wrong_place",
+                            "nothing_correct",
+                            "two_correct_wrong_place"
+                        ],
+                        "description": "Category of the hint for logic processing"
+                    }
+                }
+            },
+            "answer": {
+                "type": "array",
+                "items": "number",
+                "length": 3,
+                "description": "The correct 3-digit answer, e.g. [4, 1, 5]"
+            },
+            "puzzleTitle": {
+                "type": "string",
+                "default": "Puzzle Time — Crack the Code!",
+                "description": "Custom title for the puzzle"
+            }
+        },
+        "defaults": {
+            "clues": [
+                {
+                    "digits": [2, 6, 5],
+                    "hint": "One digit is correct and well placed.",
+                    "hintType": "correct_well_placed"
+                },
+                {
+                    "digits": [2, 7, 1],
+                    "hint": "One digit is correct but wrongly placed.",
+                    "hintType": "correct_wrong_place"
+                },
+                {
+                    "digits": [0, 3, 6],
+                    "hint": "Nothing is correct.",
+                    "hintType": "nothing_correct"
+                },
+                {
+                    "digits": [0, 6, 4],
+                    "hint": "One digit is correct but wrongly placed.",
+                    "hintType": "correct_wrong_place"
+                },
+                {
+                    "digits": [5, 4, 2],
+                    "hint": "Two digits are correct but wrongly placed.",
+                    "hintType": "two_correct_wrong_place"
+                }
+            ],
+            "answer": [4, 1, 5],
+            "puzzleTitle": "Puzzle Time — Crack the Code!"
+        },
+        "examples": {
+            "default_puzzle": {
+                "description": "The standard textbook number lock puzzle from NCERT Grade 7 Chapter 5"
+            }
+        }
+    },
+    "modes": {
+        "available": ["learn"],
+        "default": "learn",
+        "descriptions": {
+            "learn": "Step-by-step guided walkthrough of the logical elimination process"
+        }
+    },
+    "steps": {
+        "total": 9,
+        "descriptions": [
+            {
+                "id": 0,
+                "title": "The Puzzle",
+                "description": "Introduction — read all 5 clues"
+            },
+            {
+                "id": 1,
+                "title": "Start with 'Nothing Correct'",
+                "description": "Eliminate digits 0, 3, 6 using Clue 3"
+            },
+            {
+                "id": 2,
+                "title": "Analyse Clue 1: [2, 6, 5]",
+                "description": "One correct and well placed — narrow to 2 or 5"
+            },
+            {
+                "id": 3,
+                "title": "Analyse Clue 2: [2, 7, 1]",
+                "description": "One correct but wrongly placed"
+            },
+            {
+                "id": 4,
+                "title": "Analyse Clue 4: [0, 6, 4]",
+                "description": "Deduce that 4 is in the code"
+            },
+            {
+                "id": 5,
+                "title": "Analyse Clue 5: [5, 4, 2]",
+                "description": "Two digits correct but wrongly placed — narrow candidates"
+            },
+            {
+                "id": 6,
+                "title": "Deduce Position of 4",
+                "description": "4 must be at position 1, therefore 5 is at position 3"
+            },
+            {
+                "id": 7,
+                "title": "Find the Middle Digit",
+                "description": "Deduce that 1 goes to position 2 — code is 4-1-5"
+            },
+            {
+                "id": 8,
+                "title": "The Code is 4 – 1 – 5 !",
+                "description": "Final verification against all 5 clues with unlock animation"
+            }
+        ]
+    },
+    "teaching_notes": {
+        "pedagogical_approach": "logical_elimination",
+        "key_skill": "systematic_reasoning",
+        "instructions": [
+            "At Step 1 (setup), let the student read all 5 clues and think for 30 seconds.",
+            "At Step 2 (eliminate), emphasise that the 'nothing correct' clue is the most powerful starting point.",
+            "At each subsequent step, pause and ask: 'What can we conclude from this clue?'",
+            "Let the student reason before revealing each step.",
+            "At the final step, ask the student to verify the code 415 against ALL 5 clues themselves.",
+            "This builds systematic verification skills."
+        ],
+        "student_instructions": "This is a logic puzzle, not a maths calculation! Read the 5 clues about the 3-digit code. At each step, we will eliminate impossible digits and narrow down what the code could be. Try to think ahead: before each step appears, see if you can figure out the next digit yourself!"
+    },
+    "visual_spec": {
+        "designSystem": "Singularity v1.0",
+        "theme": {
+            "primary_indigo": "#4A4DC9",
+            "highlight_orange": "#FF7212",
+            "gradient_dark": "#533086",
+            "gradient_light": "#FC9145",
+            "indigo_light": "#C1C1EA",
+            "orange_light": "#FFF3E4",
+            "gray_900": "#4E4E4E",
+            "gray_400": "#CACACA",
+            "gray_200": "#EBEBEB",
+            "gray_100": "#F5F5F5",
+            "white": "#FFFFFF",
+            "confirmed": "#22A65A",
+            "confirmed_light": "#E8F8EF",
+            "eliminated": "#E14B4B",
+            "eliminated_light": "#FDECEC"
+        },
+        "fonts": {
+            "family": "Poppins",
+            "weights": [400, 500, 600, 700, 800, 900],
+            "source": "Google Fonts"
+        },
+        "buttons": {
+            "height": "40px",
+            "padding_horizontal": "24px",
+            "border_radius": "100px (pill)",
+            "variants": {
+                "contained": {
+                    "background": "#4A4DC9",
+                    "color": "#FFFFFF",
+                    "hover_background": "#533086",
+                    "disabled_background": "#EBEBEB",
+                    "disabled_color": "#CACACA"
+                },
+                "outlined": {
+                    "background": "#FFFFFF",
+                    "color": "#4A4DC9",
+                    "border": "2px solid #4A4DC9",
+                    "hover_background": "rgba(74,77,201,0.03)",
+                    "disabled_border": "2px solid #EBEBEB",
+                    "disabled_color": "#CACACA"
+                },
+                "highlight": {
+                    "background": "#FF7212",
+                    "color": "#FFFFFF",
+                    "hover_background": "#e5600f",
+                    "disabled_background": "#EBEBEB",
+                    "disabled_color": "#CACACA"
+                }
+            }
+        },
+        "border_radii": {
+            "pill": "100px",
+            "card": "16px",
+            "small": "8px"
+        },
+        "decorative_shapes": {
+            "description": "Header includes circle outlines, rotated square outlines, and triangle shapes in semi-transparent white, matching Singularity shape language",
+            "shapes": ["circle", "triangle", "square"]
+        },
+        "lock_graphic": "3D padlock with gradient body (#533086 → #FC9145), three rotating digit wheels, animated shackle on unlock",
+        "clue_cards": "White cards on #F5F5F5 background, 1.5px #EBEBEB border, pill-shaped number badges, digit boxes with red X (eliminated) or green check (confirmed)",
+        "elimination_grid": "10 columns (digits 0-9) × 3 rows (positions 1-3), #FDECEC red cells = eliminated, #E8F8EF green cells = confirmed, #F5F5F5 default",
+        "think_about_it_box": "#FFF3E4 background with 4px #FF7212 left border, orange star icon, uppercase label",
+        "final_animation": "Padlock wheels spin and reveal 4-1-5, shackle animates open, confetti falls in 6-color Singularity palette, verification checklist appears with sequential green checkmarks",
+        "responsive": {
+            "breakpoint": "520px",
+            "behavior": "Below 520px: stacks to column layout, lock graphic scales down, buttons shrink padding"
+        }
+    }
+}

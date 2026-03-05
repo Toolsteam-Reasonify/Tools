@@ -1,0 +1,205 @@
+{
+  "toolName": "systematic_factor_listing_tool",
+  "version": "1.0.0",
+  "description": "Interactive step-based calculation practice tool for Grade 7 Mathematics — Systematic Factor Listing for 225. Centre stage shows four coloured building blocks representing the prime factors: two orange blocks labelled '3' and two green blocks labelled '5'. At each step, blocks are selected and combined with a multiplication animation, producing a new factor that drops into a growing factor list on the right side. A grocery bag analogy panel at the bottom shows 2 packets of dal and 2 packets of rice forming combinations. The factor list sorts itself in ascending order. Final verification grid shows 225 divided by each factor with a checkmark. Purple accent colour (#8b5cf6) for highlights. Indian school context with clean notebook aesthetic. Baloo 2 / Lilita One font family with varied numeric styles. Mobile-responsive, touch-friendly drag interactions. 5-colour palette: purple, orange, green, white background, dark text.",
+  "category": "mathematics",
+  "grade": "7",
+  "subject": "Number Theory — HCF and Factors",
+  "curriculum": "NCERT Ganita Prakash Grade 7 Part-II, Chapter 3: Finding Common Ground",
+  "parameters": {
+    "width": {
+      "type": "number",
+      "default": 800,
+      "description": "Component width in pixels"
+    },
+    "height": {
+      "type": "number",
+      "default": 600,
+      "description": "Component minimum height in pixels"
+    },
+    "initialMode": {
+      "type": "string",
+      "enum": ["learn", "practice", "explore"],
+      "default": "learn",
+      "description": "Starting interaction mode"
+    },
+    "showModeSelector": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide mode selector tabs"
+    },
+    "enabledModes": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["learn", "practice", "explore"] },
+      "default": ["learn", "practice", "explore"],
+      "description": "Which modes are available"
+    },
+    "showNavigation": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide prev/next navigation buttons"
+    },
+    "showPlayPause": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide auto-play button"
+    },
+    "showStepIndicator": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide step counter in header"
+    },
+    "initialStep": {
+      "type": "number",
+      "default": 0,
+      "description": "Starting step index (0-based)"
+    },
+    "filterSteps": {
+      "type": "array",
+      "items": { "type": "number" },
+      "default": null,
+      "description": "Only show steps with these IDs"
+    },
+    "animationSpeed": {
+      "type": "number",
+      "default": 1,
+      "description": "Animation speed multiplier (0.5 = slow, 2 = fast)"
+    },
+    "autoPlayDuration": {
+      "type": "number",
+      "default": 6000,
+      "description": "Auto-advance delay in ms (0 to disable)"
+    },
+    "themeColor": {
+      "type": "string",
+      "default": "#8b5cf6",
+      "description": "Primary accent colour"
+    },
+    "darkMode": {
+      "type": "boolean",
+      "default": false,
+      "description": "Dark mode toggle"
+    }
+  },
+  "additionalProps": {
+    "schema": {
+      "number": {
+        "type": "number",
+        "default": 225,
+        "description": "The number whose factors are being listed"
+      },
+      "primeFactors": {
+        "type": "array",
+        "items": { "type": "number" },
+        "default": [3, 3, 5, 5],
+        "description": "Array of prime factors (with repetitions)"
+      },
+      "blockColors": {
+        "type": "object",
+        "default": { "3": "#f97316", "5": "#22c55e" },
+        "description": "Mapping of prime number to block colour"
+      },
+      "accentColor": {
+        "type": "string",
+        "default": "#8b5cf6",
+        "description": "Primary purple accent colour"
+      }
+    },
+    "examples": [
+      {
+        "description": "Default — Factor listing for 225",
+        "value": {
+          "number": 225,
+          "primeFactors": [3, 3, 5, 5],
+          "accentColor": "#8b5cf6"
+        }
+      },
+      {
+        "description": "Custom number — Factor listing for 90",
+        "value": {
+          "number": 90,
+          "primeFactors": [2, 3, 3, 5],
+          "blockColors": { "2": "#3b82f6", "3": "#f97316", "5": "#22c55e" }
+        }
+      }
+    ]
+  },
+  "modes": {
+    "learn": {
+      "name": "Learn",
+      "description": "Step-by-step guided walkthrough of systematic factor listing"
+    },
+    "practice": {
+      "name": "Practice",
+      "description": "Student tries to find factors on their own with hints"
+    },
+    "explore": {
+      "name": "Explore",
+      "description": "Free exploration of building blocks and factor combinations"
+    }
+  },
+  "steps": {
+    "totalSteps": 7,
+    "stepList": [
+      {
+        "id": 0,
+        "title": "Prime Factorisation of 225",
+        "description": "Introduce the building-block metaphor and show 225 = 3 × 3 × 5 × 5"
+      },
+      {
+        "id": 1,
+        "title": "The Empty Subpart — Factor 1",
+        "description": "Picking zero blocks gives the factor 1"
+      },
+      {
+        "id": 2,
+        "title": "Single Prime Factors",
+        "description": "Factors 3 and 5 from picking one block each"
+      },
+      {
+        "id": 3,
+        "title": "Pairs of Prime Factors",
+        "description": "Factors 9, 15, 25 from picking two blocks"
+      },
+      {
+        "id": 4,
+        "title": "Triples of Prime Factors",
+        "description": "Factors 45, 75 from picking three blocks"
+      },
+      {
+        "id": 5,
+        "title": "All Four — The Number Itself",
+        "description": "Factor 225 from using all four blocks"
+      },
+      {
+        "id": 6,
+        "title": "Verification — All 9 Factors!",
+        "description": "Verify completeness with division checks"
+      }
+    ]
+  },
+  "teachingNotes": {
+    "step1": "Show the prime factorisation and introduce the building-block metaphor.",
+    "step2": "Add 1 — the empty subpart.",
+    "step3": "Form single-prime factors.",
+    "step4": "Form all pairs — emphasise that 3×3 is valid.",
+    "step5": "Triples.",
+    "step6": "All four = 225.",
+    "step7": "Verify completeness."
+  },
+  "instructions_for_student": "Watch as we build every factor of 225 from its prime building blocks (3, 3, 5, 5). At each step, we pick a certain number of primes and multiply them. Count along — how many factors does 225 have in total?",
+  "colorPalette": {
+    "purple": "#8b5cf6",
+    "orange": "#f97316",
+    "green": "#22c55e",
+    "white": "#fefefe",
+    "dark": "#1e1b2e"
+  },
+  "designNotes": {
+    "font": "Baloo 2 + Lilita One (Google Fonts) — playful Indian school context",
+    "layout": "Centre stage building blocks → growing factor list → grocery analogy → verification grid",
+    "aesthetic": "Clean notebook aesthetic with Indian school context",
+    "responsive": "Mobile-responsive with touch-friendly interactions",
+    "animations": "Block selection pulse, factor drop-in, verification checkmark draw, grocery bounce"
+  }
+}

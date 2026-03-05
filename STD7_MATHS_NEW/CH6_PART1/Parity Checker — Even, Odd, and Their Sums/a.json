@@ -1,0 +1,176 @@
+{
+    "toolName": "parity_checker_tool",
+    "version": "1.0.0",
+    "description": "Interactive step-based parity checker tool for Grade 7 Mathematics — Chapter 6: Number Play. Displays dot-pairing diagrams for even and odd numbers. Six progressive phases: (1) Introduction to parity concept, (2) Even + Even = Even with paired dots, (3) Odd + Odd = Even showing leftover dots combining, (4) Even + Odd = Odd showing one leftover remaining, (5) Consecutive numbers — always different parity so sum is always odd, (6) Summary of all parity addition rules. Each phase shows two groups of dots being combined with animation — dots slide together and pair up, leftover dots glow red. Blue accent (#3b82f6) for even numbers, orange (#f97316) for odd numbers, white background, dark text, light grey separators. Prediction prompt appears before each reveal. Indian school context — uses chapati distribution and book pages as real-world examples. Clean educational design with Nunito font family. Touch-friendly buttons, mobile-responsive layout. 5-colour palette: blue, orange, white, dark grey text, light grey borders.",
+    "subject": "Mathematics",
+    "grade": "Grade 7",
+    "chapter": "Chapter 6 — Number Play",
+    "topic": "Consecutive Numbers and the Parity Definition",
+    "curriculum": "NCERT Ganita Prakash",
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Width of the tool in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Minimum height of the tool in pixels"
+        },
+        "initialStep": {
+            "type": "number",
+            "default": 1,
+            "min": 1,
+            "max": 6,
+            "description": "Which phase to start on (1-6)"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier. 0.5 = slower, 2 = faster"
+        },
+        "showNavigation": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show or hide the prev/next/restart buttons"
+        },
+        "showStepIndicator": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show or hide the step dot indicator"
+        },
+        "filterSteps": {
+            "type": "array",
+            "items": { "type": "number" },
+            "description": "Only show specific phase IDs (1-6)"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#3b82f6",
+            "description": "Primary theme color"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Dark mode toggle"
+        },
+        "additionalProps": {
+            "type": "object",
+            "description": "Tool-specific dynamic content for the parity checker",
+            "properties": {
+                "accentEven": {
+                    "type": "string",
+                    "default": "#3b82f6",
+                    "description": "Accent colour used for even numbers"
+                },
+                "accentOdd": {
+                    "type": "string",
+                    "default": "#f97316",
+                    "description": "Accent colour used for odd numbers"
+                },
+                "customExamples": {
+                    "type": "array",
+                    "description": "Custom number pairs for additional exploration",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "a": { "type": "number" },
+                            "b": { "type": "number" },
+                            "label": { "type": "string" }
+                        }
+                    }
+                },
+                "showAllStepsAtOnce": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Show all phases at once instead of stepping through"
+                }
+            },
+            "examples": [
+                {
+                    "description": "Default — full walkthrough",
+                    "value": {}
+                },
+                {
+                    "description": "Custom colours for colour-blind accessibility",
+                    "value": {
+                        "accentEven": "#2563eb",
+                        "accentOdd": "#dc2626"
+                    }
+                },
+                {
+                    "description": "Custom number pairs to explore",
+                    "value": {
+                        "customExamples": [
+                            { "a": 12, "b": 15, "label": "Textbook pages" },
+                            { "a": 8, "b": 9, "label": "Consecutive" }
+                        ]
+                    }
+                }
+            ]
+        }
+    },
+    "phases": {
+        "total": 6,
+        "list": [
+            {
+                "id": 1,
+                "title": "What is Parity?",
+                "type": "introduction",
+                "hasPrediction": false,
+                "concepts": ["Even numbers pair perfectly", "Odd numbers have one leftover"]
+            },
+            {
+                "id": 2,
+                "title": "Even + Even = Even",
+                "type": "explanation_with_prediction",
+                "hasPrediction": true,
+                "concepts": ["Both groups pair perfectly", "No leftovers", "Sum is even"]
+            },
+            {
+                "id": 3,
+                "title": "Odd + Odd = Even",
+                "type": "explanation_with_prediction",
+                "hasPrediction": true,
+                "concepts": ["Each group has 1 leftover", "Leftovers combine into a pair", "Sum is even"]
+            },
+            {
+                "id": 4,
+                "title": "Even + Odd = Odd",
+                "type": "explanation_with_prediction",
+                "hasPrediction": true,
+                "concepts": ["Even group pairs perfectly", "Odd group has 1 leftover", "Leftover remains", "Sum is odd"]
+            },
+            {
+                "id": 5,
+                "title": "Consecutive Numbers",
+                "type": "explanation_with_prediction",
+                "hasPrediction": true,
+                "concepts": ["Consecutive numbers have different parity", "One even + one odd", "Sum is always odd", "Martin & Maria puzzle"]
+            },
+            {
+                "id": 6,
+                "title": "Parity Rules Summary",
+                "type": "summary",
+                "hasPrediction": false,
+                "concepts": ["All four addition rules", "Consecutive numbers insight"]
+            }
+        ]
+    },
+    "teaching_notes": "Advance one phase at a time. At Step 1, ask the student to name even and odd numbers. At Steps 2-4, enable prediction mode and pause — let the student think before revealing. At Step 5, connect to the textbook example (consecutive page numbers always sum to odd, Martin and Maria's ages). At Step 6, challenge with Lakpa's coin puzzle: odd ₹1 coins + odd ₹5 coins + even ₹10 coins — can the total be ₹205?",
+    "instructions_for_student": "Watch as each parity combination is revealed with its dot-pairing diagram. At each step, try to predict whether the sum will be even or odd before the answer appears. Pay attention to what happens to the leftover dots — that is the key to understanding parity!",
+    "learning_objectives": [
+        "Understand parity: the property of a number being even or odd",
+        "Determine the parity of the sum of two numbers using the dot-pairing model",
+        "Know that even + even = even, odd + odd = even, even + odd = odd",
+        "Understand why consecutive numbers always have different parity",
+        "Apply parity reasoning to solve puzzles like Martin and Maria's age problem"
+    ],
+    "real_world_connections": [
+        "Chapati distribution — even numbers split equally, odd numbers leave one over",
+        "Book page numbers — consecutive pages always sum to odd",
+        "Coin puzzles — Lakpa's piggy bank problem",
+        "Birthday age puzzles — Martin and Maria"
+    ]
+}

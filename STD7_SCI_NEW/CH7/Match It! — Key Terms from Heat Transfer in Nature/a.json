@@ -1,0 +1,570 @@
+{
+    "toolName": "chapter_summary_matching_tool",
+    "version": "1.1.0",
+    "description": "An interactive matching activity for chapter revision where students connect key terms with their correct definitions by tapping/clicking. Terms are colour-coded on the left, shuffled definitions on the right. Correct matches lock in with a colour-coded bezier-curve connecting line and checkmark animation. Designed for Indian school Grade 7 Science — Heat Transfer in Nature.",
+    "category": "revision",
+    "subject": "Science",
+    "grade": "7",
+    "chapter": "Heat Transfer in Nature",
+    "topic": "In a Nutshell — Chapter Summary",
+    "dependencies": {
+        "react": ">=17.0.0",
+        "note": "All icons are self-contained inline SVG components. No external icon library (e.g. lucide-react) is required. The component is fully self-contained in a single .tsx file with zero third-party dependencies beyond React."
+    },
+    "changelog": {
+        "1.1.0": "Replaced lucide-react icon imports with inline SVG icon components (BookOpen, Target, RotateCcw, Check, XIcon, Award, Star, Zap, ChevronRight). Fixed SVG connecting lines to use matchAreaRef for correct coordinate calculation. Added cubic-bezier curve paths for smooth line connections. Added scroll-aware line repositioning.",
+        "1.0.0": "Initial release with 9-term matching, colour-coded lines, hints, and completion overlay."
+    },
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Width of the tool container in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Height of the tool container in pixels"
+        },
+        "initialMode": {
+            "type": "string",
+            "default": "practice",
+            "enum": [
+                "learn",
+                "practice",
+                "real_world",
+                "hands_on"
+            ],
+            "description": "Starting mode for the tool"
+        },
+        "showModeSelector": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show or hide the mode selector tabs"
+        },
+        "enabledModes": {
+            "type": "array",
+            "default": [
+                "practice"
+            ],
+            "description": "Which modes are available to the student"
+        },
+        "showNavigation": {
+            "type": "boolean",
+            "default": false,
+            "description": "Show prev/next navigation buttons"
+        },
+        "showPlayPause": {
+            "type": "boolean",
+            "default": false,
+            "description": "Show play/pause auto-advance button"
+        },
+        "showStepIndicator": {
+            "type": "boolean",
+            "default": false,
+            "description": "Show step counter indicator"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier"
+        },
+        "autoPlayDuration": {
+            "type": "number",
+            "default": 0,
+            "description": "Auto-advance delay in ms (0 = disabled)"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#4A4DC9",
+            "description": "Primary theme colour (hex)"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable dark mode"
+        }
+    },
+    "additionalProps": {
+        "description": "Tool-specific dynamic content for the matching activity",
+        "schema": {
+            "pairs": {
+                "type": "array",
+                "description": "Array of term-definition pair objects to match",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "term": {
+                            "type": "string",
+                            "description": "The key term to display on the left"
+                        },
+                        "definition": {
+                            "type": "string",
+                            "description": "The correct definition to display on the right"
+                        },
+                        "color": {
+                            "type": "string",
+                            "description": "Hex colour code for the term's colour tag and connecting line"
+                        },
+                        "hint": {
+                            "type": "string",
+                            "description": "A helpful hint shown on incorrect match attempts"
+                        },
+                        "category": {
+                            "type": "string",
+                            "description": "Category grouping label for the term"
+                        }
+                    },
+                    "required": [
+                        "term",
+                        "definition",
+                        "color"
+                    ]
+                }
+            },
+            "title": {
+                "type": "string",
+                "default": "In a Nutshell — Chapter Summary",
+                "description": "Title displayed at the top of the tool"
+            },
+            "subtitle": {
+                "type": "string",
+                "default": "Match each key term with its correct definition",
+                "description": "Subtitle displayed below the title"
+            },
+            "instructionText": {
+                "type": "string",
+                "default": "Tap a term, then tap its definition to match them!",
+                "description": "Instruction text shown in the banner"
+            },
+            "showHints": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to show hint text on incorrect matches"
+            },
+            "showCategories": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to show category groupings on completion"
+            },
+            "shuffleSeed": {
+                "type": "number",
+                "description": "Seed for deterministic shuffling of definitions (random if omitted)"
+            },
+            "teachingNotes": {
+                "type": "string",
+                "description": "Teaching notes for the educator (not shown to student)"
+            },
+            "categoryGroups": {
+                "type": "array",
+                "description": "Custom category groupings shown on the completion screen",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "label": {
+                            "type": "string"
+                        },
+                        "terms": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "color": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "examples": {
+            "default_heat_transfer": {
+                "description": "Default 9-term Heat Transfer in Nature chapter summary matching",
+                "value": {
+                    "pairs": [
+                        {
+                            "term": "Conduction",
+                            "definition": "Transfer of heat through a material by direct contact, without the particles themselves moving from place to place.",
+                            "color": "#E53935",
+                            "hint": "Think about touching a hot pan — heat flows through the solid metal.",
+                            "category": "Heat Transfer"
+                        },
+                        {
+                            "term": "Convection",
+                            "definition": "Transfer of heat in liquids and gases where hot, less dense material rises and cooler, denser material sinks, creating a current.",
+                            "color": "#1E88E5",
+                            "hint": "This definition mentions particles actually moving in a circular current.",
+                            "category": "Heat Transfer"
+                        },
+                        {
+                            "term": "Radiation",
+                            "definition": "Transfer of heat in the form of waves (infrared) that can travel through empty space without needing any medium.",
+                            "color": "#FB8C00",
+                            "hint": "How does the Sun's heat reach the Earth through the vacuum of space?",
+                            "category": "Heat Transfer"
+                        },
+                        {
+                            "term": "Good Conductor",
+                            "definition": "A material that allows heat to pass through it easily and quickly, such as metals like copper and aluminium.",
+                            "color": "#43A047",
+                            "hint": "Metals are great at this — that's why metal spoons get hot fast.",
+                            "category": "Materials"
+                        },
+                        {
+                            "term": "Insulator",
+                            "definition": "A material that does not allow heat to pass through it easily, such as wood, plastic, and air.",
+                            "color": "#8E24AA",
+                            "hint": "This is the opposite of a conductor — think of why we use wooden handles.",
+                            "category": "Materials"
+                        },
+                        {
+                            "term": "Sea Breeze",
+                            "definition": "A cool breeze that blows from the sea toward the land during the day because land heats up faster than water.",
+                            "color": "#00ACC1",
+                            "hint": "Happens during the DAY — land gets hot first, so wind comes from the cooler sea.",
+                            "category": "Wind Patterns"
+                        },
+                        {
+                            "term": "Land Breeze",
+                            "definition": "A breeze that blows from the land toward the sea at night because land cools down faster than water.",
+                            "color": "#78909C",
+                            "hint": "Happens at NIGHT — land cools first, so wind blows the other way.",
+                            "category": "Wind Patterns"
+                        },
+                        {
+                            "term": "Infiltration",
+                            "definition": "The process by which rainwater seeps into the ground through the soil and fills the gaps between rocks below.",
+                            "color": "#7E57C2",
+                            "hint": "Think about rainwater soaking into soil and going underground.",
+                            "category": "Groundwater"
+                        },
+                        {
+                            "term": "Aquifer",
+                            "definition": "An underground layer of permeable rock or sediment that holds and transmits groundwater, supplying wells and springs.",
+                            "color": "#EC407A",
+                            "hint": "This is where groundwater is stored deep underground in rock layers.",
+                            "category": "Groundwater"
+                        }
+                    ],
+                    "title": "In a Nutshell — Chapter Summary",
+                    "subtitle": "Match each key term with its correct definition",
+                    "showHints": true,
+                    "showCategories": true,
+                    "categoryGroups": [
+                        {
+                            "label": "Heat Transfer Modes",
+                            "terms": [
+                                "Conduction",
+                                "Convection",
+                                "Radiation"
+                            ],
+                            "color": "#FF7212"
+                        },
+                        {
+                            "label": "Materials",
+                            "terms": [
+                                "Good Conductor",
+                                "Insulator"
+                            ],
+                            "color": "#533086"
+                        },
+                        {
+                            "label": "Wind Patterns",
+                            "terms": [
+                                "Sea Breeze",
+                                "Land Breeze"
+                            ],
+                            "color": "#00ACC1"
+                        },
+                        {
+                            "label": "Groundwater",
+                            "terms": [
+                                "Infiltration",
+                                "Aquifer"
+                            ],
+                            "color": "#EC407A"
+                        }
+                    ],
+                    "teachingNotes": "Activate at the START of the revision session as a self-assessment tool. Let students attempt all 9 matches independently first. Note which terms they struggle with — these indicate concepts that need re-teaching. Common confusions: conduction vs convection definitions (particle movement difference), sea breeze vs land breeze (day vs night direction). After completion, briefly revisit any terms they got wrong. Ask: 'Which three terms relate to heat transfer modes? Which two relate to wind? Which two relate to groundwater?'"
+                }
+            },
+            "hints_disabled": {
+                "description": "Same matching activity but without hints for assessment mode",
+                "value": {
+                    "showHints": false,
+                    "title": "Chapter Test — Key Terms",
+                    "subtitle": "Match all 9 terms without any hints!",
+                    "instructionText": "No hints this time — match from memory!"
+                }
+            },
+            "only_heat_transfer": {
+                "description": "Subset matching — only the 3 heat transfer modes",
+                "value": {
+                    "pairs": [
+                        {
+                            "term": "Conduction",
+                            "definition": "Transfer of heat through a material by direct contact, without the particles themselves moving from place to place.",
+                            "color": "#E53935",
+                            "hint": "Think about touching a hot pan — heat flows through the solid metal.",
+                            "category": "Heat Transfer"
+                        },
+                        {
+                            "term": "Convection",
+                            "definition": "Transfer of heat in liquids and gases where hot, less dense material rises and cooler, denser material sinks, creating a current.",
+                            "color": "#1E88E5",
+                            "hint": "This definition mentions particles actually moving in a circular current.",
+                            "category": "Heat Transfer"
+                        },
+                        {
+                            "term": "Radiation",
+                            "definition": "Transfer of heat in the form of waves (infrared) that can travel through empty space without needing any medium.",
+                            "color": "#FB8C00",
+                            "hint": "How does the Sun's heat reach the Earth through the vacuum of space?",
+                            "category": "Heat Transfer"
+                        }
+                    ],
+                    "title": "Heat Transfer Modes — Quick Match",
+                    "subtitle": "Match the three modes of heat transfer"
+                }
+            },
+            "only_wind_and_groundwater": {
+                "description": "Subset matching — wind patterns + groundwater terms only",
+                "value": {
+                    "pairs": [
+                        {
+                            "term": "Sea Breeze",
+                            "definition": "A cool breeze that blows from the sea toward the land during the day because land heats up faster than water.",
+                            "color": "#00ACC1",
+                            "hint": "Happens during the DAY — land gets hot first, so wind comes from the cooler sea.",
+                            "category": "Wind Patterns"
+                        },
+                        {
+                            "term": "Land Breeze",
+                            "definition": "A breeze that blows from the land toward the sea at night because land cools down faster than water.",
+                            "color": "#78909C",
+                            "hint": "Happens at NIGHT — land cools first, so wind blows the other way.",
+                            "category": "Wind Patterns"
+                        },
+                        {
+                            "term": "Infiltration",
+                            "definition": "The process by which rainwater seeps into the ground through the soil and fills the gaps between rocks below.",
+                            "color": "#7E57C2",
+                            "hint": "Think about rainwater soaking into soil and going underground.",
+                            "category": "Groundwater"
+                        },
+                        {
+                            "term": "Aquifer",
+                            "definition": "An underground layer of permeable rock or sediment that holds and transmits groundwater, supplying wells and springs.",
+                            "color": "#EC407A",
+                            "hint": "This is where groundwater is stored deep underground in rock layers.",
+                            "category": "Groundwater"
+                        }
+                    ],
+                    "title": "Wind & Groundwater — Quick Match",
+                    "subtitle": "Match these 4 terms about breezes and underground water",
+                    "categoryGroups": [
+                        {
+                            "label": "Wind Patterns",
+                            "terms": [
+                                "Sea Breeze",
+                                "Land Breeze"
+                            ],
+                            "color": "#00ACC1"
+                        },
+                        {
+                            "label": "Groundwater",
+                            "terms": [
+                                "Infiltration",
+                                "Aquifer"
+                            ],
+                            "color": "#EC407A"
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "icons": {
+        "note": "All icons are defined as inline SVG React components inside the .tsx file. No external icon library is imported.",
+        "available": [
+            {
+                "name": "BookOpen",
+                "usage": "Header title icon"
+            },
+            {
+                "name": "Target",
+                "usage": "Score badge icon"
+            },
+            {
+                "name": "RotateCcw",
+                "usage": "Reset/Try Again button icon"
+            },
+            {
+                "name": "Check",
+                "usage": "Matched term/definition checkmark"
+            },
+            {
+                "name": "XIcon",
+                "usage": "Close instruction banner (renamed from X to avoid JSX conflict)"
+            },
+            {
+                "name": "Award",
+                "usage": "Completion overlay trophy icon"
+            },
+            {
+                "name": "Star",
+                "usage": "Hint banner icon"
+            },
+            {
+                "name": "Zap",
+                "usage": "Instruction banner icon"
+            },
+            {
+                "name": "ChevronRight",
+                "usage": "Selected term arrow indicator"
+            }
+        ]
+    },
+    "modes": {
+        "practice": {
+            "label": "Match",
+            "icon": "Target (inline SVG)",
+            "description": "Match key terms with their definitions"
+        }
+    },
+    "steps": {
+        "practice": [
+            {
+                "id": 1,
+                "title": "Match Key Terms",
+                "description": "Connect each term on the left with its correct definition on the right.",
+                "type": "practice",
+                "mode": "practice"
+            }
+        ]
+    },
+    "lineRendering": {
+        "note": "v1.1.0 uses cubic-bezier SVG paths for smooth curved connections between matched pairs. Lines are drawn relative to the matchAreaRef (the scrollable div wrapping the grid), with scroll offset accounted for. Each line has a glow shadow path, a main coloured path, and an animated checkmark badge at the midpoint."
+    },
+    "teaching_notes": "Activate at the START of the revision session as a self-assessment tool. Let students attempt all 9 matches independently first. Note which terms they struggle with — these indicate concepts that need re-teaching. Common confusions: conduction vs convection definitions (particle movement difference), sea breeze vs land breeze (day vs night direction). After completion, briefly revisit any terms they got wrong. Ask: 'Which three terms relate to heat transfer modes? Which two relate to wind? Which two relate to groundwater?'",
+    "instructions_for_student": "Match each key term on the left with its correct definition on the right! Tap a term first, then tap its matching definition. All 9 terms cover the most important concepts from this chapter — conduction, convection, radiation, conductors, insulators, breezes, and groundwater. Try to match all 9 correctly from memory before looking at hints!",
+    "frontend_action": "show_interactive_tool",
+    "title": "In a Nutshell — Chapter Summary",
+    "data": {
+        "toolName": "chapter_summary_matching_tool",
+        "parameters": {
+            "themeColor": "#4A4DC9",
+            "showModeSelector": false,
+            "showNavigation": false,
+            "autoPlayDuration": 0,
+            "additionalProps": {
+                "pairs": [
+                    {
+                        "term": "Conduction",
+                        "definition": "Transfer of heat through a material by direct contact, without the particles themselves moving from place to place.",
+                        "color": "#E53935",
+                        "hint": "Think about touching a hot pan — heat flows through the solid metal.",
+                        "category": "Heat Transfer"
+                    },
+                    {
+                        "term": "Convection",
+                        "definition": "Transfer of heat in liquids and gases where hot, less dense material rises and cooler, denser material sinks, creating a current.",
+                        "color": "#1E88E5",
+                        "hint": "This definition mentions particles actually moving in a circular current.",
+                        "category": "Heat Transfer"
+                    },
+                    {
+                        "term": "Radiation",
+                        "definition": "Transfer of heat in the form of waves (infrared) that can travel through empty space without needing any medium.",
+                        "color": "#FB8C00",
+                        "hint": "How does the Sun's heat reach the Earth through the vacuum of space?",
+                        "category": "Heat Transfer"
+                    },
+                    {
+                        "term": "Good Conductor",
+                        "definition": "A material that allows heat to pass through it easily and quickly, such as metals like copper and aluminium.",
+                        "color": "#43A047",
+                        "hint": "Metals are great at this — that's why metal spoons get hot fast.",
+                        "category": "Materials"
+                    },
+                    {
+                        "term": "Insulator",
+                        "definition": "A material that does not allow heat to pass through it easily, such as wood, plastic, and air.",
+                        "color": "#8E24AA",
+                        "hint": "This is the opposite of a conductor — think of why we use wooden handles.",
+                        "category": "Materials"
+                    },
+                    {
+                        "term": "Sea Breeze",
+                        "definition": "A cool breeze that blows from the sea toward the land during the day because land heats up faster than water.",
+                        "color": "#00ACC1",
+                        "hint": "Happens during the DAY — land gets hot first, so wind comes from the cooler sea.",
+                        "category": "Wind Patterns"
+                    },
+                    {
+                        "term": "Land Breeze",
+                        "definition": "A breeze that blows from the land toward the sea at night because land cools down faster than water.",
+                        "color": "#78909C",
+                        "hint": "Happens at NIGHT — land cools first, so wind blows the other way.",
+                        "category": "Wind Patterns"
+                    },
+                    {
+                        "term": "Infiltration",
+                        "definition": "The process by which rainwater seeps into the ground through the soil and fills the gaps between rocks below.",
+                        "color": "#7E57C2",
+                        "hint": "Think about rainwater soaking into soil and going underground.",
+                        "category": "Groundwater"
+                    },
+                    {
+                        "term": "Aquifer",
+                        "definition": "An underground layer of permeable rock or sediment that holds and transmits groundwater, supplying wells and springs.",
+                        "color": "#EC407A",
+                        "hint": "This is where groundwater is stored deep underground in rock layers.",
+                        "category": "Groundwater"
+                    }
+                ],
+                "title": "In a Nutshell — Chapter Summary",
+                "subtitle": "Match each key term with its correct definition",
+                "instructionText": "Tap a term, then tap its definition to match them!",
+                "showHints": true,
+                "showCategories": true,
+                "categoryGroups": [
+                    {
+                        "label": "Heat Transfer Modes",
+                        "terms": [
+                            "Conduction",
+                            "Convection",
+                            "Radiation"
+                        ],
+                        "color": "#FF7212"
+                    },
+                    {
+                        "label": "Materials",
+                        "terms": [
+                            "Good Conductor",
+                            "Insulator"
+                        ],
+                        "color": "#533086"
+                    },
+                    {
+                        "label": "Wind Patterns",
+                        "terms": [
+                            "Sea Breeze",
+                            "Land Breeze"
+                        ],
+                        "color": "#00ACC1"
+                    },
+                    {
+                        "label": "Groundwater",
+                        "terms": [
+                            "Infiltration",
+                            "Aquifer"
+                        ],
+                        "color": "#EC407A"
+                    }
+                ],
+                "teachingNotes": "Activate at the START of the revision session as a self-assessment tool. Let students attempt all 9 matches independently first. Note which terms they struggle with — these indicate concepts that need re-teaching. Common confusions: conduction vs convection definitions (particle movement difference), sea breeze vs land breeze (day vs night direction). After completion, briefly revisit any terms they got wrong. Ask: 'Which three terms relate to heat transfer modes? Which two relate to wind? Which two relate to groundwater?'"
+            }
+        }
+    }
+}

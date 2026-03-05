@@ -1,0 +1,98 @@
+{
+    "toolName": "hundredths_arithmetic_tool",
+    "version": "2.0.0",
+    "designSystem": "Singularity",
+    "description": "Interactive calculation practice tool for CBSE Grade 7 Mathematics (Decimals chapter), redesigned with the Singularity Design System. Six problems mixing addition and subtraction with tenths and hundredths.",
+    "topic": "Practice: Figure it Out — Sums and Differences with Hundredths",
+    "subject": "Mathematics",
+    "grade": 7,
+    "curriculum": "CBSE",
+    "textbook": "Ganita Prakash",
+    "chapter": "3 - A Peek Beyond the Point",
+    "section": "3.3 A Hundredth Part / Figure it Out (Page 58)",
+    "instructions_for_student": "Solve each problem using the column method. Enter digits in the Units, Tenths, and Hundredths columns, starting from the right (hundredths first). The tool checks each digit as you go!",
+    "teaching_notes": "Present AFTER teaching the column method for hundredths arithmetic. Problem (f) requires double borrowing — let students struggle before offering hints.",
+    "design_system_tokens": {
+        "colors": {
+            "primary": "#4A4DC9",
+            "primaryDark": "#533086",
+            "accent": "#FF7212",
+            "accentDark": "#FC9145",
+            "primaryTint": "#C1C1EA",
+            "accentTint": "#FFF3E4",
+            "gray900": "#4E4E4E",
+            "gray500": "#CACACA",
+            "gray300": "#EBEBEB",
+            "gray100": "#F5F5F5"
+        },
+        "gradients": {
+            "header": "linear-gradient(135deg, #533086 0%, #4A4DC9 60%, #FC9145 100%)",
+            "primary": "linear-gradient(135deg, #533086 0%, #4A4DC9 100%)",
+            "accent": "linear-gradient(135deg, #FF7212 0%, #FC9145 100%)"
+        },
+        "typography": {
+            "fontFamily": "Poppins",
+            "monoFont": "JetBrains Mono"
+        },
+        "buttons": {
+            "height": "40px",
+            "padding": "0 24px",
+            "borderRadius": "100px (pill)",
+            "variants": ["contained", "outlined", "text"],
+            "states": ["enabled", "disabled", "hover", "pressed"]
+        }
+    },
+    "parameters": {
+        "width": { "type": "number", "default": 900 },
+        "themeColor": { "type": "string", "default": "#4A4DC9" },
+        "darkMode": { "type": "boolean", "default": false }
+    },
+    "additionalProps": {
+        "properties": {
+            "problems": { "type": "array", "default": "6 textbook problems" },
+            "showHints": { "type": "boolean", "default": true },
+            "showProgress": { "type": "boolean", "default": true },
+            "title": { "type": "string", "default": "Figure it Out" },
+            "subtitle": { "type": "string", "default": "Sums & Differences with Hundredths" }
+        }
+    },
+    "problems_detail": [
+        { "id": "a", "type": "addition", "expression": "3/10 + 3 4/100", "answer": "3.34", "difficulty": "easy" },
+        { "id": "b", "type": "addition", "expression": "9 5/10 7/100 + 2 1/10 3/100", "answer": "11.70", "difficulty": "medium" },
+        { "id": "c", "type": "addition", "expression": "15 6/10 4/100 + 14 3/10 6/100", "answer": "30.00", "difficulty": "hard" },
+        { "id": "d", "type": "subtraction", "expression": "7 7/100 - 4 4/100", "answer": "3.03", "difficulty": "easy" },
+        { "id": "e", "type": "subtraction", "expression": "8 6/100 - 5 3/100", "answer": "3.03", "difficulty": "easy" },
+        { "id": "f", "type": "subtraction", "expression": "12 6/10 2/100 - 9/10 9/100", "answer": "11.63", "difficulty": "hard" }
+    ],
+    "agent_tool_call_examples": [
+        {
+            "description": "Default: all 6 problems with Singularity design",
+            "tool_call": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Figure it Out — Sums and Differences with Hundredths",
+                "data": {
+                    "toolName": "hundredths_arithmetic_tool",
+                    "parameters": {}
+                },
+                "instructions_for_student": "Solve each problem using the column method. Enter digits right-to-left. The tool checks each digit as you go!"
+            }
+        },
+        {
+            "description": "No hints for assessment",
+            "tool_call": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Quiz — Decimal Arithmetic",
+                "data": {
+                    "toolName": "hundredths_arithmetic_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "showHints": false,
+                            "title": "Quiz Time!",
+                            "subtitle": "Test your decimal skills"
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,494 @@
+{
+  "tool_name": "TenthPartTool",
+  "topic": "3.2 A Tenth Part",
+  "subject": "Mathematics",
+  "grade": 7,
+  "curriculum": "Ganita Prakash",
+  "design_system": "Singularity",
+  "version": "1.0.0",
+  
+  "description": "Interactive learning tool for understanding tenth parts, converting between mixed numbers and improper fractions, and applying tenth concepts to real-world measurements.",
+  
+  "learning_objectives": [
+    "Understand that one unit can be divided into 10 equal parts (tenths)",
+    "Recognize that 10 × 1/10 = 1 whole unit",
+    "Convert between mixed numbers (3 4/10) and improper fractions (34/10)",
+    "Read and write fractional notation correctly",
+    "Apply tenth concepts to real-world measurement scenarios"
+  ],
+  
+  "tool_structure": {
+    "modes": {
+      "learn": {
+        "name": "Learn Mode",
+        "icon": "📚",
+        "steps": 5,
+        "description": "Visual lessons with interactive demonstrations",
+        "topics": [
+          "Understanding a Tenth Part",
+          "Ten One-Tenths Make One Unit",
+          "Converting 34 One-Tenths",
+          "Reading Decimal Numbers",
+          "The Math Behind Tenths"
+        ]
+      },
+      "practice": {
+        "name": "Practice Mode",
+        "icon": "🧠",
+        "questions": 5,
+        "description": "Multiple-choice questions with immediate feedback",
+        "scoring": true
+      },
+      "real_world": {
+        "name": "Real World Mode",
+        "icon": "🌍",
+        "scenarios": 4,
+        "description": "Practical applications of tenths",
+        "topics": [
+          "Measuring Fabric",
+          "Pouring Juice",
+          "Running Track",
+          "Digital Scale"
+        ]
+      }
+    },
+    
+    "visual_components": [
+      {
+        "name": "PencilWithRuler",
+        "purpose": "Show measurement of 3 4/10 units",
+        "demonstrates": "Reading fractional measurements on ruler"
+      },
+      {
+        "name": "TenthsVisualization",
+        "purpose": "Show 10 blocks representing tenths",
+        "demonstrates": "10 × 1/10 = 1 unit"
+      },
+      {
+        "name": "ConversionDiagram",
+        "purpose": "Show conversion flow",
+        "demonstrates": "34 × 1/10 → 34/10 → 3 + 4/10"
+      },
+      {
+        "name": "TenthsNumberLine",
+        "purpose": "Show tenths on number line",
+        "demonstrates": "Locating fractional values"
+      },
+      {
+        "name": "EquationBreakdown",
+        "purpose": "Show step-by-step math",
+        "demonstrates": "Algebraic decomposition"
+      }
+    ]
+  },
+  
+  "design_tokens": {
+    "colors": {
+      "primary": "#4A4DC9",
+      "primaryDark": "#533086",
+      "secondary": "#FF7212",
+      "secondaryLight": "#FC9145",
+      "neutral": {
+        "dark": "#4E4E4E",
+        "medium": "#CACACA",
+        "light": "#EBEBEB",
+        "lighter": "#F5F5F5"
+      },
+      "accent": {
+        "purple": "#533086",
+        "purpleLight": "#C1C1EA",
+        "orange": "#FC9145",
+        "orangeLight": "#FFF3E4"
+      }
+    },
+    "spacing": {
+      "xs": "4px",
+      "sm": "8px",
+      "md": "12px",
+      "lg": "16px",
+      "xl": "20px",
+      "xxl": "24px",
+      "xxxl": "32px",
+      "huge": "40px"
+    },
+    "borderRadius": {
+      "sm": "8px",
+      "md": "10px",
+      "lg": "12px",
+      "xl": "16px",
+      "xxl": "24px",
+      "round": "50%"
+    },
+    "typography": {
+      "fontFamily": "Poppins, system-ui, -apple-system, sans-serif",
+      "fontWeights": {
+        "regular": "400",
+        "medium": "500",
+        "semibold": "600",
+        "bold": "700"
+      }
+    }
+  },
+  
+  "default_configuration": {
+    "initialMode": "learn",
+    "showModeSelector": true,
+    "enabledModes": ["learn", "practice", "real_world"],
+    "showNavigation": true,
+    "showPlayPause": true,
+    "showStepIndicator": true,
+    "initialStep": 0,
+    "animationSpeed": 1,
+    "autoPlayDuration": 8000,
+    "themeColor": "#533086",
+    "darkMode": false
+  },
+  
+  "customization_options": {
+    "visual_parameters": {
+      "pencilLength": {
+        "type": "number",
+        "default": 3.4,
+        "min": 1,
+        "max": 5,
+        "description": "Length of pencil in units"
+      },
+      "totalBlocks": {
+        "type": "number",
+        "default": 10,
+        "fixed": true,
+        "description": "Total blocks in tenths visualization"
+      },
+      "highlightedBlocks": {
+        "type": "number",
+        "default": 10,
+        "min": 0,
+        "max": 10,
+        "description": "Number of highlighted blocks"
+      },
+      "numberLineValue": {
+        "type": "number",
+        "default": 3.4,
+        "min": 0,
+        "max": 5,
+        "description": "Marked value on number line"
+      }
+    },
+    
+    "content_customization": {
+      "customQuestions": {
+        "type": "PracticeQuestion[]",
+        "description": "Array of custom practice questions",
+        "structure": {
+          "id": "number",
+          "question": "string",
+          "options": "string[] (4 options)",
+          "correct": "string",
+          "explanation": "string"
+        }
+      },
+      "customScenarios": {
+        "type": "RealWorldScenario[]",
+        "description": "Array of custom real-world scenarios",
+        "structure": {
+          "id": "number",
+          "title": "string",
+          "scenario": "string",
+          "visual": "string (emoji)",
+          "question": "string",
+          "answer": "string",
+          "realLifeTip": "string"
+        }
+      }
+    }
+  },
+  
+  "interactive_features": {
+    "navigation": {
+      "previous_button": "Navigate to previous step",
+      "next_button": "Navigate to next step",
+      "play_pause": "Auto-advance through steps",
+      "mode_selector": "Switch between Learn/Practice/Real World"
+    },
+    "feedback": {
+      "immediate": "Instant feedback on practice questions",
+      "visual": "Color-coded correct/incorrect indicators",
+      "explanatory": "Detailed explanations for all answers",
+      "progress": "Real-time score tracking"
+    },
+    "animations": {
+      "entrance": "Smooth slide and fade animations",
+      "transitions": "Seamless step changes",
+      "interactive": "Hover and press states",
+      "progress": "Animated progress bar filling"
+    }
+  },
+  
+  "responsive_breakpoints": {
+    "mobile": {
+      "maxWidth": "639px",
+      "features": [
+        "Stacked layouts",
+        "Larger touch targets (44px minimum)",
+        "Simplified navigation",
+        "Full-width mode buttons",
+        "Reduced animation complexity"
+      ]
+    },
+    "tablet": {
+      "minWidth": "640px",
+      "maxWidth": "1023px",
+      "features": [
+        "Two-column layouts where appropriate",
+        "Optimized spacing",
+        "Side-by-side mode buttons",
+        "Enhanced visualizations"
+      ]
+    },
+    "desktop": {
+      "minWidth": "1024px",
+      "features": [
+        "Multi-column layouts",
+        "Full-size visualizations",
+        "Horizontal mode selector",
+        "Maximum content width 1200px",
+        "Rich animations"
+      ]
+    }
+  },
+  
+  "accessibility": {
+    "wcag_compliance": "AA",
+    "features": [
+      "Semantic HTML structure",
+      "Keyboard navigation support",
+      "Focus indicators",
+      "High contrast colors (4.5:1 minimum)",
+      "Large touch targets",
+      "Clear error messages",
+      "Screen reader friendly labels"
+    ]
+  },
+  
+  "performance": {
+    "optimization": [
+      "React key-based efficient re-renders",
+      "CSS animations (GPU accelerated)",
+      "Lazy loading of visual components",
+      "Optimized SVG rendering",
+      "Minimal bundle impact"
+    ],
+    "target_metrics": {
+      "first_paint": "< 1s",
+      "interactive": "< 2s",
+      "animation_fps": "60fps",
+      "bundle_size": "< 100KB (gzipped)"
+    }
+  },
+  
+  "testing_scenarios": [
+    {
+      "scenario": "Complete Learn Mode",
+      "steps": [
+        "Load tool in Learn mode",
+        "Navigate through all 5 steps",
+        "Verify each visual component loads",
+        "Check animations play smoothly",
+        "Confirm content accuracy"
+      ]
+    },
+    {
+      "scenario": "Practice Mode Assessment",
+      "steps": [
+        "Switch to Practice mode",
+        "Answer all 5 questions (mix correct/incorrect)",
+        "Verify immediate feedback appears",
+        "Check score updates correctly",
+        "Confirm completion summary displays"
+      ]
+    },
+    {
+      "scenario": "Real World Applications",
+      "steps": [
+        "Switch to Real World mode",
+        "Navigate through all 4 scenarios",
+        "Verify emoji visuals display",
+        "Check content relevance",
+        "Confirm educational value"
+      ]
+    },
+    {
+      "scenario": "Responsive Design",
+      "steps": [
+        "Test on mobile viewport (375px)",
+        "Test on tablet viewport (768px)",
+        "Test on desktop viewport (1440px)",
+        "Verify layouts adapt correctly",
+        "Check touch target sizes"
+      ]
+    },
+    {
+      "scenario": "Auto-Play Feature",
+      "steps": [
+        "Click Play button",
+        "Verify auto-advance after 8 seconds",
+        "Click Pause button",
+        "Confirm auto-advance stops",
+        "Test manual navigation during play"
+      ]
+    }
+  ],
+  
+  "common_issues": {
+    "animation_not_playing": {
+      "cause": "CSS animations disabled or browser incompatibility",
+      "solution": "Check browser support, verify animationDuration > 0"
+    },
+    "incorrect_progress": {
+      "cause": "State management issue",
+      "solution": "Ensure setStepDetails callback is properly configured"
+    },
+    "layout_breaking": {
+      "cause": "Viewport too narrow or CSS conflicts",
+      "solution": "Test responsive breakpoints, check for CSS specificity issues"
+    },
+    "custom_content_not_showing": {
+      "cause": "Incorrect prop format",
+      "solution": "Verify customQuestions/customScenarios match interface exactly"
+    }
+  },
+  
+  "integration_guide": {
+    "step1": "Import the component: import TenthPartTool from './TenthPartTool'",
+    "step2": "Add to your React component: <TenthPartTool />",
+    "step3": "Customize with props as needed",
+    "step4": "Style container if necessary (tool is self-contained)",
+    "step5": "Test all modes and responsive breakpoints"
+  },
+  
+  "dependencies": {
+    "required": {
+      "react": ">=16.8.0",
+      "react-dom": ">=16.8.0"
+    },
+    "optional": {
+      "typescript": ">=4.0.0"
+    }
+  },
+  
+  "file_structure": {
+    "main_component": "TenthPartTool.tsx",
+    "documentation": "SKILL.md",
+    "configuration": "INSTRUCTIONS.json",
+    "types": "Defined inline in component",
+    "styles": "Inline styles using design tokens"
+  },
+  
+  "mathematical_concepts": {
+    "core_concepts": [
+      "Fractional parts of a whole",
+      "Equivalence of fractions",
+      "Place value for fractions",
+      "Converting between representations"
+    ],
+    "prerequisite_knowledge": [
+      "Basic fraction concepts",
+      "Whole number place value",
+      "Addition and subtraction",
+      "Multiplication basics"
+    ],
+    "extension_topics": [
+      "Decimal notation (covered in next topics)",
+      "Hundredths and thousandths",
+      "Operations with decimals",
+      "Real-world problem solving"
+    ]
+  },
+  
+  "teacher_guidance": {
+    "suggested_duration": "45-60 minutes",
+    "classroom_use": [
+      "Individual practice on devices",
+      "Projected for whole-class instruction",
+      "Small group collaborative learning",
+      "Homework assignment",
+      "Formative assessment tool"
+    ],
+    "differentiation": [
+      "Fast finishers: Try custom harder questions",
+      "Struggling learners: Focus on Learn mode, repeat as needed",
+      "Visual learners: Emphasize visual components",
+      "Kinesthetic learners: Use practice mode for engagement"
+    ],
+    "assessment_opportunities": [
+      "Practice mode score as formative assessment",
+      "Observe student navigation patterns",
+      "Discussion prompts from Real World scenarios",
+      "Exit ticket: Explain 3 4/10 = 34/10"
+    ]
+  },
+  
+  "parent_guidance": {
+    "how_to_support": [
+      "Sit with your child during Learn mode",
+      "Discuss real-world examples together",
+      "Encourage explaining answers out loud",
+      "Relate to everyday measurements (cooking, etc.)"
+    ],
+    "what_to_look_for": [
+      "Can they identify tenths on a ruler?",
+      "Do they understand 10 tenths = 1 whole?",
+      "Can they convert between forms?",
+      "Do they see practical applications?"
+    ]
+  },
+  
+  "extension_activities": {
+    "offline": [
+      "Create your own ruler with tenth markings",
+      "Measure objects around the house in tenths",
+      "Draw fraction strips showing tenths",
+      "Write a story problem using tenths"
+    ],
+    "online": [
+      "Research how tenths are used in sports timing",
+      "Find examples of tenths in news articles",
+      "Create a presentation about decimal measurements",
+      "Design your own tenth practice questions"
+    ]
+  },
+  
+  "changelog": {
+    "1.0.0": {
+      "date": "2024-02-12",
+      "changes": [
+        "Initial release",
+        "Implemented Singularity Design System",
+        "Created 5 Learn steps with visualizations",
+        "Added 5 Practice questions",
+        "Developed 4 Real World scenarios",
+        "Full responsive design",
+        "Auto-play functionality",
+        "Dark mode support"
+      ]
+    }
+  },
+  
+  "metadata": {
+    "author": "Anthropic Educational Tools",
+    "created": "2024-02-12",
+    "last_updated": "2024-02-12",
+    "tags": [
+      "mathematics",
+      "fractions",
+      "tenths",
+      "grade-7",
+      "interactive",
+      "educational",
+      "ganita-prakash",
+      "singularity-design"
+    ],
+    "category": "Educational Tools",
+    "subcategory": "Mathematics - Number Systems"
+  }
+}

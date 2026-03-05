@@ -1,0 +1,166 @@
+{
+  "frontend_action": "show_interactive_tool",
+  "title": "Chapter 10 Review — Operations with Integers",
+  "description": "Comprehensive MCQ quiz tool for Grade 7 Mathematics — Chapter Review: Operations with Integers. Clean, professional exam-style interface with topic tagging, animated feedback, and summary dashboard.",
+  "data": {
+    "toolName": "chapter_review_quiz",
+    "componentFile": "ChapterReviewQuiz.tsx",
+    "parameters": {
+      "themeColor": "#dc2626",
+      "darkMode": false,
+      "additionalProps": {
+        "chapterTitle": "Chapter 10 Review",
+        "chapterNumber": 10,
+        "instructionsForStudent": "Answer each question carefully — each one tests a different concept from the chapter. After answering, read the explanation and identify which topic it comes from: sign rules, properties, or word problems. At the end, check your score and revisit any topic where you made a mistake.",
+        "teachingNotes": "This quiz is designed to be used at the end of the chapter, after the Terhüchü puzzle discussion. rq1 tests basic sign rules. rq2 applies division rules to larger numbers. rq3 is the trickiest — students must work backwards from the result of ×(−1). rq4 identifies a named property. rq5 tests the distributive property with a 'both paths' insight. rq6 is the cement company word problem from the textbook — students should recognise it. Review rq3 and rq5 in particular, as these are the highest-difficulty items and the most instructive to discuss as a class.",
+        "questions": [
+          {
+            "id": "rq1",
+            "topic": "Sign Rules",
+            "topicColor": "#dc2626",
+            "question": "What is the value of (−8) × (−5)?",
+            "options": [
+              { "label": "A", "text": "−40" },
+              { "label": "B", "text": "40" },
+              { "label": "C", "text": "−13" },
+              { "label": "D", "text": "13" }
+            ],
+            "correctIndex": 1,
+            "explanation": "When both the multiplier and multiplicand are negative, the product is positive. The magnitude is 8 × 5 = 40, so (−8) × (−5) = +40.",
+            "conceptName": "Sign Rules for Multiplication"
+          },
+          {
+            "id": "rq2",
+            "topic": "Division Rules",
+            "topicColor": "#f59e0b",
+            "question": "If (−548) × 972 = −532656, what is (−532656) ÷ (−548)?",
+            "options": [
+              { "label": "A", "text": "−972" },
+              { "label": "B", "text": "972" },
+              { "label": "C", "text": "−548" },
+              { "label": "D", "text": "548" }
+            ],
+            "correctIndex": 1,
+            "explanation": "Division of two negatives gives a positive result. Since (−548) × 972 = −532656, dividing −532656 by −548 reverses the multiplication and gives +972.",
+            "conceptName": "Sign Rules for Division"
+          },
+          {
+            "id": "rq3",
+            "topic": "Multiplicative Identity",
+            "topicColor": "#8b5cf6",
+            "question": "Riya says: \"The integer whose product with (−1) is 31 must be −31.\" Is she correct?",
+            "options": [
+              { "label": "A", "text": "Yes, because (−1) × (−31) = 31" },
+              { "label": "B", "text": "No, the integer is 31" },
+              { "label": "C", "text": "No, the integer is −1" },
+              { "label": "D", "text": "Yes, because (−1) × 31 = 31" }
+            ],
+            "correctIndex": 0,
+            "explanation": "We need an integer n such that (−1) × n = 31. Since −1 × a = −a for all integers, we need −n = 31, so n = −31. Riya is correct: (−1) × (−31) = 31.",
+            "conceptName": "Property of −1 (Additive Inverse via Multiplication)"
+          },
+          {
+            "id": "rq4",
+            "topic": "Commutative Property",
+            "topicColor": "#22c55e",
+            "question": "Which property of integer multiplication does the equation (−7) × 4 = 4 × (−7) demonstrate?",
+            "options": [
+              { "label": "A", "text": "Associative property" },
+              { "label": "B", "text": "Distributive property" },
+              { "label": "C", "text": "Commutative property" },
+              { "label": "D", "text": "Closure property" }
+            ],
+            "correctIndex": 2,
+            "explanation": "When swapping the multiplier and multiplicand gives the same product, it demonstrates the commutative property: a × b = b × a. This holds for all integers.",
+            "conceptName": "Commutative Property of Multiplication"
+          },
+          {
+            "id": "rq5",
+            "topic": "Distributive Property",
+            "topicColor": "#0ea5e9",
+            "question": "Arjun evaluates (−5) × (18 + (−3)). Which calculation gives the same result using the distributive property?",
+            "options": [
+              { "label": "A", "text": "(−5) × 18 + (−5) × (−3)" },
+              { "label": "B", "text": "(−5) × 18 − (−3)" },
+              { "label": "C", "text": "(−5) + 18 × (−5) + (−3)" },
+              { "label": "D", "text": "(−5) × 18 + (−3)" }
+            ],
+            "correctIndex": 0,
+            "explanation": "The distributive property states a × (b + c) = (a × b) + (a × c). So (−5) × (18 + (−3)) = (−5) × 18 + (−5) × (−3) = −90 + 15 = −75. Both paths give −75.",
+            "conceptName": "Distributive Property over Addition"
+          },
+          {
+            "id": "rq6",
+            "topic": "Word Problem",
+            "topicColor": "#ec4899",
+            "question": "A cement company earns ₹8 profit per bag of white cement and ₹5 loss per bag of grey cement. If it sells 3,000 white and 5,000 grey bags, what is the result?",
+            "options": [
+              { "label": "A", "text": "₹1,000 loss" },
+              { "label": "B", "text": "₹1,000 profit" },
+              { "label": "C", "text": "₹49,000 profit" },
+              { "label": "D", "text": "₹49,000 loss" }
+            ],
+            "correctIndex": 0,
+            "explanation": "Profit from white cement = 3000 × 8 = ₹24,000. Loss from grey cement = 5000 × (−5) = −₹25,000. Total = 24,000 + (−25,000) = −₹1,000, which is a ₹1,000 loss.",
+            "conceptName": "Applying Integer Operations to Word Problems"
+          }
+        ]
+      }
+    }
+  },
+  "instructions_for_student": "Answer each question carefully — each one tests a different concept from the chapter. After answering, read the explanation and identify which topic it comes from: sign rules, properties, or word problems. At the end, check your score and revisit any topic where you made a mistake.",
+  "teaching_notes": "This quiz is designed to be used at the end of the chapter, after the Terhüchü puzzle discussion. rq1 tests basic sign rules. rq2 applies division rules to larger numbers. rq3 is the trickiest — students must work backwards from the result of ×(−1). rq4 identifies a named property. rq5 tests the distributive property with a 'both paths' insight. rq6 is the cement company word problem from the textbook — students should recognise it. Review rq3 and rq5 in particular, as these are the highest-difficulty items and the most instructive to discuss as a class.",
+  "design_spec": {
+    "font_display": "Lilita One (Google Fonts)",
+    "font_body": "Nunito (Google Fonts)",
+    "palette": {
+      "red": "#dc2626",
+      "green": "#22c55e",
+      "amber": "#f59e0b",
+      "white": "#ffffff",
+      "dark_text": "#1e293b"
+    },
+    "features": [
+      "Top bar with chapter title and question progress",
+      "Coloured topic pill badge per question",
+      "Question text in Lilita One display font",
+      "Full-width A-D answer buttons with hover animation",
+      "Correct answer turns green with topic reinforcement text",
+      "Wrong answer turns red with shake animation; correct highlighted",
+      "Slide-in explanation panel with bolded concept name",
+      "Final summary: animated dial gauge, star rating, topic breakdown table, Review Mistakes button",
+      "Indian context: student names Riya and Arjun, cement company word problem, ₹ currency",
+      "Touch-friendly, mobile-responsive, ARIA accessibility labels",
+      "Confetti animation on score ≥ 50%"
+    ],
+    "accessibility": [
+      "ARIA labels on all interactive buttons",
+      "High contrast text on backgrounds",
+      "Keyboard navigable",
+      "Minimum 44px touch targets"
+    ],
+    "responsiveness": "Fluid layout with max-width 560px question card, full viewport height, mobile-first padding"
+  },
+  "agent_readme": {
+    "quick_reference": {
+      "toolName": "chapter_review_quiz",
+      "purpose": "End-of-chapter MCQ quiz with animated feedback and topic-wise scoring",
+      "target_audience": "Grade 7 students studying Operations with Integers",
+      "question_count": 6,
+      "topics_covered": [
+        "Sign Rules for Multiplication",
+        "Sign Rules for Division",
+        "Multiplicative Identity / Property of −1",
+        "Commutative Property",
+        "Distributive Property",
+        "Word Problems with Integer Operations"
+      ]
+    },
+    "customisation_guide": "Replace the questions array in additionalProps with any set of QuizQuestion objects to reuse this component for other chapters. Each question needs: id, topic, topicColor, question text, 4 options, correctIndex (0-3), explanation, and conceptName.",
+    "difficulty_notes": {
+      "easiest": ["rq1 (basic sign rule)", "rq4 (identify named property)"],
+      "medium": ["rq2 (division with large numbers)", "rq6 (word problem)"],
+      "hardest": ["rq3 (backwards from −1 multiplication)", "rq5 (distributive property both paths)"]
+    }
+  }
+}

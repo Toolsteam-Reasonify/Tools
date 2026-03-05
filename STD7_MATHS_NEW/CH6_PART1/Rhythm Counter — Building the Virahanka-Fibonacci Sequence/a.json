@@ -1,0 +1,70 @@
+{
+    "toolName": "counting_rhythms_tool",
+    "version": "2.0.0",
+    "description": "Interactive step-based rhythm counter for Grade 7 Mathematics — Chapter 6: Number Play, Virahanka-Fibonacci sequence. Redesigned with Singularity Design System: Poppins font, indigo (#4A4DC9) + orange (#FF7212) palette, purple-to-orange gradients (#533086 → #FC9145), lavender (#C1C1EA) and cream (#FFF3E4) light fills, pill-shaped buttons (border-radius: 100px). Displays rhythm patterns as coloured blocks: short syllable (1 beat) as indigo square, long syllable (2 beats) as gradient purple-to-orange rectangle. Six progressive steps from n=1 to n=5 plus recursive rule reveal.",
+    "designSystem": "Singularity",
+    "designTokens": {
+        "colors": {
+            "primary": "#4A4DC9",
+            "accent": "#FF7212",
+            "gradientStart": "#533086",
+            "gradientEnd": "#FC9145",
+            "lightFill1": "#C1C1EA",
+            "lightFill2": "#FFF3E4",
+            "neutralDark": "#4E4E4E",
+            "neutralMid": "#CACACA",
+            "neutralLight": "#EBEBEB",
+            "background": "#F5F5F5",
+            "white": "#FFFFFF"
+        },
+        "typography": {
+            "fontFamily": "Poppins",
+            "weights": [400, 500, 600, 700, 800]
+        },
+        "borderRadius": {
+            "pill": 100,
+            "large": 16,
+            "medium": 12,
+            "small": 8
+        },
+        "buttonStyles": {
+            "contained": "Solid background, pill shape, 8px 24px padding",
+            "outlined": "Border only, pill shape, hover fills soft background",
+            "texted": "No border/background, text only"
+        }
+    },
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "width": { "type": "number", "default": 800 },
+            "height": { "type": "number", "default": 600 },
+            "animationSpeed": { "type": "number", "default": 1 },
+            "autoPlayDuration": { "type": "number", "default": 0 },
+            "showNavigation": { "type": "boolean", "default": true },
+            "showStepIndicator": { "type": "boolean", "default": true },
+            "initialStep": { "type": "number", "default": 0 }
+        }
+    },
+    "additionalProps": {
+        "type": "object",
+        "properties": {
+            "showTablaLabels": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show 'ta'/'dha' labels (Indian tabla). When false, shows '1'/'2'."
+            }
+        }
+    },
+    "steps": {
+        "total": 6,
+        "details": [
+            { "id": 0, "n": 1, "title": "1 Beat", "count": 1 },
+            { "id": 1, "n": 2, "title": "2 Beats", "count": 2 },
+            { "id": 2, "n": 3, "title": "3 Beats", "count": 3, "features": ["sum_highlight"] },
+            { "id": 3, "n": 4, "title": "4 Beats", "count": 5, "features": ["prediction_banner"] },
+            { "id": 4, "n": 5, "title": "5 Beats — The Split", "count": 8, "features": ["split_diagram"] },
+            { "id": 5, "n": 0, "title": "The Virahāṅka Rule!", "count": 0, "features": ["recursive_rule", "staircase"] }
+        ]
+    },
+    "instructionsForStudent": "Watch as rhythm patterns are built for increasing beat counts using short (1-beat) and long (2-beat) blocks. Count along and notice the pattern: each count is the sum of the previous two. This is how the Virahanka-Fibonacci sequence is born!"
+}

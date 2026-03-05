@@ -1,0 +1,123 @@
+{
+  "frontend_action": "show_interactive_tool",
+  "title": "Practice: Figure it Out — 16 Decimal Addition and Subtraction Problems",
+  "description": "Interactive calculation workspace for 16 decimal problems (8 additions, 8 subtractions) using the column method with automatic decimal point alignment, zero padding, and immediate feedback.",
+  "subject": "Mathematics",
+  "grade": 7,
+  "curriculum": "CBSE",
+  "textbook": "Ganita Prakash",
+  "chapter": "Chapter 3 — A Peek Beyond the Point",
+  "section": "3.7 Addition and Subtraction of Decimals — Figure it Out",
+  "data": {
+    "toolName": "decimal_practice_tool",
+    "componentFile": "DecimalPracticeTool.tsx",
+    "parameters": {
+      "width": 800,
+      "height": 700,
+      "themeColor": "#2563eb",
+      "darkMode": false,
+      "showModeSelector": true,
+      "enabledModes": ["practice"],
+      "initialMode": "practice",
+      "animationSpeed": 1,
+      "autoPlayDuration": 0,
+      "additionalProps": {
+        "tabs": [
+          {
+            "id": "add",
+            "label": "Find the Sums",
+            "icon": "➕",
+            "problems": [
+              { "id": "a1", "label": "(a)", "num1": 5.3, "num2": 2.6, "operation": "+", "answer": 7.9 },
+              { "id": "a2", "label": "(b)", "num1": 18, "num2": 8.8, "operation": "+", "answer": 26.8, "paddingNote": "18 → 18.0 (padded with zero)" },
+              { "id": "a3", "label": "(c)", "num1": 2.15, "num2": 5.26, "operation": "+", "answer": 7.41 },
+              { "id": "a4", "label": "(d)", "num1": 9.01, "num2": 9.10, "operation": "+", "answer": 18.11 },
+              { "id": "a5", "label": "(e)", "num1": 29.19, "num2": 9.91, "operation": "+", "answer": 39.10 },
+              { "id": "a6", "label": "(f)", "num1": 0.934, "num2": 0.6, "operation": "+", "answer": 1.534, "paddingNote": "0.6 → 0.600 (padded with zeros)" },
+              { "id": "a7", "label": "(g)", "num1": 0.75, "num2": 0.03, "operation": "+", "answer": 0.78 },
+              { "id": "a8", "label": "(h)", "num1": 6.236, "num2": 0.487, "operation": "+", "answer": 6.723 }
+            ]
+          },
+          {
+            "id": "sub",
+            "label": "Find the Differences",
+            "icon": "➖",
+            "problems": [
+              { "id": "s1", "label": "(a)", "num1": 5.6, "num2": 2.3, "operation": "-", "answer": 3.3 },
+              { "id": "s2", "label": "(b)", "num1": 18, "num2": 8.8, "operation": "-", "answer": 9.2, "paddingNote": "18 → 18.0 (padded with zero)" },
+              { "id": "s3", "label": "(c)", "num1": 10.4, "num2": 4.5, "operation": "-", "answer": 5.9 },
+              { "id": "s4", "label": "(d)", "num1": 17, "num2": 16.198, "operation": "-", "answer": 0.802, "paddingNote": "17 → 17.000 (padded with zeros)" },
+              { "id": "s5", "label": "(e)", "num1": 17, "num2": 0.05, "operation": "-", "answer": 16.95, "paddingNote": "17 → 17.00 (padded with zeros)" },
+              { "id": "s6", "label": "(f)", "num1": 34.505, "num2": 18.1, "operation": "-", "answer": 16.405, "paddingNote": "18.1 → 18.100 (padded with zeros)" },
+              { "id": "s7", "label": "(g)", "num1": 9.9, "num2": 9.09, "operation": "-", "answer": 0.81, "paddingNote": "9.9 → 9.90 (padded with zero)" },
+              { "id": "s8", "label": "(h)", "num1": 6.236, "num2": 0.487, "operation": "-", "answer": 5.749 }
+            ]
+          }
+        ],
+        "features": {
+          "estimatePrompt": true,
+          "decimalAlignment": true,
+          "zeroPadding": true,
+          "carryBorrowIndicators": true,
+          "rightToLeftEntry": true,
+          "immediageFeedback": true,
+          "hintButton": true,
+          "progressBar": true,
+          "celebrationAnimation": true
+        },
+        "placeValueHeaders": ["Tens", "Units", ".", "Tenths", "Hundredths", "Thousandths"],
+        "columnMethodDisplay": {
+          "showPreFilledNumbers": true,
+          "autoAlignDecimalPoints": true,
+          "showZeroPaddingNotes": true,
+          "entryDirection": "right-to-left"
+        }
+      }
+    }
+  },
+  "teaching_notes": "Assign as independent practice AFTER column method and estimation are taught. Problems with whole numbers (18+8.8, 17-16.198) are the trickiest — they require zero padding. The estimation prompt reinforces the habit of predicting answers before computing. Carry/borrow indicators help students track their work.",
+  "instructions_for_student": "Solve all 16 problems using the column method. The tool aligns decimal points for you. Enter digits from right to left! Use the estimate button before solving each problem to predict the answer range. If you get stuck, use the hint button for strategy tips.",
+  "learning_objectives": [
+    "Add decimal numbers using the column method with proper decimal point alignment",
+    "Subtract decimal numbers using the column method with borrowing when needed",
+    "Pad whole numbers and shorter decimals with zeros for proper alignment",
+    "Estimate sums and differences before computing",
+    "Apply carry-over and borrowing techniques to decimal operations"
+  ],
+  "prerequisites": [
+    "Understanding of decimal place value (tenths, hundredths, thousandths)",
+    "Addition and subtraction of whole numbers using column method",
+    "Understanding of carrying and borrowing in whole number arithmetic"
+  ],
+  "agent_usage": {
+    "quick_reference": {
+      "tool_type": "Interactive Practice",
+      "total_problems": 16,
+      "problem_types": ["8 addition", "8 subtraction"],
+      "key_features": ["Column method workspace", "Decimal alignment", "Zero padding notes", "Estimation prompts", "Immediate feedback", "Progress tracking"],
+      "difficulty_range": "Easy (5.3+2.6) to Hard (17-16.198)"
+    },
+    "tool_call_examples": [
+      {
+        "description": "Show full tool with defaults",
+        "parameters": {}
+      },
+      {
+        "description": "Start on subtraction tab",
+        "parameters": {
+          "additionalProps": {
+            "initialTab": "sub"
+          }
+        }
+      },
+      {
+        "description": "Focus on tricky padding problems only",
+        "parameters": {
+          "additionalProps": {
+            "filterProblems": ["a2", "a6", "s2", "s4", "s5", "s6", "s7"]
+          }
+        }
+      }
+    ]
+  }
+}

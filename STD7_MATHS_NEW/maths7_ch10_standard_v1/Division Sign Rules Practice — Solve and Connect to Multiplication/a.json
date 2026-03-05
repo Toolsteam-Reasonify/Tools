@@ -1,0 +1,224 @@
+{
+  "toolName": "division_sign_rules_tool",
+  "version": "1.0.0",
+  "description": "Calculation practice tool for Grade 7 Mathematics — Division Sign Rules. An interactive practice tool presenting six integer division problems of increasing complexity. For each problem, students determine the quotient (including its sign). After each attempt, the tool reveals the corresponding multiplication fact that justifies the division, reinforcing the key concept that division sign rules mirror multiplication sign rules.",
+  "topic": "Division of Integers — Sign Rules via Multiplication",
+  "grade": 7,
+  "subject": "Mathematics",
+  "textbook_reference": "Ganita Prakash | Grade 7 | Part-II, Chapter 2: Operations with Integers, Section: Division of Integers (pp. 38–39)",
+  "curriculum": "NCERT / NCF 2023",
+
+  "parameters": {
+    "width": {
+      "type": "number",
+      "default": 800,
+      "description": "Width of the tool container"
+    },
+    "height": {
+      "type": "number",
+      "default": 600,
+      "description": "Height of the tool container"
+    },
+    "themeColor": {
+      "type": "string",
+      "default": "#6366f1",
+      "description": "Primary color (indigo)"
+    },
+    "darkMode": {
+      "type": "boolean",
+      "default": false,
+      "description": "Dark mode toggle"
+    },
+    "animationSpeed": {
+      "type": "number",
+      "default": 1,
+      "description": "Animation speed multiplier"
+    }
+  },
+
+  "additionalProps": {
+    "problems": {
+      "type": "array",
+      "description": "Array of division problems. Each problem has dividend, divisor, quotient, context string, and the linked multiplication fact.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "description": "Unique problem ID" },
+          "dividend": { "type": "number", "description": "The number being divided (can be negative)" },
+          "divisor": { "type": "number", "description": "The number dividing (can be negative, non-zero)" },
+          "quotient": { "type": "number", "description": "Correct answer including sign" },
+          "context": { "type": "string", "description": "Real-world context or hint shown below the expression" },
+          "multiplicationFact": { "type": "string", "description": "The multiplication equation that confirms the division, shown after answering" }
+        },
+        "required": ["id", "dividend", "divisor", "quotient", "multiplicationFact"]
+      },
+      "default": [
+        {
+          "id": "d1",
+          "dividend": -100,
+          "divisor": 25,
+          "quotient": -4,
+          "context": "A kirana store loses ₹100 over 25 days equally.",
+          "multiplicationFact": "25 × (−4) = −100"
+        },
+        {
+          "id": "d2",
+          "dividend": -100,
+          "divisor": -4,
+          "quotient": 25,
+          "context": "If ₹100 debt is split into ₹4 debt-parts…",
+          "multiplicationFact": "(−4) × 25 = −100"
+        },
+        {
+          "id": "d3",
+          "dividend": 50,
+          "divisor": -25,
+          "quotient": -2,
+          "context": "₹50 profit divided among 25 debt accounts.",
+          "multiplicationFact": "(−25) × (−2) = 50"
+        },
+        {
+          "id": "d4",
+          "dividend": -46,
+          "divisor": -23,
+          "quotient": 2,
+          "context": "From the textbook practice set — same signs!",
+          "multiplicationFact": "(−23) × 2 = −46"
+        },
+        {
+          "id": "d5",
+          "dividend": 36,
+          "divisor": -18,
+          "quotient": -2,
+          "context": "From the textbook practice set — different signs!",
+          "multiplicationFact": "(−18) × (−2) = 36"
+        },
+        {
+          "id": "d6",
+          "dividend": -30,
+          "divisor": 6,
+          "quotient": -5,
+          "context": "Ladakh temperature drops 30°C over 6 hours.",
+          "multiplicationFact": "6 × (−5) = −30"
+        }
+      ]
+    },
+    "showSignReminder": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show persistent footer with sign rule reminder"
+    },
+    "title": {
+      "type": "string",
+      "default": "Division of Integers — Sign Rules",
+      "description": "Title displayed at the top of the tool"
+    }
+  },
+
+  "design_spec": {
+    "layout": "Problem card centred on screen showing the division expression in large Lilita One font. Two input panels below: left panel is a sign selector toggle (+ / −), right panel is a number entry field. 'Check' button to submit. Correct answer: card turns green, checkmark appears, 'Multiplication Connection' panel slides in with amber highlight. Wrong answer: card shakes red briefly, correct answer appears with explanation. Context quote displayed as grey italic note below expression. Progress bar at top. Sign rule reminder in persistent footer.",
+    "fonts": {
+      "display": "Lilita One (Google Fonts)",
+      "body": "Nunito (Google Fonts)"
+    },
+    "color_palette": {
+      "indigo": "#6366f1 — primary, headers, buttons, active states",
+      "green": "#22c55e — correct answers, same-sign indicator",
+      "red": "#ef4444 — wrong answers, different-sign indicator",
+      "amber": "#f59e0b — multiplication fact highlight panel",
+      "white": "#ffffff — card backgrounds"
+    },
+    "responsive": "Mobile-responsive with clamp() font sizes, flex-wrap on inputs, large touch targets (min 48px)"
+  },
+
+  "teaching_notes": {
+    "overview": "Encourage students to state the sign rule BEFORE computing the magnitude for each problem.",
+    "pause_points": [
+      {
+        "after_problem": "d3",
+        "question": "Is this different from d1? Why is one quotient positive and one negative?",
+        "note": "Students sometimes confuse (−) ÷ (+) = (−) with (+) ÷ (−) = (−); both give negative, but the reasoning differs."
+      },
+      {
+        "after_problem": "d5",
+        "question": "Connect d4 and d5 to the textbook practice set on page 39.",
+        "note": "These are direct from the NCERT 'Figure it Out' exercises."
+      },
+      {
+        "after_problem": "d6",
+        "question": "What does −5 mean in the Ladakh temperature context?",
+        "note": "Ground the negative quotient in real meaning — the temperature drops 5°C each hour."
+      }
+    ],
+    "closing_reflection": "Ask: 'Are the sign rules for division different from multiplication? Could you have predicted that?'",
+    "differentiation": {
+      "struggling": "Let students use the sign-hint badge above the input before every problem.",
+      "advanced": "Ask students to create their own d7 and d8 problems with real-world contexts."
+    }
+  },
+
+  "instructions_for_student": "For each division problem, enter the quotient — include the sign (positive or negative). Use the +/− toggle to pick the sign, then type the number. After each answer, the tool shows the multiplication fact that confirms your answer. Try to predict the sign BEFORE calculating the magnitude. Ask yourself: do the dividend and divisor have the same sign or different signs? Same signs → positive quotient. Different signs → negative quotient.",
+
+  "problem_progression": [
+    { "id": "d1", "type": "(−) ÷ (+) = (−)", "difficulty": "introductory", "source": "textbook example p.38" },
+    { "id": "d2", "type": "(−) ÷ (−) = (+)", "difficulty": "introductory", "source": "textbook example p.38" },
+    { "id": "d3", "type": "(+) ÷ (−) = (−)", "difficulty": "intermediate", "source": "textbook example p.38" },
+    { "id": "d4", "type": "(−) ÷ (−) = (+)", "difficulty": "practice", "source": "Figure it Out Q1(d) p.39" },
+    { "id": "d5", "type": "(+) ÷ (−) = (−)", "difficulty": "practice", "source": "Figure it Out Q1(c) p.39" },
+    { "id": "d6", "type": "(−) ÷ (+) = (−)", "difficulty": "application", "source": "real-world context" }
+  ],
+
+  "agent_examples": [
+    {
+      "scenario": "Default — all 6 problems",
+      "tool_call": {
+        "frontend_action": "show_interactive_tool",
+        "title": "Division Sign Rules Practice",
+        "data": {
+          "toolName": "division_sign_rules_tool",
+          "parameters": {}
+        },
+        "instructions_for_student": "Solve each division and watch how multiplication confirms your answer!"
+      }
+    },
+    {
+      "scenario": "Only textbook problems (d4, d5)",
+      "tool_call": {
+        "frontend_action": "show_interactive_tool",
+        "title": "Textbook Practice: Division",
+        "data": {
+          "toolName": "division_sign_rules_tool",
+          "parameters": {
+            "additionalProps": {
+              "problems": [
+                { "id": "d4", "dividend": -46, "divisor": -23, "quotient": 2, "context": "NCERT Figure it Out Q1(d)", "multiplicationFact": "(−23) × 2 = −46" },
+                { "id": "d5", "dividend": 36, "divisor": -18, "quotient": -2, "context": "NCERT Figure it Out Q1(c)", "multiplicationFact": "(−18) × (−2) = 36" }
+              ],
+              "title": "Textbook Practice — Division of Integers"
+            }
+          }
+        }
+      }
+    },
+    {
+      "scenario": "Custom problems with Indian context",
+      "tool_call": {
+        "frontend_action": "show_interactive_tool",
+        "title": "Division with Real-World Contexts",
+        "data": {
+          "toolName": "division_sign_rules_tool",
+          "parameters": {
+            "additionalProps": {
+              "problems": [
+                { "id": "c1", "dividend": -200, "divisor": 8, "quotient": -25, "context": "A farmer loses ₹200 over 8 equal instalments.", "multiplicationFact": "8 × (−25) = −200" },
+                { "id": "c2", "dividend": -150, "divisor": -5, "quotient": 30, "context": "₹150 total debt cleared in ₹5 debt-payments.", "multiplicationFact": "(−5) × 30 = −150" },
+                { "id": "c3", "dividend": 84, "divisor": -4, "quotient": -21, "context": "84 marks penalty split across 4 negative categories.", "multiplicationFact": "(−4) × (−21) = 84" }
+              ],
+              "title": "Real-World Division Challenges"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

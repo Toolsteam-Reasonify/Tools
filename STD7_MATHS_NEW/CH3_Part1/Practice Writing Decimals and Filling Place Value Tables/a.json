@@ -1,0 +1,296 @@
+{
+    "toolName": "decimal_place_value_tool",
+    "version": "1.1.0",
+    "description": "Interactive fill-in table tool for CBSE Grade 7 Mathematics (Decimals chapter). A place value table with columns: Hundreds, Tens, Units, decimal point, Tenths, Hundredths, Thousandths. Eight rows corresponding to verbal descriptions. Student clicks on each cell and types the correct digit. Green highlight for correct, red for incorrect. The first two rows are pre-filled as worked examples. An animation shows how 234 hundredths overflows.",
+    "topic": "Practice: Decimal Form and Place Value Tables",
+    "subject": "Mathematics",
+    "grade": "Grade 7",
+    "curriculum": "CBSE / NCERT",
+    "chapter": "Chapter 3 — A Peek Beyond the Point",
+    "textbook": "Ganita Prakash",
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Width of the tool container in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Minimum height of the tool container"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#2563eb",
+            "description": "Primary theme color (CSS color value)"
+        }
+    },
+    "additionalProps": {
+        "description": "Tool-specific dynamic content for the decimal place value table",
+        "schema": {
+            "rows": {
+                "type": "array",
+                "description": "Array of place value rows. Each row has an id, label, description, answer object, and flags.",
+                "items": {
+                    "id": { "type": "string", "description": "Unique identifier for the row" },
+                    "label": { "type": "string", "description": "Display label like (a), (b), etc." },
+                    "description": { "type": "string", "description": "Verbal description of the number" },
+                    "answer": {
+                        "type": "object",
+                        "description": "Correct digits for each column. Use empty string for unused columns.",
+                        "properties": {
+                            "hundreds": { "type": "string" },
+                            "tens": { "type": "string" },
+                            "units": { "type": "string" },
+                            "tenths": { "type": "string" },
+                            "hundredths": { "type": "string" },
+                            "thousandths": { "type": "string" }
+                        }
+                    },
+                    "isWorkedExample": { "type": "boolean", "description": "If true, cells are pre-filled and read-only" },
+                    "explanation": { "type": "string", "description": "Explanation shown after checking" },
+                    "hasOverflow": { "type": "boolean", "description": "Flag for overflow/carry cases (shows OVERFLOW badge)" },
+                    "overflowFrom": { "type": "string", "description": "Description of the overflow carry process" }
+                }
+            },
+            "showOverflowAnimation": {
+                "type": "boolean",
+                "default": false,
+                "description": "Whether to auto-show the overflow animation on load"
+            },
+            "overflowRowId": {
+                "type": "string",
+                "description": "ID of the row to highlight in overflow animation"
+            },
+            "title": {
+                "type": "string",
+                "default": "Practice: Decimal Form and Place Value Tables",
+                "description": "Title displayed in the header"
+            },
+            "subtitle": {
+                "type": "string",
+                "default": "For each description, type each digit into the correct place value column.",
+                "description": "Subtitle / instruction text"
+            }
+        },
+        "examples": {
+            "default_textbook_exercise": {
+                "title": "Practice: Decimal Form and Place Value Tables",
+                "subtitle": "For each description, type each digit into the correct place value column. Be careful with overflow cases!",
+                "rows": [
+                    {
+                        "id": "a",
+                        "label": "(a)",
+                        "description": "2 ones, 3 tenths and 5 hundredths",
+                        "answer": { "hundreds": "", "tens": "", "units": "2", "tenths": "3", "hundredths": "5", "thousandths": "" },
+                        "isWorkedExample": true,
+                        "explanation": "2.35 → 2 in Units, 3 in Tenths, 5 in Hundredths"
+                    },
+                    {
+                        "id": "b",
+                        "label": "(b)",
+                        "description": "1 ten and 5 tenths",
+                        "answer": { "hundreds": "", "tens": "1", "units": "0", "tenths": "5", "hundredths": "", "thousandths": "" },
+                        "isWorkedExample": true,
+                        "explanation": "10.5 → 1 in Tens, 0 in Units, 5 in Tenths"
+                    },
+                    {
+                        "id": "c",
+                        "label": "(c)",
+                        "description": "4 ones and 6 hundredths",
+                        "answer": { "hundreds": "", "tens": "", "units": "4", "tenths": "0", "hundredths": "6", "thousandths": "" },
+                        "isWorkedExample": false,
+                        "explanation": "4.06 → 4 in Units, 0 in Tenths, 6 in Hundredths"
+                    },
+                    {
+                        "id": "d",
+                        "label": "(d)",
+                        "description": "1 hundred, 1 one and 1 hundredth",
+                        "answer": { "hundreds": "1", "tens": "0", "units": "1", "tenths": "0", "hundredths": "1", "thousandths": "" },
+                        "isWorkedExample": false,
+                        "explanation": "101.01 → 1 in Hundreds, 0 in Tens, 1 in Units, 0 in Tenths, 1 in Hundredths"
+                    },
+                    {
+                        "id": "e",
+                        "label": "(e)",
+                        "description": "8/100 and 9/10",
+                        "answer": { "hundreds": "", "tens": "", "units": "0", "tenths": "9", "hundredths": "8", "thousandths": "" },
+                        "isWorkedExample": false,
+                        "explanation": "0.98 → 9/10 = 9 Tenths, 8/100 = 8 Hundredths"
+                    },
+                    {
+                        "id": "f",
+                        "label": "(f)",
+                        "description": "5/100",
+                        "answer": { "hundreds": "", "tens": "", "units": "0", "tenths": "0", "hundredths": "5", "thousandths": "" },
+                        "isWorkedExample": false,
+                        "explanation": "0.05 → 0 in Units, 0 in Tenths, 5 in Hundredths"
+                    },
+                    {
+                        "id": "g",
+                        "label": "(g)",
+                        "description": "234 hundredths",
+                        "answer": { "hundreds": "", "tens": "", "units": "2", "tenths": "3", "hundredths": "4", "thousandths": "" },
+                        "isWorkedExample": false,
+                        "explanation": "234 hundredths = 234/100 = 2.34 → 2 in Units, 3 in Tenths, 4 in Hundredths",
+                        "hasOverflow": true,
+                        "overflowFrom": "234 in Hundredths → carry 23 Tenths, keep 4 Hundredths → carry 2 Units, keep 3 Tenths"
+                    },
+                    {
+                        "id": "h",
+                        "label": "(h)",
+                        "description": "105 tenths",
+                        "answer": { "hundreds": "", "tens": "1", "units": "0", "tenths": "5", "hundredths": "", "thousandths": "" },
+                        "isWorkedExample": false,
+                        "explanation": "105 tenths = 105/10 = 10.5 → 1 in Tens, 0 in Units, 5 in Tenths",
+                        "hasOverflow": true,
+                        "overflowFrom": "105 in Tenths → carry 10 Units, keep 5 Tenths → carry 1 Ten, keep 0 Units"
+                    }
+                ]
+            },
+            "custom_with_thousandths": {
+                "title": "Decimal Place Values — Extended",
+                "rows": [
+                    {
+                        "id": "x1",
+                        "label": "(1)",
+                        "description": "2 ones, 1 tenth, 4 hundredths and 7 thousandths",
+                        "answer": { "hundreds": "", "tens": "", "units": "2", "tenths": "1", "hundredths": "4", "thousandths": "7" },
+                        "isWorkedExample": false,
+                        "explanation": "2.147 → each digit in its correct column"
+                    }
+                ]
+            }
+        }
+    },
+    "teaching_notes": "Use AFTER demonstrating 234 tenths = 23.4. Items (a)-(b) are worked examples; (c)-(h) are independent practice. Items (g)-(h) involve overflow/carry. The overflow animation button shows step-by-step how 234 hundredths redistributes into 2.34 via carry arrows.",
+    "instructions_for_student": "For each description, type each digit into the correct place value column. Be careful with overflow cases! The first two rows (a) and (b) are already filled in as examples to guide you. Click 'Check' to verify your answers row by row, or 'Check All' to verify everything at once. Use the overflow animation button to see how numbers like '234 hundredths' carry over into bigger place values.",
+    "learning_objectives": [
+        "Convert word descriptions of numbers to decimal form",
+        "Place each digit in the correct column of a place value table",
+        "Understand how tenths, hundredths, and thousandths relate to each other",
+        "Handle overflow/carry cases (e.g., 234 hundredths = 2.34)",
+        "Read decimal numbers as a combination of place values"
+    ],
+    "tool_call_examples": [
+        {
+            "description": "Default textbook exercise — 8 rows from Ganita Prakash Chapter 3",
+            "call": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Practice: Decimal Form and Place Value Tables",
+                "data": {
+                    "toolName": "decimal_place_value_tool",
+                    "parameters": {
+                        "additionalProps": {}
+                    }
+                },
+                "instructions_for_student": "For each description, type each digit into the correct place value column. Be careful with overflow cases!"
+            }
+        },
+        {
+            "description": "Only the overflow examples for focused teaching",
+            "call": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Overflow in Decimal Place Values",
+                "data": {
+                    "toolName": "decimal_place_value_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "title": "Overflow Practice",
+                            "subtitle": "These numbers have more than 9 in a column — watch the carry!",
+                            "rows": [
+                                {
+                                    "id": "g",
+                                    "label": "(g)",
+                                    "description": "234 hundredths",
+                                    "answer": { "hundreds": "", "tens": "", "units": "2", "tenths": "3", "hundredths": "4", "thousandths": "" },
+                                    "isWorkedExample": false,
+                                    "hasOverflow": true,
+                                    "explanation": "234/100 = 2.34"
+                                },
+                                {
+                                    "id": "h",
+                                    "label": "(h)",
+                                    "description": "105 tenths",
+                                    "answer": { "hundreds": "", "tens": "1", "units": "0", "tenths": "5", "hundredths": "", "thousandths": "" },
+                                    "isWorkedExample": false,
+                                    "hasOverflow": true,
+                                    "explanation": "105/10 = 10.5"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "instructions_for_student": "Watch the overflow animation, then fill in the correct digits!"
+            }
+        },
+        {
+            "description": "Custom rows with thousandths",
+            "call": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Extended Place Values",
+                "data": {
+                    "toolName": "decimal_place_value_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "title": "Place Values up to Thousandths",
+                            "rows": [
+                                {
+                                    "id": "t1",
+                                    "label": "(1)",
+                                    "description": "2 ones, 1 tenth, 4 hundredths, 7 thousandths",
+                                    "answer": { "hundreds": "", "tens": "", "units": "2", "tenths": "1", "hundredths": "4", "thousandths": "7" },
+                                    "isWorkedExample": true,
+                                    "explanation": "2.147"
+                                },
+                                {
+                                    "id": "t2",
+                                    "label": "(2)",
+                                    "description": "254 thousandths",
+                                    "answer": { "hundreds": "", "tens": "", "units": "0", "tenths": "2", "hundredths": "5", "thousandths": "4" },
+                                    "isWorkedExample": false,
+                                    "hasOverflow": true,
+                                    "explanation": "254/1000 = 0.254"
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "description": "Minimal — just 2 worked examples for demonstration",
+            "call": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Place Value Examples",
+                "data": {
+                    "toolName": "decimal_place_value_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "title": "Understanding Decimal Place Values",
+                            "subtitle": "Study these worked examples carefully.",
+                            "rows": [
+                                {
+                                    "id": "a",
+                                    "label": "(a)",
+                                    "description": "2 ones, 3 tenths and 5 hundredths",
+                                    "answer": { "hundreds": "", "tens": "", "units": "2", "tenths": "3", "hundredths": "5", "thousandths": "" },
+                                    "isWorkedExample": true,
+                                    "explanation": "2.35"
+                                },
+                                {
+                                    "id": "b",
+                                    "label": "(b)",
+                                    "description": "1 ten and 5 tenths",
+                                    "answer": { "hundreds": "", "tens": "1", "units": "0", "tenths": "5", "hundredths": "", "thousandths": "" },
+                                    "isWorkedExample": true,
+                                    "explanation": "10.5"
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

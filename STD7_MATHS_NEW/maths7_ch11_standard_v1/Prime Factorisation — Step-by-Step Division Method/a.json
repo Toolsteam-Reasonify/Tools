@@ -1,0 +1,70 @@
+{
+    "toolName": "prime_factorisation_division_method",
+    "version": "2.0.0",
+    "description": "Interactive step-based calculation practice tool for Grade 7 Mathematics — Prime Factorisation via Division Method. Redesigned with Singularity Design System. Split-screen layout with division format and tree diagram. Poppins font, indigo/orange palette, pill buttons.",
+    "category": "mathematics",
+    "grade": "7",
+    "topic": "Prime Factorisation — Division Method",
+    "curriculum": "NCERT Ganita Prakash Grade 7 Part-II, Chapter 3: Finding Common Ground",
+    "design_system": "Singularity",
+    "design_specification": {
+        "colors": {
+            "primary_indigo": "#4A4DC9",
+            "primary_orange": "#FF7212",
+            "gradient_start": "#533086",
+            "gradient_end": "#FC9145",
+            "neutral_dark": "#4E4E4E",
+            "neutral_grey": "#CACACA",
+            "neutral_light_grey": "#EBEBEB",
+            "neutral_off_white": "#F5F5F5",
+            "accent_light_purple": "#C1C1EA",
+            "accent_light_peach": "#FFF3E4"
+        },
+        "gradients": {
+            "primary": "linear-gradient(135deg, #533086, #4A4DC9)",
+            "accent": "linear-gradient(135deg, #FF7212, #FC9145)",
+            "mixed": "linear-gradient(135deg, #533086, #FC9145)",
+            "subtle": "linear-gradient(135deg, #C1C1EA, #FFF3E4)"
+        },
+        "typography": { "font": "Poppins (400-900)" },
+        "buttons": { "style": "Pill (100px radius)", "height": "40px / 32px", "variants": ["contained", "outlined", "text"] },
+        "primeColorCoding": { "2": "#4A4DC9", "3": "#FF7212", "5": "#533086" }
+    },
+    "parameters": {
+        "width": { "type": "number", "default": 800 },
+        "height": { "type": "number", "default": 600 },
+        "initialMode": { "type": "string", "enum": ["learn", "practice"], "default": "learn" },
+        "showModeSelector": { "type": "boolean", "default": true },
+        "showNavigation": { "type": "boolean", "default": true },
+        "showPlayPause": { "type": "boolean", "default": true },
+        "showStepIndicator": { "type": "boolean", "default": true },
+        "animationSpeed": { "type": "number", "default": 1 },
+        "autoPlayDuration": { "type": "number", "default": 8000 }
+    },
+    "additionalProps": {
+        "properties": {
+            "number": { "type": "number", "default": 1200 },
+            "showHints": { "type": "boolean", "default": true },
+            "showTeachingNotes": { "type": "boolean", "default": true },
+            "primeColors": { "type": "object", "default": { "2": "#4A4DC9", "3": "#FF7212", "5": "#533086" } }
+        },
+        "examples": {
+            "default_1200": { "number": 1200 },
+            "textbook_105": { "number": 105 },
+            "textbook_360": { "number": 360 },
+            "textbook_840": { "number": 840 }
+        }
+    },
+    "modes": {
+        "learn": { "description": "Guided walkthrough with teaching notes, division table, tree diagram" },
+        "practice": { "description": "Quiz — identify smallest prime divisor at each step" }
+    },
+    "teaching_notes": {
+        "step_1": "Present 1200. Smallest prime is 2.",
+        "step_2_to_4": "Divide by 2 four times.",
+        "step_5": "75 is odd. Digit-sum: 7+5=12, divisible by 3.",
+        "step_6_7": "25 ends in 5, divide by 5. Then 5 is prime.",
+        "summary": "1200 = 2 x 2 x 2 x 2 x 3 x 5 x 5."
+    },
+    "instructions_for_student": "Follow the division method step by step. At each step, identify the smallest prime number that divides the current number. Watch as the division format builds on the left and the tree diagram builds on the right. At the end, read off all the primes to write the complete prime factorisation of 1200."
+}

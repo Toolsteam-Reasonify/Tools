@@ -1,0 +1,324 @@
+{
+    "toolName": "chapter_summary_matching_tool",
+    "version": "2.0.0",
+    "description": "Interactive matching exercise connecting chapter summary key ideas to concrete examples from the CBSE Grade 7 Mathematics Decimals chapter. Redesigned with Singularity Design System — purple/orange palette, Poppins font, gradient accents. Students click statements then examples to match. Green connecting SVG lines for correct matches. Confetti + gradient congratulations animation when all matched correctly.",
+    "designSystem": "Singularity",
+    "category": "assessment",
+    "subject": "Mathematics",
+    "grade": "7",
+    "chapter": "3 - A Peek Beyond the Point (Decimals)",
+    "topic": "Chapter Summary — Key Ideas of the Decimal System",
+    "learningObjectives": [
+        "Reinforce understanding of decimal system key ideas by linking abstract concepts to concrete chapter examples",
+        "Assess student recall of chapter content through interactive matching",
+        "Connect summary points to real scenarios: measurement accuracy, place value structure, decimal notation, and decimal operations"
+    ],
+    "teachingNotes": "Use as the final chapter activity. Students match without notes first, then verify. Discuss mismatches as a class for deeper understanding.",
+    "instructionsForStudent": "Match each key idea to the example that best illustrates it. Think back to the chapter!",
+    "designTokens": {
+        "colors": {
+            "primary": "#4A4DC9",
+            "accent": "#FF7212",
+            "gradientStart": "#533086",
+            "gradientEnd": "#FC9145",
+            "lightPurple": "#C1C1EA",
+            "lightPeach": "#FFF3E4",
+            "bgPurpleSoft": "#EEEDF8",
+            "bgPeachSoft": "#FFF8F0",
+            "textDark": "#4E4E4E",
+            "textMid": "#6B6B6B",
+            "textLight": "#9B9B9B",
+            "gray100": "#F5F5F5",
+            "gray200": "#EBEBEB",
+            "gray300": "#CACACA",
+            "gray400": "#4E4E4E",
+            "white": "#FFFFFF",
+            "success": "#2EAE6D",
+            "successLight": "#E6F9EF",
+            "successBorder": "#A8E6C8",
+            "error": "#E34850",
+            "errorLight": "#FDECEC"
+        },
+        "font": "'Poppins', 'Segoe UI', system-ui, -apple-system, sans-serif",
+        "fontUrl": "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap",
+        "radius": {
+            "sm": 8,
+            "md": 12,
+            "lg": 16,
+            "xl": 20,
+            "full": 9999
+        },
+        "shadows": {
+            "sm": "0 1px 3px rgba(74, 77, 201, 0.06)",
+            "md": "0 4px 12px rgba(74, 77, 201, 0.08)",
+            "lg": "0 8px 24px rgba(74, 77, 201, 0.12)",
+            "xl": "0 12px 40px rgba(74, 77, 201, 0.16)",
+            "glow": "0 0 20px rgba(74, 77, 201, 0.2)",
+            "accentGlow": "0 0 20px rgba(255, 114, 18, 0.2)"
+        },
+        "buttonStyle": {
+            "height": 40,
+            "paddingHorizontal": 24,
+            "borderRadius": 9999,
+            "borderWidth": 2,
+            "fontWeight": 600,
+            "fontSize": 13,
+            "hoverScale": 1.03,
+            "pressScale": 0.95
+        }
+    },
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Width of the tool in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Height of the tool in pixels"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#4A4DC9",
+            "description": "Primary theme color (Singularity primary)"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable dark mode"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier"
+        }
+    },
+    "additionalProps": {
+        "description": "Tool-specific dynamic content for the matching exercise",
+        "schema": {
+            "pairs": {
+                "type": "array",
+                "description": "Array of match pairs. Each pair has a statement (key idea) and an example.",
+                "items": {
+                    "id": "string — unique identifier, must match between statement and its correct example",
+                    "statement": "string — the key idea / summary point",
+                    "example": "string — the concrete example from the chapter",
+                    "statementLabel": "string — label shown on the statement card badge (e.g., '1', '2')",
+                    "exampleLabel": "string — label shown on the example card badge (e.g., 'A', 'B')"
+                }
+            },
+            "statementCardColor": {
+                "type": "string",
+                "default": "#C1C1EA",
+                "description": "Background color for key idea cards — Singularity Light Purple"
+            },
+            "statementTextColor": {
+                "type": "string",
+                "default": "#1B1464",
+                "description": "Text color for key idea cards — deep indigo"
+            },
+            "exampleCardColor": {
+                "type": "string",
+                "default": "#FFF3E4",
+                "description": "Background color for example cards — Singularity Light Peach"
+            },
+            "exampleTextColor": {
+                "type": "string",
+                "default": "#3D1E00",
+                "description": "Text color for example cards — deep brown"
+            },
+            "correctLineColor": {
+                "type": "string",
+                "default": "#2EAE6D",
+                "description": "Color of SVG connecting lines and badges for correct matches — Green"
+            },
+            "incorrectLineColor": {
+                "type": "string",
+                "default": "#E34850",
+                "description": "Color for incorrect match flash line — Red"
+            },
+            "title": {
+                "type": "string",
+                "default": "Chapter Summary — Key Ideas of the Decimal System",
+                "description": "Title displayed inside the pill-shaped header chip"
+            },
+            "instructions": {
+                "type": "string",
+                "default": "Match each key idea to the example that best illustrates it. Think back to the chapter!",
+                "description": "Instruction text for students"
+            },
+            "congratsMessage": {
+                "type": "string",
+                "default": "Congratulations! You matched all key ideas correctly!",
+                "description": "Message shown in the gradient congratulations banner when all pairs matched"
+            },
+            "teachingNotes": {
+                "type": "string",
+                "default": "Try matching without notes first, then verify. Discuss mismatches as a class.",
+                "description": "Teaching tip shown in footer"
+            }
+        },
+        "examples": {
+            "default_decimals_chapter": {
+                "pairs": [
+                    {
+                        "id": "1",
+                        "statementLabel": "1",
+                        "statement": "Splitting units into smaller parts gives accuracy",
+                        "exampleLabel": "A",
+                        "example": "Sonu's screws needed tenths of a cm to tell them apart"
+                    },
+                    {
+                        "id": "2",
+                        "statementLabel": "2",
+                        "statement": "1 unit = 10 tenths = 100 hundredths = 1000 thousandths",
+                        "exampleLabel": "B",
+                        "example": "Folding paper: each tenth splits into 10 hundredths"
+                    },
+                    {
+                        "id": "3",
+                        "statementLabel": "3",
+                        "statement": "The decimal point separates whole from fractional part",
+                        "exampleLabel": "C",
+                        "example": "₹705, ₹70.5, ₹7.05 — same digits, dot changes value"
+                    },
+                    {
+                        "id": "4",
+                        "statementLabel": "4",
+                        "statement": "We can compare, locate, add, and subtract decimals",
+                        "exampleLabel": "D",
+                        "example": "56.456 < 56.465; 18 + 8.8 = 26.8"
+                    }
+                ],
+                "statementCardColor": "#C1C1EA",
+                "statementTextColor": "#1B1464",
+                "exampleCardColor": "#FFF3E4",
+                "exampleTextColor": "#3D1E00",
+                "correctLineColor": "#2EAE6D",
+                "incorrectLineColor": "#E34850"
+            },
+            "custom_3_pairs": {
+                "pairs": [
+                    {
+                        "id": "1",
+                        "statementLabel": "1",
+                        "statement": "Place value extends to the right of ones",
+                        "exampleLabel": "X",
+                        "example": "10,000 → 1000 → 100 → 10 → 1 → 1/10 → 1/100"
+                    },
+                    {
+                        "id": "2",
+                        "statementLabel": "2",
+                        "statement": "Trailing zeros don't change decimal value",
+                        "exampleLabel": "Y",
+                        "example": "0.2 = 0.20 = 0.200 (all equal 2 tenths)"
+                    },
+                    {
+                        "id": "3",
+                        "statementLabel": "3",
+                        "statement": "Unit conversions use powers of 10",
+                        "exampleLabel": "Z",
+                        "example": "1 mm = 0.1 cm = 0.001 m"
+                    }
+                ],
+                "title": "Decimal Concepts — Match the Idea"
+            }
+        }
+    },
+    "modes": {
+        "practice": {
+            "description": "Students match key ideas to examples interactively",
+            "default": true
+        }
+    },
+    "features": [
+        "Singularity Design System: #4A4DC9 primary, #FF7212 accent, #533086→#FC9145 gradient",
+        "Poppins font loaded via Google Fonts CDN",
+        "Pill-shaped title chip with gradient sparkle icon",
+        "Key Ideas column: light purple (#C1C1EA) cards with deep indigo text",
+        "Examples column: light peach (#FFF3E4) cards with deep brown text, shuffled order",
+        "Click-to-match: select statement → select example → instant feedback",
+        "Green curved SVG lines with glow backdrop drawn on correct matches",
+        "Red dashed line + shake animation on incorrect attempts",
+        "Rounded square (8px radius) number/letter badges with gradient fills",
+        "Selected state: 2px primary/accent border, scale(1.025), directional translateX shift, glow shadow",
+        "Correct state: success green light fill, check icon badge, correctGlow animation",
+        "Gradient progress bar: primary→accent fill, bouncy width transition",
+        "Congratulations banner: full #533086→#4A4DC9→#FC9145 gradient, celebrateBounce animation",
+        "Confetti particles in design system colors",
+        "Reset button: Singularity Outlined style — pill shape, 40px height, 2px border, hover→primary color, press scale(0.95)",
+        "Teaching tip footer with muted text hierarchy",
+        "Staggered fadeInLeft/fadeInRight card entry animations",
+        "Decorative gradient accent lines flanking column headers"
+    ],
+    "animations": [
+        "smFadeInUp — header entrance",
+        "smFadeInLeft — statement cards staggered entrance",
+        "smFadeInRight — example cards staggered entrance",
+        "smPopIn — badge pop",
+        "smPulse — active selection dot pulsing",
+        "smShake — incorrect match shake",
+        "smCorrectGlow — correct match green glow",
+        "smCelebrate — congrats banner bounce",
+        "smDrawLine — SVG line draw",
+        "smStarSpin — sparkle icon spin entrance",
+        "smBadgePop — award icon pop in congrats",
+        "smGradientShift — background gradient animation",
+        "confettiFall — confetti particle fall"
+    ],
+    "defaultToolCall": {
+        "frontend_action": "show_interactive_tool",
+        "title": "Chapter Summary — Key Ideas of the Decimal System",
+        "data": {
+            "toolName": "chapter_summary_matching_tool",
+            "parameters": {
+                "width": 800,
+                "height": 600,
+                "themeColor": "#4A4DC9",
+                "additionalProps": {
+                    "pairs": [
+                        {
+                            "id": "1",
+                            "statementLabel": "1",
+                            "statement": "Splitting units into smaller parts gives accuracy",
+                            "exampleLabel": "A",
+                            "example": "Sonu's screws needed tenths of a cm to tell them apart"
+                        },
+                        {
+                            "id": "2",
+                            "statementLabel": "2",
+                            "statement": "1 unit = 10 tenths = 100 hundredths = 1000 thousandths",
+                            "exampleLabel": "B",
+                            "example": "Folding paper: each tenth splits into 10 hundredths"
+                        },
+                        {
+                            "id": "3",
+                            "statementLabel": "3",
+                            "statement": "The decimal point separates whole from fractional part",
+                            "exampleLabel": "C",
+                            "example": "₹705, ₹70.5, ₹7.05 — same digits, dot changes value"
+                        },
+                        {
+                            "id": "4",
+                            "statementLabel": "4",
+                            "statement": "We can compare, locate, add, and subtract decimals",
+                            "exampleLabel": "D",
+                            "example": "56.456 < 56.465; 18 + 8.8 = 26.8"
+                        }
+                    ],
+                    "statementCardColor": "#C1C1EA",
+                    "statementTextColor": "#1B1464",
+                    "exampleCardColor": "#FFF3E4",
+                    "exampleTextColor": "#3D1E00",
+                    "correctLineColor": "#2EAE6D",
+                    "incorrectLineColor": "#E34850",
+                    "title": "Chapter Summary — Key Ideas of the Decimal System",
+                    "instructions": "Match each key idea to the example that best illustrates it. Think back to the chapter!",
+                    "congratsMessage": "Congratulations! You matched all key ideas correctly!"
+                }
+            }
+        },
+        "instructions_for_student": "Match each key idea to the example that best illustrates it. Think back to the chapter!"
+    }
+}
