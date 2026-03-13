@@ -1,0 +1,223 @@
+{
+    "toolName": "inverse_operations_tool",
+    "version": "2.0.0",
+    "description": "Interactive educational tool teaching how inverse operations undo each other using four arithmetic examples (addition-subtraction, multiplication-division, subtraction-addition, division-multiplication pairs) from NCERT Grade 7 Chapter 7 - Finding the Unknown. Redesigned with Singularity Design System.",
+    "topic": "Using Inverse Operations to Simplify: Arithmetic Examples 1 to 4",
+    "subject": "Mathematics",
+    "grade": "7",
+    "chapter": "7 - Finding the Unknown",
+    "curriculum": "NCERT",
+
+    "generation_prompt": "Step-by-step process showing how inverse operations undo each other. Four examples: addition-subtraction, subtraction-addition, multiplication-division, division-multiplication pairs.",
+
+    "learning_objectives": [
+        "Understand that inverse operations undo each other (addition↔subtraction, multiplication↔division)",
+        "Apply inverse operations to simplify arithmetic expressions without direct calculation",
+        "Recognize that performing the same operation on both sides of an equation preserves equality",
+        "Solve for unknown expressions by removing unwanted terms/factors using inverse operations"
+    ],
+
+    "teaching_notes": "Guide students through this interactive tool. Encourage exploration and discussion. Let students discover patterns across the four examples before formalizing the concept. Use the weighing scale analogy to build intuition.",
+
+    "instructions_for_student": "Inverse operations undo each other. Adding 3 then subtracting 3 returns to the original. Pairs: add-subtract, multiply-divide. In these examples, we use inverse operations to find the value of a shorter expression from a known equation — without computing the long expression directly!",
+
+    "design_system": {
+        "name": "Singularity",
+        "font": "Poppins",
+        "colors": {
+            "primary": "#4A4DC9",
+            "accent": "#FF7212",
+            "gradientStart": "#533086",
+            "gradientEnd": "#FC9145",
+            "lightPurple": "#C1C1EA",
+            "lightOrange": "#FFF3E4",
+            "gray900": "#4E4E4E",
+            "gray400": "#CACACA",
+            "gray200": "#EBEBEB",
+            "gray100": "#F5F5F5",
+            "white": "#FFFFFF",
+            "success": "#2DB87E",
+            "error": "#E5453E"
+        },
+        "borderRadius": {
+            "large": "24px",
+            "medium": "14px",
+            "small": "10px"
+        },
+        "buttonVariants": ["contained", "outlined", "text", "highlight"]
+    },
+
+    "parameters": {
+        "width": { "type": "number", "default": 800, "description": "Width of the tool container in pixels" },
+        "height": { "type": "number", "default": 600, "description": "Height of the tool container in pixels" },
+        "initialMode": { "type": "string", "enum": ["learn", "practice"], "default": "learn", "description": "Starting mode when tool loads" },
+        "showModeSelector": { "type": "boolean", "default": true, "description": "Show/hide the mode tab selector" },
+        "enabledModes": {
+            "type": "array",
+            "items": { "type": "string", "enum": ["learn", "practice"] },
+            "default": ["learn", "practice"],
+            "description": "Which modes to enable"
+        },
+        "showNavigation": { "type": "boolean", "default": true, "description": "Show/hide prev/next navigation buttons (learn mode only)" },
+        "showStepIndicator": { "type": "boolean", "default": true, "description": "Show/hide step counter in header (learn mode only)" },
+        "animationSpeed": { "type": "number", "default": 1, "description": "Animation speed multiplier (higher = faster)" },
+        "autoPlayDuration": { "type": "number", "default": 10000, "description": "Auto-advance delay in milliseconds (0 to disable)" },
+        "themeColor": { "type": "string", "default": "#4A4DC9", "description": "Primary theme color (maps to DS.primary)" },
+        "darkMode": { "type": "boolean", "default": false, "description": "Enable dark mode" },
+        "initialStep": { "type": "number", "default": 1, "description": "Starting step ID" },
+        "filterSteps": { "type": "array", "items": { "type": "number" }, "default": null, "description": "Only show steps with these IDs" }
+    },
+
+    "additionalProps": {
+        "description": "Tool-specific dynamic content for inverse operations examples",
+        "schema": {
+            "examples": {
+                "type": "array",
+                "description": "Custom examples to display (overrides defaults). Each example uses pair-specific theming from the Singularity design system.",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "id": { "type": "string", "description": "Unique example identifier" },
+                        "title": { "type": "string", "description": "Example title" },
+                        "operationPair": {
+                            "type": "string",
+                            "enum": ["add_subtract", "subtract_add", "multiply_divide", "divide_multiply"],
+                            "description": "Type of inverse operation pair. Determines color theme: add_subtract=#4A4DC9 indigo, multiply_divide=#533086 purple, subtract_add=#FF7212 orange, divide_multiply=#FC9145 amber"
+                        },
+                        "expression": { "type": "string", "description": "The full expression on the LHS" },
+                        "knownResult": { "type": "number", "description": "The known RHS value" },
+                        "termToRemove": { "type": "string", "description": "The term to be removed (e.g., '+ 88')" },
+                        "termToRemoveValue": { "type": "number", "description": "Numeric value of the term to remove" },
+                        "inverseOperation": { "type": "string", "description": "Description of the inverse operation" },
+                        "inverseOperationSymbol": { "type": "string", "description": "Symbol form of inverse operation (e.g., '− 88')" },
+                        "resultExpression": { "type": "string", "description": "Simplified expression after removal" },
+                        "resultValue": { "type": "number", "description": "Numeric result" },
+                        "color": { "type": "string", "description": "Accent color for this example (uses DS tokens by default)" }
+                    }
+                }
+            },
+            "showAllExamples": { "type": "boolean", "default": false, "description": "Show all examples at once instead of one per step" },
+            "highlightExample": { "type": "string", "description": "ID of example to highlight/focus" },
+            "animationDelay": { "type": "number", "default": 500, "description": "Base delay between animation phases in ms" },
+            "showFormula": { "type": "boolean", "default": false, "description": "Show the general formula for inverse operations" }
+        }
+    },
+
+    "modes": {
+        "learn": {
+            "label": "Learn",
+            "icon": "BookOpen",
+            "description": "Step-by-step walkthrough of all four inverse operation examples with animated reveal phases. Bottom navigation (Prev/Next with gradient dots) and teaching note footer visible.",
+            "steps": [1, 2, 3, 4, 5]
+        },
+        "practice": {
+            "label": "Practice",
+            "icon": "Target",
+            "description": "One-question-at-a-time quiz with immediate feedback. Has its own internal navigation (Previous/Next with status dots). Bottom nav bar and teaching note hidden.",
+            "steps": [10, 11]
+        }
+    },
+
+    "steps": {
+        "1": { "title": "What are Inverse Operations?", "mode": "learn", "type": "intro", "description": "Introduction with animated pair cards (Addition↔Subtraction, Multiplication↔Division) and key idea callout" },
+        "2": { "title": "Example 1: Addition ↔ Subtraction", "mode": "learn", "type": "explanation", "description": "4-phase animated walkthrough: Given → Apply Inverse (−88) → Cancel → Result" },
+        "3": { "title": "Example 2: Multiplication ↔ Division", "mode": "learn", "type": "explanation", "description": "4-phase animated walkthrough: Given → Apply Inverse (÷7) → Cancel → Result" },
+        "4": { "title": "Example 3: Subtraction ↔ Addition", "mode": "learn", "type": "explanation", "description": "4-phase animated walkthrough: Given → Apply Inverse (+(−67)) → Cancel → Result" },
+        "5": { "title": "Example 4: Division ↔ Multiplication", "mode": "learn", "type": "explanation", "description": "4-phase animated walkthrough: Given → Apply Inverse (×(9/8)) → Cancel → Result" },
+        "10": { "title": "Identify the Inverse", "mode": "practice", "type": "practice", "description": "4 MCQ questions — one at a time — identifying inverse of given operations" },
+        "11": { "title": "Apply Inverse Operations", "mode": "practice", "type": "practice", "description": "4 MCQ questions — one at a time — computing values by applying inverse operations" }
+    },
+
+    "ui_features": {
+        "header": "Gradient header (#533086→#FC9145) with decorative translucent circles and icon badge",
+        "mode_tabs": "Outlined pill tabs with #4A4DC9 active border and #C1C1EA light purple active background",
+        "buttons": {
+            "contained": "Purple-to-orange gradient (#533086→#FC9145) with shadow, used for primary actions (Next)",
+            "outlined": "Transparent with #4A4DC9 border, used for secondary actions (Prev)",
+            "highlight": "Orange gradient (#FF7212→#FF8F3F) with pulsing animation, used for post-answer Next",
+            "text": "No border/background, #4A4DC9 color"
+        },
+        "step_dots": "Active dot uses gradient fill (#533086→#FC9145), inactive uses #EBEBEB gray",
+        "practice_dots": "Green (#2DB87E) for correct, red (#E5453E) for incorrect, #4A4DC9 for current",
+        "example_cards": "Pair-specific color themes with badge, shimmer top bar, and strikethrough cancel animation",
+        "practice_cards": "One question at a time, border turns green/red on answer, feedback message below options",
+        "teaching_note": "Light orange (#FFF3E4) footer, shown only in learn mode"
+    },
+
+    "tool_call_examples": [
+        {
+            "description": "Default: Show all four examples in learn mode",
+            "parameters": {}
+        },
+        {
+            "description": "Show only the addition-subtraction example",
+            "parameters": {
+                "initialMode": "learn",
+                "filterSteps": [1, 2],
+                "showModeSelector": false
+            }
+        },
+        {
+            "description": "Jump straight to practice mode",
+            "parameters": {
+                "initialMode": "practice",
+                "showModeSelector": true
+            }
+        },
+        {
+            "description": "Faster animations for quick review",
+            "parameters": {
+                "animationSpeed": 2.5,
+                "autoPlayDuration": 5000
+            }
+        },
+        {
+            "description": "Minimal view — no auto-advance, no step indicator",
+            "parameters": {
+                "autoPlayDuration": 0,
+                "showStepIndicator": false
+            }
+        },
+        {
+            "description": "Custom example with agent-provided data",
+            "parameters": {
+                "initialMode": "learn",
+                "filterSteps": [2],
+                "showModeSelector": false,
+                "additionalProps": {
+                    "examples": [
+                        {
+                            "id": "custom1",
+                            "title": "Custom: Remove Addition",
+                            "operationPair": "add_subtract",
+                            "expression": "500 + 200 + 75",
+                            "knownResult": 775,
+                            "termToRemove": "+ 75",
+                            "termToRemoveValue": 75,
+                            "inverseOperation": "Subtract 75 from both sides",
+                            "inverseOperationSymbol": "− 75",
+                            "resultExpression": "500 + 200",
+                            "resultValue": 700,
+                            "color": "#4A4DC9"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "description": "Practice only — no mode selector, no learn tab",
+            "parameters": {
+                "initialMode": "practice",
+                "showModeSelector": false,
+                "enabledModes": ["practice"]
+            }
+        },
+        {
+            "description": "All examples with practice, no auto-advance",
+            "parameters": {
+                "autoPlayDuration": 0,
+                "enabledModes": ["learn", "practice"]
+            }
+        }
+    ]
+}

@@ -1,0 +1,468 @@
+{
+  "id": "M3.S12.T12.T2D1",
+  "title": "Interactive Parallel Line Constructor",
+  "subtype": "geometry_constructor",
+  "toolName": "parallel_line_constructor",
+  "componentExport": {
+    "default": "ParallelLineConstructor",
+    "named": "ParallelLineConstructor"
+  },
+  "designSystem": {
+    "name": "Singularity",
+    "font": "Poppins",
+    "colors": {
+      "primary": "#4A4DC9",
+      "primaryDark": "#533086",
+      "orange": "#FF7212",
+      "orangeLight": "#FC9145",
+      "bgPage": "#FFFFFF",
+      "bgCard": "#F5F5F5",
+      "purpleLight": "#C1C1EA",
+      "purpleTint": "#EEEEF8",
+      "orangeTint": "#FFF3E4",
+      "textPrimary": "#1A1A2E",
+      "textSecondary": "#4E4E4E",
+      "textMuted": "#7A7A8E",
+      "textDisabled": "#CACACA",
+      "border": "#EBEBEB",
+      "success": "#2EAD6B",
+      "error": "#E04B4B"
+    },
+    "buttons": {
+      "height": 40,
+      "paddingHorizontal": 24,
+      "borderRadius": 20,
+      "fontWeight": 600,
+      "variants": ["contained", "outlined"]
+    }
+  },
+  "parameters": {
+    "initialMode": "learn",
+    "enabledModes": ["learn", "practice"],
+    "showModeSelector": true,
+    "learnMode": {
+      "canvasVisible": true,
+      "canvasSize": { "width": 750, "height": 440 },
+      "stepNavigationButtons": false,
+      "keyInsightBox": false,
+      "showTheoryToggle": true,
+      "prevNextButtons": true,
+      "animationConfig": {
+        "defaultDuration": 800,
+        "arcStepDuration": 1500,
+        "chordStepDuration": 1500,
+        "easing": "easeOutCubic"
+      }
+    },
+    "practiceMode": {
+      "type": "mcq",
+      "canvasVisible": false,
+      "totalQuestions": 5,
+      "showProgressBar": true,
+      "showExplanation": true,
+      "showScoreAtEnd": true
+    },
+    "additionalProps": {
+      "geometry": {
+        "lineM": {
+          "y": 340,
+          "xStart": 30,
+          "xEnd": 720
+        },
+        "pointB": { "x": 340, "y": 120 },
+        "pointA": { "x": 210, "y": 340 },
+        "arcRadius": 50
+      },
+      "givenLine": {
+        "step1": {
+          "label": "Given: line m and point B not on m. Construct a line through B parallel to m.",
+          "lineM": true,
+          "pointB": { "x": 340, "y": 120 },
+          "visible": true
+        },
+        "step2": {
+          "label": "Line m with point B above it",
+          "lineM": true,
+          "pointB": { "x": 340, "y": 120 },
+          "visible": true
+        },
+        "step3": {
+          "label": "Line m and transversal l intersect at A",
+          "lineM": true,
+          "pointB": { "x": 340, "y": 120 },
+          "visible": true
+        },
+        "step4": {
+          "label": "Angle at A being copied to B",
+          "lineM": true,
+          "pointB": { "x": 340, "y": 120 },
+          "visible": true
+        },
+        "step5": {
+          "label": "Lines m and n are parallel (equal corresponding angles)",
+          "lineM": true,
+          "pointB": { "x": 340, "y": 120 },
+          "visible": true
+        }
+      },
+      "transversal": {
+        "step1": {
+          "drawn": false,
+          "label": "Transversal not drawn",
+          "visible": false,
+          "intersectionA": null
+        },
+        "step2": {
+          "drawn": true,
+          "label": "Draw transversal l through B meeting line m at point A. The angle between l and m at A is angle a.",
+          "visible": true,
+          "intersectionA": { "x": 210, "y": 340 },
+          "animation": {
+            "type": "lineGrow",
+            "duration": 800
+          }
+        },
+        "step3": {
+          "drawn": true,
+          "label": "Transversal l creates angle a at point A",
+          "visible": true,
+          "intersectionA": { "x": 210, "y": 340 }
+        },
+        "step4": {
+          "drawn": true,
+          "label": "Transversal in place",
+          "visible": true,
+          "intersectionA": { "x": 210, "y": 340 }
+        },
+        "step5": {
+          "drawn": true,
+          "label": "Transversal l cuts both parallel lines",
+          "visible": true,
+          "intersectionA": { "x": 210, "y": 340 }
+        }
+      },
+      "angleCopyAtB": {
+        "step1": {
+          "label": "Angle copy not started",
+          "visible": false,
+          "newRayDrawn": false,
+          "sourceArcAtA": false,
+          "targetArcAtB": false,
+          "chordTransferred": false
+        },
+        "step2": {
+          "label": "Ready to copy angle",
+          "visible": false,
+          "newRayDrawn": false,
+          "sourceArcAtA": false,
+          "targetArcAtB": false,
+          "chordTransferred": false
+        },
+        "step3": {
+          "label": "Draw arcs at A (source) and B (target) with same radius",
+          "visible": true,
+          "newRayDrawn": false,
+          "sourceArcAtA": true,
+          "targetArcAtB": true,
+          "chordTransferred": false,
+          "animation": {
+            "type": "compassSweep",
+            "duration": 1500,
+            "phases": [
+              {
+                "id": "arcAtA",
+                "startPercent": 0,
+                "endPercent": 40,
+                "description": "Compass sweeps arc at A with dashed radius line, tip dot, and 'r' label. Points C and D fade in at intersections."
+              },
+              {
+                "id": "arcAtB",
+                "startPercent": 45,
+                "endPercent": 90,
+                "description": "Same-radius compass sweeps arc at B with dashed radius, tip dot, and 'same r' label. Point E fades in."
+              },
+              {
+                "id": "equalRadiusBadge",
+                "startPercent": 90,
+                "endPercent": 100,
+                "description": "'Equal radius at A & B' pill badge fades in between arcs."
+              }
+            ]
+          }
+        },
+        "step4": {
+          "label": "Transfer the chord from arc at A to arc at B — this copies angle a",
+          "visible": true,
+          "newRayDrawn": false,
+          "sourceArcAtA": true,
+          "targetArcAtB": true,
+          "chordTransferred": true,
+          "animation": {
+            "type": "chordTransfer",
+            "duration": 1500,
+            "phases": [
+              {
+                "id": "measureChordAtA",
+                "startPercent": 0,
+                "endPercent": 35,
+                "description": "Chord line grows from C to D at A with traveling compass tip dot. 'chord' label appears."
+              },
+              {
+                "id": "transferChordToB",
+                "startPercent": 40,
+                "endPercent": 70,
+                "description": "Chord line grows from E to F at B with compass tip. Point F and 'same chord' label appear."
+              },
+              {
+                "id": "revealAngleAtB",
+                "startPercent": 72,
+                "endPercent": 100,
+                "description": "Angle a fill and arc sweep in progressively at B. Angle label 'a' fades in."
+              }
+            ]
+          }
+        },
+        "step5": {
+          "label": "Draw the new ray through B — line n is parallel to m",
+          "visible": true,
+          "newRayDrawn": true,
+          "sourceArcAtA": true,
+          "targetArcAtB": true,
+          "chordTransferred": true
+        }
+      },
+      "correspondingAngles": {
+        "step1": {
+          "label": "Angles not marked",
+          "visible": false,
+          "angleAtA": null,
+          "angleAtB": null,
+          "showEquality": false
+        },
+        "step2": {
+          "label": "Angle a formed between transversal l and line m at A",
+          "visible": true,
+          "angleAtA": "a",
+          "angleAtB": null,
+          "showEquality": false
+        },
+        "step3": {
+          "label": "Source angle a identified",
+          "visible": true,
+          "angleAtA": "a",
+          "angleAtB": null,
+          "showEquality": false
+        },
+        "step4": {
+          "label": "Same angle a being constructed at B",
+          "visible": true,
+          "angleAtA": "a",
+          "angleAtB": "a",
+          "showEquality": false
+        },
+        "step5": {
+          "label": "Corresponding angles are equal, so lines m and n are parallel!",
+          "visible": true,
+          "angleAtA": "a",
+          "angleAtB": "a",
+          "showEquality": true
+        }
+      },
+      "parallelVerification": {
+        "step1": {
+          "label": "Not yet verified",
+          "verified": false,
+          "showParallelMarks": false
+        },
+        "step2": {
+          "label": "Not yet verified",
+          "verified": false,
+          "showParallelMarks": false
+        },
+        "step3": {
+          "label": "Construction in progress",
+          "verified": false,
+          "showParallelMarks": false
+        },
+        "step4": {
+          "label": "Almost there",
+          "verified": false,
+          "showParallelMarks": false
+        },
+        "step5": {
+          "label": "Verified: line n is parallel to line m. The arrow marks on both lines confirm parallelism.",
+          "verified": true,
+          "showParallelMarks": true,
+          "verificationBadge": {
+            "text": "∠a = ∠a  ⟹  m ∥ n",
+            "position": { "x": 540, "y": 195 },
+            "style": "pill"
+          }
+        }
+      },
+      "mcqQuestions": [
+        {
+          "id": 1,
+          "question": "What is the first step to construct a line parallel to line m through point B?",
+          "options": [
+            { "id": "a", "text": "Draw a perpendicular from B to m" },
+            { "id": "b", "text": "Draw a transversal line through B that intersects m" },
+            { "id": "c", "text": "Copy line m directly through B" },
+            { "id": "d", "text": "Bisect the angle at B" }
+          ],
+          "correctId": "b",
+          "explanation": "The first step is to draw a transversal — a line through B that crosses line m at a point A. This creates the angle we need to copy.",
+          "relatedStep": 2
+        },
+        {
+          "id": 2,
+          "question": "Why do we draw arcs of equal radius at both points A and B?",
+          "options": [
+            { "id": "a", "text": "To measure the length of the transversal" },
+            { "id": "b", "text": "To create congruent triangles for the SSS condition" },
+            { "id": "c", "text": "To find the midpoint of the transversal" },
+            { "id": "d", "text": "To construct a perpendicular bisector" }
+          ],
+          "correctId": "b",
+          "explanation": "Equal-radius arcs at A and B set up an isosceles triangle at each point. By also transferring the chord, we ensure two triangles are congruent (SSS), guaranteeing equal angles.",
+          "relatedStep": 3
+        },
+        {
+          "id": 3,
+          "question": "What does 'transferring the chord' accomplish in this construction?",
+          "options": [
+            { "id": "a", "text": "It makes line n perpendicular to line m" },
+            { "id": "b", "text": "It copies the exact angle a from point A to point B" },
+            { "id": "c", "text": "It bisects the angle at point A" },
+            { "id": "d", "text": "It marks the midpoint of arc at B" }
+          ],
+          "correctId": "b",
+          "explanation": "Transferring the chord length from the arc at A to the arc at B reproduces the same opening, copying the exact angle a at point B.",
+          "relatedStep": 4
+        },
+        {
+          "id": 4,
+          "question": "Which geometric principle guarantees that line n is parallel to line m?",
+          "options": [
+            { "id": "a", "text": "Alternate interior angles are supplementary" },
+            { "id": "b", "text": "Corresponding angles formed by a transversal are equal" },
+            { "id": "c", "text": "Vertically opposite angles are equal" },
+            { "id": "d", "text": "Angles in a triangle add up to 180°" }
+          ],
+          "correctId": "b",
+          "explanation": "The Corresponding Angles Converse states: if a transversal cuts two lines making equal corresponding angles, those two lines must be parallel.",
+          "relatedStep": 5
+        },
+        {
+          "id": 5,
+          "question": "In this construction, what tools are needed?",
+          "options": [
+            { "id": "a", "text": "Ruler and protractor" },
+            { "id": "b", "text": "Only a compass" },
+            { "id": "c", "text": "Unmarked ruler (straightedge) and compass" },
+            { "id": "d", "text": "Set square and ruler" }
+          ],
+          "correctId": "c",
+          "explanation": "The construction uses only an unmarked straightedge and a compass — no measurement of angles or lengths is needed, making it a pure geometric construction.",
+          "relatedStep": 1
+        }
+      ]
+    }
+  },
+  "description": "An interactive tool for constructing a line parallel to a given line through a specified point using the angle-copying method at a transversal. In Learn mode, students view an animated canvas showing each construction step with compass-sweep arc animations and chord transfer visuals. In Practice mode, students answer MCQ questions testing their understanding of the construction method. The tool uses the Singularity design system with Poppins font and purple/orange colour palette.",
+  "objective_id": "M3.S12.T12.O1",
+  "teaching_notes": "This construction reverses the property of parallel lines: instead of measuring angles to check parallelism, we create equal angles to ensure it. The method builds directly on the angle-copying technique from M2.S10.T10. Learn mode features animated compass-sweep arcs showing how each arc is formed progressively. Practice mode uses MCQ questions to assess conceptual understanding without requiring canvas interaction.",
+  "tool_objectives": [
+    {
+      "step": 1,
+      "filterSteps": [1],
+      "tool_config": {
+        "toolName": "parallel_line_constructor",
+        "parameters": {
+          "givenLine": { "visible": true },
+          "transversal": { "visible": false },
+          "angleCopyAtB": { "visible": false },
+          "correspondingAngles": { "visible": false }
+        }
+      },
+      "objective_id": "M3.S12.T12.O1",
+      "instructions_for_student": "Here is line m and point B above it. Our goal: construct a line through B that is parallel to m, using only compass and straightedge."
+    },
+    {
+      "step": 2,
+      "filterSteps": [2],
+      "tool_config": {
+        "toolName": "parallel_line_constructor",
+        "parameters": {
+          "transversal": { "drawn": true, "visible": true, "animated": true },
+          "correspondingAngles": { "visible": true, "angleAtA": "a" }
+        }
+      },
+      "objective_id": "M3.S12.T12.O1",
+      "instructions_for_student": "Draw a transversal line l from B to line m, meeting at point A. Notice the angle a formed between l and m at A. This angle is the key — we will copy it."
+    },
+    {
+      "step": 3,
+      "filterSteps": [3],
+      "tool_config": {
+        "toolName": "parallel_line_constructor",
+        "parameters": {
+          "angleCopyAtB": {
+            "visible": true,
+            "sourceArcAtA": true,
+            "targetArcAtB": true,
+            "animated": true,
+            "animationType": "compassSweep",
+            "showRadiusIndicator": true,
+            "showEqualRadiusBadge": true
+          }
+        }
+      },
+      "objective_id": "M3.S12.T12.O2",
+      "instructions_for_student": "Draw equal-radius arcs at both A and B on the transversal. The arc at A captures the angle, and the arc at B prepares the target."
+    },
+    {
+      "step": 4,
+      "filterSteps": [4],
+      "tool_config": {
+        "toolName": "parallel_line_constructor",
+        "parameters": {
+          "angleCopyAtB": {
+            "visible": true,
+            "chordTransferred": true,
+            "animated": true,
+            "animationType": "chordTransfer",
+            "showCompassTip": true,
+            "showChordLabels": true
+          },
+          "correspondingAngles": {
+            "angleAtB": "a",
+            "animated": true,
+            "animationType": "angleSweep"
+          }
+        }
+      },
+      "objective_id": "M3.S12.T12.O2",
+      "instructions_for_student": "Transfer the chord from the arc at A to the arc at B, just like in the angle-copying construction. This creates the same angle a at point B."
+    },
+    {
+      "step": 5,
+      "filterSteps": [5],
+      "tool_config": {
+        "toolName": "parallel_line_constructor",
+        "parameters": {
+          "angleCopyAtB": { "newRayDrawn": true },
+          "correspondingAngles": { "showEquality": true },
+          "parallelVerification": {
+            "verified": true,
+            "showParallelMarks": true,
+            "showVerificationBadge": true
+          }
+        }
+      },
+      "objective_id": "M3.S12.T12.O2",
+      "instructions_for_student": "Draw line n through B. Since both lines make equal corresponding angles with transversal l, line n is parallel to line m. The arrow marks confirm parallelism."
+    }
+  ],
+  "instructions_for_student": "Construct a line parallel to given line m through point B. The method uses angle copying: draw a transversal, identify the angle at the intersection with m, then copy that exact angle at point B. Equal corresponding angles guarantee the new line is parallel to m."
+}

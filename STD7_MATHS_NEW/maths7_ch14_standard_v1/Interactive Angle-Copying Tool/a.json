@@ -1,0 +1,331 @@
+{
+  "id": "M2.S10.T10.T2D1",
+  "title": "Interactive Angle-Copying Tool",
+  "subtype": "geometry_constructor",
+  "toolName": "angle_copying_tool",
+  "parameters": {
+    "initialMode": "learn",
+    "enabledModes": ["learn", "practice"],
+    "responsiveBreakpoint": 640,
+    "geometry": {
+      "vertexX": 130,
+      "vertexY": 210,
+      "armLength": 170,
+      "arcRadius": 100,
+      "angleDegrees": 50,
+      "chordLength": 85.5,
+      "svgViewBox": "0 0 380 280"
+    },
+    "designSystem": {
+      "font": "Poppins",
+      "colors": {
+        "primary": "#4A4DC9",
+        "primaryLight": "#C1C1EA",
+        "primaryGhost": "#EEEEF8",
+        "accent": "#FF7212",
+        "accentSoft": "#FC9145",
+        "accentLight": "#FFF3E4",
+        "accentMid": "#FFD4AC",
+        "purple": "#533086",
+        "gray900": "#1A1A2E",
+        "gray700": "#4E4E4E",
+        "gray500": "#7A7A8A",
+        "gray400": "#9E9E9E",
+        "gray300": "#CACACA",
+        "gray200": "#EBEBEB",
+        "gray100": "#F5F5F5",
+        "white": "#FFFFFF",
+        "success": "#2ECC71",
+        "successLight": "#E8FAF0"
+      },
+      "geometryColors": {
+        "ray": "#4E4E4E",
+        "arc": "#4A4DC9",
+        "chord": "#FF7212",
+        "chordTarget": "#533086",
+        "angleMarker": "#FC9145"
+      },
+      "borderRadius": 12,
+      "borderRadiusPill": 40,
+      "shadows": {
+        "small": "0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04)",
+        "medium": "0 4px 12px rgba(74,77,201,0.10), 0 1px 4px rgba(0,0,0,0.06)"
+      }
+    },
+    "componentArchitecture": {
+      "exportStrategy": {
+        "named": "export { AngleCopyingTool }",
+        "default": "export default AngleCopyingTool",
+        "note": "Both named and default exports at end of file. Main component declared as plain 'function AngleCopyingTool()' (not inline export default) for compatibility with all bundler import styles."
+      }
+    },
+    "additionalProps": {
+      "sourceAngle": {
+        "step1": {
+          "label": "Source angle BAC = 50 degrees.",
+          "showArc": false,
+          "vertex": { "x": 130, "y": 210 },
+          "visible": true,
+          "showChord": false,
+          "angleDegrees": 50
+        },
+        "step2": {
+          "label": "Arc from A cuts arms at B, C.",
+          "showArc": true,
+          "vertex": { "x": 130, "y": 210 },
+          "visible": true,
+          "showChord": false,
+          "angleDegrees": 50
+        },
+        "step3": {
+          "label": "Chord BC captures angle size.",
+          "showArc": true,
+          "vertex": { "x": 130, "y": 210 },
+          "visible": true,
+          "showChord": true,
+          "angleDegrees": 50
+        },
+        "step4": {
+          "label": "Source with arc and chord.",
+          "showArc": true,
+          "vertex": { "x": 130, "y": 210 },
+          "visible": true,
+          "showChord": true,
+          "angleDegrees": 50
+        },
+        "step5": {
+          "label": "SSS: triangle ABC = triangle XYZ",
+          "showArc": true,
+          "vertex": { "x": 130, "y": 210 },
+          "visible": true,
+          "showChord": true,
+          "showCongruenceTicks": true,
+          "angleDegrees": 50
+        }
+      },
+      "compassAction": {
+        "step1": {
+          "label": "No compass action yet",
+          "action": "none"
+        },
+        "step2": {
+          "label": "Draw arc from vertex A cutting both arms",
+          "action": "draw_source_arc",
+          "centre": "A",
+          "radius": 100
+        },
+        "step3": {
+          "label": "Draw arc from vertex X with same radius",
+          "action": "draw_target_arc",
+          "centre": "X",
+          "radius": 100
+        },
+        "step4": {
+          "label": "Measure chord BC, mark Y on target arc at distance BC from Z",
+          "action": "transfer_chord",
+          "from": "Z",
+          "chordLength": 85.5
+        },
+        "step5": {
+          "label": "Construction complete — both angles are equal",
+          "action": "complete"
+        }
+      },
+      "congruenceProof": {
+        "step1": { "visible": false },
+        "step2": { "visible": false },
+        "step3": { "visible": false },
+        "step4": { "visible": false },
+        "step5": {
+          "visible": true,
+          "label": "SSS Congruence guarantees the copy is exact",
+          "sides": [
+            { "source": "AB", "target": "XZ", "reason": "same arc radius", "color": "#4A4DC9" },
+            { "source": "AC", "target": "XZ", "reason": "same arc radius", "color": "#4A4DC9" },
+            { "source": "BC", "target": "YZ", "reason": "transferred chord", "sourceColor": "#FF7212", "targetColor": "#533086" }
+          ],
+          "conclusion": "Therefore Angle BAC = Angle YXZ = 50 degrees",
+          "trianglePairs": "ABC and XYZ"
+        }
+      },
+      "targetWorkspace": {
+        "step1": {
+          "label": "Target: ray from X.",
+          "rayXZ": true,
+          "showArc": false,
+          "vertex": { "x": 130, "y": 210 },
+          "visible": true,
+          "secondRay": false,
+          "showChordTransfer": false
+        },
+        "step2": {
+          "label": "Ray from X ready.",
+          "rayXZ": true,
+          "showArc": false,
+          "vertex": { "x": 130, "y": 210 },
+          "visible": true,
+          "secondRay": false,
+          "showChordTransfer": false
+        },
+        "step3": {
+          "label": "Arc from X, same radius. Z on ray.",
+          "rayXZ": true,
+          "showArc": true,
+          "vertex": { "x": 130, "y": 210 },
+          "visible": true,
+          "secondRay": false,
+          "showChordTransfer": false,
+          "pointZ": true
+        },
+        "step4": {
+          "label": "Transfer chord BC as YZ.",
+          "rayXZ": true,
+          "showArc": true,
+          "vertex": { "x": 130, "y": 210 },
+          "visible": true,
+          "secondRay": false,
+          "showChordTransfer": true,
+          "pointZ": true,
+          "pointY": true
+        },
+        "step5": {
+          "label": "Angle YXZ = Angle BAC = 50 degrees!",
+          "rayXZ": true,
+          "showArc": true,
+          "vertex": { "x": 130, "y": 210 },
+          "visible": true,
+          "secondRay": true,
+          "showChordTransfer": true,
+          "showAngleMarker": true,
+          "showCongruenceTicks": true,
+          "pointZ": true,
+          "pointY": true
+        }
+      },
+      "measurementOverlay": {
+        "step1": {
+          "badges": [
+            { "label": "Source", "value": "50°", "background": "#EEEEF8", "color": "#4A4DC9", "border": "#C1C1EA" }
+          ]
+        },
+        "step2": {
+          "badges": [
+            { "label": "Source", "value": "50°", "background": "#EEEEF8", "color": "#4A4DC9", "border": "#C1C1EA" }
+          ]
+        },
+        "step3": {
+          "badges": [
+            { "label": "Source", "value": "50°", "background": "#EEEEF8", "color": "#4A4DC9", "border": "#C1C1EA" },
+            { "label": "Chord", "value": "85.5", "background": "#FFF3E4", "color": "#FF7212", "border": "#FFD4AC" }
+          ]
+        },
+        "step4": {
+          "badges": [
+            { "label": "Source", "value": "50°", "background": "#EEEEF8", "color": "#4A4DC9", "border": "#C1C1EA" },
+            { "label": "Chord", "value": "85.5", "background": "#FFF3E4", "color": "#FF7212", "border": "#FFD4AC" }
+          ]
+        },
+        "step5": {
+          "badges": [
+            { "label": "Source", "value": "50°", "background": "#EEEEF8", "color": "#4A4DC9", "border": "#C1C1EA" },
+            { "label": "Chord", "value": "85.5", "background": "#FFF3E4", "color": "#FF7212", "border": "#FFD4AC" },
+            { "label": "Target", "value": "50° ✓", "background": "#E8FAF0", "color": "#2ECC71", "border": "#A3E4C1" }
+          ]
+        }
+      },
+      "practiceMode": {
+        "availableAngles": [30, 45, 60, 75, 110, 135],
+        "defaultAngle": 60,
+        "arcRadius": 90,
+        "armLength": 160,
+        "vertex": { "x": 130, "y": 210 },
+        "revealButton": true,
+        "revealButtonLabels": {
+          "hidden": "Reveal Construction",
+          "revealed": "✓ Revealed"
+        }
+      }
+    },
+    "showModeSelector": true
+  },
+  "description": "A dual-panel interactive tool where students copy a given angle from a source location to a target location using ruler and compass. The left panel shows the original angle with its arc and chord. The right panel is the workspace where students replicate the construction step by step. The tool highlights how SSS congruence guarantees the copied angle is exact, and shows the chord transfer as the critical measurement step. Built with Singularity design system (Poppins font, #4A4DC9 primary, #FF7212 accent, #533086 purple). Responsive layout stacks panels vertically below 640px. Component exported as both named and default export for universal bundler compatibility.",
+  "objective_id": "M2.S10.T10.O1",
+  "teaching_notes": "The chord BC is the critical measurement — it encodes the angle size within the fixed-radius arc. Emphasise that we never measure the angle in degrees; instead, we transfer the triangle that defines it. This connects to repeating patterns where exact angle copies are needed for each unit.",
+  "implementation_notes": {
+    "export_strategy": "Main component declared as plain 'function AngleCopyingTool()' with separate 'export { AngleCopyingTool }' (named) and 'export default AngleCopyingTool' (default) at end of file, replacing the original inline 'export default function' declaration."
+  },
+  "tool_objectives": [
+    {
+      "step": 1,
+      "filterSteps": [1],
+      "tool_config": {
+        "toolName": "angle_copying_tool",
+        "parameters": {
+          "sourceAngle": { "showArc": false, "visible": true, "showChord": false },
+          "compassAction": { "action": "none" },
+          "targetWorkspace": { "rayXZ": true, "visible": true }
+        }
+      },
+      "objective_id": "M2.S10.T10.O1",
+      "instructions_for_student": "Left: angle BAC = 50 degrees. Right: ray from X. Copy the angle without a protractor."
+    },
+    {
+      "step": 2,
+      "filterSteps": [2],
+      "tool_config": {
+        "toolName": "angle_copying_tool",
+        "parameters": {
+          "sourceAngle": { "showArc": true, "showChord": false },
+          "compassAction": { "action": "draw_source_arc" },
+          "targetWorkspace": { "showArc": false }
+        }
+      },
+      "objective_id": "M2.S10.T10.O1",
+      "instructions_for_student": "Draw arc from A cutting both arms. AB = AC (same radius), so triangle ABC is isosceles."
+    },
+    {
+      "step": 3,
+      "filterSteps": [3],
+      "tool_config": {
+        "toolName": "angle_copying_tool",
+        "parameters": {
+          "sourceAngle": { "showArc": true, "showChord": true },
+          "compassAction": { "action": "draw_target_arc" },
+          "targetWorkspace": { "showArc": true, "pointZ": true }
+        }
+      },
+      "objective_id": "M2.S10.T10.O1",
+      "instructions_for_student": "Same radius arc from X. Mark Z on ray. Now XZ = AB = AC."
+    },
+    {
+      "step": 4,
+      "filterSteps": [4],
+      "tool_config": {
+        "toolName": "angle_copying_tool",
+        "parameters": {
+          "sourceAngle": { "showArc": true, "showChord": true },
+          "compassAction": { "action": "transfer_chord" },
+          "targetWorkspace": { "showArc": true, "showChordTransfer": true, "pointZ": true, "pointY": true }
+        }
+      },
+      "objective_id": "M2.S10.T10.O2",
+      "instructions_for_student": "Set compass to chord BC. Place on Z, mark Y on arc. YZ = BC."
+    },
+    {
+      "step": 5,
+      "filterSteps": [5],
+      "tool_config": {
+        "toolName": "angle_copying_tool",
+        "parameters": {
+          "sourceAngle": { "showArc": true, "showChord": true, "showCongruenceTicks": true },
+          "compassAction": { "action": "complete" },
+          "congruenceProof": { "visible": true },
+          "targetWorkspace": { "showArc": true, "secondRay": true, "showChordTransfer": true, "showAngleMarker": true, "showCongruenceTicks": true }
+        }
+      },
+      "objective_id": "M2.S10.T10.O2",
+      "instructions_for_student": "Draw ray XY. SSS proves: AB=XZ, AC=XZ, BC=YZ. Angles are equal!"
+    }
+  ],
+  "instructions_for_student": "Copy an angle from one location to another using only compass and straightedge. The key idea: an arc and its chord capture the size of an angle. Transfer the arc radius and chord length to a new vertex, and SSS congruence guarantees the copy is exact. In practice mode, try copying different angles."
+}

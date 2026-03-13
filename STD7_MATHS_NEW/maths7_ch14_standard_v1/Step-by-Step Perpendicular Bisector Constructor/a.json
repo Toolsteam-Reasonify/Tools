@@ -1,0 +1,300 @@
+{
+  "id": "M1.S4.T4.T2D1",
+  "title": "Step-by-Step Perpendicular Bisector Constructor",
+  "subtype": "geometry_constructor",
+  "toolName": "perpendicular_bisector_constructor",
+  "version": "3.0.0",
+  "description": "A guided construction tool where students build the perpendicular bisector of a line segment XY using only compass and straightedge. Learn mode shows 4 animated steps with sequential arc formation (arc from X draws first, then arc from Y) and measurement verification. Practice mode has 10 mixed questions: MCQ, True/False, and Fill in the Blanks with hints, explanations, and score tracking. Styled with Singularity Design System (Poppins font, #4A4DC9 purple / #FF7212 orange palette).",
+  "objective_id": "M1.S4.T4.O1",
+  "teaching_notes": "Emphasise that compass radius must exceed half of XY for arcs to intersect. In learn mode, arcs draw sequentially (arc from X first, then arc from Y) so students can clearly see each step. Animation duration for arc steps is 3.6s for clarity. Practice mode uses shuffled mixed-type questions to reinforce conceptual understanding.",
+  "instructions_for_student": "Follow the guided steps to construct the perpendicular bisector of segment XY. Watch each arc draw one at a time — first from X, then from Y. Find intersection points A and B, then draw line AB. In practice mode, test your understanding with mixed questions.",
+  "designSystem": {
+    "name": "Singularity",
+    "font": "Poppins",
+    "colors": {
+      "primary": "#4A4DC9",
+      "accent": "#FF7212",
+      "gradientPurple": "#533086",
+      "gradientOrange": "#FC9145",
+      "lightPurple": "#C1C1EA",
+      "lightOrange": "#FFF3E4",
+      "dark": "#4E4E4E",
+      "gray": "#CACACA",
+      "lightGray": "#EBEBEB",
+      "offWhite": "#F5F5F5",
+      "white": "#FFFFFF",
+      "success": "#2EBD6B",
+      "error": "#E5453F"
+    },
+    "spacing": {
+      "padding": 24,
+      "buttonHeight": 40,
+      "radiusSmall": 8,
+      "radiusMedium": 16,
+      "radiusLarge": 24
+    },
+    "buttonStyles": {
+      "contained": "Gradient fill (#533086 → #FC9145), white text, no border",
+      "outlined": "Transparent bg, 1.5px solid #4A4DC9 border, purple text",
+      "disabled": "#EBEBEB bg, #CACACA text"
+    }
+  },
+  "parameters": {
+    "initialMode": "learn",
+    "enabledModes": ["learn", "practice"],
+    "showModeSelector": true,
+    "showNavigation": true,
+    "showStepIndicator": true,
+    "animationSpeed": 1,
+    "autoPlayDuration": 0,
+    "themeColor": "#4A4DC9",
+    "darkMode": false,
+    "width": 800,
+    "height": 700,
+    "additionalProps": {
+      "lineSegmentXY": {
+        "step1": {
+          "label": "Given: line segment XY. Choose a compass radius greater than half of XY.",
+          "length": 260,
+          "visible": true
+        },
+        "step2": { "label": "Line XY is fixed", "length": 260, "visible": true },
+        "step3": { "label": "Line XY is fixed", "length": 260, "visible": true },
+        "step4": { "label": "Line XY with midpoint O marked", "length": 260, "visible": true }
+      },
+      "arcsAbove": {
+        "step1": {
+          "label": "No arcs drawn yet",
+          "visible": false,
+          "arcFromX": false,
+          "arcFromY": false,
+          "intersectionA": null
+        },
+        "step2": {
+          "label": "Arc from X draws first (0-40%), then arc from Y (40-75%), intersection A appears (75%+)",
+          "visible": true,
+          "arcFromX": true,
+          "arcFromY": true,
+          "sequentialAnimation": true,
+          "arcXProgressRange": [0, 0.4],
+          "arcYProgressRange": [0.4, 0.75],
+          "pointAProgressRange": [0.75, 0.9],
+          "labelProgressRange": [0.85, 1.0],
+          "intersectionA": { "x": 260, "y": 100 }
+        },
+        "step3": { "label": "Point A visible from step 2", "visible": true, "arcFromX": true, "arcFromY": true, "intersectionA": { "x": 260, "y": 100 } },
+        "step4": { "label": "Point A confirmed", "visible": true, "arcFromX": true, "arcFromY": true, "intersectionA": { "x": 260, "y": 100 } }
+      },
+      "arcsBelow": {
+        "step1": { "label": "No arcs drawn yet", "visible": false, "arcFromX": false, "arcFromY": false, "intersectionB": null },
+        "step2": { "label": "Not yet drawn", "visible": false, "arcFromX": false, "arcFromY": false, "intersectionB": null },
+        "step3": {
+          "label": "Arc from X draws first (0-40%), then arc from Y (40-75%), intersection B appears (75%+)",
+          "visible": true,
+          "arcFromX": true,
+          "arcFromY": true,
+          "sequentialAnimation": true,
+          "arcXProgressRange": [0, 0.4],
+          "arcYProgressRange": [0.4, 0.75],
+          "pointBProgressRange": [0.75, 0.9],
+          "labelProgressRange": [0.85, 1.0],
+          "intersectionB": { "x": 260, "y": 280 }
+        },
+        "step4": { "label": "Point B confirmed", "visible": true, "arcFromX": true, "arcFromY": true, "intersectionB": { "x": 260, "y": 280 } }
+      },
+      "bisectorLine": {
+        "step1": { "drawn": false, "label": "Bisector not drawn", "visible": false, "midpointO": null },
+        "step2": { "drawn": false, "label": "Bisector not drawn", "visible": false, "midpointO": null },
+        "step3": { "drawn": false, "label": "Ready to draw the bisector", "visible": false, "midpointO": null },
+        "step4": {
+          "drawn": true,
+          "label": "Line AB is the perpendicular bisector at 90° through midpoint O.",
+          "visible": true,
+          "midpointO": { "x": 260, "y": 185 }
+        }
+      },
+      "measurementDisplay": {
+        "step1": { "label": "Measurements hidden", "showAngle": false, "showDistances": false },
+        "step2": { "label": "XA = YA (equal distances confirmed)", "showAngle": false, "showDistances": true },
+        "step3": { "label": "XA = YA, XB = YB", "showAngle": false, "showDistances": true },
+        "step4": { "label": "XO = OY (midpoint), angle AOX = 90 degrees", "showAngle": true, "showDistances": true }
+      }
+    }
+  },
+  "animationConfig": {
+    "defaultDuration": 1400,
+    "arcStepDuration": 3600,
+    "arcSteps": [1, 2],
+    "arcSequence": {
+      "description": "Arcs draw one by one in steps 2 and 3. Arc from X draws first, then arc from Y, then intersection point appears, then measurement label.",
+      "phases": [
+        { "phase": "arcFromX", "progressRange": [0, 0.4], "description": "First arc draws from point X with 'arc from X' label" },
+        { "phase": "arcFromY", "progressRange": [0.4, 0.75], "description": "Second arc draws from point Y with 'arc from Y' label" },
+        { "phase": "intersectionPoint", "progressRange": [0.75, 0.9], "description": "Intersection point (A or B) pops in" },
+        { "phase": "measurementLabel", "progressRange": [0.85, 1.0], "description": "Distance equality badge (XA=YA or XB=YB) slides in" }
+      ]
+    },
+    "easingFunction": "easeOutCubic"
+  },
+  "modes": {
+    "learn": {
+      "label": "Learn",
+      "icon": "BookOpen",
+      "description": "4-step animated construction with sequential arc formation. Step 1: line segment with radius guidance. Step 2: arcs above (X first, then Y) finding point A. Step 3: arcs below (X first, then Y) finding point B. Step 4: bisector line AB with midpoint O and 90° verification."
+    },
+    "practice": {
+      "label": "Practice",
+      "icon": "Target",
+      "description": "10 shuffled mixed-type questions: MCQ (4 questions), True/False (3 questions), Fill in the Blanks (3 questions). Features hints, explanations, score tracking, and animated feedback (glow for correct, shake for incorrect)."
+    }
+  },
+  "practiceQuestions": {
+    "types": ["mcq", "true_false", "fill_blank"],
+    "totalQuestions": 10,
+    "features": ["shuffle", "hints", "explanations", "score_tracking", "animated_feedback"],
+    "questionBreakdown": {
+      "mcq": 4,
+      "true_false": 3,
+      "fill_blank": 3
+    },
+    "questions": [
+      { "id": 1, "type": "mcq", "question": "When constructing a perpendicular bisector, the compass radius must be:", "options": ["Equal to half of XY", "Greater than half of XY", "Less than half of XY", "Exactly equal to XY"], "correctAnswer": "Greater than half of XY", "hint": "Think about when two circles can intersect." },
+      { "id": 2, "type": "true_false", "question": "The perpendicular bisector of XY passes through the midpoint of XY at 90°.", "correctAnswer": "True" },
+      { "id": 3, "type": "fill_blank", "question": "If A is the intersection point above XY, then XA ____ YA (=, >, or <).", "correctAnswer": "=", "hint": "Both arcs use the same compass radius." },
+      { "id": 4, "type": "mcq", "question": "How many intersection points are needed to construct a perpendicular bisector?", "options": ["1", "2", "3", "4"], "correctAnswer": "2" },
+      { "id": 5, "type": "true_false", "question": "You can use different radii for arcs above and below XY and still get the perpendicular bisector.", "correctAnswer": "True" },
+      { "id": 6, "type": "mcq", "question": "Any point equidistant from X and Y lies on the:", "options": ["Line segment XY", "Perpendicular bisector of XY", "Circle through X and Y", "Angle bisector of XY"], "correctAnswer": "Perpendicular bisector of XY" },
+      { "id": 7, "type": "fill_blank", "question": "The angle between the perpendicular bisector and line XY is ____ degrees.", "correctAnswer": "90", "hint": "The word 'perpendicular' is the clue!" },
+      { "id": 8, "type": "true_false", "question": "If the compass radius is less than half of XY, the arcs from X and Y will not intersect.", "correctAnswer": "True" },
+      { "id": 9, "type": "mcq", "question": "If O is the midpoint found by the perpendicular bisector, which is true?", "options": ["XO > OY", "XO < OY", "XO = OY", "XO + OY > XY"], "correctAnswer": "XO = OY" },
+      { "id": 10, "type": "fill_blank", "question": "The congruence condition to prove △AOX ≅ △AOY is ____. (SSS/SAS/ASA)", "correctAnswer": "SAS", "hint": "Two sides and the included angle are equal." }
+    ]
+  },
+  "steps": {
+    "learn": [
+      {
+        "id": 1,
+        "title": "Examine Line Segment XY",
+        "description": "Display XY with animated line formation from left to right. Half-length bracket in orange, full-length label. Info badge: 'Compass radius must be greater than ½ of XY'.",
+        "visibleElements": ["lineSegmentXY", "halfLengthIndicator"],
+        "measurements": [],
+        "animationDuration": 1400
+      },
+      {
+        "id": 2,
+        "title": "Draw Arcs Above the Line",
+        "description": "Sequential animation: arc from X draws first (0-40% progress) with 'arc from X' label, then arc from Y (40-75%) with 'arc from Y' label. Point A pops in at intersection (75%+). XA=YA badge slides in (85%+).",
+        "visibleElements": ["lineSegmentXY", "arcFromXAbove", "arcFromYAbove", "pointA", "measurementXA_YA"],
+        "measurements": ["XA = YA"],
+        "animationDuration": 3600,
+        "sequentialArcs": true
+      },
+      {
+        "id": 3,
+        "title": "Draw Arcs Below the Line",
+        "description": "Sequential animation: arc from X draws below (0-40%), then arc from Y (40-75%). Point B appears (75%+). XB=YB badge (85%+). Previous arcs and point A remain visible.",
+        "visibleElements": ["lineSegmentXY", "arcsAbove", "pointA", "arcFromXBelow", "arcFromYBelow", "pointB", "measurementXB_YB"],
+        "measurements": ["XA = YA", "XB = YB"],
+        "animationDuration": 3600,
+        "sequentialArcs": true
+      },
+      {
+        "id": 4,
+        "title": "Draw the Perpendicular Bisector",
+        "description": "Green bisector line AB draws with glow effect. Amber midpoint O bounces in (35%+). 90° angle mark appears (55%+). XO/OY labels (70%+). Final confirmation badge (85%+).",
+        "visibleElements": ["all"],
+        "measurements": ["XO = OY", "∠AOX = 90°"],
+        "animationDuration": 1400
+      }
+    ]
+  },
+  "svgConfig": {
+    "width": 520,
+    "height": 370,
+    "defaultSegmentLength": 260,
+    "compassRadiusMultiplier": 0.66,
+    "gridDotSpacing": 20,
+    "gridDotRadius": 0.5,
+    "gridDotColor": "#EBEBEB",
+    "overflow": "hidden"
+  },
+  "tool_objectives": [
+    {
+      "step": 1,
+      "filterSteps": [1],
+      "tool_config": {
+        "toolName": "perpendicular_bisector_constructor",
+        "parameters": {
+          "initialMode": "learn",
+          "filterSteps": [1],
+          "additionalProps": {
+            "arcsAbove": { "visible": false },
+            "arcsBelow": { "visible": false },
+            "bisectorLine": { "visible": false },
+            "lineSegmentXY": { "visible": true },
+            "measurementDisplay": { "showDistances": false }
+          }
+        }
+      },
+      "objective_id": "M1.S4.T4.O1",
+      "instructions_for_student": "Examine the line segment XY. You need to choose a compass radius that is more than half the length of XY. Why is this minimum radius necessary?"
+    },
+    {
+      "step": 2,
+      "filterSteps": [2],
+      "tool_config": {
+        "toolName": "perpendicular_bisector_constructor",
+        "parameters": {
+          "initialMode": "learn",
+          "filterSteps": [2],
+          "additionalProps": {
+            "arcsAbove": { "visible": true, "arcFromX": true, "arcFromY": true, "sequentialAnimation": true },
+            "arcsBelow": { "visible": false },
+            "bisectorLine": { "visible": false },
+            "measurementDisplay": { "showDistances": true }
+          }
+        }
+      },
+      "objective_id": "M1.S4.T4.O1",
+      "instructions_for_student": "Watch carefully: first an arc is drawn from X above the line, then an arc from Y with the same radius. They intersect at point A. Notice that XA = YA — point A is equidistant from both endpoints."
+    },
+    {
+      "step": 3,
+      "filterSteps": [3],
+      "tool_config": {
+        "toolName": "perpendicular_bisector_constructor",
+        "parameters": {
+          "initialMode": "learn",
+          "filterSteps": [3],
+          "additionalProps": {
+            "arcsAbove": { "visible": true },
+            "arcsBelow": { "visible": true, "arcFromX": true, "arcFromY": true, "sequentialAnimation": true },
+            "bisectorLine": { "visible": false },
+            "measurementDisplay": { "showDistances": true }
+          }
+        }
+      },
+      "objective_id": "M1.S4.T4.O1",
+      "instructions_for_student": "Now watch the same process below the line: arc from X draws first, then arc from Y. They meet at point B. Both A and B are equidistant from X and Y."
+    },
+    {
+      "step": 4,
+      "filterSteps": [4],
+      "tool_config": {
+        "toolName": "perpendicular_bisector_constructor",
+        "parameters": {
+          "initialMode": "learn",
+          "filterSteps": [4],
+          "additionalProps": {
+            "arcsAbove": { "visible": true },
+            "arcsBelow": { "visible": true },
+            "bisectorLine": { "drawn": true, "visible": true },
+            "measurementDisplay": { "showAngle": true, "showDistances": true }
+          }
+        }
+      },
+      "objective_id": "M1.S4.T4.O2",
+      "instructions_for_student": "Draw line AB. This is the perpendicular bisector! It passes through midpoint O where XO = OY, and meets XY at exactly 90 degrees."
+    }
+  ]
+}

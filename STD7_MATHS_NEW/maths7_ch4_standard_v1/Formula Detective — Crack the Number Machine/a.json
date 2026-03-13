@@ -1,0 +1,454 @@
+{
+    "toolName": "formula_detective_tool",
+    "version": "2.1.0",
+    "description": "Interactive step-based equation builder for Grade 7 Mathematics — Number Machine Formula Detective. Students discover hidden formulas by observing input-output pairs from 3 progressively harder number machines (Formula Factories). Features Y-shaped machine graphic with dual-colour input funnels (purple for a, orange for b), animated number tokens, candidate formula testing workspace, and verification tables. Built on the Singularity design system with Poppins font and purple-orange palette.",
+    "topic": "Formula Detective and Saree Border Patterns",
+    "subject": "Mathematics",
+    "grade": 7,
+    "chapter": "Chapter 4 — Expressions Using Letter-Numbers",
+    "curriculum": "NCERT Ganita Prakash",
+    "learningObjectives": [
+        "Develop systematic trial-and-test thinking for algebraic pattern discovery",
+        "Understand how algebraic expressions represent operations on two inputs",
+        "Learn to verify a formula by substituting multiple input-output pairs",
+        "Progress from simple (2a − b) to complex (3a − b + 1) formula recognition"
+    ],
+    "dependencies": {
+        "react": ">=17",
+        "lucide-react": "0.263.1",
+        "iconsUsed": ["ChevronLeft", "ChevronRight", "Check", "X", "RotateCcw", "Star"],
+        "iconsNote": "Difficulty badge icons for Medium (lightning bolt) and Hard (medal) are rendered as inline SVGs to avoid missing icon errors in lucide-react@0.263.1. Only Star is used from lucide for the Easy badge.",
+        "fonts": ["Poppins (weights: 400, 500, 600, 700, 800) — loaded via Google Fonts import in injected keyframes stylesheet"]
+    },
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Width of the tool container in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Height of the tool container in pixels"
+        },
+        "showNavigation": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide the bottom navigation bar with Previous (outlined), Reset (text), and Next (contained) buttons"
+        },
+        "showStepIndicator": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide the step dot indicator in the gradient header"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier (higher = faster)"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#4A4DC9",
+            "description": "Primary purple colour from Singularity design system"
+        }
+    },
+    "additionalProps": {
+        "description": "Tool-specific dynamic content for the Formula Detective",
+        "properties": {
+            "machines": {
+                "type": "array",
+                "description": "Array of machine configurations. Each machine has a secret formula and input-output pairs. Default provides 3 machines with formulas 2a−b, a+2b, and 3a−b+1.",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "number",
+                            "description": "Unique machine ID"
+                        },
+                        "label": {
+                            "type": "string",
+                            "description": "Display name shown in the title bar, e.g. 'Formula Factory #1'"
+                        },
+                        "difficulty": {
+                            "type": "string",
+                            "enum": ["Easy", "Medium", "Hard"],
+                            "description": "Difficulty badge. Easy = green + Star icon, Medium = orange + inline SVG lightning bolt, Hard = red + inline SVG medal"
+                        },
+                        "formula": {
+                            "type": "string",
+                            "description": "Machine-readable formula string used by evaluateFormula(). Supported: 'a+b', 'a-b', 'a*b', '2a-b', '2a+b', 'a+2b', '3a-b', '3a-b+1', '2a+b+1', '3a+b-1'"
+                        },
+                        "formulaDisplay": {
+                            "type": "string",
+                            "description": "Human-readable formula for UI display, e.g. '2a − b'"
+                        },
+                        "pairs": {
+                            "type": "array",
+                            "description": "Input-output test pairs. Each pair is revealed sequentially with token-drop animation.",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "a": { "type": "number", "description": "First input value (shown in purple funnel)" },
+                                    "b": { "type": "number", "description": "Second input value (shown in orange funnel)" },
+                                    "output": { "type": "number", "description": "Expected output value (shown in green chute)" }
+                                },
+                                "required": ["a", "b", "output"]
+                            }
+                        },
+                        "candidates": {
+                            "type": "array",
+                            "description": "Candidate formulas for testing. Must include the correct one. Each is tested against the last revealed pair with green checkmark or red X.",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "formula": { "type": "string", "description": "Machine-readable formula string" },
+                                    "display": { "type": "string", "description": "Human-readable formula for display" }
+                                },
+                                "required": ["formula", "display"]
+                            }
+                        }
+                    },
+                    "required": ["id", "label", "difficulty", "formula", "formulaDisplay", "pairs", "candidates"]
+                }
+            },
+            "showTeachingNotes": {
+                "type": "boolean",
+                "default": false,
+                "description": "Show detailed teaching hints alongside the tool"
+            },
+            "allowCustomMachines": {
+                "type": "boolean",
+                "default": false,
+                "description": "Allow agent to pass fully custom machine configurations"
+            }
+        },
+        "examples": {
+            "default_three_machines": {
+                "description": "Default configuration with 3 machines: 2a−b (Easy), a+2b (Medium), 3a−b+1 (Hard). No additionalProps needed — uses built-in defaults.",
+                "value": {}
+            },
+            "custom_single_machine": {
+                "description": "Show only one custom machine with a simple a+b formula",
+                "value": {
+                    "machines": [
+                        {
+                            "id": 1,
+                            "label": "Mystery Machine",
+                            "difficulty": "Easy",
+                            "formula": "a+b",
+                            "formulaDisplay": "a + b",
+                            "pairs": [
+                                { "a": 3, "b": 4, "output": 7 },
+                                { "a": 10, "b": 5, "output": 15 },
+                                { "a": 7, "b": 7, "output": 14 }
+                            ],
+                            "candidates": [
+                                { "formula": "a+b", "display": "a + b" },
+                                { "formula": "a-b", "display": "a − b" },
+                                { "formula": "a*b", "display": "a × b" }
+                            ]
+                        }
+                    ]
+                }
+            },
+            "two_machines_medium_hard": {
+                "description": "Skip easy, show only medium and hard machines",
+                "value": {
+                    "machines": [
+                        {
+                            "id": 1,
+                            "label": "Challenge Factory #1",
+                            "difficulty": "Medium",
+                            "formula": "a+2b",
+                            "formulaDisplay": "a + 2b",
+                            "pairs": [
+                                { "a": 5, "b": 2, "output": 9 },
+                                { "a": 8, "b": 1, "output": 10 },
+                                { "a": 11, "b": 10, "output": 31 }
+                            ],
+                            "candidates": [
+                                { "formula": "a+b", "display": "a + b" },
+                                { "formula": "2a+b", "display": "2a + b" },
+                                { "formula": "a+2b", "display": "a + 2b" }
+                            ]
+                        },
+                        {
+                            "id": 2,
+                            "label": "Challenge Factory #2",
+                            "difficulty": "Hard",
+                            "formula": "3a-b+1",
+                            "formulaDisplay": "3a − b + 1",
+                            "pairs": [
+                                { "a": 4, "b": 1, "output": 12 },
+                                { "a": 6, "b": 0, "output": 19 },
+                                { "a": 3, "b": 2, "output": 8 },
+                                { "a": 10, "b": 3, "output": 28 }
+                            ],
+                            "candidates": [
+                                { "formula": "3a-b", "display": "3a − b" },
+                                { "formula": "2a+b+1", "display": "2a + b + 1" },
+                                { "formula": "3a-b+1", "display": "3a − b + 1" },
+                                { "formula": "3a+b-1", "display": "3a + b − 1" }
+                            ]
+                        }
+                    ]
+                }
+            },
+            "saree_pattern_connection": {
+                "description": "Machine themed around the saree border pattern from the textbook, using the same systematic position-finding approach",
+                "value": {
+                    "machines": [
+                        {
+                            "id": 1,
+                            "label": "Saree Pattern Factory",
+                            "difficulty": "Easy",
+                            "formula": "3a-b",
+                            "formulaDisplay": "3n − 2 (Design A position)",
+                            "pairs": [
+                                { "a": 1, "b": 2, "output": 1 },
+                                { "a": 2, "b": 2, "output": 4 },
+                                { "a": 3, "b": 2, "output": 7 },
+                                { "a": 4, "b": 2, "output": 10 }
+                            ],
+                            "candidates": [
+                                { "formula": "a+b", "display": "n + 2" },
+                                { "formula": "2a-b", "display": "2n − 2" },
+                                { "formula": "3a-b", "display": "3n − 2" }
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "steps": {
+        "total": "2 × number of machines (default: 6 for 3 machines)",
+        "perMachine": 2,
+        "structure": [
+            {
+                "step": 1,
+                "type": "discovery",
+                "machine": 1,
+                "description": "Machine 1 (Easy): Input-output pairs revealed sequentially with token-drop animation, then candidate formulas tested one by one with checkmark/X results"
+            },
+            {
+                "step": 2,
+                "type": "verification",
+                "machine": 1,
+                "description": "Machine 1: Full verification table showing all pairs with substitution and green checkmarks"
+            },
+            {
+                "step": 3,
+                "type": "discovery",
+                "machine": 2,
+                "description": "Machine 2 (Medium): Discover formula a + 2b"
+            },
+            {
+                "step": 4,
+                "type": "verification",
+                "machine": 2,
+                "description": "Machine 2: Verify formula a + 2b"
+            },
+            {
+                "step": 5,
+                "type": "discovery",
+                "machine": 3,
+                "description": "Machine 3 (Hard): Discover formula 3a − b + 1 (with constant term)"
+            },
+            {
+                "step": 6,
+                "type": "verification",
+                "machine": 3,
+                "description": "Machine 3: Verify formula 3a − b + 1"
+            }
+        ]
+    },
+    "designSystem": {
+        "name": "Singularity",
+        "version": "1.0",
+        "fontFamily": "Poppins (Google Fonts, weights 400–800)",
+        "palette": {
+            "primary": {
+                "purple": "#4A4DC9",
+                "orange": "#FF7212"
+            },
+            "dark": {
+                "purpleDark": "#533086",
+                "orangeDark": "#FC9145"
+            },
+            "light": {
+                "purpleLight": "#C1C1EA",
+                "orangeLight": "#FFF3E4"
+            },
+            "neutrals": {
+                "dark": "#4E4E4E",
+                "gray": "#CACACA",
+                "grayLight": "#EBEBEB",
+                "surface": "#F5F5F5",
+                "white": "#FFFFFF"
+            },
+            "semantic": {
+                "green": "#22c55e",
+                "greenLight": "#dcfce7",
+                "red": "#ef4444",
+                "redLight": "#fee2e2"
+            }
+        },
+        "gradients": {
+            "primary": "linear-gradient(135deg, #533086 0%, #FC9145 100%)",
+            "subtle": "linear-gradient(135deg, #C1C1EA 0%, #FFF3E4 100%)",
+            "purple": "linear-gradient(135deg, #4A4DC9 0%, #533086 100%)"
+        },
+        "shadows": {
+            "sm": "0 2px 8px rgba(74,77,201,0.10)",
+            "md": "0 4px 16px rgba(74,77,201,0.14)",
+            "lg": "0 8px 32px rgba(83,48,134,0.18)",
+            "orange": "0 4px 16px rgba(255,114,18,0.25)"
+        },
+        "borderRadius": {
+            "sm": 8,
+            "md": 12,
+            "lg": 16,
+            "xl": 24,
+            "pill": 40
+        },
+        "spacing": {
+            "sp4": 4,
+            "sp8": 8,
+            "sp12": 12,
+            "sp16": 16,
+            "sp20": 20,
+            "sp24": 24,
+            "sp32": 32,
+            "sp40": 40
+        },
+        "buttons": {
+            "height": 40,
+            "horizontalPadding": 24,
+            "borderRadius": 8,
+            "fontSize": 14,
+            "fontWeight": 600,
+            "variants": {
+                "contained": {
+                    "enabled": { "background": "gradientPurple", "color": "#FFFFFF", "border": "none", "shadow": "shadowMd" },
+                    "hover": { "background": "gradientPrimary", "shadow": "shadowLg", "transform": "translateY(-1px)" },
+                    "disabled": { "background": "#EBEBEB", "color": "#CACACA", "shadow": "none" }
+                },
+                "outlined": {
+                    "enabled": { "background": "#FFFFFF", "color": "#4A4DC9", "border": "2px solid #C1C1EA" },
+                    "hover": { "background": "#F5F5F5", "border": "2px solid #4A4DC9", "shadow": "shadowSm" },
+                    "disabled": { "background": "#FFFFFF", "color": "#CACACA", "border": "2px solid #EBEBEB" }
+                },
+                "text": {
+                    "enabled": { "background": "transparent", "color": "#4E4E4E", "border": "2px solid transparent" },
+                    "hover": { "background": "#F5F5F5" }
+                }
+            },
+            "usage": {
+                "previous": "outlined",
+                "reset": "text",
+                "next": "contained"
+            }
+        },
+        "decorativeShapes": {
+            "description": "Floating SVG geometric shapes (triangle, circle, square) from the Singularity design system, used as decorative elements in the header and around the machine graphic",
+            "shapes": ["DecoTriangle (outline)", "DecoCircle (outline or filled)", "DecoSquare (outline)"],
+            "colours": ["purpleLight (#C1C1EA)", "orangeDark (#FC9145)", "white (semi-transparent in header)"],
+            "animation": "decoFloat — gentle vertical bob with slight rotation, 5-7s infinite"
+        },
+        "machineGraphic": {
+            "style": "Playful industrial with animated SVG gears and gradient pipes",
+            "funnelA": { "colour": "gradientPurple", "label": "a" },
+            "funnelB": { "colour": "orange→orangeDark gradient", "label": "b" },
+            "body": {
+                "unsolved": "dark purple-gray gradient with shimmer overlay and spinning gears",
+                "solved": "gradientPrimary (purple→orange) with pulseGlow animation"
+            },
+            "outputChute": {
+                "inactive": "gray gradient",
+                "active": "green gradient with outputAppear animation"
+            }
+        }
+    },
+    "animations": {
+        "tokenDrop": "0.55s ease-out — numbers drop into funnels with bounce",
+        "outputAppear": "0.5s ease-out with 0.35s delay — output scales in with rotation",
+        "popIn": "0.5s ease-out — solved formula appears with overshoot scale",
+        "fadeInUp": "0.5s ease-out — cards and elements slide up from below",
+        "slideInRight": "0.35s ease-out — pair log entries slide in from right",
+        "pulseGlow": "2.2s infinite — solved machine glows purple-orange",
+        "machineHum": "0.7s infinite — subtle scale pulse when processing",
+        "gradientShift": "8s infinite — header gradient position animates",
+        "gearSpin": "3-6s infinite — decorative gears rotate at varying speeds",
+        "decoFloat": "5-7s infinite — decorative shapes float with gentle bob",
+        "stepDotPulse": "1.5s infinite — active step dot pulses",
+        "shimmer": "3.5s infinite — light sweep across unsolved machine body"
+    },
+    "teachingNotes": {
+        "machine1": "For Machine 1, suggest students start with simple operations (a + b, a − b, a × b) and then try combinations like 2a − b.",
+        "machine2": "Emphasise that the SAME inputs (5, 2) give a DIFFERENT output from Machine 1, so the formula must be different.",
+        "machine3": "Hint that the formula might include a constant (a number without a variable).",
+        "afterAll": "Ask: What strategy did you use to discover the formulas? Can you make your own number machine and challenge a friend? Connect to the saree border pattern where the remainder method uses a similar systematic approach.",
+        "connectionToSaree": "In the saree border pattern (Example 12 in textbook), designs A, B, C repeat every 3 positions. The positions are described by 3n−2, 3n−1, and 3n — this is the same systematic pattern-finding approach used in the Formula Detective.",
+        "hints": [
+            "💡 Start with simple operations like a + b, a − b, then try 2a − b.",
+            "💡 Same inputs (5, 2) give a DIFFERENT output. The formula must differ from Machine 1!",
+            "💡 This formula might include a constant — a number without a variable!"
+        ]
+    },
+    "instructions_for_student": "You are a Formula Detective! Each number machine takes two inputs (a and b) and produces an output using a secret formula. Your job is to figure out the formula. Watch the input-output pairs being revealed, try different formulas in your head, and see if your guess matches all the pairs. The machines get harder — the third one has a constant term in the formula!",
+    "agentQuickReference": {
+        "defaultUsage": {
+            "description": "Use with no additionalProps for the standard 3-machine experience",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Formula Detective",
+                "data": {
+                    "toolName": "formula_detective_tool",
+                    "parameters": {}
+                }
+            }
+        },
+        "customMachines": {
+            "description": "Pass custom machines array to override defaults",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Formula Detective",
+                "data": {
+                    "toolName": "formula_detective_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "machines": ["...array of MachineData objects"]
+                        }
+                    }
+                }
+            }
+        },
+        "minimalUI": {
+            "description": "Hide navigation and step indicator for embedded use",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Formula Detective",
+                "data": {
+                    "toolName": "formula_detective_tool",
+                    "parameters": {
+                        "showNavigation": false,
+                        "showStepIndicator": false
+                    }
+                }
+            }
+        },
+        "supportedFormulas": [
+            "a+b",
+            "a-b",
+            "a*b",
+            "2a-b",
+            "2a+b",
+            "a+2b",
+            "3a-b",
+            "3a-b+1",
+            "2a+b+1",
+            "3a+b-1"
+        ]
+    }
+}

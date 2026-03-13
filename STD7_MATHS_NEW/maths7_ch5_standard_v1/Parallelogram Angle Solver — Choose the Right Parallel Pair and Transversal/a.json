@@ -1,0 +1,284 @@
+{
+  "toolName": "parallelogram_angle_solver",
+  "version": "4.0.0",
+  "description": "Fully responsive interactive step-based tool for Grade 7 Mathematics — Parallelogram Angle Solver. Two modes: Learn (6-step guided walkthrough) and Practice (5 MCQ questions with instant feedback). Singularity Design System. No external icon library — all icons are inline SVGs. Responsive across mobile (<500px), tablet (<700px), and desktop.",
+
+  "component": {
+    "file": "parallelogram_angle_solver.tsx",
+    "exportType": "default function",
+    "exportName": "ParallelogramAngleSolver",
+    "propsRequired": false,
+    "imports": {
+      "react": ["useState", "useEffect"]
+    },
+    "externalDependencies": "NONE — zero external libraries",
+    "inlineIcons": [
+      { "name": "IcoLeft", "svg": "ChevronLeft", "usage": "Previous button, navigation" },
+      { "name": "IcoRight", "svg": "ChevronRight", "usage": "Next button, Next Question button" },
+      { "name": "IcoReset", "svg": "RotateCcw", "usage": "Reset button, Retry button" },
+      { "name": "IcoBook", "svg": "BookOpen", "usage": "Header badge, Learn tab" },
+      { "name": "IcoScissors", "svg": "Scissors", "usage": "Step 2 scissors animation" },
+      { "name": "IcoCheck", "svg": "Check/Polyline", "usage": "Correct answer icon, equation solved icon" },
+      { "name": "IcoX", "svg": "X/Cross", "usage": "Wrong answer icon" },
+      { "name": "IcoAward", "svg": "Award/Medal", "usage": "Practice results screen" },
+      { "name": "IcoTarget", "svg": "Target/Bullseye", "usage": "Practice tab" }
+    ],
+    "subComponents": {
+      "Dgm": {
+        "description": "SVG parallelogram diagram with dynamic highlighting, angle arcs, arrow marks, vertex labels. Fully responsive via viewBox — scales to any container width.",
+        "props": {
+          "hp": { "type": "string", "values": ["AB_CD", "AD_BC", ""], "description": "Highlighted parallel pair" },
+          "ht": { "type": "string", "values": ["AD", "BC", "CD", ""], "description": "Highlighted transversal" },
+          "sv": { "type": "Record<string, number>", "description": "Solved angles e.g. { DAB: 120, CAB: 55 }" },
+          "isSum": { "type": "boolean", "description": "Summary mode — all pairs glow" },
+          "sid": { "type": "number", "values": [-1, 0, 1, 2, 3, 4, 5], "description": "Learn step id or -1 for practice" },
+          "md": { "type": "string", "values": ["learn", "practice"], "description": "Current mode" },
+          "small": { "type": "boolean", "default": false, "description": "Compact size for practice diagrams" }
+        }
+      },
+      "useW": {
+        "description": "Custom hook that tracks window.innerWidth on resize. Returns current width number. Used to derive mob (<500) and tab (<700) breakpoints."
+      }
+    }
+  },
+
+  "responsiveDesign": {
+    "hook": "useW() — useState + useEffect with window resize listener",
+    "breakpoints": {
+      "mobile": { "maxWidth": 499, "variable": "mob", "description": "Phones — single column, smaller fonts, compact padding" },
+      "tablet": { "maxWidth": 699, "variable": "tab", "description": "Tablets — stacked layout, medium sizing" },
+      "desktop": { "minWidth": 700, "description": "Full two-column layout, max sizing" }
+    },
+    "scaledProperties": {
+      "containerBorderRadius": { "mobile": "12px", "desktop": "24px" },
+      "padding": { "mobile": "14px", "tablet": "18px", "desktop": "22px" },
+      "headerTitleFontSize": { "mobile": 16, "desktop": 19 },
+      "stepTitleFontSize": { "mobile": 14, "desktop": 16 },
+      "bodyFontSize": { "mobile": 12, "desktop": 13 },
+      "equationFontSize": { "mobile": 12, "desktop": 14 },
+      "buttonFontSize": { "mobile": 11, "desktop": 13 },
+      "tabFontSize": { "mobile": 12, "desktop": 13 },
+      "iconSizes": { "mobile": "12-13px", "desktop": "14-15px" },
+      "buttonPadding": { "mobile": "7px 12px", "desktop": "9px 18px" },
+      "previousButtonText": { "mobile": "Prev", "desktop": "Previous" }
+    },
+    "layoutChanges": {
+      "learnTwoColumn": {
+        "desktop": "flexDirection: row — diagram left, calculation right",
+        "tabletAndMobile": "flexDirection: column — diagram stacks above calculation"
+      },
+      "practiceOptionsGrid": {
+        "desktop": "gridTemplateColumns: 1fr 1fr — 2x2 grid",
+        "mobile": "gridTemplateColumns: 1fr — single column stack"
+      },
+      "practiceOptionAlignment": {
+        "desktop": "justifyContent: center",
+        "mobile": "justifyContent: flex-start"
+      },
+      "summaryCardMinWidth": {
+        "desktop": "110px",
+        "mobile": "80px"
+      },
+      "scoreDotSize": {
+        "desktop": "30x30px",
+        "mobile": "26x26px"
+      },
+      "navigationGap": {
+        "mobile": "6px gap between buttons",
+        "desktop": "space-between with no extra gap"
+      }
+    },
+    "svgDiagram": "Always responsive — uses width:100% + viewBox so it scales naturally to any container width on all devices"
+  },
+
+  "designSystem": {
+    "name": "Singularity",
+    "font": {
+      "family": "Poppins",
+      "weights": [400, 500, 600, 700, 800],
+      "loadMethod": "@import url in injected <style> element via useEffect"
+    },
+    "colors": {
+      "primary": { "key": "pri", "hex": "#4A4DC9" },
+      "orange": { "key": "ora", "hex": "#FF7212" },
+      "deepPurple": { "key": "dp", "hex": "#533086" },
+      "deepOrange": { "key": "dOra", "hex": "#FC9145" },
+      "lightPurple": { "key": "lp", "hex": "#C1C1EA" },
+      "lightOrange": { "key": "lOra", "hex": "#FFF3E4" },
+      "gray900": { "key": "g9", "hex": "#4E4E4E" },
+      "gray400": { "key": "g4", "hex": "#CACACA" },
+      "gray200": { "key": "g2", "hex": "#EBEBEB" },
+      "gray100": { "key": "g1", "hex": "#F5F5F5" },
+      "white": { "key": "w", "hex": "#FFFFFF" },
+      "success": { "key": "ok", "hex": "#2ECC71" },
+      "error": { "key": "err", "hex": "#E74C3C" }
+    },
+    "gradient": "linear-gradient(135deg, #533086 0%, #FC9145 100%)",
+    "borderRadius": {
+      "sm": "8px",
+      "md": "12px",
+      "pill": "40px",
+      "xl": "24px"
+    },
+    "buttonStyles": {
+      "contained": "Gradient background, white text, pill radius — Next, Next Question, Retry",
+      "outlined": "White background, 2px primary border, primary text, pill radius — Previous",
+      "texted": "Transparent background, no border, gray text, pill radius — Reset"
+    }
+  },
+
+  "givenAngles": {
+    "angleDAC": 65,
+    "angleADC": 60
+  },
+  "computedAngles": {
+    "angleDAB": 120,
+    "angleCAB": 55,
+    "angleBCD": 120,
+    "angleABC": 60
+  },
+
+  "modes": {
+    "learn": {
+      "label": "Learn",
+      "icon": "IcoBook",
+      "totalSteps": 6,
+      "descriptionTextColor": "#4E4E4E (gray900 — dark/black)",
+      "steps": [
+        {
+          "id": 0,
+          "title": "The Problem",
+          "parallelHighlight": "none",
+          "transversalHighlight": "none",
+          "equation": null,
+          "scissors": false,
+          "summary": false,
+          "specialUI": "Orange instruction banner"
+        },
+        {
+          "id": 1,
+          "title": "Step 1 — Find ∠DAB",
+          "parallelHighlight": "AB_CD (purple)",
+          "transversalHighlight": "AD (orange)",
+          "equation": ["∠ADC + ∠DAB = 180°", "60° + ∠DAB = 180°", "∠DAB = 180° − 60°", "∠DAB = 120°"],
+          "solvedAngle": "DAB = 120°"
+        },
+        {
+          "id": 2,
+          "title": "Step 2 — Split ∠DAB to find ∠CAB",
+          "parallelHighlight": "none",
+          "transversalHighlight": "none",
+          "equation": ["∠DAB = ∠DAC + ∠CAB", "120° = 65° + ∠CAB", "∠CAB = 120° − 65°", "∠CAB = 55°"],
+          "scissors": true,
+          "solvedAngle": "CAB = 55°"
+        },
+        {
+          "id": 3,
+          "title": "Step 3 — Find ∠BCD",
+          "parallelHighlight": "AD_BC (green)",
+          "transversalHighlight": "CD (orange)",
+          "equation": ["∠ADC + ∠BCD = 180°", "60° + ∠BCD = 180°", "∠BCD = 180° − 60°", "∠BCD = 120°"],
+          "solvedAngle": "BCD = 120°"
+        },
+        {
+          "id": 4,
+          "title": "Step 4 — Find ∠ABC",
+          "parallelHighlight": "AB_CD (purple)",
+          "transversalHighlight": "BC (orange)",
+          "equation": ["∠BCD + ∠ABC = 180°", "120° + ∠ABC = 180°", "∠ABC = 180° − 120°", "∠ABC = 60°"],
+          "solvedAngle": "ABC = 60°"
+        },
+        {
+          "id": 5,
+          "title": "Summary — Pattern Revealed!",
+          "summary": true,
+          "summaryPairs": [
+            "∠DAB = 120° = ∠BCD = 120° → Opposite — Equal!",
+            "∠ADC = 60° = ∠ABC = 60° → Opposite — Equal!",
+            "∠DAB + ∠ABC = 120° + 60° = 180° → Supplementary",
+            "∠ADC + ∠BCD = 60° + 120° = 180° → Supplementary"
+          ],
+          "realWorldContext": "Parallelogram-shaped farm with irrigation diagonal"
+        }
+      ]
+    },
+    "practice": {
+      "label": "Practice",
+      "icon": "IcoTarget",
+      "totalQuestions": 5,
+      "feedback": {
+        "correct": "Green bg (#ecfdf5), green border, check icon, pulse animation, '✅ Correct!'",
+        "wrong": "Red bg (#fef2f2), red border, X icon, shake animation, '❌ Incorrect', correct shown green",
+        "explanation": "Detailed reasoning below options"
+      },
+      "questions": [
+        { "id": 1, "topic": "Interior angles AB∥CD", "question": "∠ADC=60°. What is ∠DAB?", "correctAnswer": "120°", "correctIndex": 0 },
+        { "id": 2, "topic": "Angle splitting", "question": "∠DAB=120°, ∠DAC=65°. What is ∠CAB?", "correctAnswer": "55°", "correctIndex": 1 },
+        { "id": 3, "topic": "Interior angles AD∥BC", "question": "∠ADC=60°. What is ∠BCD?", "correctAnswer": "120°", "correctIndex": 2 },
+        { "id": 4, "topic": "Opposite angles", "question": "Which angles are always equal?", "correctAnswer": "∠DAB & ∠BCD", "correctIndex": 1 },
+        { "id": 5, "topic": "Consecutive supplementary", "question": "∠DAB + ∠ABC = ?", "correctAnswer": "180°", "correctIndex": 2 }
+      ],
+      "resultsScreen": {
+        "icon": "IcoAward on gradient circle",
+        "scoreDots": "Green/red circles with popIn animation",
+        "messages": { "perfect": "Perfect! 🎉", "good": "Good job!", "needsWork": "Keep practising!" },
+        "retryButton": "Gradient contained button"
+      }
+    }
+  },
+
+  "animations": {
+    "injectionMethod": "document.createElement('style') in useEffect, removed on cleanup",
+    "keyframes": {
+      "fadeInUp": "Content entry — 0.3s-0.5s",
+      "fadeInScale": "Results screen — 0.5s",
+      "popIn": "Angle arcs, score dots — 0.4s-0.5s",
+      "scissorsCut": "Scissors icon rotation step 2 — 0.7s",
+      "slideR": "Summary pair rows staggered — 0.4s, 0.12s stagger",
+      "shake": "Wrong answer option — 0.4s",
+      "pulse": "Correct answer option — 0.5s",
+      "bounceIn": "Check icon on solved equation — 0.5s"
+    }
+  },
+
+  "stateManagement": {
+    "learn": {
+      "mode": "Current mode string ('learn' | 'practice')",
+      "si": "Step index 0-5",
+      "eqI": "Equation line reveal index",
+      "aV": "Animated counter value (-1 = not started)",
+      "scA": "Scissors animation active boolean",
+      "op": "Content opacity for transitions (0 or 1)"
+    },
+    "practice": {
+      "qi": "Question index 0-4",
+      "sel": "Selected option index (-1 = none)",
+      "sr": "Show result boolean",
+      "sc": "Score counter",
+      "dn": "Practice finished boolean",
+      "ans": "boolean[] — correct/wrong per question"
+    }
+  },
+
+  "layout": {
+    "maxWidth": "800px",
+    "sections": [
+      "Header (gradient, title, subtitle, progress bar)",
+      "Mode tabs (Learn / Practice — static buttons, no dynamic component refs)",
+      "Step indicator (learn only — 6 clickable bars + counter)",
+      "Content area (learn steps OR practice questions)",
+      "Navigation bar (learn only — Previous / Reset / Next)"
+    ]
+  },
+
+  "teaching_notes": {
+    "step_0": "Problem introduction. Orange banner explains color coding.",
+    "step_1": "AB∥CD purple + AD orange transversal. Interior angles: ∠ADC + ∠DAB = 180°.",
+    "step_2": "Scissors animation. ∠CAB = ∠DAB − ∠DAC. ∠DAB arc only visible steps 1-2.",
+    "step_3": "AD∥BC green + CD orange transversal. ∠ADC + ∠BCD = 180°.",
+    "step_4": "AB∥CD purple + BC orange transversal. ∠BCD + ∠ABC = 180°. Interior arc uses directed function.",
+    "step_5": "4 summary cards + farm context."
+  },
+
+  "instructions_for_student": "Learn Mode: Follow each step. Notice which sides glow as the parallel pair (purple or green) and transversal (orange). Interior angles sum = 180° at each step. Practice Mode: Answer 5 MCQs. Wrong answers show the correct one highlighted green with explanation."
+}

@@ -1,0 +1,252 @@
+{
+  "id": "M4.S19.T19.T2D1",
+  "title": "Interactive Tangram Puzzle Tool",
+  "subtype": "puzzle_manipulative",
+  "toolName": "tangram_puzzle_tool",
+  "version": "2.0.0",
+  "description": "A fully responsive interactive tangram puzzle where students drag, rotate, and flip the 7 standard tangram pieces to form target shapes. Adapts layout for mobile (stacked pieces/target), tablet, and desktop (side-by-side). Uses Singularity design system (Poppins font, #4A4DC9 primary, #FF7212 accent, #533086→#FC9145 gradient). Presents 4 progressive challenges: square, triangle, parallelogram, cat.",
+  "objective_id": "M4.S19.T19.O1",
+  "teaching_notes": "Tangrams develop spatial reasoning and geometric intuition. Start with the square (easiest since pieces came from it). The parallelogram requires flipping piece G, which is a key insight. The cat shape challenges creative placement. Connect to the tiling theme: tangram pieces tile the square perfectly. On mobile devices, the layout stacks pieces above the target for easier touch interaction.",
+  "instructions_for_student": "Solve tangram puzzles by dragging, rotating, and flipping the 7 pieces to fill each target shape. Every piece must be used, with no gaps and no overlaps. Start with the square, then try the triangle, parallelogram, and finally a cat shape!",
+  "responsive": {
+    "mobile": {
+      "breakpoint": "≤480px",
+      "layout": "stacked (pieces top, target bottom)",
+      "features": "Icon-only toolbar buttons, compact header, tap/double-tap controls, touch-optimized drag"
+    },
+    "tablet": {
+      "breakpoint": "481–768px",
+      "layout": "stacked or side-by-side based on width",
+      "features": "Intermediate sizing, full button labels"
+    },
+    "desktop": {
+      "breakpoint": ">768px",
+      "layout": "side-by-side (pieces left, target right)",
+      "features": "Full UI with all labels, hover states, larger canvas"
+    }
+  },
+  "designSystem": {
+    "name": "Singularity",
+    "font": "Poppins",
+    "colors": {
+      "primary": "#4A4DC9",
+      "accent": "#FF7212",
+      "gradientStart": "#533086",
+      "gradientEnd": "#FC9145",
+      "lightPurple": "#C1C1EA",
+      "lightOrange": "#FFF3E4",
+      "text": "#4E4E4E",
+      "textLight": "#8A8A8A",
+      "border": "#EBEBEB",
+      "background": "#F5F5F5",
+      "white": "#FFFFFF",
+      "disabled": "#CACACA",
+      "disabledBg": "#EBEBEB"
+    },
+    "borderRadius": {
+      "default": 8,
+      "pill": 24
+    }
+  },
+  "parameters": {
+    "width": {
+      "type": "number",
+      "default": 800,
+      "description": "Maximum width of the tool container in pixels. The tool is fully responsive within this max-width — it will shrink to fit any smaller container."
+    },
+    "height": {
+      "type": "number",
+      "default": 600,
+      "description": "Height of the tool container in pixels. Chrome bars and canvas auto-adjust."
+    },
+    "initialMode": {
+      "type": "string",
+      "default": "practice",
+      "enum": ["practice"],
+      "description": "The mode to start in"
+    },
+    "enabledModes": {
+      "type": "array",
+      "default": ["practice"],
+      "description": "Which modes are available"
+    },
+    "showModeSelector": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether to show mode selection tabs"
+    },
+    "themeColor": {
+      "type": "string",
+      "default": "#4A4DC9",
+      "description": "Primary theme color (Singularity default)"
+    },
+    "darkMode": {
+      "type": "boolean",
+      "default": false,
+      "description": "Enable dark mode (not used in Singularity design)"
+    },
+    "animationSpeed": {
+      "type": "number",
+      "default": 1,
+      "description": "Animation speed multiplier"
+    }
+  },
+  "additionalProps": {
+    "description": "Tool-specific dynamic content for tangram configuration",
+    "schema": {
+      "targetShape": {
+        "type": "object",
+        "description": "Configuration for each challenge step's target shape",
+        "properties": {
+          "stepN": {
+            "label": "string",
+            "shape": "string — 'square' | 'triangle' | 'parallelogram' | 'cat'",
+            "outline": "boolean",
+            "difficulty": "string — 'easy' | 'medium' | 'hard'"
+          }
+        }
+      },
+      "pieceControls": {
+        "type": "object",
+        "description": "Controls configuration for each step",
+        "properties": {
+          "stepN": {
+            "label": "string",
+            "snapToGrid": "boolean",
+            "dragEnabled": "boolean",
+            "flipEnabled": "boolean",
+            "rotateEnabled": "boolean"
+          }
+        }
+      },
+      "tangramPieces": {
+        "type": "object",
+        "description": "Piece set configuration per step",
+        "properties": {
+          "stepN": {
+            "label": "string",
+            "pieces": "string[]",
+            "arranged": "boolean"
+          }
+        }
+      },
+      "progressTracker": {
+        "type": "object",
+        "description": "Progress tracking per step",
+        "properties": {
+          "stepN": {
+            "label": "string",
+            "completed": "boolean",
+            "challengeIndex": "number",
+            "totalChallenges": "number"
+          }
+        }
+      },
+      "validationFeedback": {
+        "type": "object",
+        "description": "Validation and feedback per step",
+        "properties": {
+          "stepN": {
+            "hintOnFail": "string",
+            "checkNoGaps": "boolean",
+            "checkComplete": "boolean",
+            "successMessage": "string",
+            "checkNoOverlaps": "boolean"
+          }
+        }
+      }
+    },
+    "examples": {
+      "default_4_challenges": {
+        "targetShape": {
+          "step1": { "label": "Challenge 1: Reconstruct the original square from all 7 pieces", "shape": "square", "outline": true, "difficulty": "easy" },
+          "step2": { "label": "Challenge 2: Form a large triangle using all 7 pieces", "shape": "triangle", "outline": true, "difficulty": "easy" },
+          "step3": { "label": "Challenge 3: Form a parallelogram using all 7 pieces", "shape": "parallelogram", "outline": true, "difficulty": "medium" },
+          "step4": { "label": "Challenge 4: Form a cat shape using all 7 pieces", "shape": "cat", "outline": true, "difficulty": "hard" }
+        },
+        "validationFeedback": {
+          "step1": { "hintOnFail": "Try placing the two large triangles first — they take up half the square.", "checkNoGaps": true, "checkComplete": true, "successMessage": "Perfect! All 7 pieces form the original square.", "checkNoOverlaps": true },
+          "step2": { "hintOnFail": "The large triangles form the base. Try placing them along the bottom edge.", "checkNoGaps": true, "checkComplete": true, "successMessage": "Great! You formed a triangle from 7 pieces.", "checkNoOverlaps": true },
+          "step3": { "hintOnFail": "Remember: the parallelogram piece can be flipped.", "checkNoGaps": true, "checkComplete": true, "successMessage": "Excellent! A parallelogram from all 7 tangram pieces.", "checkNoOverlaps": true },
+          "step4": { "hintOnFail": "Use the small triangles for the ears and the large triangles for the body.", "checkNoGaps": true, "checkComplete": true, "successMessage": "Amazing! You made a cat from tangram pieces.", "checkNoOverlaps": true }
+        }
+      }
+    }
+  },
+  "tool_objectives": [
+    {
+      "step": 1,
+      "filterSteps": [1],
+      "tool_config": {
+        "toolName": "tangram_puzzle_tool",
+        "parameters": {
+          "targetShape": { "shape": "square" },
+          "pieceControls": { "dragEnabled": true, "flipEnabled": true, "rotateEnabled": true }
+        }
+      },
+      "objective_id": "M4.S19.T19.O1",
+      "instructions_for_student": "Identify the 7 tangram pieces and arrange them back into the original square. All pieces must be used with no gaps or overlaps."
+    },
+    {
+      "step": 2,
+      "filterSteps": [2],
+      "tool_config": {
+        "toolName": "tangram_puzzle_tool",
+        "parameters": {
+          "targetShape": { "shape": "triangle" },
+          "pieceControls": { "dragEnabled": true, "flipEnabled": true, "rotateEnabled": true }
+        }
+      },
+      "objective_id": "M4.S19.T19.O2",
+      "instructions_for_student": "Form a large triangle using all 7 pieces. Think about which pieces form the base."
+    },
+    {
+      "step": 3,
+      "filterSteps": [3],
+      "tool_config": {
+        "toolName": "tangram_puzzle_tool",
+        "parameters": {
+          "targetShape": { "shape": "parallelogram" },
+          "pieceControls": { "dragEnabled": true, "flipEnabled": true, "rotateEnabled": true }
+        }
+      },
+      "objective_id": "M4.S19.T19.O2",
+      "instructions_for_student": "Form a parallelogram from all 7 pieces. Remember that piece G can be flipped!"
+    },
+    {
+      "step": 4,
+      "filterSteps": [4],
+      "tool_config": {
+        "toolName": "tangram_puzzle_tool",
+        "parameters": {
+          "targetShape": { "shape": "cat" },
+          "pieceControls": { "dragEnabled": true, "flipEnabled": true, "rotateEnabled": true }
+        }
+      },
+      "objective_id": "M4.S19.T19.O2",
+      "instructions_for_student": "Form a cat shape! Use small triangles for ears, large triangles for the body."
+    }
+  ],
+  "modes": {
+    "practice": {
+      "label": "Practice",
+      "description": "Solve tangram puzzles with progressive difficulty",
+      "icon": "Target"
+    }
+  },
+  "pieces": {
+    "A": { "type": "large_triangle", "color": "#4A4DC9", "label": "Large Triangle A" },
+    "B": { "type": "large_triangle", "color": "#533086", "label": "Large Triangle B" },
+    "C": { "type": "medium_triangle", "color": "#FC9145", "label": "Medium Triangle" },
+    "D": { "type": "square", "color": "#FF7212", "label": "Square" },
+    "E": { "type": "small_triangle", "color": "#C1C1EA", "label": "Small Triangle E" },
+    "F": { "type": "small_triangle", "color": "#8B7FC7", "label": "Small Triangle F" },
+    "G": { "type": "parallelogram", "color": "#6B5CA5", "label": "Parallelogram" }
+  },
+  "challenges": [
+    { "id": 1, "shape": "square", "difficulty": "easy" },
+    { "id": 2, "shape": "triangle", "difficulty": "easy" },
+    { "id": 3, "shape": "parallelogram", "difficulty": "medium" },
+    { "id": 4, "shape": "cat", "difficulty": "hard" }
+  ]
+}

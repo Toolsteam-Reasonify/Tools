@@ -1,0 +1,603 @@
+{
+  "id": "M2.S8.T8.T2D1",
+  "title": "Interactive Angle Bisection Constructor",
+  "subtype": "geometry_constructor",
+  "toolName": "angle_bisection_constructor",
+  "parameters": {
+    "initialMode": "learn",
+    "enabledModes": ["learn", "practice"],
+    "designSystem": {
+      "colors": {
+        "primary": "#4A4DC9",
+        "orange": "#FF7212",
+        "gradStart": "#533086",
+        "gradEnd": "#FC9145",
+        "lightPurple": "#C1C1EA",
+        "lightPeach": "#FFF3E4",
+        "dark": "#4E4E4E",
+        "gray": "#CACACA",
+        "lightGray": "#EBEBEB",
+        "offWhite": "#F5F5F5",
+        "white": "#FFFFFF",
+        "solidPurple": "#533086",
+        "solidOrange": "#FC9145",
+        "correct": "#2E7D32",
+        "correctBg": "#E8F5E9",
+        "wrong": "#C62828",
+        "wrongBg": "#FFEBEE"
+      },
+      "font": "'Poppins', sans-serif",
+      "fontLoading": {
+        "method": "link_tag",
+        "href": "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap",
+        "note": "Font loaded via <link> element instead of CSS @import inside <style> to avoid React rendering errors"
+      },
+      "cssInjection": {
+        "method": "dangerouslySetInnerHTML",
+        "note": "CSS keyframes and global styles injected via <style dangerouslySetInnerHTML> to prevent React error #130 caused by @import inside JSX style children",
+        "keyframes": ["fadeSlideIn", "pulse"],
+        "globalRules": ["button:hover{filter:brightness(1.05)}"]
+      },
+      "borderRadius": {
+        "default": 8,
+        "large": 16,
+        "extraLarge": 20,
+        "pill": 40
+      }
+    },
+    "canvasColors": {
+      "armOX": "#4E4E4E",
+      "armOY": "#4E4E4E",
+      "arcFromO": "#FF7212",
+      "pointA": "#FC9145",
+      "pointB": "#FC9145",
+      "arcFromA": "#4A4DC9",
+      "arcFromB": "#533086",
+      "pointC": "#FF7212",
+      "bisector": "#533086",
+      "triangleOAC": "rgba(74, 77, 201, 0.12)",
+      "triangleOBC": "rgba(83, 48, 134, 0.12)",
+      "triangleStrokeOAC": "#4A4DC9",
+      "triangleStrokeOBC": "#533086",
+      "angleMarker": "#FC9145",
+      "halfAngle1": "#4A4DC9",
+      "halfAngle2": "#533086",
+      "glowC": "#FF7212"
+    },
+    "geometry": {
+      "vertexO": { "x": 150, "y": 320 },
+      "armLength": 230,
+      "arcRadiusFromO": 140,
+      "arcRadiusFromAB": 120,
+      "svgWidth": 530,
+      "svgHeight": 410,
+      "dotGrid": {
+        "implementation": "DotGrid_component",
+        "note": "Rendered as a proper React functional component <DotGrid /> returning a Fragment wrapper (<>...dots...</>) instead of a bare array from buildDotGrid() to prevent React error #130 (Element type is invalid: expected string or class/component but got object)",
+        "columns": 27,
+        "rows": 21,
+        "spacing": 20,
+        "offset": 5,
+        "dotRadius": 0.4,
+        "dotColor": "#CACACA",
+        "dotOpacity": 0.3
+      }
+    },
+    "showModeSelector": true,
+    "componentArchitecture": {
+      "exportStrategy": {
+        "named": "export { AngleBisectionConstructor }",
+        "default": "export default AngleBisectionConstructor",
+        "note": "Both named and default exports at end of file. Main component declared as plain function (not inline export default) for compatibility with all bundler import styles."
+      },
+      "nullSafetyFixes": {
+        "EqualMarks": {
+          "fallback": "<g />",
+          "note": "Returns empty <g /> SVG element instead of null when line length < 1, preventing React error #130 when rendered inside SVG groups"
+        },
+        "SSSProofPanel": {
+          "fallback": "null",
+          "note": "Returns null when not visible (valid for top-level conditional rendering in DOM, not inside SVG)"
+        }
+      }
+    },
+    "additionalProps": {
+      "givenAngle": {
+        "step1": {
+          "armOX": true,
+          "armOY": true,
+          "label": "Given: angle XOY = 90 degrees. We will bisect this angle.",
+          "vertexO": { "x": 150, "y": 320 },
+          "visible": true,
+          "angleDegrees": 90
+        },
+        "step2": {
+          "armOX": true,
+          "armOY": true,
+          "label": "Angle XOY shown with both arms",
+          "vertexO": { "x": 150, "y": 320 },
+          "visible": true,
+          "angleDegrees": 90
+        },
+        "step3": {
+          "armOX": true,
+          "armOY": true,
+          "label": "Angle XOY with construction in progress",
+          "vertexO": { "x": 150, "y": 320 },
+          "visible": true,
+          "angleDegrees": 90
+        },
+        "step4": {
+          "armOX": true,
+          "armOY": true,
+          "label": "Angle XOY bisected into two 45-degree angles",
+          "vertexO": { "x": 150, "y": 320 },
+          "visible": true,
+          "angleDegrees": 90
+        }
+      },
+      "equalArmPoints": {
+        "step1": {
+          "label": "Points not yet marked",
+          "pointA": null,
+          "pointB": null,
+          "visible": false,
+          "showOAequalsOB": false
+        },
+        "step2": {
+          "label": "Mark A on arm OX and B on arm OY such that OA = OB (use compass with centre O)",
+          "pointA": { "x": 290, "y": 320 },
+          "pointB": { "x": 150, "y": 180 },
+          "visible": true,
+          "showOAequalsOB": true,
+          "compassIndicator": {
+            "center": { "x": 150, "y": 320 },
+            "label": "compass at O"
+          }
+        },
+        "step3": {
+          "label": "OA = OB confirmed",
+          "pointA": { "x": 290, "y": 320 },
+          "pointB": { "x": 150, "y": 180 },
+          "visible": true,
+          "showOAequalsOB": true
+        },
+        "step4": {
+          "label": "Equal distances on both arms",
+          "pointA": { "x": 290, "y": 320 },
+          "pointB": { "x": 150, "y": 180 },
+          "visible": true,
+          "showOAequalsOB": true
+        }
+      },
+      "bisectorArcs": {
+        "step1": {
+          "label": "Arcs not drawn",
+          "visible": false,
+          "arcFromA": false,
+          "arcFromB": false,
+          "intersectionC": null
+        },
+        "step2": {
+          "label": "Ready for next step",
+          "visible": false,
+          "arcFromA": false,
+          "arcFromB": false,
+          "intersectionC": null
+        },
+        "step3": {
+          "label": "Equal-radius arcs from A and B intersect at point C inside the angle",
+          "visible": true,
+          "arcFromA": true,
+          "arcFromB": true,
+          "arcRadius": 120,
+          "arcSweepDegrees": 64,
+          "intersectionC": "computed_by_circleIntersection",
+          "compassIndicators": [
+            { "point": "A", "color": "#4A4DC9", "label": "compass at A" },
+            { "point": "B", "color": "#533086", "label": "compass at B" }
+          ],
+          "dashedRadiusLines": {
+            "AC": { "color": "#4A4DC9" },
+            "BC": { "color": "#533086" }
+          },
+          "glowAtIntersection": {
+            "enabled": true,
+            "color": "#FF7212",
+            "radius": 22
+          }
+        },
+        "step4": {
+          "label": "AC = BC (equal arc radii)",
+          "visible": true,
+          "arcFromA": true,
+          "arcFromB": true,
+          "intersectionC": "computed_by_circleIntersection"
+        }
+      },
+      "bisectorRay": {
+        "step1": {
+          "drawn": false,
+          "label": "Bisector not drawn",
+          "visible": false,
+          "showHalfAngles": false
+        },
+        "step2": {
+          "drawn": false,
+          "label": "Bisector not drawn",
+          "visible": false,
+          "showHalfAngles": false
+        },
+        "step3": {
+          "drawn": false,
+          "label": "Ready to draw OC",
+          "visible": false,
+          "showHalfAngles": false
+        },
+        "step4": {
+          "drawn": true,
+          "label": "Ray OC bisects the angle! Angle XOC = angle COY = 45 degrees.",
+          "visible": true,
+          "showHalfAngles": true,
+          "strokeColor": "#533086",
+          "halfAngleArcColors": {
+            "first": "#4A4DC9",
+            "second": "#533086"
+          }
+        }
+      },
+      "congruenceOverlay": {
+        "step1": {
+          "label": "Proof not shown",
+          "visible": false,
+          "highlightSSS": false,
+          "showTriangles": false
+        },
+        "step2": {
+          "label": "Proof not shown",
+          "visible": false,
+          "highlightSSS": false,
+          "showTriangles": false
+        },
+        "step3": {
+          "label": "Proof not shown",
+          "visible": false,
+          "highlightSSS": false,
+          "showTriangles": false
+        },
+        "step4": {
+          "label": "Why it works: Triangle OAC is congruent to triangle OBC by SSS (OA=OB, AC=BC, OC=OC). So angle AOC = angle BOC.",
+          "visible": true,
+          "highlightSSS": true,
+          "showTriangles": true,
+          "triangleColors": {
+            "OAC": {
+              "fill": "rgba(74, 77, 201, 0.12)",
+              "stroke": "#4A4DC9"
+            },
+            "OBC": {
+              "fill": "rgba(83, 48, 134, 0.12)",
+              "stroke": "#533086"
+            }
+          },
+          "equalMarks": {
+            "OA_OB": { "count": 1, "color": "#FF7212" },
+            "AC_BC": { "count": 2, "colorsPerSide": ["#4A4DC9", "#533086"] },
+            "OC_OC": { "count": 3, "color": "#533086" }
+          }
+        }
+      }
+    },
+    "practiceMode": {
+      "type": "mcq_quiz",
+      "showDiagram": false,
+      "shuffleQuestions": true,
+      "showExplanationOnAnswer": true,
+      "showProgressBar": true,
+      "showRunningScore": true,
+      "showDifficultyBadge": true,
+      "showCategoryIcon": true,
+      "difficultyColors": {
+        "easy": "#81B29A",
+        "medium": "#FC9145",
+        "hard": "#FF7212"
+      },
+      "categoryIcons": {
+        "concept": "💡",
+        "calculation": "🔢",
+        "proof": "📐",
+        "construction": "🧭"
+      },
+      "questions": [
+        {
+          "id": 1,
+          "question": "If you bisect a 90° angle, what is the measure of each half?",
+          "options": [
+            { "id": "a", "text": "30°" },
+            { "id": "b", "text": "45°" },
+            { "id": "c", "text": "60°" },
+            { "id": "d", "text": "90°" }
+          ],
+          "correctId": "b",
+          "explanation": "Bisecting means dividing into two equal parts. 90° ÷ 2 = 45° for each half.",
+          "relatedAngle": 90,
+          "diagramStep": 4,
+          "difficulty": "easy",
+          "category": "calculation"
+        },
+        {
+          "id": 2,
+          "question": "Why do we mark points A and B such that OA = OB?",
+          "options": [
+            { "id": "a", "text": "To make the figure look neat" },
+            { "id": "b", "text": "To ensure the two triangles are congruent by SSS" },
+            { "id": "c", "text": "Because the textbook says so" },
+            { "id": "d", "text": "To measure the angle" }
+          ],
+          "correctId": "b",
+          "explanation": "Equal distances OA = OB give us one pair of equal sides needed for the SSS congruence proof.",
+          "relatedAngle": 90,
+          "diagramStep": 2,
+          "difficulty": "medium",
+          "category": "proof"
+        },
+        {
+          "id": 3,
+          "question": "What congruence condition proves ray OC bisects ∠XOY?",
+          "options": [
+            { "id": "a", "text": "SAS" },
+            { "id": "b", "text": "ASA" },
+            { "id": "c", "text": "SSS" },
+            { "id": "d", "text": "RHS" }
+          ],
+          "correctId": "c",
+          "explanation": "△OAC ≅ △OBC by SSS: OA = OB, AC = BC, and OC = OC (common side).",
+          "relatedAngle": 90,
+          "diagramStep": 4,
+          "difficulty": "medium",
+          "category": "proof"
+        },
+        {
+          "id": 4,
+          "question": "If you bisect a 120° angle, what is each resulting angle?",
+          "options": [
+            { "id": "a", "text": "45°" },
+            { "id": "b", "text": "50°" },
+            { "id": "c", "text": "60°" },
+            { "id": "d", "text": "90°" }
+          ],
+          "correctId": "c",
+          "explanation": "120° ÷ 2 = 60°. Each half measures 60°.",
+          "relatedAngle": 120,
+          "diagramStep": 4,
+          "difficulty": "easy",
+          "category": "calculation"
+        },
+        {
+          "id": 5,
+          "question": "Why must arcs from A and B have the same radius?",
+          "options": [
+            { "id": "a", "text": "So AC = BC, making C equidistant from A and B" },
+            { "id": "b", "text": "To save time" },
+            { "id": "c", "text": "Different radii work too" },
+            { "id": "d", "text": "Arcs always need equal radii" }
+          ],
+          "correctId": "a",
+          "explanation": "Equal radii ensure AC = BC — the second pair of equal sides for SSS congruence.",
+          "relatedAngle": 90,
+          "diagramStep": 3,
+          "difficulty": "medium",
+          "category": "construction"
+        },
+        {
+          "id": 6,
+          "question": "How can you construct a 45° angle with ruler and compass?",
+          "options": [
+            { "id": "a", "text": "Bisect a 60° angle" },
+            { "id": "b", "text": "Construct 90° then bisect it" },
+            { "id": "c", "text": "Draw any two lines" },
+            { "id": "d", "text": "Use a protractor" }
+          ],
+          "correctId": "b",
+          "explanation": "First construct 90° (via perpendicular bisector), then bisect to get 45°.",
+          "relatedAngle": 90,
+          "diagramStep": 4,
+          "difficulty": "easy",
+          "category": "construction"
+        },
+        {
+          "id": 7,
+          "question": "In △OAC and △OBC, which is the common side?",
+          "options": [
+            { "id": "a", "text": "OA" },
+            { "id": "b", "text": "AC" },
+            { "id": "c", "text": "OC" },
+            { "id": "d", "text": "BC" }
+          ],
+          "correctId": "c",
+          "explanation": "OC belongs to both triangles — the third equal side in SSS: OC = OC.",
+          "relatedAngle": 90,
+          "diagramStep": 4,
+          "difficulty": "easy",
+          "category": "proof"
+        },
+        {
+          "id": 8,
+          "question": "Bisect 60° twice. What angle do you get?",
+          "options": [
+            { "id": "a", "text": "15°" },
+            { "id": "b", "text": "20°" },
+            { "id": "c", "text": "30°" },
+            { "id": "d", "text": "10°" }
+          ],
+          "correctId": "a",
+          "explanation": "First: 60° ÷ 2 = 30°. Second: 30° ÷ 2 = 15°.",
+          "relatedAngle": 60,
+          "diagramStep": 4,
+          "difficulty": "hard",
+          "category": "calculation"
+        },
+        {
+          "id": 9,
+          "question": "What is the first step in bisecting ∠XOY?",
+          "options": [
+            { "id": "a", "text": "Draw ray OC" },
+            { "id": "b", "text": "Draw arcs from A and B" },
+            { "id": "c", "text": "Place compass on O, draw arc cutting both arms" },
+            { "id": "d", "text": "Measure with protractor" }
+          ],
+          "correctId": "c",
+          "explanation": "First: compass at O, arc intersects both arms giving A and B with OA = OB.",
+          "relatedAngle": 90,
+          "diagramStep": 2,
+          "difficulty": "easy",
+          "category": "construction"
+        },
+        {
+          "id": 10,
+          "question": "For the 8-petalled design, adjacent lines are 45° apart. How?",
+          "options": [
+            { "id": "a", "text": "360° ÷ 8 = 45°, by bisecting 90°" },
+            { "id": "b", "text": "Random lines" },
+            { "id": "c", "text": "180° ÷ 4 = 45°" },
+            { "id": "d", "text": "Protractor only" }
+          ],
+          "correctId": "a",
+          "explanation": "360° ÷ 8 = 45°. Construct 90° angles and bisect them.",
+          "relatedAngle": 90,
+          "diagramStep": 4,
+          "difficulty": "medium",
+          "category": "concept"
+        },
+        {
+          "id": 11,
+          "question": "Can you bisect an angle without knowing its measure?",
+          "options": [
+            { "id": "a", "text": "No, must measure first" },
+            { "id": "b", "text": "Yes, compass method works for any angle" },
+            { "id": "c", "text": "Only right angles" },
+            { "id": "d", "text": "Only angles < 90°" }
+          ],
+          "correctId": "b",
+          "explanation": "The construction works for any angle — SSS congruence guarantees exact bisection without measurement.",
+          "relatedAngle": 120,
+          "diagramStep": 4,
+          "difficulty": "medium",
+          "category": "concept"
+        },
+        {
+          "id": 12,
+          "question": "If ∠XOY = 150°, what is ∠XOC after bisection?",
+          "options": [
+            { "id": "a", "text": "60°" },
+            { "id": "b", "text": "75°" },
+            { "id": "c", "text": "80°" },
+            { "id": "d", "text": "100°" }
+          ],
+          "correctId": "b",
+          "explanation": "150° ÷ 2 = 75°.",
+          "relatedAngle": 150,
+          "diagramStep": 4,
+          "difficulty": "easy",
+          "category": "calculation"
+        }
+      ]
+    }
+  },
+  "description": "An interactive construction tool that teaches students how to bisect any given angle using ruler and compass. In Learn mode, students see a 4-step animated construction: observe the 90° angle, mark equal-distance points A and B via arc from O, draw equal-radius arcs from A and B meeting at C with compass indicators and glow effects, then draw bisector ray OC with SSS congruence overlay. In Practice mode, students answer 12 MCQ questions across 4 categories (concept, calculation, proof, construction) with 3 difficulty levels, shuffled order, explanations on answer, progress tracking, and a results summary. Uses Singularity design system with Poppins font (loaded via <link> tag), #4A4DC9/#FF7212 palette, gradient accents, and CSS keyframes injected via dangerouslySetInnerHTML. Component exported as both named and default export for universal bundler compatibility.",
+  "objective_id": "M2.S8.T8.O1",
+  "teaching_notes": "Start with 90 degrees since students just learned to construct it. The bisection gives 45 degrees, connecting to the 8-petalled design from the textbook. The congruence overlay in step 4 reinforces the SSS proof: ΔOAC congruent to ΔOBC. In Practice mode, MCQ questions test conceptual understanding, calculation ability, proof reasoning, and construction knowledge. Questions are shuffled each attempt for varied practice. No diagram is shown in Practice mode — students must recall the construction from Learn mode.",
+  "implementation_notes": {
+    "react_error_130_fixes": [
+      "DotGrid converted from bare-array-returning function (buildDotGrid) to a proper React functional component (<DotGrid />) that wraps dots in a Fragment (<>...</>)",
+      "EqualMarks returns <g /> (empty SVG group) instead of null when line length < 1, safe for SVG context rendering",
+      "Font loaded via <link href=...> element instead of CSS @import inside <style> JSX child string",
+      "CSS keyframes and global hover rules injected via <style dangerouslySetInnerHTML={{__html: ...}}> instead of plain JSX string children",
+      "HTML entity &amp; in subtitle replaced with JSX string expression for safe rendering"
+    ],
+    "export_strategy": "Main component declared as plain 'function AngleBisectionConstructor()' with separate 'export { AngleBisectionConstructor }' (named) and 'export default AngleBisectionConstructor' (default) at end of file"
+  },
+  "tool_objectives": [
+    {
+      "step": 1,
+      "filterSteps": [1],
+      "tool_config": {
+        "toolName": "angle_bisection_constructor",
+        "parameters": {
+          "givenAngle": { "visible": true, "angleDegrees": 90 },
+          "bisectorRay": { "visible": false },
+          "bisectorArcs": { "visible": false },
+          "equalArmPoints": { "visible": false },
+          "congruenceOverlay": { "visible": false }
+        }
+      },
+      "objective_id": "M2.S8.T8.O1",
+      "instructions_for_student": "Here is a 90° angle XOY. Our goal is to divide it into two equal 45° angles using only compass and straightedge."
+    },
+    {
+      "step": 2,
+      "filterSteps": [2],
+      "tool_config": {
+        "toolName": "angle_bisection_constructor",
+        "parameters": {
+          "givenAngle": { "visible": true },
+          "bisectorRay": { "visible": false },
+          "bisectorArcs": { "visible": false },
+          "equalArmPoints": {
+            "visible": true,
+            "showOAequalsOB": true,
+            "compassIndicator": { "center": "O", "label": "compass at O" }
+          }
+        }
+      },
+      "objective_id": "M2.S8.T8.O1",
+      "instructions_for_student": "Place the compass on vertex O and draw an arc cutting both arms. Mark the intersection with arm OX as A and with arm OY as B. Since both lie on the same arc, OA = OB."
+    },
+    {
+      "step": 3,
+      "filterSteps": [3],
+      "tool_config": {
+        "toolName": "angle_bisection_constructor",
+        "parameters": {
+          "bisectorRay": { "visible": false },
+          "bisectorArcs": {
+            "visible": true,
+            "arcFromA": true,
+            "arcFromB": true,
+            "compassIndicators": ["A", "B"],
+            "dashedRadiusLines": true,
+            "glowAtIntersection": true
+          },
+          "equalArmPoints": { "visible": true }
+        }
+      },
+      "objective_id": "M2.S8.T8.O1",
+      "instructions_for_student": "Place compass on A and draw an arc inside the angle (blue). Then with the same radius from B draw another arc (purple). They cross at point C. Since both arcs have the same radius, AC = BC."
+    },
+    {
+      "step": 4,
+      "filterSteps": [4],
+      "tool_config": {
+        "toolName": "angle_bisection_constructor",
+        "parameters": {
+          "bisectorRay": {
+            "drawn": true,
+            "visible": true,
+            "showHalfAngles": true,
+            "strokeColor": "#533086"
+          },
+          "bisectorArcs": { "visible": true },
+          "equalArmPoints": { "visible": true },
+          "congruenceOverlay": {
+            "visible": true,
+            "showTriangles": true,
+            "highlightSSS": true
+          }
+        }
+      },
+      "objective_id": "M2.S8.T8.O2",
+      "instructions_for_student": "Draw ray OC — it bisects the angle! Each half is 45°. By SSS: △OAC ≅ △OBC (OA=OB, AC=BC, OC=OC), so ∠AOC = ∠BOC."
+    }
+  ],
+  "instructions_for_student": "Learn to bisect any angle into two equal halves using compass and straightedge. Follow the four steps in Learn mode to see the construction and understand the SSS congruence proof. Then switch to Practice mode to test your understanding with MCQ questions on concepts, calculations, proofs, and construction steps."
+}

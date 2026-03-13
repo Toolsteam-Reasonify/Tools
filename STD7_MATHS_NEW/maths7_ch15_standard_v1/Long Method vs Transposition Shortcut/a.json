@@ -1,0 +1,388 @@
+{
+    "toolName": "equation_solving_efficiency_tool",
+    "version": "2.0.0",
+    "description": "Interactive tool that teaches three key observations for making equation solving efficient — showing side-by-side comparison of full step-by-step method and transposition shortcut. Built with Singularity Design System (Poppins font, #4A4DC9 primary, #FF7212 accent, #533086→#FC9145 gradient, pill buttons, geometric decorations). Based on Chapter 7 (Finding the Unknown) of Ganita Prakash Grade 7.",
+    "category": "algebra",
+    "gradeLevel": "7",
+    "chapter": "7 - Finding the Unknown",
+    "topic": "Making Equation Solving Efficient: Three Key Observations",
+    "designSystem": {
+        "name": "Singularity",
+        "font": "Poppins",
+        "colors": {
+            "primary": "#4A4DC9",
+            "accent": "#FF7212",
+            "gradientStart": "#533086",
+            "gradientEnd": "#FC9145",
+            "lavender": "#C1C1EA",
+            "peach": "#FFF3E4",
+            "lavenderLight": "#EEEDF7",
+            "peachLight": "#FFF9F2",
+            "gray900": "#4E4E4E",
+            "gray200": "#EBEBEB",
+            "gray100": "#F5F5F5",
+            "white": "#FFFFFF",
+            "success": "#2DB574",
+            "error": "#E5453F"
+        },
+        "buttons": "Pill-shaped (border-radius: 40px), variants: contained, outlined, highlight, text",
+        "decorations": "Geometric shapes (circle, triangle, square) as subtle background elements"
+    },
+    "learningObjectives": [
+        "Understand Observation (a): Additive inverse transposition — a term changes sign when moved across the equals sign",
+        "Understand Observation (b): Factor transposition — a multiplicative factor becomes a divisor on the other side",
+        "Understand Observation (c): Divisor transposition — a divisor becomes a multiplier on the other side",
+        "Compare full step-by-step solving with transposition shortcut side by side",
+        "Verify that both methods produce the same answer"
+    ],
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Width of the tool in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Height of the tool in pixels"
+        },
+        "initialMode": {
+            "type": "string",
+            "enum": ["learn", "practice", "explore"],
+            "default": "learn",
+            "description": "Starting mode for the tool"
+        },
+        "showModeSelector": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether to show mode selection pill tabs"
+        },
+        "enabledModes": {
+            "type": "array",
+            "items": { "type": "string", "enum": ["learn", "practice", "explore"] },
+            "default": ["learn", "practice", "explore"],
+            "description": "Which modes to enable"
+        },
+        "showNavigation": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether to show pill navigation buttons (Previous/Next)"
+        },
+        "showStepIndicator": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether to show step counter pill in header"
+        },
+        "autoPlayDuration": {
+            "type": "number",
+            "default": 0,
+            "description": "Auto-advance delay in ms (0 = no auto-play)"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable dark mode (design system colors adapt)"
+        }
+    },
+    "additionalProps": {
+        "description": "Tool-specific dynamic content for equation solving",
+        "schema": {
+            "equations": {
+                "type": "array",
+                "description": "Array of equation examples with full steps and transposition shortcut steps",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "equation": {
+                            "type": "string",
+                            "description": "LaTeX representation of the equation (supports \\dfrac, \\div, \\times)"
+                        },
+                        "variable": {
+                            "type": "string",
+                            "description": "The unknown variable letter (rendered in primary indigo #4A4DC9)"
+                        },
+                        "answer": {
+                            "type": "string",
+                            "description": "LaTeX representation of the answer"
+                        },
+                        "observation": {
+                            "type": "string",
+                            "enum": ["additive_inverse", "division", "multiplication"],
+                            "description": "Which observation this equation demonstrates"
+                        },
+                        "fullSteps": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "step": { "type": "string", "description": "LaTeX for this step" },
+                                    "explanation": { "type": "string", "description": "Plain text explanation (rendered in #4E4E4E)" }
+                                }
+                            },
+                            "description": "Full step-by-step solution (shown in purple/lavender column #EEEDF7)"
+                        },
+                        "shortcutSteps": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "step": { "type": "string", "description": "LaTeX for this step" },
+                                    "explanation": { "type": "string", "description": "Plain text explanation (rendered in #4E4E4E)" }
+                                }
+                            },
+                            "description": "Transposition shortcut solution (shown in orange/peach column #FFF9F2)"
+                        }
+                    }
+                }
+            },
+            "showBothMethods": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to show both methods side by side"
+            },
+            "highlightTransposition": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to highlight the transposition action"
+            },
+            "animationDelay": {
+                "type": "number",
+                "default": 300,
+                "description": "Delay in ms between step reveals"
+            }
+        },
+        "examples": {
+            "default": {
+                "description": "Uses built-in equations from textbook: 2y+7=21, 11y+(-5)=61, 5x-4=7, u/15=6, 6y+7=4y+21",
+                "additionalProps": {}
+            },
+            "single_equation": {
+                "description": "Focus on one specific equation",
+                "additionalProps": {
+                    "equations": [
+                        {
+                            "equation": "3x - 10 = 35",
+                            "variable": "x",
+                            "answer": "15",
+                            "observation": "additive_inverse",
+                            "fullSteps": [
+                                { "step": "3x - 10 = 35", "explanation": "Start with the equation" },
+                                { "step": "3x - 10 + 10 = 35 + 10", "explanation": "Add 10 to both sides" },
+                                { "step": "3x = 45", "explanation": "Simplify both sides" },
+                                { "step": "3x \\div 3 = 45 \\div 3", "explanation": "Divide both sides by 3" },
+                                { "step": "x = 15", "explanation": "Solution found!" }
+                            ],
+                            "shortcutSteps": [
+                                { "step": "3x - 10 = 35", "explanation": "Start with the equation" },
+                                { "step": "3x = 35 + 10", "explanation": "−10 transposes to +10" },
+                                { "step": "3x = 45", "explanation": "Simplify" },
+                                { "step": "x = 45 \\div 3", "explanation": "×3 transposes to ÷3" },
+                                { "step": "x = 15", "explanation": "Solution found!" }
+                            ]
+                        }
+                    ]
+                }
+            },
+            "division_observation": {
+                "description": "Focus on observation (c) — divisor to multiplication",
+                "additionalProps": {
+                    "equations": [
+                        {
+                            "equation": "\\dfrac{u}{15} = 6",
+                            "variable": "u",
+                            "answer": "90",
+                            "observation": "multiplication",
+                            "fullSteps": [
+                                { "step": "\\dfrac{u}{15} = 6", "explanation": "Start with the equation" },
+                                { "step": "\\dfrac{u}{15} \\times 15 = 6 \\times 15", "explanation": "Multiply both sides by 15" },
+                                { "step": "u = 90", "explanation": "Solution found!" }
+                            ],
+                            "shortcutSteps": [
+                                { "step": "\\dfrac{u}{15} = 6", "explanation": "Start with the equation" },
+                                { "step": "u = 6 \\times 15", "explanation": "÷15 transposes to ×15" },
+                                { "step": "u = 90", "explanation": "Solution found!" }
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "modes": {
+        "learn": {
+            "description": "Teaches the three key observations with animated side-by-side comparisons. Full method in lavender column, transposition in peach column, VS badge with gradient.",
+            "steps": [1, 2, 3, 4, 5, 6, 7]
+        },
+        "practice": {
+            "description": "Students solve equations using transposition and check answers. Orange highlight 'Check' button, green/red feedback with bounce animation.",
+            "steps": [10, 11, 12]
+        },
+        "explore": {
+            "description": "Students pick any equation via pill buttons and watch both methods animated side by side.",
+            "steps": [20]
+        }
+    },
+    "steps": {
+        "1": { "title": "Three Key Observations", "mode": "learn", "type": "intro" },
+        "2": { "title": "Observation (a): Additive Inverse", "mode": "learn", "type": "explanation" },
+        "3": { "title": "Observation (b): Division Shortcut", "mode": "learn", "type": "explanation" },
+        "4": { "title": "Observation (c): Multiplication Shortcut", "mode": "learn", "type": "explanation" },
+        "5": { "title": "Side-by-Side: 2y + 7 = 21", "mode": "learn", "type": "explanation" },
+        "6": { "title": "Side-by-Side: 11y + (−5) = 61", "mode": "learn", "type": "explanation" },
+        "7": { "title": "Side-by-Side: 6y + 7 = 4y + 21", "mode": "learn", "type": "explanation" },
+        "10": { "title": "Solve: 3x − 10 = 35", "mode": "practice", "type": "practice" },
+        "11": { "title": "Solve: 4(m + 6) − 8 = 2m − 4", "mode": "practice", "type": "practice" },
+        "12": { "title": "Solve: u/15 = 6", "mode": "practice", "type": "practice" },
+        "20": { "title": "Explore Any Equation", "mode": "explore", "type": "explore" }
+    },
+    "instructions_for_student": "Transposition moves a term across the equals sign with a sign change. Instead of writing the inverse operation on both sides, you can directly move the term to the other side and change its sign (addition becomes subtraction and vice versa) or change its operation (multiplication becomes division and vice versa). This is faster than writing every inverse operation step, and both methods always give the same answer.",
+    "teaching_notes": "Guide students through this interactive tool. Encourage exploration and discussion. Start with the Learn mode to introduce the three observations. Let students click 'Reveal Next Step' to see both methods progress simultaneously. Highlight that both columns always arrive at the same answer. Then move to Practice mode where students apply transposition themselves. The Explore mode lets students revisit any equation freely.",
+    "generation_prompt": "Progressive comparison showing same equation solved two ways side by side: full step-by-step and transposition shortcut. Both give same answer.",
+    "toolCallExamples": [
+        {
+            "description": "Default — show all five textbook equations with all modes (Singularity design)",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Making Equation Solving Efficient",
+                "data": {
+                    "toolName": "equation_solving_efficiency_tool",
+                    "parameters": {}
+                },
+                "instructions_for_student": "Transposition moves a term across equals sign with sign change. Faster than writing every inverse operation step."
+            }
+        },
+        {
+            "description": "Focus only on Learn mode, observation (a)",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Observation (a): Additive Inverse Transposition",
+                "data": {
+                    "toolName": "equation_solving_efficiency_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "enabledModes": ["learn"],
+                        "filterSteps": [2, 5]
+                    }
+                },
+                "instructions_for_student": "When a term is removed from one side, its additive inverse appears on the other."
+            }
+        },
+        {
+            "description": "Practice mode only — orange Check button, pill input",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Practice: Solve Using Transposition",
+                "data": {
+                    "toolName": "equation_solving_efficiency_tool",
+                    "parameters": {
+                        "initialMode": "practice",
+                        "enabledModes": ["practice"]
+                    }
+                },
+                "instructions_for_student": "Use transposition to solve each equation. Move terms across the equals sign with a sign change."
+            }
+        },
+        {
+            "description": "Explore mode — pill equation selector buttons",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Explore: Compare Both Methods",
+                "data": {
+                    "toolName": "equation_solving_efficiency_tool",
+                    "parameters": {
+                        "initialMode": "explore",
+                        "enabledModes": ["explore"]
+                    }
+                },
+                "instructions_for_student": "Pick any equation and watch both solving methods side by side."
+            }
+        },
+        {
+            "description": "Custom equation — agent provides its own equation data",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Solving 3x − 10 = 35",
+                "data": {
+                    "toolName": "equation_solving_efficiency_tool",
+                    "parameters": {
+                        "initialMode": "explore",
+                        "enabledModes": ["explore"],
+                        "additionalProps": {
+                            "equations": [
+                                {
+                                    "equation": "3x - 10 = 35",
+                                    "variable": "x",
+                                    "answer": "15",
+                                    "observation": "additive_inverse",
+                                    "fullSteps": [
+                                        { "step": "3x - 10 = 35", "explanation": "Start with the equation" },
+                                        { "step": "3x - 10 + 10 = 35 + 10", "explanation": "Add 10 to both sides" },
+                                        { "step": "3x = 45", "explanation": "Simplify both sides" },
+                                        { "step": "3x \\div 3 = 45 \\div 3", "explanation": "Divide both sides by 3" },
+                                        { "step": "x = 15", "explanation": "Solution found!" }
+                                    ],
+                                    "shortcutSteps": [
+                                        { "step": "3x - 10 = 35", "explanation": "Start with the equation" },
+                                        { "step": "3x = 35 + 10", "explanation": "−10 transposes to +10" },
+                                        { "step": "3x = 45", "explanation": "Simplify" },
+                                        { "step": "x = 45 \\div 3", "explanation": "×3 transposes to ÷3" },
+                                        { "step": "x = 15", "explanation": "Solution found!" }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                },
+                "instructions_for_student": "Watch both methods solve 3x − 10 = 35 side by side."
+            }
+        },
+        {
+            "description": "Auto-play through learn mode with gradient progress dots",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Auto-Play: Three Observations",
+                "data": {
+                    "toolName": "equation_solving_efficiency_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "autoPlayDuration": 10000
+                    }
+                },
+                "instructions_for_student": "Watch the lesson auto-advance, or use navigation to go at your own pace."
+            }
+        },
+        {
+            "description": "Minimal — single comparison, no mode selector, no navigation",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Compare: 2y + 7 = 21",
+                "data": {
+                    "toolName": "equation_solving_efficiency_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "showModeSelector": false,
+                        "showNavigation": false,
+                        "filterSteps": [5]
+                    }
+                },
+                "instructions_for_student": "Click 'Reveal Next Step' to see both methods progress together."
+            }
+        },
+        {
+            "description": "All observations only — skip side-by-side comparisons",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "The Three Observations",
+                "data": {
+                    "toolName": "equation_solving_efficiency_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "enabledModes": ["learn"],
+                        "filterSteps": [1, 2, 3, 4]
+                    }
+                },
+                "instructions_for_student": "Learn the three key observations that make equation solving faster."
+            }
+        }
+    ]
+}

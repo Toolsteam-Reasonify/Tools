@@ -1,0 +1,373 @@
+{
+    "toolName": "matchstick_pattern_tool",
+    "version": "2.0.0",
+    "description": "Step-based timeline showing matchstick triangle pattern growth from position 1 through 5. Each step adds a new position, shows the count, and updates the general expression 2n+1. Practice mode uses MCQ questions. Built with Singularity Design System.",
+    "category": "algebra",
+    "gradeLevel": "7",
+    "topic": "Matchstick Patterns and Setting Up Equations",
+    "contentReference": "NCERT Ganita Prakash Grade 7 Part-II, Chapter 7 — Finding the Unknown",
+
+    "designSystem": {
+        "name": "Singularity",
+        "font": "Poppins",
+        "colors": {
+            "primary": "#4A4DC9",
+            "primaryDark": "#533086",
+            "accent": "#FF7212",
+            "accentSoft": "#FC9145",
+            "tintPrimary": "#C1C1EA",
+            "tintAccent": "#FFF3E4",
+            "gray900": "#1A1A2E",
+            "gray700": "#4E4E4E",
+            "gray400": "#CACACA",
+            "gray200": "#EBEBEB",
+            "gray100": "#F5F5F5",
+            "white": "#FFFFFF",
+            "green": "#2ECC71",
+            "red": "#E74C3C"
+        },
+        "borderRadius": {
+            "sm": 8,
+            "md": 12,
+            "lg": 20,
+            "xl": 28,
+            "full": 999
+        },
+        "shadows": {
+            "sm": "0 2px 8px rgba(74,77,201,0.08)",
+            "md": "0 4px 20px rgba(74,77,201,0.12)",
+            "lg": "0 12px 40px rgba(74,77,201,0.16)",
+            "accent": "0 4px 16px rgba(255,114,18,0.25)"
+        },
+        "buttonVariants": ["primary", "accent", "outline", "ghost"]
+    },
+
+    "learningObjectives": [
+        "Understand how triangle matchstick patterns grow with each position",
+        "Derive the general expression 2n+1 for the number of matchsticks at position n",
+        "Set up and solve linear equations based on pattern rules",
+        "Determine if a given number of matchsticks corresponds to a valid position"
+    ],
+
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Width of the tool in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Height of the tool in pixels"
+        },
+        "initialMode": {
+            "type": "string",
+            "enum": ["learn", "practice", "explore"],
+            "default": "learn",
+            "description": "Starting mode for the tool"
+        },
+        "showModeSelector": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether to show mode selection tabs"
+        },
+        "enabledModes": {
+            "type": "array",
+            "items": { "type": "string", "enum": ["learn", "practice", "explore"] },
+            "default": ["learn", "practice", "explore"],
+            "description": "Which modes are available"
+        },
+        "showNavigation": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show prev/next navigation buttons"
+        },
+        "showPlayPause": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show play/pause auto-advance button (hidden in practice mode)"
+        },
+        "showStepIndicator": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show step counter in header"
+        },
+        "initialStep": {
+            "type": "number",
+            "default": 1,
+            "description": "Starting step ID"
+        },
+        "filterSteps": {
+            "type": "array",
+            "items": { "type": "number" },
+            "default": null,
+            "description": "Only show specific step IDs"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier"
+        },
+        "autoPlayDuration": {
+            "type": "number",
+            "default": 8000,
+            "description": "Auto-advance delay in ms (0 to disable). Disabled in practice mode."
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#4A4DC9",
+            "description": "Primary theme color (Singularity default: #4A4DC9)"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable dark mode"
+        }
+    },
+
+    "additionalProps": {
+        "description": "Tool-specific dynamic content for matchstick pattern customization",
+        "properties": {
+            "maxPosition": {
+                "type": "number",
+                "default": 5,
+                "description": "Maximum position to show in the learn mode pattern sequence"
+            },
+            "sticksPerUnit": {
+                "type": "number",
+                "default": 2,
+                "description": "Number of matchsticks added per new position (coefficient of n in the formula)"
+            },
+            "baseSticks": {
+                "type": "number",
+                "default": 1,
+                "description": "Constant term in the expression (added to sticksPerUnit × n)"
+            },
+            "showFormula": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to display the general formula below the timeline"
+            }
+        },
+        "examples": {
+            "default_triangle_pattern": {
+                "sticksPerUnit": 2,
+                "baseSticks": 1,
+                "showFormula": true
+            },
+            "square_pattern_variant": {
+                "sticksPerUnit": 3,
+                "baseSticks": 1,
+                "showFormula": true
+            },
+            "formula_hidden": {
+                "showFormula": false
+            }
+        }
+    },
+
+    "modes": {
+        "learn": {
+            "label": "Learn",
+            "description": "Step-by-step walkthrough of triangle matchstick pattern growth from position 1 to 5. Each step shows the SVG triangle visual, animated timeline dots, formula computation, and a growing data table.",
+            "icon": "BookOpen",
+            "stepIds": [1, 2, 3, 4, 5],
+            "autoPlayEnabled": true
+        },
+        "practice": {
+            "label": "Practice",
+            "description": "5 multiple-choice questions testing formula application, equation solving, validity checking, and conceptual understanding. Tracks score with instant feedback and explanations.",
+            "icon": "Target",
+            "stepIds": [10, 11, 12, 13, 14],
+            "autoPlayEnabled": false,
+            "questionFormat": "MCQ",
+            "totalQuestions": 5,
+            "optionsPerQuestion": 4,
+            "features": ["score_tracking", "instant_feedback", "explanation_on_answer", "final_score_card"]
+        },
+        "explore": {
+            "label": "Explore",
+            "description": "Interactive slider to explore any position from 1 to 50 with live formula computation, animated timeline, and data table.",
+            "icon": "Zap",
+            "stepIds": [20],
+            "sliderRange": { "min": 1, "max": 50 },
+            "autoPlayEnabled": true
+        }
+    },
+
+    "steps": {
+        "learn": [
+            {
+                "id": 1,
+                "title": "The Triangle Pattern Begins",
+                "description": "At position 1, we build a single triangle using 3 matchsticks. This is the seed of our pattern!",
+                "type": "intro",
+                "visiblePositions": 1,
+                "matchstickCount": 3
+            },
+            {
+                "id": 2,
+                "title": "Growing the Pattern",
+                "description": "At position 2, we add another triangle sharing one side. Now we have 5 matchsticks total: 2×2 + 1 = 5.",
+                "type": "explanation",
+                "visiblePositions": 2,
+                "matchstickCount": 5
+            },
+            {
+                "id": 3,
+                "title": "Position 3 — See the Rule?",
+                "description": "Adding one more triangle gives us 7 matchsticks: 2×3 + 1 = 7. Each new triangle adds exactly 2 sticks!",
+                "type": "explanation",
+                "visiblePositions": 3,
+                "matchstickCount": 7
+            },
+            {
+                "id": 4,
+                "title": "Position 4 — The Pattern Holds",
+                "description": "At position 4, we have 9 matchsticks: 2×4 + 1 = 9. The formula 2n+1 works every time!",
+                "type": "explanation",
+                "visiblePositions": 4,
+                "matchstickCount": 9
+            },
+            {
+                "id": 5,
+                "title": "Position 5 — General Rule: 2n + 1",
+                "description": "At position 5: 2×5 + 1 = 11 matchsticks. For any position n, the count is always 2n + 1.",
+                "type": "explanation",
+                "visiblePositions": 5,
+                "matchstickCount": 11
+            }
+        ],
+        "practice": [
+            {
+                "id": 10,
+                "title": "Question 1 of 5",
+                "description": "How many matchsticks are needed at position 6 in the triangle pattern?",
+                "question": "How many matchsticks are needed at position 6?",
+                "equation": "2n + 1, where n = 6",
+                "options": [
+                    { "id": "a", "label": "11" },
+                    { "id": "b", "label": "12" },
+                    { "id": "c", "label": "13" },
+                    { "id": "d", "label": "14" }
+                ],
+                "correctId": "c",
+                "explanation": "Using the formula: 2 × 6 + 1 = 12 + 1 = 13 matchsticks.",
+                "difficulty": "easy",
+                "skill": "formula_application"
+            },
+            {
+                "id": 11,
+                "title": "Question 2 of 5",
+                "description": "Jasmine makes an arrangement using exactly 99 matchsticks. What is the position number?",
+                "question": "If 2n + 1 = 99, what is n?",
+                "equation": "2n + 1 = 99",
+                "options": [
+                    { "id": "a", "label": "n = 48" },
+                    { "id": "b", "label": "n = 49" },
+                    { "id": "c", "label": "n = 50" },
+                    { "id": "d", "label": "n = 99" }
+                ],
+                "correctId": "b",
+                "explanation": "2n + 1 = 99 → 2n = 98 → n = 49. Position 49.",
+                "difficulty": "medium",
+                "skill": "equation_solving"
+            },
+            {
+                "id": 12,
+                "title": "Question 3 of 5",
+                "description": "Can we make an arrangement using exactly 200 sticks?",
+                "question": "Is it possible to use exactly 200 matchsticks?",
+                "equation": "2n + 1 = 200",
+                "options": [
+                    { "id": "a", "label": "Yes, at position 99" },
+                    { "id": "b", "label": "Yes, at position 100" },
+                    { "id": "c", "label": "No, n is not a whole number" },
+                    { "id": "d", "label": "Yes, at position 99.5" }
+                ],
+                "correctId": "c",
+                "explanation": "2n + 1 = 200 → n = 99.5. Not a whole number, so 200 sticks is impossible.",
+                "difficulty": "medium",
+                "skill": "validity_check"
+            },
+            {
+                "id": 13,
+                "title": "Question 4 of 5",
+                "description": "Each new triangle increases the count by how many?",
+                "question": "How many new matchsticks does each added triangle need?",
+                "equation": "(2n+1) − (2(n−1)+1)",
+                "options": [
+                    { "id": "a", "label": "1 matchstick" },
+                    { "id": "b", "label": "2 matchsticks" },
+                    { "id": "c", "label": "3 matchsticks" },
+                    { "id": "d", "label": "It varies" }
+                ],
+                "correctId": "b",
+                "explanation": "Each new triangle shares one side, so only 2 new sticks are added.",
+                "difficulty": "easy",
+                "skill": "pattern_reasoning"
+            },
+            {
+                "id": 14,
+                "title": "Question 5 of 5",
+                "description": "What equation finds the position for 41 matchsticks?",
+                "question": "Which equation to solve for 41 matchsticks?",
+                "equation": "? = 41",
+                "options": [
+                    { "id": "a", "label": "2n − 1 = 41" },
+                    { "id": "b", "label": "n + 1 = 41" },
+                    { "id": "c", "label": "2n + 1 = 41" },
+                    { "id": "d", "label": "3n + 1 = 41" }
+                ],
+                "correctId": "c",
+                "explanation": "The formula is 2n + 1. So 2n + 1 = 41 → n = 20.",
+                "difficulty": "medium",
+                "skill": "equation_framing"
+            }
+        ],
+        "explore": [
+            {
+                "id": 20,
+                "title": "Explore Any Position",
+                "description": "Slide to any position from 1 to 50 and watch the formula in action.",
+                "type": "explore",
+                "slider": true,
+                "sliderMin": 1,
+                "sliderMax": 50
+            }
+        ]
+    },
+
+    "triangleGeometry": {
+        "description": "Equilateral triangle matchstick pattern rendered via SVG. Each triangle has all 3 sides drawn explicitly. Adjacent triangles share base vertices.",
+        "sideLength": "50 * scale",
+        "height": "sideLen * sqrt(3) / 2",
+        "vertexSpacing": "sideLen (base vertices spaced equally)",
+        "rendering": {
+            "sidesPerTriangle": 3,
+            "sharedVertices": "Adjacent triangles share bottom-right/bottom-left base vertex",
+            "allSidesDrawn": true,
+            "vertexDots": "Filled circles with stroke at each vertex",
+            "colorScheme": {
+                "existing": "#4A4DC9 (primary indigo)",
+                "newlyAdded": "#FF7212 (accent orange)",
+                "dotFillExisting": "#C1C1EA (tint primary)",
+                "dotFillNew": "#FC9145 (accent soft)"
+            }
+        }
+    },
+
+    "animations": {
+        "sgFadeUp": "translateY(24px) → translateY(0) with opacity",
+        "sgPop": "scale(0) → scale(1.2) → scale(1) with opacity",
+        "sgSlide": "translateX(-30px) → translateX(0) with opacity",
+        "sgBounce": "translateY bounce with 2 dampened peaks",
+        "sgCount": "scale(0.6) → scale(1) with opacity",
+        "sgShake": "horizontal shake (±5px) for wrong answers",
+        "sgPulse": "box-shadow pulse for focus states"
+    },
+
+    "teaching_notes": "Guide students through this interactive tool. Encourage exploration and discussion. Ask them to predict matchstick counts before revealing the next step.",
+    "instructions_for_student": "Triangle matchstick pattern: 3 sticks at position 1, 5 at position 2, 7 at position 3. General rule: 2n+1.",
+    "generation_prompt": "Step-based timeline showing matchstick triangle pattern growth from position 1 through 5. Each step adds a new position, shows the count, and updates the general expression 2n+1."
+}

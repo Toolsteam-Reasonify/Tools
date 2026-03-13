@@ -1,0 +1,109 @@
+{
+    "toolName": "weighing_scale_tool",
+    "version": "5.0.0",
+    "description": "Fully responsive interactive brass two-pan weighing scale for Grade 7 algebra (Ch 7: Finding the Unknown). Singularity Design System (Poppins, #4A4DC9 indigo + #FF7212 orange). Photorealistic brass scale with bell base, fleur-de-lis crown, 4 fanning chains, wide saucer pans. 10 practice problems. No teaching notes banner. Adapts to all screen sizes 320px–1200px+.",
+    "category": "algebra",
+    "grade": "7",
+    "curriculum": "NCERT Ganita Prakash Part-II",
+    "chapter": "7 – Finding the Unknown",
+    "topic": "Unknown Weights on Traditional Weighing Scales (Fig 7.9 to 7.12)",
+    "responsive": {
+        "approach": "ResizeObserver-based container width detection with isMobile (<500px) and isSmall (<650px) breakpoints",
+        "scaleSVG": "Uses viewBox='0 0 600 400' with width:100% and aspectRatio:600/400 — scales to any container",
+        "items": "Icon sizes adapt: 34px desktop, 28px tablet, 24px mobile. Count labels scale too.",
+        "typography": "Font sizes, paddings, gaps all conditionally sized per breakpoint",
+        "layout": "flexWrap on all button rows, input row stays flex with minWidth:0, header text truncates with ellipsis",
+        "buttons": "Pill buttons shrink padding on mobile. Check button hides label text on mobile (icon only).",
+        "dots": "Problem dots shrink from 30px to 26px on mobile",
+        "containerWidth": "width:100% with maxWidth from props (default 800px), no fixed px width"
+    },
+    "designSystem": {
+        "name": "Singularity",
+        "font": "Poppins (Google Fonts CDN)",
+        "icons": "lucide-react: Check, X, ChevronRight, ChevronLeft, RotateCcw, Trophy, BookOpen, Target, HelpCircle, Star",
+        "colors": {
+            "indigo": "#4A4DC9",
+            "orange": "#FF7212",
+            "purple": "#533086",
+            "tangerine": "#FC9145",
+            "lilac": "#C1C1EA",
+            "peach": "#FFF3E4",
+            "dark": "#4E4E4E",
+            "gray": "#CACACA",
+            "lightGray": "#EBEBEB",
+            "offWhite": "#F5F5F5"
+        },
+        "buttons": {
+            "variants": ["contained (indigo)", "outlined (lilac border)", "text (no bg)", "highlight (orange)"],
+            "borderRadius": "100px (pill)"
+        }
+    },
+    "parameters": {
+        "width": { "type": "number", "default": 800, "description": "Max width in pixels. Container uses width:100% up to this max." },
+        "height": { "type": "number", "default": 740, "description": "Min height on desktop. Mobile uses auto." },
+        "initialMode": { "type": "string", "enum": ["learn", "practice"], "default": "learn" },
+        "showModeSelector": { "type": "boolean", "default": true },
+        "showNavigation": { "type": "boolean", "default": true }
+    },
+    "additionalProps": {
+        "type": "object",
+        "properties": {
+            "problems": {
+                "type": "array",
+                "description": "Custom problems array. Default: 10 built-in problems.",
+                "items": {
+                    "type": "object",
+                    "required": ["id", "title", "description", "leftPan", "rightPan", "correctEquation", "acceptableEquations", "solution", "hint"],
+                    "properties": {
+                        "id": { "type": "number" },
+                        "title": { "type": "string" },
+                        "description": { "type": "string" },
+                        "leftPan": { "type": "array" },
+                        "rightPan": { "type": "array" },
+                        "correctEquation": { "type": "string" },
+                        "acceptableEquations": { "type": "array", "items": { "type": "string" } },
+                        "solution": { "type": "number" },
+                        "hint": { "type": "string" },
+                        "figureRef": { "type": "string" }
+                    }
+                }
+            },
+            "showHints": { "type": "boolean", "default": true },
+            "unknownSymbol": { "type": "string", "default": "x" }
+        }
+    },
+    "modes": {
+        "learn": {
+            "description": "5-step guided walkthrough. No teaching notes banner. Cards with emoji icons, equation previews for steps 3-5.",
+            "steps": 5
+        },
+        "practice": {
+            "description": "10 interactive problems. No teaching notes banner. Brass scale, equation input, instant validation, hints, show-answer, dot nav, score tracker.",
+            "defaultProblems": [
+                { "id": 1, "ref": "Fig 7.9", "eq": "x + 2 = 12", "sol": 10 },
+                { "id": 2, "ref": "Fig 7.10", "eq": "3x + 4 = 2x + 14", "sol": 10 },
+                { "id": 3, "ref": "Fig 7.11", "eq": "5x = 3x + 21", "sol": 10.5 },
+                { "id": 4, "ref": "Fig 7.12", "eq": "90x + 50 = 60x + 500", "sol": 15 },
+                { "id": 5, "eq": "x = 7", "sol": 7 },
+                { "id": 6, "eq": "2x = 8", "sol": 4 },
+                { "id": 7, "eq": "x + 5 = 20", "sol": 15 },
+                { "id": 8, "eq": "4x = 2x + 10", "sol": 5 },
+                { "id": 9, "eq": "3x + 7 = x + 25", "sol": 9 },
+                { "id": 10, "eq": "5x + 3 = 2x + 21", "sol": 6 }
+            ]
+        }
+    },
+    "scaleVisualDesign": {
+        "type": "Photorealistic brass balance in a single SVG with viewBox for responsiveness",
+        "base": "Bell-shaped with curved path, 3 tiers",
+        "pillar": "22px wide column with 7 ring bands",
+        "crown": "Fleur-de-lis finial with scrollwork",
+        "beam": "540 units wide, rotates via SVG <g transform>",
+        "chains": "4 fanning dashed lines per side, inside the rotating <g>",
+        "pans": "Elliptical saucers (rx=82) with inner highlight, inside rotating <g>",
+        "items": "Overlaid via absolute-positioned divs with % positioning, rotate with beam via CSS transform"
+    },
+    "teaching_notes": "No teaching notes banner in either mode. Teaching content is embedded in the Learn mode cards themselves.",
+    "instructions_for_student": "Translate a two-pan balance scenario into an algebraic equation using x for the unknown.",
+    "generation_prompt": "Standalone interaction where a two-pan balance image is shown with a sack and standard iron weights. Students type the algebraic equation using x for the unknown. Instant validation provided."
+}

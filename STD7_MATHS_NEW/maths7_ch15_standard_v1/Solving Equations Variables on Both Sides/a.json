@@ -1,0 +1,382 @@
+{
+    "toolName": "equation_solver_both_sides_tool",
+    "version": "2.0.0",
+    "description": "Fully responsive, interactive step-by-step walkthrough tool for solving linear equations with unknowns on both sides. Built with Singularity Design System (Poppins font, #4A4DC9 indigo / #FF7212 orange palette, pill buttons, geometric decorations). Covers Example 5 (11y + (–5) = 61, solvable) and Example 6 (6y + 7 = 4y + 21, unknowns on both sides). Supports verification, practice mode, real-world connections, and hands-on equation building using Brahmagupta's formula. Adapts to all screen sizes via container-based breakpoints (xs/sm/md/lg).",
+    "category": "algebra",
+    "gradeLevel": "Grade 7",
+    "curriculum": "NCERT Ganita Prakash Part-II, Chapter 7 - Finding the Unknown",
+    "designSystem": {
+        "name": "Singularity",
+        "font": "Poppins",
+        "colors": {
+            "primary": "#4A4DC9",
+            "accent": "#FF7212",
+            "gradientStart": "#533086",
+            "gradientEnd": "#FC9145",
+            "lightPurple": "#C1C1EA",
+            "lightOrange": "#FFF3E4",
+            "dark": "#4E4E4E",
+            "gray": "#CACACA",
+            "lightGray": "#EBEBEB",
+            "offWhite": "#F5F5F5",
+            "white": "#FFFFFF",
+            "success": "#2ECC71",
+            "error": "#E74C3C"
+        },
+        "buttons": {
+            "borderRadius": "40px (pill shape)",
+            "variants": ["contained", "outlined", "text"],
+            "states": ["enabled", "disabled", "hover", "pressed"]
+        },
+        "decorations": "Geometric shapes (circles, triangles, squares) floating with CSS animations"
+    },
+    "responsive": {
+        "method": "Container-based ResizeObserver (not window width)",
+        "breakpoints": {
+            "xs": { "maxWidth": 379, "description": "Phones portrait — icons only in tabs, stacked equations, minimal padding" },
+            "sm": { "minWidth": 380, "maxWidth": 519, "description": "Large phones — compact layout, full tab labels" },
+            "md": { "minWidth": 520, "maxWidth": 719, "description": "Tablets — standard layout" },
+            "lg": { "minWidth": 720, "description": "Desktop — full layout with max content width" }
+        },
+        "adaptations": [
+            "Font sizes scale per breakpoint (body: 11-13px, math: 14-17px, headings: 14-17px)",
+            "Padding scales (10-20px), gaps scale (8-14px)",
+            "Mode tabs show icons-only on xs, icons+labels on sm+",
+            "Navigation buttons show icons-only on xs, icons+text on sm+",
+            "Equations stack vertically (LHS / = / RHS) on xs, horizontal on sm+",
+            "Progress dots shrink (6px on xs, 8px on sm+)",
+            "Decorative triangle hidden on xs to reduce clutter",
+            "Step card scroll height adapts (260px xs, 290px sm, 330px md+)",
+            "Intro icon scales (48px xs → 72px lg)",
+            "All containers use box-sizing: border-box, width: 100%, maxWidth constraints"
+        ]
+    },
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Maximum width of the tool container in pixels. The component uses width: 100% with maxWidth set to this value, so it naturally fills available space on smaller screens."
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Minimum height of the tool container. On xs breakpoint, minHeight becomes 'auto' to allow content-driven height."
+        },
+        "initialMode": {
+            "type": "string",
+            "enum": ["learn", "practice", "real_world", "hands_on"],
+            "default": "learn",
+            "description": "Starting mode for the tool"
+        },
+        "showModeSelector": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide the mode selector tabs. Tabs are horizontally scrollable on small screens."
+        },
+        "enabledModes": {
+            "type": "array",
+            "items": { "type": "string", "enum": ["learn", "practice", "real_world", "hands_on"] },
+            "default": ["learn", "practice", "real_world", "hands_on"],
+            "description": "Which modes to make available"
+        },
+        "showNavigation": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide bottom navigation bar with prev/next buttons and progress dots"
+        },
+        "showStepIndicator": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide the step counter badge in the header (e.g., '2/4')"
+        },
+        "initialStep": {
+            "type": "number",
+            "default": 1,
+            "description": "Starting step ID"
+        },
+        "filterSteps": {
+            "type": "array",
+            "items": { "type": "number" },
+            "default": null,
+            "description": "Only show these step IDs. Null shows all steps."
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier (reserved for future use)"
+        },
+        "autoPlayDuration": {
+            "type": "number",
+            "default": 0,
+            "description": "Auto-advance delay in ms (0 = manual navigation only)"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#4A4DC9",
+            "description": "Primary theme color. Defaults to Singularity indigo. Used for buttons, highlights, and gradient accents."
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable dark mode (reserved for future use; current version uses Singularity light theme)"
+        }
+    },
+    "additionalProps": {
+        "description": "Tool-specific dynamic content for equation solving walkthrough",
+        "schema": {
+            "examples": {
+                "type": "array",
+                "description": "Array of equation examples with step-by-step walkthrough. Uses plain text math (Unicode ÷ × – symbols), NOT LaTeX.",
+                "items": {
+                    "title": { "type": "string", "description": "Display title (e.g., 'Example 5: Solve 11y + (–5) = 61')" },
+                    "equation": { "type": "string", "description": "The equation in readable form (e.g., '11y + (-5) = 61')" },
+                    "hasSolution": { "type": "boolean", "description": "Whether this equation has a finite solution" },
+                    "steps": {
+                        "type": "array",
+                        "description": "Step-by-step solution walkthrough. Each step shows LHS = RHS with an explanation.",
+                        "items": {
+                            "lhs": { "type": "string", "description": "Plain text for left-hand side (e.g., '11y + (–5)'). Variables are auto-styled italic." },
+                            "rhs": { "type": "string", "description": "Plain text for right-hand side (e.g., '61')" },
+                            "explanation": { "type": "string", "description": "Text explanation of this step" },
+                            "operation": { "type": "string", "optional": true, "description": "Operation performed, shown as orange pill badge (e.g., 'Subtract 4y from both sides')" },
+                            "highlight": { "type": "string", "enum": ["lhs", "rhs", "both", "operation"], "description": "Which side(s) to highlight with colored background" }
+                        }
+                    },
+                    "solution": { "type": "string", "description": "Solution display text (e.g., 'y = 6')" },
+                    "solutionValue": { "type": "string", "description": "Numeric value of the solution (e.g., '6')" },
+                    "verification": {
+                        "type": "array",
+                        "optional": true,
+                        "description": "Optional verification steps to confirm the solution",
+                        "items": {
+                            "lhs": { "type": "string" },
+                            "rhs": { "type": "string" },
+                            "explanation": { "type": "string" },
+                            "highlight": { "type": "string", "enum": ["lhs", "rhs", "both"] }
+                        }
+                    }
+                }
+            },
+            "showBalanceScale": {
+                "type": "boolean",
+                "default": false,
+                "description": "Show animated balance scale visualization (reserved for future enhancement)"
+            },
+            "highlightInverseOps": {
+                "type": "boolean",
+                "default": true,
+                "description": "Highlight inverse operations during walkthrough with orange pill badges"
+            },
+            "showVerification": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show the '✓ Verify' button after completing all solution steps"
+            }
+        },
+        "examples": [
+            {
+                "description": "Default: Examples 5 and 6 from NCERT textbook",
+                "value": {}
+            },
+            {
+                "description": "Custom equation: 5x + 3 = 2x + 18 (solvable, unknowns on both sides)",
+                "value": {
+                    "examples": [
+                        {
+                            "title": "Solve 5x + 3 = 2x + 18",
+                            "equation": "5x + 3 = 2x + 18",
+                            "hasSolution": true,
+                            "steps": [
+                                { "lhs": "5x + 3", "rhs": "2x + 18", "explanation": "Start with the equation.", "highlight": "both" },
+                                { "lhs": "5x + 3 – 2x", "rhs": "2x + 18 – 2x", "explanation": "Subtract 2x from both sides.", "operation": "Subtract 2x from both sides", "highlight": "operation" },
+                                { "lhs": "3x + 3", "rhs": "18", "explanation": "5x – 2x = 3x on the left.", "highlight": "both" },
+                                { "lhs": "3x + 3 – 3", "rhs": "18 – 3", "explanation": "Subtract 3 from both sides.", "operation": "Subtract 3 from both sides", "highlight": "operation" },
+                                { "lhs": "3x", "rhs": "15", "explanation": "Simplify.", "highlight": "both" },
+                                { "lhs": "3x ÷ 3", "rhs": "15 ÷ 3", "explanation": "Divide both sides by 3.", "operation": "Divide by 3", "highlight": "operation" },
+                                { "lhs": "x", "rhs": "5", "explanation": "x = 5!", "highlight": "both" }
+                            ],
+                            "solution": "x = 5",
+                            "solutionValue": "5",
+                            "verification": [
+                                { "lhs": "5(5) + 3", "rhs": "2(5) + 18", "explanation": "Substitute x = 5.", "highlight": "both" },
+                                { "lhs": "25 + 3", "rhs": "10 + 18", "explanation": "Calculate.", "highlight": "both" },
+                                { "lhs": "28", "rhs": "28", "explanation": "LHS = RHS ✓", "highlight": "both" }
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "Equation with no solution: 3x + 4 = 3x + 7",
+                "value": {
+                    "examples": [
+                        {
+                            "title": "Solve 3x + 4 = 3x + 7",
+                            "equation": "3x + 4 = 3x + 7",
+                            "hasSolution": false,
+                            "steps": [
+                                { "lhs": "3x + 4", "rhs": "3x + 7", "explanation": "Start with the equation.", "highlight": "both" },
+                                { "lhs": "3x + 4 – 3x", "rhs": "3x + 7 – 3x", "explanation": "Subtract 3x from both sides.", "operation": "Subtract 3x from both sides", "highlight": "operation" },
+                                { "lhs": "4", "rhs": "7", "explanation": "The x terms cancel! 4 = 7 is FALSE. No solution.", "highlight": "both" }
+                            ],
+                            "solution": "No Solution",
+                            "solutionValue": "none"
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "Learn mode only, focused on Example 6",
+                "value": {
+                    "examples": [
+                        {
+                            "title": "Solve 6y + 7 = 4y + 21",
+                            "equation": "6y + 7 = 4y + 21",
+                            "hasSolution": true,
+                            "steps": [
+                                { "lhs": "6y + 7", "rhs": "4y + 21", "explanation": "Unknowns on BOTH sides!", "highlight": "both" },
+                                { "lhs": "6y + 7 – 4y", "rhs": "4y + 21 – 4y", "explanation": "Subtract 4y from both sides.", "operation": "Subtract 4y", "highlight": "operation" },
+                                { "lhs": "2y + 7", "rhs": "21", "explanation": "6y – 4y = 2y.", "highlight": "both" },
+                                { "lhs": "2y + 7 – 7", "rhs": "21 – 7", "explanation": "Subtract 7.", "operation": "Subtract 7", "highlight": "operation" },
+                                { "lhs": "2y", "rhs": "14", "explanation": "Simplify.", "highlight": "both" },
+                                { "lhs": "2y ÷ 2", "rhs": "14 ÷ 2", "explanation": "Divide by 2.", "operation": "Divide by 2", "highlight": "operation" },
+                                { "lhs": "y", "rhs": "7", "explanation": "y = 7!", "highlight": "both" }
+                            ],
+                            "solution": "y = 7",
+                            "solutionValue": "7"
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "Mobile-optimized: minimal modes, practice only",
+                "parameters": {
+                    "showModeSelector": false,
+                    "initialMode": "practice",
+                    "enabledModes": ["practice"],
+                    "filterSteps": [10, 11, 12]
+                }
+            }
+        ]
+    },
+    "modes": {
+        "learn": {
+            "label": "Learn",
+            "description": "Step-by-step walkthrough of Examples 5 and 6 with animated equation steps and verification",
+            "icon": "BookOpen",
+            "color": "#4A4DC9",
+            "bgColor": "#C1C1EA",
+            "steps": [1, 2, 3, 4]
+        },
+        "practice": {
+            "label": "Practice",
+            "description": "Solve equations independently with answer checking and progressive hints",
+            "icon": "Target",
+            "color": "#533086",
+            "bgColor": "#E8D5F5",
+            "steps": [10, 11, 12]
+        },
+        "real_world": {
+            "label": "Real World",
+            "description": "Weighing scale analogy and savings problem connecting to Brahmagupta's formula",
+            "icon": "Zap",
+            "color": "#FF7212",
+            "bgColor": "#FFF3E4",
+            "steps": [20, 21]
+        },
+        "hands_on": {
+            "label": "Hands On",
+            "description": "Build and solve custom Ax + B = Cx + D equations, discover no-solution/infinite cases",
+            "icon": "Star",
+            "color": "#2ECC71",
+            "bgColor": "#E8F8F0",
+            "steps": [30]
+        }
+    },
+    "steps": {
+        "1": {
+            "title": "Equations with Variables on Both Sides",
+            "description": "Unknowns on both sides of '='. Let's learn to solve them!",
+            "mode": "learn",
+            "type": "intro"
+        },
+        "2": {
+            "title": "Example 5: Single-side Unknown",
+            "description": "Solve 11y + (–5) = 61 using inverse operations.",
+            "mode": "learn",
+            "type": "explanation",
+            "data": { "exampleIndex": 0 }
+        },
+        "3": {
+            "title": "Example 6: Unknowns on Both Sides",
+            "description": "Solve 6y + 7 = 4y + 21 — y on BOTH sides!",
+            "mode": "learn",
+            "type": "explanation",
+            "data": { "exampleIndex": 1 }
+        },
+        "4": {
+            "title": "Key Strategy: Balance It",
+            "description": "Whatever you do to one side, do to the other!",
+            "mode": "learn",
+            "type": "explanation"
+        },
+        "10": {
+            "title": "Solve 3x – 10 = 35",
+            "description": "Find x.",
+            "mode": "practice",
+            "type": "practice",
+            "data": {
+                "equation": "3x – 10 = 35",
+                "answer": 15,
+                "variable": "x",
+                "hints": ["Add 10 to both sides", "Divide by 3"]
+            }
+        },
+        "11": {
+            "title": "Solve 3u – 7 = 2u + 3",
+            "description": "Variables on both sides!",
+            "mode": "practice",
+            "type": "practice",
+            "data": {
+                "equation": "3u – 7 = 2u + 3",
+                "answer": 10,
+                "variable": "u",
+                "hints": ["Subtract 2u from both sides", "Add 7 to both sides"]
+            }
+        },
+        "12": {
+            "title": "Solve 5x – 4 = 7",
+            "description": "Find x!",
+            "mode": "practice",
+            "type": "practice",
+            "data": {
+                "equation": "5x – 4 = 7",
+                "answer": 2.2,
+                "variable": "x",
+                "hints": ["Add 4 → 5x = 11", "Divide by 5 → x = 2.2"]
+            }
+        },
+        "20": {
+            "title": "Weighing Scale Analogy",
+            "description": "A balanced scale stays balanced with equal changes!",
+            "mode": "real_world",
+            "type": "real_world"
+        },
+        "21": {
+            "title": "Savings Problem",
+            "description": "Jahnavi: ₹4000+₹650/mo. Sunita: ₹5050+₹500/mo. When equal?",
+            "mode": "real_world",
+            "type": "real_world",
+            "data": { "exampleIndex": 1 }
+        },
+        "30": {
+            "title": "Build Your Own Equation",
+            "description": "Create Ax + B = Cx + D and solve it!",
+            "mode": "hands_on",
+            "type": "hands_on"
+        }
+    },
+    "teaching_notes": "Guide students through this interactive tool. Start with Learn mode to walk through Example 5 (single-side unknown: 11y + (–5) = 61) and Example 6 (unknowns on both sides: 6y + 7 = 4y + 21). Encourage students to click 'Next Step' themselves and read each explanation. After solving, use the '✓ Verify' button to demonstrate substitution-based checking. In Practice mode, students solve equations independently — hints are available via the orange 'Hint' button. The Real World mode connects equations to weighing scales and the savings problem from the textbook. Hands On mode lets students build Ax + B = Cx + D equations and discover what happens when A = C (no solution or infinite solutions). The tool is fully responsive and works on student tablets, phones, and classroom projectors.",
+    "instructions_for_student": "Collect unknown terms on one side and constants on the other. Use inverse operations: add/subtract to move terms, multiply/divide to isolate the variable. If unknowns cancel leaving a false statement (like 4 = 7), there is no solution. If they cancel leaving a true statement (like 5 = 5), there are infinite solutions. Always verify your solution by substituting back into the original equation!",
+    "generation_prompt": "Process walkthrough of equations with unknowns on both sides. Example 5 (solvable) and Example 6 (no solution) walked through step by step."
+}

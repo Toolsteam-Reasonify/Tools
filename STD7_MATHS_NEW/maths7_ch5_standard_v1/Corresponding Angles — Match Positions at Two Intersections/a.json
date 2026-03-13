@@ -1,0 +1,446 @@
+{
+    "toolName": "corresponding_angles_tool",
+    "version": "3.0.0",
+    "description": "Interactive step-based geometry constructor for Grade 7 Mathematics — Corresponding Angles Identifier. Redesigned with Singularity Design System. Fully responsive across mobile (<480px), tablet (480–700px), and desktop (700px+). Fluid SVG diagram with viewBox scaling. Swipe navigation on touch devices. All angle labels in black (#1a1a1a). No pulsing intersection circles.",
+    "subject": "Mathematics",
+    "grade": "Grade 7",
+    "topic": "Parallel and Intersecting Lines — Corresponding Angles",
+    "textbook": "Ganita Prakash",
+    "context": "Indian school context — compare to two identical traffic junctions on a highway.",
+    "designSystem": "Singularity",
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Maximum width in pixels. Container uses width:100%; maxWidth:this value. Actual rendered width detected via ResizeObserver."
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Reference height. Actual height adapts based on content and breakpoint."
+        },
+        "initialMode": {
+            "type": "string",
+            "default": "learn",
+            "enum": ["learn"],
+            "description": "Starting mode of the tool"
+        },
+        "showModeSelector": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether to show mode selector tabs"
+        },
+        "showNavigation": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide prev/next/reset buttons and step dots"
+        },
+        "showPlayPause": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide auto-play button"
+        },
+        "showStepIndicator": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide step progress dots"
+        },
+        "initialStep": {
+            "type": "number",
+            "default": 1,
+            "description": "Step ID to start on"
+        },
+        "filterSteps": {
+            "type": "array",
+            "items": { "type": "number" },
+            "default": null,
+            "description": "Only show these step IDs (null = show all)"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier"
+        },
+        "autoPlayDuration": {
+            "type": "number",
+            "default": 8000,
+            "description": "Delay in ms before auto-advancing steps"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#4A4DC9",
+            "description": "Primary accent color (Singularity primary indigo)"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Dark mode toggle"
+        }
+    },
+    "additionalProps": {
+        "description": "Tool-specific configuration for the corresponding angles diagram",
+        "properties": {
+            "lineAngle": {
+                "type": "number",
+                "default": 25,
+                "description": "Angle of transversal from vertical (degrees).",
+                "examples": [15, 25, 35, 45]
+            },
+            "lineLColor": {
+                "type": "string",
+                "default": "#4E4E4E",
+                "description": "Color of line l (Singularity DS dark neutral)"
+            },
+            "lineMColor": {
+                "type": "string",
+                "default": "#4E4E4E",
+                "description": "Color of line m (Singularity DS dark neutral)"
+            },
+            "transversalColor": {
+                "type": "string",
+                "default": "#7B7B9E",
+                "description": "Color of transversal t (muted purple-grey)"
+            },
+            "pairColors": {
+                "type": "object",
+                "description": "Colors for each pair of corresponding angles.",
+                "properties": {
+                    "pair1": { "type": "string", "default": "#4A4DC9", "description": "∠1 & ∠5 — Singularity Primary Indigo" },
+                    "pair2": { "type": "string", "default": "#FF7212", "description": "∠2 & ∠6 — Singularity Accent Orange" },
+                    "pair3": { "type": "string", "default": "#533086", "description": "∠3 & ∠7 — Deep Purple (Gradient Start)" },
+                    "pair4": { "type": "string", "default": "#FC9145", "description": "∠4 & ∠8 — Warm Orange (Gradient End)" }
+                }
+            },
+            "showLabels": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show angle number labels (∠1–∠8). Always rendered in black (#1a1a1a)."
+            },
+            "showPositionBadges": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show position label badges (e.g. 'Both upper-left'). Badge backgrounds use Singularity light tints."
+            },
+            "animationDuration": {
+                "type": "number",
+                "default": 800,
+                "description": "Duration of glow-in animation per step in ms"
+            },
+            "highlightPairs": {
+                "type": "array",
+                "items": { "type": "number" },
+                "default": [1, 2, 3, 4],
+                "description": "Which pairs to include (1=∠1&5, 2=∠2&6, 3=∠3&7, 4=∠4&8)"
+            },
+            "showConnectingLines": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show dashed connecting lines between corresponding angle pairs"
+            },
+            "parallelLines": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether lines l and m show parallel arrow marks"
+            }
+        },
+        "examples": {
+            "default": {
+                "description": "Default configuration — all 4 pairs step-by-step with Singularity DS",
+                "value": {}
+            },
+            "steepTransversal": {
+                "description": "Steeper transversal angle",
+                "value": { "lineAngle": 40 }
+            },
+            "customColors": {
+                "description": "Swapped pair colors within brand palette",
+                "value": {
+                    "pairColors": {
+                        "pair1": "#533086",
+                        "pair2": "#FC9145",
+                        "pair3": "#4A4DC9",
+                        "pair4": "#FF7212"
+                    }
+                }
+            },
+            "onlyFirstTwoPairs": {
+                "description": "Focused teaching — only first two pairs",
+                "value": { "highlightPairs": [1, 2] }
+            },
+            "noBadges": {
+                "description": "Simplified view without position badges",
+                "value": { "showPositionBadges": false }
+            },
+            "nonParallelLines": {
+                "description": "Lines not marked as parallel",
+                "value": { "parallelLines": false }
+            }
+        }
+    },
+    "modes": {
+        "learn": {
+            "label": "Learn",
+            "description": "Step-by-step reveal of all four corresponding angle pairs",
+            "icon": "Eye"
+        }
+    },
+    "steps": {
+        "learn": [
+            {
+                "id": 1,
+                "title": "Two Lines & A Transversal",
+                "description": "8 angles numbered in black, all arcs dimmed (#EBEBEB). Clean diagram, no intersection circles.",
+                "visualState": "All arcs light grey. All labels black (#1a1a1a). Lines in #4E4E4E. Transversal in #7B7B9E.",
+                "teachingNote": "Ask: 'How many angles are at each point?'"
+            },
+            {
+                "id": 2,
+                "title": "Pair 1 — Upper-Left",
+                "description": "∠1 and ∠5 glow indigo (#4A4DC9) with glow-behind. Dashed connector. Badge 'Both upper-left'.",
+                "visualState": "∠1 & ∠5 arcs glow indigo. singArcGlow animation with 12% opacity glow-behind. singConnDraw for connector. singBadgeSlide for badge with #C1C1EA tint. Labels black.",
+                "teachingNote": "Ask: 'Which angle at the second intersection is in the SAME position?'"
+            },
+            {
+                "id": 3,
+                "title": "Pair 2 — Upper-Right",
+                "description": "∠2 and ∠6 glow orange (#FF7212). Previous pair at 70% opacity. Badge 'Both upper-right'.",
+                "visualState": "∠2 & ∠6 arcs glow orange. Badge #FFF3E4 tint. Previous pair faded at 70%. Labels black.",
+                "teachingNote": "Reinforce: same position at both intersections."
+            },
+            {
+                "id": 4,
+                "title": "Pair 3 — Lower-Left",
+                "description": "∠3 and ∠7 glow deep purple (#533086). Badge 'Both lower-left'.",
+                "visualState": "∠3 & ∠7 arcs glow deep purple. Badge #C1C1EA80 tint. Previous pairs faded. Labels black.",
+                "teachingNote": "Pattern recognition: students should predict the last pair."
+            },
+            {
+                "id": 5,
+                "title": "Pair 4 — Lower-Right",
+                "description": "∠4 and ∠8 glow warm orange (#FC9145). All previous pairs visible faded. Badge 'Both lower-right'.",
+                "visualState": "∠4 & ∠8 arcs glow warm orange. Badge #FFF3E4CC tint. All labels black.",
+                "teachingNote": "Complete the pattern. All four position types covered."
+            },
+            {
+                "id": 6,
+                "title": "All Four Pairs — Summary",
+                "description": "All four pairs full color. All connectors visible. All badges shown. Gradient summary pill.",
+                "visualState": "All pairs full color. All connectors visible. 4 badges fade in staggered (0.12s each). Summary pill gradient (#533086→#FC9145) white text with singBounceIn. Labels black.",
+                "teachingNote": "Key takeaway: If lines are parallel, corresponding angles are always equal."
+            }
+        ]
+    },
+    "responsive": {
+        "strategy": "Container-query via ResizeObserver. Component measures its own rendered width and applies breakpoint-driven token values. SVG uses viewBox with preserveAspectRatio for fluid scaling.",
+        "breakpoints": {
+            "mobile": {
+                "condition": "containerWidth < 480px",
+                "description": "Phones in portrait",
+                "tokens": {
+                    "outerBorderRadius": "14px",
+                    "headerPaddingX": "12px",
+                    "headerPaddingY": "10px",
+                    "headerGap": "8px",
+                    "iconSize": "26px",
+                    "iconRadius": "8px",
+                    "iconInnerSize": "13px",
+                    "titleFontSize": "13px",
+                    "subtitleFontSize": "9px",
+                    "subtitleText": "Grade 7 • Ganita Prakash (shortened)",
+                    "cardMargin": "8px",
+                    "cardPaddingX": "10px",
+                    "cardPaddingY": "10px",
+                    "cardRadius": "12px",
+                    "stepNumberSize": "22px",
+                    "stepNumberFontSize": "10px",
+                    "stepTitleFontSize": "12.5px",
+                    "stepDescFontSize": "11px",
+                    "stepGap": "8px",
+                    "navGap": "5px",
+                    "navPaddingY": "8px",
+                    "navPaddingBottom": "10px",
+                    "buttonSize": "32px",
+                    "buttonRadius": "8px",
+                    "buttonIconSize": "13px",
+                    "chevronSize": "15px",
+                    "dotSize": "7px",
+                    "dotActiveWidth": "18px",
+                    "dotGap": "3px",
+                    "diagramPadding": "2px",
+                    "decorativeCircles": "hidden"
+                }
+            },
+            "tablet": {
+                "condition": "480px ≤ containerWidth < 700px",
+                "description": "Tablets, phones in landscape",
+                "tokens": {
+                    "outerBorderRadius": "24px",
+                    "headerPaddingX": "16px",
+                    "titleFontSize": "15px",
+                    "diagramPadding": "8px",
+                    "note": "All other tokens same as desktop"
+                }
+            },
+            "desktop": {
+                "condition": "containerWidth ≥ 700px",
+                "description": "Desktop, large tablets",
+                "tokens": {
+                    "outerBorderRadius": "24px",
+                    "headerPaddingX": "24px",
+                    "headerPaddingY": "18px",
+                    "headerGap": "12px",
+                    "iconSize": "36px",
+                    "iconRadius": "12px",
+                    "iconInnerSize": "18px",
+                    "titleFontSize": "18px",
+                    "subtitleFontSize": "11px",
+                    "subtitleText": "Definition & Identification • Grade 7 • Ganita Prakash (full)",
+                    "cardMargin": "16px",
+                    "cardPaddingX": "18px",
+                    "cardPaddingY": "14px",
+                    "cardRadius": "20px",
+                    "stepNumberSize": "28px",
+                    "stepNumberFontSize": "13px",
+                    "stepTitleFontSize": "15px",
+                    "stepDescFontSize": "13px",
+                    "stepGap": "12px",
+                    "navGap": "10px",
+                    "navPaddingY": "14px",
+                    "navPaddingBottom": "18px",
+                    "buttonSize": "40px",
+                    "buttonRadius": "12px",
+                    "buttonIconSize": "16px",
+                    "chevronSize": "18px",
+                    "dotSize": "10px",
+                    "dotActiveWidth": "26px",
+                    "dotGap": "6px",
+                    "diagramPadding": "14px",
+                    "decorativeCircles": "visible"
+                }
+            }
+        },
+        "svgScaling": {
+            "viewBox": "0 0 780 390",
+            "preserveAspectRatio": "xMidYMid meet",
+            "width": "100%",
+            "height": "auto (determined by aspect ratio)",
+            "description": "SVG diagram uses a fixed coordinate system (780×390) and scales fluidly via viewBox. All geometry, labels, badges, and connectors are in viewBox coordinates and scale proportionally."
+        },
+        "touchSupport": {
+            "swipeNavigation": {
+                "enabled": true,
+                "threshold": "50px horizontal swipe",
+                "swipeLeft": "Go to next step",
+                "swipeRight": "Go to previous step",
+                "implementation": "onTouchStart captures X, onTouchEnd calculates delta"
+            },
+            "buttonTouchStates": {
+                "onTouchStart": "Sets pressedBtn for visual feedback",
+                "onTouchEnd": "Clears pressedBtn and hoveredBtn",
+                "description": "All buttons support touch press states in addition to mouse hover/press"
+            }
+        },
+        "textOverflow": {
+            "headerTitle": "whiteSpace: nowrap, overflow: hidden, textOverflow: ellipsis",
+            "headerSubtitle": "whiteSpace: nowrap, overflow: hidden, textOverflow: ellipsis",
+            "stepDescription": "Normal wrapping, no truncation"
+        },
+        "containerLayout": {
+            "outerWidth": "width: 100%, maxWidth: 800px",
+            "centering": "margin: 0 auto",
+            "navFlexWrap": "nowrap — buttons use flexShrink: 0 to prevent compression"
+        }
+    },
+    "design": {
+        "designSystem": "Singularity",
+        "fontPrimary": "Poppins",
+        "fontWeights": "400, 500, 600, 700, 800",
+        "colors": {
+            "primary": "#4A4DC9",
+            "accent": "#FF7212",
+            "gradientStart": "#533086",
+            "gradientEnd": "#FC9145",
+            "primaryLight": "#C1C1EA",
+            "accentLight": "#FFF3E4",
+            "dark": "#4E4E4E",
+            "grey": "#CACACA",
+            "lightGrey": "#EBEBEB",
+            "offWhite": "#F5F5F5",
+            "white": "#FFFFFF",
+            "angleLabelColor": "#1a1a1a (always black)"
+        },
+        "pairColors": {
+            "pair1": "#4A4DC9 (∠1 & ∠5)",
+            "pair2": "#FF7212 (∠2 & ∠6)",
+            "pair3": "#533086 (∠3 & ∠7)",
+            "pair4": "#FC9145 (∠4 & ∠8)"
+        },
+        "badgeBackgrounds": {
+            "pair1": "#C1C1EA",
+            "pair2": "#FFF3E4",
+            "pair3": "#C1C1EA80",
+            "pair4": "#FFF3E4CC"
+        },
+        "header": {
+            "background": "linear-gradient(135deg, #533086, #FC9145)",
+            "decorativeCircles": "Semi-transparent white, hidden on mobile",
+            "titleColor": "#FFFFFF",
+            "subtitleColor": "rgba(255,255,255,0.65)"
+        },
+        "progressBar": {
+            "height": "3px",
+            "background": "#EBEBEB",
+            "fill": "linear-gradient(90deg, #4A4DC9, #FF7212)"
+        },
+        "stepCard": {
+            "background": "#F5F5F5",
+            "border": "1px solid #EBEBEB",
+            "numberPill": "linear-gradient(135deg, #533086, #FC9145)",
+            "titleColor": "#4E4E4E",
+            "descriptionColor": "#6B6B6B"
+        },
+        "buttons": {
+            "contained": {
+                "enabled": { "background": "#F5F5F5" },
+                "hover": { "background": "#C1C1EA" },
+                "pressed": { "background": "#4A4DC9", "color": "#FFFFFF" },
+                "disabled": { "background": "#EBEBEB", "opacity": 0.5 }
+            },
+            "outlined": {
+                "enabled": { "border": "1.5px solid #CACACA", "background": "#FFFFFF" },
+                "hover": { "border": "1.5px solid #4A4DC9", "background": "#C1C1EA50" },
+                "pressed": { "background": "#C1C1EA" }
+            },
+            "accent": {
+                "enabled": { "background": "#4A4DC9" },
+                "hover": { "background": "#FF7212" },
+                "pressed": { "background": "linear-gradient(135deg, #533086, #FC9145)" }
+            }
+        },
+        "stepDots": {
+            "active": "linear-gradient(90deg, #4A4DC9, #FF7212)",
+            "completed": "#C1C1EA",
+            "upcoming": "#EBEBEB"
+        },
+        "diagram": {
+            "background": "#FFFFFF with gradient overlay (#C1C1EA 12% → #FFF3E4 12%)",
+            "lineLAndM": "#4E4E4E, 2.5px stroke",
+            "transversal": "#7B7B9E, 2.5px stroke",
+            "lineLabels": "l,m in #4A4DC9 / t in #FF7212, Poppins italic 700",
+            "parallelMarks": "#4A4DC9 at 35% opacity",
+            "dimmedArcs": "#EBEBEB, 2px stroke",
+            "angleLabelText": "#1a1a1a (always black), Poppins 500/700",
+            "intersectionCircles": "REMOVED"
+        },
+        "animations": {
+            "singFadeInUp": "opacity 0→1, translateY 16px→0 (step card entrance)",
+            "singFadeIn": "opacity 0→1 (badge fade on summary)",
+            "singArcGlow": "opacity 0→1, strokeWidth 2→5→3.5 (arc highlight + 12% glow-behind)",
+            "singBadgeSlide": "opacity 0→1, translateX -8→0, scale 0.85→1",
+            "singConnDraw": "strokeDashoffset 200→0, opacity 0.2→1",
+            "singBounceIn": "scale 0→1.08→0.96→1 (summary pill)",
+            "singStepPop": "scale 0.5→1.15→1 (step number)"
+        }
+    },
+    "instructions_for_student": "Watch as each pair of corresponding angles is revealed. At each step, notice the POSITION of the highlighted angle — is it upper-left, upper-right, lower-left, or lower-right? Then find the angle in the SAME position at the other intersection. Angles in the same position are corresponding angles. After all four pairs are shown, see the complete picture with connecting lines. On mobile, swipe left or right to navigate between steps."
+}

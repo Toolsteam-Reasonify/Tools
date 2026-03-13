@@ -1,0 +1,425 @@
+{
+    "toolName": "line_segment_explorer",
+    "version": "2.0.0",
+    "description": "Fully responsive, interactive step-based geometry explorer for Grade 7 Mathematics — Line Segment Relationship Explorer. Canvas-based tool showing pairs of line segments in different configurations (perpendicular, angle meeting, converging, parallel) with animated progressive reveal. Includes MCQ practice mode with 5 questions and real-world examples with proper geometric illustrations. Uses Singularity Design System (Poppins font, #4A4DC9 primary, #FF7212 accent). Responsive across mobile (<480px), tablet (480–768px), and desktop (≥768px) via ResizeObserver.",
+
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Maximum component width in pixels. The component is fully fluid — it fills its container up to this max-width and auto-adapts all sizing via ResizeObserver breakpoints."
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Reference height. Canvas height is computed responsively: ~65% of container width on mobile (capped 220px), ~50% on tablet (capped 280px), ~48% on desktop (capped 340px)."
+        },
+        "initialMode": {
+            "type": "string",
+            "enum": ["learn", "practice", "real_world"],
+            "default": "learn",
+            "description": "Starting mode"
+        },
+        "showModeSelector": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide mode selector tabs. On mobile, tabs show icons only; on tablet+, icons with labels."
+        },
+        "showNavigation": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide prev/next buttons. On mobile, buttons show icon-only (chevrons); on tablet+, icon with text labels."
+        },
+        "showPlayPause": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide play/pause auto-advance button (hidden in practice mode)"
+        },
+        "showStepIndicator": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide step counter pill in header. In practice mode, also shows score."
+        },
+        "initialStep": {
+            "type": "number",
+            "default": 1,
+            "description": "Starting step ID"
+        },
+        "filterSteps": {
+            "type": "array",
+            "items": { "type": "number" },
+            "default": null,
+            "description": "Array of step IDs to show (null = show all). Useful for focusing on specific concepts."
+        },
+        "autoPlayDuration": {
+            "type": "number",
+            "default": 0,
+            "description": "Auto-advance delay in ms (0 = manual navigation only)"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier. Default animation duration is 1800ms / speed."
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#4A4DC9",
+            "description": "Primary theme color (hex) — from Singularity Design System"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable dark mode (not yet implemented in canvas — reserved for future)"
+        }
+    },
+
+    "additionalProps": {
+        "description": "Tool-specific dynamic content passed by the agent",
+        "schema": {
+            "showGrid": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show background dot grid. Grid spacing auto-adapts: 30px on desktop, 20px when canvas < 300px wide."
+            },
+            "gridSpacing": {
+                "type": "number",
+                "default": 30,
+                "description": "Base grid spacing in pixels (auto-reduces on small screens)"
+            },
+            "lineThickness": {
+                "type": "number",
+                "default": 3,
+                "description": "Default line thickness. Canvas auto-scales: uses 2.5 on mobile, 3.5 on desktop."
+            },
+            "labelFontSize": {
+                "type": "number",
+                "default": 14,
+                "description": "Default label font size. Canvas auto-scales labels based on canvas width."
+            },
+            "showProtractor": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show protractor tick overlay on angle steps (Step 3). Hidden when canvas < 300px."
+            },
+            "showAngleArc": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show angle arc between lines"
+            },
+            "highlightColor": {
+                "type": "string",
+                "default": "#4A4DC9",
+                "description": "Highlight/accent color (defaults to Singularity primary)"
+            },
+            "segments": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "x1": { "type": "number" },
+                        "y1": { "type": "number" },
+                        "x2": { "type": "number" },
+                        "y2": { "type": "number" },
+                        "label": { "type": "string" },
+                        "color": { "type": "string" }
+                    },
+                    "required": ["x1", "y1", "x2", "y2"]
+                },
+                "default": [],
+                "description": "Custom line segments to display (coordinates are relative to canvas w/h)"
+            },
+            "realWorldExamples": {
+                "type": "array",
+                "items": { "type": "string" },
+                "default": ["door frame", "textbook edge", "railway tracks", "notebook lines", "desk legs", "ladder rungs"],
+                "description": "Real-world examples shown in labels (Indian school context)"
+            }
+        },
+        "examples": {
+            "basic_perpendicular": {
+                "showGrid": true,
+                "showAngleArc": true
+            },
+            "custom_angle": {
+                "showGrid": true,
+                "showProtractor": true,
+                "showAngleArc": true
+            },
+            "no_grid": {
+                "showGrid": false,
+                "lineThickness": 4
+            },
+            "mobile_optimized": {
+                "showGrid": true,
+                "showProtractor": false,
+                "gridSpacing": 20
+            }
+        }
+    },
+
+    "modes": {
+        "learn": {
+            "steps": [1, 2, 3, 4, 5, 6],
+            "description": "Step-by-step exploration of line segment relationships: grid intro → perpendicular (90°) → angle meeting (115.3°) → converging → parallel → classify all four types"
+        },
+        "practice": {
+            "steps": [10, 11, 12, 13, 14],
+            "description": "5-question MCQ quiz with geometric diagrams. Each question shows a line configuration on canvas and asks the student to identify the relationship or angle type. Immediate feedback with explanation. Final score shown after question 5."
+        },
+        "real_world": {
+            "steps": [20, 21],
+            "description": "Real-world perpendicular and parallel line examples with geometric illustrations — Indian classroom context (door frame, textbook, desk, railway tracks, notebook, ladder)"
+        }
+    },
+
+    "stepSummary": {
+        "1": {
+            "title": "Exploring Line Segments",
+            "mode": "learn",
+            "canvas": "Empty dot grid with decorative fan lines and intro text. Mobile: shortened text."
+        },
+        "2": {
+            "title": "Perpendicular Lines — 90°",
+            "mode": "learn",
+            "canvas": "Two full lines (l horizontal, m vertical) with arrowheads on both ends, intersection dot, 90° blue square symbol in top-right quadrant. Labels l and m in italic. Badge: 'Perpendicular — 90°'. Hint: 'Like a door frame corner'."
+        },
+        "3": {
+            "title": "Meeting at an Angle — 115.3°",
+            "mode": "learn",
+            "canvas": "Two rays FG (210° from +x) and FH (94.7° from +x) emanating from point F. Red angle arc, protractor tick marks every 5° (major at 30°), degree numbers at major ticks. Badge: '115.3°'. Vocabulary box on wide screens (>450px). Labels F (endpoint), G, H."
+        },
+        "4": {
+            "title": "Will They Meet? — Converging Lines",
+            "mode": "learn",
+            "canvas": "Segments PQ (upper-left) and RS (lower-right) as solid lines with endpoint dots. Dashed extensions from Q and S toward mathematically computed intersection point. Arrow heads converging. Pulsing red dot at intersection. Badge: 'They WILL meet if extended!' (shortened on mobile)."
+        },
+        "5": {
+            "title": "Never Meeting — Parallel Lines",
+            "mode": "learn",
+            "canvas": "Two horizontal lines l (primary) and m (accent) with arrowheads on all 4 ends. Dashed extensions. Direction ▸ markers. Three vertical dashed distance markers labeled d (italic). Badge: '∞ Never Meet — Parallel Lines ∞'. Hint: 'Like railway tracks'. Mobile: shortened labels."
+        },
+        "6": {
+            "title": "Classify All Four Types",
+            "mode": "learn",
+            "canvas": "2×2 grid with rounded cards. Top-left: Perpendicular with square symbol. Top-right: Angle meeting with arc. Bottom-left: Converging with dashed extensions to meeting point. Bottom-right: Parallel with direction markers. Mobile: abbreviated card labels (e.g. '⊥ 90°')."
+        },
+        "10": {
+            "title": "Question 1 of 5",
+            "mode": "practice",
+            "type": "MCQ",
+            "diagram": "perpendicular",
+            "question": "What type of lines are shown here?",
+            "correctAnswer": "Perpendicular lines"
+        },
+        "11": {
+            "title": "Question 2 of 5",
+            "mode": "practice",
+            "type": "MCQ",
+            "diagram": "converging",
+            "question": "If two line segments are extended and they meet, what are they called?",
+            "correctAnswer": "Converging lines"
+        },
+        "12": {
+            "title": "Question 3 of 5",
+            "mode": "practice",
+            "type": "MCQ",
+            "diagram": "perpendicular",
+            "question": "What is the angle between two perpendicular lines?",
+            "correctAnswer": "90°"
+        },
+        "13": {
+            "title": "Question 4 of 5",
+            "mode": "practice",
+            "type": "MCQ",
+            "diagram": "parallel",
+            "question": "Which line pairs NEVER meet?",
+            "correctAnswer": "Parallel lines"
+        },
+        "14": {
+            "title": "Question 5 of 5",
+            "mode": "practice",
+            "type": "MCQ",
+            "diagram": "obtuse_angle",
+            "question": "FG and FH meet at 115.3°. What type of angle?",
+            "correctAnswer": "Obtuse angle"
+        },
+        "20": {
+            "title": "Perpendicular in Daily Life",
+            "mode": "real_world",
+            "canvas": "Three side-by-side illustrations: (1) Door frame — 3-sided rectangle with floor line, 90° symbols at all corners. (2) Textbook — full rectangle with ruled lines inside, margin line, 90° at corner. (3) Desk/Table — horizontal tabletop with vertical legs, floor line, 90° at all joints. Labels and badges for each. Summary line at bottom."
+        },
+        "21": {
+            "title": "Parallel Lines Around Us",
+            "mode": "real_world",
+            "canvas": "Three side-by-side illustrations: (1) Railway tracks — two vertical parallel rails with horizontal sleepers, 90° symbol, direction arrows, distance marker d. (2) Notebook — rectangle with 10 ruled parallel lines, margin line, direction arrows. (3) Ladder — two converging side rails with horizontal rungs, direction markers. Labels and badges for each. Summary line at bottom."
+        }
+    },
+
+    "practiceMode": {
+        "description": "MCQ quiz with 5 questions. Each question renders a geometric diagram on canvas (static, not animated) and shows 4 multiple-choice options below. Immediate feedback on selection: correct answer highlights green (#22C55E), wrong answer shakes and highlights red (#EF4444) with explanation. Score tracked across all questions. Final score card shown after question 5 with gradient text.",
+        "totalQuestions": 5,
+        "questionStructure": {
+            "id": "number (10-14)",
+            "question": "string",
+            "image": "string — canvas diagram type: 'perpendicular' | 'parallel' | 'converging' | 'obtuse_angle' | 'acute_angle'",
+            "options": "string[] — 4 choices",
+            "correct": "number — 0-indexed correct option",
+            "explanation": "string — shown after answering"
+        },
+        "diagramTypes": {
+            "perpendicular": "Two lines at 90° with arrowheads, square symbol, intersection dot",
+            "parallel": "Two horizontal lines with arrowheads and direction markers",
+            "converging": "Two segments with endpoint dots, dashed extensions meeting at a point",
+            "obtuse_angle": "Two rays from common point with 115.3° arc and badge",
+            "acute_angle": "Fallback — two horizontal lines"
+        }
+    },
+
+    "designSystem": {
+        "name": "Singularity Design System",
+        "font": "Poppins (weights 400, 500, 600, 700, 800)",
+        "colors": {
+            "primary": "#4A4DC9",
+            "accent": "#FF7212",
+            "gradientFrom": "#533086",
+            "gradientTo": "#FC9145",
+            "soft1": "#C1C1EA",
+            "soft2": "#FFF3E4",
+            "gray": "#4E4E4E",
+            "grayLight": "#CACACA",
+            "grayBg": "#F5F5F5",
+            "border": "#EBEBEB",
+            "white": "#FFFFFF",
+            "success": "#22C55E",
+            "error": "#EF4444"
+        },
+        "buttons": {
+            "borderRadius": "40px (pill)",
+            "padding": "10px 24px (desktop), 9px 18px (tablet), 8px 14px (mobile)",
+            "types": {
+                "contained": "Solid primary bg, white text (Next button)",
+                "outlined": "White bg, primary border, primary text (Previous button)",
+                "highlight": "Solid accent (#FF7212) bg, white text (Play/Pause button)"
+            },
+            "states": {
+                "enabled": "Full opacity, pointer cursor",
+                "disabled": "0.5 opacity, #EBEBEB bg, #CACACA text, not-allowed cursor",
+                "hover": "scale(1.02) via CSS transition"
+            }
+        },
+        "canvasColors": {
+            "primaryLine": "#4A4DC9 (perpendicular horizontal, parallel line 1, rail)",
+            "accentLine": "#FF7212 (perpendicular vertical, parallel line 2, angle ray 2, ladder rungs)",
+            "rightAngleSymbol": "#4A4DC9 stroke + #C1C1EA40 fill",
+            "angleArc": "#533086",
+            "intersectionDot": "#533086",
+            "dashedExtension": "same color at 0.4 alpha",
+            "gridDots": "#4A4DC9 at 0.15 alpha",
+            "gridLines": "#4A4DC9 at 0.06 alpha"
+        }
+    },
+
+    "responsive": {
+        "strategy": "ResizeObserver on container element measures actual rendered width. Three breakpoints derive all sizing.",
+        "breakpoints": {
+            "mobile": {
+                "condition": "containerWidth < 480px",
+                "padding": "12px",
+                "fontSize": { "title": 16, "body": 12, "small": 10, "button": 11 },
+                "canvasHeight": "min(containerWidth × 0.65, 220px)",
+                "gridSpacing": "20px (when canvas < 300px)",
+                "modeTabs": "Icon-only (emoji), 44px min touch target",
+                "navButtons": "Icon-only (chevrons), 44×44px min",
+                "borderRadius": "16px container, 10px cards",
+                "badges": "Shortened text (e.g. 'Will meet!' instead of 'They WILL meet if extended!')",
+                "vocabBox": "Hidden (Step 3)",
+                "step6Labels": "Abbreviated ('⊥ 90°' instead of 'Perpendicular (90°)')"
+            },
+            "tablet": {
+                "condition": "480px ≤ containerWidth < 768px",
+                "padding": "16px",
+                "fontSize": { "title": 18, "body": 13, "small": 11, "button": 12 },
+                "canvasHeight": "min(containerWidth × 0.5, 280px)",
+                "modeTabs": "Icon + label",
+                "navButtons": "Icon + label",
+                "borderRadius": "20px container, 14px cards"
+            },
+            "desktop": {
+                "condition": "containerWidth ≥ 768px",
+                "padding": "24px",
+                "fontSize": { "title": 20, "body": 14, "small": 12, "button": 13 },
+                "canvasHeight": "min(containerWidth × 0.48, 340px)",
+                "modeTabs": "Icon + label, 24px horizontal padding",
+                "navButtons": "Icon + label, 24px horizontal padding",
+                "borderRadius": "24px container, 14px cards"
+            }
+        },
+        "canvasRendering": {
+            "dpr": "Uses window.devicePixelRatio for crisp rendering on Retina/HiDPI",
+            "width": "containerWidth - responsivePadding, set via canvas.width (resolution) and canvas.style.width: '100%' (display)",
+            "height": "Computed from breakpoint formula above",
+            "lineThickness": "2.5 on mobile, 3.5 on desktop",
+            "arrowSize": "min(7, containerWidth × 0.012)",
+            "dotRadius": "min(6, containerWidth × 0.01)",
+            "labelFonts": "Scale by canvas width: w<300 → small, w<500 → medium, else full size"
+        },
+        "touchTargets": {
+            "minimum": "44×44px on all interactive elements (Apple HIG standard)",
+            "buttons": "minHeight: 44px, minWidth: 44px",
+            "modeTabsOnMobile": "18px emoji + 12px padding = 44px touch area"
+        }
+    },
+
+    "teachingNotes": {
+        "step1": "Blank canvas with grid. Introduce that we will explore line segment relationships.",
+        "step2": "Reveal perpendicular lines with 90° blue square symbol. Ask what is special about this angle. Real-world: door frame, textbook edge.",
+        "step3": "Show FG and FH meeting at 115.3°. Introduce protractor reading and vocabulary (endpoint, degree measure, obtuse angle). Vocabulary box appears on wider screens.",
+        "step4": "Two segments heading towards each other that will meet if extended. Ask student to predict WHERE. Intersection computed mathematically via parametric line-line intersection.",
+        "step5": "Two segments going same direction. Ask if they would EVER meet. Previews parallel lines. Equal-distance markers prove constant separation.",
+        "step6": "All four types in a 2×2 grid. Ask student to classify them. Labels adapt for mobile.",
+        "practice": "5 MCQ questions with immediate feedback. Diagrams rendered statically on canvas. Score tracked across all questions. Explanations teach even when wrong.",
+        "step20": "Three real-world perpendicular examples: door frame, textbook, desk. Each with proper geometric lines and 90° symbols on canvas.",
+        "step21": "Three real-world parallel examples: railway tracks (with perpendicular sleepers), ruled notebook (with perpendicular margin), ladder (with rungs). Each with proper geometric lines on canvas."
+    },
+
+    "instructionsForStudent": "Watch as different pairs of line segments appear. For each pair, think about: Do they meet? If so, at what angle? If they do not meet, would they meet if extended? Use the vocabulary words — endpoint, midpoint, intersect, perpendicular, degree measure — to describe what you see.",
+
+    "agentUsage": {
+        "quickReference": {
+            "showPerpendicularOnly": { "initialMode": "learn", "filterSteps": [2], "showModeSelector": false },
+            "showAngleOnly": { "initialMode": "learn", "filterSteps": [3], "showModeSelector": false },
+            "showParallelOnly": { "initialMode": "learn", "filterSteps": [5], "showModeSelector": false },
+            "fullLearnSequence": { "initialMode": "learn" },
+            "practiceQuiz": { "initialMode": "practice", "showModeSelector": false },
+            "realWorldExamples": { "initialMode": "real_world", "showModeSelector": false },
+            "autoPlayTour": { "initialMode": "learn", "autoPlayDuration": 6000 },
+            "mobileOptimized": { "width": 400, "additionalProps": { "showProtractor": false, "gridSpacing": 20 } }
+        },
+        "toolCallExamples": [
+            {
+                "scenario": "Student asks: What are perpendicular lines?",
+                "parameters": { "initialMode": "learn", "filterSteps": [2], "showModeSelector": false, "showPlayPause": false }
+            },
+            {
+                "scenario": "Student asks: Show me all types of line relationships",
+                "parameters": { "initialMode": "learn" }
+            },
+            {
+                "scenario": "Teacher wants a quiz",
+                "parameters": { "initialMode": "practice", "showModeSelector": false }
+            },
+            {
+                "scenario": "Show real-world examples of parallel lines",
+                "parameters": { "initialMode": "real_world", "filterSteps": [21], "showModeSelector": false }
+            },
+            {
+                "scenario": "Auto-play presentation mode",
+                "parameters": { "initialMode": "learn", "autoPlayDuration": 5000, "showModeSelector": false }
+            },
+            {
+                "scenario": "Mobile student on phone",
+                "parameters": { "width": 400, "additionalProps": { "showProtractor": false } }
+            }
+        ]
+    }
+}

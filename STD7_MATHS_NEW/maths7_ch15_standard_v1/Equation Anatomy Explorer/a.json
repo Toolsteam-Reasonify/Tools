@@ -1,0 +1,213 @@
+{
+    "toolName": "equation_structure_explorer",
+    "version": "2.0.0",
+    "description": "Interactive structure explorer letting students click on parts of an equation to learn their names. LHS, equals sign, RHS, variable, coefficient, and constant are each labelled when clicked. Practice mode uses MCQ questions. Aligned to NCERT Grade 7 Chapter 7 — Finding the Unknown.",
+    "topic": "What is an Equation: Definitions, LHS, RHS, and Solving",
+    "subject": "Mathematics",
+    "grade": 7,
+    "chapter": "7 — Finding the Unknown",
+
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Component width in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Component height in pixels"
+        },
+        "initialMode": {
+            "type": "string",
+            "enum": ["learn", "practice", "real_world"],
+            "default": "learn",
+            "description": "Starting mode for the tool"
+        },
+        "showModeSelector": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show or hide mode tabs"
+        },
+        "enabledModes": {
+            "type": "array",
+            "items": { "type": "string", "enum": ["learn", "practice", "real_world"] },
+            "default": ["learn", "practice", "real_world"],
+            "description": "Which modes to enable"
+        },
+        "showNavigation": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show or hide prev/next buttons"
+        },
+        "showStepIndicator": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show or hide step dots"
+        },
+        "initialStep": {
+            "type": "number",
+            "default": 1,
+            "description": "Starting step ID"
+        },
+        "filterSteps": {
+            "type": "array",
+            "items": { "type": "number" },
+            "default": null,
+            "description": "Only show these step IDs"
+        },
+        "autoPlayDuration": {
+            "type": "number",
+            "default": 0,
+            "description": "Auto-advance delay in ms (0 = disabled)"
+        }
+    },
+
+    "additionalProps": {
+        "description": "Tool-specific dynamic content for customising displayed equations and interactions",
+        "properties": {
+            "equations": {
+                "type": "array",
+                "description": "Custom equations to display",
+                "items": {
+                    "lhs": { "type": "string", "description": "Left-hand side expression" },
+                    "rhs": { "type": "string", "description": "Right-hand side expression" },
+                    "variable": { "type": "string", "description": "Variable letter (e.g. x, y, n)" },
+                    "coefficient": { "type": "number", "description": "Coefficient value" },
+                    "constant_lhs": { "type": "number", "description": "Constant on LHS" },
+                    "constant_rhs": { "type": "number", "description": "Constant on RHS" },
+                    "label": { "type": "string", "description": "Optional label for the equation" }
+                }
+            },
+            "highlightParts": {
+                "type": "array",
+                "items": { "type": "string", "enum": ["lhs", "rhs", "equals", "variable", "coefficient", "constant"] },
+                "description": "Which parts to highlight initially"
+            },
+            "showLabels": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show part labels on click"
+            },
+            "equationFontSize": {
+                "type": "number",
+                "default": 28,
+                "description": "Font size for equation display"
+            },
+            "interactive": {
+                "type": "boolean",
+                "default": true,
+                "description": "Enable click interaction"
+            },
+            "showSolution": {
+                "type": "boolean",
+                "default": false,
+                "description": "Show step-by-step solution"
+            },
+            "solutionSteps": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "Custom solution steps to animate"
+            }
+        },
+        "examples": {
+            "basic_equation": {
+                "equations": [{ "lhs": "2n + 1", "rhs": "99", "variable": "n" }],
+                "showLabels": true,
+                "interactive": true
+            },
+            "word_problem_equation": {
+                "equations": [{ "lhs": "25p + 50", "rhs": "500", "variable": "p", "label": "Party Budget" }],
+                "showLabels": true
+            },
+            "with_solution": {
+                "equations": [{ "lhs": "5x – 4", "rhs": "7", "variable": "x" }],
+                "showSolution": true,
+                "solutionSteps": ["5x – 4 = 7", "5x = 7 + 4", "5x = 11", "x = 11/5"]
+            },
+            "historical_equation": {
+                "equations": [{ "lhs": "300 + 6x", "rhs": "10x – 100", "variable": "x", "label": "Bhāskarāchārya's Horse Problem" }],
+                "showLabels": true
+            }
+        }
+    },
+
+    "designSystem": {
+        "name": "Singularity",
+        "font": "Poppins",
+        "colors": {
+            "primary": "#4A4DC9",
+            "primaryDark": "#533086",
+            "orange": "#FF7212",
+            "orangeLight": "#FC9145",
+            "lavender": "#C1C1EA",
+            "peach": "#FFF3E4",
+            "gray900": "#4E4E4E",
+            "gray600": "#7a7a7a",
+            "gray400": "#CACACA",
+            "gray200": "#EBEBEB",
+            "gray100": "#F5F5F5",
+            "white": "#FFFFFF",
+            "success": "#22c55e",
+            "error": "#ef4444"
+        },
+        "gradients": {
+            "purpleOrange": "linear-gradient(135deg, #533086, #FC9145)",
+            "purplePurple": "linear-gradient(135deg, #4A4DC9, #533086)"
+        },
+        "borderRadius": {
+            "card": "20px",
+            "element": "14px",
+            "pill": "40px"
+        },
+        "buttons": {
+            "contained": {
+                "borderRadius": "40px",
+                "fontWeight": 700,
+                "padding": "12px 40px"
+            },
+            "outlined": {
+                "borderRadius": "40px",
+                "fontWeight": 600,
+                "padding": "8px 20px",
+                "borderWidth": "2px"
+            }
+        }
+    },
+
+    "modes": {
+        "learn": {
+            "steps": [1, 2, 3, 4, 5],
+            "description": "Step-by-step introduction to equation structure — LHS, RHS, equals sign, variable, coefficient, constant. Includes clickable interactive equation parts and balance scale analogy."
+        },
+        "practice": {
+            "steps": [10, 11, 12, 13, 14, 15],
+            "description": "MCQ quiz: students answer multiple-choice questions to identify variable, coefficient, constant, LHS, RHS, equals sign, solve equations, and distinguish equations from expressions. Includes score tracking and explanations."
+        },
+        "real_world": {
+            "steps": [20, 21, 22],
+            "description": "Real-world problems from the NCERT chapter: party budget, savings comparison, and Bhāskarāchārya's horse puzzle (1150 CE). Each equation is clickable to explore parts in context."
+        }
+    },
+
+    "stepSummary": {
+        "1": { "title": "What is an Equation?", "mode": "learn", "type": "intro", "interaction": "click-to-label" },
+        "2": { "title": "Parts of an Equation", "mode": "learn", "type": "explanation", "interaction": "click-to-label" },
+        "3": { "title": "LHS and RHS Explained", "mode": "learn", "type": "explanation", "interaction": "click-to-label" },
+        "4": { "title": "Solving Means Finding the Unknown", "mode": "learn", "type": "explanation", "interaction": "animated-solution-steps" },
+        "5": { "title": "Equations from History", "mode": "learn", "type": "explanation", "interaction": "click-to-label" },
+        "10": { "title": "Identify the Variable (3x + 7 = 22)", "mode": "practice", "type": "mcq", "interaction": "select-option-check-answer" },
+        "11": { "title": "Spot the Coefficient (5x – 4 = 7)", "mode": "practice", "type": "mcq", "interaction": "select-option-check-answer" },
+        "12": { "title": "Find the Constant (11y + (–5) = 61)", "mode": "practice", "type": "mcq", "interaction": "select-option-check-answer" },
+        "13": { "title": "What is the RHS? (6y + 7 = 4y + 21)", "mode": "practice", "type": "mcq", "interaction": "select-option-check-answer" },
+        "14": { "title": "Solve the Equation (2n + 1 = 99)", "mode": "practice", "type": "mcq", "interaction": "select-option-check-answer" },
+        "15": { "title": "Equation or Expression? (3x + 4)", "mode": "practice", "type": "mcq", "interaction": "select-option-check-answer" },
+        "20": { "title": "Party Budget Equation", "mode": "real_world", "type": "real_world", "interaction": "click-to-label" },
+        "21": { "title": "Savings Equation", "mode": "real_world", "type": "real_world", "interaction": "click-to-label" },
+        "22": { "title": "Horse Price Puzzle (1150 CE)", "mode": "real_world", "type": "real_world", "interaction": "click-to-label" }
+    },
+
+    "teaching_notes": "Guide students through this interactive tool. Encourage exploration and discussion. Start in Learn mode and let students click each coloured part of the equation. Ask them to predict what each part is called before clicking. In Practice mode, students answer MCQ questions with instant feedback — watch for common misconceptions like confusing coefficient and constant. In Real World mode, connect the abstract equation to a story they can visualise.",
+
+    "instructions_for_student": "An equation has a Left Hand Side, equals sign, and Right Hand Side. Variable is the unknown letter, coefficient multiplies it, constant stands alone. Click on each coloured piece of the equation to discover its name!"
+}

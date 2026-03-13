@@ -1,0 +1,156 @@
+{
+    "toolName": "parallel_line_constructor",
+    "version": "2.0.0",
+    "description": "Interactive step-based geometry constructor for Grade 7 Mathematics — Parallel Line Construction via Corresponding Angles. Redesigned with Singularity Design System (Poppins font, #4A4DC9 primary, #FF7212 accent, #533086 deep purple gradient). Includes 5 MCQ practice questions with instant feedback.",
+    "designSystem": "Singularity",
+    "designTokens": {
+        "font": "Poppins",
+        "colors": {
+            "primary": "#4A4DC9",
+            "accent": "#FF7212",
+            "deepPurple": "#533086",
+            "orange": "#FC9145",
+            "lightPurple": "#C1C1EA",
+            "lightOrange": "#FFF3E4",
+            "gray900": "#4E4E4E",
+            "gray400": "#CACACA",
+            "gray200": "#EBEBEB",
+            "gray100": "#F5F5F5"
+        },
+        "gradients": {
+            "header": "linear-gradient(135deg, #533086, #FC9145)",
+            "subtle": "linear-gradient(135deg, #C1C1EA, #FFF3E4)"
+        },
+        "buttonStyles": ["contained", "outlined", "texted"],
+        "buttonStates": ["enabled", "disabled", "hover", "pressed"]
+    },
+    "category": "geometry",
+    "grade": 7,
+    "subject": "Mathematics",
+    "textbook": "Ganita Prakash",
+    "chapter": "5 — Parallel and Intersecting Lines",
+    "topic": "Drawing Parallel Lines Using Corresponding Angles",
+
+    "parameters": {
+        "width": { "type": "number", "default": 800 },
+        "height": { "type": "number", "default": 600 },
+        "initialMode": { "type": "string", "enum": ["learn", "practice", "explore", "real_world"], "default": "learn" },
+        "showModeSelector": { "type": "boolean", "default": true },
+        "enabledModes": { "type": "array", "default": ["learn", "practice", "explore", "real_world"] },
+        "showNavigation": { "type": "boolean", "default": true },
+        "showStepIndicator": { "type": "boolean", "default": true },
+        "initialStep": { "type": "number", "default": 1 },
+        "filterSteps": { "type": "array", "default": null },
+        "animationSpeed": { "type": "number", "default": 1 },
+        "autoPlayDuration": { "type": "number", "default": 0 },
+        "themeColor": { "type": "string", "default": "#4A4DC9" },
+        "darkMode": { "type": "boolean", "default": false }
+    },
+
+    "additionalProps": {
+        "properties": {
+            "initialAngle": { "type": "number", "default": 60 },
+            "minAngle": { "type": "number", "default": 10 },
+            "maxAngle": { "type": "number", "default": 170 },
+            "showProtractor": { "type": "boolean", "default": true },
+            "showGrid": { "type": "boolean", "default": true },
+            "showLabels": { "type": "boolean", "default": true },
+            "highlightCorresponding": { "type": "boolean", "default": true },
+            "lineColorL": { "type": "string", "default": "#533086" },
+            "lineColorM": { "type": "string", "default": "#533086" },
+            "transversalColor": { "type": "string", "default": "#4E4E4E" },
+            "angleHighlightColor": { "type": "string", "default": "#FF7212" }
+        },
+        "examples": {
+            "default_60": { "initialAngle": 60 },
+            "right_angle": { "initialAngle": 90 },
+            "acute": { "initialAngle": 30 },
+            "obtuse": { "initialAngle": 120 },
+            "minimal": { "initialAngle": 60, "showProtractor": false, "showGrid": false }
+        }
+    },
+
+    "modes": {
+        "learn": {
+            "steps": [1, 2, 3, 4, 5, 6],
+            "description": "6-step construction walkthrough with teaching notes"
+        },
+        "practice": {
+            "steps": [10],
+            "description": "5 MCQ questions with instant correct/wrong feedback, explanations, and score card",
+            "mcqQuestions": [
+                {
+                    "id": 1,
+                    "question": "When a transversal intersects two parallel lines, the corresponding angles are:",
+                    "options": ["Always supplementary", "Always equal", "Always complementary", "Sometimes equal"],
+                    "correctIndex": 1
+                },
+                {
+                    "id": 2,
+                    "question": "If ∠a at X is 60°, what should ∠b at Y be for l ∥ m?",
+                    "options": ["120°", "90°", "60°", "30°"],
+                    "correctIndex": 2
+                },
+                {
+                    "id": 3,
+                    "question": "Corresponding angles 75° and 85° — are lines parallel?",
+                    "options": ["Yes (both acute)", "Yes (add to 160°)", "No (angles not equal)", "Cannot determine"],
+                    "correctIndex": 2
+                },
+                {
+                    "id": 4,
+                    "question": "Max distinct angle values when transversal crosses two lines?",
+                    "options": ["8", "6", "4", "2"],
+                    "correctIndex": 2
+                },
+                {
+                    "id": 5,
+                    "question": "Transversal ⊥ to line l (90°). Angle with m for l ∥ m?",
+                    "options": ["45°", "180°", "90°", "60°"],
+                    "correctIndex": 2
+                }
+            ]
+        },
+        "explore": {
+            "steps": [20],
+            "description": "Free angle slider exploration"
+        },
+        "real_world": {
+            "steps": [30],
+            "description": "Indian context — highway chauraha crossings"
+        }
+    },
+
+    "practiceFeatures": {
+        "questionCount": 5,
+        "feedbackType": "instant",
+        "showCorrectOnWrong": true,
+        "showExplanation": true,
+        "animations": {
+            "correctAnswer": "celebrate (scale bounce)",
+            "wrongAnswer": "shake (horizontal vibration)",
+            "explanation": "slideIn (fade up)"
+        },
+        "scoring": true,
+        "retryEnabled": true,
+        "scoreCard": {
+            "5/5": "Perfect Score! 🎉",
+            "4/5": "Excellent! 🌟",
+            "3/5": "Good Job! 👍",
+            "below": "Keep Practicing! 💪"
+        }
+    },
+
+    "learningObjectives": [
+        "Construct parallel lines using equal corresponding angles",
+        "Understand the corresponding angles property",
+        "Verify the property for any angle measure via slider",
+        "Identify whether lines are parallel from angle measurements"
+    ],
+
+    "instructions_for_student": "Follow the 6-step construction in Learn mode. At Step 2, see the protractor measure ∠a at point X. At Step 4, the same angle is copied to point Y. Watch lines extend in Step 5 — they never meet! Use the slider in Step 6 to verify with any angle. Then test yourself in Practice mode with 5 questions — wrong answers show the correct option and an explanation.",
+
+    "teaching_notes": "Step 1: Draw l and t, ask how many distinct angles. Step 2: Protractor shows 60°. Step 3: Mark Y, ask what angle gives only 2 distinct values. Step 4: Draw m at same angle — corresponding angles EQUAL. Step 5: Lines never meet. Step 6: Slider verification. Practice: 5 MCQs with instant feedback.",
+
+    "indian_context": "Two chauraha crossings on a National Highway — if the highway meets both at the same angle, the crossroads are parallel."
+}

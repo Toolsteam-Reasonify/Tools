@@ -1,0 +1,181 @@
+{
+    "toolName": "equation_balance_tool",
+    "version": "3.0.0",
+    "description": "Fully responsive interactive What-If tool for teaching 'Preserving Equality: Performing Same Operations on Both Sides'. Features container-query-based responsive breakpoints (xs <380px, sm <520px, md <700px, lg 700px+), fluid SVG scale visualization, adaptive typography, and touch-friendly mobile interactions. Singularity Design System (Poppins, #4A4DC9/#FF7212/#533086). Learn mode with 7 animated steps. Practice mode with mixed MCQ, True/False, and Fill-in-the-Blank questions.",
+    "topic": "Preserving Equality: Performing Same Operations on Both Sides",
+    "subject": "Mathematics",
+    "grade": "Grade 7",
+    "curriculum": "NCERT Ganita Prakash Part-II",
+    "chapter": "Chapter 7 - Finding the Unknown",
+
+    "designSystem": {
+        "name": "Singularity",
+        "font": "Poppins",
+        "colors": {
+            "primary": "#4A4DC9",
+            "primaryDark": "#533086",
+            "accent": "#FF7212",
+            "accentSoft": "#FC9145",
+            "primaryTint": "#C1C1EA",
+            "accentTint": "#FFF3E4",
+            "primaryLight": "#EEEEFF",
+            "gray900": "#4E4E4E",
+            "gray500": "#CACACA",
+            "gray300": "#EBEBEB",
+            "gray100": "#F5F5F5",
+            "success": "#2DB87A",
+            "error": "#E0454B"
+        },
+        "buttons": "Pill-shaped (border-radius: 999px), contained gradient for primary CTAs, outlined for secondary",
+        "cards": "border-radius: 16px, subtle borders with tint colors"
+    },
+
+    "responsiveBreakpoints": {
+        "xs": {
+            "maxWidth": 379,
+            "description": "Extra small phones (iPhone SE, small Android). Compact padding (12px), font sizes reduced (title 14px, body 11-12px), SVG scale 240px wide, navigation shows only arrows with numeric counter, buttons full-width, equation text uses word-break."
+        },
+        "sm": {
+            "minWidth": 380,
+            "maxWidth": 519,
+            "description": "Standard phones. Moderate padding (14px), title 14px, SVG 270px, nav shows arrows with abbreviated labels, buttons adapt to content width."
+        },
+        "md": {
+            "minWidth": 520,
+            "maxWidth": 699,
+            "description": "Large phones / small tablets. Standard padding (16-18px), title 15-16px, SVG 290px, full nav labels, step indicator dots shown."
+        },
+        "lg": {
+            "minWidth": 700,
+            "description": "Tablets and desktop. Full padding (20px), title 17px, body 13px, SVG 310px, all UI elements at full size, step indicator dots with active expansion."
+        }
+    },
+
+    "responsiveFeatures": [
+        "Container-query-based breakpoints via ResizeObserver (not window width — works in iframes and embedded contexts)",
+        "SVG balance scale uses viewBox with percentage-based width for fluid scaling",
+        "Font sizes, paddings, gaps, and icon sizes adapt per breakpoint",
+        "Equation text uses word-break: break-all to prevent horizontal overflow",
+        "Navigation buttons collapse text labels on xs (arrows only + step counter)",
+        "Step indicator dots replaced by numeric 'X/Y' counter on xs screens",
+        "True/False buttons stack horizontally but with reduced padding on mobile",
+        "MCQ options use flex-start alignment for multiline text on small screens",
+        "Check Answer and Next buttons go full-width on mobile for easier tap targets",
+        "Fill-in-blank input scales width from 130px (mobile) to 160px (desktop)",
+        "inputMode='numeric' on fill-in-blank for mobile numeric keyboard",
+        "Container uses margin: 0 auto and width: 100% with maxWidth for centering",
+        "Touch-friendly: WebkitOverflowScrolling: 'touch' on scroll container",
+        "Border-radius reduces from 20px (lg) to 14px (mobile) for compact feel",
+        "Header description shortens on mobile for space efficiency"
+    ],
+
+    "learning_objectives": [
+        "Understand that performing the same operation on both sides preserves equality",
+        "Visualize equation balance using a weighing scale analogy",
+        "Recognize that different operations on different sides breaks equality",
+        "Apply inverse operations to systematically solve linear equations",
+        "Use the balance principle across addition, subtraction, multiplication, and division"
+    ],
+
+    "instructions_for_student": "Performing the same operation on both sides of an equation preserves equality. Different operations on different sides breaks it.",
+
+    "teaching_notes": "Guide students through this interactive tool. Encourage exploration and discussion. Start with Learn mode for conceptual understanding, then switch to Practice for mixed assessment. The tool is fully responsive — works on classroom projectors, tablets, and student phones.",
+
+    "parameters": {
+        "width": { "type": "number", "default": 800, "description": "Max width of container. Tool is fluid within this — will shrink to fit any screen." },
+        "height": { "type": "number", "default": 600, "description": "Min height on desktop. On mobile, height is auto to avoid scrollbar issues." },
+        "initialMode": { "type": "string", "enum": ["learn", "practice"], "default": "learn" },
+        "showModeSelector": { "type": "boolean", "default": true },
+        "enabledModes": { "type": "array", "items": { "type": "string", "enum": ["learn", "practice"] }, "default": ["learn", "practice"] },
+        "showNavigation": { "type": "boolean", "default": true },
+        "showStepIndicator": { "type": "boolean", "default": true, "description": "On xs screens, automatically replaced by numeric counter regardless of this setting" },
+        "themeColor": { "type": "string", "default": "#4A4DC9", "description": "Note: Singularity DS colors are hardcoded in the DS token object for consistency" },
+        "animationSpeed": { "type": "number", "default": 1 }
+    },
+
+    "additionalProps": {
+        "description": "Tool-specific dynamic content",
+        "schema": {
+            "initialEquation": {
+                "type": "object",
+                "default": { "leftExpression": "15 + 8", "rightExpression": "23", "leftValue": 23, "rightValue": 23 }
+            },
+            "availableOperations": { "type": "array", "default": ["add", "subtract", "multiply", "divide"] },
+            "operandRange": { "type": "object", "default": { "min": 1, "max": 20 } },
+            "showNumericValues": { "type": "boolean", "default": true },
+            "presetEquations": { "type": "array", "description": "Custom equation presets for demos" }
+        }
+    },
+
+    "modes": {
+        "learn": {
+            "steps": [1, 2, 3, 4, 5, 6, 7],
+            "description": "7 interactive steps: intro → balance principle (interactive demo) → add/subtract/multiply-divide examples → breaking equality → solving equations walkthrough"
+        },
+        "practice": {
+            "steps": [20],
+            "description": "10 randomized questions: ~3 MCQ + ~4 True/False + ~3 Fill-in-Blank from a 20-question bank. Score tracking, hints, explanations, retry."
+        }
+    },
+
+    "stepSummary": {
+        "1": { "title": "What is an Equation?", "mode": "learn", "visual": "Animated LHS = RHS with responsive scale SVG" },
+        "2": { "title": "The Balance Principle", "mode": "learn", "visual": "Interactive demo — tap operations to see preserved equality" },
+        "3": { "title": "Adding to Both Sides", "mode": "learn", "visual": "Before/after with animated scale (responsive)" },
+        "4": { "title": "Subtracting from Both Sides", "mode": "learn", "visual": "Before/after transform" },
+        "5": { "title": "Multiplying & Dividing", "mode": "learn", "visual": "Before/after with large numbers (word-break enabled)" },
+        "6": { "title": "What Breaks Equality?", "mode": "learn", "visual": "Broken scale with shake animation" },
+        "7": { "title": "Solving Equations", "mode": "learn", "visual": "Step-by-step solve walkthrough (5x − 4 = 7)" },
+        "20": { "title": "Practice Time!", "mode": "practice", "visual": "Mixed quiz with progress bar, score, full-width mobile buttons" }
+    },
+
+    "generation_prompt": "What-If tool where students start with a balanced equation and choose an operation to apply to both sides. Shows whether equality is preserved. Can also try applying to one side only to see imbalance.",
+
+    "toolCallExamples": [
+        {
+            "title": "Default — Full responsive tool",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Preserving Equality",
+                "data": {
+                    "toolName": "equation_balance_tool",
+                    "parameters": { "initialMode": "learn", "showModeSelector": true }
+                },
+                "instructions_for_student": "Performing the same operation on both sides of an equation preserves equality."
+            }
+        },
+        {
+            "title": "Practice Only — mobile optimized",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Practice: Equation Balance",
+                "data": {
+                    "toolName": "equation_balance_tool",
+                    "parameters": { "initialMode": "practice", "showModeSelector": false, "enabledModes": ["practice"] }
+                }
+            }
+        },
+        {
+            "title": "Compact embed (400px width)",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Equation Balance",
+                "data": {
+                    "toolName": "equation_balance_tool",
+                    "parameters": { "width": 400, "initialMode": "learn", "showModeSelector": true }
+                }
+            }
+        },
+        {
+            "title": "Full-width classroom projector",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Preserving Equality — Class Demo",
+                "data": {
+                    "toolName": "equation_balance_tool",
+                    "parameters": { "width": 1200, "height": 800, "initialMode": "learn" }
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,174 @@
+{
+  "id": "M2.S6.T6.T2D1",
+  "title": "Interactive 90-Degree Angle Constructor",
+  "subtype": "geometry_constructor",
+  "toolName": "right_angle_constructor",
+  "version": "2.1.0",
+  "description": "A fully responsive, step-by-step interactive tool for constructing a 90-degree angle at any point O on a line. Learn mode shows an animated SVG construction with 4 steps. Practice mode presents 5 MCQ questions. Built with Singularity Design System (Poppins, #4A4DC9/#FF7212). Adapts to all screen sizes via ResizeObserver-based container queries.",
+  "objective_id": "M2.S6.T6.O1",
+  "teaching_notes": "This tool builds directly on the perpendicular bisector construction. The key insight is that O is already on the bisector, so only one pair of arcs is needed. This is not a new method — it is the same technique applied strategically.",
+  "instructions_for_student": "Learn to construct a perfect 90-degree angle at any point on a line using the perpendicular bisector method. Then test your understanding with MCQ questions in Practice mode.",
+  "designSystem": {
+    "name": "Singularity",
+    "font": "Poppins",
+    "colors": {
+      "primary": "#4A4DC9",
+      "primaryLight": "#C1C1EA",
+      "primaryBg": "#EEEEF8",
+      "orange": "#FF7212",
+      "orangeLight": "#FFF3E4",
+      "orangeAlt": "#FC9145",
+      "gradientStart": "#533086",
+      "gradientEnd": "#FC9145",
+      "dark": "#4E4E4E",
+      "gray": "#CACACA",
+      "lightGray": "#EBEBEB",
+      "lightest": "#F5F5F5",
+      "white": "#FFFFFF",
+      "success": "#2ECC71",
+      "error": "#E74C3C"
+    },
+    "radii": { "sm": 8, "md": 12, "lg": 20, "xl": 24, "pill": 40 },
+    "buttonHeight": 40,
+    "buttonPadding": "10px 24px"
+  },
+  "responsive": {
+    "strategy": "Container-query based via ResizeObserver measuring actual component width. No CSS media queries — purely JavaScript-driven for iframe/embed compatibility.",
+    "breakpoints": {
+      "xs": { "maxWidth": 359, "label": "Small phones", "description": "Compact layout with reduced padding (14px), smaller fonts (12-13px), 32px icon boxes, 34px nav buttons" },
+      "sm": { "minWidth": 360, "maxWidth": 575, "label": "Phones", "description": "Same compact sizing as xs — optimized for portrait phone screens" },
+      "md": { "minWidth": 576, "maxWidth": 767, "label": "Tablets", "description": "Medium layout with 18px padding, 36px icon boxes, slightly larger fonts" },
+      "lg": { "minWidth": 768, "label": "Desktop", "description": "Full layout with 24px padding, 40px buttons, 15-17px fonts — matches Singularity DS specs" }
+    },
+    "scaledProperties": [
+      "Horizontal/vertical padding",
+      "Header title/subtitle font sizes",
+      "Icon box and icon sizes",
+      "Mode selector button padding and font sizes",
+      "Canvas minimum height and border radius",
+      "MCQ question, option, button, explanation font sizes",
+      "MCQ option padding, label size, gap",
+      "Navigation button size and icon size",
+      "Step dot active/inactive widths",
+      "Annotation icon size and font size",
+      "Description title and body font sizes",
+      "Container border radius",
+      "Score badge font size"
+    ],
+    "svgBehavior": "SVG uses viewBox='0 0 700 400' and width:100% — scales proportionally within any container width. All geometry coordinates are in SVG units, not pixels, so the construction looks identical at all sizes.",
+    "containerWidth": "Set to width:100% with maxWidth from props.width (default 800px) and margin:0 auto for centering. Fills parent container naturally on mobile."
+  },
+  "parameters": {
+    "initialMode": {
+      "type": "string",
+      "enum": ["learn", "practice"],
+      "default": "learn",
+      "description": "Starting mode"
+    },
+    "enabledModes": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["learn", "practice"] },
+      "default": ["learn", "practice"],
+      "description": "Available modes"
+    },
+    "showModeSelector": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide mode selector tabs"
+    },
+    "showNavigation": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show/hide step navigation (Learn mode only)"
+    },
+    "initialStep": {
+      "type": "number",
+      "default": 1,
+      "description": "Starting step ID"
+    },
+    "filterSteps": {
+      "type": "array",
+      "items": { "type": "number" },
+      "default": null,
+      "description": "Only show these step IDs. Learn: [1,2,3,4]. Practice: [10,11,12,13,14]."
+    },
+    "animationSpeed": {
+      "type": "number",
+      "default": 1,
+      "description": "Animation speed multiplier (3500ms / speed per step)"
+    },
+    "autoPlayDuration": {
+      "type": "number",
+      "default": 10000,
+      "description": "Auto-advance delay in ms (0 to disable)"
+    },
+    "darkMode": {
+      "type": "boolean",
+      "default": false,
+      "description": "Dark mode toggle (kept for compatibility)"
+    },
+    "width": {
+      "type": "number",
+      "default": 800,
+      "description": "Maximum component width in pixels. Component is always 100% width of parent up to this max."
+    },
+    "height": {
+      "type": "number",
+      "default": 600,
+      "description": "Suggested height (not enforced — component is intrinsically sized)"
+    }
+  },
+  "additionalProps": {
+    "description": "Geometry configuration for SVG construction in Learn mode.",
+    "schema": {
+      "baseLine": { "step1": { "pointO": "{x,y}", "visible": "boolean", "highlighted": "boolean" } },
+      "equalMarks": { "step2": { "pointX": "{x,y}|null", "pointY": "{x,y}|null", "visible": "boolean", "showOXequalsOY": "boolean" } },
+      "arcsAbove": { "step3": { "visible": "boolean", "arcFromX": "boolean", "arcFromY": "boolean", "intersectionA": "{x,y}|null" } },
+      "perpendicularRay": { "step4": { "drawn": "boolean", "visible": "boolean", "angleMarker": "boolean" } },
+      "annotationPanel": { "step1-4": { "text": "string", "showKeyInsight": "boolean" } }
+    },
+    "defaults": {
+      "baseLine": { "step1": { "pointO": { "x": 350, "y": 270 } } },
+      "equalMarks": { "step2": { "pointX": { "x": 170, "y": 270 }, "pointY": { "x": 530, "y": 270 } } },
+      "arcsAbove": { "step3": { "intersectionA": { "x": 350, "y": 80 } } },
+      "annotationPanel": {
+        "step1": { "text": "Goal: Construct a 90° angle at point O using compass and straightedge only.", "showKeyInsight": false },
+        "step2": { "text": "By marking OX = OY, we made O the midpoint of segment XY. The perpendicular bisector of XY must pass through O!", "showKeyInsight": true },
+        "step3": { "text": "Since O is already on the perpendicular bisector, we only need ONE more point on it. One pair of arcs gives us point A.", "showKeyInsight": true },
+        "step4": { "text": "Key Insight: The 90° angle construction is just the perpendicular bisector applied to a segment whose midpoint is your chosen point O.", "showKeyInsight": true }
+      }
+    },
+    "examples": [
+      { "description": "Default", "value": {} },
+      { "description": "Custom O position", "value": { "baseLine": { "step1": { "pointO": { "x": 250, "y": 270 } } }, "equalMarks": { "step2": { "pointX": { "x": 100, "y": 270 }, "pointY": { "x": 400, "y": 270 } } }, "arcsAbove": { "step3": { "intersectionA": { "x": 250, "y": 80 } } } } }
+    ]
+  },
+  "modes": {
+    "learn": {
+      "description": "Animated SVG construction with 4 progressive steps, annotation panel, description, and navigation.",
+      "steps": [
+        { "id": 1, "title": "Starting Point", "shows": "Line + O highlighted" },
+        { "id": 2, "title": "Mark Equal Distances", "shows": "X/Y slide, ticks, OX=OY, midpoint badge" },
+        { "id": 3, "title": "Draw Arcs Above", "shows": "Arc origins, arcs, point A, shortcut callout" },
+        { "id": 4, "title": "Complete the 90° Angle", "shows": "Ray OA, 90° markers, completion badge" }
+      ]
+    },
+    "practice": {
+      "description": "5 MCQ questions with score tracking, explanations, gradient buttons.",
+      "steps": [
+        { "id": 10, "question": "What is the first step?", "correctIndex": 1 },
+        { "id": 11, "question": "Why OX = OY?", "correctIndex": 1 },
+        { "id": 12, "question": "How many arc pairs?", "correctIndex": 2 },
+        { "id": 13, "question": "What angle does ray OA make?", "correctIndex": 2 },
+        { "id": 14, "question": "Same as which construction?", "correctIndex": 1 }
+      ]
+    }
+  },
+  "tool_objectives": [
+    { "step": 1, "filterSteps": [1], "objective_id": "M2.S6.T6.O1", "instructions_for_student": "Here is a line with point O marked. Goal: construct a 90° angle at O." },
+    { "step": 2, "filterSteps": [1, 2], "objective_id": "M2.S6.T6.O1", "instructions_for_student": "Mark X and Y equidistant from O. O is now the midpoint of XY!" },
+    { "step": 3, "filterSteps": [1, 2, 3], "objective_id": "M2.S6.T6.O1", "instructions_for_student": "Draw arcs from X and Y above the line. Only ONE pair needed!" },
+    { "step": 4, "filterSteps": [1, 2, 3, 4], "objective_id": "M2.S6.T6.O2", "instructions_for_student": "Draw ray OA — exactly 90° on both sides!" },
+    { "step": 5, "filterSteps": [10, 11, 12, 13, 14], "objective_id": "M2.S6.T6.O3", "instructions_for_student": "Test your understanding with 5 MCQ questions." }
+  ]
+}

@@ -1,0 +1,189 @@
+{
+    "toolName": "linear_pair_angle_finder",
+    "version": "3.0.0",
+    "description": "Interactive step-based geometry constructor for Grade 7 Mathematics — Linear Pair Angle Finder. Redesigned with the Singularity Design System: Poppins font, purple (#4A4DC9) / orange (#FF7212) palette, pill-shaped buttons (border-radius 40, height 40px), gradient header (purple-dark → purple → orange-mid). Learn mode progressively reveals four angles using linear pair property. Practice mode has 5 MCQ questions with correct/wrong feedback, explanations, score tracking, and results screen. SVG diagram updates per question. Touch-friendly for tablet use. Indian school context.",
+
+    "designSystem": {
+        "name": "Singularity",
+        "font": "Poppins",
+        "fontWeights": [400, 500, 600, 700, 800],
+        "colors": {
+            "primary": {
+                "purple": "#4A4DC9",
+                "purpleDark": "#533086",
+                "purpleLight": "#C1C1EA",
+                "purpleBg": "#EEEDF7"
+            },
+            "accent": {
+                "orange": "#FF7212",
+                "orangeMid": "#FC9145",
+                "orangeLight": "#FFF3E4"
+            },
+            "grey": {
+                "grey900": "#4E4E4E",
+                "grey400": "#CACACA",
+                "grey200": "#EBEBEB",
+                "grey100": "#F5F5F5"
+            },
+            "functional": {
+                "green": "#2ECC71",
+                "greenBg": "#E8F8F0",
+                "red": "#E74C3C",
+                "redBg": "#FDECEB"
+            },
+            "white": "#FFFFFF"
+        },
+        "angleColors": {
+            "a": "#4A4DC9",
+            "b": "#FC9145",
+            "c": "#533086",
+            "d": "#FF7212"
+        },
+        "buttons": {
+            "contained": {
+                "height": 40,
+                "borderRadius": 40,
+                "paddingHorizontal": 24,
+                "background": "linear-gradient(135deg, #4A4DC9, #FC9145)",
+                "color": "#FFFFFF",
+                "fontWeight": 600,
+                "fontSize": 13
+            },
+            "outlined": {
+                "height": 36,
+                "borderRadius": 40,
+                "paddingHorizontal": 20,
+                "border": "1.5px solid #4A4DC9",
+                "background": "#FFFFFF",
+                "color": "#4A4DC9",
+                "fontWeight": 600,
+                "fontSize": 12
+            }
+        },
+        "header": {
+            "gradient": "linear-gradient(135deg, #533086 0%, #4A4DC9 40%, #FC9145 100%)"
+        },
+        "cards": {
+            "svgCard": {
+                "background": "#F5F5F5",
+                "borderRadius": 16,
+                "border": "1px solid #EBEBEB"
+            },
+            "calcBox": {
+                "background": "#F5F5F5",
+                "borderRadius": 14,
+                "borderLeft": "4px solid"
+            }
+        },
+        "stepIndicator": {
+            "type": "pill",
+            "activeWidth": 22,
+            "inactiveWidth": 8,
+            "height": 8,
+            "activeColor": "#4A4DC9",
+            "inactiveColor": "#C1C1EA"
+        },
+        "progressBar": {
+            "gradient": "linear-gradient(90deg, #4A4DC9, #FC9145)"
+        }
+    },
+
+    "curriculum": "NCERT Ganita Prakash Grade 7, Chapter 5 — Parallel and Intersecting Lines",
+
+    "learningObjectives": [
+        "Understand that two intersecting lines form four angles",
+        "Learn the linear pair property: adjacent angles on a straight line add up to 180°",
+        "Discover that vertically opposite angles are always equal",
+        "Apply the linear pair property to find unknown angles step by step",
+        "Test understanding through MCQ practice with immediate feedback"
+    ],
+
+    "parameters": {
+        "width": { "type": "number", "default": 800, "description": "Component width in pixels" },
+        "height": { "type": "number", "default": 600, "description": "Component height in pixels" },
+        "initialMode": { "type": "string", "enum": ["learn", "practice"], "default": "learn", "description": "Starting mode" },
+        "showModeSelector": { "type": "boolean", "default": true, "description": "Show/hide the Learn/Practice mode tabs" },
+        "enabledModes": { "type": "array", "default": ["learn", "practice"], "description": "Which modes to enable" },
+        "showNavigation": { "type": "boolean", "default": true, "description": "Show/hide prev/next navigation buttons (learn mode)" },
+        "showStepIndicator": { "type": "boolean", "default": true, "description": "Show/hide step pill indicators" },
+        "animationSpeed": { "type": "number", "default": 1, "description": "Animation speed multiplier" },
+        "autoPlayDuration": { "type": "number", "default": 8000, "description": "Auto-advance delay in ms (0 = disabled)" }
+    },
+
+    "additionalProps": {
+        "description": "Tool-specific dynamic content for the Linear Pair Angle Finder",
+        "schema": {
+            "startingAngle": { "type": "number", "default": 120, "min": 1, "max": 179, "description": "The initial angle ∠a in degrees for Learn mode" },
+            "lineColor": { "type": "string", "default": "#4E4E4E", "description": "Colour of the two intersecting lines (Singularity grey900)" },
+            "lineThickness": { "type": "number", "default": 2.5, "description": "Thickness of the intersecting lines in px" },
+            "angleColors": {
+                "type": "object",
+                "description": "Custom colours for each of the four angles (Singularity palette defaults)",
+                "properties": {
+                    "a": { "type": "string", "default": "#4A4DC9", "description": "Purple — primary" },
+                    "b": { "type": "string", "default": "#FC9145", "description": "Orange mid — accent" },
+                    "c": { "type": "string", "default": "#533086", "description": "Purple dark" },
+                    "d": { "type": "string", "default": "#FF7212", "description": "Orange — accent" }
+                }
+            },
+            "highlightColor": { "type": "string", "default": "#C1C1EA", "description": "Colour for the 180° linear pair arc highlight (Singularity purpleLight)" },
+            "intersectionDotSize": { "type": "number", "default": 7, "description": "Radius of the intersection dot in px" },
+            "arcRadius": { "type": "number", "default": 55, "description": "Radius of the angle arc in the SVG" }
+        },
+        "examples": {
+            "default_120": { "startingAngle": 120 },
+            "right_angle": { "startingAngle": 90 },
+            "acute_angle_50": { "startingAngle": 50 },
+            "obtuse_angle_135": { "startingAngle": 135 },
+            "custom_line_color": { "startingAngle": 110, "lineColor": "#533086", "lineThickness": 3 }
+        }
+    },
+
+    "modes": {
+        "learn": {
+            "steps": [1, 2, 3, 4, 5],
+            "description": "Step-by-step guided exploration. Step 1: show ∠a. Step 2: linear pair (a,b) → find ∠b. Step 3: linear pair (b,c) → find ∠c. Step 4: linear pair (c,d) → find ∠d. Step 5: vertically opposite pairs with purple/orange highlights."
+        },
+        "practice": {
+            "steps": [10],
+            "description": "5 MCQ questions with pill-shaped option buttons. Correct → green bg (#E8F8F0) + pop animation. Wrong → red bg (#FDECEB) + shake + correct highlighted in green. Explanation in orange-light (#FFF3E4) box. Progress bar with purple→orange gradient. Final results with score badge, emoji, per-question dots, and gradient retake button."
+        }
+    },
+
+    "mcqQuestions": [
+        { "id": 1, "question": "If ∠a = 70°, what is ∠b?", "correctAnswer": 110, "options": [70, 90, 110, 120], "concept": "Linear pair" },
+        { "id": 2, "question": "If ∠a = 135°, what is ∠b?", "correctAnswer": 45, "options": [45, 55, 135, 90], "concept": "Linear pair" },
+        { "id": 3, "question": "If ∠a = 55°, what is ∠c?", "correctAnswer": 55, "options": [55, 125, 35, 180], "concept": "Vertically opposite angles" },
+        { "id": 4, "question": "If ∠a = 100°, what is ∠d?", "correctAnswer": 80, "options": [100, 80, 90, 60], "concept": "Linear pair + vertically opposite" },
+        { "id": 5, "question": "If ∠a = 65°, what is ∠b + ∠d?", "correctAnswer": 230, "options": [130, 180, 230, 250], "concept": "Combined linear pair + vertically opposite" }
+    ],
+
+    "practiceFeatures": {
+        "totalQuestions": 5,
+        "optionStyle": "Pill-shaped buttons (borderRadius: 40) in 2×2 grid",
+        "feedbackOnWrongAnswer": "Selected option shakes red (#FDECEB bg, #E74C3C border). Correct option pops green (#E8F8F0 bg, #2ECC71 border). Explanation in orange-light (#FFF3E4) box with #FC9145 left border.",
+        "feedbackOnCorrectAnswer": "Green pop animation with #E8F8F0 background and '✓ Correct! Well done!' message.",
+        "scoreTracking": "Progress bar with purple→orange gradient. Star icon + score counter. Final screen: emoji, gradient score badge (borderRadius: 40), per-question check/cross dots, gradient 'Retake Quiz' button.",
+        "diagramUpdate": "SVG updates per question. Before answer: only given angle shown. After answer: all relevant angles revealed with linear pair / vertically opposite highlights."
+    },
+
+    "stepSummary": {
+        "1": { "title": "Two Lines Intersect", "mode": "learn" },
+        "2": { "title": "Finding ∠b — Linear Pair", "mode": "learn" },
+        "3": { "title": "Finding ∠c — Linear Pair", "mode": "learn" },
+        "4": { "title": "Finding ∠d — Linear Pair", "mode": "learn" },
+        "5": { "title": "Vertically Opposite Angles", "mode": "learn" },
+        "10": { "title": "Practice Quiz (5 MCQs)", "mode": "practice" }
+    },
+
+    "instructions_for_student": "In Learn mode, use the pill-shaped navigation buttons to step through. Watch as each angle is revealed — notice which two angles form a linear pair (add to 180°). After all four are found, observe vertically opposite angles are equal. In Practice mode, answer 5 multiple-choice questions. If you choose a wrong answer, the correct answer will be highlighted in green with an explanation.",
+
+    "teaching_notes": {
+        "step_1": "Show only angle a = 120° (purple arc) and the two intersecting lines. Ask the student what they think the other angles might be.",
+        "step_2": "Highlight the linear pair (a, b) with a dashed purple-light arc. Calculate b = 180 − 120 = 60. ∠b shown in orange-mid.",
+        "step_3": "Highlight the linear pair (b, c). Calculate c = 180 − 60 = 120. ∠c shown in purple-dark. Ask the student to predict before revealing.",
+        "step_4": "Highlight (c, d). Calculate d = 180 − 120 = 60. ∠d shown in orange.",
+        "step_5": "Highlight vertically opposite pairs: ∠a = ∠c in purple bg (#EEEDF7), ∠b = ∠d in orange bg (#FFF3E4). Equality symbols animated.",
+        "practice": "5 MCQ questions of increasing difficulty. Q1-Q2 test linear pairs. Q3 tests vertically opposite. Q4 combines both. Q5 requires multi-step reasoning (sum of two angles)."
+    }
+}

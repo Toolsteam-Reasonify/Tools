@@ -1,0 +1,75 @@
+
+
+{
+    "toolName": "geometric_twins_tool",
+    "version": "1.0.0",
+    "description": "Interactive educational tool teaching congruence of figures through geometric twins (Topic 1.1 from Ganita Prakash Grade 7). Covers arm lengths, included angles, and congruence conditions with SVG diagrams and practice MCQs.",
+    "parameters": {
+        "width": { "type": "number", "default": 800, "description": "Component width in pixels" },
+        "height": { "type": "number", "default": 600, "description": "Component height in pixels" },
+        "initialMode": { "type": "string", "enum": ["learn", "practice"], "default": "learn" },
+        "showModeSelector": { "type": "boolean", "default": true },
+        "enabledModes": { "type": "array", "items": { "type": "string", "enum": ["learn", "practice"] }, "default": ["learn", "practice"] },
+        "showNavigation": { "type": "boolean", "default": true },
+        "showPlayPause": { "type": "boolean", "default": true },
+        "showStepIndicator": { "type": "boolean", "default": true },
+        "initialStep": { "type": "number", "default": 1, "description": "Step ID to start on" },
+        "filterSteps": { "type": "array", "items": { "type": "number" }, "default": null, "description": "Only show these step IDs" },
+        "animationSpeed": { "type": "number", "default": 1, "description": "Animation speed multiplier" },
+        "autoPlayDuration": { "type": "number", "default": 0, "description": "Auto-advance delay in ms (0 = off)" },
+        "themeColor": { "type": "string", "default": "#4A4DC9" },
+        "darkMode": { "type": "boolean", "default": false }
+    },
+    "additionalProps": {
+        "description": "Geometry-specific dynamic content for customizing diagrams",
+        "properties": {
+            "armLengthAB": { "type": "number", "default": 4, "description": "Length of arm AB in cm" },
+            "armLengthBC": { "type": "number", "default": 8, "description": "Length of arm BC in cm" },
+            "angleDeg": { "type": "number", "default": 80, "description": "Included angle ∠ABC in degrees" },
+            "showMultipleAngles": { "type": "boolean", "default": false },
+            "showCongruenceComparison": { "type": "boolean", "default": false },
+            "showFlipRotate": { "type": "boolean", "default": false },
+            "highlightAngle": { "type": "boolean", "default": false },
+            "customLabels": { "type": "object", "properties": { "A": { "type": "string" }, "B": { "type": "string" }, "C": { "type": "string" } } },
+            "diagramColor": { "type": "string", "default": "#533086" },
+            "accentColor": { "type": "string", "default": "#FF7212" }
+        },
+        "examples": [
+            { "armLengthAB": 4, "armLengthBC": 8, "angleDeg": 80 },
+            { "armLengthAB": 5, "armLengthBC": 5, "angleDeg": 60, "highlightAngle": true },
+            { "showMultipleAngles": true, "armLengthAB": 4, "armLengthBC": 8 }
+        ]
+    },
+    "modes": {
+        "learn": {
+            "label": "Learn",
+            "icon": "BookOpen",
+            "description": "Step-by-step explanation of congruence with interactive diagrams",
+            "stepIds": [1, 2, 3, 4, 5, 6]
+        },
+        "practice": {
+            "label": "Practice",
+            "icon": "Target",
+            "description": "5 MCQ questions testing understanding of congruence",
+            "stepIds": [10, 11, 12, 13, 14]
+        }
+    },
+    "steps": {
+        "learn": [
+            { "id": 1, "title": "The Problem: Recreating a Figure", "type": "intro" },
+            { "id": 2, "title": "Are Arm Lengths Enough?", "type": "explanation" },
+            { "id": 3, "title": "The Missing Piece: The Included Angle", "type": "interactive" },
+            { "id": 4, "title": "What is Congruence?", "type": "explanation" },
+            { "id": 5, "title": "Confirming Congruence", "type": "explanation" },
+            { "id": 6, "title": "Key Takeaway", "type": "summary" }
+        ],
+        "practice": [
+            { "id": 10, "title": "Question 1 — Definition of congruence" },
+            { "id": 11, "title": "Question 2 — Arm lengths vs angles" },
+            { "id": 12, "title": "Question 3 — Allowed transformations" },
+            { "id": 13, "title": "Question 4 — Required measurements" },
+            { "id": 14, "title": "Question 5 — Applying congruence" }
+        ]
+    }
+}
+

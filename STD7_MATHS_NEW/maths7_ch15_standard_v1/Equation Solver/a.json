@@ -1,0 +1,72 @@
+{
+    "toolName": "equation_solver_tool",
+    "version": "3.0.0",
+    "description": "Animated step-by-step walkthrough of solving 5x - 4 = 7 using inverse operations with verification at the end.",
+    "designSystem": "Singularity",
+    "designTokens": {
+        "primary": "#4A4DC9",
+        "accent": "#FF7212",
+        "gradient": "#533086 → #FC9145",
+        "tints": ["#C1C1EA", "#FFF3E4"],
+        "font": "Poppins"
+    },
+    "category": "algebra",
+    "gradeLevel": "Grade 7",
+    "subject": "Mathematics",
+    "topic": "Solving Linear Equations Systematically with Verification",
+    "textbookReference": "Ganita Prakash Grade 7 Part-II, Chapter 7: Finding the Unknown, Section 7.2",
+    "dependencies": ["lucide-react"],
+    "performanceNotes": "v3.0 fixes: Removed per-button useState (CSS :hover/:active via classes), reduced setTimeout chains from 4 to 2, stabilized useMemo deps, eliminated cascading re-renders.",
+    "parameters": {
+        "width": { "type": "number", "default": 800 },
+        "height": { "type": "number", "default": 620 },
+        "initialMode": { "type": "string", "default": "learn", "enum": ["learn", "practice", "real_world", "hands_on"] },
+        "showModeSelector": { "type": "boolean", "default": true },
+        "enabledModes": { "type": "array", "default": ["learn", "practice", "real_world", "hands_on"] },
+        "showNavigation": { "type": "boolean", "default": true },
+        "showPlayPause": { "type": "boolean", "default": true },
+        "showStepIndicator": { "type": "boolean", "default": true },
+        "animationSpeed": { "type": "number", "default": 1 },
+        "autoPlayDuration": { "type": "number", "default": 10000 }
+    },
+    "additionalProps": {
+        "schema": {
+            "equation": {
+                "type": "object",
+                "properties": {
+                    "lhsCoefficient": { "type": "number", "default": 5 },
+                    "lhsVariable": { "type": "string", "default": "x" },
+                    "lhsConstant": { "type": "number", "default": -4 },
+                    "rhsValue": { "type": "number", "default": 7 }
+                }
+            },
+            "showVerification": { "type": "boolean", "default": true },
+            "showBalanceScale": { "type": "boolean", "default": true }
+        }
+    },
+    "modes": {
+        "learn": {
+            "label": "Learn",
+            "steps": 6,
+            "description": "Original → Add both sides → Simplify → Divide → Solution → Verify"
+        },
+        "practice": {
+            "label": "Practice",
+            "steps": 5,
+            "description": "5 MCQ questions: Q1-First step, Q2-Value of 5x, Q3-Find x, Q4-Verify LHS, Q5-Why add 4 (inverse operations)"
+        },
+        "real_world": {
+            "label": "Real World",
+            "steps": 2,
+            "description": "Balance scale SVG + coin word problem"
+        },
+        "hands_on": {
+            "label": "Hands On",
+            "steps": 1,
+            "description": "Interactive slider to discover the solution"
+        }
+    },
+    "teaching_notes": "Guide students through this interactive tool. Encourage exploration and discussion. Start with Learn mode to walk through the systematic approach (adding to both sides, dividing both sides). Then let students test understanding in Practice mode (5 MCQs covering procedure, computation, verification, and conceptual understanding of inverse operations). Use Real World mode to connect to the weighing scale analogy from Section 7.1. Finally, Hands On mode lets students discover the solution through experimentation.",
+    "instructions_for_student": "Solve 5x - 4 = 7. Add 4 both sides: 5x = 11. Divide by 5: x = 11/5. Verify: 5(11/5)-4 = 7.",
+    "generation_prompt": "Animated step-by-step walkthrough of solving 5x - 4 = 7 using inverse operations with verification at the end."
+}

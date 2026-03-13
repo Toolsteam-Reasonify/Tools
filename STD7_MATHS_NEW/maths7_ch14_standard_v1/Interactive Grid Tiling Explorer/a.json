@@ -1,0 +1,342 @@
+{
+  "id": "M4.S20.T20.T2D1",
+  "title": "Interactive Grid Tiling Explorer",
+  "subtype": "tiling_explorer",
+  "toolName": "grid_tiling_explorer",
+  "version": "3.0.0",
+  "description": "An interactive tool (Singularity Design System) where students explore tiling rectangular grids with 2×1 domino tiles. Learn mode: click grid cells to place/remove dominoes and discover the parity rule through hands-on experimentation. Practice mode: 8 MCQ questions (no diagrams) testing parity rule, tileability, tile counting, and checkerboard argument. Fully responsive for mobile, tablet, and desktop.",
+  "objective_id": "M4.S20.T20.O1",
+  "teaching_notes": "The progression from even-even to even-odd to odd-odd grids helps students discover the parity rule inductively. Step 3 is the key moment where students experience impossibility firsthand. Step 5 introduces the deeper idea that even parity is necessary but not sufficient — this connects to the checkerboard colouring argument. Practice mode uses MCQ questions only (no diagrams) to test conceptual understanding.",
+  "instructions_for_student": "Explore which rectangular grids can be tiled with 2×1 dominoes. Try tiling 4×6, 4×7, 5×7, and 3×5 grids. Discover the parity rule through experimentation. Then test your understanding with multiple-choice questions in Practice mode.",
+  "designSystem": {
+    "name": "Singularity",
+    "version": "1.0",
+    "font": "Poppins (Google Fonts, weights: 400, 500, 600, 700, 800)",
+    "colors": {
+      "primary": "#4A4DC9",
+      "primaryDark": "#3a3da9",
+      "accent": "#FF7212",
+      "accentDark": "#e56400",
+      "gradientStart": "#533086",
+      "gradientEnd": "#FC9145",
+      "lavender": "#C1C1EA",
+      "lavenderLight": "#E8E8F5",
+      "peach": "#FFF3E4",
+      "peachMid": "#FFDDB8",
+      "bgLight": "#F5F5F5",
+      "bgWhite": "#FFFFFF",
+      "textDark": "#4E4E4E",
+      "textMid": "#7A7A7A",
+      "textLight": "#CACACA",
+      "borderLight": "#EBEBEB",
+      "borderMid": "#CACACA",
+      "success": "#2ECC71",
+      "successBg": "#E8F8F0",
+      "error": "#E74C3C",
+      "errorBg": "#FDECEB",
+      "warningBg": "#FFF8ED",
+      "warningBorder": "#FC9145"
+    },
+    "radius": {
+      "sm": 8,
+      "md": 12,
+      "lg": 20,
+      "pill": 999
+    },
+    "shadows": {
+      "sm": "0 2px 8px rgba(74,77,201,0.08)",
+      "md": "0 8px 24px rgba(74,77,201,0.10)",
+      "lg": "0 16px 48px rgba(74,77,201,0.12)"
+    },
+    "buttons": {
+      "variants": ["contained", "outlined", "text"],
+      "colors": ["primary", "accent", "neutral"],
+      "states": ["enabled", "disabled", "hover", "pressed"],
+      "borderRadius": "pill (999px)",
+      "height": { "default": 40, "mobile": 36, "small": "auto" },
+      "padding": { "default": "10px 24px", "small": "8px 16px", "smallMobile": "6px 12px" }
+    }
+  },
+  "parameters": {
+    "initialMode": "learn",
+    "enabledModes": ["learn", "practice"],
+    "showModeSelector": true,
+    "showNavigation": true,
+    "showStepIndicator": true,
+    "autoPlayDuration": 0,
+    "width": 800,
+    "height": 600,
+    "darkMode": false,
+    "additionalProps": {
+      "dominoTiles": {
+        "step1": {
+          "label": "You need 12 tiles for a 4×6 grid. Click cells to place tiles.",
+          "placed": 0,
+          "available": 12,
+          "orientation": "horizontal_or_vertical"
+        },
+        "step2": {
+          "label": "14 tiles needed for 4×7. Try a column-by-column strategy.",
+          "placed": 0,
+          "available": 14,
+          "orientation": "horizontal_or_vertical"
+        },
+        "step3": {
+          "label": "Try placing tiles — you will always have 1 square left over!",
+          "placed": 0,
+          "available": 17,
+          "orientation": "horizontal_or_vertical"
+        },
+        "step4": {
+          "label": "Try to tile this 3×5 grid. What happens?",
+          "placed": 0,
+          "available": 7,
+          "orientation": "horizontal_or_vertical"
+        },
+        "step5": {
+          "label": "Remove one square and try again. Does even count guarantee success?",
+          "placed": 0,
+          "available": 17,
+          "orientation": "horizontal_or_vertical"
+        }
+      },
+      "gridDimensions": {
+        "step1": {
+          "m": 4,
+          "n": 6,
+          "label": "4×6 grid: 24 squares (even). Can you tile this?",
+          "parity": "even",
+          "tileable": true,
+          "totalSquares": 24
+        },
+        "step2": {
+          "m": 4,
+          "n": 7,
+          "label": "4×7 grid: 28 squares (even). One dimension is even — still tileable!",
+          "parity": "even",
+          "tileable": true,
+          "totalSquares": 28
+        },
+        "step3": {
+          "m": 5,
+          "n": 7,
+          "label": "5×7 grid: 35 squares (ODD). Cannot be exactly covered!",
+          "parity": "odd",
+          "tileable": false,
+          "totalSquares": 35
+        },
+        "step4": {
+          "m": 3,
+          "n": 5,
+          "label": "3×5 grid: 15 squares (ODD). Both dimensions odd — not tileable.",
+          "parity": "odd",
+          "tileable": false,
+          "totalSquares": 15
+        },
+        "step5": {
+          "m": 5,
+          "n": 7,
+          "label": "5×7 grid with 1 square removed: 34 squares (even). But is even count enough?",
+          "parity": "even",
+          "tileable": "maybe",
+          "totalSquares": 34
+        }
+      },
+      "parityIndicator": {
+        "step1": {
+          "label": "24 / 2 = 12 tiles. Even count means tiling is possible.",
+          "colour": "green",
+          "tilesNeeded": 12,
+          "parityStatus": "EVEN — tileable",
+          "totalSquares": 24
+        },
+        "step2": {
+          "label": "28 / 2 = 14 tiles. At least one even dimension guarantees tileability.",
+          "colour": "green",
+          "tilesNeeded": 14,
+          "parityStatus": "EVEN — tileable",
+          "totalSquares": 28
+        },
+        "step3": {
+          "label": "35 / 2 = 17.5 — not a whole number! Tiling is impossible.",
+          "colour": "red",
+          "tilesNeeded": 17.5,
+          "parityStatus": "ODD — impossible!",
+          "totalSquares": 35
+        },
+        "step4": {
+          "label": "15 / 2 = 7.5. Both dimensions odd → product always odd.",
+          "colour": "red",
+          "tilesNeeded": 7.5,
+          "parityStatus": "ODD — impossible!",
+          "totalSquares": 15
+        },
+        "step5": {
+          "label": "34 / 2 = 17. Even count is necessary but NOT sufficient — shape matters.",
+          "colour": "orange",
+          "tilesNeeded": 17,
+          "parityStatus": "EVEN — but shape matters!",
+          "totalSquares": 34
+        }
+      },
+      "removeSquareTool": {
+        "step1": { "label": "Square removal disabled", "enabled": false, "squareRemoved": false },
+        "step2": { "label": "Square removal disabled", "enabled": false, "squareRemoved": false },
+        "step3": { "label": "Square removal disabled", "enabled": false, "squareRemoved": false },
+        "step4": { "label": "Square removal disabled", "enabled": false, "squareRemoved": false },
+        "step5": { "label": "Click any square to remove it. Does removing one square always make it tileable?", "enabled": true, "squareRemoved": true }
+      },
+      "parityRuleDisplay": {
+        "step1": { "label": "Discover the rule by experimenting", "showRule": false },
+        "step2": { "label": "Try different grids to find a pattern", "showRule": false },
+        "step3": { "label": "The parity rule explains why some grids are impossible", "ruleText": "Both-odd grids cannot be tiled because odd × odd = odd, and an odd number of squares cannot be paired.", "showRule": true },
+        "step4": { "label": "Complete parity rule", "ruleText": "Parity Rule: An m × n grid is tileable with 2×1 tiles when at least one of m, n is even. If both are odd, tiling is impossible.", "showRule": true },
+        "step5": { "label": "Necessary vs sufficient conditions", "ruleText": "Even total is necessary but not sufficient. The shape of the region also determines tileability.", "showRule": true }
+      }
+    }
+  },
+  "modes": {
+    "learn": {
+      "label": "Learn",
+      "icon": "BookOpen",
+      "description": "Step-by-step discovery of the parity rule through interactive grid tiling with domino placement"
+    },
+    "practice": {
+      "label": "Practice",
+      "icon": "Target",
+      "description": "MCQ quiz (8 questions, no diagrams) testing parity rule, tileability, tile counting, and checkerboard argument"
+    }
+  },
+  "steps": {
+    "learn": [
+      {
+        "id": 1,
+        "title": "Tiling a 4×6 Grid",
+        "description": "24 squares (even). Each 2×1 domino covers 2 squares. You need 12 tiles. Click cells to place tiles.",
+        "type": "intro",
+        "gridConfig": { "m": 4, "n": 6, "tileable": true, "parity": "even" }
+      },
+      {
+        "id": 2,
+        "title": "Tiling a 4×7 Grid",
+        "description": "28 squares (even). One dimension is even — try column-by-column!",
+        "type": "explanation",
+        "gridConfig": { "m": 4, "n": 7, "tileable": true, "parity": "even" }
+      },
+      {
+        "id": 3,
+        "title": "Can You Tile 5×7?",
+        "description": "35 squares (odd). You'll always have 1 left! Odd total = impossible.",
+        "type": "explanation",
+        "gridConfig": { "m": 5, "n": 7, "tileable": false, "parity": "odd" }
+      },
+      {
+        "id": 4,
+        "title": "Another Odd: 3×5",
+        "description": "15 squares (odd). Both odd → product odd → impossible.",
+        "type": "explanation",
+        "gridConfig": { "m": 3, "n": 5, "tileable": false, "parity": "odd" }
+      },
+      {
+        "id": 5,
+        "title": "Remove a Square",
+        "description": "Remove 1 from 5×7 → 34 squares (even). Even ≠ always sufficient!",
+        "type": "explanation",
+        "gridConfig": { "m": 5, "n": 7, "tileable": "maybe", "parity": "even", "removeEnabled": true }
+      }
+    ],
+    "practice": [
+      { "id": 1, "type": "mcq", "question": "Can a 4×6 grid be tiled?", "correctAnswer": "A", "hint": "Is the total number of squares even or odd?" },
+      { "id": 2, "type": "mcq", "question": "Why can't a 5×7 grid be tiled?", "correctAnswer": "B", "hint": "What happens when you divide 35 by 2?" },
+      { "id": 3, "type": "mcq", "question": "Which grid can be tiled?", "correctAnswer": "C", "hint": "Check if at least one dimension is even." },
+      { "id": 4, "type": "mcq", "question": "What is the Parity Rule?", "correctAnswer": "B", "hint": "When is odd × odd = odd?" },
+      { "id": 5, "type": "mcq", "question": "Is even count sufficient after removal?", "correctAnswer": "B", "hint": "Does the removed square's position matter?" },
+      { "id": 6, "type": "mcq", "question": "How many dominoes for 6×8?", "correctAnswer": "B", "hint": "Total squares ÷ 2 = tiles needed." },
+      { "id": 7, "type": "mcq", "question": "Odd × odd = ?", "correctAnswer": "B", "hint": "Multiply a few pairs of odd numbers." },
+      { "id": 8, "type": "mcq", "question": "Checkerboard colouring argument", "correctAnswer": "A", "hint": "Visualise placing a domino on a checkerboard." }
+    ]
+  },
+  "tool_objectives": [
+    {
+      "step": 1,
+      "filterSteps": [1],
+      "objective_id": "M4.S20.T20.O1",
+      "instructions_for_student": "Tile this 4×6 grid with 2×1 dominoes. Each tile covers exactly 2 squares. You need 12 tiles for 24 squares. Click cells on the grid to place tiles."
+    },
+    {
+      "step": 2,
+      "filterSteps": [2],
+      "objective_id": "M4.S20.T20.O1",
+      "instructions_for_student": "Now try a 4×7 grid (28 squares). One dimension is even. Can you still tile it? Try a column-by-column approach."
+    },
+    {
+      "step": 3,
+      "filterSteps": [3],
+      "objective_id": "M4.S20.T20.O2",
+      "instructions_for_student": "Try to tile a 5×7 grid (35 squares). You will always have 1 square left! Because 35 is odd and each tile covers 2 squares — you cannot pair them all up."
+    },
+    {
+      "step": 4,
+      "filterSteps": [4],
+      "objective_id": "M4.S20.T20.O2",
+      "instructions_for_student": "Another odd-by-odd grid: 3×5 = 15 squares (odd). The parity rule says: if both dimensions are odd, tiling is impossible."
+    },
+    {
+      "step": 5,
+      "filterSteps": [5],
+      "objective_id": "M4.S20.T20.O3",
+      "instructions_for_student": "Remove one square from the 5×7 grid to get 34 squares (even). Try to tile. Discover that even count is necessary but not always sufficient — the shape matters!"
+    }
+  ],
+  "responsive": {
+    "mobile": {
+      "breakpoint": "<580px",
+      "layout": "stacked (grid above, controls below)",
+      "cellSize": "auto-calculated, max 36px",
+      "buttonHeight": 36,
+      "padding": 12
+    },
+    "tablet": {
+      "breakpoint": "580–960px",
+      "layout": "side-by-side with 185px panel",
+      "cellSize": "auto-calculated, max 42px",
+      "buttonHeight": 40,
+      "padding": 16
+    },
+    "desktop": {
+      "breakpoint": ">960px",
+      "layout": "full side-by-side with 225px panel",
+      "cellSize": "auto-calculated, max 48px",
+      "buttonHeight": 40,
+      "padding": 24
+    }
+  },
+  "practiceMode": {
+    "type": "MCQ only (no diagrams/grids)",
+    "totalQuestions": 8,
+    "features": [
+      "Gradient progress bar (purple → orange)",
+      "Score tracking (score/answered)",
+      "Hint system (Show Hint button, accent outlined)",
+      "Detailed explanations with success/error backgrounds",
+      "Quiz completion summary with percentage and emoji",
+      "Retry option (contained primary button)"
+    ],
+    "topics": [
+      "Basic tileability (4×6 grid)",
+      "Why odd grids fail (5×7)",
+      "Identifying tileable grids from options",
+      "The Parity Rule definition",
+      "Necessary vs sufficient conditions (removed square)",
+      "Tile counting (6×8 grid)",
+      "Odd × odd product property",
+      "Checkerboard colouring argument"
+    ]
+  },
+  "dominoPalette": [
+    "#4A4DC9", "#7B5EA7", "#533086", "#6366f1", "#8b5cf6",
+    "#FF7212", "#FC9145", "#06b6d4", "#14b8a6", "#3b82f6",
+    "#a855f7", "#ec4899", "#10b981", "#f59e0b", "#0ea5e9"
+  ],
+  "iconNote": "Header grid icon uses inline SVG (no lucide-react dependency) to avoid runtime errors with missing icon components across different lucide-react versions."
+}

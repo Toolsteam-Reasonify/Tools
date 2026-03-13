@@ -1,0 +1,87 @@
+{
+    "toolName": "paper_folding_explorer",
+    "version": "2.0.0",
+    "description": "Interactive step-based geometry constructor for Grade 7 Mathematics — Paper Folding Explorer. Redesigned with Singularity Design System (Poppins font, purple #4A4DC9/#533086 primary, orange #FF7212/#FC9145 accent, pill-shaped buttons with Contained/Outlined/Text states). Fully responsive for mobile, tablet, and desktop. Shows a virtual square sheet of paper with fold animations teaching parallel and perpendicular lines.",
+    "designSystem": "Singularity",
+    "designTokens": {
+        "colors": {
+            "primary": "#4A4DC9",
+            "primaryDark": "#533086",
+            "primaryLight": "#C1C1EA",
+            "primaryBg": "#EDEDF8",
+            "accent": "#FF7212",
+            "accentDark": "#FC9145",
+            "accentLight": "#FFF3E4",
+            "gray900": "#1A1A2E",
+            "gray700": "#4E4E4E",
+            "gray400": "#CACACA",
+            "gray200": "#EBEBEB",
+            "gray100": "#F5F5F5"
+        },
+        "font": "Poppins",
+        "buttonStyles": {
+            "contained": "Filled background with primary/accent color, white text, pill-shaped",
+            "outlined": "Transparent background, colored border, colored text, pill-shaped",
+            "text": "No background or border, colored text on hover"
+        },
+        "borderRadius": {
+            "pill": 999,
+            "xl": 24,
+            "lg": 16,
+            "md": 12,
+            "sm": 8
+        }
+    },
+    "responsiveBreakpoints": {
+        "mobile": "<576px — single column, collapsible sidebar, compact controls",
+        "tablet": "576-991px — sidebar narrowed to 210px, medium font sizes",
+        "desktop": "992px+ — full sidebar 260px, all features visible"
+    },
+    "category": "geometry",
+    "grade": 7,
+    "subject": "Mathematics",
+    "chapter": "Parallel and Intersecting Lines",
+    "textbook": "Ganita Prakash",
+    "board": "NCERT/CBSE",
+    "parameters": {
+        "width": { "type": "number", "default": 800, "description": "Max width in pixels (responsive below this)" },
+        "height": { "type": "number", "default": 600, "description": "Height in pixels (mobile uses 100dvh)" },
+        "showNavigation": { "type": "boolean", "default": true },
+        "showPlayPause": { "type": "boolean", "default": true },
+        "showStepIndicator": { "type": "boolean", "default": true },
+        "initialStep": { "type": "number", "default": 1, "description": "Starting step 1-5" },
+        "filterSteps": { "type": "array", "items": { "type": "number" }, "default": null },
+        "animationSpeed": { "type": "number", "default": 1 },
+        "autoPlayDuration": { "type": "number", "default": 0 },
+        "themeColor": { "type": "string", "default": "#4A4DC9" }
+    },
+    "additionalProps": {
+        "properties": {
+            "sheetColor": { "type": "string", "default": "#FEFCF9" },
+            "showLabels": { "type": "boolean", "default": true },
+            "animationDuration": { "type": "number", "default": 1200 },
+            "showCounter": { "type": "boolean", "default": true },
+            "showTeachingNotes": { "type": "boolean", "default": true },
+            "highlightEdges": { "type": "boolean", "default": true }
+        },
+        "examples": {
+            "default": { "sheetColor": "#FEFCF9", "showLabels": true, "showCounter": true, "animationDuration": 1200 },
+            "minimal": { "showLabels": false, "showCounter": false, "showTeachingNotes": false },
+            "slow": { "animationDuration": 2500 },
+            "fast": { "animationDuration": 600 }
+        }
+    },
+    "steps": {
+        "1": { "title": "The Square Sheet", "type": "intro", "counters": { "horizontal": 2, "vertical": 2, "perpCorners": 4 } },
+        "2": { "title": "First Horizontal Fold", "type": "fold", "counters": { "horizontal": 3, "vertical": 2, "perpCorners": 4 } },
+        "3": { "title": "Second Horizontal Fold", "type": "fold", "counters": { "horizontal": 5, "vertical": 2, "perpCorners": 4 } },
+        "4": { "title": "Vertical Fold", "type": "fold", "counters": { "horizontal": 5, "vertical": 3, "perpCorners": 9 } },
+        "5": { "title": "Diagonal Fold — Challenge", "type": "challenge", "counters": { "horizontal": 5, "vertical": 3, "perpCorners": 9 } }
+    },
+    "instructions_for_student": "Watch the square sheet being folded step by step. After each fold, count how many parallel lines you can see (look for the arrow marks ▶) and how many perpendicular corners exist (look for the square symbols □). Can you predict the pattern?",
+    "context": {
+        "region": "India",
+        "schoolSystem": "CBSE/NCERT",
+        "activityReference": "Activity 2 — Section 5.4 of Ganita Prakash Grade 7"
+    }
+}

@@ -1,0 +1,229 @@
+{
+    "toolName": "eight_angle_finder",
+    "version": "2.0.0",
+    "description": "Interactive step-based calculation practice tool for Grade 7 Mathematics — Eight Angle Finder. Diagram showing two parallel horizontal lines (l and m with arrow marks) and a diagonal transversal (t) with 8 numbered angles at two intersection points. Initially only ∠6 shows '135°' in a purple (#533086) badge; all others show '?' in grey. Each step: the property used appears as a labelled arrow between angles (e.g., 'Corresponding' arrow from ∠6 to ∠2), the target angle fades from grey to its group colour with a number counter animation (rolling from ? to 135 or 45). Group 1 (angles 2,4,6,8) in purple (#533086). Group 2 (angles 1,3,5,7) in orange (#FF7212). At Step 6, a summary panel shows: 'Team Purple: 135° × 4 | Team Orange: 45° × 4' with matching colour blocks. A 'Try New Angle' button opens a number input (1-179) that reruns the animation with the new value. Property labels use icons: magnifying glass for corresponding, mirror for vertically opposite, straight line for linear pair. Singularity design system — Poppins font, gradient header (#533086 → #FC9145), pill-shaped buttons, clean white background. Touch-friendly. Indian school context — like two teams in cricket.",
+    "designSystem": {
+        "name": "Singularity",
+        "font": "Poppins",
+        "colors": {
+            "indigo": "#4A4DC9",
+            "orange": "#FF7212",
+            "gradientStart": "#533086",
+            "gradientEnd": "#FC9145",
+            "indigoLight": "#C1C1EA",
+            "orangeLight": "#FFF3E4",
+            "dark": "#4E4E4E",
+            "grey": "#CACACA",
+            "lightGrey": "#EBEBEB",
+            "offWhite": "#F5F5F5",
+            "white": "#FFFFFF",
+            "success": "#2ECC71",
+            "error": "#E74C3C"
+        },
+        "groups": {
+            "group1": { "color": "#533086", "lightFill": "#C1C1EA", "label": "Team Purple 💜", "angles": [2, 4, 6, 8] },
+            "group2": { "color": "#FF7212", "lightFill": "#FFF3E4", "label": "Team Orange 🧡", "angles": [1, 3, 5, 7] }
+        },
+        "buttonVariants": ["contained", "outlined", "highlight", "text"],
+        "borderRadius": { "pill": "999px", "card": "16px", "badge": "10px" }
+    },
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Width of the tool container in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Height of the tool container in pixels"
+        },
+        "initialMode": {
+            "type": "string",
+            "enum": ["learn", "practice"],
+            "default": "learn",
+            "description": "Starting mode — 'learn' for step-by-step guided walkthrough, 'practice' for 5 MCQ questions"
+        },
+        "showModeSelector": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide the Learn/Practice mode tabs"
+        },
+        "enabledModes": {
+            "type": "array",
+            "items": { "type": "string", "enum": ["learn", "practice"] },
+            "default": ["learn", "practice"],
+            "description": "Which modes to enable"
+        },
+        "showNavigation": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide prev/next/reset buttons in Learn mode"
+        },
+        "showStepIndicator": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide step progress dots in Learn mode"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Animation speed multiplier (higher = faster)"
+        },
+        "autoPlayDuration": {
+            "type": "number",
+            "default": 0,
+            "description": "Auto-advance delay in ms (0 = manual only)"
+        },
+        "themeColor": {
+            "type": "string",
+            "default": "#4A4DC9",
+            "description": "Primary accent color (Singularity indigo)"
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Dark mode toggle"
+        }
+    },
+    "additionalProps": {
+        "schema": {
+            "startingAngle": {
+                "type": "number",
+                "min": 1,
+                "max": 179,
+                "default": 135,
+                "description": "The initial given angle (∠6) in degrees. Must be between 1 and 179."
+            },
+            "startingAngleIndex": {
+                "type": "number",
+                "default": 6,
+                "description": "Which angle number is given initially (currently fixed at 6)"
+            }
+        },
+        "examples": {
+            "default_135": {
+                "startingAngle": 135
+            },
+            "acute_angle_60": {
+                "startingAngle": 60
+            },
+            "right_angle_90": {
+                "startingAngle": 90
+            },
+            "obtuse_angle_110": {
+                "startingAngle": 110
+            },
+            "small_angle_30": {
+                "startingAngle": 30
+            }
+        }
+    },
+    "modes": {
+        "learn": {
+            "label": "Learn",
+            "icon": "📖",
+            "description": "Step-by-step guided walkthrough showing how all 8 angles are found from one given angle using corresponding angles, vertically opposite angles, and linear pair properties. Includes a 'Try New Angle' feature for custom input (1°–179°)."
+        },
+        "practice": {
+            "label": "Practice",
+            "icon": "🧠",
+            "description": "5 MCQ questions testing understanding of corresponding angles, vertically opposite angles, linear pairs, and the two-group property. Wrong answers immediately show the correct answer with a detailed explanation. Score summary shown at the end with option to retry or review Learn mode."
+        }
+    },
+    "steps": {
+        "learn": [
+            {
+                "id": 0,
+                "title": "Starting Point",
+                "description": "Given ∠6. Can we find ALL other angles?",
+                "property": "Given",
+                "propertyIcon": "🎯"
+            },
+            {
+                "id": 1,
+                "title": "Find ∠2 (Corresponding)",
+                "description": "∠6 and ∠2 are corresponding angles. Parallel lines → equal.",
+                "property": "Corresponding Angles",
+                "propertyIcon": "🔍"
+            },
+            {
+                "id": 2,
+                "title": "Find ∠8 (Vertically Opposite)",
+                "description": "∠6 and ∠8 are vertically opposite. Always equal.",
+                "property": "Vertically Opposite",
+                "propertyIcon": "🪞"
+            },
+            {
+                "id": 3,
+                "title": "Find ∠4 (Corresponding)",
+                "description": "∠8 and ∠4 are corresponding angles.",
+                "property": "Corresponding Angles",
+                "propertyIcon": "🔍"
+            },
+            {
+                "id": 4,
+                "title": "Find ∠5 (Linear Pair)",
+                "description": "∠5 + ∠6 = 180° (linear pair).",
+                "property": "Linear Pair",
+                "propertyIcon": "📏"
+            },
+            {
+                "id": 5,
+                "title": "Find ∠1, ∠3, ∠7",
+                "description": "All remaining angles = supplement. Two-group summary.",
+                "property": "All Properties",
+                "propertyIcon": "⚡"
+            }
+        ]
+    },
+    "practice_questions": [
+        {
+            "id": 1,
+            "topic": "Corresponding Angles",
+            "question": "Two parallel lines are cut by a transversal. If one angle is 70°, what is its corresponding angle?",
+            "options": ["70°", "110°", "90°", "180°"],
+            "correct_answer": "70°",
+            "correct_index": 0,
+            "explanation": "Corresponding angles formed by a transversal cutting parallel lines are always equal. So the corresponding angle is also 70°."
+        },
+        {
+            "id": 2,
+            "topic": "Linear Pair",
+            "question": "Lines l ∥ m with transversal t. If ∠6 = 125°, what is ∠5?",
+            "options": ["125°", "55°", "65°", "45°"],
+            "correct_answer": "55°",
+            "correct_index": 1,
+            "explanation": "∠5 and ∠6 form a linear pair. Linear pairs add up to 180°. So ∠5 = 180° − 125° = 55°."
+        },
+        {
+            "id": 3,
+            "topic": "Vertically Opposite Angles",
+            "question": "When two lines intersect, the vertically opposite angles are:",
+            "options": ["Supplementary (add to 180°)", "Always 90°", "Always equal", "Always different"],
+            "correct_answer": "Always equal",
+            "correct_index": 2,
+            "explanation": "Vertically opposite angles are always equal. Each pair shares two linear pairs that both sum to 180°."
+        },
+        {
+            "id": 4,
+            "topic": "Chained Properties (Corresponding + Vertically Opposite)",
+            "question": "Parallel lines l ∥ m, transversal t. If ∠2 = 48°, what is ∠8?",
+            "options": ["132°", "90°", "48°", "42°"],
+            "correct_answer": "48°",
+            "correct_index": 2,
+            "explanation": "∠2 and ∠6 are corresponding → ∠6 = 48°. ∠6 and ∠8 are vertically opposite → ∠8 = 48°."
+        },
+        {
+            "id": 5,
+            "topic": "Two-Group Property",
+            "question": "A transversal crosses two parallel lines making 8 angles. If one angle is 135°, how many are 135°?",
+            "options": ["2 angles", "3 angles", "4 angles", "6 angles"],
+            "correct_answer": "4 angles",
+            "correct_index": 2,
+            "explanation": "The 8 angles split into TWO groups of 4. If one is 135°, then 4 angles = 135° and the other 4 = 45°. Like two cricket teams!"
+        }
+    ],
+    "teaching_notes": "Step 1: Show diagram with only ∠6 = 135° coloured. Ask: 'Can we find ALL other angles from just this one?' Steps 2-4: Build the 135° group using corresponding and vertically opposite angles. Step 5: Linear pair gives ∠5 = 45°. Step 6: All remaining angles are 45°. Show two-group summary. Practice mode: 5 MCQ questions with immediate feedback — wrong answers reveal the correct answer with a detailed explanation. Score summary at end with retry option.",
+    "instructions_for_student": "Use the Learn tab to follow the step-by-step reasoning chain. Starting from angle 6 = 135 degrees, watch how each new angle is found using a specific property — corresponding angles, vertically opposite angles, or linear pair. Notice how the 8 angles split into exactly TWO groups. After the walkthrough, try entering a different starting angle! Then switch to the Practice tab to test yourself with 5 multiple-choice questions."
+}

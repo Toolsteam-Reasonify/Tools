@@ -1,0 +1,449 @@
+{
+  "toolName": "chapter_summary_quiz_tool",
+  "version": "2.0.0",
+  "description": "Standalone MCQ quiz with 8 questions covering all major concepts from Chapter 7 - Finding the Unknown: balance principle, equation definition, trial-and-error, inverse operations, transposition, word problems, and history of algebra. Built with Singularity Design System (Poppins font, #4A4DC9 indigo + #FF7212 orange palette). Fully responsive for mobile, tablet, and desktop.",
+  "category": "assessment",
+  "subject": "Mathematics",
+  "grade": 7,
+  "chapter": "7 - Finding the Unknown",
+  "book": "Ganita Prakash | Grade 7 | Part-II",
+  "topic": "Chapter Summary, Magic Trick, and Practice Problems",
+  "designSystem": {
+    "name": "Singularity",
+    "font": "Poppins",
+    "colors": {
+      "primary": "#4A4DC9",
+      "primaryDark": "#3538A0",
+      "accent": "#FF7212",
+      "accentDark": "#E5600A",
+      "purple": "#533086",
+      "purpleLight": "#C1C1EA",
+      "purpleBg": "#EEEDF8",
+      "orange": "#FC9145",
+      "orangeLight": "#FFF3E4",
+      "orangeBg": "#FFF8F0",
+      "gray900": "#1A1A2E",
+      "gray700": "#4E4E4E",
+      "gray500": "#7A7A8E",
+      "gray400": "#9E9EB0",
+      "gray300": "#CACACA",
+      "gray200": "#EBEBEB",
+      "gray100": "#F5F5F5",
+      "white": "#FFFFFF",
+      "success": "#22C55E",
+      "successBg": "#ECFDF5",
+      "error": "#EF4444",
+      "errorBg": "#FEF2F2"
+    },
+    "borderRadius": {
+      "sm": 8,
+      "md": 12,
+      "lg": 16,
+      "xl": 20,
+      "xxl": 24,
+      "full": 9999
+    },
+    "buttonVariants": ["contained", "outlined", "text"],
+    "buttonStates": ["enabled", "disabled", "hover", "pressed"],
+    "buttonColors": ["primary", "accent"],
+    "decorativeShapes": ["circle", "triangle", "square"]
+  },
+  "responsiveBreakpoints": {
+    "mobile": "<480px",
+    "tablet": "480px-768px",
+    "desktop": ">768px"
+  },
+  "iconsUsed": ["Check", "X", "ChevronRight", "RotateCcw", "BookOpen", "Target", "Zap", "Trophy", "Star"],
+  "iconLibrary": "lucide-react@0.383.0",
+  "parameters": {
+    "width": {
+      "type": "number",
+      "default": 860,
+      "description": "Component max-width in pixels. Component is fluid/responsive within this."
+    },
+    "height": {
+      "type": "number",
+      "default": "auto",
+      "description": "Component height. Auto by default, adapts to content."
+    },
+    "themeColor": {
+      "type": "string",
+      "default": "#4A4DC9",
+      "description": "Primary theme color (Singularity primary indigo)"
+    },
+    "darkMode": {
+      "type": "boolean",
+      "default": false,
+      "description": "Dark mode toggle"
+    },
+    "initialMode": {
+      "type": "string",
+      "default": "learn",
+      "description": "Starting mode (learn, practice, real_world, hands_on)"
+    },
+    "showModeSelector": {
+      "type": "boolean",
+      "default": false,
+      "description": "Show/hide mode selector tabs"
+    },
+    "autoPlayDuration": {
+      "type": "number",
+      "default": 0,
+      "description": "Auto-advance delay in ms (0 = disabled for quiz)"
+    }
+  },
+  "additionalProps": {
+    "description": "Quiz-specific dynamic content passed by the agent",
+    "schema": {
+      "questions": {
+        "type": "array",
+        "description": "Array of MCQ question objects",
+        "items": {
+          "id": { "type": "number", "description": "Unique question ID" },
+          "question": { "type": "string", "description": "The question text" },
+          "options": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Array of 4 answer options"
+          },
+          "correctAnswer": { "type": "number", "description": "Index (0-3) of the correct option" },
+          "explanation": { "type": "string", "description": "Explanation shown after answering" },
+          "concept": { "type": "string", "description": "Concept tag (e.g. Balance Principle, Transposition)" },
+          "difficulty": { "type": "string", "enum": ["easy", "medium", "hard"], "description": "Difficulty level" }
+        }
+      },
+      "title": {
+        "type": "string",
+        "default": "Finding the Unknown — Chapter Quiz",
+        "description": "Quiz title displayed in header"
+      },
+      "subtitle": {
+        "type": "string",
+        "default": "Chapter 7 • Ganita Prakash • Grade 7",
+        "description": "Subtitle below the title"
+      },
+      "passingScore": {
+        "type": "number",
+        "default": 60,
+        "description": "Percentage required to pass (0-100)"
+      },
+      "showExplanations": {
+        "type": "boolean",
+        "default": true,
+        "description": "Whether to show explanations after each answer"
+      },
+      "shuffleQuestions": {
+        "type": "boolean",
+        "default": false,
+        "description": "Randomize question order"
+      },
+      "teachingNotes": {
+        "type": "string",
+        "default": "Guide students through this interactive tool. Encourage exploration and discussion.",
+        "description": "Notes visible on the intro screen for teachers"
+      },
+      "studentInstructions": {
+        "type": "string",
+        "default": "MCQ questions reviewing: equation definition, trial-and-error, inverse operations, transposition, word problem framing, algebra history.",
+        "description": "Instructions visible on the intro screen for students"
+      }
+    },
+    "examples": {
+      "default_quiz": {
+        "description": "Default 8-question chapter summary quiz with Singularity design",
+        "additionalProps": {}
+      },
+      "shuffled_quiz": {
+        "description": "Same quiz with randomized question order",
+        "additionalProps": {
+          "shuffleQuestions": true
+        }
+      },
+      "strict_passing": {
+        "description": "Quiz with 80% passing score and no explanations until end",
+        "additionalProps": {
+          "passingScore": 80,
+          "showExplanations": false
+        }
+      },
+      "custom_questions": {
+        "description": "Example of custom questions with custom title",
+        "additionalProps": {
+          "title": "Quick Recap Quiz",
+          "subtitle": "Equations Basics",
+          "questions": [
+            {
+              "id": 1,
+              "question": "What is the solution to 3x + 1 = 10?",
+              "options": ["x = 2", "x = 3", "x = 4", "x = 5"],
+              "correctAnswer": 1,
+              "explanation": "3x + 1 = 10 → 3x = 9 → x = 3",
+              "concept": "Inverse Operations",
+              "difficulty": "easy"
+            }
+          ],
+          "passingScore": 70
+        }
+      }
+    }
+  },
+  "defaultQuestions": [
+    {
+      "id": 1,
+      "question": "A balanced weighing scale has 3 bags and a 2 kg weight on the left, and a 10 kg weight on the right. If all bags weigh the same, what does each bag weigh? Which principle helps us find this?",
+      "options": [
+        "Each bag = 2⅔ kg; Balance Principle (equal weights on both sides stay balanced)",
+        "Each bag = 3 kg; Trial and Error method",
+        "Each bag = 4 kg; Transposition rule",
+        "Each bag = 2 kg; Inverse operations"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The balance principle tells us both sides are equal: 3b + 2 = 10. Subtracting 2 from both sides gives 3b = 8, so b = 8/3 = 2⅔ kg. When we remove equal weights from both plates, the scale stays balanced.",
+      "concept": "Balance Principle",
+      "difficulty": "medium"
+    },
+    {
+      "id": 2,
+      "question": "Which of the following is the best definition of an algebraic equation?",
+      "options": [
+        "Any expression that contains a letter-number (variable)",
+        "A statement of equality between two algebraic expressions, with an '=' sign between them",
+        "A formula used to calculate the area of shapes",
+        "A number sentence that always has a whole number as the answer"
+      ],
+      "correctAnswer": 1,
+      "explanation": "An equation is a statement that says two algebraic expressions are equal. For example, 2n + 1 = 99 has a Left Hand Side (LHS) and a Right Hand Side (RHS) connected by '='. The LHS value must equal the RHS value for the equation to hold.",
+      "concept": "Equation Definition",
+      "difficulty": "easy"
+    },
+    {
+      "id": 3,
+      "question": "Riya wants to solve 2n + 1 = 99 using trial and error. She tries n = 30 (LHS = 61), then n = 50 (LHS = 101). What should she try next, and what is the limitation of this method?",
+      "options": [
+        "Try n = 49; this method is always the fastest",
+        "Try n = 40; this method works only for small numbers",
+        "Try n = 49; this method can be inefficient because it may require many guesses",
+        "Try n = 45; this method gives wrong answers for fractions"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Since n = 50 gives 101 (too high) and n = 30 gives 61 (too low), we try n = 49: 2(49) + 1 = 99 ✓. The trial and error method works but can be very inefficient — you may need many attempts, especially with equations whose solutions are fractions or large numbers.",
+      "concept": "Trial and Error",
+      "difficulty": "medium"
+    },
+    {
+      "id": 4,
+      "question": "To solve 5x − 4 = 7 systematically, we add 4 to both sides to get 5x = 11, then divide both sides by 5 to get x = 11/5. Which mathematical idea makes this valid?",
+      "options": [
+        "The commutative property of addition",
+        "The trial and error method",
+        "Performing the same operation on both sides of an equation preserves equality (inverse operations)",
+        "The distributive property of multiplication"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Since LHS and RHS have the same value, doing the same operation (adding 4, then dividing by 5) to both sides keeps them equal. We use inverse operations: addition is the inverse of subtraction, and division is the inverse of multiplication.",
+      "concept": "Inverse Operations",
+      "difficulty": "easy"
+    },
+    {
+      "id": 5,
+      "question": "In the equation 6y + 7 = 4y + 21, what is the correct first step using transposition to bring all unknown terms to one side?",
+      "options": [
+        "Divide both sides by 2",
+        "Subtract 4y from both sides to get 2y + 7 = 21",
+        "Add 4y to both sides to get 10y + 7 = 21",
+        "Subtract 7 from both sides to get 6y = 4y + 14"
+      ],
+      "correctAnswer": 1,
+      "explanation": "When a term is moved from one side to the other, its additive inverse appears. Subtracting 4y from both sides: 6y − 4y + 7 = 21, giving 2y + 7 = 21. Then subtract 7: 2y = 14, so y = 7.",
+      "concept": "Transposition",
+      "difficulty": "medium"
+    },
+    {
+      "id": 6,
+      "question": "Madhubanti can spend ₹500 on snacks (₹25 per plate) with a ₹50 delivery charge. She has 5 family members. How many friends can she invite? Which equation models this?",
+      "options": [
+        "25f = 500; she can invite 20 friends",
+        "25(f + 5) + 50 = 500; she can invite 13 friends",
+        "25f + 50 = 500; she can invite 18 friends",
+        "50f + 25 = 500; she can invite 9 friends"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Let f = number of friends. Total people = f + 5 (friends + family). Cost = 25(f + 5) + 50 = 500. Subtracting 50: 25(f + 5) = 450. Dividing by 25: f + 5 = 18. So f = 13.",
+      "concept": "Word Problems",
+      "difficulty": "hard"
+    },
+    {
+      "id": 7,
+      "question": "Ancient Indian mathematicians wrote 3x + 4 = 2x + 8 as 'yā 3 rū 4' over 'yā 2 rū 8'. What does 'yā' stand for, and who first systematically described algebra with unknowns?",
+      "options": [
+        "'yā' stands for 'yoga' (union); Aryabhata in 200 BCE",
+        "'yā' is short for 'yāvat-tāvat' (as much as needed); Brahmagupta in 628 CE",
+        "'yā' stands for 'yantra' (machine); Al-Khwarizmi in 825 CE",
+        "'yā' stands for 'yathā' (as if); Bhāskarāchārya in 1150 CE"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The symbol 'yā' was short for 'yāvat-tāvat' meaning 'as much as needed' — representing the unknown. Brahmagupta's Brāhmasphuṭasiddhānta (628 CE) contained one of the earliest known works on algebra.",
+      "concept": "History of Algebra",
+      "difficulty": "medium"
+    },
+    {
+      "id": 8,
+      "question": "A magic trick says: Think of a number, multiply by 2, add 10, divide by 2, subtract the original number, then add 3. The answer is always 8. If the starting number is x, which expression shows why?",
+      "options": [
+        "After all steps: (2x + 10)/2 − x + 3 = x + 5 − x + 3 = 8 ✓",
+        "The trick only works for positive numbers",
+        "After all steps: 2x + 10 − x + 3 = x + 13, which equals 8 only when x = −5",
+        "It works because dividing by 2 always cancels the multiplication by 2"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Start with x → ×2: 2x → +10: 2x+10 → ÷2: x+5 → −x: 5 → +3: 8. The algebra shows 'x' always cancels out, leaving 8 regardless of starting number. This is the power of algebraic reasoning!",
+      "concept": "Algebraic Modelling",
+      "difficulty": "hard"
+    }
+  ],
+  "screens": {
+    "intro": {
+      "description": "Welcome screen with chapter icon, concept tags, stats grid, teaching notes, student instructions, and Start Quiz button",
+      "features": [
+        "Animated BookOpen icon with float effect",
+        "Concept tags with staggered popIn animation",
+        "3-column responsive stats grid (Target, Zap, Trophy icons)",
+        "Purple teaching notes card",
+        "Orange student instructions card",
+        "Primary contained SBtn with pulse animation"
+      ]
+    },
+    "quiz": {
+      "description": "Question screen with progress bar, step dots, concept/difficulty tags, question card, 4 options, explanation box, and action button",
+      "features": [
+        "Linear progress bar with primary-to-purple gradient",
+        "Numbered step dots showing answered/current/upcoming states",
+        "Streak counter with fire emoji and bounce animation",
+        "Score badge in success green",
+        "Question card with white background and subtle shadow",
+        "Option buttons with select/hover/correct/wrong states",
+        "Correct: green border + successBg + Check icon + correctPulse animation",
+        "Wrong: red border + errorBg + X icon + wrongShake animation",
+        "Confetti particles on correct answers",
+        "Explanation card with purpleBg and left border accent",
+        "Accent Check Answer button / Primary Next Question button"
+      ]
+    },
+    "result": {
+      "description": "Results screen with score circle, pass/fail message, streak badge, concept breakdown, and Try Again button",
+      "features": [
+        "Emoji with starSpin animation",
+        "Conic gradient score circle with glowPulse",
+        "Pass/fail messaging with appropriate colors",
+        "Best streak badge with bounce animation",
+        "Per-question concept breakdown with correct/wrong indicators",
+        "Difficulty tags on each breakdown row",
+        "Primary contained SBtn with RotateCcw icon"
+      ]
+    }
+  },
+  "animations": [
+    "fadeInUp", "fadeInDown", "fadeInScale", "popIn", "pulse",
+    "slideInLeft", "slideInRight", "bounce", "correctPulse",
+    "wrongShake", "confetti", "starSpin", "glowPulse", "float"
+  ],
+  "components": {
+    "SBtn": {
+      "description": "Singularity design system button with contained/outlined/text variants, primary/accent colors, enabled/disabled/hover/pressed states, pill-shaped (border-radius: 9999px), compact mode for mobile, touch-friendly with onTouchStart/onTouchEnd",
+      "props": ["variant", "color", "disabled", "onClick", "children", "style", "compact"]
+    },
+    "DecoShape": {
+      "description": "Decorative SVG/CSS shapes (circle, triangle, square) matching Singularity design system, with filled/outlined variants and configurable color/opacity",
+      "props": ["shape", "size", "color", "filled", "style"]
+    }
+  },
+  "teachingNotes": "Guide students through this interactive tool. Encourage exploration and discussion. Use the quiz as a formative assessment after completing Chapter 7. Discuss wrong answers as learning opportunities — each explanation connects to a specific section of the textbook.",
+  "studentInstructions": "MCQ questions reviewing: equation definition, trial-and-error, inverse operations, transposition, word problem framing, algebra history. Read each question carefully. Select the best answer and click 'Check Answer'. Read the explanation to strengthen your understanding.",
+  "generationPrompt": "Standalone MCQ quiz with 8 questions covering all major concepts from the chapter: balance principle, equation definition, trial-and-error, inverse operations, transposition, word problems, history.",
+  "agentExamples": [
+    {
+      "description": "Default chapter summary quiz with Singularity design",
+      "json": {
+        "frontend_action": "show_interactive_tool",
+        "title": "Chapter 7 Summary Quiz",
+        "data": {
+          "toolName": "chapter_summary_quiz_tool",
+          "parameters": {
+            "additionalProps": {}
+          }
+        },
+        "teaching_notes": "Guide students through this interactive tool. Encourage exploration and discussion.",
+        "instructions_for_student": "MCQ questions reviewing: equation definition, trial-and-error, inverse operations, transposition, word problem framing, algebra history."
+      }
+    },
+    {
+      "description": "Shuffled quiz with strict passing",
+      "json": {
+        "frontend_action": "show_interactive_tool",
+        "title": "Chapter 7 Assessment",
+        "data": {
+          "toolName": "chapter_summary_quiz_tool",
+          "parameters": {
+            "additionalProps": {
+              "shuffleQuestions": true,
+              "passingScore": 75,
+              "title": "Chapter 7 — Assessment Quiz",
+              "subtitle": "Finding the Unknown • Final Test"
+            }
+          }
+        },
+        "teaching_notes": "Use as a summative assessment. Questions are shuffled for each student.",
+        "instructions_for_student": "Answer all 8 questions. You need 75% to pass."
+      }
+    },
+    {
+      "description": "Quick recap without explanations",
+      "json": {
+        "frontend_action": "show_interactive_tool",
+        "title": "Quick Recap",
+        "data": {
+          "toolName": "chapter_summary_quiz_tool",
+          "parameters": {
+            "additionalProps": {
+              "showExplanations": false,
+              "title": "Quick Recap — Finding the Unknown",
+              "subtitle": "Speed Round"
+            }
+          }
+        },
+        "teaching_notes": "Fast-paced review. Students see results at the end without per-question explanations.",
+        "instructions_for_student": "Answer each question quickly. You'll see your results at the end."
+      }
+    },
+    {
+      "description": "Custom single-question test",
+      "json": {
+        "frontend_action": "show_interactive_tool",
+        "title": "Quick Check",
+        "data": {
+          "toolName": "chapter_summary_quiz_tool",
+          "parameters": {
+            "additionalProps": {
+              "title": "Equation Basics Check",
+              "subtitle": "1 Question Quick Test",
+              "passingScore": 100,
+              "questions": [
+                {
+                  "id": 1,
+                  "question": "Solve: 3x + 1 = 10. What is x?",
+                  "options": ["x = 2", "x = 3", "x = 4", "x = 5"],
+                  "correctAnswer": 1,
+                  "explanation": "3x + 1 = 10 → subtract 1 from both sides → 3x = 9 → divide both sides by 3 → x = 3",
+                  "concept": "Inverse Operations",
+                  "difficulty": "easy"
+                }
+              ]
+            }
+          }
+        },
+        "teaching_notes": "Use as a quick check before starting the full quiz.",
+        "instructions_for_student": "Solve this equation step by step."
+      }
+    }
+  ]
+}

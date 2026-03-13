@@ -1,0 +1,368 @@
+{
+    "toolName": "balance_scale_tool",
+    "version": "3.0.0",
+    "description": "Interactive brass balance scale tool for finding unknown weights. Items sit ON pans (not floating). Performance-optimized with memoized SVG. Singularity Design System (Poppins, #4A4DC9/#FF7212). Two modes: Learn (6 steps with equations merged) and Practice (5 MCQ questions, one at a time).",
+    "designSystem": "Singularity",
+    "scaleStyle": "Realistic brass balance scale with ornate finial, cylindrical pillar, chain-hung circular pans, items placed ON pan surface",
+    "category": "algebra",
+    "gradeLevel": "7",
+    "subject": "mathematics",
+    "chapter": "7 - Finding the Unknown",
+    "topic": "Finding Unknown Weights: Balance Scale Problems (Fig 7.6–7.8)",
+
+    "learningObjectives": [
+        "Understand that a balanced scale means both sides have equal total weight",
+        "Learn to find unknown weights by removing equal known weights from both sides",
+        "Frame simple equations from balance scale situations",
+        "Solve single-variable linear equations using inverse operations",
+        "Connect balance scale problems to algebraic equations (Bījagaṇita)"
+    ],
+
+    "teachingNotes": "Guide students through this interactive tool. Encourage exploration and discussion.",
+    "instructionsForStudent": "To find an unknown weight on a balanced scale, remove the same known weight from both sides. The scale remains balanced.",
+    "generationPrompt": "Process walkthrough showing how to find an unknown weight on a balance scale by removing equal known weights from both sides. Each step is animated showing the scale tilt and rebalance.",
+
+    "interfaces": {
+        "ModeType": "'learn' | 'practice'",
+        "ScaleItem": {
+            "id": "string",
+            "label": "string",
+            "emoji": "string",
+            "weight": "number",
+            "isUnknown": "boolean"
+        },
+        "ScaleProblem": {
+            "id": "string",
+            "title": "string",
+            "leftItems": "ScaleItem[]",
+            "rightItems": "ScaleItem[]",
+            "unknownVar": "string",
+            "equation": "string",
+            "solution": "number",
+            "hint": "string",
+            "figRef": "string"
+        },
+        "MCQQuestion": {
+            "id": "number",
+            "q": "string",
+            "pIdx": "number — index into problems array, -1 for no scale visual",
+            "opts": "string[] — exactly 4 options",
+            "ans": "number — 0-based index of correct option",
+            "exp": "string — explanation shown after submit"
+        },
+        "LearnStep": {
+            "id": "number",
+            "title": "string",
+            "desc": "string",
+            "data?": {
+                "pIdx?": "number — index into problems array",
+                "eq?": "boolean — show equation chip",
+                "allEq?": "boolean — show all equations together"
+            }
+        },
+        "ScaleState": {
+            "lw": "number — left weight total",
+            "rw": "number — right weight total",
+            "diff": "number — lw minus rw",
+            "bal": "boolean — true if balanced"
+        }
+    },
+
+    "parameters": {
+        "width": { "type": "number", "default": 800, "description": "Width in pixels" },
+        "height": { "type": "number", "default": 620, "description": "Height in pixels" },
+        "initialMode": { "type": "ModeType", "enum": ["learn", "practice"], "default": "learn" },
+        "showModeSelector": { "type": "boolean", "default": true },
+        "enabledModes": { "type": "ModeType[]", "default": ["learn", "practice"] },
+        "showNavigation": { "type": "boolean", "default": true },
+        "showStepIndicator": { "type": "boolean", "default": true }
+    },
+
+    "additionalProps": {
+        "description": "Tool-specific dynamic content passed via props.additionalProps",
+        "properties": {
+            "problems": {
+                "type": "ScaleProblem[]",
+                "description": "Custom balance scale problems. Defaults to 3 problems (Fig 7.6, 7.7, 7.8)."
+            },
+            "mcqQuestions": {
+                "type": "MCQQuestion[]",
+                "description": "Custom MCQ questions for practice mode. Defaults to 5 questions. pIdx links to problems array index (-1 for no scale)."
+            }
+        }
+    },
+
+    "defaultData": {
+        "problems": [
+            {
+                "id": "fig76",
+                "title": "Fig 7.6 — Bread & Eggs",
+                "leftItems": [
+                    { "id": "b1", "label": "Bread", "emoji": "🍞", "weight": 2, "isUnknown": false },
+                    { "id": "b2", "label": "Bread", "emoji": "🍞", "weight": 2, "isUnknown": false },
+                    { "id": "b3", "label": "Bread", "emoji": "🍞", "weight": 2, "isUnknown": false }
+                ],
+                "rightItems": [
+                    { "id": "e1", "label": "Egg", "emoji": "🍳", "weight": 3, "isUnknown": true },
+                    { "id": "e2", "label": "Egg", "emoji": "🍳", "weight": 3, "isUnknown": true }
+                ],
+                "unknownVar": "e",
+                "equation": "2+2+2 = e+e → 2e = 6 → e = 3",
+                "solution": 3,
+                "hint": "Each bread=2. Total left=6. Two eggs=6 → each egg=3.",
+                "figRef": "Fig 7.6"
+            },
+            {
+                "id": "fig77",
+                "title": "Fig 7.7 — Sun & Stars",
+                "leftItems": [
+                    { "id": "s1", "label": "Sun", "emoji": "☀️", "weight": 4, "isUnknown": false },
+                    { "id": "st1", "label": "Star", "emoji": "⭐", "weight": 6, "isUnknown": true },
+                    { "id": "st2", "label": "Star", "emoji": "⭐", "weight": 6, "isUnknown": true }
+                ],
+                "rightItems": [
+                    { "id": "w1", "label": "16", "emoji": "🔷", "weight": 16, "isUnknown": false }
+                ],
+                "unknownVar": "y",
+                "equation": "4+2y = 16 → 2y = 12 → y = 6",
+                "solution": 6,
+                "hint": "Sun=4. Remove 4: 2y=12 → y=6.",
+                "figRef": "Fig 7.7"
+            },
+            {
+                "id": "fig78",
+                "title": "Fig 7.8 — Fruits",
+                "leftItems": [
+                    { "id": "wm1", "label": "Watermelon", "emoji": "🍉", "weight": 10, "isUnknown": false },
+                    { "id": "or1", "label": "Orange", "emoji": "🍊", "weight": 4, "isUnknown": false }
+                ],
+                "rightItems": [
+                    { "id": "bn1", "label": "Banana", "emoji": "🍌", "weight": 7, "isUnknown": true },
+                    { "id": "bn2", "label": "Banana", "emoji": "🍌", "weight": 7, "isUnknown": true }
+                ],
+                "unknownVar": "b",
+                "equation": "10+4 = 2b → 14 = 2b → b = 7",
+                "solution": 7,
+                "hint": "Left=14. Two bananas=14 → each=7.",
+                "figRef": "Fig 7.8"
+            }
+        ],
+        "mcqQuestions": [
+            { "id": 1, "q": "Fig 7.6: Three bread slices (each=2) balance two eggs. Weight of each egg?", "pIdx": 0, "opts": ["2", "3", "4", "6"], "ans": 1, "exp": "Total left=6. 2 eggs=6 → each=3." },
+            { "id": 2, "q": "Fig 7.7: Sun (4) + 2 stars balance 16. Weight of each star?", "pIdx": 1, "opts": ["4", "5", "6", "8"], "ans": 2, "exp": "Remove sun: 2y=12 → y=6." },
+            { "id": 3, "q": "Fig 7.8: Watermelon (10) + Orange (4) balance 2 bananas. Each banana?", "pIdx": 2, "opts": ["5", "6", "7", "10"], "ans": 2, "exp": "Left=14. 2b=14 → b=7." },
+            { "id": 4, "q": "If 3 apples balance a pumpkin of weight 12, what does each apple weigh?", "pIdx": -1, "opts": ["3", "4", "6", "9"], "ans": 1, "exp": "3 apples=12 → each=4." },
+            { "id": 5, "q": "Remove 5 kg from both sides of a balanced scale. What happens?", "pIdx": -1, "opts": ["Left goes down", "Right goes down", "Stays balanced", "Scale tips over"], "ans": 2, "exp": "Equal removal → stays balanced!" }
+        ],
+        "learnSteps": [
+            { "id": 1, "title": "What is a Balance Scale?", "desc": "A balance scale has two pans hung by chains. When both sides have equal weight, the beam stays perfectly level — this is the basis of equations!" },
+            { "id": 2, "title": "The Golden Rule", "desc": "Remove the same weight from BOTH sides → the scale stays balanced. This is how we isolate and find unknowns!" },
+            { "id": 3, "title": "Fig 7.6 — Find the Egg Weight", "desc": "Three breads (each=2) balance two eggs. Total left = 6, so 2e = 6 → e = 3!", "data": { "pIdx": 0, "eq": true } },
+            { "id": 4, "title": "Fig 7.7 — Find the Star Weight", "desc": "Sun (4) + 2 stars = 16. Remove sun: 2y = 12 → y = 6!", "data": { "pIdx": 1, "eq": true } },
+            { "id": 5, "title": "Fig 7.8 — Find the Banana Weight", "desc": "Watermelon (10) + Orange (4) = 2 bananas. 14 = 2b → b = 7!", "data": { "pIdx": 2, "eq": true } },
+            { "id": 6, "title": "Equations from Balance Scales", "desc": "Every balanced scale gives an equation: Left = Right. This is algebra — Bījagaṇita!", "data": { "allEq": true } }
+        ]
+    },
+
+    "modes": {
+        "learn": {
+            "label": "Learn",
+            "icon": "BookOpen",
+            "description": "6-step walkthrough: intro → golden rule → Fig 7.6 → 7.7 → 7.8 → all equations summary. Each problem step has animated solve and hint. Equations mode merged here.",
+            "totalSteps": 6,
+            "features": ["Animated solution walkthrough", "Hint toggle", "Equation chip display", "All-equations summary step"]
+        },
+        "practice": {
+            "label": "Practice",
+            "icon": "Target",
+            "description": "5 MCQ questions shown one at a time with Next/Prev navigation. First 3 include scale visual, last 2 are concept questions. Score tracked.",
+            "totalQuestions": 5,
+            "features": ["4-option MCQ grid (A/B/C/D)", "Submit button", "Correct/incorrect animation", "Explanation after submit", "Running score counter"]
+        }
+    },
+
+    "designTokens": {
+        "singularity": {
+            "primary": "#4A4DC9",
+            "accent": "#FF7212",
+            "primaryDark": "#533086",
+            "accentDark": "#FC9145",
+            "primaryLight": "#C1C1EA",
+            "accentLight": "#FFF3E4",
+            "gray900": "#4E4E4E",
+            "gray400": "#CACACA",
+            "gray200": "#EBEBEB",
+            "gray50": "#F5F5F5",
+            "white": "#FFFFFF",
+            "success": "#2DB57B",
+            "error": "#E54D4D",
+            "font": "Poppins",
+            "borderRadius": "40px (buttons), 20px (container), 12px (cards/chips), 8px (small)"
+        },
+        "brassScale": {
+            "light": "#E8D174",
+            "mid": "#C9A84C",
+            "dark": "#A07C28",
+            "darker": "#7A5C18",
+            "highlight": "#F5E6A0",
+            "shine": "#FFF8DC",
+            "panInner": "#D4B858",
+            "panRim": "#B8962E",
+            "chain": "#B89838"
+        }
+    },
+
+    "performanceNotes": [
+        "SvgDefs extracted as React.memo static component — never re-renders",
+        "renderScale wrapped in useCallback with [calcState, removed, solved] deps",
+        "renderEq and renderSol wrapped in useCallback with [] deps",
+        "Btn component wrapped in React.memo",
+        "All setTimeout IDs tracked in timersRef and cleared on step change",
+        "No inner component re-creation — Learn/Practice rendered as inline IIFEs",
+        "Animation durations shortened to .3s–.35s for snappy feel",
+        "Items use stable keys (item.id) not array index"
+    ],
+
+    "scaleRendering": {
+        "itemPlacement": "Items sit ON pan surface at panY-6 (emoji bottom touches pan rim), not floating in air",
+        "itemShadows": "Each item has a small elliptical shadow at panY-2 for grounded look",
+        "weightLabels": "Below pan at panY+18, unknown items show '?'",
+        "totalBadge": "Pill badge at panY+24 showing total weight per side",
+        "tiltAnimation": "Beam rotates around center pivot, 0.85s cubic-bezier transition",
+        "balanceIndicator": "Green checkmark circle above finial when balanced"
+    },
+
+    "toolCallExamples": [
+        {
+            "description": "Default: Learn mode with all 6 steps",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Finding Unknown Weights",
+                "data": {
+                    "toolName": "balance_scale_tool",
+                    "parameters": {
+                        "initialMode": "learn"
+                    }
+                },
+                "teaching_notes": "Guide students through this interactive tool. Encourage exploration and discussion.",
+                "instructions_for_student": "To find an unknown weight on a balanced scale, remove the same known weight from both sides. The scale remains balanced."
+            }
+        },
+        {
+            "description": "Practice mode with 5 MCQs",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Practice: Balance Scale Problems",
+                "data": {
+                    "toolName": "balance_scale_tool",
+                    "parameters": {
+                        "initialMode": "practice"
+                    }
+                },
+                "instructions_for_student": "Answer each question by selecting the correct option. Use the balance scale visual to help you!"
+            }
+        },
+        {
+            "description": "Learn mode only, no mode selector",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Balance Scale Walkthrough",
+                "data": {
+                    "toolName": "balance_scale_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "showModeSelector": false,
+                        "enabledModes": ["learn"]
+                    }
+                }
+            }
+        },
+        {
+            "description": "Custom problem via additionalProps",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Custom Balance Problem",
+                "data": {
+                    "toolName": "balance_scale_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "showModeSelector": false,
+                        "additionalProps": {
+                            "problems": [
+                                {
+                                    "id": "custom1",
+                                    "title": "Books & Pencils",
+                                    "leftItems": [
+                                        { "id": "bk1", "label": "Book", "emoji": "📕", "weight": 5, "isUnknown": false },
+                                        { "id": "bk2", "label": "Book", "emoji": "📕", "weight": 5, "isUnknown": false }
+                                    ],
+                                    "rightItems": [
+                                        { "id": "p1", "label": "Pencil Box", "emoji": "✏️", "weight": 10, "isUnknown": true }
+                                    ],
+                                    "unknownVar": "p",
+                                    "equation": "5+5 = p → p = 10",
+                                    "solution": 10,
+                                    "hint": "Two books weigh 5 each. Total = 10. Pencil box = 10!",
+                                    "figRef": "Custom"
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "description": "Custom MCQ questions via additionalProps",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Custom Quiz",
+                "data": {
+                    "toolName": "balance_scale_tool",
+                    "parameters": {
+                        "initialMode": "practice",
+                        "showModeSelector": false,
+                        "additionalProps": {
+                            "mcqQuestions": [
+                                {
+                                    "id": 1,
+                                    "q": "If 4 balls balance a box of weight 20, what does each ball weigh?",
+                                    "pIdx": -1,
+                                    "opts": ["4", "5", "10", "20"],
+                                    "ans": 1,
+                                    "exp": "4 balls = 20, each = 20 ÷ 4 = 5."
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "description": "Compact: no nav, no step indicator",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Scale Demo",
+                "data": {
+                    "toolName": "balance_scale_tool",
+                    "parameters": {
+                        "initialMode": "learn",
+                        "showModeSelector": false,
+                        "showNavigation": false,
+                        "showStepIndicator": false
+                    }
+                }
+            }
+        }
+    ],
+
+    "decisionTree": {
+        "student_asks_what_is_balance_scale": "initialMode: 'learn' — steps 1-2 cover intro + golden rule",
+        "student_asks_about_fig_7.6": "initialMode: 'learn' — navigate to step 3",
+        "student_asks_about_fig_7.7": "initialMode: 'learn' — navigate to step 4",
+        "student_asks_about_fig_7.8": "initialMode: 'learn' — navigate to step 5",
+        "student_asks_about_equations": "initialMode: 'learn' — navigate to step 6 (all equations)",
+        "student_needs_practice": "initialMode: 'practice' — 5 MCQ questions",
+        "teacher_wants_custom_problem": "Use additionalProps.problems with custom ScaleProblem[]",
+        "teacher_wants_custom_quiz": "Use additionalProps.mcqQuestions with custom MCQQuestion[]"
+    }
+}

@@ -1,0 +1,296 @@
+{
+    "toolName": "draw_parallel_lines_tool",
+    "version": "3.0.0",
+    "description": "Interactive geometry tool for Grade 7 — Drawing Parallel Lines on Dot Paper. 4 modes: Learn (interactive dot-grid challenges), Practice (5 MCQ questions with wrong-answer correction), Real World (contextual examples), Hands On (free draw). Singularity Design System (#4A4DC9 primary, #FF7212 accent, Poppins font, pill buttons with 4 variants × 4 states). Fully responsive across all devices via 4-tier breakpoint system (xs/sm/md/lg) with 40+ scaled properties. Touch-optimized with onTouchStart dedup. ResizeObserver + resize + orientationchange listeners.",
+
+    "designSystem": {
+        "name": "Singularity",
+        "colors": {
+            "primary": "#4A4DC9",
+            "primaryHover": "#3A3DA9",
+            "primaryPressed": "#333599",
+            "primaryLight": "#C1C1EA",
+            "primaryGhost": "#EDEDF8",
+            "accent": "#FF7212",
+            "accentHover": "#E56400",
+            "accentPressed": "#D05A00",
+            "accentLight": "#FFF3E4",
+            "accentMid": "#FC9145",
+            "gradientStart": "#533086",
+            "gradientEnd": "#FC9145",
+            "success": "#2ECC71",
+            "error": "#E74C3C",
+            "neutral900": "#4E4E4E",
+            "neutral600": "#7A7A7A",
+            "neutral400": "#CACACA",
+            "neutral200": "#EBEBEB",
+            "neutral100": "#F5F5F5",
+            "white": "#FFFFFF"
+        },
+        "font": "Poppins (400–800)",
+        "buttons": {
+            "shape": "Pill (border-radius: 9999px)",
+            "variants": ["contained", "outlined", "texted", "highlight"],
+            "states": ["enabled", "disabled", "hover", "pressed"],
+            "spec": {
+                "lg": { "height": 40, "paddingX": 24, "fontSize": 13, "iconGap": 4 },
+                "md": { "height": 36, "paddingX": 20, "fontSize": 12, "iconGap": 4 },
+                "sm": { "height": 32, "paddingX": 14, "fontSize": 11, "iconGap": 4 },
+                "xs": { "height": 28, "paddingX": 10, "fontSize": 10, "iconGap": 3 }
+            }
+        }
+    },
+
+    "responsive": {
+        "strategy": "ResizeObserver + window.resize + orientationchange. All dimensions from RV (Responsive Values) object per breakpoint.",
+        "breakpoints": {
+            "xs": { "range": "< 380px", "description": "Small phones portrait. Icon-only buttons/tabs, no text labels, compact spacing." },
+            "sm": { "range": "380–599px", "description": "Standard phones. Mode labels shown, button labels hidden." },
+            "md": { "range": "600–899px", "description": "Large phones landscape / tablets. All labels visible." },
+            "lg": { "range": "900px+", "description": "Desktop / tablet landscape. Full sizing per PDF spec (40px buttons, 24px padding)." }
+        },
+        "heightCalculation": {
+            "xs": "max(480, min(88vh, 660))",
+            "sm": "max(520, min(85vh, 700))",
+            "md": "max(560, min(78% width, 680))",
+            "lg": "max(560, min(75% width, props.height))"
+        },
+        "scaledProperties": {
+            "buttons": "Height 28→32→36→40, padding 10→14→20→24, font 10→11→12→13",
+            "modeSelector": "Height 26→30→34→38, padding 8→12→16→20, font 9→10→12→13",
+            "header": "Title 13→14→16→17, subtitle 9→10→11→12, padding 8→10→12→14",
+            "dotGrid": "Tap target 34→38→42→44, dot radius 3→3.5→3.5→3.5, line width 2→2.5→3→3.5",
+            "mcqOptions": "Font 11→12→13→14, padding 8→10→12→14, circle 22→24→28→32",
+            "feedback": "Font 12→13→15→16, paddingX 14→18→24→28",
+            "celebration": "Icon 44→52→60→72, title 16→18→22→26, stars 18→20→24→28",
+            "navigation": "Padding 6→8→10→12"
+        },
+        "visibilityFlags": {
+            "showBtnLabel": "false on xs/sm, true on md/lg — hides Previous/Play/Next text",
+            "showModeLabel": "false on xs, true on sm/md/lg — hides mode tab text",
+            "showGivenLabel": "false on xs/sm, true on md/lg — hides 'Given Line' SVG badge",
+            "showHintLabel": "false on xs/sm, true on md/lg — hides Hint/Reset button text"
+        },
+        "touchOptimizations": [
+            "onTouchStart with preventDefault for instant touch response",
+            "Touch/click dedup via lastTouchRef timestamp (300ms window)",
+            "touchAction: 'manipulation' on container and all interactive elements",
+            "WebkitTapHighlightColor: 'transparent'",
+            "Hover states only applied on non-touch (mouse) interactions"
+        ]
+    },
+
+    "parameters": {
+        "width": { "type": "number", "default": 800, "description": "Suggested max width. Actual width measured from parent via ResizeObserver." },
+        "height": { "type": "number", "default": 600, "description": "Suggested height for lg. Auto-calculated per breakpoint." },
+        "initialMode": { "type": "string", "enum": ["learn", "practice", "real_world", "hands_on"], "default": "learn", "description": "Starting mode." },
+        "showModeSelector": { "type": "boolean", "default": true, "description": "Show/hide mode tabs." },
+        "enabledModes": { "type": "array", "items": "ModeType", "default": ["learn", "practice", "real_world", "hands_on"], "description": "Which modes to enable." },
+        "showNavigation": { "type": "boolean", "default": true, "description": "Show/hide Previous/Next buttons." },
+        "showPlayPause": { "type": "boolean", "default": true, "description": "Show/hide Play/Pause button." },
+        "showStepIndicator": { "type": "boolean", "default": true, "description": "Show/hide 'Step X of Y' badge." },
+        "initialStep": { "type": "number", "default": 1, "description": "Starting step ID." },
+        "filterSteps": { "type": "array", "items": "number", "default": null, "description": "Only show these step IDs." },
+        "animationSpeed": { "type": "number", "default": 1, "description": "Animation speed multiplier." },
+        "autoPlayDuration": { "type": "number", "default": 8000, "description": "Auto-advance delay in ms (Real World mode only)." },
+        "themeColor": { "type": "string", "default": "#4A4DC9", "description": "Primary theme color." },
+        "darkMode": { "type": "boolean", "default": false, "description": "Dark mode toggle." }
+    },
+
+    "additionalProps": {
+        "description": "Tool-specific dot-grid configuration.",
+        "schema": {
+            "gridCols": { "type": "number", "default": 10, "description": "Dot grid columns." },
+            "gridRows": { "type": "number", "default": 8, "description": "Dot grid rows." },
+            "dotSize": { "type": "number", "default": 7, "description": "Base dot diameter." },
+            "challenges": {
+                "type": "array",
+                "description": "Dot-grid challenges for Learn and Hands On modes.",
+                "items": {
+                    "givenLine": { "start": "[col, row]", "end": "[col, row]" },
+                    "difficulty": "Easy | Medium | Hard",
+                    "hint": "string",
+                    "label": "string"
+                }
+            },
+            "slopeTolerance": { "type": "number", "default": 0.001 },
+            "showGrid": { "type": "boolean", "default": false, "description": "Show faint grid lines." }
+        },
+        "examples": {
+            "default": { "description": "Default 5 challenges, no config needed.", "value": {} },
+            "beginnerHorizontalOnly": {
+                "value": {
+                    "showGrid": true,
+                    "challenges": [
+                        { "givenLine": { "start": [1, 2], "end": [7, 2] }, "difficulty": "Easy", "hint": "Same row!", "label": "Horizontal" },
+                        { "givenLine": { "start": [2, 5], "end": [8, 5] }, "difficulty": "Easy", "hint": "Same row!", "label": "Horizontal" }
+                    ]
+                }
+            },
+            "advancedDiagonals": {
+                "value": {
+                    "challenges": [
+                        { "givenLine": { "start": [1, 1], "end": [5, 3] }, "difficulty": "Hard", "hint": "4 right, 2 down!", "label": "Gentle" },
+                        { "givenLine": { "start": [2, 1], "end": [4, 6] }, "difficulty": "Hard", "hint": "2 right, 5 down!", "label": "Steep" },
+                        { "givenLine": { "start": [1, 3], "end": [4, 2] }, "difficulty": "Hard", "hint": "3 right, 1 up!", "label": "Shallow" }
+                    ]
+                }
+            },
+            "compactMobile": {
+                "value": { "gridCols": 8, "gridRows": 6, "showGrid": true }
+            },
+            "largeGrid": {
+                "value": { "gridCols": 12, "gridRows": 10 }
+            }
+        }
+    },
+
+    "modes": {
+        "learn": {
+            "label": "Learn",
+            "icon": "BookOpen",
+            "gradient": ["#4A4DC9", "#7B7FE0"],
+            "description": "Interactive dot-grid challenges. Each step presents a given line; student taps two dots to draw a parallel line. Slope comparison gives instant green/red feedback. 5 steps progressing from horizontal to steep slopes.",
+            "steps": [
+                { "id": 1, "title": "Horizontal Parallel", "challengeIndex": 0 },
+                { "id": 2, "title": "Vertical Parallel", "challengeIndex": 1 },
+                { "id": 3, "title": "45° Diagonal", "challengeIndex": 2 },
+                { "id": 4, "title": "Gentle Slope", "challengeIndex": 3 },
+                { "id": 5, "title": "Steep Slope", "challengeIndex": 4 }
+            ]
+        },
+        "practice": {
+            "label": "Practice",
+            "icon": "Target",
+            "gradient": ["#FF7212", "#FC9145"],
+            "description": "5 multiple-choice questions on parallel lines, transversals, and angles. Wrong answers highlight the correct option in green with an explanation. Score shown after all 5 answered.",
+            "questions": [
+                { "id": 1, "topic": "Parallel lines definition" },
+                { "id": 2, "topic": "Vertically opposite angles" },
+                { "id": 3, "topic": "Corresponding angles" },
+                { "id": 4, "topic": "Slope and parallelism" },
+                { "id": 5, "topic": "Co-interior angles" }
+            ]
+        },
+        "real_world": {
+            "label": "Real World",
+            "icon": "Globe",
+            "gradient": ["#533086", "#8B5CF6"],
+            "description": "3 real-world examples of parallel lines: railway tracks, ruled notebooks, building edges. Auto-advances with Play/Pause.",
+            "steps": [
+                { "id": 20, "title": "Railway Tracks" },
+                { "id": 21, "title": "Ruled Notebook" },
+                { "id": 22, "title": "Building Edges" }
+            ]
+        },
+        "hands_on": {
+            "label": "Hands On",
+            "icon": "Zap",
+            "gradient": ["#E56400", "#FF7212"],
+            "description": "Free draw mode — same dot-grid as Learn but starts at challenge 0. Student can complete all 5 challenges with celebration at the end.",
+            "steps": [
+                { "id": 30, "title": "Free Draw", "freeMode": true }
+            ]
+        }
+    },
+
+    "steps": {
+        "total": 14,
+        "learn": [1, 2, 3, 4, 5],
+        "practice": [10, 11, 12, 13, 14],
+        "real_world": [20, 21, 22],
+        "hands_on": [30]
+    },
+
+    "mcqQuestions": [
+        { "id": 1, "question": "Which best describes parallel lines?", "correctAnswer": "Lines on the same plane that never meet", "topic": "definition" },
+        { "id": 2, "question": "Vertically opposite angles are:", "correctAnswer": "Always equal", "topic": "intersection" },
+        { "id": 3, "question": "If a corresponding angle is 65°, the other is:", "correctAnswer": "65°", "topic": "transversal" },
+        { "id": 4, "question": "Lines are parallel if they have the same:", "correctAnswer": "Slope (rise/run)", "topic": "slope" },
+        { "id": 5, "question": "Co-interior angles add up to:", "correctAnswer": "180°", "topic": "co-interior" }
+    ],
+
+    "features": {
+        "dotGridInteraction": "Tap two dots to draw a line. Slope comparison (dy/dx) runs instantly. Handles vertical lines. Rejects lines overlapping the given line.",
+        "mcqWithCorrection": "4 options per question. Wrong answer highlights red + correct highlights green simultaneously. Explanation card appears after every answer.",
+        "scoreTracking": "MCQ score shown after all 5 answered with contextual feedback (Perfect/Good/Keep learning).",
+        "slopeComparison": "Mathematical slope check with configurable tolerance (default 0.001).",
+        "feedbackPopup": "Green gradient pill for correct, red gradient pill for incorrect. Auto-fades incorrect after 1.2s.",
+        "givenLineAnimation": "easeOutCubic draw animation (700ms) on each new challenge. Staggered endpoint appearance.",
+        "previewLine": "Dashed accent-colored preview from first dot to cursor position.",
+        "dotInteraction": "Pulsing ring animation on selected dots. Expanding halo on hover. Touch-optimized tap targets (34–44px).",
+        "celebrationOverlay": "Confetti particles in DS colors, gradient trophy circle, 5 animated stars, Play Again button.",
+        "hintSystem": "Per-challenge hint text in accent-light banner with lightbulb icon.",
+        "modeSelector": "4 mode tabs with icons. Active = gradient Contained, Inactive = Outlined with hover states.",
+        "stepNavigation": "Previous (outlined) / Play-Pause (contained) / Next (highlight) buttons with proper disabled states.",
+        "autoAdvance": "Real World mode auto-advances via setTimeout with configurable duration. Respects stopAutoNext prop.",
+        "stepTransitions": "Fade + slide (280ms) with easeOutCubic between steps.",
+        "progressBar": "Gradient bar showing step/total percentage.",
+        "responsiveLayout": "40+ properties scaled across 4 breakpoints. Dynamic header height calculation. Grid fills exact available space.",
+        "darkMode": "Surface, background, text, and border colors swap when darkMode=true."
+    },
+
+    "teachingNotes": {
+        "overview": "Tests spatial intuition for parallelism in Learn mode, reinforces theory in Practice mode with MCQs, connects to real life in Real World mode, and provides free exploration in Hands On mode.",
+        "scaffolding": [
+            "Learn mode progresses: horizontal → vertical → 45° → gentle slope → steep slope",
+            "Hints available for every challenge",
+            "MCQ questions cover definition, vertically opposite angles, corresponding angles, slope concept, and co-interior angles",
+            "Wrong MCQ answers show the correct answer + explanation immediately",
+            "Final unusual-angle challenges motivate the need for transversals (next module)"
+        ],
+        "curriculumLink": "Ganita Prakash Grade 7, Chapter 5: Parallel and Intersecting Lines (Sections 5.1–5.8)",
+        "prerequisiteKnowledge": ["Parallel lines never meet", "Basic dot grid familiarity", "Intuitive concept of direction/slope"],
+        "followUpTopics": ["Transversals (5.5)", "Corresponding angles (5.6)", "Alternate angles (5.8)"]
+    },
+
+    "agentQuickReference": {
+        "default": {
+            "description": "Show full tool with all 4 modes, default challenges",
+            "toolCall": { "toolName": "draw_parallel_lines_tool", "parameters": {} }
+        },
+        "learnOnly": {
+            "description": "Learn mode only — interactive dot grid challenges",
+            "toolCall": { "toolName": "draw_parallel_lines_tool", "parameters": { "initialMode": "learn", "enabledModes": ["learn"], "showModeSelector": false } }
+        },
+        "practiceOnly": {
+            "description": "Practice mode only — 5 MCQ questions",
+            "toolCall": { "toolName": "draw_parallel_lines_tool", "parameters": { "initialMode": "practice", "enabledModes": ["practice"], "showModeSelector": false } }
+        },
+        "beginnerWithGrid": {
+            "description": "Beginner — horizontal only, grid lines visible",
+            "toolCall": { "toolName": "draw_parallel_lines_tool", "parameters": { "initialMode": "learn", "enabledModes": ["learn"], "showModeSelector": false, "additionalProps": { "showGrid": true, "challenges": [{ "givenLine": { "start": [1, 2], "end": [7, 2] }, "difficulty": "Easy", "hint": "Same row!", "label": "Horizontal" }] } } }
+        },
+        "advancedChallenges": {
+            "description": "Hard diagonal challenges only",
+            "toolCall": { "toolName": "draw_parallel_lines_tool", "parameters": { "initialMode": "learn", "enabledModes": ["learn", "hands_on"], "additionalProps": { "challenges": [{ "givenLine": { "start": [1, 1], "end": [5, 3] }, "difficulty": "Hard", "hint": "4 right, 2 down!", "label": "Gentle" }, { "givenLine": { "start": [2, 1], "end": [4, 6] }, "difficulty": "Hard", "hint": "2 right, 5 down!", "label": "Steep" }] } } }
+        },
+        "mobileCompact": {
+            "description": "Compact grid for small screens",
+            "toolCall": { "toolName": "draw_parallel_lines_tool", "parameters": { "additionalProps": { "gridCols": 8, "gridRows": 6, "showGrid": true } } }
+        },
+        "noNavMinimal": {
+            "description": "Minimal UI — no navigation, no mode selector, single step",
+            "toolCall": { "toolName": "draw_parallel_lines_tool", "parameters": { "initialMode": "learn", "showModeSelector": false, "showNavigation": false, "showPlayPause": false, "filterSteps": [1] } }
+        },
+        "realWorldAutoPlay": {
+            "description": "Real World mode with fast auto-advance",
+            "toolCall": { "toolName": "draw_parallel_lines_tool", "parameters": { "initialMode": "real_world", "enabledModes": ["real_world"], "showModeSelector": false, "autoPlayDuration": 5000 } }
+        }
+    },
+
+    "decisionTree": [
+        "Student is new to parallel lines → default (all 4 modes)",
+        "Student needs interactive practice → learnOnly",
+        "Student needs theory quiz → practiceOnly",
+        "Student struggles with basics → beginnerWithGrid",
+        "Student finds it too easy → advancedChallenges",
+        "Student on small phone → mobileCompact",
+        "Classroom projector demo → largeGrid additionalProps",
+        "Quick embed with no controls → noNavMinimal",
+        "Auto-playing slideshow → realWorldAutoPlay",
+        "Student completed all → transition to transversals topic"
+    ],
+
+    "instructions_for_student": "This tool has 4 modes. In LEARN, a blue line appears on the dot grid — tap two dots to draw a parallel line. Green = correct, red = try again. In PRACTICE, answer 5 questions about parallel lines — if you pick wrong, the correct answer lights up green with an explanation. In REAL WORLD, discover parallel lines in everyday objects. In HANDS ON, draw freely on the dot grid. Use the arrow buttons to move between steps."
+}

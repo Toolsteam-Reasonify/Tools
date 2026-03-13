@@ -1,0 +1,294 @@
+{
+    "toolName": "drawing_parallel_lines_tool",
+    "version": "4.0.0",
+    "description": "Interactive step-based geometry constructor for Grade 7 Mathematics — Drawing Parallel Lines via Two Methods with Practice MCQs. Redesigned with Singularity Design System: Poppins font, primary #4A4DC9, accent #FF7212, gradient #533086→#FC9145, lavender #C1C1EA, peach #FFF3E4. Learn mode has two sub-tabs with canvas animations. Practice mode has 5 MCQs with diagrams and scoring.",
+
+    "designSystem": {
+        "name": "Singularity",
+        "font": "Poppins (400–800)",
+        "colors": {
+            "primary": "#4A4DC9",
+            "accent": "#FF7212",
+            "gradientFrom": "#533086",
+            "gradientTo": "#FC9145",
+            "lavender": "#C1C1EA",
+            "peach": "#FFF3E4",
+            "gray900": "#4E4E4E",
+            "gray400": "#CACACA",
+            "gray200": "#EBEBEB",
+            "gray100": "#F5F5F5",
+            "white": "#FFFFFF",
+            "correct": "#2ECC71",
+            "wrong": "#E74C3C"
+        },
+        "buttons": {
+            "contained": "Filled primary #4A4DC9, white text, border-radius 24px",
+            "outlined": "Transparent bg, 1.5px primary border, primary text, border-radius 24px",
+            "texted": "No bg, primary text underlined, border-radius 24px",
+            "disabled": "Gray #CACACA fill, white text, not-allowed cursor"
+        }
+    },
+
+    "parameters": {
+        "width": {
+            "type": "number",
+            "default": 800,
+            "description": "Component max width in pixels"
+        },
+        "height": {
+            "type": "number",
+            "default": 600,
+            "description": "Component height in pixels"
+        },
+        "initialMode": {
+            "type": "string",
+            "enum": ["learn", "practice"],
+            "default": "learn",
+            "description": "Starting mode tab"
+        },
+        "initialSubMethod": {
+            "type": "string",
+            "enum": ["ruler", "paper"],
+            "default": "ruler",
+            "description": "Starting sub-method in Learn mode"
+        },
+        "showModeSelector": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide Learn and Practice tab bar"
+        },
+        "showNavigation": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide Prev/Next/Reset navigation"
+        },
+        "showStepIndicator": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show/hide step counter badge"
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 1,
+            "description": "Canvas animation speed multiplier"
+        }
+    },
+
+    "additionalProps": {
+        "description": "Tool-specific customisation props",
+        "schema": {
+            "lineColor": {
+                "type": "string",
+                "default": "#4E4E4E",
+                "description": "Color of line l"
+            },
+            "setSquareColor": {
+                "type": "string",
+                "default": "#4A4DC9",
+                "description": "Color of the set square outline"
+            },
+            "rulerColor": {
+                "type": "string",
+                "default": "#FF7212",
+                "description": "Color of the ruler graphic"
+            },
+            "paperColor": {
+                "type": "string",
+                "default": "#FFF3E4",
+                "description": "Background for paper folding canvas"
+            },
+            "creaseColor": {
+                "type": "string",
+                "default": "#CACACA",
+                "description": "Color of fold crease lines"
+            },
+            "showAngleLabels": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show 90° angle square symbols"
+            },
+            "showParallelMarks": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show ▸▸ parallel arrow marks on lines"
+            },
+            "mcqQuestions": {
+                "type": "array",
+                "description": "Custom MCQ questions array to override defaults",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "q": { "type": "string", "description": "Question text" },
+                        "opts": { "type": "array", "items": { "type": "string" }, "description": "Four option strings" },
+                        "ans": { "type": "number", "description": "Correct option index (0-3)" },
+                        "exp": { "type": "string", "description": "Explanation shown after answering" },
+                        "fig": { "type": "string", "enum": ["sq", "pf"], "description": "Mini-figure type: sq = set square diagram, pf = paper fold diagram" }
+                    }
+                }
+            }
+        }
+    },
+
+    "modes": {
+        "learn": {
+            "label": "Learn",
+            "icon": "BookOpen",
+            "description": "Step-by-step animated construction with canvas drawings",
+            "subMethods": {
+                "ruler": {
+                    "label": "📐 Ruler & Set Square",
+                    "steps": [
+                        { "id": 1, "title": "Draw Line l with a Ruler", "animation": "Line draws left-to-right with arrowheads and label l" },
+                        { "id": 2, "title": "Place the Set Square on Line l", "animation": "Orange ruler appears vertically, set square triangle bounces in with lavender fill, 90° symbol appears" },
+                        { "id": 3, "title": "Slide the Set Square Along the Ruler", "animation": "Set square slides up with easeInOut, dotted trail path, ghost at original position" },
+                        { "id": 4, "title": "Draw Line m — Parallel!", "animation": "Line m draws in primary color, 90° symbol appears, parallel ▸▸ arrows, '90° = 90° → l ∥ m' banner" }
+                    ]
+                },
+                "paper": {
+                    "label": "📄 Paper Folding",
+                    "steps": [
+                        { "id": 5, "title": "Line l and Point A", "animation": "Line l draws on paper-textured bg, point A appears with orange dot and glow ring" },
+                        { "id": 6, "title": "Fold Crease t ⊥ l through A", "animation": "Lavender fold overlay fades, dashed crease t appears vertically, 90° symbol at intersection" },
+                        { "id": 7, "title": "Fold Line m ⊥ t through A", "animation": "Second fold overlay, line m draws in primary, 90° symbol, parallel arrows, 'Both ⊥ to t → l ∥ m' banner" }
+                    ]
+                }
+            }
+        },
+        "practice": {
+            "label": "Practice",
+            "icon": "Target",
+            "description": "5 MCQ questions with diagrams, instant feedback, explanations, and score screen",
+            "questions": [
+                { "id": 1, "summary": "Why slide the set square?", "answer": "Equal 90° corresponding angles", "figure": "sq" },
+                { "id": 2, "summary": "l ⊥ t and m ⊥ t — conclusion?", "answer": "l ∥ m (parallel)", "figure": "pf" },
+                { "id": 3, "summary": "Both corresponding angles 90° — lines are?", "answer": "Parallel", "figure": "sq" },
+                { "id": 4, "summary": "Which tool is the transversal?", "answer": "The ruler", "figure": "sq" },
+                { "id": 5, "summary": "How many folds needed?", "answer": "Two folds", "figure": "pf" }
+            ],
+            "scoring": {
+                "5": { "emoji": "🏆", "message": "Perfect! You really understand parallel lines!" },
+                "4": { "emoji": "🏆", "message": "Great job! Almost perfect!" },
+                "3": { "emoji": "⭐", "message": "Good work! Review the ones you missed." },
+                "0-2": { "emoji": "📚", "message": "Keep practising! Try the Learn mode to review." }
+            }
+        }
+    },
+
+    "navigation": {
+        "prevButton": { "style": "outlined", "label": "Prev", "icon": "ChevronLeft" },
+        "nextButton": { "style": "contained", "label": "Next", "icon": "ChevronRight" },
+        "resetButton": { "style": "texted", "label": "Reset", "icon": "RotateCcw" },
+        "checkButton": { "style": "contained", "label": "Check Answer", "fullWidth": true },
+        "tryAgainButton": { "style": "contained", "label": "Try Again", "icon": "RotateCcw" }
+    },
+
+    "teaching_notes": "Steps 1–4 cover Method 1 (ruler and set square). Emphasise the ruler as transversal and the 90° corresponding angles. Steps 5–7 cover Method 2 (paper folding). Show that both l and m are perpendicular to crease t, so corresponding angles are both 90° — hence parallel. Practice MCQs reinforce both methods and the key principle: two lines perpendicular to the same line are always parallel.",
+
+    "instructions_for_student": "Watch two methods for drawing parallel lines in Learn mode. Method 1 uses a ruler and set square — sliding the set square creates two lines with equal 90° corresponding angles. Method 2 uses paper folding — two perpendicular folds create a parallel line. Then test yourself with 5 MCQs in Practice mode! For both methods, the key principle is: two lines perpendicular to the same line are always parallel.",
+
+    "tool_call_examples": [
+        {
+            "description": "Default — Learn mode, ruler sub-tab",
+            "parameters": {}
+        },
+        {
+            "description": "Start in Practice mode directly",
+            "parameters": {
+                "initialMode": "practice"
+            }
+        },
+        {
+            "description": "Start with paper folding method",
+            "parameters": {
+                "initialMode": "learn",
+                "initialSubMethod": "paper"
+            }
+        },
+        {
+            "description": "Practice mode only — hide Learn tab",
+            "parameters": {
+                "initialMode": "practice",
+                "showModeSelector": false
+            }
+        },
+        {
+            "description": "Learn mode only — hide Practice tab",
+            "parameters": {
+                "initialMode": "learn",
+                "showModeSelector": false
+            }
+        },
+        {
+            "description": "Faster animations for quick demo",
+            "parameters": {
+                "animationSpeed": 2
+            }
+        },
+        {
+            "description": "Custom MCQ questions",
+            "parameters": {
+                "initialMode": "practice",
+                "additionalProps": {
+                    "mcqQuestions": [
+                        {
+                            "q": "What angle does a set square make with line l?",
+                            "opts": ["45°", "60°", "90°", "120°"],
+                            "ans": 2,
+                            "exp": "The set square's right angle edge makes exactly 90° with line l.",
+                            "fig": "sq"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "description": "Custom line and set square colors",
+            "parameters": {
+                "additionalProps": {
+                    "lineColor": "#333333",
+                    "setSquareColor": "#6366F1",
+                    "rulerColor": "#F59E0B"
+                }
+            }
+        },
+        {
+            "description": "Hide angle labels and parallel marks",
+            "parameters": {
+                "additionalProps": {
+                    "showAngleLabels": false,
+                    "showParallelMarks": false
+                }
+            }
+        },
+        {
+            "description": "Minimal UI — no nav, no step indicator",
+            "parameters": {
+                "showNavigation": false,
+                "showStepIndicator": false
+            }
+        }
+    ],
+
+    "decision_tree": {
+        "student_asks_how_to_draw_parallel_lines": {
+            "action": "Show Learn mode with ruler sub-tab",
+            "parameters": { "initialMode": "learn", "initialSubMethod": "ruler" }
+        },
+        "student_asks_about_paper_folding": {
+            "action": "Show Learn mode with paper sub-tab",
+            "parameters": { "initialMode": "learn", "initialSubMethod": "paper" }
+        },
+        "student_wants_to_practice": {
+            "action": "Show Practice mode",
+            "parameters": { "initialMode": "practice" }
+        },
+        "teacher_wants_quiz_only": {
+            "action": "Practice mode without Learn tab",
+            "parameters": { "initialMode": "practice", "showModeSelector": false }
+        },
+        "quick_revision": {
+            "action": "Fast animations with both modes",
+            "parameters": { "animationSpeed": 2 }
+        }
+    }
+}

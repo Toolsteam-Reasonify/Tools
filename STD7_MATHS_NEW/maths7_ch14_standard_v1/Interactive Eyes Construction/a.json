@@ -1,0 +1,586 @@
+{
+  "id": "M1.S4.T4.T1D1",
+  "title": "Introduction — The 'Eyes' Construction Revisited",
+  "subtype": "geometry_constructor",
+  "toolName": "eyes_construction_tool",
+  "version": "2.0.0",
+  "description": "A fully responsive, touch-enabled interactive tool that lets students construct the 'Eyes' figure step by step. Students examine a supporting line XY, set a compass radius via slider, watch realistic compass-drawing animations with visible pivot points and radius arms, find intersection points A and B, and draw the upper and lower arcs to form a symmetrical eye shape. On the final step, dragging the centre points along the perpendicular bisector changes the eye shape in real time. Works on mobile, tablet, and desktop with adaptive layout, touch drag, and fluid typography.",
+  "objective_id": "M1.S4.T4.O1",
+  "teaching_notes": "This tool connects the Eyes construction from Grade 6 to the new concept of perpendicular bisector. The final step where students drag centres along the bisector previews the equidistant point property covered in M1.S3.T3. Emphasise that compass radius must exceed half of XY for arcs to intersect. In practice mode, students should try different radii and segment lengths. The slow 7-second animation with visible compass pivot labels ('Compass at X', 'Compass at Y', 'Centre = A', 'Centre = B') and radius arms helps students follow each construction step clearly. Touch support enables use on school tablets and phones.",
+  "instructions_for_student": "Build a symmetrical eye shape step by step. Start by examining the supporting line XY, then watch how equal-radius arcs from X and Y find the centres A and B. Notice the pulsing ring showing where the compass is placed and the dashed line showing the radius arm. Finally, drag the centres along the perpendicular bisector to explore how different eye shapes emerge while symmetry is always maintained.",
+  "designSystem": {
+    "name": "Singularity",
+    "font": "Poppins",
+    "fontWeights": [400, 500, 600, 700],
+    "fontCDN": "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap",
+    "colors": {
+      "primary": "#4A4DC9",
+      "primaryDark": "#533086",
+      "accent": "#FF7212",
+      "accentSoft": "#FC9145",
+      "lavender": "#C1C1EA",
+      "peach": "#FFF3E4",
+      "lavenderBg": "#EEEDF8",
+      "peachBg": "#FFF8F0",
+      "gray900": "#4E4E4E",
+      "gray400": "#CACACA",
+      "gray200": "#EBEBEB",
+      "gray100": "#F5F5F5",
+      "white": "#FFFFFF",
+      "black": "#1A1A2E",
+      "success": "#2ECC71",
+      "danger": "#E74C3C"
+    },
+    "borderRadius": {
+      "full": 24,
+      "sm": 12,
+      "xs": 8
+    },
+    "buttons": {
+      "height": { "mobile": 34, "desktop": 40 },
+      "paddingHorizontal": { "mobile": 14, "desktop": 24 },
+      "borderRadius": { "mobile": 18, "desktop": 24 },
+      "fontSize": { "mobile": 11, "desktop": 13 },
+      "variants": ["contained", "outlined", "accent", "ghost", "success"]
+    }
+  },
+  "responsive": {
+    "breakpoints": {
+      "mobile": { "maxWidth": 479, "label": "sm" },
+      "tablet": { "minWidth": 480, "maxWidth": 699, "label": "md" },
+      "desktop": { "minWidth": 700, "label": "lg" }
+    },
+    "containerWidth": {
+      "strategy": "ResizeObserver on root container",
+      "maxWidth": 800,
+      "width": "100%"
+    },
+    "canvasHeight": {
+      "mobile": 240,
+      "tablet": 300,
+      "desktop": 360
+    },
+    "fontScaling": {
+      "mobile": 0.82,
+      "tablet": 0.92,
+      "desktop": 1.0
+    },
+    "padding": {
+      "mobile": 10,
+      "tablet": 14,
+      "desktop": 18
+    },
+    "headerPadding": {
+      "mobile": 12,
+      "tablet": 18,
+      "desktop": 28
+    },
+    "headerLayout": {
+      "mobile": "column (stacked)",
+      "tablet": "row",
+      "desktop": "row"
+    },
+    "modeToggle": {
+      "mobile": "full-width stretch",
+      "desktop": "auto-width"
+    },
+    "navigationButtons": {
+      "mobile": "icon-only (no text labels)",
+      "desktop": "icon + text"
+    },
+    "practiceButtonLabels": {
+      "mobile": ["Above", "Below", "Eye"],
+      "desktop": ["Draw Arcs Above", "Draw Arcs Below", "Draw Eye Shape"]
+    },
+    "compassSliderLabel": {
+      "mobile": "hidden (icon + slider + value only)",
+      "desktop": "visible ('Compass radius:')"
+    },
+    "stepDots": {
+      "mobile": { "active": 18, "inactive": 8, "height": 8, "gap": 5 },
+      "desktop": { "active": 28, "inactive": 10, "height": 10, "gap": 8 }
+    },
+    "dragTargets": {
+      "mobile": { "radius": 16, "note": "Larger touch targets for fingers" },
+      "desktop": { "radius": 11 }
+    },
+    "touchSupport": {
+      "enabled": true,
+      "events": ["onTouchStart", "onTouchMove", "onTouchEnd", "onTouchCancel"],
+      "svgTouchAction": "none",
+      "note": "Prevents page scroll during drag on Step 5"
+    }
+  },
+  "animations": {
+    "learnStepDuration": 7000,
+    "practiceStepDuration": 5000,
+    "easing": "easeInOutQuad for master timeline, easeOutCubic for reveals, easeOutElastic for point pops",
+    "compassVisualization": {
+      "pivotRing": "Pulsing animated ring at compass placement point (pivotPulse keyframe)",
+      "pivotLabel": "Pill-shaped label below pivot: 'Compass at X', 'Compass at Y', 'Centre = A', 'Centre = B'",
+      "radiusArm": "Dashed line from pivot to pencil tip, visible throughout arc drawing",
+      "pencilTip": "Small dark dot with radial glow at the drawing end of compass",
+      "needleBody": "Triangle polygon connecting tip to base",
+      "placementBurst": "Expanding ring animation when compass first touches a point"
+    },
+    "arcDrawing": {
+      "method": "requestAnimationFrame with fractional arc path (arcPartial)",
+      "glowTrail": "Radial gradient circle following pencil tip",
+      "sparkleOnIntersection": "Two expanding ring animations at point discovery"
+    },
+    "stepTimelines": {
+      "step2": {
+        "0.00-0.05": "Compass placement burst at X",
+        "0.05-0.42": "Arc drawn from X above (pivot label: 'Compass at X')",
+        "0.42-0.52": "Compass lifts and travels X → Y (hop arc)",
+        "0.52-0.57": "Compass placement burst at Y",
+        "0.57-0.82": "Arc drawn from Y above (pivot label: 'Compass at Y')",
+        "0.82-1.00": "Intersection sparkle, point A reveals with elastic bounce + pulse glow, distance lines + measurement label fade in"
+      },
+      "step3": {
+        "note": "Same timeline as step 2 but arcs drawn below the line, revealing point B"
+      },
+      "step4": {
+        "0.00-0.04": "Compass placement burst at A",
+        "0.04-0.40": "Upper eye arc drawn from A (pivot label: 'Centre = A')",
+        "0.40-0.48": "Compass travels A → B",
+        "0.48-0.52": "Compass placement burst at B",
+        "0.52-0.88": "Lower eye arc drawn from B (pivot label: 'Centre = B')",
+        "0.88-1.00": "Perpendicular bisector grows from O, midpoint O appears with elastic bounce + green pulse, 90° angle mark fades in"
+      }
+    },
+    "keyframes": [
+      "fadeInUp", "popIn", "pulseGlow", "pulseGlowPurple",
+      "pivotPulse", "pivotPulseSmall", "dragHint", "slideRight",
+      "sparkle", "fadeInScale", "placeBurst"
+    ]
+  },
+  "parameters": {
+    "initialMode": "learn",
+    "enabledModes": ["learn", "practice"],
+    "showModeSelector": true,
+    "showNavigation": true,
+    "showPlayPause": true,
+    "showStepIndicator": true,
+    "animationSpeed": 1,
+    "autoPlayDuration": 12000,
+    "themeColor": "#4A4DC9",
+    "darkMode": false,
+    "additionalProps": {
+      "lineSegmentXY": {
+        "step1": {
+          "label": "Given: line segment XY. Choose a compass radius greater than half of XY.",
+          "length": 280,
+          "visible": true
+        },
+        "step2": {
+          "label": "Line XY is fixed",
+          "length": 280,
+          "visible": true
+        },
+        "step3": {
+          "label": "Line XY is fixed",
+          "length": 280,
+          "visible": true
+        },
+        "step4": {
+          "label": "Line XY with eye arcs",
+          "length": 280,
+          "visible": true
+        },
+        "step5": {
+          "label": "Line XY — drag centres to reshape",
+          "length": 280,
+          "visible": true
+        }
+      },
+      "arcsAbove": {
+        "step1": {
+          "visible": false,
+          "arcFromX": false,
+          "arcFromY": false,
+          "intersectionA": null
+        },
+        "step2": {
+          "label": "Arcs from X and Y meet at point A above the line",
+          "visible": true,
+          "arcFromX": true,
+          "arcFromY": true,
+          "intersectionA": { "x": 340, "y": 85 },
+          "compassPivotLabels": ["Compass at X", "Compass at Y"],
+          "animationPhase": "progressive arc draw with placement burst"
+        },
+        "step3": {
+          "visible": true,
+          "arcFromX": true,
+          "arcFromY": true,
+          "intersectionA": { "x": 340, "y": 85 },
+          "displayMode": "faded (opacity 0.4) — previously completed"
+        },
+        "step4": {
+          "visible": true,
+          "arcFromX": true,
+          "arcFromY": true,
+          "intersectionA": { "x": 340, "y": 85 },
+          "displayMode": "faded"
+        },
+        "step5": {
+          "visible": true,
+          "arcFromX": true,
+          "arcFromY": true,
+          "intersectionA": { "x": 340, "y": 85 },
+          "displayMode": "faded (opacity 0.18)"
+        }
+      },
+      "arcsBelow": {
+        "step1": {
+          "visible": false,
+          "arcFromX": false,
+          "arcFromY": false,
+          "intersectionB": null
+        },
+        "step2": {
+          "visible": false,
+          "arcFromX": false,
+          "arcFromY": false,
+          "intersectionB": null
+        },
+        "step3": {
+          "label": "Arcs from X and Y meet at point B below the line",
+          "visible": true,
+          "arcFromX": true,
+          "arcFromY": true,
+          "intersectionB": { "x": 340, "y": 375 },
+          "compassPivotLabels": ["Compass at X", "Compass at Y"],
+          "animationPhase": "progressive arc draw with placement burst"
+        },
+        "step4": {
+          "visible": true,
+          "arcFromX": true,
+          "arcFromY": true,
+          "intersectionB": { "x": 340, "y": 375 },
+          "displayMode": "faded"
+        },
+        "step5": {
+          "visible": true,
+          "arcFromX": true,
+          "arcFromY": true,
+          "intersectionB": { "x": 340, "y": 375 },
+          "displayMode": "faded (opacity 0.18)"
+        }
+      },
+      "bisectorLine": {
+        "step1": { "drawn": false, "visible": false, "midpointO": null },
+        "step2": { "drawn": false, "visible": false, "midpointO": null },
+        "step3": { "drawn": false, "visible": false, "midpointO": null },
+        "step4": {
+          "drawn": true,
+          "label": "Line AB is the perpendicular bisector, passing through midpoint O at 90°",
+          "visible": true,
+          "midpointO": { "x": 340, "y": 235 },
+          "strokeColor": "linearGradient(#4A4DC9 → #533086)",
+          "animationPhase": "grows outward from O in final 12% of timeline"
+        },
+        "step5": {
+          "drawn": true,
+          "visible": true,
+          "midpointO": { "x": 340, "y": 235 },
+          "strokeStyle": "solid (not dashed)"
+        }
+      },
+      "eyeShape": {
+        "step1": { "visible": false },
+        "step2": { "visible": false },
+        "step3": { "visible": false },
+        "step4": {
+          "visible": true,
+          "upperArc": true,
+          "lowerArc": true,
+          "compassPivotLabels": ["Centre = A", "Centre = B"],
+          "animationPhase": "progressive eye arc draw with compass needle"
+        },
+        "step5": {
+          "visible": true,
+          "upperArc": true,
+          "lowerArc": true,
+          "draggable": true,
+          "dragTargetRadius": { "mobile": 16, "desktop": 11 },
+          "touchEnabled": true
+        }
+      },
+      "measurementDisplay": {
+        "step1": {
+          "showDistances": false,
+          "showAngle": false,
+          "label": "½XY = 140. Radius must be > ½XY"
+        },
+        "step2": {
+          "showDistances": true,
+          "showAngle": false,
+          "label": "XA = YA = {compassRadius} (equal!)"
+        },
+        "step3": {
+          "showDistances": true,
+          "showAngle": false,
+          "label": "XA=YA, XB=YB = {compassRadius}"
+        },
+        "step4": {
+          "showDistances": true,
+          "showAngle": true,
+          "label": "XO=OY={segmentLength/2} · ∠AOX=90°"
+        },
+        "step5": {
+          "showDistances": true,
+          "showAngle": false,
+          "label": "↕ Drag A and B to reshape"
+        }
+      },
+      "compassRadius": 180,
+      "segmentLength": 280
+    }
+  },
+  "svgCanvas": {
+    "viewBox": "0 0 680 460",
+    "preserveAspectRatio": "xMidYMid meet",
+    "geometryCenter": { "x": 340, "y": 235 },
+    "pointX": { "x": 200, "y": 235 },
+    "pointY": { "x": 480, "y": 235 },
+    "note": "All coordinates are in SVG viewBox units. The SVG scales responsively via viewBox + 100% width container."
+  },
+  "tool_objectives": [
+    {
+      "step": 1,
+      "filterSteps": [1],
+      "tool_config": {
+        "toolName": "eyes_construction_tool",
+        "parameters": {
+          "lineSegmentXY": { "visible": true },
+          "arcsAbove": { "visible": false },
+          "arcsBelow": { "visible": false },
+          "bisectorLine": { "visible": false },
+          "eyeShape": { "visible": false },
+          "measurementDisplay": { "showDistances": false },
+          "compassSlider": { "visible": true, "min": 80, "max": 260 }
+        }
+      },
+      "objective_id": "M1.S4.T4.O1",
+      "instructions_for_student": "Examine the line segment XY. Use the slider to choose a compass radius. Watch the animated preview arc from X. The radius must be more than half the length of XY — why is this minimum necessary for the arcs to intersect?"
+    },
+    {
+      "step": 2,
+      "filterSteps": [2],
+      "tool_config": {
+        "toolName": "eyes_construction_tool",
+        "parameters": {
+          "arcsAbove": { "visible": true, "arcFromX": true, "arcFromY": true, "animated": true },
+          "arcsBelow": { "visible": false },
+          "bisectorLine": { "visible": false },
+          "eyeShape": { "visible": false },
+          "measurementDisplay": { "showDistances": true },
+          "compassVisualization": { "pivotLabels": true, "radiusArm": true, "placementBurst": true }
+        }
+      },
+      "objective_id": "M1.S4.T4.O1",
+      "instructions_for_student": "Watch carefully! The compass is placed at X (see the pulsing ring and label). It sweeps an arc above. Then it lifts and is placed at Y. Where the two arcs cross is point A. Notice XA = YA — point A is equidistant from both endpoints."
+    },
+    {
+      "step": 3,
+      "filterSteps": [3],
+      "tool_config": {
+        "toolName": "eyes_construction_tool",
+        "parameters": {
+          "arcsAbove": { "visible": true, "displayMode": "faded" },
+          "arcsBelow": { "visible": true, "arcFromX": true, "arcFromY": true, "animated": true },
+          "bisectorLine": { "visible": false },
+          "eyeShape": { "visible": false },
+          "measurementDisplay": { "showDistances": true },
+          "compassVisualization": { "pivotLabels": true, "radiusArm": true, "placementBurst": true }
+        }
+      },
+      "objective_id": "M1.S4.T4.O1",
+      "instructions_for_student": "Now the compass repeats below the line. Arc from X, then arc from Y — same radius. They meet at point B. Both A and B are equidistant from X and Y!"
+    },
+    {
+      "step": 4,
+      "filterSteps": [4],
+      "tool_config": {
+        "toolName": "eyes_construction_tool",
+        "parameters": {
+          "arcsAbove": { "visible": true, "displayMode": "faded" },
+          "arcsBelow": { "visible": true, "displayMode": "faded" },
+          "bisectorLine": { "drawn": true, "visible": true, "animated": true },
+          "eyeShape": { "visible": true, "upperArc": true, "lowerArc": true, "animated": true },
+          "measurementDisplay": { "showAngle": true, "showDistances": true },
+          "compassVisualization": { "pivotLabels": true, "radiusArm": true, "placementBurst": true }
+        }
+      },
+      "objective_id": "M1.S4.T4.O2",
+      "instructions_for_student": "The compass is placed at A as centre and draws the upper eye arc. Then placed at B for the lower arc. The line AB is the perpendicular bisector — it passes through midpoint O at exactly 90°. This is why the eye is symmetrical!"
+    },
+    {
+      "step": 5,
+      "filterSteps": [5],
+      "tool_config": {
+        "toolName": "eyes_construction_tool",
+        "parameters": {
+          "arcsAbove": { "visible": true, "displayMode": "very faded" },
+          "arcsBelow": { "visible": true, "displayMode": "very faded" },
+          "bisectorLine": { "visible": true, "strokeStyle": "solid" },
+          "eyeShape": { "visible": true, "draggable": true, "touchEnabled": true },
+          "measurementDisplay": { "showDistances": true }
+        }
+      },
+      "objective_id": "M1.S4.T4.O2",
+      "instructions_for_student": "Drag points A and B along the perpendicular bisector. Notice how different positions create different eye shapes, but symmetry is always maintained — because every point on the bisector is equidistant from X and Y!"
+    }
+  ],
+  "modes": {
+    "learn": {
+      "label": "Learn",
+      "description": "Step-by-step guided construction of the Eyes figure with slow realistic compass animations (7s per step)",
+      "icon": "BookOpen",
+      "steps": 5,
+      "animationDuration": 7000
+    },
+    "practice": {
+      "label": "Practice",
+      "description": "Construct the Eyes figure on your own with adjustable compass radius and animated arc drawing (5s per phase)",
+      "icon": "Target",
+      "steps": 2,
+      "animationDuration": 5000,
+      "controls": {
+        "compassRadiusSlider": { "min": 80, "max": 260, "default": 180 },
+        "buttons": [
+          {
+            "label": { "desktop": "Draw Arcs Above", "mobile": "Above" },
+            "triggersStep": 1,
+            "enabledWhen": "practiceStep === 0 && radius > halfXY && previousAnimComplete"
+          },
+          {
+            "label": { "desktop": "Draw Arcs Below", "mobile": "Below" },
+            "triggersStep": 2,
+            "enabledWhen": "practiceStep === 1 && previousAnimComplete"
+          },
+          {
+            "label": { "desktop": "Draw Eye Shape", "mobile": "Eye" },
+            "triggersStep": 3,
+            "enabledWhen": "practiceStep === 2 && previousAnimComplete"
+          }
+        ],
+        "resetButton": {
+          "label": { "desktop": "Reset", "mobile": "(icon only)" },
+          "action": "Resets practiceStep to 0 and compassRadius to 180"
+        }
+      }
+    }
+  },
+  "steps": {
+    "learn": [
+      {
+        "id": 1,
+        "title": "The Supporting Line XY",
+        "type": "intro",
+        "description": "Display line segment XY with animated compass radius preview arc and slider control"
+      },
+      {
+        "id": 2,
+        "title": "Arcs Above — Finding Point A",
+        "type": "construction",
+        "description": "Animated compass draws arcs from X then Y above line; reveals intersection point A with sparkle"
+      },
+      {
+        "id": 3,
+        "title": "Arcs Below — Finding Point B",
+        "type": "construction",
+        "description": "Animated compass draws arcs from X then Y below line; reveals intersection point B with sparkle"
+      },
+      {
+        "id": 4,
+        "title": "Drawing the Eye Shape",
+        "type": "construction",
+        "description": "Animated compass draws upper eye arc from A, lower from B; perpendicular bisector and midpoint O revealed"
+      },
+      {
+        "id": 5,
+        "title": "Explore — Drag to Reshape",
+        "type": "interactive",
+        "description": "Full eye displayed; A and B are draggable (touch + mouse) along perpendicular bisector to reshape eye",
+        "descriptionMobile": "Drag A and B up/down to reshape the eye. Symmetry is always preserved!"
+      }
+    ],
+    "practice": [
+      {
+        "id": 10,
+        "title": "Practice: Build the Eyes",
+        "type": "practice",
+        "description": "Student controls compass radius and triggers each construction phase via buttons"
+      },
+      {
+        "id": 11,
+        "title": "Practice: Experiment",
+        "type": "practice",
+        "description": "Explore what happens with different compass radii"
+      }
+    ]
+  },
+  "additionalProps": {
+    "schema": {
+      "compassRadius": {
+        "type": "number",
+        "default": 180,
+        "min": 80,
+        "max": 260,
+        "description": "Initial compass radius for arc construction. Must exceed half of segmentLength (140) for valid intersection."
+      },
+      "segmentLength": {
+        "type": "number",
+        "default": 280,
+        "min": 100,
+        "max": 400,
+        "description": "Length of line segment XY in SVG viewBox units."
+      },
+      "lineSegmentXY": {
+        "type": "object",
+        "description": "Per-step configuration for line segment visibility and labels."
+      },
+      "arcsAbove": {
+        "type": "object",
+        "description": "Per-step configuration for arcs above the line (visibility, which arcs, intersection point A, compass pivot labels, animation phase)."
+      },
+      "arcsBelow": {
+        "type": "object",
+        "description": "Per-step configuration for arcs below the line (visibility, which arcs, intersection point B, compass pivot labels, animation phase)."
+      },
+      "bisectorLine": {
+        "type": "object",
+        "description": "Per-step configuration for perpendicular bisector line (visibility, drawn state, midpoint O, stroke style, animation)."
+      },
+      "eyeShape": {
+        "type": "object",
+        "description": "Per-step configuration for the eye arcs (visibility, upper/lower arcs, draggable state, touch support, drag target radius)."
+      },
+      "measurementDisplay": {
+        "type": "object",
+        "description": "Per-step configuration for measurement labels (distances, angles, dynamic text with compass radius values)."
+      }
+    },
+    "examples": [
+      {
+        "description": "Default construction with standard radius",
+        "value": { "compassRadius": 180, "segmentLength": 280 }
+      },
+      {
+        "description": "Wider eye with larger radius",
+        "value": { "compassRadius": 240, "segmentLength": 280 }
+      },
+      {
+        "description": "Shorter segment with adjusted radius",
+        "value": { "compassRadius": 150, "segmentLength": 200 }
+      },
+      {
+        "description": "Narrow eye with radius just above minimum",
+        "value": { "compassRadius": 150, "segmentLength": 280 }
+      }
+    ]
+  }
+}

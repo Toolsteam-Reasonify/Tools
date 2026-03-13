@@ -1,0 +1,529 @@
+{
+    "toolName": "hanging_scale_tool",
+    "version": "2.0.0",
+    "description": "Fully responsive interactive hanging mobile/scale puzzle tool where students categorize six puzzles by difficulty, then solve each by finding the unknown weight value. Built with the Singularity Design System (Poppins font, #4A4DC9/#FF7212 palette, #533086→#FC9145 gradients). Adapts from mobile (320px) to desktop (860px+) via ResizeObserver container queries.",
+    "topic": "Finding Unknown Weights: Hanging Scale Problems (Fig 7.1 to 7.5)",
+    "subject": "Mathematics",
+    "grade": 7,
+    "chapter": "Chapter 7 – Finding the Unknown",
+    "learningObjectives": [
+        "Understand how hanging mobiles/scales balance when total weight is distributed",
+        "Find unknown weights using arithmetic reasoning (total minus known = unknown portion)",
+        "Categorize problems by difficulty to build metacognitive skills",
+        "Solve equations of the form: knownTotal + n × unknownWeight = totalWeight"
+    ],
+
+    "designSystem": {
+        "name": "Singularity",
+        "font": "Poppins (300–800 weights, loaded via Google Fonts)",
+        "colors": {
+            "primary": "#4A4DC9",
+            "accent": "#FF7212",
+            "gradientStart": "#533086",
+            "gradientEnd": "#FC9145",
+            "primaryLight": "#C1C1EA",
+            "accentLight": "#FFF3E4",
+            "neutralDark": "#4E4E4E",
+            "neutralGrey": "#CACACA",
+            "neutralLightGrey": "#EBEBEB",
+            "neutralOffWhite": "#F5F5F5",
+            "white": "#FFFFFF",
+            "success": "#2ECC71",
+            "successLight": "#E8F8F0",
+            "error": "#E74C3C",
+            "errorLight": "#FDECEB"
+        },
+        "buttons": {
+            "variants": ["contained", "outlined", "text", "highlight"],
+            "states": ["enabled", "hover", "pressed", "disabled"],
+            "height": "40px (desktop) / 34px (mobile)",
+            "padding": "24px (desktop) / 16px (mobile)",
+            "borderRadius": "pill (100px)"
+        },
+        "radii": {
+            "pill": 100,
+            "card": 16,
+            "large": 20,
+            "medium": 12,
+            "small": 8
+        }
+    },
+
+    "responsive": {
+        "strategy": "Container-query via ResizeObserver (not CSS media queries). The component measures its own container width and adapts all layout, typography, spacing, and SVG sizes dynamically.",
+        "breakpoints": {
+            "xs": {
+                "containerWidth": "< 420px",
+                "devices": "Small phones (iPhone SE, Galaxy S8)",
+                "gridColumns": 2,
+                "solveLayout": "column (stacked)",
+                "svgGridSize": 100,
+                "svgSolveSize": 180,
+                "buttonHeight": 34,
+                "buttonPadding": 16,
+                "fontSize": "8–16px range"
+            },
+            "sm": {
+                "containerWidth": "420–599px",
+                "devices": "Large phones (iPhone 14, Pixel 7)",
+                "gridColumns": 2,
+                "solveLayout": "column (stacked)",
+                "svgGridSize": 100,
+                "svgSolveSize": 180,
+                "buttonHeight": 34,
+                "buttonPadding": 16,
+                "fontSize": "8–16px range"
+            },
+            "md": {
+                "containerWidth": "600–859px",
+                "devices": "Tablets (iPad Mini, Galaxy Tab)",
+                "gridColumns": 3,
+                "solveLayout": "row (side-by-side)",
+                "svgGridSize": 115,
+                "svgSolveSize": 210,
+                "buttonHeight": 40,
+                "buttonPadding": 24,
+                "fontSize": "9–19px range"
+            },
+            "lg": {
+                "containerWidth": "860px+",
+                "devices": "Desktop / laptop / iPad Pro landscape",
+                "gridColumns": 3,
+                "solveLayout": "row (side-by-side)",
+                "svgGridSize": 130,
+                "svgSolveSize": 250,
+                "buttonHeight": 40,
+                "buttonPadding": 24,
+                "fontSize": "9–22px range"
+            }
+        },
+        "containerSizing": {
+            "width": "100% (fluid)",
+            "maxWidth": "860px",
+            "aspectRatio": "4 / 3",
+            "minHeight": "400px",
+            "margin": "0 auto (centered)"
+        },
+        "adaptations": {
+            "categorizeGrid": "3 columns → 2 on mobile; chip buttons flex-wrap on tiny screens",
+            "solvePhase": "Side-by-side (row) on desktop/tablet → stacked (column) on mobile with scroll overflow",
+            "svgMobiles": "Proportionally scaled item radius, font sizes, wire lengths per container size",
+            "header": "Shorter padding, smaller icon, abbreviated subtitle on mobile",
+            "buttons": "Check button shows '✓' instead of 'Check' on mobile; height/padding scaled",
+            "scoreCard": "flex-wrap on mobile, divider lines hidden on xs/sm",
+            "animations": "slideInUp replaces slideInLeft on mobile for stacked layout"
+        }
+    },
+
+    "parameters": {
+        "description": "The component uses width: 100% and aspect-ratio: 4/3 by default. Fixed width/height props are no longer needed — the tool auto-adapts to any container. These are kept for backwards compatibility but are optional.",
+        "width": {
+            "type": "number",
+            "default": "100% (fluid)",
+            "description": "Not typically needed. The container fills its parent width up to max-width 860px."
+        },
+        "height": {
+            "type": "number",
+            "default": "auto (aspect-ratio 4:3)",
+            "description": "Not typically needed. Height is derived from aspect-ratio."
+        },
+        "darkMode": {
+            "type": "boolean",
+            "default": false,
+            "description": "Reserved for future dark mode support"
+        }
+    },
+
+    "additionalProps": {
+        "description": "Tool-specific dynamic content for hanging scale puzzles",
+        "schema": {
+            "puzzles": {
+                "type": "array",
+                "description": "Array of puzzle data objects. Each puzzle represents a hanging mobile with known and unknown weights. Colors should use Singularity palette (#4A4DC9, #FF7212, #533086, #FC9145, #C1C1EA) for visual consistency.",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "number",
+                            "description": "Unique puzzle identifier"
+                        },
+                        "totalWeight": {
+                            "type": "number",
+                            "description": "Total weight displayed at the top of the mobile"
+                        },
+                        "branches": {
+                            "type": "array",
+                            "description": "Array of branches hanging from the mobile bar",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "items": {
+                                        "type": "array",
+                                        "description": "Items hanging from this branch",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "label": {
+                                                    "type": "string",
+                                                    "description": "Emoji or text label for the item"
+                                                },
+                                                "weight": {
+                                                    "type": "number",
+                                                    "description": "Weight of item. Use -1 for unknown items."
+                                                },
+                                                "color": {
+                                                    "type": "string",
+                                                    "description": "Color hex for item display. Use Singularity palette: #4A4DC9 (primary), #FF7212 (accent), #533086 (gradient start), #FC9145 (gradient end), #C1C1EA (light primary)"
+                                                },
+                                                "isUnknown": {
+                                                    "type": "boolean",
+                                                    "description": "Whether this item's weight is unknown (to be solved). Unknown items show dashed orange (#FF7212) border with '= ?' label."
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "unknownLabel": {
+                            "type": "string",
+                            "description": "Description of which items are unknown (shown to student in orange accent color)"
+                        },
+                        "answer": {
+                            "type": "number",
+                            "description": "The correct weight of each unknown item"
+                        },
+                        "difficulty": {
+                            "type": "string",
+                            "enum": ["easy", "medium", "hard"],
+                            "description": "Actual difficulty. Easy: orange-light bg (#FFF3E4). Medium: purple-light bg (#F3EEFF). Hard: red-light bg (#FDE8E8)."
+                        },
+                        "hint": {
+                            "type": "string",
+                            "description": "Hint text shown in accent-light (#FFF3E4) card after first wrong attempt"
+                        },
+                        "figLabel": {
+                            "type": "string",
+                            "description": "Figure reference label (e.g., 'Fig 7.1')"
+                        }
+                    }
+                }
+            },
+            "showDifficultySort": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to show the categorization phase before solving"
+            },
+            "allowHints": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to allow hint display after wrong answer"
+            },
+            "maxAttempts": {
+                "type": "number",
+                "default": 3,
+                "description": "Maximum number of attempts per puzzle before moving on"
+            }
+        },
+        "examples": {
+            "defaultPuzzles": {
+                "description": "Uses built-in 6 puzzles (Fig 7.1-7.6) with Singularity colors. Fully responsive.",
+                "value": {}
+            },
+            "customEasySet": {
+                "description": "Custom 3 easy puzzles using Singularity palette colors",
+                "value": {
+                    "puzzles": [
+                        {
+                            "id": 1,
+                            "totalWeight": 10,
+                            "branches": [
+                                { "items": [{ "label": "🍎", "weight": 3, "color": "#4A4DC9", "isUnknown": false }] },
+                                { "items": [{ "label": "🍊", "weight": -1, "color": "#FF7212", "isUnknown": true }] }
+                            ],
+                            "unknownLabel": "🍊",
+                            "answer": 7,
+                            "difficulty": "easy",
+                            "hint": "Apple weighs 3 and total is 10. So orange = 10 - 3",
+                            "figLabel": "Puzzle A"
+                        },
+                        {
+                            "id": 2,
+                            "totalWeight": 12,
+                            "branches": [
+                                { "items": [{ "label": "🌟", "weight": 4, "color": "#FC9145", "isUnknown": false }] },
+                                { "items": [{ "label": "🌙", "weight": -1, "color": "#533086", "isUnknown": true }, { "label": "🌙", "weight": -1, "color": "#533086", "isUnknown": true }] }
+                            ],
+                            "unknownLabel": "🌙",
+                            "answer": 4,
+                            "difficulty": "easy",
+                            "hint": "Star = 4. Two moons share (12 - 4) ÷ 2",
+                            "figLabel": "Puzzle B"
+                        },
+                        {
+                            "id": 3,
+                            "totalWeight": 15,
+                            "branches": [
+                                { "items": [{ "label": "🎈", "weight": -1, "color": "#4A4DC9", "isUnknown": true }] },
+                                { "items": [{ "label": "🎈", "weight": -1, "color": "#4A4DC9", "isUnknown": true }] },
+                                { "items": [{ "label": "🎈", "weight": -1, "color": "#4A4DC9", "isUnknown": true }] }
+                            ],
+                            "unknownLabel": "🎈",
+                            "answer": 5,
+                            "difficulty": "easy",
+                            "hint": "Three equal balloons share 15: 15 ÷ 3",
+                            "figLabel": "Puzzle C"
+                        }
+                    ],
+                    "maxAttempts": 5
+                }
+            },
+            "noCategorizationMode": {
+                "description": "Skip categorization and go straight to solving",
+                "value": {
+                    "showDifficultySort": false
+                }
+            }
+        }
+    },
+
+    "modes": {
+        "categorize": {
+            "description": "Students see all 6 puzzles in a responsive grid (3-col desktop, 2-col mobile). Each puzzle shows a mini SVG mobile with animated swing. Students tap Easy/Medium/Hard chip buttons below each.",
+            "responsiveNotes": "Grid collapses from 3 → 2 columns. SVG mobiles scale from 130px → 100px. Chip buttons flex-wrap on narrow screens."
+        },
+        "solve": {
+            "description": "Students solve each puzzle sorted by their categorization. Shows an animated mobile SVG, question card with known/unknown counts, numeric input with pill-rounded Singularity styling, and instant feedback.",
+            "responsiveNotes": "Layout switches from side-by-side (row) to stacked (column) on mobile. SVG scales from 250px → 180px. Check button shows '✓' instead of 'Check' on mobile. Scrollable on mobile."
+        },
+        "complete": {
+            "description": "Shows trophy animation, grade/score/solved stats in a flex-wrap card, per-puzzle results with difficulty chips, and 'Try Again' highlight button.",
+            "responsiveNotes": "Score card uses flex-wrap. Divider lines hidden on mobile. Font sizes scale down proportionally."
+        }
+    },
+
+    "interactions": {
+        "categorizePhase": {
+            "description": "Students tap Easy (🟢 green dot, #FFF3E4 bg) / Medium (🟡 amber dot, #F3EEFF bg) / Hard (🔴 red dot, #FDE8E8 bg) chip buttons below each mini-mobile.",
+            "requiredAction": "Categorize all puzzles before the 'Start Solving' button activates (switches from contained #4A4DC9 to highlight #FF7212)."
+        },
+        "solvePhase": {
+            "description": "Students type the numeric weight into a pill-rounded input (2px #C1C1EA border) and press the 'Check' contained button (#4A4DC9).",
+            "feedback": {
+                "correct": "Green gradient card with sg-popIn animation, auto-advances after 1.6s",
+                "wrong": "Red gradient card with sg-shakeX animation, input shakes. Hint button (outlined #C1C1EA) appears after first wrong attempt.",
+                "maxAttemptsReached": "Shows correct answer in red card, auto-advances after 1.8s"
+            }
+        }
+    },
+
+    "scoring": {
+        "method": "Points decrease with more attempts: (maxAttempts - attempts + 1) × 10",
+        "maxPerPuzzle": 30,
+        "totalMax": 180,
+        "display": "Star icon (#FF7212 fill) with score in accent-light chip (#FFF3E4 background, #B45309 text)",
+        "grades": {
+            "A+": "≥ 90% — success green (#2ECC71)",
+            "A": "≥ 75% — success green (#2ECC71)",
+            "B": "≥ 60% — accent orange (#FF7212)",
+            "C": "≥ 40% — accent orange (#FF7212)",
+            "D": "< 40% — error red (#E74C3C)"
+        }
+    },
+
+    "animations": {
+        "keyframes": [
+            "sg-fadeInUp — content entry from below",
+            "sg-fadeInDown — header/top-bar entry",
+            "sg-popIn — correct feedback, element reveals",
+            "sg-pulse — current puzzle dot in mini-map",
+            "sg-shakeX — wrong answer shake",
+            "sg-slideInLeft / sg-slideInRight — solve phase desktop panels",
+            "sg-slideInUp — solve phase mobile panels (replaces slideInLeft)",
+            "sg-dropIn — SVG branch items entering",
+            "sg-starSpin — trophy on complete phase",
+            "sg-gradientShift — header gradient animation"
+        ],
+        "swingAnimation": "Continuous sinusoidal rotation (±2°) on mobile SVGs via requestAnimationFrame"
+    },
+
+    "teachingNotes": {
+        "overview": "Guide students through this interactive tool. Encourage exploration and discussion. The tool is fully responsive — works on classroom projectors, student tablets, and phones.",
+        "beforeStarting": [
+            "Introduce the concept of hanging mobiles as a visual form of equations",
+            "Explain that the total weight at top equals sum of all hanging items",
+            "Remind students that unknown items (shown with dashed orange borders and '= ?') all have the SAME weight",
+            "On mobile devices, orient the phone in portrait mode for best experience"
+        ],
+        "duringCategorization": [
+            "Ask students why they think a puzzle is easy, medium, or hard",
+            "Discuss what makes a puzzle harder (more unknowns, more branches, larger numbers)",
+            "There are no 'wrong' categorizations — this builds metacognitive awareness",
+            "On tablets/phones, students can scroll down to see all puzzles in the 2-column grid"
+        ],
+        "duringSolving": [
+            "Encourage students to write the equation on paper: known + n×unknown = total",
+            "For wrong answers, have students explain their thinking before showing hints",
+            "Connect the mobile problems to formal algebraic equations (e.g., 3 + 2x = 16)",
+            "On mobile, the puzzle and input stack vertically — students can scroll between them"
+        ],
+        "afterCompletion": [
+            "Discuss which puzzles were hardest and why",
+            "Compare student categorizations with actual difficulty",
+            "Extend by asking students to create their own mobile puzzles",
+            "Use the 'Try Again' button to re-attempt with different categorizations"
+        ]
+    },
+
+    "instructionsForStudent": "Hanging mobile puzzles where the total weight is given and students must find the unknown weight at one branch. First, look at all 6 puzzles and decide if each is Easy, Medium, or Hard. Then solve them one by one — type the weight of each unknown item. You get 3 tries per puzzle and can ask for a hint after a wrong answer. Works on phones, tablets, and computers!",
+
+    "toolCallExamples": [
+        {
+            "title": "Default — All 6 NCERT Fig 7.1-7.6 puzzles (fully responsive)",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Finding Unknown Weights: Hanging Scale Problems",
+                "data": {
+                    "toolName": "hanging_scale_tool",
+                    "parameters": {}
+                },
+                "instructions_for_student": "Categorize each hanging mobile puzzle by difficulty, then solve them by finding the unknown weight!"
+            }
+        },
+        {
+            "title": "Skip categorization, solve directly",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Solve Hanging Scale Puzzles",
+                "data": {
+                    "toolName": "hanging_scale_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "showDifficultySort": false
+                        }
+                    }
+                },
+                "instructions_for_student": "Solve each hanging mobile puzzle by finding the unknown weight!"
+            }
+        },
+        {
+            "title": "Easy mode with 5 attempts — great for mobile use",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Easy Hanging Scale Puzzles",
+                "data": {
+                    "toolName": "hanging_scale_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "maxAttempts": 5,
+                            "allowHints": true
+                        }
+                    }
+                },
+                "instructions_for_student": "You have 5 tries per puzzle. Use the hints! Works on your phone too."
+            }
+        },
+        {
+            "title": "Custom fruit-themed puzzles with Singularity colors",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Fruit Weight Puzzles",
+                "data": {
+                    "toolName": "hanging_scale_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "puzzles": [
+                                {
+                                    "id": 1,
+                                    "totalWeight": 20,
+                                    "branches": [
+                                        { "items": [{ "label": "🍎", "weight": 5, "color": "#4A4DC9", "isUnknown": false }] },
+                                        { "items": [{ "label": "🍐", "weight": -1, "color": "#FF7212", "isUnknown": true }] },
+                                        { "items": [{ "label": "🍐", "weight": -1, "color": "#FF7212", "isUnknown": true }] },
+                                        { "items": [{ "label": "🍐", "weight": -1, "color": "#FF7212", "isUnknown": true }] }
+                                    ],
+                                    "unknownLabel": "🍐 pear",
+                                    "answer": 5,
+                                    "difficulty": "easy",
+                                    "hint": "Apple = 5. Three pears share 20 - 5 = 15",
+                                    "figLabel": "Fruit 1"
+                                },
+                                {
+                                    "id": 2,
+                                    "totalWeight": 18,
+                                    "branches": [
+                                        { "items": [{ "label": "🍇", "weight": 3, "color": "#533086", "isUnknown": false }, { "label": "🍇", "weight": 3, "color": "#533086", "isUnknown": false }] },
+                                        { "items": [{ "label": "🍑", "weight": -1, "color": "#FC9145", "isUnknown": true }] },
+                                        { "items": [{ "label": "🍑", "weight": -1, "color": "#FC9145", "isUnknown": true }] }
+                                    ],
+                                    "unknownLabel": "🍑 peach",
+                                    "answer": 6,
+                                    "difficulty": "medium",
+                                    "hint": "Two grapes = 6 total. Two peaches share 18 - 6 = 12",
+                                    "figLabel": "Fruit 2"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "instructions_for_student": "Find the weight of each fruit!"
+            }
+        },
+        {
+            "title": "Challenge mode — no hints, 2 attempts",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Challenge: Hanging Scale Puzzles",
+                "data": {
+                    "toolName": "hanging_scale_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "allowHints": false,
+                            "maxAttempts": 2
+                        }
+                    }
+                },
+                "instructions_for_student": "Challenge mode! No hints and only 2 tries per puzzle."
+            }
+        },
+        {
+            "title": "Single puzzle for quick practice",
+            "json": {
+                "frontend_action": "show_interactive_tool",
+                "title": "Quick Puzzle",
+                "data": {
+                    "toolName": "hanging_scale_tool",
+                    "parameters": {
+                        "additionalProps": {
+                            "puzzles": [
+                                {
+                                    "id": 1,
+                                    "totalWeight": 21,
+                                    "branches": [
+                                        { "items": [{ "label": "🎯", "weight": 3, "color": "#4A4DC9", "isUnknown": false }] },
+                                        { "items": [{ "label": "🎲", "weight": -1, "color": "#FF7212", "isUnknown": true }, { "label": "🎲", "weight": -1, "color": "#FF7212", "isUnknown": true }, { "label": "🎲", "weight": -1, "color": "#FF7212", "isUnknown": true }] }
+                                    ],
+                                    "unknownLabel": "🎲 dice",
+                                    "answer": 6,
+                                    "difficulty": "easy",
+                                    "hint": "Target = 3. Three dice share 21 - 3 = 18",
+                                    "figLabel": "Quick"
+                                }
+                            ],
+                            "maxAttempts": 5
+                        }
+                    }
+                },
+                "instructions_for_student": "Solve this one puzzle! Perfect for a quick warm-up."
+            }
+        }
+    ],
+
+    "agentQuickReference": {
+        "defaultUse": "Just pass empty parameters — all 6 NCERT puzzles load automatically, fully responsive",
+        "customizePuzzles": "Pass additionalProps.puzzles[] with Singularity colors (#4A4DC9, #FF7212, #533086, #FC9145)",
+        "skipCategorization": "additionalProps.showDifficultySort = false",
+        "adjustDifficulty": "additionalProps.maxAttempts (1-10) and additionalProps.allowHints (true/false)",
+        "responsiveNote": "No width/height needed — component auto-fills its container with 4:3 aspect ratio, max 860px wide"
+    }
+}

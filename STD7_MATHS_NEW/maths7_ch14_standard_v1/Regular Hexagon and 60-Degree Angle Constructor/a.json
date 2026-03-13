@@ -1,0 +1,388 @@
+{
+  "id": "M3.S16.T16.T2D1",
+  "title": "Regular Hexagon and 60-Degree Angle Constructor",
+  "subtype": "geometry_constructor",
+  "toolName": "hexagon_60degree_constructor",
+  "version": "2.0.0",
+  "parameters": {
+    "initialMode": "learn",
+    "enabledModes": ["learn", "practice"],
+    "showModeSelector": true,
+    "showNavigation": true,
+    "showStepIndicator": true,
+    "initialStep": 1,
+    "animationSpeed": 1,
+    "darkMode": false,
+    "responsive": true,
+    "breakpoints": {
+      "small": 480,
+      "mobile": 580,
+      "tablet": 768
+    },
+    "designSystem": {
+      "primary": "#4A4DC9",
+      "accent": "#FF7212",
+      "gradientStart": "#533086",
+      "gradientEnd": "#FC9145",
+      "lightPurple": "#C1C1EA",
+      "lightOrange": "#FFF3E4",
+      "text": "#4E4E4E",
+      "textLight": "#7A7A7A",
+      "gray": "#CACACA",
+      "grayLight": "#EBEBEB",
+      "grayBg": "#F5F5F5",
+      "white": "#FFFFFF",
+      "success": "#2ECC71",
+      "error": "#E74C3C",
+      "font": "Poppins",
+      "borderRadius": {
+        "sm": 8,
+        "md": 12,
+        "lg": 16,
+        "xl": 24
+      }
+    },
+    "additionalProps": {
+      "triangleDecomposition": {
+        "step1": {
+          "label": "Hexagon outline with dashed radii, centre O, vertex labels A–F",
+          "visible": true,
+          "showCentre": true,
+          "trianglesShown": 0,
+          "animationSpeed": "normal"
+        },
+        "step2": {
+          "label": "3 equilateral triangles placed slowly around centre with 60° angle marks",
+          "visible": true,
+          "showCentre": true,
+          "showAngleSum": true,
+          "trianglesShown": 3,
+          "animationSpeed": "slow",
+          "animationDuration": "1.2s per triangle",
+          "animationStagger": "0.45s between triangles"
+        },
+        "step3": {
+          "label": "All 6 equilateral triangles placed slowly — 6 × 60° = 360° — with 120° interior angles shown",
+          "visible": true,
+          "showCentre": true,
+          "showAngleSum": true,
+          "trianglesShown": 6,
+          "animationSpeed": "slow",
+          "animationDuration": "1.2s per triangle",
+          "animationStagger": "0.45s between triangles"
+        },
+        "step4": {
+          "label": "Compass construction animation — circle drawn, vertices placed one by one",
+          "visible": false,
+          "showCentre": false,
+          "trianglesShown": 0,
+          "animationSpeed": "normal"
+        },
+        "step5": {
+          "label": "Completed hexagon with symmetry lines and rotation indicator",
+          "visible": true,
+          "showCentre": true,
+          "trianglesShown": 6,
+          "animationSpeed": "none"
+        }
+      },
+      "angleAnnotations": {
+        "step1": {
+          "showCentreAngles": false,
+          "showInteriorAngles": false
+        },
+        "step2": {
+          "showCentreAngles": true,
+          "showInteriorAngles": false,
+          "label": "60° at centre per triangle"
+        },
+        "step3": {
+          "showCentreAngles": true,
+          "showInteriorAngles": true,
+          "label": "60° at centre, 120° at each vertex"
+        },
+        "step4": {
+          "showCentreAngles": true,
+          "showInteriorAngles": false,
+          "label": "60° marks guide vertex placement"
+        },
+        "step5": {
+          "showCentreAngles": true,
+          "showInteriorAngles": true,
+          "label": "All angles annotated"
+        }
+      },
+      "hexagonConstruction": {
+        "step4": {
+          "visible": true,
+          "circleDrawn": true,
+          "verticesAnimated": true,
+          "sidesAnimated": true,
+          "label": "Draw circle → place vertices using compass equal to radius → connect sides"
+        }
+      },
+      "symmetryHighlight": {
+        "step5": {
+          "showRotational": true,
+          "showReflective": true,
+          "rotationAngle": 60,
+          "reflectionLines": 6,
+          "label": "6-fold rotational symmetry and 6 lines of mirror symmetry"
+        }
+      },
+      "practiceMode": {
+        "type": "mcq_only",
+        "totalQuestions": 8,
+        "showDiagrams": false,
+        "fullWidthLayout": true,
+        "maxContentWidth": 560,
+        "questions": [
+          {
+            "id": 1,
+            "question": "How many equilateral triangles can a regular hexagon be divided into?",
+            "options": ["4", "6", "8", "3"],
+            "correctIndex": 1,
+            "explanation": "A regular hexagon divides into exactly 6 equilateral triangles by joining each vertex to the centre O."
+          },
+          {
+            "id": 2,
+            "question": "What is the measure of each angle of an equilateral triangle?",
+            "options": ["90°", "45°", "60°", "120°"],
+            "correctIndex": 2,
+            "explanation": "All three angles are equal to 60° because 180° ÷ 3 = 60°."
+          },
+          {
+            "id": 3,
+            "question": "Why do 6 equilateral triangles fit perfectly around the centre?",
+            "options": ["6 × 60° = 360°", "6 × 90° = 540°", "6 × 45° = 270°", "6 × 30° = 180°"],
+            "correctIndex": 0,
+            "explanation": "Each triangle contributes 60° at centre. 6 × 60° = 360° — they fit with no gaps."
+          },
+          {
+            "id": 4,
+            "question": "What is the interior angle at each vertex of a regular hexagon?",
+            "options": ["60°", "90°", "120°", "150°"],
+            "correctIndex": 2,
+            "explanation": "Two triangle angles meet at each vertex: 60° + 60° = 120°."
+          },
+          {
+            "id": 5,
+            "question": "To construct a regular hexagon, the compass radius should be:",
+            "options": ["Half the circle radius", "Equal to the circle radius", "Double the circle radius", "Any random length"],
+            "correctIndex": 1,
+            "explanation": "Compass radius = circle radius creates equilateral triangles with 60° arcs."
+          },
+          {
+            "id": 6,
+            "question": "How many lines of symmetry does a regular hexagon have?",
+            "options": ["3", "4", "6", "12"],
+            "correctIndex": 2,
+            "explanation": "6 lines of mirror symmetry — 3 through opposite vertices and 3 through midpoints."
+          },
+          {
+            "id": 7,
+            "question": "Why can regular hexagons tile the plane without gaps?",
+            "options": ["They have 6 sides", "3 × 120° = 360° at each meeting point", "They are made of triangles", "They have rotational symmetry"],
+            "correctIndex": 1,
+            "explanation": "3 interior angles of 120° meet: 3 × 120° = 360°. Perfect coverage."
+          },
+          {
+            "id": 8,
+            "question": "What is the rotational symmetry order of a regular hexagon?",
+            "options": ["Order 3 (120°)", "Order 4 (90°)", "Order 6 (60°)", "Order 2 (180°)"],
+            "correctIndex": 2,
+            "explanation": "6-fold rotational symmetry. Identical after every 60° rotation (360° ÷ 6)."
+          }
+        ]
+      }
+    }
+  },
+  "description": "A fully responsive interactive tool that shows how a regular hexagon is composed of 6 equilateral triangles and guides students through constructing one using 60-degree angles. Learn mode has 5 animated steps with slow triangle placement in steps 2-3. Practice mode is MCQ-only (no diagrams) with 8 questions, score tracking, and results screen. Uses Singularity Design System (Poppins font, #4A4DC9 primary, #FF7212 accent, #533086→#FC9145 gradient). Layout adapts from desktop side-by-side to mobile stacked via ResizeObserver container queries.",
+  "objective_id": "M3.S16.T16.O1",
+  "teaching_notes": "The equilateral triangle is the building block — its 60-degree angle is what makes the hexagon work. Steps 2 and 3 use slowed-down animations (1.2s per triangle, 0.45s stagger) so students can observe each triangle being placed one at a time. Emphasise that the compass radius equals the circle radius for the construction, which automatically gives 60-degree arcs. Connect to the tiling section: hexagons tile the plane because their interior angle (120 degrees) divides 360 degrees evenly (3 × 120 = 360). Practice mode uses text-only MCQs without diagrams to test conceptual understanding independently.",
+  "tool_objectives": [
+    {
+      "step": 1,
+      "filterSteps": [1],
+      "tool_config": {
+        "toolName": "hexagon_60degree_constructor",
+        "parameters": {
+          "initialMode": "learn",
+          "initialStep": 1,
+          "additionalProps": {
+            "triangleDecomposition": {
+              "visible": true,
+              "trianglesShown": 0
+            },
+            "angleAnnotations": {
+              "showCentreAngles": false,
+              "showInteriorAngles": false
+            }
+          }
+        }
+      },
+      "objective_id": "M3.S16.T16.O1",
+      "instructions_for_student": "A regular hexagon has 6 equal sides and 6 equal angles. We will show how it is made of 6 equilateral triangles arranged around a centre point O."
+    },
+    {
+      "step": 2,
+      "filterSteps": [2],
+      "tool_config": {
+        "toolName": "hexagon_60degree_constructor",
+        "parameters": {
+          "initialMode": "learn",
+          "initialStep": 2,
+          "additionalProps": {
+            "triangleDecomposition": {
+              "visible": true,
+              "trianglesShown": 3,
+              "animationSpeed": "slow"
+            },
+            "angleAnnotations": {
+              "showCentreAngles": true,
+              "showInteriorAngles": false
+            }
+          }
+        }
+      },
+      "objective_id": "M3.S16.T16.O2",
+      "instructions_for_student": "Watch as equilateral triangles are placed slowly around the centre. Each contributes 60° at the centre. After 3 triangles: 3 × 60° = 180° (half circle)."
+    },
+    {
+      "step": 3,
+      "filterSteps": [3],
+      "tool_config": {
+        "toolName": "hexagon_60degree_constructor",
+        "parameters": {
+          "initialMode": "learn",
+          "initialStep": 3,
+          "additionalProps": {
+            "triangleDecomposition": {
+              "visible": true,
+              "trianglesShown": 6,
+              "animationSpeed": "slow"
+            },
+            "angleAnnotations": {
+              "showCentreAngles": true,
+              "showInteriorAngles": true
+            }
+          }
+        }
+      },
+      "objective_id": "M3.S16.T16.O2",
+      "instructions_for_student": "All 6 triangles fit perfectly: 6 × 60° = 360° with no gaps. The interior angle at each hexagon vertex is 60° + 60° = 120°."
+    },
+    {
+      "step": 4,
+      "filterSteps": [4],
+      "tool_config": {
+        "toolName": "hexagon_60degree_constructor",
+        "parameters": {
+          "initialMode": "learn",
+          "initialStep": 4,
+          "additionalProps": {
+            "hexagonConstruction": {
+              "visible": true,
+              "circleDrawn": true,
+              "verticesAnimated": true
+            },
+            "triangleDecomposition": {
+              "visible": false
+            }
+          }
+        }
+      },
+      "objective_id": "M3.S16.T16.O2",
+      "instructions_for_student": "Now construct the hexagon: draw a circle, place one vertex, then use the compass (set to the radius) to step around the circle marking 60° arcs for each new vertex."
+    },
+    {
+      "step": 5,
+      "filterSteps": [5],
+      "tool_config": {
+        "toolName": "hexagon_60degree_constructor",
+        "parameters": {
+          "initialMode": "learn",
+          "initialStep": 5,
+          "additionalProps": {
+            "symmetryHighlight": {
+              "showReflective": true,
+              "showRotational": true,
+              "rotationAngle": 60
+            },
+            "hexagonConstruction": {
+              "visible": true,
+              "sidesDrawn": 6,
+              "verticesPlaced": 6
+            }
+          }
+        }
+      },
+      "objective_id": "M3.S16.T16.O2",
+      "instructions_for_student": "The regular hexagon is complete! Notice its 6-fold rotational symmetry — it looks identical after every 60° rotation. It also has 6 lines of mirror symmetry."
+    }
+  ],
+  "practice_config": {
+    "type": "mcq_only",
+    "showDiagrams": false,
+    "layout": "full_width_centered",
+    "maxContentWidth": 560,
+    "totalQuestions": 8,
+    "scoringEnabled": true,
+    "showExplanationAfterAnswer": true,
+    "showResultsScreen": true,
+    "retryEnabled": true,
+    "reviewModeLink": true,
+    "feedbackAnimations": {
+      "correct": "correctGlow 0.6s ease-out",
+      "incorrect": "shake 0.4s ease-out"
+    }
+  },
+  "responsive_config": {
+    "method": "ResizeObserver",
+    "containerQuery": true,
+    "breakpoints": {
+      "small": {
+        "maxWidth": 480,
+        "layout": "stacked",
+        "headerIconHidden": true,
+        "headerSubtitleHidden": true,
+        "footerButtonsIconOnly": true,
+        "titleFontSize": 12,
+        "bodyFontSize": 12,
+        "optionFontSize": 12,
+        "buttonPadding": "6px 12px",
+        "panelPadding": "12px 14px"
+      },
+      "mobile": {
+        "maxWidth": 580,
+        "layout": "stacked",
+        "learnModeSvgMaxHeight": 320,
+        "titleFontSize": 13,
+        "bodyFontSize": 12,
+        "optionFontSize": 13,
+        "buttonPadding": "7px 16px",
+        "panelPadding": "14px 16px"
+      },
+      "tablet": {
+        "maxWidth": 768,
+        "layout": "side_by_side",
+        "titleFontSize": 15,
+        "bodyFontSize": 13,
+        "optionFontSize": 13,
+        "buttonPadding": "8px 20px",
+        "panelPadding": "18px 22px"
+      },
+      "desktop": {
+        "minWidth": 769,
+        "layout": "side_by_side",
+        "infoPanelWidth": 270,
+        "titleFontSize": 15,
+        "bodyFontSize": 13,
+        "optionFontSize": 13,
+        "buttonPadding": "8px 20px",
+        "panelPadding": "18px 22px"
+      }
+    }
+  },
+  "instructions_for_student": "Explore how 6 equilateral triangles form a regular hexagon, then construct one using compass-and-straightedge 60-degree angle marking. Watch the triangles appear one by one in steps 2 and 3 to see how they fit. Then test your understanding with 8 MCQ questions in Practice mode."
+}

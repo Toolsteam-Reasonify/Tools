@@ -1,0 +1,95 @@
+{
+  "id": "M1.S5.T5.T2D1",
+  "title": "Perpendicular Bisector Practice Quiz",
+  "subtype": "geometry_mcq_quiz",
+  "toolName": "perpendicular_bisector_quiz",
+  "parameters": {
+    "initialMode": "practice",
+    "enabledModes": ["practice"],
+    "additionalProps": {
+      "questionBank": {
+        "totalQuestions": 12,
+        "questionTypes": ["mcq", "true_false", "diagram_mcq", "multi_select"],
+        "categories": [
+          "Standard Construction",
+          "Different Radii",
+          "Same-Side Arcs",
+          "Error Detection",
+          "Proof & Reasoning",
+          "90° Angle",
+          "Equidistant Property",
+          "Rope Construction",
+          "Synthesis"
+        ],
+        "diagramTypes": ["standard", "different_radii", "same_side", "error", "90_angle", "equidistant", "rope"]
+      },
+      "hintSystem": {
+        "type": "per_question",
+        "hintsPerQuestion": 1,
+        "revealBehavior": "on_demand"
+      },
+      "scoringSystem": {
+        "pointsPerQuestion": 1,
+        "totalPoints": 12,
+        "passingScore": 8,
+        "showCategoryBreakdown": true
+      },
+      "feedbackSystem": {
+        "showExplanationOnSubmit": true,
+        "showCorrectAnswer": true,
+        "highlightCorrectGreen": true,
+        "highlightIncorrectRed": true
+      },
+      "progressTracker": {
+        "showProgressDots": true,
+        "showScoreBar": true,
+        "showPercentage": true,
+        "showCategoryResults": true
+      },
+      "diagramRenderer": {
+        "canvasWidth": 480,
+        "canvasHeight": 280,
+        "dotGrid": true,
+        "style": "singularity_design_system"
+      }
+    },
+    "showModeSelector": false
+  },
+  "description": "An interactive MCQ quiz with 12 mixed questions covering perpendicular bisector concepts. Questions span conceptual understanding, visual diagram interpretation, true/false, error detection, proof reasoning, and multi-select synthesis. Each question includes a progressive hint and detailed explanation upon submission. Canvas-rendered diagrams illustrate construction scenarios for visual questions.",
+  "objective_id": "M1.S5.T5.O1",
+  "teaching_notes": "This quiz directly maps to the Figure it Out exercises from the textbook Chapter 6. Questions 1-2 cover standard construction (textbook intro), Questions 3-4 address different radii (Exercise Q1), Questions 5-6 test same-side arcs (Exercise Q2), Question 7 is error detection (Exercise Q3), Questions 8-9 test congruence proofs and 90° angle construction, Questions 10-11 cover equidistant property and Sulba-Sutra rope method, and Question 12 is a synthesis multi-select. The hint system scaffolds without giving away the answer.",
+  "tool_objectives": [
+    {
+      "step": 1,
+      "filterSteps": [1, 2],
+      "objective_id": "M1.S5.T5.O1",
+      "instructions_for_student": "Answer questions about the standard perpendicular bisector construction method using equal-radius arcs."
+    },
+    {
+      "step": 2,
+      "filterSteps": [3, 4],
+      "objective_id": "M1.S5.T5.O1",
+      "instructions_for_student": "Explore whether different radii can be used above and below the segment."
+    },
+    {
+      "step": 3,
+      "filterSteps": [5, 6],
+      "objective_id": "M1.S5.T5.O2",
+      "instructions_for_student": "Determine if both arc pairs can be drawn on the same side of XY."
+    },
+    {
+      "step": 4,
+      "filterSteps": [7],
+      "objective_id": "M1.S5.T5.O2",
+      "instructions_for_student": "Identify errors in a construction where unequal radii are used within the same pair."
+    },
+    {
+      "step": 5,
+      "filterSteps": [8, 9, 10, 11, 12],
+      "objective_id": "M1.S5.T5.O2",
+      "instructions_for_student": "Apply congruence proofs, equidistant property, and synthesize all construction methods."
+    }
+  ],
+  "instructions_for_student": "Complete 12 mixed questions about perpendicular bisector constructions! Questions include conceptual MCQs, diagram-based visual questions, true/false, error detection, and multi-select synthesis. Use hints if stuck, and read the explanations carefully after each answer.",
+  "generation_prompt": "Create a perpendicular bisector practice quiz with 12 mixed MCQ questions. Include: Q1-2 on standard construction (conceptual + diagram), Q3-4 on different radii (true/false + diagram), Q5-6 on same-side arcs (MCQ + reasoning), Q7 on error detection (diagram with unequal radii in one pair), Q8 on congruence proof (SSS), Q9 on 90° angle construction, Q10 on equidistant property, Q11 on Sulba-Sutra rope method, Q12 as multi-select synthesis. Each question has 1 hint, detailed explanation, canvas diagram where applicable, and scoring with category breakdown."
+}
